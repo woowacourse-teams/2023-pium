@@ -2,7 +2,7 @@
 name: Bug report
 about: 버그리포트
 title: ''
-labels: bug
+labels: ''
 assignees: ''
 
 ---
