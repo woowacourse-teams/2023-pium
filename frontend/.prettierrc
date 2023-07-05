@@ -1,0 +1,15 @@
+{
+  "singleQuote": true,
+  "printWidth": 100,
+  "importOrder": [
+    "^types/(.*)$",
+    "<THIRD_PARTY_MODULES>",
+    "^pages/(.*)$",
+    "^components/(.*)$",
+    "\\.style\\.ts$",
+    "^hooks/(.*)$",
+    "^utils/(.*)$",
+    "^constants/(.*)$",
+    "^assets/(.*)$"
+  ]
+}

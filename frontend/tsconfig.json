@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ES2016",
+    "module": "ESNext",
+    "strict": true,
+    "jsx": "react-jsx",
+    "outDir": "dist",
+    "moduleResolution": "Node"
+  },
+  "include": ["src/**/*"]
+}
