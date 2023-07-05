@@ -4,7 +4,6 @@
     "module": "ESNext",
     "strict": true,
     "jsx": "react-jsx",
-    "outDir": "dist",
     "moduleResolution": "Node"
   },
   "include": ["src/**/*"]
