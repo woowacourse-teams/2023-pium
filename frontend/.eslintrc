@@ -19,6 +19,7 @@
     "plugin:@typescript-eslint/recommended",
     "plugin:jsx-a11y/recommended"
   ],
+  "ignorePatterns": ["webpack.config.js", "mockServiceWorker.js"],
   "rules": {
     "react/button-has-type": 1,
     "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
