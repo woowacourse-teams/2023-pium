@@ -1,0 +1,28 @@
+{
+  "root": true,
+  "env": {
+    "browser": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2016
+  },
+  "plugins": ["react", "react-hooks", "@typescript-eslint", "import", "jsx-a11y"],
+  "extends": [
+    "prettier",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "rules": {
+    "react/button-has-type": 1,
+    "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],
+    "react/react-in-jsx-scope": 0,
+    "react/jsx-pascal-case": 1
+  }
+}
