@@ -1,6 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+
+echo "Front End pre-commit"
 cd frontend && npm test
 npm run lint-staged
 
