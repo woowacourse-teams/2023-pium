@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-cd client && echo 'Front End Check' && npx lint-staged && npm test
+cd frontend && echo 'Front End Check' && npx lint-staged && npm test
