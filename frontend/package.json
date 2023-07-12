@@ -41,6 +41,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^5.5.3",
     "msw": "^1.2.2",
+    "msw-storybook-addon": "^1.8.0",
     "postcss-styled-syntax": "^0.4.0",
     "prop-types": "^15.8.1",
     "react-refresh": "^0.14.0",
@@ -57,6 +58,6 @@
     "webpack-dev-server": "^4.15.1"
   },
   "msw": {
-    "workerDirectory": "."
+    "workerDirectory": "public/"
   }
 }
