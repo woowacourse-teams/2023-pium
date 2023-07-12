@@ -1,7 +1,7 @@
 export interface NewPetPlantRequest {
-  nickname?: string;
-
   dictionaryPlantId: number;
+  nickname: string;
+  birthDate: string;
 
   waterCycle: number;
   lastWaterDate: string;
@@ -10,5 +10,4 @@ export interface NewPetPlantRequest {
   flowerpot: string;
   light: string;
   wind: string;
-  birthDate: string;
 }
