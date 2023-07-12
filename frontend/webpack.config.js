@@ -46,12 +46,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: resolve(__dirname, 'index.html'),
+      template: resolve(__dirname, 'public', 'index.html'),
     }),
     ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
   ],
   devServer: {
     open: true,
     port: 8282,
+    static: {
+      directory: resolve(__dirname, 'public'),
+    },
   },
 };

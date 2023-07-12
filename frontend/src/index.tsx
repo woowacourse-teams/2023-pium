@@ -5,6 +5,17 @@ import App from './App';
 import { GlobalStyle } from './style/Global.style';
 import theme from './style/theme.style';
 
+if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { worker } = require('./mocks/browser');
+
+  worker.start({
+    serviceWorker: {
+      url: './mockServiceWorker.js',
+    },
+  });
+}
+
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
