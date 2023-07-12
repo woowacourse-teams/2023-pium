@@ -2,6 +2,7 @@ package com.official.pium.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,4 +18,9 @@ public class Member extends BaseEntity {
 
     @Column(name = "email")
     private String email;
+
+    @Builder
+    public Member(String email) {
+        this.email = email;
+    }
 }

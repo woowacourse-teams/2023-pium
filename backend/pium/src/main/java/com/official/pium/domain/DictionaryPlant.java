@@ -2,6 +2,7 @@ package com.official.pium.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -53,4 +54,21 @@ public class DictionaryPlant extends BaseEntity {
 
     @Embedded
     private WaterCycle waterCycle;
+
+    @Builder
+    public DictionaryPlant(String name, String imageUrl, String familyName, String smell, String poison, String manageLevel, String growSpeed, String requireTemp, String minimumTemp, String requireHumidity, String postingPlace, String specialManageInfo, WaterCycle waterCycle) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.familyName = familyName;
+        this.smell = smell;
+        this.poison = poison;
+        this.manageLevel = manageLevel;
+        this.growSpeed = growSpeed;
+        this.requireTemp = requireTemp;
+        this.minimumTemp = minimumTemp;
+        this.requireHumidity = requireHumidity;
+        this.postingPlace = postingPlace;
+        this.specialManageInfo = specialManageInfo;
+        this.waterCycle = waterCycle;
+    }
 }

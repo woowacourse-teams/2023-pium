@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,7 +24,7 @@ public class PetPlant {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "dictionary_plant_id")
-    private DictionaryPlant plant;
+    private DictionaryPlant dictionaryPlant;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -58,7 +59,7 @@ public class PetPlant {
     private LocalDate birthDate;
 
     @NotNull
-    @Column(name = "water_cycle", nullable = false)
+    @Column(name = "next_water_date", nullable = false)
     private LocalDate nextWaterDate;
 
     @NotNull
@@ -70,4 +71,20 @@ public class PetPlant {
     @NotNull
     @Column(name = "water_cycle", nullable = false)
     private Integer waterCycle;
+
+    @Builder
+    public PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location, String flowerpot, String light, String wind, @NotNull LocalDate birthDate, @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
+        this.dictionaryPlant = dictionaryPlant;
+        this.member = member;
+        this.nickname = nickname;
+        this.imageUrl = imageUrl;
+        this.location = location;
+        this.flowerpot = flowerpot;
+        this.light = light;
+        this.wind = wind;
+        this.birthDate = birthDate;
+        this.nextWaterDate = nextWaterDate;
+        this.lastWaterDate = lastWaterDate;
+        this.waterCycle = waterCycle;
+    }
 }
