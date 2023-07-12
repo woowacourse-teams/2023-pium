@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @Getter
 @Table(name = "pet_plant")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PetPlant {
+public class PetPlant extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
