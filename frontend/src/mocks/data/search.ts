@@ -19,6 +19,11 @@ const SEARCH_DATA = [
     name: '아카시아',
     image: 'https://images.unsplash.com/photo-1510325805092-2951ab330b7d',
   },
+  {
+    id: 5,
+    name: '참새',
+    image: 'https://images.unsplash.com/photo-1555841769-75541ae4fc9f',
+  },
 ];
 
 export default SEARCH_DATA;
