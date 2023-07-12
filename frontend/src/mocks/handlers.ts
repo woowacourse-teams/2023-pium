@@ -1,4 +1,4 @@
-import { NewPetPlantRequest } from '../types/api/petPlant';
+import type { NewPetPlantRequest } from '../types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import SEARCH_DATA from './data/search';
