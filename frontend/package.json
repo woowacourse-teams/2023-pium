@@ -4,7 +4,7 @@
   "description": "피움 프론트엔드",
   "main": "src/index.tsx",
   "scripts": {
-    "test": "echo test is not prepared  ",
+    "test": "echo test is not prepared",
     "start": "webpack-dev-server --mode=development",
     "build": "NODE_ENV=production webpack",
     "storybook": "storybook dev -p 6006",
