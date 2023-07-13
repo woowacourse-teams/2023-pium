@@ -20,7 +20,7 @@ const SearchBox = () => {
   const [searchResults, setSearchResults] = useState<DictNameSearchResult[] | null>(null);
   const timeoutId = useRef(0);
 
-  const searchInputValue = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+  const changeSearch = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(value);
 
     if (timeoutId.current) {
@@ -33,14 +33,21 @@ const SearchBox = () => {
     }, 150);
   };
 
-  const enter = ({ key }: React.KeyboardEvent) => {
+  const enterSearch = ({ key }: React.KeyboardEvent) => {
     if (key !== 'Enter') return;
 
     search(searchName);
   };
 
+  const clickSearch = () => {
+    search(searchName);
+  };
+
   const search = async (name: string) => {
-    if (name === '') return;
+    if (name === '') {
+      setSearchResults(null);
+      return;
+    }
 
     try {
       const response = await searchAPI.getResult(name);
@@ -57,12 +64,12 @@ const SearchBox = () => {
     <Wrapper>
       <InputArea>
         <BiSearch size="32" color="#1bcc66" />
-        <Input type="text" value={searchName} onChange={searchInputValue} onKeyDown={enter} />
-        <EnterButton type="button" onClick={search}>
+        <Input type="text" value={searchName} onChange={changeSearch} onKeyDown={enterSearch} />
+        <EnterButton type="button" onClick={clickSearch}>
           <BiRightArrowAlt size="32" color="#333333" />
         </EnterButton>
       </InputArea>
-      {searchResults !== null &&
+      {searchResults &&
         (searchResults.length === 0 ? (
           <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
         ) : (
