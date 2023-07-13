@@ -41,7 +41,7 @@ const SearchBox = () => {
     }, 150);
   };
 
-  const enter = async ({ key }: React.KeyboardEvent) => {
+  const enter = ({ key }: React.KeyboardEvent) => {
     if (key !== 'Enter') return;
 
     search(searchName);
