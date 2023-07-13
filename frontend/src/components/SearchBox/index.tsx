@@ -15,7 +15,11 @@ import {
 
 type SearchResult = any;
 
-const getSearch = async (name: string) => {
+interface GetSearch {
+  data: SearchResult[] 
+}
+
+const getSearch = async (name: string): Promise<GetSearch> => {
   const response = await fetch(`search?name=${name}`);
   return await response.json();
 };
@@ -23,7 +27,7 @@ const getSearch = async (name: string) => {
 const SearchBox = () => {
   const [searchName, setSearchName] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
-  const timeoutId = useRef<number | null>(null);
+  const timeoutId = useRef<number>();
 
   const searchInputValue = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(value);
