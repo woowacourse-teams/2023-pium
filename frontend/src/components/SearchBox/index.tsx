@@ -1,6 +1,6 @@
+import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useRef, useState } from 'react';
 import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
-import { MESSAGE } from '../../constants';
 import {
   InputArea,
   ResultItem,
@@ -12,21 +12,12 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
-
-type SearchResult = any;
-
-interface GetSearch {
-  data: SearchResult[];
-}
-
-const getSearch = async (name: string): Promise<GetSearch> => {
-  const response = await fetch(`search?name=${name}`);
-  return await response.json();
-};
+import searchAPI from 'apis/search';
+import { MESSAGE } from 'constants/index';
 
 const SearchBox = () => {
   const [searchName, setSearchName] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
+  const [searchResults, setSearchResults] = useState<DictNameSearchResult[] | null>(null);
   const timeoutId = useRef(0);
 
   const searchInputValue = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +43,10 @@ const SearchBox = () => {
     if (name === '') return;
 
     try {
-      const { data: searchResults } = await getSearch(name);
+      const response = await searchAPI.getResult(name);
+      if (!response.ok) throw new Error();
+
+      const { data: searchResults } = await response.json();
       setSearchResults(searchResults);
     } catch {
       return;
