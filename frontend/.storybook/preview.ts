@@ -1,6 +1,6 @@
-import { storybookHandlers } from '../src/mocks/storybookHandlers';
 import type { Preview } from '@storybook/react';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+import { storybookHandlers } from '../src/mocks/storybookHandlers';
 import { decorateGlobalStyle } from './decorators';
 
 initialize({
