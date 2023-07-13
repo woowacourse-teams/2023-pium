@@ -74,7 +74,7 @@ const SearchBox = () => {
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
               <ResultItem key={id}>
-                <ResultThumbnail src={image} />
+                <ResultThumbnail alt={name} src={image} />
                 <Name>{name}</Name>
               </ResultItem>
             ))}
