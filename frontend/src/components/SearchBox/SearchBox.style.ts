@@ -75,6 +75,8 @@ export const Name = styled.p`
 `;
 
 export const EnterButton = styled.button`
+  display: flex;
+  align-items: center;
   background: transparent;
   border: none;
 `;
