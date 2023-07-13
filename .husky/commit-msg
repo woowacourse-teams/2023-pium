@@ -1,0 +1,72 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+
+# 커밋 컨벤션
+# 0. 검사 예외 조건 (자동 생성, 최초 커밋)
+# - Merge branch*, Merge pull request*, initial*
+# 1. 접두사의 글자는 소문자
+# 2. 맨 마지막 글자 '.' 마침표 금지
+# 3. 커밋 접두사 (규칙: '접두사' + '콜론' + ' ')
+# - feat: 새로운 기능 추가
+# - fix: 버그 수정
+# - docs: 문서의 수정
+# - style: (코드의 수정 없이) 스타일(style)만 변경(들여쓰기 같은 포맷이나 세미콜론을 빼먹은 경우)
+# - refactor: 코드를 리펙토링
+# - test: Test 관련한 코드의 추가, 수정
+# - chore: (코드의 수정 없이) 설정을 변경
+# - design: css 코드 수정
+# - build: build 및 관련 설정 변경
+
+COMMIT_MSG_FILE=$1
+FIRST_LINE=`head -n1 ${COMMIT_MSG_FILE}`
+RES="needCheck" # needCheck, auto, initial, lintError*, clear
+
+if [[ $FIRST_LINE =~ ^(Merge branch) ]] ||
+   [[ $FIRST_LINE =~ ^(Merge pull request) ]]; then
+  RES="auto"
+fi
+
+if [[ $FIRST_LINE =~ ^(initial) ]]; then
+  RES="initial"
+fi
+
+if [ $RES == "needCheck" ]; then
+  if [[ $FIRST_LINE =~ (\.)$ ]]; then
+    RES="lintError1"
+  fi
+
+  if [[ ! $FIRST_LINE =~ ^(feat: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(fix: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(docs: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(style: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(refactor: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(test: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(design: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(build: ) ]] &&
+     [[ ! $FIRST_LINE =~ ^(chore: ) ]]; then
+    RES="lintError2"
+  fi
+
+  if [[ ! $RES =~ ^(lintError) ]]; then
+    RES="clear"
+  fi
+fi
+
+if [[ $RES =~ ^(lintError) ]]; then
+  if [[ $RES == "lintError1" ]]; then
+    echo "CommitLint#1: 문장 마지막의 ('.') 마침표를 제거해주세요."
+  fi
+  if [[ $RES == "lintError2" ]]; then
+    echo "CommitLint#2: 접두사, 콜론, 띄어쓰기 형태를 확인하세요. (feat: , fix: , docs: , style: , refactor: , test: , chore: )"
+  fi
+  exit 1
+elif [[ $RES == "auto" ]]; then
+  echo "Automatically generated commit message from git"
+elif [[ $RES == "initial" ]]; then
+  echo "Initial commit"
+elif [[ $RES == "clear" ]]; then
+  echo "Pass commit lint!"
+fi
+
+exit 0

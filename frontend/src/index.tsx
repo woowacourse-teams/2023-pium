@@ -17,6 +17,17 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
+if (process.env.NODE_ENV === 'development') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { worker } = require('./mocks/browser');
+
+  worker.start({
+    serviceWorker: {
+      url: './mockServiceWorker.js',
+    },
+  });
+}
+
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
