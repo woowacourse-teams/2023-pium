@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
 import App from './App';
 import { GlobalStyle } from './style/Global.style';
+import { GlobalFont } from './style/GlobalFont.style';
 import theme from './style/theme.style';
 
 if (process.env.NODE_ENV === 'development') {
@@ -20,8 +21,9 @@ const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <StrictMode>
+    <GlobalFont />
+    <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
       <App />
     </ThemeProvider>
   </StrictMode>

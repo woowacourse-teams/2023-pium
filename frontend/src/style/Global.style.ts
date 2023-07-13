@@ -4,8 +4,9 @@ import { reset } from './reset.style';
 export const GlobalStyle = createGlobalStyle`
   ${reset}
 
+
   * {
-    font-family: "Noto Sans KR", sans-serif, 'NanumSquareRound' !important;
+    font-family: "NanumSquareRound", "Noto Sans KR", sans-serif;
   }
   
   /********** hidden scroll **********/
@@ -18,4 +19,6 @@ export const GlobalStyle = createGlobalStyle`
   body::-webkit-scrollbar {
     display: none;
   }
+
+  
 `;
