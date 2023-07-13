@@ -9,6 +9,4 @@ export default meta;
 
 type Story = StoryObj<typeof SearchBox>;
 
-export const Story: Story = {
-  args: {},
-};
+export const Default: Story = {};
