@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
-import { NO_SEARCH_RESULT_MESSAGE } from '../../constants';
+import { MESSAGE } from '../../constants';
 import {
   InputArea,
   ResultItem,
@@ -16,7 +16,7 @@ import {
 type SearchResult = any;
 
 interface GetSearch {
-  data: SearchResult[] 
+  data: SearchResult[];
 }
 
 const getSearch = async (name: string): Promise<GetSearch> => {
@@ -69,7 +69,7 @@ const SearchBox = () => {
       </InputArea>
       {searchResults !== null &&
         (searchResults.length === 0 ? (
-          <ResultMessage>{NO_SEARCH_RESULT_MESSAGE}</ResultMessage>
+          <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
         ) : (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
