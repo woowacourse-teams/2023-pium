@@ -4,15 +4,8 @@ import { reset } from './reset.style';
 export const GlobalStyle = createGlobalStyle`
   ${reset}
 
-  @font-face {
-    font-family: 'NanumSquareRound';
-    font-weight: normal;
-    font-style: normal;
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
-  }
-
   * {
-    font-family: "Noto Sans KR", sans-serif !important;
+    font-family: "Noto Sans KR", sans-serif, 'NanumSquareRound' !important;
   }
   
   /********** hidden scroll **********/
