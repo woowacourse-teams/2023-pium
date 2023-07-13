@@ -3,14 +3,18 @@
   "printWidth": 100,
   "importOrder": [
     "^types/(.*)$",
+
     "<THIRD_PARTY_MODULES>",
     "^pages/(.*)$",
     "^components/(.*)$",
     "\\.style$",
     "^hooks/(.*)$",
+
+    "^apis/(.*)$",
     "^utils/(.*)$",
     "^constants/(.*)$",
     "^assets/(.*)$",
+
     "^\\./?"
   ]
 }
