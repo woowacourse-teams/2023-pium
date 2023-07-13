@@ -27,18 +27,18 @@ const getSearch = async (name: string): Promise<GetSearch> => {
 const SearchBox = () => {
   const [searchName, setSearchName] = useState('');
   const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
-  const timeoutId = useRef<number | null>(null);
+  const timeoutId = useRef(0);
 
   const searchInputValue = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     setSearchName(value);
 
-    if (timeoutId.current !== null) {
+    if (timeoutId.current) {
       clearTimeout(timeoutId.current);
     }
 
     timeoutId.current = window.setTimeout(() => {
       search(value);
-      timeoutId.current = null;
+      timeoutId.current = 0;
     }, 150);
   };
 
