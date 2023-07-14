@@ -12,7 +12,7 @@ public class DictionaryPlantFixture {
             .familyName("선인장")
             .smell("안남")
             .poison("없음")
-            .manageLevel("쉬움")
+            .manageLevel("어려움")
             .growSpeed("빨리자람")
             .requireTemp("20도")
             .minimumTemp("0도")
