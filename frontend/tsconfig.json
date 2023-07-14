@@ -8,7 +8,7 @@
     "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
 
-    "baseUrl": "./src",
+    "baseUrl": "src",
     "paths": {
       "types/*": ["types/*"],
       "pages/*": ["pages/*"],

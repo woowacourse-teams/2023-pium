@@ -20,6 +20,7 @@ module.exports = {
       pages: resolve(__dirname, 'src', 'pages'),
       components: resolve(__dirname, 'src', 'components'),
       hooks: resolve(__dirname, 'src', 'hooks'),
+      apis: resolve(__dirname, 'src', 'apis'),
       utils: resolve(__dirname, 'src', 'utils'),
       assets: resolve(__dirname, 'src', 'assets'),
       constants: resolve(__dirname, 'src', 'constants'),
@@ -56,5 +57,6 @@ module.exports = {
     static: {
       directory: resolve(__dirname, 'public'),
     },
+    historyApiFallback: true,
   },
 };
