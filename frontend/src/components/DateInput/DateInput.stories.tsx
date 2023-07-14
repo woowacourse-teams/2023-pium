@@ -10,7 +10,5 @@ export default meta;
 type Story = StoryObj<typeof DateInput>;
 
 export const Default: Story = {
-  args: {
-    placeholder: '언제',
-  },
+  args: {},
 };
