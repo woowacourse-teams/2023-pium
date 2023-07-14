@@ -14,4 +14,7 @@ export const PageArea = styled.main`
   width: 100%;
   max-width: 736px;
   height: 100%;
+  padding: 0 16px;
+
+  background: white;
 `;
