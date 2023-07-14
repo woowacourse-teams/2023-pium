@@ -8,7 +8,11 @@ export const GlobalStyle = createGlobalStyle`
   * {
     font-family: "NanumSquareRound", "Noto Sans KR", sans-serif;
   }
-  
+
+  html, body, #root {
+    height: 100%;
+  }
+
   /********** hidden scroll **********/
   html,
   body {
