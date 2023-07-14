@@ -1,6 +1,6 @@
 import SearchBox from 'components/SearchBox';
 import { Logo, Wrapper } from './Main.style';
-import logo from 'assets/logo.png';
+import logo from 'assets/logo.svg';
 
 const Main = () => {
   return (
