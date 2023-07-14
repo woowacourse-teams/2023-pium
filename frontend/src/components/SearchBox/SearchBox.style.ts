@@ -23,7 +23,7 @@ export const Input = styled.input`
   margin: 12px 0;
   margin-left: 8px;
 
-  font-size: 1.4rem;
+  font-size: 2rem;
 
   border: none;
   outline: none;
@@ -33,7 +33,7 @@ export const ResultMessage = styled.p`
   width: 100%;
   height: 40px;
 
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: #333333;
   text-align: center;
 `;
@@ -70,7 +70,7 @@ export const ResultThumbnail = styled.img`
 `;
 
 export const Name = styled.p`
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: #333333;
 `;
 
