@@ -8,14 +8,15 @@
     "skipLibCheck": true,
     "esModuleInterop": true,
 
+    "baseUrl": "src",
     "paths": {
-      "types/*": ["./src/types"],
-      "pages/*": ["./src/pages"],
-      "components/*": ["./src/components"],
-      "hooks/*": ["./src/hooks"],
-      "utils/*": ["./src/utils"],
-      "assets/*": ["./src/assets"],
-      "constants/*": ["./src/constants"]
+      "types/*": ["types/*"],
+      "pages/*": ["pages/*"],
+      "components/*": ["components/*"],
+      "hooks/*": ["hooks/*"],
+      "utils/*": ["utils/*"],
+      "assets/*": ["assets/*"],
+      "constants/*": ["constants/*"]
     }
   },
   "include": ["src/**/*"]
