@@ -2,8 +2,12 @@ import { useState } from 'react';
 import { getToday, convertDateKorYear } from 'utils/date';
 import { Date, Wrapper, DateValue } from './DateInput.style';
 
-const DateInput = () => {
-  const [date, setDate] = useState(getToday());
+interface DateInputProps {
+  initialValue: string;
+}
+
+const DateInput = ({ initialValue }: DateInputProps) => {
+  const [date, setDate] = useState(initialValue);
 
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
