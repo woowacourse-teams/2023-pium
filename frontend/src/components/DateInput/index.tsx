@@ -1,13 +1,20 @@
-interface DateInputProps {
-  placeholder: string;
-}
+import { useState } from 'react';
+import { getToday, convertDateKorYear } from 'utils/date';
+import { Date, Wrapper, DateValue } from './DateInput.style';
 
-const DateInput = ({ placeholder }: DateInputProps) => {
+const DateInput = () => {
+  const [date, setDate] = useState(getToday());
+
+  const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+    const { value } = event.target;
+    setDate(value);
+  };
+
   return (
-    <div>
-      <label>{placeholder}</label>
-      <input type="date" />
-    </div>
+    <Wrapper>
+      <DateValue htmlFor="date-input">{convertDateKorYear(date)}</DateValue>
+      <Date name="date-input" type="date" value={date} onChange={changeHandler} max={getToday()} />
+    </Wrapper>
   );
 };
 
