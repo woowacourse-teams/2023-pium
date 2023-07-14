@@ -6,6 +6,8 @@
     "strict": true,
     "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
+    "esModuleInterop": true,
+
     "paths": {
       "types/*": ["./src/types"],
       "pages/*": ["./src/pages"],
@@ -13,8 +15,8 @@
       "hooks/*": ["./src/hooks"],
       "utils/*": ["./src/utils"],
       "assets/*": ["./src/assets"],
-      "constants/*": ["./src/constants"],
-    },
+      "constants/*": ["./src/constants"]
+    }
   },
   "include": ["src/**/*"]
 }
