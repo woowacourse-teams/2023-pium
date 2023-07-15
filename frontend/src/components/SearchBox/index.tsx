@@ -20,7 +20,7 @@ const SearchBox = () => {
   const [searchResults, setSearchResults] = useState<DictNameSearchResult[] | null>(null);
   const timeoutId = useRef(0);
 
-  const changeSearch = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+  const changeSearch: React.ComponentProps<'input'>['onChange'] = ({ target: { value } }) => {
     setSearchName(value);
 
     if (timeoutId.current) {
@@ -33,7 +33,7 @@ const SearchBox = () => {
     }, 150);
   };
 
-  const enterSearch = ({ key }: React.KeyboardEvent) => {
+  const enterSearch: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
     if (key !== 'Enter') return;
 
     search(searchName);
@@ -70,9 +70,7 @@ const SearchBox = () => {
         </EnterButton>
       </InputArea>
       {searchResults &&
-        (searchResults.length === 0 ? (
-          <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
-        ) : (
+        (searchResults.length ? (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
               <ResultItem key={id}>
@@ -81,6 +79,8 @@ const SearchBox = () => {
               </ResultItem>
             ))}
           </ResultList>
+        ) : (
+          <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
         ))}
     </Wrapper>
   );
