@@ -25,7 +25,7 @@ public class PetPlantService {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(request.getDictionaryPlantId())
                 .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id : " + request.getDictionaryPlantId()));
 
-        PetPlant petPlant = PetPlantMapper.toEntity(request, dictionaryPlant, member);
+        PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, member);
         petPlantRepository.save(petPlant);
     }
 }

@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 
 public class PetPlantMapper {
 
-    public static PetPlant toEntity(PetPlantRequest request, DictionaryPlant dictionaryPlant, Member member) {
+    public static PetPlant toPetPlant(PetPlantRequest request, DictionaryPlant dictionaryPlant, Member member) {
         return PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
                 .member(member)
