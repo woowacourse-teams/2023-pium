@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: min-content;
 
-  border: solid 2px #1bcc66;
+  border: solid 2px ${(p) => p.theme.color.primary};
   border-radius: 29px;
 `;
 
@@ -34,7 +34,7 @@ export const ResultMessage = styled.p`
   height: 40px;
 
   font-size: 1.8rem;
-  color: #333333;
+  color: ${(p) => p.theme.color.sub};
   text-align: center;
 `;
 
@@ -52,7 +52,7 @@ export const ResultItem = styled.div`
   height: 56px;
   padding-left: 12px;
 
-  border-top: solid 2px rgba(27, 204, 102, 0.3);
+  border-top: solid 2px ${(p) => p.theme.color.primary + '40'};
 `;
 
 const skeletonBackground = keyframes`
@@ -73,7 +73,7 @@ export const ResultThumbnail = styled.img`
 
 export const Name = styled.p`
   font-size: 1.8rem;
-  color: #333333;
+  color: ${(p) => p.theme.color.sub};
 `;
 
 export const EnterButton = styled.button`
