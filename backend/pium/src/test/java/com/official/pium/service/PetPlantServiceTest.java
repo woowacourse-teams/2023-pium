@@ -1,9 +1,9 @@
 package com.official.pium.service;
 
+import com.official.pium.IntegrationTest;
 import com.official.pium.controller.dto.PetPlantRequest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
-import com.official.pium.fixture.DictionaryPlantFixture;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
@@ -16,12 +16,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
+import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @SpringBootTest
-class PetPlantServiceTest {
+class PetPlantServiceTest extends IntegrationTest {
 
     private Member member;
     private DictionaryPlant dictionaryPlant;
@@ -40,7 +41,7 @@ class PetPlantServiceTest {
 
     @BeforeEach
     void setUp() {
-        dictionaryPlant = DictionaryPlantFixture.스투키;
+        dictionaryPlant = 스투키;
         dictionaryPlantRepository.save(dictionaryPlant);
 
         member = new Member("guest@gmail.com");
@@ -49,17 +50,17 @@ class PetPlantServiceTest {
 
     @Test
     void 반려_식물_등록() {
-        PetPlantRequest request = new PetPlantRequest(
-                dictionaryPlant.getId(),
-                "피우미",
-                "베란다",
-                "플라스틱 화분",
-                3,
-                "빛 많이 필요함",
-                "바람이 잘 통하는 곳",
-                LocalDate.now(),
-                LocalDate.now()
-        );
+        PetPlantRequest request = PetPlantRequest.builder()
+                .dictionaryPlantId(dictionaryPlant.getId())
+                .nickname("피우미")
+                .location("베란다")
+                .flowerpot("플라스틱 화분")
+                .waterCycle(3)
+                .light("빛 많이 필요함")
+                .wind("바람이 잘 통하는 곳")
+                .birthDate(LocalDate.now())
+                .lastWaterDate(LocalDate.now())
+                .build();
 
         petPlantService.create(request, member);
         assertThat(petPlantRepository.findAll()).isNotEmpty();
