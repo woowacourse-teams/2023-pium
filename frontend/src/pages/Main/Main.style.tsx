@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const LogoMessage = styled.p`
-  margin-top: 8vh;
+  margin-top: 10%;
   font-size: 3rem;
   font-weight: 700;
   color: ${(props) => props.theme.color.primary};
@@ -47,8 +47,10 @@ export const StartButton = styled.button`
 
   border-radius: 24px;
 
+  transition: background-color 0.2s;
+
   &:hover {
-    background-color: rgba(27, 204, 102, 0.1);
+    background-color: ${({ theme }) => theme.color.primary + '1A'};
   }
 `;
 
