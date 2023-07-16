@@ -16,7 +16,7 @@ public class PetPlantController {
 
     private final PetPlantService petPlantService;
 
-    @PostMapping("/pet-plant")
+    @PostMapping("/pet-plants")
     public ResponseEntity<Void> create(PetPlantRequest request, Member member) {
         petPlantService.create(request, member);
         return ResponseEntity.created(URI.create("/")).build();
