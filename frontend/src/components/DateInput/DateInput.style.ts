@@ -33,18 +33,9 @@ export const Date = styled.input.attrs({ type: 'date' })`
     height: 100%;
   }
 
-  &::-webkit-datetime-edit-text {
-    display: none;
-    appearance: none;
-  }
-  &::-webkit-datetime-edit-month-field {
-    display: none;
-    appearance: none;
-  }
-  &::-webkit-datetime-edit-day-field {
-    display: none;
-    appearance: none;
-  }
+  &::-webkit-datetime-edit-text,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-day-field,
   &::-webkit-datetime-edit-year-field {
     display: none;
     appearance: none;
