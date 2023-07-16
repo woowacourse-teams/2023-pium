@@ -35,11 +35,11 @@ public class PetPlantRequest {
     @NotBlank
     private String wind;
 
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
-    @NotBlank
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
 }
