@@ -56,7 +56,7 @@ public class DictionaryPlant extends BaseEntity {
     private WaterCycle waterCycle;
 
     @Builder
-    public DictionaryPlant(String name, String imageUrl, String familyName, String smell, String poison, String manageLevel, String growSpeed, String requireTemp, String minimumTemp, String requireHumidity, String postingPlace, String specialManageInfo, WaterCycle waterCycle) {
+    private DictionaryPlant(String name, String imageUrl, String familyName, String smell, String poison, String manageLevel, String growSpeed, String requireTemp, String minimumTemp, String requireHumidity, String postingPlace, String specialManageInfo, WaterCycle waterCycle) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.familyName = familyName;

@@ -25,7 +25,7 @@ public class WaterCycle {
     private String winter;
 
     @Builder
-    public WaterCycle(String spring, String summer, String autumn, String winter) {
+    private WaterCycle(String spring, String summer, String autumn, String winter) {
         this.spring = spring;
         this.summer = summer;
         this.autumn = autumn;

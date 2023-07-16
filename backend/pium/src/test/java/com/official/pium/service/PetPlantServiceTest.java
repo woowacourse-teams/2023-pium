@@ -16,7 +16,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
-import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -41,11 +40,8 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @BeforeEach
     void setUp() {
-        dictionaryPlant = 스투키;
-        dictionaryPlantRepository.save(dictionaryPlant);
-
-        member = new Member("guest@gmail.com");
-        memberRepository.save(member);
+        dictionaryPlant = dictionaryPlantSupport.builder().build();
+        member = memberSupport.builder().build();
     }
 
     @Test
