@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.temporal.ChronoUnit;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -86,5 +87,19 @@ public class PetPlant extends BaseEntity {
         this.nextWaterDate = nextWaterDate;
         this.lastWaterDate = lastWaterDate;
         this.waterCycle = waterCycle;
+    }
+
+    public long calculateNextWaterDay(LocalDate localDate) {
+        if (localDate.isAfter(nextWaterDate)) {
+            throw new IllegalArgumentException("물주기 남은 날짜는 음수가 될 수 없습니다.");
+        }
+        return ChronoUnit.DAYS.between(localDate, nextWaterDate);
+    }
+
+    public long calculateDaySince(LocalDate localDate) {
+        if (localDate.isBefore(birthDate)) {
+            throw new IllegalArgumentException("함께한 날은 음수가 될 수 없습니다.");
+        }
+        return ChronoUnit.DAYS.between(birthDate, localDate) + 1;
     }
 }
