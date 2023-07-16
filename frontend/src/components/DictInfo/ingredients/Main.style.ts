@@ -12,7 +12,6 @@ export const Wrapper = styled.div<WrapperProps>`
   flex-wrap: wrap;
   row-gap: 10px;
   column-gap: 10px;
-  align-self: start;
 
   width: ${({ $width }) => $width};
   height: ${({ $height }) => $height};
