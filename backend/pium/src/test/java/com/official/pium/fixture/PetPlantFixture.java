@@ -1,8 +1,12 @@
 package com.official.pium.fixture;
 
 import com.official.pium.controller.dto.PetPlantRequest;
+import com.official.pium.controller.dto.PetPlantResponse;
 
 import java.time.LocalDate;
+
+import static com.official.pium.controller.dto.PetPlantResponse.DictionaryPlantResponse;
+import static com.official.pium.controller.dto.PetPlantResponse.builder;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class PetPlantFixture {
@@ -18,6 +22,27 @@ public class PetPlantFixture {
                 .wind("바람이 잘 통하는 곳")
                 .birthDate(LocalDate.now())
                 .lastWaterDate(LocalDate.now())
+                .build();
+    }
+
+    public static class RESPONSE {
+        public static PetPlantResponse 피우미_응답 = builder()
+                .id(1L)
+                .nickname("피우미")
+                .imageUrl("https://image.com")
+                .location("베란다")
+                .flowerpot("플라스틱 화분")
+                .light("빛 많이 필요함")
+                .wind("바람이 잘 통하는 곳")
+                .birthDate(LocalDate.now())
+                .lastWaterDate(LocalDate.now())
+                .waterCycle(3)
+                .nextWaterDay(1L)
+                .daySince(1L)
+                .dictionaryPlant(DictionaryPlantResponse.builder()
+                        .id(1L)
+                        .name("스투키")
+                        .build())
                 .build();
     }
 }
