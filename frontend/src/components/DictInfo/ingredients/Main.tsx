@@ -1,14 +1,14 @@
-import { Wrapper, WrapperProps } from './Main.style';
+import { Wrapper } from './Main.style';
 import Title from './Title.style';
 import getFilteredChildren from '../../../utils/getFilteredChildren';
 import Content from './Content';
 
-interface MainProps extends React.PropsWithChildren {
+interface DictInfoProps extends React.PropsWithChildren {
   alignment?: 'row' | 'column';
   contentDirection?: 'row' | 'column';
+  width: string;
+  height: string;
 }
-
-type DictInfoProps = MainProps & WrapperProps;
 
 const Main = (props: DictInfoProps) => {
   const {
@@ -23,9 +23,9 @@ const Main = (props: DictInfoProps) => {
   const contents = getFilteredChildren(<Content />, children);
 
   return (
-    <Wrapper flexDirection={alignment} width={width} height={height}>
-      <Wrapper flexDirection="row">{title}</Wrapper>
-      <Wrapper flexDirection={contentDirection}>{contents}</Wrapper>
+    <Wrapper $flexDirection={alignment} $width={width} $height={height}>
+      <Wrapper $flexDirection="row">{title}</Wrapper>
+      <Wrapper $flexDirection={contentDirection}>{contents}</Wrapper>
     </Wrapper>
   );
 };
