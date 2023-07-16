@@ -1,6 +1,7 @@
 package com.official.pium.controller;
 
 import com.official.pium.controller.dto.PetPlantRequest;
+import com.official.pium.controller.dto.PetPlantResponse;
 import com.official.pium.domain.Member;
 import com.official.pium.service.PetPlantService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class PetPlantController {
 
     @PostMapping("/pet-plants")
     public ResponseEntity<Void> create(PetPlantRequest request, Member member) {
-        petPlantService.create(request, member);
-        return ResponseEntity.created(URI.create("/")).build();
+        PetPlantResponse petPlantResponse = petPlantService.create(request, member);
+        return ResponseEntity.created(URI.create("/pet-plants/" + petPlantResponse.getId())).build();
     }
 }
