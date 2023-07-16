@@ -8,16 +8,23 @@ interface DateInputProps {
 
 const DateInput = ({ initialValue }: DateInputProps) => {
   const [date, setDate] = useState(initialValue);
+  const today = getToday();
 
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
+
+    if (value > today) {
+      setDate(today);
+      return;
+    }
+
     setDate(value);
   };
 
   return (
     <Wrapper>
       <DateValue htmlFor="date-input">{convertDateKorYear(date)}</DateValue>
-      <Date name="date-input" type="date" value={date} onChange={changeHandler} max={getToday()} />
+      <Date name="date-input" type="date" value={date} onChange={changeHandler} max={today} />
     </Wrapper>
   );
 };
