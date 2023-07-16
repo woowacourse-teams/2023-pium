@@ -6,8 +6,8 @@ import Content from './Content';
 interface DictInfoProps extends React.PropsWithChildren {
   alignment?: 'row' | 'column';
   contentDirection?: 'row' | 'column';
-  width: string;
-  height: string;
+  width?: string;
+  height?: string;
 }
 
 const Main = (props: DictInfoProps) => {
