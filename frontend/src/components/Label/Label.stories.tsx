@@ -5,6 +5,18 @@ import Label, { LabelProps } from '.';
 const meta: Meta<typeof Label> = {
   component: Label,
 
+  args: {
+    variant: 'default',
+    dimmed: true,
+    hasHoverEffect: false,
+  },
+
+  argTypes: {
+    variant: { description: '색깔 고르기' },
+    dimmed: { description: '흐리무리하게 할까요?' },
+    hasHoverEffect: { description: '마우스를 올리면 색을 살짝 바꿀까요?' },
+  },
+
   decorators: [
     (Story) => (
       <div style={{ padding: '20px' }}>
@@ -55,12 +67,6 @@ const Wrapper = (props: LabelProps) => {
 };
 
 export const Playground: Story = {
-  args: {
-    variant: 'default',
-    dimmed: true,
-    hasHoverEffect: false,
-  },
-
   argTypes: {
     variant: { control: 'radio' },
     dimmed: { control: 'boolean' },

@@ -3,6 +3,26 @@ import DictInfo from '.';
 
 const meta: Meta<typeof DictInfo> = {
   component: DictInfo,
+
+  args: {
+    alignment: 'column',
+    contentDirection: 'row',
+  },
+
+  argTypes: {
+    alignment: {
+      description: '제목과 내용들을 어느 방향으로 배치할까요?',
+    },
+    contentDirection: {
+      description: '각 내용을 어느 방향으로 배치할까요?',
+    },
+    width: {
+      description: '컴포넌트 전체 가로 길이',
+    },
+    height: {
+      description: '컴포넌트 전체 세로 길이',
+    },
+  },
 };
 
 export default meta;
