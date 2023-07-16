@@ -12,8 +12,12 @@ const getBgColor = ({ $variant = 'default', $dimmed = true }: LabelStyleProps) =
   return $variant === 'default' ? `#BBBBBB${opacity}` : `${theme.color[$variant]}${opacity}`;
 };
 
-export const Wrapper = styled.span<LabelStyleProps>`
+export const Wrapper = styled.div<LabelStyleProps>`
+  display: inline-block;
+  align-self: start;
+
   padding: 7px 12px;
+
   background-color: ${(props) => getBgColor(props)};
   border-radius: 77px;
 
