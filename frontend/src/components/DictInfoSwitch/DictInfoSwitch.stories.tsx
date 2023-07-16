@@ -7,7 +7,7 @@ const meta: Meta<typeof DictInfoSwitch> = {
   argTypes: {
     title: { description: '정보 제목' },
     optionMap: {
-      description: '{[정보 옵션 이름]: 해당 옵션에서 보여줄 정보 또는 정보들의 배열}',
+      description: 'key: 정보 옵션 이름\n\nvalue: 해당 옵션에서 보여줄 정보 또는 정보들의 배열',
     },
     defaultSelected: { description: '기본적으로 설정할 정보 옵션 이름' },
   },
