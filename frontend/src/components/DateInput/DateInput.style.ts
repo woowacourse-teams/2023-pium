@@ -17,7 +17,6 @@ export const DateValue = styled.label`
 
 export const Date = styled.input.attrs({ type: 'date' })`
   position: relative;
-  z-index: 1;
 
   width: 100%;
   padding: 10px;
