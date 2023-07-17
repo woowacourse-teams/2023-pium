@@ -2,17 +2,15 @@ package com.official.pium.service;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.controller.dto.PetPlantRequest;
+import com.official.pium.controller.dto.PetPlantResponse;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
-import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 
@@ -20,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-@SpringBootTest
 class PetPlantServiceTest extends IntegrationTest {
 
     private Member member;
@@ -30,13 +27,7 @@ class PetPlantServiceTest extends IntegrationTest {
     private PetPlantService petPlantService;
 
     @Autowired
-    private MemberRepository memberRepository;
-
-    @Autowired
     private PetPlantRepository petPlantRepository;
-
-    @Autowired
-    private DictionaryPlantRepository dictionaryPlantRepository;
 
     @BeforeEach
     void setUp() {
@@ -58,7 +49,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .lastWaterDate(LocalDate.now())
                 .build();
 
-        petPlantService.create(request, member);
-        assertThat(petPlantRepository.findAll()).isNotEmpty();
+        PetPlantResponse petPlantResponse = petPlantService.create(request, member);
+
+        assertThat(petPlantRepository.findById(petPlantResponse.getId())).isNotEmpty();
     }
 }
