@@ -12,19 +12,17 @@ const Option = (props: OptionProps) => {
   const id = useId();
 
   return (
-    <>
-      <Label htmlFor={id}>
-        <HiddenRadio
-          type="radio"
-          id={id}
-          name={name}
-          value={value}
-          checked={value === contextValue}
-          onChange={() => setValue(value)}
-        />
-        <span>{value}</span>
-      </Label>
-    </>
+    <Label htmlFor={id}>
+      <HiddenRadio
+        type="radio"
+        id={id}
+        name={name}
+        value={value}
+        checked={value === contextValue}
+        onChange={() => setValue(value)}
+      />
+      <span>{value}</span>
+    </Label>
   );
 };
 
