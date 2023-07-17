@@ -1,6 +1,7 @@
-import { storybookHandlers } from '../src/mocks/storybookHandlers';
+import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import type { Preview } from '@storybook/react';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+import { storybookHandlers } from '../src/mocks/storybookHandlers';
 import { decorateGlobalStyle } from './decorators';
 
 initialize({
@@ -10,9 +11,24 @@ initialize({
   onUnhandledRequest: 'bypass',
 });
 
+const customViewPort = {
+  standardViewPort: {
+    name: 'standardViewPort',
+    styles: {
+      width: '360px',
+      height: '800px',
+    },
+  },
+};
+
 const preview: Preview = {
   decorators: [decorateGlobalStyle],
   parameters: {
+    viewport: {
+      viewports: { ...INITIAL_VIEWPORTS, ...customViewPort },
+
+      defaultViewport: 'standardViewPort',
+    },
     actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {

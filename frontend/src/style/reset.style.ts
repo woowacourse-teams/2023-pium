@@ -23,10 +23,7 @@ export const reset = css`
   time, mark, audio, video, dialog {
     margin: 0;
     padding: 0;
-
-    font: inherit;
     vertical-align: baseline;
-
     border: 0;
   }
 

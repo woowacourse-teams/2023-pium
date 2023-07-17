@@ -3,20 +3,22 @@
     "target": "ES2016",
     "module": "CommonJS",
     "jsx": "react-jsx",
+
     "strict": true,
     "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
 
+    "baseUrl": "src",
     "paths": {
-      "types/*": ["./src/types/*"],
-      "pages/*": ["./src/pages/*"],
-      "components/*": ["./src/components/*"],
-      "contexts/*": ["./src/contexts/*"],
-      "hooks/*": ["./src/hooks/*"],
-      "utils/*": ["./src/utils/*"],
-      "assets/*": ["./src/assets/*"],
-      "constants/*": ["./src/constants/*"]
+      "types/*": ["types/*"],
+      "pages/*": ["pages/*"],
+      "components/*": ["components/*"],
+      "contexts/*": ["contexts/*"],
+      "hooks/*": ["hooks/*"],
+      "utils/*": ["utils/*"],
+      "assets/*": ["assets/*"],
+      "constants/*": ["constants/*"]
     }
   },
   "include": ["src/**/*"]

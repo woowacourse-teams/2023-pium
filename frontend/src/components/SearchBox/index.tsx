@@ -1,3 +1,4 @@
+import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useRef, useState } from 'react';
 import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
 import {
@@ -11,25 +12,15 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
+import searchAPI from 'apis/search';
 import { MESSAGE } from 'constants/index';
-
-type SearchResult = any;
-
-interface GetSearch {
-  data: SearchResult[];
-}
-
-const getSearch = async (name: string): Promise<GetSearch> => {
-  const response = await fetch(`search?name=${name}`);
-  return await response.json();
-};
 
 const SearchBox = () => {
   const [searchName, setSearchName] = useState('');
-  const [searchResults, setSearchResults] = useState<SearchResult[] | null>(null);
+  const [searchResults, setSearchResults] = useState<DictNameSearchResult[] | null>(null);
   const timeoutId = useRef(0);
 
-  const searchInputValue = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+  const changeSearch: React.ComponentProps<'input'>['onChange'] = ({ target: { value } }) => {
     setSearchName(value);
 
     if (timeoutId.current) {
@@ -42,17 +33,27 @@ const SearchBox = () => {
     }, 150);
   };
 
-  const enter = ({ key }: React.KeyboardEvent) => {
+  const enterSearch: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
     if (key !== 'Enter') return;
 
     search(searchName);
   };
 
+  const clickSearch = () => {
+    search(searchName);
+  };
+
   const search = async (name: string) => {
-    if (name === '') return;
+    if (name === '') {
+      setSearchResults(null);
+      return;
+    }
 
     try {
-      const { data: searchResults } = await getSearch(name);
+      const response = await searchAPI.getResult(name);
+      if (!response.ok) throw new Error();
+
+      const { data: searchResults } = await response.json();
       setSearchResults(searchResults);
     } catch {
       return;
@@ -63,15 +64,13 @@ const SearchBox = () => {
     <Wrapper>
       <InputArea>
         <BiSearch size="32" color="#1bcc66" />
-        <Input type="text" value={searchName} onChange={searchInputValue} onKeyDown={enter} />
-        <EnterButton type="button" onClick={() => search(searchName)}>
+        <Input type="text" value={searchName} onChange={changeSearch} onKeyDown={enterSearch} />
+        <EnterButton type="button" onClick={clickSearch}>
           <BiRightArrowAlt size="32" color="#333333" />
         </EnterButton>
       </InputArea>
-      {searchResults !== null &&
-        (searchResults.length === 0 ? (
-          <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
-        ) : (
+      {searchResults &&
+        (searchResults.length ? (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
               <ResultItem key={id}>
@@ -80,6 +79,8 @@ const SearchBox = () => {
               </ResultItem>
             ))}
           </ResultList>
+        ) : (
+          <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
         ))}
     </Wrapper>
   );

@@ -15,6 +15,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
+    "react-router-dom": "^6.14.1",
     "styled-components": "^6.0.2"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
     "@storybook/addon-essentials": "^7.0.25",
     "@storybook/addon-interactions": "^7.0.25",
     "@storybook/addon-links": "^7.0.25",
+    "@storybook/addon-viewport": "^7.0.27",
     "@storybook/blocks": "^7.0.25",
     "@storybook/react": "^7.0.25",
     "@storybook/react-webpack5": "^7.0.25",
@@ -55,6 +57,7 @@
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-order": "^6.0.3",
     "ts-loader": "^9.4.4",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.1.6",
     "webpack": "^5.88.1",
     "webpack-cli": "^5.1.4",
