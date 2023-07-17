@@ -1,12 +1,12 @@
-import { Wrapper } from './Label.style';
+import { Wrapper } from './Tag.style';
 
-export interface LabelProps extends React.PropsWithChildren {
+export interface TagProps extends React.PropsWithChildren {
   variant?: 'default' | 'primary' | 'sub' | 'accent';
   dimmed?: boolean;
   hasHoverEffect?: boolean;
 }
 
-const Label = (props: LabelProps) => {
+const Tag = (props: TagProps) => {
   const { children, variant = 'default', dimmed = true, hasHoverEffect = false } = props;
 
   return (
@@ -16,4 +16,4 @@ const Label = (props: LabelProps) => {
   );
 };
 
-export default Label;
+export default Tag;

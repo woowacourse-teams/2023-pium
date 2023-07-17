@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import Label, { LabelProps } from '.';
+import Tag, { TagProps } from '.';
 
-const meta: Meta<typeof Label> = {
-  component: Label,
+const meta: Meta<typeof Tag> = {
+  component: Tag,
 
   args: {
     variant: 'default',
@@ -28,17 +28,17 @@ const meta: Meta<typeof Label> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Label>;
+type Story = StoryObj<typeof Tag>;
 
 export const Default: Story = {
   render: () => (
-    <Label variant="default" dimmed>
+    <Tag variant="default" dimmed>
       식물을 쉽게, 피움.
-    </Label>
+    </Tag>
   ),
 };
 
-const Wrapper = (props: LabelProps) => {
+const Wrapper = (props: TagProps) => {
   const { dimmed = true, hasHoverEffect = false, variant = 'default' } = props;
 
   const [content, setContent] = useState('사실 없어요 ㅎㅎ');
@@ -46,13 +46,13 @@ const Wrapper = (props: LabelProps) => {
   return (
     <>
       <div style={{ marginBottom: '20px' }}>
-        <Label variant={variant} dimmed={dimmed} hasHoverEffect={hasHoverEffect}>
+        <Tag variant={variant} dimmed={dimmed} hasHoverEffect={hasHoverEffect}>
           {content}
-        </Label>
+        </Tag>
       </div>
 
       <label
-        htmlFor="Label component input test"
+        htmlFor="Tag component input test"
         style={{ display: 'flex', flexDirection: 'column' }}
       >
         입력하고픈 내용이 있나요?
