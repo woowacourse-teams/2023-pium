@@ -1,15 +1,14 @@
 package com.official.pium.controller.dto;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
 @Getter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PetPlantResponse {
 
     private Long id;
@@ -30,23 +29,6 @@ public class PetPlantResponse {
     private LocalDate lastWaterDate;
 
     private DictionaryPlantResponse dictionaryPlant;
-
-    @Builder
-    private PetPlantResponse(Long id, String nickname, String imageUrl, String location, String flowerpot, String light, String wind, LocalDate birthDate, LocalDate lastWaterDate, Integer waterCycle, Long nextWaterDay, Long daySince, DictionaryPlantResponse dictionaryPlant) {
-        this.id = id;
-        this.nickname = nickname;
-        this.imageUrl = imageUrl;
-        this.location = location;
-        this.flowerpot = flowerpot;
-        this.light = light;
-        this.wind = wind;
-        this.birthDate = birthDate;
-        this.lastWaterDate = lastWaterDate;
-        this.waterCycle = waterCycle;
-        this.nextWaterDay = nextWaterDay;
-        this.daySince = daySince;
-        this.dictionaryPlant = dictionaryPlant;
-    }
 
     @Getter
     @NoArgsConstructor
