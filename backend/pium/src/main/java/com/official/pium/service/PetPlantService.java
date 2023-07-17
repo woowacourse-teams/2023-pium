@@ -8,13 +8,12 @@ import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.PetPlantRequest;
 import com.official.pium.service.dto.PetPlantResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional(readOnly = true)
@@ -49,5 +48,15 @@ public class PetPlantService {
 
     private long getDaySince(PetPlant petPlant) {
         return ChronoUnit.DAYS.between(petPlant.getBirthDate(), LocalDate.now());
+    }
+
+    public PetPlantResponse read(Long petPlantId) {
+        PetPlant petPlant = petPlantRepository.findById(petPlantId)
+                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
+
+        long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
+        long daySince = petPlant.calculateDaySince(LocalDate.now());
+
+        return PetPlantResponse.of(petPlant, nextWaterDay, daySince);
     }
 }
