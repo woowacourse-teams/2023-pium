@@ -1,4 +1,4 @@
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
 interface RadioProps {
   name: string;
@@ -8,15 +8,7 @@ interface RadioProps {
 
 export type RadioProviderProps = RadioProps & React.PropsWithChildren;
 
-const RadioContext = createContext<RadioProps | null>(null);
-
-export const useRadioContext = () => {
-  const value = useContext(RadioContext);
-
-  if (!value) throw new Error('컴포넌트가 RadioProvider의 자손이 아닙니다!');
-
-  return value;
-};
+export const RadioContext = createContext<RadioProps | null>(null);
 
 const RadioProvider = (props: RadioProviderProps) => {
   const { value, setValue, name, children } = props;
