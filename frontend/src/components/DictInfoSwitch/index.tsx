@@ -10,8 +10,9 @@ interface DictInfoSwitchProps {
 
 const DictInfoSwitch = (props: DictInfoSwitchProps) => {
   const { optionMap, title, defaultSelected } = props;
+  const options = Object.keys(optionMap);
 
-  const [selected, setSelected] = useState(defaultSelected ?? Object.keys(optionMap)[0]);
+  const [selected, setSelected] = useState(defaultSelected ?? options[0]);
 
   const selectedOptions = optionMap[selected] ?? [];
 
@@ -20,7 +21,7 @@ const DictInfoSwitch = (props: DictInfoSwitchProps) => {
       <DictInfo.Title>
         {title}
         <InlineRadio name={title} value={selected} setValue={setSelected}>
-          {Object.keys(optionMap).map((optionName) => (
+          {options.map((optionName) => (
             <InlineRadio.Option key={optionName} value={optionName} />
           ))}
         </InlineRadio>
