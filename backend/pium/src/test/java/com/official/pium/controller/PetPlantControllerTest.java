@@ -1,8 +1,8 @@
 package com.official.pium.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.official.pium.controller.dto.PetPlantResponse;
 import com.official.pium.service.PetPlantService;
+import com.official.pium.service.dto.PetPlantResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;

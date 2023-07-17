@@ -1,11 +1,11 @@
 package com.official.pium.service;
 
 import com.official.pium.IntegrationTest;
-import com.official.pium.controller.dto.PetPlantRequest;
-import com.official.pium.controller.dto.PetPlantResponse;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

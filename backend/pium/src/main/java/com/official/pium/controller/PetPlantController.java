@@ -1,9 +1,9 @@
 package com.official.pium.controller;
 
-import com.official.pium.controller.dto.PetPlantRequest;
-import com.official.pium.controller.dto.PetPlantResponse;
 import com.official.pium.domain.Member;
 import com.official.pium.service.PetPlantService;
+import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

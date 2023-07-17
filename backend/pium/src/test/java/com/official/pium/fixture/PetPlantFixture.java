@@ -1,12 +1,12 @@
 package com.official.pium.fixture;
 
-import com.official.pium.controller.dto.PetPlantRequest;
-import com.official.pium.controller.dto.PetPlantResponse;
+import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantResponse;
 
 import java.time.LocalDate;
 
-import static com.official.pium.controller.dto.PetPlantResponse.DictionaryPlantResponse;
-import static com.official.pium.controller.dto.PetPlantResponse.builder;
+import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResponse;
+import static com.official.pium.service.dto.PetPlantResponse.builder;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class PetPlantFixture {

@@ -1,13 +1,13 @@
 package com.official.pium.service;
 
-import com.official.pium.controller.dto.PetPlantRequest;
-import com.official.pium.controller.dto.PetPlantResponse;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

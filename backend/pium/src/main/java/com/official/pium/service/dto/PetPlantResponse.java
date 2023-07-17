@@ -1,4 +1,4 @@
-package com.official.pium.controller.dto;
+package com.official.pium.service.dto;
 
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;

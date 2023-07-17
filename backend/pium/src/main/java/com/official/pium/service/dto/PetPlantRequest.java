@@ -1,4 +1,4 @@
-package com.official.pium.controller.dto;
+package com.official.pium.service.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
