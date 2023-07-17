@@ -13,9 +13,15 @@ const font = {
   title: 'normal 700 3.2rem/4rem NanumSquareRound',
 };
 
+const width = {
+  mobile: '360px',
+  pad: '768px',
+};
+
 const theme: DefaultTheme = {
   color,
   font,
+  width,
 };
 
 export default theme;
