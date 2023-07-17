@@ -17,13 +17,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PetPlantService {
 
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
 
+    @Transactional
     public PetPlantResponse create(PetPlantRequest request, Member member) {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(request.getDictionaryPlantId())
                 .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id : " + request.getDictionaryPlantId()));
