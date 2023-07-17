@@ -18,6 +18,7 @@ import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_등록
 import static com.official.pium.fixture.PetPlantFixture.RESPONSE;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -36,6 +37,7 @@ class PetPlantControllerTest {
     @MockBean
     private PetPlantService petPlantService;
 
+
     @Nested
     class 반려_식물이 {
 
@@ -50,6 +52,16 @@ class PetPlantControllerTest {
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(MockMvcResultMatchers.status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
+                    .andDo(print());
+        }
+
+        @Test
+        void 전부_조회하면_OK를_반환한다() throws Exception {
+            given(petPlantService.readAll(any()))
+                    .willReturn(RESPONSE.식물_전체조회_응답);
+
+            mockMvc.perform(get("/pet-plants"))
+                    .andExpect(MockMvcResultMatchers.status().isOk())
                     .andDo(print());
         }
     }
