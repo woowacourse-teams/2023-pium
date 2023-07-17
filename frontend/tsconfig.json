@@ -3,6 +3,7 @@
     "target": "ES2016",
     "module": "CommonJS",
     "jsx": "react-jsx",
+
     "strict": true,
     "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
