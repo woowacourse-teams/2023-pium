@@ -4,8 +4,10 @@ import com.official.pium.IntegrationTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantRequest;
 import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.SinglePetPlantResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -13,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -52,5 +55,15 @@ class PetPlantServiceTest extends IntegrationTest {
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
 
         assertThat(petPlantRepository.findById(petPlantResponse.getId())).isNotEmpty();
+    }
+
+    @Test
+    void 반려_식물_조회() {
+        petPlantRepository.save(petPlantSupport.builder().member(member).build());
+
+        DataResponse<SinglePetPlantResponse> response = petPlantService.readAll(member);
+
+        List<SinglePetPlantResponse> data = response.getData();
+        assertThat(data).isNotEmpty();
     }
 }
