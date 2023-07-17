@@ -1,7 +1,7 @@
-import { Wrapper } from './Main.style';
+import { Flexbox, SizedFlexBox } from './Main.style';
 import Title from './Title.style';
 import getFilteredChildren from '../../../utils/getFilteredChildren';
-import Content from './Content';
+import Content from '../../Tag';
 
 interface DictInfoProps extends React.PropsWithChildren {
   alignment?: 'row' | 'column';
@@ -23,10 +23,10 @@ const Main = (props: DictInfoProps) => {
   const contents = getFilteredChildren(<Content />, children);
 
   return (
-    <Wrapper $flexDirection={alignment} $width={width} $height={height}>
-      <Wrapper $flexDirection="row">{title}</Wrapper>
-      <Wrapper $flexDirection={contentDirection}>{contents}</Wrapper>
-    </Wrapper>
+    <SizedFlexBox $flexDirection={alignment} $width={width} $height={height}>
+      <Flexbox $flexDirection="row">{title}</Flexbox>
+      <Flexbox $flexDirection={contentDirection}>{contents}</Flexbox>
+    </SizedFlexBox>
   );
 };
 
