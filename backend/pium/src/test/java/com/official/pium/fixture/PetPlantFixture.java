@@ -4,6 +4,7 @@ import com.official.pium.service.dto.PetPlantRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 
 import java.time.LocalDate;
+import com.official.pium.domain.PetPlant;
 
 import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResponse;
 import static com.official.pium.service.dto.PetPlantResponse.builder;
@@ -45,4 +46,17 @@ public class PetPlantFixture {
                         .build())
                 .build();
     }
+
+    public static PetPlant 산세베리아 = PetPlant.builder()
+            .nickname("기영이")
+            .imageUrl("image.url")
+            .light("자연광이 잘 드는 곳")
+            .location("창가")
+            .wind("바람이 가끔 부는 곳")
+            .flowerpot("플라스틱")
+            .waterCycle(7)
+            .birthDate(LocalDate.of(2022, 7, 1))
+            .lastWaterDate(LocalDate.of(2022, 7, 1))
+            .nextWaterDate(LocalDate.of(2022, 7, 8))
+            .build();
 }
