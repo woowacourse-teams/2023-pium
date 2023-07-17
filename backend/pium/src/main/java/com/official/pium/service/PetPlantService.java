@@ -54,9 +54,9 @@ public class PetPlantService {
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
 
-        long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
-        long daySince = petPlant.calculateDaySince(LocalDate.now());
+        Long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
+        Long daySince = petPlant.calculateDaySince(LocalDate.now());
 
-        return PetPlantResponse.of(petPlant, nextWaterDay, daySince);
+        return PetPlantMapper.toPetPlantResponse(petPlant, nextWaterDay, daySince);
     }
 }

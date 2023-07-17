@@ -75,6 +75,6 @@ class PetPlantServiceTest extends IntegrationTest {
 
         assertThatThrownBy(() -> petPlantService.read(wrongId))
                 .isInstanceOf(NoSuchElementException.class)
-                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id : " + wrongId);
+                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
     }
 }

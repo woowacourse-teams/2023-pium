@@ -14,7 +14,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.official.pium.fixture.PetPlantFixture;
 import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.PetPlantResponse;
 import java.nio.charset.StandardCharsets;
@@ -43,28 +42,6 @@ class PetPlantControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
-    @Test
-    void 단일_반려_식물_조회_성공시_200_OK_반환() throws Exception {
-        given(petPlantService.read(anyLong()))
-                .willReturn(PetPlantFixture.단일_반려_식물_응답);
-
-        mockMvc.perform(get("/pet-plants/{petPlantId}", 1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andExpect(status().isOk())
-                .andDo(print());
-    }
-
-    @Test
-    void 단일_반려_식물_조회시_잘못된_ID를_받으면_400_반환() throws Exception {
-        mockMvc.perform(get("/pet-plants/{petPlantId}", -1L)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .characterEncoding(StandardCharsets.UTF_8))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.message").value(containsString("반려식물 ID는 음수가 될 수 없습니다.")))
-                .andDo(print());
-    }
-
     @Nested
     class 반려_식물이 {
 
@@ -79,6 +56,28 @@ class PetPlantControllerTest {
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(MockMvcResultMatchers.status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
+                    .andDo(print());
+        }
+
+        @Test
+        void 조회되면_200_OK를_반환한다() throws Exception {
+            given(petPlantService.read(anyLong()))
+                    .willReturn(RESPONSE.피우미_응답);
+
+            mockMvc.perform(get("/pet-plants/{petPlantId}", 1L)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .characterEncoding(StandardCharsets.UTF_8))
+                    .andExpect(status().isOk())
+                    .andDo(print());
+        }
+
+        @Test
+        void 조회시_잘못된_ID를_받으면_400을_반환한다() throws Exception {
+            mockMvc.perform(get("/pet-plants/{petPlantId}", -1L)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .characterEncoding(StandardCharsets.UTF_8))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.message").value(containsString("반려식물 ID는 음수가 될 수 없습니다.")))
                     .andDo(print());
         }
     }
