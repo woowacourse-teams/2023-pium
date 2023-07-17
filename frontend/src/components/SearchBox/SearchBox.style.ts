@@ -7,7 +7,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: min-content;
 
-  border: solid 2px #1bcc66;
+  border: solid 2px ${(p) => p.theme.color.primary};
   border-radius: 29px;
 `;
 
@@ -23,7 +23,7 @@ export const Input = styled.input`
   margin: 12px 0;
   margin-left: 8px;
 
-  font-size: 1.4rem;
+  font-size: 2rem;
 
   border: none;
   outline: none;
@@ -33,13 +33,15 @@ export const ResultMessage = styled.p`
   width: 100%;
   height: 40px;
 
-  font-size: 1.4rem;
-  color: #333333;
+  font-size: 1.8rem;
+  color: ${(p) => p.theme.color.sub};
   text-align: center;
 `;
 
 export const ResultList = styled.div`
+  overflow: scroll;
   width: 100%;
+  max-height: 336px;
 `;
 
 export const ResultItem = styled.div`
@@ -50,7 +52,7 @@ export const ResultItem = styled.div`
   height: 56px;
   padding-left: 12px;
 
-  border-top: solid 2px rgba(27, 204, 102, 0.3);
+  border-top: solid 2px ${(p) => p.theme.color.primary + '40'};
 `;
 
 const skeletonBackground = keyframes`
@@ -70,8 +72,8 @@ export const ResultThumbnail = styled.img`
 `;
 
 export const Name = styled.p`
-  font-size: 1.4rem;
-  color: #333333;
+  font-size: 1.8rem;
+  color: ${(p) => p.theme.color.sub};
 `;
 
 export const EnterButton = styled.button`
