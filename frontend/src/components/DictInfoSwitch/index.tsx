@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import DictInfo from '../DictInfo';
-import InlineRadio from '../InlineRadio';
+import DictInfo from 'components/DictInfo';
+import InlineRadio from 'components/InlineRadio';
 
 interface DictInfoSwitchProps {
   title: string;

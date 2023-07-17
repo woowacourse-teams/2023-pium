@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react';
 import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
-import { MESSAGE } from '../../constants';
 import {
   InputArea,
   ResultItem,
@@ -12,6 +11,7 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
+import { MESSAGE } from 'constants/index';
 
 type SearchResult = any;
 
@@ -64,7 +64,7 @@ const SearchBox = () => {
       <InputArea>
         <BiSearch size="32" color="#1bcc66" />
         <Input type="text" value={searchName} onChange={searchInputValue} onKeyDown={enter} />
-        <EnterButton type="button" onClick={search}>
+        <EnterButton type="button" onClick={() => search(searchName)}>
           <BiRightArrowAlt size="32" color="#333333" />
         </EnterButton>
       </InputArea>

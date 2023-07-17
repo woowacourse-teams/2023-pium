@@ -1,7 +1,7 @@
+import Content from 'components/Tag';
 import { Flexbox, SizedFlexBox } from './Main.style';
 import Title from './Title.style';
-import getFilteredChildren from '../../../utils/getFilteredChildren';
-import Content from '../../Tag';
+import getFilteredChildren from 'utils/getFilteredChildren';
 
 interface DictInfoProps extends React.PropsWithChildren {
   alignment?: 'row' | 'column';

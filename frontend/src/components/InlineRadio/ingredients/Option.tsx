@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import { HiddenRadio, Label } from './Option.style';
-import { useRadioContext } from '../../../contexts/radioContext';
+import { useRadioContext } from 'hooks/useRadioContext';
 
 interface OptionProps {
   value: string;

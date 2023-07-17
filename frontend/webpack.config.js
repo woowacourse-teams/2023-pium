@@ -23,6 +23,7 @@ module.exports = {
       utils: resolve(__dirname, 'src', 'utils'),
       assets: resolve(__dirname, 'src', 'assets'),
       constants: resolve(__dirname, 'src', 'constants'),
+      contexts: resolve(__dirname, 'src', 'contexts'),
     },
   },
   module: {

@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { Wrapper } from './Main.style';
-import RadioProvider, { RadioProviderProps } from '../../../contexts/radioContext';
-import getFilteredChildren from '../../../utils/getFilteredChildren';
+import RadioProvider, { RadioProviderProps } from 'contexts/radioContext';
+import getFilteredChildren from 'utils/getFilteredChildren';
 import Option from './Option';
 
 const Main = (props: RadioProviderProps) => {
