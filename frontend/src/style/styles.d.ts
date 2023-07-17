@@ -13,5 +13,9 @@ declare module 'styled-components' {
       subTitle: string;
       title: string;
     };
+    width: {
+      mobile: string;
+      pad: string;
+    };
   }
 }
