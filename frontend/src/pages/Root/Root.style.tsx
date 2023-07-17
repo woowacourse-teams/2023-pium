@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
 
 export const PageArea = styled.main`
   width: 100%;
-  max-width: 736px;
+  max-width: ${(props) => props.theme.width.pad};
   height: 100%;
   padding: 0 16px;
 
