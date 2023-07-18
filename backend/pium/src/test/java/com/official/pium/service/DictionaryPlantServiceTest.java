@@ -26,7 +26,7 @@ public class DictionaryPlantServiceTest extends IntegrationTest {
     DictionaryPlantRepository dictionaryPlantRepository;
 
     @Test
-    void 사전식물_검색() {
+    void 사전식물_검색시_검색명이_포함된_사전식물을_반환한다() {
         DictionaryPlant 스투키1 = dictionaryPlantSupport.builder().build();
         DictionaryPlant 스투키2 = dictionaryPlantSupport.builder().build();
 
@@ -37,5 +37,11 @@ public class DictionaryPlantServiceTest extends IntegrationTest {
                 () -> assertThat(search.getData().get(0).getId()).isEqualTo(스투키1.getId()),
                 () -> assertThat(search.getData().get(1).getId()).isEqualTo(스투키2.getId())
         );
+    }
+
+    @Test
+    void 사전식물_검색시_검색명이_포함된_사전식물이_없으면_예외없이_빈_리스트를_반환한다() {
+        DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
+        assertThat(search.getData()).isEmpty();
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,9 +20,6 @@ public class DictionaryPlantService {
 
     public DataResponse<List<DictionaryPlantSearchResponse>> search(String name) {
         List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByNameContains(name);
-        if (dictionaryPlants.isEmpty()) {
-            throw new NoSuchElementException("검색에 해당하는 식물이 존재하지 않습니다. 검색어 : " + name);
-        }
         List<DictionaryPlantSearchResponse> dictionaryPlantSearchResponses = dictionaryPlants.stream()
                 .map(DictionaryPlantMapper::toDictionaryPlantSearchResponse)
                 .toList();
