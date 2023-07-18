@@ -10,3 +10,17 @@ export const ERROR = Object.freeze({
 export const GUIDE = Object.freeze({
   search: '피움에 등록된 식물을 검색해 보세요!',
 });
+
+export const API_PATH = Object.freeze({
+  SEARCH: '/search',
+  DICT: (plantId?: string) => `/dictionary-plants/${plantId ?? ':id'}`,
+  PET_LIST: '/pet-plants',
+  PET_DETAIL: (plantId?: string) => `/pet-plants/${plantId ?? ':id'}`,
+});
+
+export const URL_PATH = Object.freeze({
+  MAIN: '/',
+  DICT: (plantId?: string) => `/dict/${plantId ?? ':id'}`,
+  PET_LIST: '/pet',
+  PET_DETAIL: (plantId?: string) => `/pet/${plantId ?? ':id'}`,
+});
