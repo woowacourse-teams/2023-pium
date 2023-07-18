@@ -26,7 +26,7 @@ public class PetPlantController {
     @GetMapping("/pet-plants/{petPlantId}")
     public ResponseEntity<PetPlantResponse> read(
             @PathVariable
-            @Positive(message = "반려식물 ID는 음수가 될 수 없습니다.") Long petPlantId) {
+            @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId) {
         PetPlantResponse petPlantResponse = petPlantService.read(petPlantId);
         return ResponseEntity.ok(petPlantResponse);
     }
