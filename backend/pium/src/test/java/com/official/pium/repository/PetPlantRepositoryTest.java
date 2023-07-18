@@ -33,10 +33,10 @@ class PetPlantRepositoryTest {
     @BeforeEach
     void setUp() {
         member = Member.builder().email("hello@aaa.com").build();
-        Member memberSaved = memberRepository.save(member);
+        memberRepository.save(member);
 
         dictionaryPlant = DictionaryPlant.builder().build();
-        DictionaryPlant save = dictionaryPlantRepository.save(dictionaryPlant);
+        dictionaryPlantRepository.save(dictionaryPlant);
     }
 
     @Test
@@ -56,11 +56,11 @@ class PetPlantRepositoryTest {
                 .waterCycle(3)
                 .build();
 
-        PetPlant save = petPlantRepository.save(petPlant);
+        PetPlant savePetPlant = petPlantRepository.save(petPlant);
 
         assertAll(
-                () -> assertThat(save).isNotNull(),
-                () -> assertThat(save.getId()).isEqualTo(petPlant.getId())
+                () -> assertThat(savePetPlant).isNotNull(),
+                () -> assertThat(savePetPlant.getId()).isEqualTo(petPlant.getId())
         );
     }
 
@@ -81,8 +81,8 @@ class PetPlantRepositoryTest {
                 .waterCycle(3)
                 .build();
 
-        PetPlant save = petPlantRepository.save(petPlant);
+        PetPlant savePetPlant = petPlantRepository.save(petPlant);
 
-        assertThat(petPlantRepository.findById(petPlant.getId())).isPresent();
+        assertThat(petPlantRepository.findById(savePetPlant.getId())).isPresent();
     }
 }
