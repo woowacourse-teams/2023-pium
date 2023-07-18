@@ -6,6 +6,7 @@ import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse.WaterCycleResponse;
 
 public class DictionaryPlantMapper {
+
     public static DictionaryPlantResponse toDictionaryPlantResponse(DictionaryPlant dictionaryPlant) {
         return DictionaryPlantResponse.builder()
                 .id(dictionaryPlant.getId())

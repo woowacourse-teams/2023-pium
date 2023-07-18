@@ -18,7 +18,7 @@ public class DictionaryPlantService {
 
     public DictionaryPlantResponse read(Long id) {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id : " + id));
+                .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + id));
 
         return DictionaryPlantMapper.toDictionaryPlantResponse(dictionaryPlant);
     }
