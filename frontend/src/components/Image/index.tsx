@@ -1,4 +1,5 @@
-import { StyledImage, StyledImageProps } from './Image.style';
+import type { StyledImageProps } from './Image.style';
+import { StyledImage } from './Image.style';
 import sadpiumi from 'assets/sadpiumi.png';
 
 type ImageProps = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'onError'> &
