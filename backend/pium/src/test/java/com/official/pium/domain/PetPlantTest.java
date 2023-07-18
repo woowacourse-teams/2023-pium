@@ -30,7 +30,7 @@ class PetPlantTest {
 
         assertThatThrownBy(() -> 산세베리아.calculateNextWaterDay(LocalDate.of(2022, 7, 10)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("물주기 남은 날짜는 음수가 될 수 없습니다.");
+                .hasMessageContaining("물주기 남은 날짜는 음수가 될 수 없습니다.");
     }
 
     @ParameterizedTest
@@ -48,6 +48,6 @@ class PetPlantTest {
 
         assertThatThrownBy(() -> 산세베리아.calculateDaySince(LocalDate.of(1999, 7, 10)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("함께한 날은 음수가 될 수 없습니다.");
+                .hasMessageContaining("함께한 날은 음수가 될 수 없습니다.");
     }
 }

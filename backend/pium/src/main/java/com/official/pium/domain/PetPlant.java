@@ -1,17 +1,24 @@
 package com.official.pium.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -89,17 +96,17 @@ public class PetPlant extends BaseEntity {
         this.waterCycle = waterCycle;
     }
 
-    public Long calculateNextWaterDay(LocalDate localDate) {
-        if (localDate.isAfter(nextWaterDate)) {
-            throw new IllegalArgumentException("물주기 남은 날짜는 음수가 될 수 없습니다.");
+    public Long calculateNextWaterDay(LocalDate baseDate) {
+        if (baseDate.isAfter(nextWaterDate)) {
+            throw new IllegalArgumentException("물주기 남은 날짜는 음수가 될 수 없습니다. Date: " + baseDate);
         }
-        return ChronoUnit.DAYS.between(localDate, nextWaterDate);
+        return ChronoUnit.DAYS.between(baseDate, nextWaterDate);
     }
 
-    public Long calculateDaySince(LocalDate localDate) {
-        if (localDate.isBefore(birthDate)) {
-            throw new IllegalArgumentException("함께한 날은 음수가 될 수 없습니다.");
+    public Long calculateDaySince(LocalDate currentDate) {
+        if (currentDate.isBefore(birthDate)) {
+            throw new IllegalArgumentException("함께한 날은 음수가 될 수 없습니다. Date: " + currentDate);
         }
-        return ChronoUnit.DAYS.between(birthDate, localDate) + 1;
+        return ChronoUnit.DAYS.between(birthDate, currentDate) + 1;
     }
 }
