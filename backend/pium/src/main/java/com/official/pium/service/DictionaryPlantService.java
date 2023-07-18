@@ -1,17 +1,16 @@
 package com.official.pium.service;
 
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.DictionaryPlantSearchResponse;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
+import com.official.pium.service.dto.DataResponse;
+import com.official.pium.service.dto.DictionaryPlantSearchResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,7 +26,7 @@ public class DictionaryPlantService {
         }
         List<DictionaryPlantSearchResponse> dictionaryPlantSearchResponses = dictionaryPlants.stream()
                 .map(DictionaryPlantMapper::toDictionaryPlantSearchResponse)
-                .collect(Collectors.toList());
+                .toList();
         return DataResponse.<List<DictionaryPlantSearchResponse>>builder()
                 .data(dictionaryPlantSearchResponses).build();
     }
