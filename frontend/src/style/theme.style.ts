@@ -5,6 +5,9 @@ const color = {
   primary: '#1BCC66',
   sub: '#333333',
   accent: '#EB4D3D',
+  gray: '#C8C8C8',
+  grayLight: '#ECECEC',
+  grayDark: '#A5A5A5',
 };
 
 const font = {

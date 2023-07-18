@@ -7,6 +7,9 @@ declare module 'styled-components' {
       primary: string;
       sub: string;
       accent: string;
+      gray: string;
+      grayLight: string;
+      grayDark: string;
     };
     font: {
       emphasize: string;
