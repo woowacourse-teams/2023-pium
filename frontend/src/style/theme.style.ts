@@ -11,6 +11,7 @@ const font = {
   emphasize: '',
   subTitle: '',
   title: 'normal 700 3.2rem/4rem NanumSquareRound',
+  input: 'normal 500 1.8rem/2.2rem',
 };
 
 const width = {
