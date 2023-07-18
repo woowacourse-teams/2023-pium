@@ -10,3 +10,10 @@ export const decorateGlobalStyle: Decorator = (Story) => (
     <Story />
   </ThemeProvider>
 );
+
+export const decorateToastRoot: Decorator = (Story) => (
+  <>
+    <div id="toast-root"></div>
+    <Story />
+  </>
+);
