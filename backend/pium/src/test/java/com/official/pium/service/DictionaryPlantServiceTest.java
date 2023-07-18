@@ -33,7 +33,7 @@ public class DictionaryPlantServiceTest extends IntegrationTest {
         DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
 
         assertAll(
-                () -> assertThat(search.getData().size()).isEqualTo(2),
+                () -> assertThat(search.getData()).hasSize(2),
                 () -> assertThat(search.getData().get(0).getId()).isEqualTo(스투키1.getId()),
                 () -> assertThat(search.getData().get(1).getId()).isEqualTo(스투키2.getId())
         );
