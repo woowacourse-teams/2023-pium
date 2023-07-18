@@ -32,8 +32,9 @@ public class DictionaryPlantControllerTest {
     private DictionaryPlantService dictionaryPlantService;
 
     @Test
-    void 검색이_성공하면_OK를_반환한다() throws Exception {
+    void 사전_식물_검색이_성공하면_OK를_반환한다() throws Exception {
         DataResponse<List<DictionaryPlantSearchResponse>> 식물들 = DictionaryPlantFixture.RESPONSE.식물들;
+
         given(
                 dictionaryPlantService.search(any())
         ).willReturn(식물들);
