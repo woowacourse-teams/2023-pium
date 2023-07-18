@@ -14,6 +14,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+        GlobalExceptionResponse globalExceptionResponse = GlobalExceptionResponse.builder()
+                .message(e.getMessage())
+                .build();
+        return ResponseEntity.badRequest().body(globalExceptionResponse);
+    }
+
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<GlobalExceptionResponse> handleNoSuchElementException(NoSuchElementException e) {
         GlobalExceptionResponse globalExceptionResponse = GlobalExceptionResponse.builder()
