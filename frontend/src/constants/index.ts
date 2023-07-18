@@ -4,6 +4,7 @@ export const MESSAGE = Object.freeze({
 
 export const ERROR = Object.freeze({
   radioContext: '컴포넌트가 RadioProvider의 자손이 아닙니다!',
+  stackContext: '컴포넌트가 StackProvider의 자손이 아닙니다!',
 });
 
 export const GUIDE = Object.freeze({
