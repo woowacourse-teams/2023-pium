@@ -36,8 +36,9 @@ public class DictionaryPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 사전식물_검색시_검색명이_포함된_사전식물이_없으면_예외없이_빈_리스트를_반환한다() {
+    void 사전식물_검색시_검색명이_포함된_사전식물이_없으면_빈_리스트를_반환한다() {
         DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
+
         assertThat(search.getData()).isEmpty();
     }
 }
