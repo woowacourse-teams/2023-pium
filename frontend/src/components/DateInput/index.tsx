@@ -1,31 +1,19 @@
-import { useId, useState } from 'react';
-import { getToday, convertDateKorYear } from 'utils/date';
+import { InputHTMLAttributes, useId } from 'react';
 import { Date, Wrapper, DateValue } from './DateInput.style';
+import { convertDateKorYear } from 'utils/date';
 
-interface DateInputProps {
-  initialValue: string;
+interface DateInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
+  value: string;
 }
 
-const DateInput = ({ initialValue }: DateInputProps) => {
-  const [date, setDate] = useState(initialValue);
-  const today = getToday();
+const DateInput = (props: DateInputProps) => {
+  const { value, ...childrenProps } = props;
   const dateId = useId();
-
-  const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value } = event.target;
-
-    if (value > today) {
-      setDate(today);
-      return;
-    }
-
-    setDate(value);
-  };
 
   return (
     <Wrapper>
-      <DateValue htmlFor={dateId}>{convertDateKorYear(date)}</DateValue>
-      <Date id={dateId} type="date" value={date} onChange={changeHandler} max={today} />
+      <DateValue htmlFor={dateId}>{convertDateKorYear(value)}</DateValue>
+      <Date id={dateId} type="date" {...childrenProps} />
     </Wrapper>
   );
 };
