@@ -20,9 +20,11 @@ public class DictionaryPlantService {
 
     public DataResponse<List<DictionaryPlantSearchResponse>> search(String name) {
         List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByNameContains(name);
+
         List<DictionaryPlantSearchResponse> dictionaryPlantSearchResponses = dictionaryPlants.stream()
                 .map(DictionaryPlantMapper::toDictionaryPlantSearchResponse)
                 .toList();
+
         return DataResponse.<List<DictionaryPlantSearchResponse>>builder()
                 .data(dictionaryPlantSearchResponses)
                 .build();
