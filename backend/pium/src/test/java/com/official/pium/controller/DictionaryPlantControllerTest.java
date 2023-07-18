@@ -1,5 +1,6 @@
 package com.official.pium.controller;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -42,6 +43,15 @@ class DictionaryPlantControllerTest {
                 .andExpect(jsonPath("$.name").value("스투키"))
                 .andExpect(jsonPath("$.postingPlace").isArray())
                 .andExpect(jsonPath("$.waterCycle.spring").value("겉흙이 마르면 촉촉하게"))
+                .andDo(print());
+    }
+
+    @Test
+    void 사전_식물_상세_정보를_0이하의_ID값으로_조회하면_BAD_REQUEST를_반환한다() throws Exception {
+        mockMvc.perform(get("/dictionary-plants/{dictionaryPlantId}", 0L)
+                        .contentType(MediaType.APPLICATION_JSON_VALUE))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("$.message", equalTo("사전 식물 ID는 1이상의 값이어야 합니다. Value: 0")))
                 .andDo(print());
     }
 }
