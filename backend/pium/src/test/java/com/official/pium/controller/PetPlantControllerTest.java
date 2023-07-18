@@ -77,7 +77,7 @@ class PetPlantControllerTest {
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message").value(containsString("반려식물 ID는 음수가 될 수 없습니다.")))
+                    .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
                     .andDo(print());
         }
     }
