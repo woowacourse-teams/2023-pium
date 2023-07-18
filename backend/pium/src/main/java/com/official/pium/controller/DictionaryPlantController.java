@@ -2,7 +2,6 @@ package com.official.pium.controller;
 
 import com.official.pium.service.DictionaryPlantService;
 import com.official.pium.service.dto.DictionaryPlantResponse;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,6 @@ public class DictionaryPlantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DictionaryPlantResponse> read(@PathVariable
-                                                        @NotNull(message = "사전 식물 ID는 null일 수 없습니다.")
                                                         @Positive(message = "사전 식물 ID는 1이상의 값이어야 합니다.")
                                                         Long id) {
         DictionaryPlantResponse dictionaryPlantResponse = dictionaryPlantService.read(id);
