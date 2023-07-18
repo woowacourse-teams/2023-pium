@@ -28,6 +28,7 @@ public class DictionaryPlantService {
                 .map(DictionaryPlantMapper::toDictionaryPlantSearchResponse)
                 .toList();
         return DataResponse.<List<DictionaryPlantSearchResponse>>builder()
-                .data(dictionaryPlantSearchResponses).build();
+                .data(dictionaryPlantSearchResponses)
+                .build();
     }
 }
