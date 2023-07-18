@@ -8,7 +8,7 @@
     "start": "webpack-dev-server --mode=development",
     "build": "NODE_ENV=production webpack",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build -o ./dist/storybook"
   },
   "license": "MIT",
   "dependencies": {
