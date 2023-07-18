@@ -9,7 +9,6 @@ import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.PetPlantRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,23 +30,10 @@ public class PetPlantService {
         PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, member);
         petPlantRepository.save(petPlant);
 
-        long daySince = getDaySince(petPlant);
-        long nextWaterDay = getNextWaterDay(petPlant);
+        long daySince = petPlant.calculateDaySince(LocalDate.now());
+        long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
 
         return PetPlantMapper.toPetPlantResponse(petPlant, nextWaterDay, daySince);
-    }
-
-    private long getNextWaterDay(PetPlant petPlant) {
-        LocalDate nextWaterDate = getNextWaterDate(petPlant);
-        return ChronoUnit.DAYS.between(LocalDate.now(), nextWaterDate);
-    }
-
-    private LocalDate getNextWaterDate(PetPlant petPlant) {
-        return petPlant.getLastWaterDate().plusDays(petPlant.getWaterCycle());
-    }
-
-    private long getDaySince(PetPlant petPlant) {
-        return ChronoUnit.DAYS.between(petPlant.getBirthDate(), LocalDate.now());
     }
 
     public PetPlantResponse read(Long petPlantId) {
