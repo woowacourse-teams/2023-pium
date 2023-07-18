@@ -14,24 +14,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Validated
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/pet-plants")
 public class PetPlantController {
 
     private final PetPlantService petPlantService;
 
-    @GetMapping("/pet-plants/{petPlantId}")
+    @GetMapping("/{id}")
     public ResponseEntity<PetPlantResponse> read(
             @PathVariable
-            @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId) {
-        PetPlantResponse petPlantResponse = petPlantService.read(petPlantId);
+            @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id) {
+        PetPlantResponse petPlantResponse = petPlantService.read(id);
         return ResponseEntity.ok(petPlantResponse);
     }
 
-    @PostMapping("/pet-plants")
+    @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid PetPlantRequest request, Member member) {
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
         return ResponseEntity.created(URI.create("/pet-plants/" + petPlantResponse.getId())).build();

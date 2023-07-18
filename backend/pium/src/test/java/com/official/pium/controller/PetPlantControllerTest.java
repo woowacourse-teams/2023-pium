@@ -64,7 +64,7 @@ class PetPlantControllerTest {
             given(petPlantService.read(anyLong()))
                     .willReturn(RESPONSE.피우미_응답);
 
-            mockMvc.perform(get("/pet-plants/{petPlantId}", 1L)
+            mockMvc.perform(get("/pet-plants/{id}", 1L)
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isOk())
@@ -73,7 +73,7 @@ class PetPlantControllerTest {
 
         @Test
         void 조회시_잘못된_ID를_받으면_400을_반환한다() throws Exception {
-            mockMvc.perform(get("/pet-plants/{petPlantId}", -1L)
+            mockMvc.perform(get("/pet-plants/{id}", -1L)
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
