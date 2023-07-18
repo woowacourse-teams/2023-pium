@@ -4,6 +4,7 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.WaterCycle;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse.WaterCycleResponse;
+import com.official.pium.service.dto.DictionaryPlantSearchResponse;
 
 public class DictionaryPlantMapper {
 
@@ -32,6 +33,14 @@ public class DictionaryPlantMapper {
                 .summer(waterCycle.getSummer())
                 .autumn(waterCycle.getAutumn())
                 .winter(waterCycle.getWinter())
+                .build();
+    }
+
+    public static DictionaryPlantSearchResponse toDictionaryPlantSearchResponse(DictionaryPlant dictionaryPlant) {
+        return DictionaryPlantSearchResponse.builder()
+                .id(dictionaryPlant.getId())
+                .name(dictionaryPlant.getName())
+                .image(dictionaryPlant.getImageUrl())
                 .build();
     }
 }

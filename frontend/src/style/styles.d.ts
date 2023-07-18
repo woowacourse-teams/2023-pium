@@ -12,6 +12,7 @@ declare module 'styled-components' {
       emphasize: string;
       subTitle: string;
       title: string;
+      input: string;
     };
     width: {
       mobile: string;
