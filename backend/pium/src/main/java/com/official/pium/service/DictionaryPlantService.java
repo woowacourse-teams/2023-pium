@@ -20,12 +20,12 @@ public class DictionaryPlantService {
 
     private final DictionaryPlantRepository dictionaryPlantRepository;
 
-    public DataResponse<List<DictionaryPlantSearchResponse>> search(final String name) {
-        final List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByNameContains(name);
+    public DataResponse<List<DictionaryPlantSearchResponse>> search(String name) {
+        List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByNameContains(name);
         if (dictionaryPlants.isEmpty()) {
             throw new NoSuchElementException("검색에 해당하는 식물이 존재하지 않습니다. 검색어 : " + name);
         }
-        final List<DictionaryPlantSearchResponse> dictionaryPlantSearchResponses = dictionaryPlants.stream()
+        List<DictionaryPlantSearchResponse> dictionaryPlantSearchResponses = dictionaryPlants.stream()
                 .map(DictionaryPlantMapper::toDictionaryPlantSearchResponse)
                 .collect(Collectors.toList());
         return DataResponse.<List<DictionaryPlantSearchResponse>>builder()

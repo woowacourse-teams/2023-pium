@@ -27,10 +27,10 @@ public class DictionaryPlantServiceTest extends IntegrationTest {
 
     @Test
     void 사전식물_검색() {
-        final DictionaryPlant 스투키1 = dictionaryPlantSupport.builder().build();
-        final DictionaryPlant 스투키2 = dictionaryPlantSupport.builder().build();
+        DictionaryPlant 스투키1 = dictionaryPlantSupport.builder().build();
+        DictionaryPlant 스투키2 = dictionaryPlantSupport.builder().build();
 
-        final DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
+        DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
 
         assertAll(
                 () -> assertThat(search.getData().size()).isEqualTo(2),

@@ -33,7 +33,7 @@ public class DictionaryPlantControllerTest {
 
     @Test
     void 검색이_성공하면_OK를_반환한다() throws Exception {
-        final DataResponse<List<DictionaryPlantSearchResponse>> 식물들 = DictionaryPlantFixture.RESPONSE.식물들;
+        DataResponse<List<DictionaryPlantSearchResponse>> 식물들 = DictionaryPlantFixture.RESPONSE.식물들;
         given(
                 dictionaryPlantService.search(any())
         ).willReturn(식물들);
