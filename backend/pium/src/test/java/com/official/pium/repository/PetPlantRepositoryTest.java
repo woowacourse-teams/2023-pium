@@ -56,11 +56,11 @@ class PetPlantRepositoryTest {
                 .waterCycle(3)
                 .build();
 
-        PetPlant savsavePetPlant = petPlantRepository.save(petPlant);
+        PetPlant savePetPlant = petPlantRepository.save(petPlant);
 
         assertAll(
-                () -> assertThat(savsavePetPlant).isNotNull(),
-                () -> assertThat(savsavePetPlant.getId()).isEqualTo(petPlant.getId())
+                () -> assertThat(savePetPlant).isNotNull(),
+                () -> assertThat(savePetPlant.getId()).isEqualTo(petPlant.getId())
         );
     }
 

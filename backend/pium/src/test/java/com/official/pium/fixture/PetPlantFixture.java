@@ -48,7 +48,7 @@ public class PetPlantFixture {
 
     public static PetPlant 산세베리아 = PetPlant.builder()
             .nickname("기영이")
-            .imageUrl("image.url")
+            .imageUrl("https://image.com")
             .light("자연광이 잘 드는 곳")
             .location("창가")
             .wind("바람이 가끔 부는 곳")
