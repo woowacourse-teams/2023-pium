@@ -55,7 +55,6 @@ export const OptionBox = styled.ul`
   top: 32px;
 
   width: 100%;
-  padding: 0 8px;
 
   border-radius: 4px;
   box-shadow: 0 0 4px ${(props) => props.theme.color.sub + '33'};
@@ -68,6 +67,7 @@ export const OptionItem = styled.li`
 
   width: 100%;
   height: 40px;
+  padding: 0 8px;
 
   &:hover {
     background: #0000000c;
