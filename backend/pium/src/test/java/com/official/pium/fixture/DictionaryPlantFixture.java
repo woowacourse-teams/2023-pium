@@ -1,7 +1,11 @@
 package com.official.pium.fixture;
 
+import com.official.pium.service.dto.DataResponse;
+import com.official.pium.service.dto.DictionaryPlantSearchResponse;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.WaterCycle;
+
+import java.util.List;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class DictionaryPlantFixture {
@@ -28,4 +32,21 @@ public class DictionaryPlantFixture {
                                     .winter("겉흙이 마르면 촉촉하게")
                                     .build()
                     ).build();
+
+    public static class RESPONSE {
+        public static DataResponse<List<DictionaryPlantSearchResponse>> 식물들 =
+                DataResponse.<List<DictionaryPlantSearchResponse>>builder()
+                        .data(
+                                List.of(
+                                        DictionaryPlantSearchResponse.builder()
+                                                .id(1L)
+                                                .name("스투키")
+                                                .image("image")
+                                                .build()
+                                )
+                        )
+                        .build();
+
+
+    }
 }
