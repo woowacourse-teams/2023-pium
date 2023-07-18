@@ -17,7 +17,7 @@ export const Minimal: Story = {
   },
 };
 
-export const Genera: Story = {
+export const General: Story = {
   render: () => {
     const options = ['포도', '딸기', '사과'];
     const [value, setValue] = useState(options[0]);
