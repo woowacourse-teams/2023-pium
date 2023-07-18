@@ -26,12 +26,12 @@ public class DictionaryPlantServiceTest extends IntegrationTest {
         DictionaryPlant 스투키1 = dictionaryPlantSupport.builder().build();
         DictionaryPlant 스투키2 = dictionaryPlantSupport.builder().build();
 
-        DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
+        DataResponse<List<DictionaryPlantSearchResponse>> searchResultsContainsParamName = dictionaryPlantService.search("스투");
 
         assertAll(
-                () -> assertThat(search.getData()).hasSize(2),
-                () -> assertThat(search.getData().get(0).getId()).isEqualTo(스투키1.getId()),
-                () -> assertThat(search.getData().get(1).getId()).isEqualTo(스투키2.getId())
+                () -> assertThat(searchResultsContainsParamName.getData()).hasSize(2),
+                () -> assertThat(searchResultsContainsParamName.getData().get(0).getId()).isEqualTo(스투키1.getId()),
+                () -> assertThat(searchResultsContainsParamName.getData().get(1).getId()).isEqualTo(스투키2.getId())
         );
     }
 
