@@ -7,30 +7,40 @@ import com.official.pium.service.dto.PetPlantRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
+@Validated
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/pet-plants")
 public class PetPlantController {
 
     private final PetPlantService petPlantService;
 
-    @PostMapping("/pet-plants")
+    @GetMapping("/{id}")
+    public ResponseEntity<PetPlantResponse> read(
+            @PathVariable
+            @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id) {
+        PetPlantResponse petPlantResponse = petPlantService.read(id);
+        return ResponseEntity.ok(petPlantResponse);
+    }
+
+    @PostMapping
     public ResponseEntity<Void> create(@RequestBody @Valid PetPlantRequest request, Member member) {
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
         return ResponseEntity.created(URI.create("/pet-plants/" + petPlantResponse.getId())).build();
     }
 
-    @GetMapping("/pet-plants")
-    public ResponseEntity<DataResponse<SinglePetPlantResponse>> readAll(Member member) {
-        DataResponse<SinglePetPlantResponse> response = petPlantService.readAll(member);
-        return ResponseEntity.ok(response);
+    @GetMapping
+    public ResponseEntity<DataResponse<List<SinglePetPlantResponse>>> readAll(Member member) {
+        DataResponse<List<SinglePetPlantResponse>> response = petPlantService.readAll(member);
+        return ResponseEntity.ok().body(response);
     }
 }

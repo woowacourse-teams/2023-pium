@@ -15,10 +15,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -36,32 +34,29 @@ public class PetPlantService {
         PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, member);
         petPlantRepository.save(petPlant);
 
-        long daySince = getDaySince(petPlant);
-        long nextWaterDay = getNextWaterDay(petPlant);
+        long daySince = petPlant.calculateDaySince(LocalDate.now());
+        long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
 
         return PetPlantMapper.toPetPlantResponse(petPlant, nextWaterDay, daySince);
     }
 
-    public DataResponse<SinglePetPlantResponse> readAll(Member member) {
+    public PetPlantResponse read(Long id) {
+        PetPlant petPlant = petPlantRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
+
+        Long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
+        Long daySince = petPlant.calculateDaySince(LocalDate.now());
+
+        return PetPlantMapper.toPetPlantResponse(petPlant, nextWaterDay, daySince);
+    }
+
+    public DataResponse<List<SinglePetPlantResponse>> readAll(Member member) {
         List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId());
 
         List<SinglePetPlantResponse> singlePetPlantResponses = petPlants.stream()
-                .map(petPlant -> PetPlantMapper.toSinglePetPlantResponse(petPlant, getDaySince(petPlant)))
-                .collect(Collectors.toList());
+                .map(petPlant -> PetPlantMapper.toSinglePetPlantResponse(petPlant, petPlant.calculateDaySince(LocalDate.now())))
+                .toList();
 
-        return new DataResponse<>(singlePetPlantResponses);
-    }
-
-    private long getNextWaterDay(PetPlant petPlant) {
-        LocalDate nextWaterDate = getNextWaterDate(petPlant);
-        return ChronoUnit.DAYS.between(LocalDate.now(), nextWaterDate);
-    }
-
-    private LocalDate getNextWaterDate(PetPlant petPlant) {
-        return petPlant.getLastWaterDate().plusDays(petPlant.getWaterCycle());
-    }
-
-    private long getDaySince(PetPlant petPlant) {
-        return ChronoUnit.DAYS.between(petPlant.getBirthDate(), LocalDate.now());
+        return DataResponse.<List<SinglePetPlantResponse>>builder().data(singlePetPlantResponses).build();
     }
 }
