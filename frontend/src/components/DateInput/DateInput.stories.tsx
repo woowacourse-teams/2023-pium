@@ -12,6 +12,6 @@ type Story = StoryObj<typeof DateInput>;
 
 export const Default: Story = {
   args: {
-    initialValue: getToday(),
+    date: getToday(),
   },
 };

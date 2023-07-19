@@ -1,13 +1,13 @@
-import { useId, useState } from 'react';
-import { getToday, convertDateKorYear } from 'utils/date';
+import { useId } from 'react';
 import { Date, Wrapper, DateValue } from './DateInput.style';
+import { getToday, convertDateKorYear } from 'utils/date';
 
 interface DateInputProps {
-  initialValue: string;
+  date: string;
+  onChange?: (date: string) => void;
 }
 
-const DateInput = ({ initialValue }: DateInputProps) => {
-  const [date, setDate] = useState(initialValue);
+const DateInput = ({ date, onChange }: DateInputProps) => {
   const today = getToday();
   const dateId = useId();
 
@@ -15,11 +15,10 @@ const DateInput = ({ initialValue }: DateInputProps) => {
     const { value } = event.target;
 
     if (value > today) {
-      setDate(today);
       return;
     }
 
-    setDate(value);
+    onChange?.(value);
   };
 
   return (
