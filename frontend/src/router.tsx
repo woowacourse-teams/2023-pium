@@ -14,7 +14,7 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: URL_PATH.DICT(),
+        path: URL_PATH.DICT,
         element: <DictionaryDetail />,
       },
     ],
