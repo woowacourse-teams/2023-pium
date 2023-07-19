@@ -1,5 +1,5 @@
-import { InputStatus } from 'types/inputs';
-import { PropsWithChildren } from 'react';
+import type { InputStatus } from 'types/inputs';
+import type { PropsWithChildren } from 'react';
 import {
   ContentBox,
   ErrorMessage,
