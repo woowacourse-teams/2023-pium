@@ -11,13 +11,15 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
+import useDebounce from 'hooks/useDebounce';
 import { MESSAGE } from 'constants/index';
 import Dictionary from '../../queries/dictionaryPlants';
 
 const SearchBox = () => {
   const [searchName, setSearchName] = useState('');
+  const queryName = useDebounce<string>(searchName, 200);
 
-  const { data: searchResults } = Dictionary.useSearchName(searchName);
+  const { data: searchResults } = Dictionary.useSearchName(queryName);
 
   const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
