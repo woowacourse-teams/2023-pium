@@ -7,12 +7,7 @@ const useDateInput = () => {
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
 
-    if (value > today) {
-      setDate(today);
-      return;
-    }
-
-    setDate(value);
+    setDate(value > today ? today : value);
   };
 
   return { date, today, changeHandler };
