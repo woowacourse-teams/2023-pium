@@ -16,7 +16,7 @@ export const Default: Story = {
     const changeCallback: React.ChangeEventHandler<HTMLInputElement> = (e) =>
       console.log(e.target.value);
 
-    return <FormInput onChangeCallback={changeCallback} />;
+    return <FormInput onChange={changeCallback} />;
   },
 };
 
@@ -33,14 +33,13 @@ export const NumberInput: Story = {
 
     return (
       <FormInput
-        type="number"
         inputMode="numeric"
         max={MAX_CYCLE_DATE}
         min={MIN_CYCLE_DATE}
         value={numberValue}
         onKeyDown={keyDownHandler}
         nextCallback={nextCallback}
-        onChangeCallback={changeCallback}
+        onChange={changeCallback}
       />
     );
   },
