@@ -39,7 +39,7 @@ export const ResultMessage = styled.p`
 `;
 
 export const ResultList = styled.div`
-  overflow: scroll;
+  overflow-x: none;
   width: 100%;
   max-height: 336px;
 `;
