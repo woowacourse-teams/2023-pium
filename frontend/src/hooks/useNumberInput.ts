@@ -7,14 +7,14 @@ interface NumberInputProps {
 }
 
 const useNumberInput = ({ maxRange, minRange }: NumberInputProps) => {
-  const [numberValue, setNumberValue] = useState<number>();
+  const [numberValue, setNumberValue] = useState<number | ''>('');
   const { checkNumber, checkRange, checkECode } = inputValidate;
 
   const changeCallback: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const { value } = e.target;
 
     if (value === '') {
-      setNumberValue(undefined);
+      setNumberValue('');
       return;
     }
 
