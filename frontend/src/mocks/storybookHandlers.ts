@@ -4,7 +4,7 @@ import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import SEARCH_DATA from './data/search';
 
 export const storybookHandlers = [
-  rest.get('/search', (req, res, ctx) => {
+  rest.get('/dictionary-plants', (req, res, ctx) => {
     const target = req.url.searchParams.get('name') ?? '';
     const searchResult = SEARCH_DATA.filter(({ name }) => name.includes(target));
 
