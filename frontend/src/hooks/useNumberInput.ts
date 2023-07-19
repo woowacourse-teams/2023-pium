@@ -10,9 +10,7 @@ const useNumberInput = ({ maxRange, minRange }: NumberInputProps) => {
   const [numberValue, setNumberValue] = useState<number | ''>('');
   const { checkNumber, checkRange, checkECode } = inputValidate;
 
-  const changeCallback: React.ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { value } = e.target;
-
+  const changeCallback = (value: string) => {
     if (value === '') {
       setNumberValue('');
       return;
@@ -23,6 +21,7 @@ const useNumberInput = ({ maxRange, minRange }: NumberInputProps) => {
 
     setNumberValue(Number(value));
   };
+
   const keyDownHandler: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
     checkECode(e.key) && e.preventDefault();
   };
