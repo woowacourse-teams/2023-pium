@@ -2,14 +2,14 @@ import DictInfo from 'components/DictInfo';
 import DictInfoSwitch from 'components/DictInfoSwitch';
 import * as S from './DictionaryDetail.style';
 import useDictionaryPlants from 'hooks/useDictionaryPlants';
+import useInvalidIdParams from 'hooks/useInvalidIdParams';
 
 const DictionaryDetail = () => {
-  // const { id } = useParams();
-  const { dictionary, waterOption } = useDictionaryPlants('1');
+  const id = useInvalidIdParams();
 
-  if (!dictionary) {
-    return <div>...loading</div>;
-  }
+  const { dictionary } = useDictionaryPlants(id);
+
+  if (!dictionary) return null;
 
   const {
     postingPlace,
@@ -24,6 +24,7 @@ const DictionaryDetail = () => {
     smell,
     poison,
     specialManageInfo,
+    waterOptions,
   } = dictionary;
 
   const place = postingPlace.map((position, idx) => (
@@ -47,7 +48,7 @@ const DictionaryDetail = () => {
           </DictInfo>
         </S.LevelBox>
         <S.CycleBox>
-          <DictInfoSwitch title="물 주기" optionMap={waterOption}></DictInfoSwitch>
+          <DictInfoSwitch title="물 주기" optionMap={waterOptions}></DictInfoSwitch>
         </S.CycleBox>
         <S.LocationBox>
           <DictInfo>
