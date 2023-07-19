@@ -12,10 +12,14 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
-import searchAPI from 'apis/search';
+import dictionaryPlantsAPI from 'apis/dictionaryPlants';
 import { MESSAGE } from 'constants/index';
 
-const SearchBox = () => {
+interface SearchBoxProps {
+  onSelectResultItem?: (id: number) => void;
+}
+
+const SearchBox = ({ onSelectResultItem }: SearchBoxProps) => {
   const [searchName, setSearchName] = useState('');
   const [searchResults, setSearchResults] = useState<DictNameSearchResult[] | null>(null);
   const timeoutId = useRef(0);
@@ -50,7 +54,7 @@ const SearchBox = () => {
     }
 
     try {
-      const response = await searchAPI.getResult(name);
+      const response = await dictionaryPlantsAPI.getSearch(name);
       if (!response.ok) throw new Error();
 
       const { data: searchResults } = await response.json();
@@ -58,6 +62,10 @@ const SearchBox = () => {
     } catch {
       return;
     }
+  };
+
+  const selectResultItem = (id: number) => () => {
+    onSelectResultItem?.(id);
   };
 
   return (
@@ -73,7 +81,7 @@ const SearchBox = () => {
         (searchResults.length ? (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
-              <ResultItem key={id}>
+              <ResultItem key={id} onClick={selectResultItem(id)}>
                 <ResultThumbnail alt={name} src={image} />
                 <Name>{name}</Name>
               </ResultItem>
