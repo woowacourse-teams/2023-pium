@@ -1,3 +1,5 @@
+import { Season, SeasonKor } from 'types/plants';
+
 export const MESSAGE = {
   noSearchResult: '아직 사전에 등록된 식물이 없어요 😅',
 } as const;
@@ -14,4 +16,11 @@ export const URL_PATH = {
   DICT: `/dict/:id`,
   PET_LIST: '/pet',
   PET_DETAIL: `/pet/:id`,
+} as const;
+
+export const SEASONS: Record<Season, SeasonKor> = {
+  spring: '봄',
+  summer: '여름',
+  autumn: '가을',
+  winter: '겨울',
 } as const;

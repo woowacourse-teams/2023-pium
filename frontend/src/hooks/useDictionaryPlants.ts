@@ -2,7 +2,7 @@ import { DictionaryPlant } from 'types/api/dictionary';
 import { Season, SeasonKor } from 'types/plants';
 import { useEffect, useState } from 'react';
 import dictAPI from 'apis/dict';
-import { seasonConverter } from 'utils/plants';
+import { SEASONS } from 'constants/index';
 
 const initialSeasonInfo: Record<SeasonKor, string> = {
   봄: '',
@@ -30,7 +30,7 @@ const useDictionaryPlants = (id: string | undefined) => {
 
       const seasonOptions = [...Object.entries(data.waterCycle)].reduce((prev, cur) => {
         const [season, data] = cur as [Season, string];
-        const key = seasonConverter(season);
+        const key = SEASONS[season];
         return { ...prev, [key]: data };
       }, waterOption);
 
