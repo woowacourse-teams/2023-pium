@@ -1,4 +1,5 @@
-import { Season, SeasonKor } from 'types/plants';
+import { ManageLevel, Season, SeasonKor } from 'types/plants';
+import { TagVariantType } from 'components/Tag';
 
 export const MESSAGE = {
   noSearchResult: '아직 사전에 등록된 식물이 없어요 😅',
@@ -25,3 +26,9 @@ export const SEASONS: Record<Season, SeasonKor> = {
   autumn: '가을',
   winter: '겨울',
 } as const;
+
+export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
+  초보자: 'default',
+  경험자: 'primary',
+  전문가: 'accent',
+};

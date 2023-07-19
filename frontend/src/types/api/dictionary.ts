@@ -1,4 +1,4 @@
-import { Season, SeasonKor } from 'types/plants';
+import { ManageLevel, Season, SeasonKor } from 'types/plants';
 import { DataResponse } from './DataResponse';
 
 export interface DictionaryPlant {
@@ -8,7 +8,7 @@ export interface DictionaryPlant {
   familyName: string;
   smell: string;
   poison: string;
-  manageLevel: string;
+  manageLevel: ManageLevel;
   growSpeed: string;
   requireTemp: string;
   minimumTemp: string;
