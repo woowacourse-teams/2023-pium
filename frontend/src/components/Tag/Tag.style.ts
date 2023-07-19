@@ -5,6 +5,7 @@ export interface LabelStyleProps {
   $variant?: 'default' | 'primary' | 'sub' | 'accent';
   $dimmed?: boolean;
   $hasHoverEffect?: boolean;
+  $fullWidth?: boolean;
 }
 
 const getBgColor = ({ $variant = 'default', $dimmed = true }: LabelStyleProps) => {
@@ -16,10 +17,13 @@ export const Wrapper = styled.div<LabelStyleProps>`
   display: inline-block;
   align-self: start;
 
+  width: ${(props) => (props.$fullWidth ? '100%' : 'auto')};
   padding: 7px 12px;
 
+  text-align: center;
+
   background-color: ${(props) => getBgColor(props)};
-  border-radius: 77px;
+  border-radius: 8px;
 
   &:hover {
     ${({ $hasHoverEffect, $variant = 'default' }) =>

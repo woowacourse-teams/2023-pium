@@ -28,7 +28,7 @@ const DictInfoSwitch = (props: DictInfoSwitchProps) => {
       </DictInfo.Title>
 
       {typeof selectedOptions === 'string' ? (
-        <DictInfo.Content>{selectedOptions}</DictInfo.Content>
+        <DictInfo.Content fullWidth={true}>{selectedOptions}</DictInfo.Content>
       ) : (
         selectedOptions.map((content) => (
           <DictInfo.Content key={content}>{content}</DictInfo.Content>
