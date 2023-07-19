@@ -4,6 +4,10 @@ interface IconAreaProps {
   rotate: boolean;
 }
 
+interface SelectedValueProps {
+  placeholder?: boolean;
+}
+
 export const Wrapper = styled.div`
   user-select: none;
 
@@ -17,13 +21,15 @@ export const Wrapper = styled.div`
   font: ${(props) => props.theme.font.input};
 `;
 
-export const SelectedValue = styled.p`
+export const SelectedValue = styled.p<SelectedValueProps>`
   display: flex;
   align-items: center;
   justify-content: center;
 
   width: 100%;
   height: 32px;
+
+  color: ${({ placeholder, theme }) => (placeholder ? theme.color.gray : 'black')};
 
   &:hover {
     background: #0000000c;
