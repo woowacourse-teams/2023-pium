@@ -1,4 +1,4 @@
-import { Season } from 'types/plants';
+import { Season, SeasonKor } from 'types/plants';
 import { DataResponse } from './DataResponse';
 
 export interface DictionaryPlant {
@@ -16,6 +16,10 @@ export interface DictionaryPlant {
   postingPlace: string[];
   specialManageInfo: string;
   waterCycle: Record<Season, string>;
+}
+
+export interface DictPlantExtendCycles extends DictionaryPlant {
+  waterOptions: Record<SeasonKor, string>;
 }
 
 export type DictNameSearchResult = Pick<DictionaryPlant, 'id' | 'name' | 'image'>;

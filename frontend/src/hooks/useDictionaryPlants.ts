@@ -1,7 +1,7 @@
-import { DictionaryPlant } from 'types/api/dictionary';
+import { DictPlantExtendCycles } from 'types/api/dictionary';
 import { Season, SeasonKor } from 'types/plants';
-import { useEffect, useState } from 'react';
-import dictAPI from 'apis/dict';
+import { useQuery } from '@tanstack/react-query';
+import dictAPI, { DICT } from 'apis/dict';
 import { SEASONS } from 'constants/index';
 
 const initialSeasonInfo: Record<SeasonKor, string> = {
@@ -11,37 +11,31 @@ const initialSeasonInfo: Record<SeasonKor, string> = {
   겨울: '',
 };
 
-const useDictionaryPlants = (id: string | undefined) => {
-  const [dictionary, setDictionary] = useState<DictionaryPlant | null>(null);
-  const [waterOption, setWaterOption] = useState<Record<SeasonKor, string>>(initialSeasonInfo);
-
-  useEffect(() => {
-    getDetail();
-  }, []);
-
-  const getDetail = async () => {
-    try {
-      if (!id) throw new Error('id가 유효하지 않습니다.');
+const useDictionaryPlants = (id: string) => {
+  const { data: dictionary } = useQuery<DictPlantExtendCycles>({
+    queryKey: [`${DICT}/${id}`],
+    queryFn: async () => {
       const response = await dictAPI.getDictInfo(id);
 
-      if (!response.ok) throw new Error('무엇인가 잘못됐습니다.');
-
-      const data = (await response.json()) as DictionaryPlant;
-
-      const seasonOptions = [...Object.entries(data.waterCycle)].reduce((prev, cur) => {
+      if (!response.ok) throw Error('뭔가가 잘못되어 벌임;;');
+      const data = await response.json();
+      return data;
+    },
+    staleTime: Infinity,
+    suspense: true,
+    select: (data) => {
+      const { waterCycle } = data;
+      const waterOptions = [...Object.entries(waterCycle)].reduce((prev, cur) => {
         const [season, data] = cur as [Season, string];
         const key = SEASONS[season];
         return { ...prev, [key]: data };
-      }, waterOption);
+      }, initialSeasonInfo);
 
-      setWaterOption(seasonOptions);
-      setDictionary(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
+      return { ...data, waterOptions };
+    },
+  });
 
-  return { dictionary, waterOption };
+  return { dictionary };
 };
 
 export default useDictionaryPlants;

@@ -1,4 +1,4 @@
-const DICT = '/dictionary-plants';
+export const DICT = '/dictionary-plants';
 
 const getDictInfo = (id: string) => {
   return fetch(`${DICT}/${id}`, { method: 'GET' });
