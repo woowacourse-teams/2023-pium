@@ -18,7 +18,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
 
   return [
-    rest.get('/search', (req, res, ctx) => {
+    rest.get('/dictionary-plants', (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }
@@ -29,7 +29,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200), ctx.json({ data: searchResult }));
     }),
 
-    rest.get('dictionary-plnats/:id', (req, res, ctx) => {
+    rest.get('/dictionary-plants/:id', (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }

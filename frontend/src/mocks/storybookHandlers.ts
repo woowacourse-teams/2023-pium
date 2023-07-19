@@ -11,7 +11,7 @@ export const storybookHandlers = [
     return res(ctx.status(200), ctx.json({ data: searchResult }));
   }),
 
-  rest.get('dictionary-plants/:id', (req, res, ctx) =>
+  rest.get('/dictionary-plants/:id', (req, res, ctx) =>
     res(ctx.status(200), ctx.json(DICTIONARY_PLANT_DATA))
   ),
 
