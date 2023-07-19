@@ -28,11 +28,11 @@ type PetPlantFormAction =
 
 const initialPetPlantForm: PetPlantForm = {
   nickname: '기영이',
-  location: '거실',
-  flowerpot: '플라스틱',
+  location: '',
+  flowerpot: '',
   waterCycle: 7,
-  light: '창 밖',
-  wind: '바람이 안통해요',
+  light: '',
+  wind: '',
   birthDate: '2023-07-08',
   lastWaterDate: '2023-07-10',
 } as const;
