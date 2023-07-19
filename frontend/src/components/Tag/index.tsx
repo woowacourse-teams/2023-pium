@@ -1,7 +1,8 @@
 import { Wrapper } from './Tag.style';
 
+export type TagVariantType = 'default' | 'primary' | 'sub' | 'accent';
 export interface TagProps extends React.PropsWithChildren {
-  variant?: 'default' | 'primary' | 'sub' | 'accent';
+  variant?: TagVariantType;
   dimmed?: boolean;
   fullWidth?: boolean;
   hasHoverEffect?: boolean;

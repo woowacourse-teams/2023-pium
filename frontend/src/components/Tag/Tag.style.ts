@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import theme from '../../style/theme.style';
+import { TagVariantType } from '.';
 
 export interface LabelStyleProps {
-  $variant?: 'default' | 'primary' | 'sub' | 'accent';
+  $variant?: TagVariantType;
   $dimmed?: boolean;
   $hasHoverEffect?: boolean;
   $fullWidth?: boolean;
