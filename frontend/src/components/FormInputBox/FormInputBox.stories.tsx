@@ -42,7 +42,7 @@ export const ChildrenDateInput: Story = {
   render: ({ ...args }) => {
     return (
       <FormInputBox {...args}>
-        <DateInput initialValue={getToday()} />
+        <DateInput date={getToday()} />
       </FormInputBox>
     );
   },
