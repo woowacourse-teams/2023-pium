@@ -5,7 +5,10 @@ import com.official.pium.domain.WaterCycle;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse.WaterCycleResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DictionaryPlantMapper {
 
     public static DictionaryPlantResponse toDictionaryPlantResponse(DictionaryPlant dictionaryPlant) {

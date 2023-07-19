@@ -1,15 +1,16 @@
 package com.official.pium.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import com.official.pium.fixture.PetPlantFixture;
-import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.time.LocalDate;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -43,7 +44,7 @@ class PetPlantTest {
     }
 
     @Test
-    void 함께한_날_계산시_생일_이전의_날을_입력하면_예외_발생() {
+    void 함께한_날_계산시_생일_이전의_날을_입력하면_예외가_발생() {
         PetPlant 산세베리아 = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(() -> 산세베리아.calculateDaySince(LocalDate.of(1999, 7, 10)))
