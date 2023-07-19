@@ -5,6 +5,7 @@ import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.PetPlantRequest;
 import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.SinglePetPlantResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -44,6 +45,17 @@ public class PetPlantMapper {
                 .lastWaterDate(petPlant.getLastWaterDate())
                 .waterCycle(petPlant.getWaterCycle())
                 .nextWaterDay(nextWaterDay)
+                .daySince(daySince)
+                .build();
+    }
+    
+    public static SinglePetPlantResponse toSinglePetPlantResponse(PetPlant petPlant, Long daySince) {
+        return SinglePetPlantResponse.builder()
+                .id(petPlant.getId())
+                .nickname(petPlant.getNickname())
+                .imageUrl(petPlant.getImageUrl())
+                .dictionaryPlantName(petPlant.getDictionaryPlant().getName())
+                .birthDate(petPlant.getBirthDate())
                 .daySince(daySince)
                 .build();
     }

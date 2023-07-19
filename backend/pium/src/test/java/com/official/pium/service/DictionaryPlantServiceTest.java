@@ -1,22 +1,23 @@
 package com.official.pium.service;
 
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
-
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
-import java.util.List;
-import java.util.NoSuchElementException;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -26,7 +27,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     private DictionaryPlantService dictionaryPlantService;
 
     @Test
-    void 사전_식물_상세_정보를_조회한다() {
+    void 사전_식물_상세_정보_조회() {
         DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
         DictionaryPlantResponse actual = dictionaryPlantService.read(dictionaryPlant.getId());
 
@@ -38,7 +39,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 사전_식물_상세_정보_조회에_실패하면_예외가_발생한다() {
+    void 사전_식물_상세_정보_조회에_실패하면_예외_발생() {
         Long id = 0L;
 
         assertThatThrownBy(() -> dictionaryPlantService.read(id))
@@ -47,7 +48,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 사전식물_검색시_검색명이_포함된_사전식물을_반환한다() {
+    void 사전식물_검색시_검색명이_포함된_사전식물을_반환() {
         DictionaryPlant 스투키1 = dictionaryPlantSupport.builder().build();
         DictionaryPlant 스투키2 = dictionaryPlantSupport.builder().build();
 
@@ -62,7 +63,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 사전식물_검색시_검색명이_포함된_사전식물이_없으면_빈_리스트를_반환한다() {
+    void 사전식물_검색시_검색명이_포함된_사전식물이_없으면_빈_리스트를_반환() {
         DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
 
         assertThat(search.getData()).isEmpty();
