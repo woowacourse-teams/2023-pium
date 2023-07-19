@@ -42,10 +42,10 @@ class PetPlantControllerTest {
     private ObjectMapper objectMapper;
 
     @Nested
-    class 반려_식물이 {
+    class 반려_식물_ {
 
         @Test
-        void 등록되면_CREATED를_반환한다() throws Exception {
+        void 등록하면_201을_반환() throws Exception {
             PetPlantResponse response = RESPONSE.피우미_응답;
             given(petPlantService.create(any(), any()))
                     .willReturn(response);
@@ -59,7 +59,7 @@ class PetPlantControllerTest {
         }
 
         @Test
-        void 조회되면_200_OK를_반환한다() throws Exception {
+        void 조회하면_200을_반환() throws Exception {
             given(petPlantService.read(anyLong()))
                     .willReturn(RESPONSE.피우미_응답);
 
@@ -71,7 +71,7 @@ class PetPlantControllerTest {
         }
 
         @Test
-        void 조회시_잘못된_ID를_받으면_400을_반환한다() throws Exception {
+        void 잘못된_ID로_조회하면_400을_반환() throws Exception {
             mockMvc.perform(get("/pet-plants/{id}", -1L)
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -81,7 +81,7 @@ class PetPlantControllerTest {
         }
 
         @Test
-        void 전부_조회하면_200을_반환한다() throws Exception {
+        void 전체_조회하면_200을_반환() throws Exception {
             DataResponse<List<SinglePetPlantResponse>> response = RESPONSE.식물_전체조회_응답;
             given(petPlantService.readAll(any()))
                     .willReturn(RESPONSE.식물_전체조회_응답);

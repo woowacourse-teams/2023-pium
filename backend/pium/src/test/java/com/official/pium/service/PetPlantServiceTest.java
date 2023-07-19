@@ -62,7 +62,16 @@ class PetPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 단일_반려_식물_조회() {
+    void 존재하지_않는_반려_식물을_조회하면_예외_발생() {
+        Long wrongId = -1L;
+
+        assertThatThrownBy(() -> petPlantService.read(wrongId))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
+    }
+
+    @Test
+    void 반려_식물_단건_조회() {
         PetPlant petPlant = petPlantSupport.builder().build();
 
         PetPlantResponse petPlantResponse = petPlantService.read(petPlant.getId());
@@ -71,15 +80,6 @@ class PetPlantServiceTest extends IntegrationTest {
                 () -> assertThat(petPlantResponse.getId()).isEqualTo(petPlant.getId()),
                 () -> assertThat(petPlantResponse.getNickname()).isEqualTo(petPlant.getNickname())
         );
-    }
-
-    @Test
-    void 존재하지_않는_반려_식물을_조회하면_예외_발생() {
-        Long wrongId = -1L;
-
-        assertThatThrownBy(() -> petPlantService.read(wrongId))
-                .isInstanceOf(NoSuchElementException.class)
-                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
     }
 
     @Test

@@ -27,7 +27,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     private DictionaryPlantService dictionaryPlantService;
 
     @Test
-    void 사전_식물_상세_정보를_조회한다() {
+    void 사전_식물_상세_정보_조회() {
         DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
         DictionaryPlantResponse actual = dictionaryPlantService.read(dictionaryPlant.getId());
 
@@ -39,7 +39,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 사전_식물_상세_정보_조회에_실패하면_예외가_발생한다() {
+    void 사전_식물_상세_정보_조회에_실패하면_예외_발생() {
         Long id = 0L;
 
         assertThatThrownBy(() -> dictionaryPlantService.read(id))
@@ -48,7 +48,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 사전식물_검색시_검색명이_포함된_사전식물을_반환한다() {
+    void 사전식물_검색시_검색명이_포함된_사전식물을_반환() {
         DictionaryPlant 스투키1 = dictionaryPlantSupport.builder().build();
         DictionaryPlant 스투키2 = dictionaryPlantSupport.builder().build();
 
@@ -63,7 +63,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 사전식물_검색시_검색명이_포함된_사전식물이_없으면_빈_리스트를_반환한다() {
+    void 사전식물_검색시_검색명이_포함된_사전식물이_없으면_빈_리스트를_반환() {
         DataResponse<List<DictionaryPlantSearchResponse>> search = dictionaryPlantService.search("스투");
 
         assertThat(search.getData()).isEmpty();

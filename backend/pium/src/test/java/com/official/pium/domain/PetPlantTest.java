@@ -44,7 +44,7 @@ class PetPlantTest {
     }
 
     @Test
-    void 함께한_날_계산시_생일_이전의_날을_입력하면_예외_발생() {
+    void 함께한_날_계산시_생일_이전의_날을_입력하면_예외가_발생() {
         PetPlant 산세베리아 = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(() -> 산세베리아.calculateDaySince(LocalDate.of(1999, 7, 10)))

@@ -61,7 +61,7 @@ public class DictionaryPlantFixture {
                                         .build()
                         ).build();
 
-        public static DataResponse<List<DictionaryPlantSearchResponse>> 식물들 =
+        public static DataResponse<List<DictionaryPlantSearchResponse>> 스투키_산세베리아_율마_검색결과 =
                 DataResponse.<List<DictionaryPlantSearchResponse>>builder()
                         .data(
                                 List.of(
