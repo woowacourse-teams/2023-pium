@@ -12,7 +12,7 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
-import searchAPI from 'apis/search';
+import dictAPI from 'apis/dict';
 import { MESSAGE } from 'constants/index';
 
 const SearchBox = () => {
@@ -50,7 +50,7 @@ const SearchBox = () => {
     }
 
     try {
-      const response = await searchAPI.getResult(name);
+      const response = await dictAPI.getResult(name);
       if (!response.ok) throw new Error();
 
       const { data: searchResults } = await response.json();

@@ -9,14 +9,6 @@ export const ERROR = {
 export const GUIDE = {
   search: '피움에 등록된 식물을 검색해 보세요!',
 } as const;
-
-export const API_PATH = {
-  SEARCH: '/search',
-  DICT: `/dictionary-plants/:id`,
-  PET: '/pet-plants',
-  PET_DETAIL: `/pet-plants/:id`,
-} as const;
-
 export const URL_PATH = {
   MAIN: '/',
   DICT: `/dict/:id`,
