@@ -23,8 +23,10 @@ const useDictionaryPlants = (id: string) => {
     },
     staleTime: Infinity,
     suspense: true,
+    throwOnError: true,
     select: (data) => {
       const { waterCycle } = data;
+
       const waterOptions = [...Object.entries(waterCycle)].reduce((prev, cur) => {
         const [season, data] = cur as [Season, string];
         const key = SEASONS[season];
