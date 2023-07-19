@@ -34,8 +34,6 @@ export const NumberInput: Story = {
     return (
       <FormInput
         inputMode="numeric"
-        max={MAX_CYCLE_DATE}
-        min={MIN_CYCLE_DATE}
         value={numberValue}
         onKeyDown={keyDownHandler}
         nextCallback={nextCallback}
