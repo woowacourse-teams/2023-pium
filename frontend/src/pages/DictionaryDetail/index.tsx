@@ -1,20 +1,25 @@
+import { AiFillWarning } from 'react-icons/ai';
+import { BsThermometerSun, BsThermometerSnow } from 'react-icons/bs';
+import { GiFragrance } from 'react-icons/gi';
+import { PiPottedPlantFill } from 'react-icons/pi';
+import { WiHumidity } from 'react-icons/wi';
 import DictInfo from 'components/DictInfo';
 import DictInfoSwitch from 'components/DictInfoSwitch';
 import {
+  Accent,
   ContentBox,
-  CycleBox,
   FamilyName,
   HeaderBox,
-  LevelBox,
-  LocationBox,
   ManageInfoBox,
   Name,
   PlantImage,
+  PropBox,
   PropsBox,
   Wrapper,
 } from './DictionaryDetail.style';
 import useDictionaryPlants from 'hooks/useDictionaryPlants';
 import useInvalidIdParams from 'hooks/useInvalidIdParams';
+import { MANAGE_LEVEL_COLOR } from 'constants/index';
 
 const DictionaryDetail = () => {
   const id = useInvalidIdParams();
@@ -45,6 +50,8 @@ const DictionaryDetail = () => {
     <DictInfo.Content key={idx}>{position}</DictInfo.Content>
   ));
 
+  console.log(MANAGE_LEVEL_COLOR[manageLevel]);
+
   return (
     <Wrapper>
       <HeaderBox>
@@ -55,63 +62,77 @@ const DictionaryDetail = () => {
         <PlantImage src={image} alt={name} />
       </HeaderBox>
       <ContentBox>
-        <LevelBox>
+        <div>
           <DictInfo alignment="row">
             <DictInfo.Title>난이도</DictInfo.Title>
-            <DictInfo.Content>{manageLevel}</DictInfo.Content>
+            <DictInfo.Content variant={MANAGE_LEVEL_COLOR[manageLevel]}>
+              {manageLevel}
+            </DictInfo.Content>
           </DictInfo>
-        </LevelBox>
-        <CycleBox>
-          <DictInfoSwitch title="물 주기" optionMap={waterOptions}></DictInfoSwitch>
-        </CycleBox>
-        <LocationBox>
+        </div>
+        <div>
+          <DictInfoSwitch title="물 주기" optionMap={waterOptions} />
+        </div>
+        <div>
           <DictInfo>
             <DictInfo.Title>추천 장소</DictInfo.Title>
             {place}
           </DictInfo>
-        </LocationBox>
+        </div>
 
         <PropsBox>
           {growSpeed !== '' && (
-            <DictInfo>
-              <DictInfo.Title>생장 속도</DictInfo.Title>
-              <DictInfo.Content>{growSpeed}</DictInfo.Content>
-            </DictInfo>
+            <PropBox>
+              <PiPottedPlantFill color="#1BCC66" />
+              <span>
+                생장 속도는 <Accent>{`"${growSpeed}"`}</Accent>이에요🌱
+              </span>
+            </PropBox>
           )}
 
           {requireHumidity !== '' && (
-            <DictInfo>
-              <DictInfo.Title>권장 습도</DictInfo.Title>
-              <DictInfo.Content>{requireHumidity}</DictInfo.Content>
-            </DictInfo>
+            <PropBox>
+              <WiHumidity color="#1BCC66" />
+              <span>
+                권장 습도는 <Accent>{`"${requireHumidity}"`}</Accent>에요💧
+              </span>
+            </PropBox>
           )}
 
           {requireTemp !== '' && (
-            <DictInfo>
-              <DictInfo.Title>권장 온도</DictInfo.Title>
-              <DictInfo.Content>{requireTemp}</DictInfo.Content>
-            </DictInfo>
+            <PropBox>
+              <BsThermometerSun color="#1BCC66" />
+              <span>
+                권장 온도는 <Accent>{`"${requireTemp}"`}</Accent>에요🥰
+              </span>
+            </PropBox>
           )}
 
           {minimumTemp !== '' && (
-            <DictInfo>
-              <DictInfo.Title>겨울 최저 온도</DictInfo.Title>
-              <DictInfo.Content>{minimumTemp}</DictInfo.Content>
-            </DictInfo>
+            <PropBox>
+              <BsThermometerSnow color="#1BCC66" />
+              <span>
+                적어도 <Accent>{`"${minimumTemp}"`}</Accent> 이상에서 키워야 해요!🥶
+              </span>
+            </PropBox>
           )}
 
           {smell !== '' && (
-            <DictInfo>
-              <DictInfo.Title>냄새</DictInfo.Title>
-              <DictInfo.Content>{smell}</DictInfo.Content>
-            </DictInfo>
+            <PropBox>
+              <GiFragrance color="#1BCC66" />
+              <span>
+                냄새는 <Accent>{`"${smell}"`}</Accent>이에요!🪄
+              </span>
+            </PropBox>
           )}
 
           {poison !== '' && (
-            <DictInfo>
-              <DictInfo.Title>독성</DictInfo.Title>
-              <DictInfo.Content>{poison}</DictInfo.Content>
-            </DictInfo>
+            <PropBox>
+              <AiFillWarning color="#EB4D3D" />
+              <span>
+                독성은 <Accent>{`"${poison}"`}</Accent> 이에요!🚨
+              </span>
+            </PropBox>
           )}
         </PropsBox>
 
