@@ -48,8 +48,7 @@ public class PetPlantMapper {
                 .daySince(daySince)
                 .build();
     }
-
-
+    
     public static SinglePetPlantResponse toSinglePetPlantResponse(PetPlant petPlant, Long daySince) {
         return SinglePetPlantResponse.builder()
                 .id(petPlant.getId())

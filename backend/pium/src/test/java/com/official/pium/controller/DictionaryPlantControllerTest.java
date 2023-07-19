@@ -1,21 +1,11 @@
 package com.official.pium.controller;
 
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import com.official.pium.fixture.DictionaryPlantFixture;
 import com.official.pium.fixture.DictionaryPlantFixture.RESPONSE;
 import com.official.pium.service.DictionaryPlantService;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -24,6 +14,16 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -62,11 +62,10 @@ class DictionaryPlantControllerTest {
 
     @Test
     void 사전_식물_검색이_성공하면_OK를_반환한다() throws Exception {
-        DataResponse<List<DictionaryPlantSearchResponse>> 식물들 = DictionaryPlantFixture.RESPONSE.식물들;
+        DataResponse<List<DictionaryPlantSearchResponse>> 식물들 = RESPONSE.식물들;
 
-        given(
-                dictionaryPlantService.search(any())
-        ).willReturn(식물들);
+        given(dictionaryPlantService.search(any()))
+                .willReturn(식물들);
 
         mockMvc.perform(get("/dictionary-plants?name=스투키"))
                 .andExpect(status().isOk())

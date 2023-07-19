@@ -2,7 +2,9 @@ package com.official.pium.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.service.PetPlantService;
+import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.SinglePetPlantResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -12,9 +14,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_등록_요청;
 import static com.official.pium.fixture.PetPlantFixture.RESPONSE;
@@ -51,7 +53,7 @@ class PetPlantControllerTest {
             mockMvc.perform(post("/pet-plants")
                             .content(objectMapper.writeValueAsString(피우미_등록_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andExpect(MockMvcResultMatchers.status().isCreated())
+                    .andExpect(status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
                     .andDo(print());
         }
@@ -80,11 +82,12 @@ class PetPlantControllerTest {
 
         @Test
         void 전부_조회하면_200을_반환한다() throws Exception {
+            DataResponse<List<SinglePetPlantResponse>> response = RESPONSE.식물_전체조회_응답;
             given(petPlantService.readAll(any()))
                     .willReturn(RESPONSE.식물_전체조회_응답);
 
             mockMvc.perform(get("/pet-plants"))
-                    .andExpect(MockMvcResultMatchers.status().isOk())
+                    .andExpect(status().isOk())
                     .andDo(print());
         }
     }
