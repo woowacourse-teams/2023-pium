@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import Main from 'pages/Main';
@@ -15,7 +16,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.DICT,
-        element: <DictionaryDetail />,
+        element: (
+          <Suspense fallback={<div>로딩중입니다.</div>}>
+            <DictionaryDetail />
+          </Suspense>
+        ),
       },
     ],
   },
