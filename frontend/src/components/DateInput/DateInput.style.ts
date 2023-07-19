@@ -3,6 +3,8 @@ import { styled } from 'styled-components';
 export const Wrapper = styled.div`
   position: relative;
   display: flex;
+  align-items: center;
+  width: 100%;
 `;
 
 export const DateValue = styled.label`
@@ -12,7 +14,7 @@ export const DateValue = styled.label`
 
   display: inline-block;
 
-  font: 500 2rem/3.6rem 'NanumSquareRound';
+  font: 500 1.8rem/2.2rem 'NanumSquareRound';
 `;
 
 export const Date = styled.input.attrs({ type: 'date' })`
