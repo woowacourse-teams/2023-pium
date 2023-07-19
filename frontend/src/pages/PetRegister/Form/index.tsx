@@ -2,6 +2,7 @@ import type { DictionaryPlant } from 'types/api/dictionary';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import DateInput from 'components/DateInput';
+import FormInput from 'components/FormInput';
 import FormInputBox from 'components/FormInputBox';
 import Image from 'components/Image';
 import Select from 'components/Select';
@@ -29,7 +30,6 @@ const PetRegisterForm = () => {
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET', key: 'nickname', value });
-    showNextElement(0);
   };
 
   const setBirthDate = (value: string) => {
@@ -44,7 +44,6 @@ const PetRegisterForm = () => {
 
   const setWaterCycle = ({ target: { valueAsNumber } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET_NUMBER', key: 'waterCycle', value: valueAsNumber });
-    showNextElement(3);
   };
 
   const setFlowerpot = (value: string) => {
@@ -93,22 +92,30 @@ const PetRegisterForm = () => {
         <Stack topIndex={topIndex}>
           <Stack.Element height={stackElementHeight}>
             <FormInputBox title="별명이 뭔가요?" status={getStatus(0)}>
-              <input value={form.nickname} onChange={setNickname}></input>
+              <FormInput
+                value={form.nickname}
+                onChange={setNickname}
+                nextCallback={() => showNextElement(0)}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={stackElementHeight}>
             <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
-              <DateInput date={form.birthDate} onChange={setBirthDate} />
+              <DateInput value={form.birthDate} onChange={setBirthDate} />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={stackElementHeight}>
             <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getStatus(2)}>
-              <DateInput date={form.lastWaterDate} onChange={setLastWaterDate} />
+              <DateInput value={form.lastWaterDate} onChange={setLastWaterDate} />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={stackElementHeight}>
             <FormInputBox title="며칠 주기로 물을 주나요?" status={getStatus(3)}>
-              <input type="text" value={form.waterCycle} onChange={setWaterCycle}></input>
+              <FormInput
+                value={form.waterCycle}
+                onChange={setWaterCycle}
+                nextCallback={() => showNextElement(3)}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={stackElementHeight}>
