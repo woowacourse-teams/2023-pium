@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 import {
   InputArea,
   ResultItem,
@@ -18,6 +19,7 @@ import Dictionary from '../../queries/dictionaryPlants';
 const SearchBox = () => {
   const [searchName, setSearchName] = useState('');
   const queryName = useDebounce<string>(searchName, 200);
+  const navigate = useNavigate();
 
   const { data: searchResults } = Dictionary.useSearchName(queryName);
 
@@ -27,13 +29,22 @@ const SearchBox = () => {
     setSearchName(value);
   };
 
-  const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
-    if (key !== 'Enter') return;
-    console.log('searching...');
+  const search = () => {
+    if (!searchName || !searchResults) return;
+
+    const samePlant = searchResults.find(({ name }) => name === searchName);
+
+    if (!samePlant) {
+      navigate(`/dict?search=${searchName}`);
+      return;
+    }
+
+    navigate(`/dict/${samePlant.id}`);
   };
 
-  const searchOnClick = () => {
-    console.log('searching...');
+  const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
+    if (key !== 'Enter') return;
+    search();
   };
 
   return (
@@ -46,7 +57,7 @@ const SearchBox = () => {
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
         />
-        <EnterButton type="button" onClick={searchOnClick}>
+        <EnterButton type="button" onClick={search}>
           <BiRightArrowAlt size="32" color="#333333" />
         </EnterButton>
       </InputArea>
