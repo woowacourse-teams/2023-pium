@@ -11,8 +11,8 @@ import {
 
 interface FormInputBoxProps extends PropsWithChildren {
   title: string;
-  require: boolean;
-  status: InputStatus;
+  require?: boolean;
+  status?: InputStatus;
   error?: string;
 }
 
