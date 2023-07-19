@@ -1,6 +1,18 @@
 import DictInfo from 'components/DictInfo';
 import DictInfoSwitch from 'components/DictInfoSwitch';
-import * as S from './DictionaryDetail.style';
+import {
+  ContentBox,
+  CycleBox,
+  FamilyName,
+  HeaderBox,
+  LevelBox,
+  LocationBox,
+  ManageInfoBox,
+  Name,
+  PlantImage,
+  PropsBox,
+  Wrapper,
+} from './DictionaryDetail.style';
 import useDictionaryPlants from 'hooks/useDictionaryPlants';
 import useInvalidIdParams from 'hooks/useInvalidIdParams';
 
@@ -9,7 +21,9 @@ const DictionaryDetail = () => {
 
   const { dictionary } = useDictionaryPlants(id);
 
-  if (!dictionary) return null;
+  if (!dictionary) {
+    return null;
+  }
 
   const {
     postingPlace,
@@ -32,32 +46,32 @@ const DictionaryDetail = () => {
   ));
 
   return (
-    <S.Wrapper>
-      <S.HeaderBox>
+    <Wrapper>
+      <HeaderBox>
         <div>
-          <S.FamilyName>{familyName}</S.FamilyName>
-          <S.Name>{name}</S.Name>
+          <FamilyName>{familyName}</FamilyName>
+          <Name>{name}</Name>
         </div>
-        <S.PlantImage src={image} alt={name} />
-      </S.HeaderBox>
-      <S.ContentBox>
-        <S.LevelBox>
+        <PlantImage src={image} alt={name} />
+      </HeaderBox>
+      <ContentBox>
+        <LevelBox>
           <DictInfo alignment="row">
             <DictInfo.Title>난이도</DictInfo.Title>
             <DictInfo.Content>{manageLevel}</DictInfo.Content>
           </DictInfo>
-        </S.LevelBox>
-        <S.CycleBox>
+        </LevelBox>
+        <CycleBox>
           <DictInfoSwitch title="물 주기" optionMap={waterOptions}></DictInfoSwitch>
-        </S.CycleBox>
-        <S.LocationBox>
+        </CycleBox>
+        <LocationBox>
           <DictInfo>
             <DictInfo.Title>추천 장소</DictInfo.Title>
             {place}
           </DictInfo>
-        </S.LocationBox>
+        </LocationBox>
 
-        <S.PropsBox>
+        <PropsBox>
           {growSpeed !== '' && (
             <DictInfo>
               <DictInfo.Title>생장 속도</DictInfo.Title>
@@ -99,14 +113,14 @@ const DictionaryDetail = () => {
               <DictInfo.Content>{poison}</DictInfo.Content>
             </DictInfo>
           )}
-        </S.PropsBox>
+        </PropsBox>
 
-        <S.ManageInfoBox>
+        <ManageInfoBox>
           <p>특별 관리 정보</p>
           <span>{specialManageInfo}</span>
-        </S.ManageInfoBox>
-      </S.ContentBox>
-    </S.Wrapper>
+        </ManageInfoBox>
+      </ContentBox>
+    </Wrapper>
   );
 };
 
