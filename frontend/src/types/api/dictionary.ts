@@ -1,3 +1,4 @@
+import { Season } from 'types/plants';
 import { DataResponse } from './DataResponse';
 
 export interface DictionaryPlant {
@@ -14,12 +15,7 @@ export interface DictionaryPlant {
   requireHumidity: string;
   postingPlace: string[];
   specialManageInfo: string;
-  waterCycle: {
-    spring: string;
-    summer: string;
-    autumn: string;
-    winter: string;
-  };
+  waterCycle: Record<Season, string>;
 }
 
 export type DictNameSearchResult = Pick<DictionaryPlant, 'id' | 'name' | 'image'>;
