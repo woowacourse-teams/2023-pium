@@ -11,13 +11,21 @@
     },
     "ecmaVersion": 2016
   },
-  "plugins": ["react", "react-hooks", "@typescript-eslint", "import", "jsx-a11y"],
+  "plugins": [
+    "react",
+    "react-hooks",
+    "@typescript-eslint",
+    "import",
+    "jsx-a11y",
+    "@tanstack/query"
+  ],
   "extends": [
     "prettier",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:jsx-a11y/recommended"
+    "plugin:jsx-a11y/recommended",
+    "plugin:@tanstack/eslint-plugin-query/recommended"
   ],
   "ignorePatterns": ["webpack.config.js", "mockServiceWorker.js"],
   "rules": {

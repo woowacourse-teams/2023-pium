@@ -28,6 +28,7 @@ public class PetPlantSupport {
     }
 
     public final class PetPlantBuilder {
+
         private Member member;
         private DictionaryPlant dictionaryPlant;
 

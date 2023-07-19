@@ -6,14 +6,16 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantRequest;
 import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.SinglePetPlantResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -32,22 +34,29 @@ public class PetPlantService {
         PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, member);
         petPlantRepository.save(petPlant);
 
-        long daySince = getDaySince(petPlant);
-        long nextWaterDay = getNextWaterDay(petPlant);
+        long daySince = petPlant.calculateDaySince(LocalDate.now());
+        long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
 
         return PetPlantMapper.toPetPlantResponse(petPlant, nextWaterDay, daySince);
     }
 
-    private long getNextWaterDay(PetPlant petPlant) {
-        LocalDate nextWaterDate = getNextWaterDate(petPlant);
-        return ChronoUnit.DAYS.between(LocalDate.now(), nextWaterDate);
+    public PetPlantResponse read(Long id) {
+        PetPlant petPlant = petPlantRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
+
+        Long nextWaterDay = petPlant.calculateNextWaterDay(LocalDate.now());
+        Long daySince = petPlant.calculateDaySince(LocalDate.now());
+
+        return PetPlantMapper.toPetPlantResponse(petPlant, nextWaterDay, daySince);
     }
 
-    private LocalDate getNextWaterDate(PetPlant petPlant) {
-        return petPlant.getLastWaterDate().plusDays(petPlant.getWaterCycle());
-    }
+    public DataResponse<List<SinglePetPlantResponse>> readAll(Member member) {
+        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId());
 
-    private long getDaySince(PetPlant petPlant) {
-        return ChronoUnit.DAYS.between(petPlant.getBirthDate(), LocalDate.now());
+        List<SinglePetPlantResponse> singlePetPlantResponses = petPlants.stream()
+                .map(petPlant -> PetPlantMapper.toSinglePetPlantResponse(petPlant, petPlant.calculateDaySince(LocalDate.now())))
+                .toList();
+
+        return DataResponse.<List<SinglePetPlantResponse>>builder().data(singlePetPlantResponses).build();
     }
 }
