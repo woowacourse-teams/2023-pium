@@ -6,7 +6,7 @@ export const Wrapper = styled.section`
   gap: 24px;
 
   width: 320px;
-  margin: 0 auto 24px auto;
+  margin: 48px auto;
 `;
 
 export const HeaderBox = styled.section`
@@ -39,44 +39,57 @@ export const ContentBox = styled.section`
   display: flex;
   flex-direction: column;
   gap: 35px;
-`;
 
-export const LevelBox = styled.div`
-  font: ${(props) => props.theme.font.dictContent};
+  div {
+    font: ${(props) => props.theme.font.dictContent};
 
-  p {
-    font: ${(props) => props.theme.font.dictTitle};
+    p {
+      font: ${(props) => props.theme.font.dictTitle};
+    }
   }
 `;
-export const CycleBox = styled.div`
-  font: ${(props) => props.theme.font.dictContent};
 
-  p {
-    font: ${(props) => props.theme.font.dictTitle};
-  }
-`;
-export const LocationBox = styled.div`
-  font: ${(props) => props.theme.font.dictContent};
-
-  p {
-    font: ${(props) => props.theme.font.dictTitle};
-  }
-`;
 export const PropsBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  row-gap: 35px;
-  font: ${(props) => props.theme.font.dictContent};
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 
-  p {
-    font: ${(props) => props.theme.font.dictTitle};
+  padding: 16px;
+
+  color: ${(props) => props.theme.color.sub};
+
+  background: ${(props) => props.theme.color.primary + '0c'};
+  border-radius: 8px;
+`;
+
+export const PropBox = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  span {
+    font: ${(props) => props.theme.font.dictContent};
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
   }
 `;
+
+export const Accent = styled.span`
+  color: ${(props) => props.theme.color.primary};
+`;
+
 export const ManageInfoBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 10px;
+
   width: 100%;
+  padding: 16px;
+
+  background: #ececec;
+  border-radius: 8px;
 
   p {
     font: ${(props) => props.theme.font.dictTitle};
