@@ -67,7 +67,7 @@ public class PetPlantFixture {
                         List.of(
                                 SinglePetPlantResponse.builder()
                                         .nickname("엄청 큰 피우미")
-                                        .imageUrl("https://imgae.com")
+                                        .imageUrl("https://image.com")
                                         .dictionaryPlantName("스투키")
                                         .birthDate(LocalDate.now())
                                         .daySince(3L)
