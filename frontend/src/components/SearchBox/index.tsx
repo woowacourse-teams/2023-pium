@@ -1,4 +1,3 @@
-import Dictionary from 'queries/dictionaryPlants';
 import { useState } from 'react';
 import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
 import {
@@ -13,6 +12,7 @@ import {
   ResultMessage,
 } from './SearchBox.style';
 import { MESSAGE } from 'constants/index';
+import Dictionary from '../../queries/dictionaryPlants';
 
 const SearchBox = () => {
   const [searchName, setSearchName] = useState('');
