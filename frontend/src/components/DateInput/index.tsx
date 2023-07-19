@@ -3,11 +3,11 @@ import { Date, Wrapper, DateValue } from './DateInput.style';
 import { getToday, convertDateKorYear } from 'utils/date';
 
 interface DateInputProps {
-  date: string;
-  onChange?: (date: string) => void;
+  value: string;
+  onChange?: (value: string) => void;
 }
 
-const DateInput = ({ date, onChange }: DateInputProps) => {
+const DateInput = ({ value, onChange }: DateInputProps) => {
   const today = getToday();
   const dateId = useId();
 
@@ -23,8 +23,8 @@ const DateInput = ({ date, onChange }: DateInputProps) => {
 
   return (
     <Wrapper>
-      <DateValue htmlFor={dateId}>{convertDateKorYear(date)}</DateValue>
-      <Date id={dateId} type="date" value={date} onChange={changeHandler} max={today} />
+      <DateValue htmlFor={dateId}>{convertDateKorYear(value)}</DateValue>
+      <Date id={dateId} type="date" onChange={changeHandler} />
     </Wrapper>
   );
 };

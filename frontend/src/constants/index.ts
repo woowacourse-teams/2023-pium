@@ -10,3 +10,8 @@ export const ERROR = Object.freeze({
 export const GUIDE = Object.freeze({
   search: '피움에 등록된 식물을 검색해 보세요!',
 });
+
+export const NUMBER = Object.freeze({
+  MAX_CYCLE_DATE: 365,
+  MIN_CYCLE_DATE: 1,
+});

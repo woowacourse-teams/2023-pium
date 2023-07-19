@@ -6,6 +6,7 @@ import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse.WaterCycleResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
+
 import java.util.List;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -60,14 +61,24 @@ public class DictionaryPlantFixture {
                                         .build()
                         ).build();
 
-        public static DataResponse<List<DictionaryPlantSearchResponse>> 식물들 =
+        public static DataResponse<List<DictionaryPlantSearchResponse>> 스투키_산세베리아_율마_검색결과 =
                 DataResponse.<List<DictionaryPlantSearchResponse>>builder()
                         .data(
                                 List.of(
                                         DictionaryPlantSearchResponse.builder()
                                                 .id(1L)
                                                 .name("스투키")
-                                                .image("image")
+                                                .image("http://image.com")
+                                                .build(),
+                                        DictionaryPlantSearchResponse.builder()
+                                                .id(2L)
+                                                .name("산세베리아")
+                                                .image("http://image.com")
+                                                .build(),
+                                        DictionaryPlantSearchResponse.builder()
+                                                .id(3L)
+                                                .name("율마")
+                                                .image("http://image.com")
                                                 .build()
                                 )
                         )

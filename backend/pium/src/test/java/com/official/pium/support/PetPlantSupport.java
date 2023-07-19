@@ -1,17 +1,18 @@
 package com.official.pium.support;
 
-import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
-import static com.official.pium.fixture.MemberFixture.주노;
-
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
-import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+
+import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
+import static com.official.pium.fixture.MemberFixture.주노;
 
 @Component
 @RequiredArgsConstructor

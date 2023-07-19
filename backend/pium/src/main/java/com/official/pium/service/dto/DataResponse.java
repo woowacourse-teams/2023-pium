@@ -9,5 +9,4 @@ import lombok.*;
 public class DataResponse<T> {
 
     private T data;
-
 }

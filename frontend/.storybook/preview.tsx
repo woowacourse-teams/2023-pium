@@ -1,6 +1,8 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import type { Preview } from '@storybook/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
+import React from 'react';
 import { storybookHandlers } from '../src/mocks/storybookHandlers';
 import { decorateGlobalStyle } from './decorators';
 
@@ -21,8 +23,17 @@ const customViewPort = {
   },
 };
 
+const queryClient = new QueryClient();
+
 const preview: Preview = {
-  decorators: [decorateGlobalStyle],
+  decorators: [
+    decorateGlobalStyle,
+    (Story) => (
+      <QueryClientProvider client={queryClient}>
+        <Story />
+      </QueryClientProvider>
+    ),
+  ],
   parameters: {
     viewport: {
       viewports: { ...INITIAL_VIEWPORTS, ...customViewPort },
