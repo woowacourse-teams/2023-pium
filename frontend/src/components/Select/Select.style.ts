@@ -45,6 +45,7 @@ export const IconArea = styled.div<IconAreaProps>`
 
 export const Backdrop = styled.div`
   position: fixed;
+  z-index: 80;
   top: 0;
   left: 0;
 
@@ -54,12 +55,14 @@ export const Backdrop = styled.div`
 
 export const OptionBox = styled.ul`
   position: absolute;
+  z-index: 90;
   top: 32px;
 
   width: 100%;
 
+  background: white;
   border-radius: 4px;
-  box-shadow: 0 0 4px ${(props) => props.theme.color.sub + '33'};
+  box-shadow: 0 0 6px ${(props) => props.theme.color.sub + '40'};
 `;
 
 export const OptionItem = styled.li`
