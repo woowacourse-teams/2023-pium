@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { getToday } from 'utils/date';
+import useDateInput from 'hooks/useDateInput';
 import DateInput from '.';
 
 const meta: Meta<typeof DateInput> = {
@@ -11,7 +11,9 @@ export default meta;
 type Story = StoryObj<typeof DateInput>;
 
 export const Default: Story = {
-  args: {
-    initialValue: getToday(),
+  render: () => {
+    const { date, today, changeHandler } = useDateInput();
+
+    return <DateInput value={date} max={today} onChange={changeHandler} />;
   },
 };
