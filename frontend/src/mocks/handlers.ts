@@ -21,7 +21,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
 
   return [
-    rest.get(`${DICT}?name=:userInput`, (req, res, ctx) => {
+    rest.get('/dictionary-plants', (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }
