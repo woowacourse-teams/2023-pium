@@ -90,7 +90,7 @@ const PetRegisterForm = () => {
         <DictionaryPlantImageArea>
           <Image size="160px" src={dictionaryPlant?.image} />
         </DictionaryPlantImageArea>
-        <Stack topIndex={8}>
+        <Stack topIndex={topIndex}>
           <Stack.Element height={stackElementHeight}>
             <FormInputBox title="별명이 뭔가요?" status={getStatus(0)}>
               <FormInput

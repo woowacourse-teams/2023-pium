@@ -33,8 +33,8 @@ const initialPetPlantForm: PetPlantForm = {
   waterCycle: 7,
   light: '',
   wind: '',
-  birthDate: '2023-07-08',
-  lastWaterDate: '2023-07-10',
+  birthDate: '',
+  lastWaterDate: '',
 } as const;
 
 const petPlantFormReducer = (petPlantForm: PetPlantForm, action: PetPlantFormAction) => {
