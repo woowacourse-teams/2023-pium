@@ -58,7 +58,6 @@ module.exports = {
     port: 8282,
     static: {
       directory: resolve(__dirname, 'public'),
-      publicPath: '.',
     },
     historyApiFallback: true,
   },
