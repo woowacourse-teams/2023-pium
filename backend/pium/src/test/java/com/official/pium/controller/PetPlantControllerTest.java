@@ -1,6 +1,7 @@
 package com.official.pium.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.official.pium.UITest;
 import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantResponse;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @WebMvcTest(controllers = PetPlantController.class)
-class PetPlantControllerTest {
+class PetPlantControllerTest extends UITest {
 
     @Autowired
     private MockMvc mockMvc;
