@@ -54,6 +54,7 @@
     "react-refresh": "^0.14.0",
     "react-refresh-typescript": "^2.0.9",
     "storybook": "^7.0.25",
+    "storybook-addon-react-router-v6": "^1.0.2",
     "stylelint": "^15.10.1",
     "stylelint-config-clean-order": "^5.0.1",
     "stylelint-config-styled-components": "^0.1.1",
