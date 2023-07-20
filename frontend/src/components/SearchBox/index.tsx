@@ -16,10 +16,10 @@ import dictionaryPlantsAPI from 'apis/dictionaryPlants';
 import { MESSAGE } from 'constants/index';
 
 interface SearchBoxProps {
-  onSelectResultItem?: (id: number) => void;
+  onSelect?: (id: number) => void;
 }
 
-const SearchBox = ({ onSelectResultItem }: SearchBoxProps) => {
+const SearchBox = ({ onSelect }: SearchBoxProps) => {
   const [searchName, setSearchName] = useState('');
   const [searchResults, setSearchResults] = useState<DictNameSearchResult[] | null>(null);
   const timeoutId = useRef(0);
@@ -65,7 +65,7 @@ const SearchBox = ({ onSelectResultItem }: SearchBoxProps) => {
   };
 
   const selectResultItem = (id: number) => () => {
-    onSelectResultItem?.(id);
+    onSelect?.(id);
   };
 
   return (
