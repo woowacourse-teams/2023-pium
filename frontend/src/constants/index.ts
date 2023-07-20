@@ -13,6 +13,7 @@ export const ERROR = {
 export const GUIDE = {
   search: '피움에 등록된 식물을 검색해 보세요!',
 } as const;
+
 export const URL_PATH = {
   MAIN: '/',
   DICT: `/dict/:id`,
@@ -31,4 +32,9 @@ export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
   초보자: 'default',
   경험자: 'primary',
   전문가: 'accent',
+};
+
+export const NUMBER = {
+  MAX_CYCLE_DATE: 365,
+  MIN_CYCLE_DATE: 1,
 };
