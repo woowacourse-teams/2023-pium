@@ -16,8 +16,8 @@ import {
   FormArea,
   Wrapper,
 } from './Form.style';
-import dictionaryPlantsAPI from 'apis/dictionaryPlants';
-import petPlantsAPI from 'apis/petPlants';
+import DictAPI from 'apis/dictionary';
+import petPlantsAPI from 'apis/pet';
 import { URL_PATH } from 'constants/index';
 import { usePetPlantForm } from './reducer';
 
@@ -90,8 +90,7 @@ const PetRegisterForm = () => {
   };
 
   useEffect(() => {
-    dictionaryPlantsAPI
-      .getDetail(Number(dictionaryPlantId))
+    DictAPI.getDetail(dictionaryPlantId)
       .then(async (response) => {
         if (!response.ok) return;
 
