@@ -191,7 +191,7 @@ const PetRegisterForm = () => {
                   '5m 내 창문이 있어요',
                   '5m 보다 멀리 창문이 있어요',
                   '창문이 없지만 바람이 통해요',
-                  '바람이 안통해요',
+                  '바람이 안 통해요',
                 ]}
                 onChange={setWind}
                 placeholder="통풍을 선택해 주세요"

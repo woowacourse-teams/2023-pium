@@ -24,7 +24,7 @@ const DateInput = ({ value, onChange, placeholder = '날짜를 입력해 주세�
 
   return (
     <Wrapper>
-      <DateValue htmlFor={dateId} placeholder={value === ''}>
+      <DateValue htmlFor={dateId} $placeholder={value === ''}>
         {value ? convertDateKorYear(value) : placeholder}
       </DateValue>
       <Date id={dateId} type="date" onChange={changeHandler} />

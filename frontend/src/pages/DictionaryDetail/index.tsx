@@ -20,6 +20,7 @@ import {
 } from './DictionaryDetail.style';
 import useDictionaryPlants from 'hooks/useDictionaryPlants';
 import useInvalidIdParams from 'hooks/useInvalidIdParams';
+import parseTemperature from 'utils/parseTemperature';
 import { MANAGE_LEVEL_COLOR } from 'constants/index';
 
 const DictionaryDetail = () => {
@@ -51,7 +52,7 @@ const DictionaryDetail = () => {
     <DictInfo.Content key={idx}>{position}</DictInfo.Content>
   ));
 
-  console.log(MANAGE_LEVEL_COLOR[manageLevel]);
+  const { type: tempType, temperature: minTemp } = parseTemperature(minimumTemp);
 
   return (
     <Wrapper>
@@ -112,7 +113,7 @@ const DictionaryDetail = () => {
             <PropBox>
               <BsThermometerSnow color="#1BCC66" />
               <span>
-                적어도 <Accent>{`"${minimumTemp}"`}</Accent> 이상에서 키워야 해요!🥶
+                적어도 <Accent>{`"${minTemp} ${tempType}"`}</Accent> 에서 키워야 해요!🥶
               </span>
             </PropBox>
           )}
@@ -121,7 +122,7 @@ const DictionaryDetail = () => {
             <PropBox>
               <GiFragrance color="#1BCC66" />
               <span>
-                냄새는 <Accent>{`"${smell}"`}</Accent>이에요!🪄
+                냄새는 <Accent>{`"${smell}"`}</Accent>이에요🤧
               </span>
             </PropBox>
           )}

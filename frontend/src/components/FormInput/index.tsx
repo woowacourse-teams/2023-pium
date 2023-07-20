@@ -1,6 +1,6 @@
 import { InputHTMLAttributes } from 'react';
 import { GrLinkNext } from 'react-icons/gr';
-import { IconArea, Input, Wrapper } from './FormInput.style';
+import { Button, Input, Wrapper } from './FormInput.style';
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   nextCallback?: () => void;
@@ -12,7 +12,7 @@ const FormInput = (props: FormInputProps) => {
   return (
     <Wrapper>
       <Input type="text" {...inputProps} />
-      <IconArea>{nextCallback && <GrLinkNext size={16} onClick={nextCallback} />}</IconArea>
+      <Button>{nextCallback && <GrLinkNext size={16} onClick={nextCallback} />}</Button>
     </Wrapper>
   );
 };
