@@ -7,7 +7,9 @@ export const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const DateValue = styled.label`
+export const DateValue = styled.label<{
+  placeholder?: boolean;
+}>`
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0%);
@@ -15,6 +17,7 @@ export const DateValue = styled.label`
   display: inline-block;
 
   font: 500 1.8rem/2.2rem 'NanumSquareRound';
+  color: ${({ placeholder, theme }) => (placeholder ? theme.color.gray : 'black')};
 `;
 
 export const Date = styled.input.attrs({ type: 'date' })`

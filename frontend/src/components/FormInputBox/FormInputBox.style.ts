@@ -1,6 +1,6 @@
 import { InputStatus } from 'types/inputs';
 import { styled } from 'styled-components';
-import theme from 'style/theme.style';
+import theme from '../../style/theme.style';
 
 interface ContentBoxProps {
   status: InputStatus;

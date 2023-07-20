@@ -12,7 +12,7 @@ const useInvalidIdParams = (redirect: Redirect = URL_PATH.MAIN) => {
     throw 'id가 존재하지 않습니다';
   }
 
-  return id;
+  return Number(id);
 };
 
 export default useInvalidIdParams;

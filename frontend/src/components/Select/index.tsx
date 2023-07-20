@@ -6,9 +6,10 @@ interface SelectProps {
   value: string;
   options: string[];
   onChange?: (option: string) => void;
+  placeholder?: string;
 }
 
-const Select = ({ value, options, onChange }: SelectProps) => {
+const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => {
@@ -26,7 +27,9 @@ const Select = ({ value, options, onChange }: SelectProps) => {
 
   return (
     <Wrapper>
-      <SelectedValue onClick={toggle}>{value}</SelectedValue>
+      <SelectedValue onClick={toggle} placeholder={value === ''}>
+        {value || placeholder}
+      </SelectedValue>
       <IconArea rotate={isOpen}>
         <TiArrowSortedDown size={18} />
       </IconArea>
