@@ -7,15 +7,18 @@ export const Wrapper = styled.div`
   justify-content: space-between;
 
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 32px 0;
 `;
 
 export const FormArea = styled.div`
+  overflow: scroll;
   display: flex;
   flex-direction: column;
   align-items: center;
+
   width: 100%;
+  height: 100%;
 `;
 
 export const DictionaryPlantName = styled.p`
