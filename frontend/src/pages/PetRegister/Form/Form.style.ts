@@ -37,7 +37,7 @@ export const Button = styled.button`
   width: 100%;
   height: 40px;
 
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   font-weight: 500;
   color: ${(props) => props.theme.color.sub};
 
