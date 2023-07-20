@@ -1,10 +1,14 @@
 package com.official.pium.service.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
 @Builder
@@ -12,6 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class PetPlantRequest {
 
+    @NotNull
     private Long dictionaryPlantId;
 
     @NotBlank
@@ -23,6 +28,7 @@ public class PetPlantRequest {
     @NotBlank
     private String flowerpot;
 
+    @NotNull
     private Integer waterCycle;
 
     @NotBlank
@@ -31,9 +37,11 @@ public class PetPlantRequest {
     @NotBlank
     private String wind;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
+    @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
 }
