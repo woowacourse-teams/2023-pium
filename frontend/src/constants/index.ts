@@ -1,6 +1,8 @@
 import { ManageLevel, Season, SeasonKor } from 'types/plants';
 import { TagVariantType } from 'components/Tag';
 
+export const BASE_URL = 'http://api.pium.life';
+
 export const MESSAGE = {
   noSearchResult: '아직 사전에 등록된 식물이 없어요 😅',
 } as const;
