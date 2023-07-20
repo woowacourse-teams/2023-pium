@@ -1,6 +1,6 @@
-import type { PetPlantForm } from 'types';
+import { NewPetPlantRequest } from 'types/api/petPlant';
 
-const postForm = (form: PetPlantForm) => {
+const postForm = (form: NewPetPlantRequest) => {
   return fetch('/pet-plants', { method: 'POST', body: JSON.stringify({ ...form }) });
 };
 
