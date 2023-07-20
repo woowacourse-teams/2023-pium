@@ -6,7 +6,7 @@ const PetRegisterSearch = () => {
   const navigate = useNavigate();
 
   const navigateRegister = (id: number) => {
-    navigate(`/pet-register/${id}`);
+    navigate(`/pet/register/${id}`);
   };
 
   return (
