@@ -6,7 +6,7 @@ import Root from 'pages/Root';
 
 const router = createBrowserRouter([
   {
-    path: '',
+    path: '/',
     element: <Root />,
     children: [
       {
@@ -14,11 +14,11 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: 'pet-register',
+        path: 'pet/register',
         element: <PetRegisterSearch />,
       },
       {
-        path: 'pet-register/:id',
+        path: 'pet/register/:id',
         element: <PetRegisterForm />,
       },
     ],
