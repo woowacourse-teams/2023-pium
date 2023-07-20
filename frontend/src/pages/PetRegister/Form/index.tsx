@@ -21,7 +21,8 @@ import petPlantsAPI from 'apis/petPlants';
 import { usePetPlantForm } from './reducer';
 
 const PetRegisterForm = () => {
-  const { id: dictionaryPlantId } = useParams();
+  const { id } = useParams();
+  const dictionaryPlantId = Number(id);
   const { topIndex, showNextElement, isLastElementShown } = useStack(8);
   const { form, dispatch } = usePetPlantForm();
 
@@ -31,6 +32,10 @@ const PetRegisterForm = () => {
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET', key: 'nickname', value });
+  };
+
+  const validateNickname = () => {
+    if (form.nickname !== '') showNextElement(0);
   };
 
   const setBirthDate = (value: string) => {
@@ -43,8 +48,12 @@ const PetRegisterForm = () => {
     showNextElement(2);
   };
 
-  const setWaterCycle = ({ target: { valueAsNumber } }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'SET_NUMBER', key: 'waterCycle', value: valueAsNumber });
+  const setWaterCycle = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'SET_NUMBER_INPUT', key: 'waterCycle', value });
+  };
+
+  const validateWaterCycle = () => {
+    if (form.waterCycle !== '') showNextElement(3);
   };
 
   const setFlowerpot = (value: string) => {
@@ -68,17 +77,26 @@ const PetRegisterForm = () => {
   };
 
   const submit = () => {
-    petPlantsAPI.postForm(form).catch(console.log);
+    const submitForm = {
+      ...form,
+      dictionaryPlantId,
+      waterCycle: Number(form.waterCycle),
+    };
+
+    petPlantsAPI.postForm(submitForm).catch();
   };
 
   useEffect(() => {
     dictionaryPlantsAPI
       .getDetail(Number(dictionaryPlantId))
-      .then((response) => {
+      .then(async (response) => {
         if (!response.ok) return;
-        response.json().then(setDictionaryPlant).catch(console.log);
+
+        const data: DictionaryPlant = await response.json();
+        setDictionaryPlant(data);
+        dispatch({ type: 'SET', key: 'nickname', value: data.name });
       })
-      .catch(console.log);
+      .catch();
   }, []);
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
@@ -96,7 +114,7 @@ const PetRegisterForm = () => {
               <FormInput
                 value={form.nickname}
                 onChange={setNickname}
-                nextCallback={() => showNextElement(0)}
+                nextCallback={validateNickname}
               />
             </FormInputBox>
           </Stack.Element>
@@ -115,7 +133,7 @@ const PetRegisterForm = () => {
               <FormInput
                 value={form.waterCycle}
                 onChange={setWaterCycle}
-                nextCallback={() => showNextElement(3)}
+                nextCallback={validateWaterCycle}
               />
             </FormInputBox>
           </Stack.Element>
@@ -180,7 +198,7 @@ const PetRegisterForm = () => {
       </FormArea>
       <ButtonArea>
         <Button type="submit" onClick={submit} disabled={!isLastElementShown}>
-          확인
+          등록하기
         </Button>
       </ButtonArea>
     </Wrapper>
