@@ -47,6 +47,8 @@ const SearchBox = () => {
     search();
   };
 
+  const hasSearchResult = searchResults && searchName !== '';
+
   return (
     <Wrapper>
       <InputArea>
@@ -61,8 +63,7 @@ const SearchBox = () => {
           <BiRightArrowAlt size="32" color="#333333" />
         </EnterButton>
       </InputArea>
-      {searchResults &&
-        searchName !== '' &&
+      {hasSearchResult &&
         (searchResults.length ? (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
