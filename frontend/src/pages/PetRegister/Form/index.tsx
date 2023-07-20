@@ -1,6 +1,6 @@
 import type { DictionaryPlant } from 'types/api/dictionary';
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import DateInput from 'components/DateInput';
 import FormInput from 'components/FormInput';
 import FormInputBox from 'components/FormInputBox';
@@ -18,13 +18,15 @@ import {
 } from './Form.style';
 import dictionaryPlantsAPI from 'apis/dictionaryPlants';
 import petPlantsAPI from 'apis/petPlants';
+import { URL_PATH } from 'constants/index';
 import { usePetPlantForm } from './reducer';
 
 const PetRegisterForm = () => {
   const { id } = useParams();
   const dictionaryPlantId = Number(id);
-  const { topIndex, showNextElement, isLastElementShown } = useStack(8);
+  const { topIndex, showNextElement } = useStack(8);
   const { form, dispatch } = usePetPlantForm();
+  const navigate = useNavigate();
 
   const [dictionaryPlant, setDictionaryPlant] = useState<DictionaryPlant | null>(null);
 
@@ -84,6 +86,7 @@ const PetRegisterForm = () => {
     };
 
     petPlantsAPI.postForm(submitForm).catch();
+    navigate(URL_PATH.MAIN);
   };
 
   useEffect(() => {
