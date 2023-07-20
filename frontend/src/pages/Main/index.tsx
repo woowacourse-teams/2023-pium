@@ -1,4 +1,5 @@
 import { CgEnter } from 'react-icons/cg';
+import { useNavigate } from 'react-router-dom';
 import SearchBox from 'components/SearchBox';
 import {
   ButtonArea,
@@ -9,13 +10,20 @@ import {
   StartButton,
   Wrapper,
 } from './Main.style';
+import { URL_PATH } from 'constants/index';
 import logo from 'assets/logo.svg';
 
 const Main = () => {
+  const navigate = useNavigate();
+
+  const navigateRegister = () => {
+    navigate(URL_PATH.PET_REGISTER_SEARCH);
+  };
+
   return (
     <Wrapper>
       <ButtonArea>
-        <StartButton>
+        <StartButton onClick={navigateRegister}>
           시작하기
           <CgEnter />
         </StartButton>
