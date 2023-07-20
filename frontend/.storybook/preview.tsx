@@ -3,6 +3,7 @@ import type { Preview } from '@storybook/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import React from 'react';
+import { withRouter } from 'storybook-addon-react-router-v6';
 import { storybookHandlers } from '../src/mocks/storybookHandlers';
 import { decorateGlobalStyle } from './decorators';
 
@@ -33,6 +34,7 @@ const preview: Preview = {
         <Story />
       </QueryClientProvider>
     ),
+    withRouter,
   ],
   parameters: {
     viewport: {
