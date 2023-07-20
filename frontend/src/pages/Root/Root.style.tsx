@@ -11,7 +11,5 @@ export const PageArea = styled.main`
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
   height: 100%;
-  padding: 0 16px;
-
   background: white;
 `;
