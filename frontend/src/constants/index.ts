@@ -32,9 +32,9 @@ export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
   초보자: 'default',
   경험자: 'primary',
   전문가: 'accent',
-};
+} as const;
 
 export const NUMBER = {
   MAX_CYCLE_DATE: 365,
   MIN_CYCLE_DATE: 1,
-};
+}; as const;
