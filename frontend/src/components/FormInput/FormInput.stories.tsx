@@ -37,7 +37,7 @@ export const NumberInput: Story = {
         value={numberValue}
         onKeyDown={keyDownHandler}
         nextCallback={nextCallback}
-        onChange={changeCallback}
+        onChange={({ target: { value } }) => changeCallback(value)}
       />
     );
   },
