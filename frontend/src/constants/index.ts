@@ -37,4 +37,4 @@ export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
 export const NUMBER = {
   MAX_CYCLE_DATE: 365,
   MIN_CYCLE_DATE: 1,
-}; as const;
+} as const;
