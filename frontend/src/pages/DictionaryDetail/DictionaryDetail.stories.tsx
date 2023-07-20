@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { Suspense } from 'react';
 import DictionaryDetail from '.';
 
 const meta: Meta<typeof DictionaryDetail> = {
@@ -9,6 +10,15 @@ const meta: Meta<typeof DictionaryDetail> = {
       routeParams: { id: '1' },
     },
   },
+  decorators: [
+    (Story) => {
+      return (
+        <Suspense fallback={<p>로딩중...</p>}>
+          <Story />
+        </Suspense>
+      );
+    },
+  ],
 };
 
 export default meta;
