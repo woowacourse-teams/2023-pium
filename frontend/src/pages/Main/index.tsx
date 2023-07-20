@@ -1,3 +1,4 @@
+import type { DictNameSearchResult } from 'types/api/dictionary';
 import { CgEnter } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
 import SearchBox from 'components/SearchBox';
@@ -20,6 +21,23 @@ const Main = () => {
     navigate(URL_PATH.PET_REGISTER_SEARCH);
   };
 
+  const goToDictDetailPage = (plantId: number) => {
+    navigate(`/dict/${plantId}`);
+  };
+
+  const search = (searchName: string, searchResults?: DictNameSearchResult[]) => {
+    if (!searchName || !searchResults) return;
+
+    const samePlant = searchResults.find(({ name }) => name === searchName);
+
+    if (!samePlant) {
+      navigate(`/dict?search=${searchName}`);
+      return;
+    }
+
+    goToDictDetailPage(samePlant.id);
+  };
+
   return (
     <Wrapper>
       <ButtonArea>
@@ -32,7 +50,7 @@ const Main = () => {
       <Logo src={logo} alt="logo" />
       <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
       <SearchBoxArea>
-        <SearchBox />
+        <SearchBox onEnter={search} onNextClick={search} onResultClick={goToDictDetailPage} />
       </SearchBoxArea>
     </Wrapper>
   );
