@@ -16,7 +16,11 @@ import useDebounce from 'hooks/useDebounce';
 import { MESSAGE } from 'constants/index';
 import Dictionary from '../../queries/dictionaryPlants';
 
-const SearchBox = () => {
+interface SearchBoxProps {
+  onSelect?: (id: number) => void;
+}
+
+const SearchBox = ({ onSelect }: SearchBoxProps) => {
   const [searchName, setSearchName] = useState('');
   const queryName = useDebounce<string>(searchName, 200);
   const navigate = useNavigate();
@@ -49,6 +53,10 @@ const SearchBox = () => {
 
   const hasSearchResult = searchResults && searchName !== '';
 
+  const selectResultItem = (id: number) => () => {
+    onSelect?.(id);
+  };
+
   return (
     <Wrapper>
       <InputArea>
@@ -67,7 +75,7 @@ const SearchBox = () => {
         (searchResults.length ? (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
-              <ResultItem key={id}>
+              <ResultItem key={id} onClick={selectResultItem(id)}>
                 <ResultThumbnail alt={name} src={image} />
                 <Name>{name}</Name>
               </ResultItem>

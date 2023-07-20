@@ -1,6 +1,7 @@
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -20,4 +21,16 @@ export const Input = styled.input`
   &::-webkit-inner-spin-button {
     appearance: none;
   }
+`;
+
+export const IconArea = styled.div`
+  position: absolute;
+  right: 8px;
+
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+
+  transition: transform 0.4s;
 `;

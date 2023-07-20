@@ -1,7 +1,7 @@
 import { DictPlantExtendCycles } from 'types/api/dictionary';
 import { Season, SeasonKor } from 'types/plants';
 import { useQuery } from '@tanstack/react-query';
-import dictAPI, { DICT } from 'apis/dict';
+import DictAPI, { DICT } from 'apis/dictionary';
 import { SEASONS } from 'constants/index';
 
 const initialSeasonInfo: Record<SeasonKor, string> = {
@@ -11,11 +11,11 @@ const initialSeasonInfo: Record<SeasonKor, string> = {
   겨울: '',
 };
 
-const useDictionaryPlants = (id: string) => {
+const useDictionaryPlants = (id: number) => {
   const { data: dictionary } = useQuery<DictPlantExtendCycles>({
     queryKey: [`${DICT}/${id}`],
     queryFn: async () => {
-      const response = await dictAPI.getDictInfo(id);
+      const response = await DictAPI.getDetail(id);
 
       if (!response.ok) throw Error('뭔가가 잘못되어 벌임;;');
       const data = await response.json();

@@ -40,6 +40,7 @@ export const ResultMessage = styled.p`
 
 export const ResultList = styled.div`
   overflow-x: none;
+  overflow-y: auto;
   width: 100%;
   max-height: 336px;
 `;
