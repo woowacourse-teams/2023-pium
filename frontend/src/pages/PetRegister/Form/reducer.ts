@@ -1,10 +1,11 @@
 import { useReducer } from 'react';
+import { inputValidate } from 'utils/validate';
 
 interface PetPlantForm {
   nickname: string;
   location: string;
   flowerpot: string;
-  waterCycle: number;
+  waterCycle: string;
   light: string;
   wind: string;
   birthDate: string;
@@ -18,9 +19,11 @@ type PetPlantFormAction =
       value: string;
     }
   | {
-      type: 'SET_NUMBER';
+      type: 'SET_NUMBER_INPUT';
       key: keyof Pick<PetPlantForm, 'waterCycle'>;
-      value: number;
+      value: string;
+      min?: number;
+      max?: number;
     }
   | {
       type: 'INIT';
@@ -30,7 +33,7 @@ const initialPetPlantForm: PetPlantForm = {
   nickname: '기영이',
   location: '',
   flowerpot: '',
-  waterCycle: 7,
+  waterCycle: '',
   light: '',
   wind: '',
   birthDate: '',
@@ -42,7 +45,18 @@ const petPlantFormReducer = (petPlantForm: PetPlantForm, action: PetPlantFormAct
     case 'SET': {
       return { ...petPlantForm, [action.key]: action.value };
     }
-    case 'SET_NUMBER': {
+    case 'SET_NUMBER_INPUT': {
+      if (action.value === '') {
+        return { ...petPlantForm, [action.key]: '' };
+      }
+
+      if (
+        !inputValidate.checkNumber(action.value) ||
+        !inputValidate.checkRange(Number(action.value), action.min, action.max)
+      ) {
+        return { ...petPlantForm };
+      }
+
       return { ...petPlantForm, [action.key]: action.value };
     }
     case 'INIT': {
