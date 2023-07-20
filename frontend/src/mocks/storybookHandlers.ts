@@ -11,9 +11,9 @@ export const storybookHandlers = [
     return res(ctx.status(200), ctx.json({ data: searchResult }));
   }),
 
-  rest.get('dictionary-plnats/:id', (req, res, ctx) =>
-    res(ctx.status(200), ctx.json(DICTIONARY_PLANT_DATA))
-  ),
+  rest.get('/dictionary-plants/:id', (req, res, ctx) => {
+    return res(ctx.status(200), ctx.json(DICTIONARY_PLANT_DATA));
+  }),
 
   rest.post<NewPetPlantRequest>('/pet-plants', async (req, res, ctx) => res(ctx.status(201))),
 ];
