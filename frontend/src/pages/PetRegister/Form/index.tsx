@@ -101,6 +101,8 @@ const PetRegisterForm = () => {
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
 
+  const isValidForm = Object.values(form).every((value) => value !== '');
+
   return (
     <Wrapper>
       <FormArea>
@@ -197,7 +199,7 @@ const PetRegisterForm = () => {
         </Stack>
       </FormArea>
       <ButtonArea>
-        <Button type="submit" onClick={submit} disabled={!isLastElementShown}>
+        <Button type="submit" onClick={submit} disabled={!isValidForm}>
           등록하기
         </Button>
       </ButtonArea>
