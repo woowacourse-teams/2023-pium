@@ -13,7 +13,7 @@ if (process.env.NODE_ENV === 'development') {
 
   worker.start({
     serviceWorker: {
-      url: './mockServiceWorker.js',
+      url: 'http://localhost:8282/mockServiceWorker.js',
     },
   });
 }

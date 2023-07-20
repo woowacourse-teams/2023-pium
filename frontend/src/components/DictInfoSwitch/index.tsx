@@ -1,15 +1,17 @@
 import { useState } from 'react';
 import DictInfo from 'components/DictInfo';
 import InlineRadio from 'components/InlineRadio';
+import { TagVariantType } from 'components/Tag';
 
 interface DictInfoSwitchProps {
   title: string;
   optionMap: Record<string, string | string[]>;
   defaultSelected?: string;
+  variant?: TagVariantType;
 }
 
 const DictInfoSwitch = (props: DictInfoSwitchProps) => {
-  const { optionMap, title, defaultSelected } = props;
+  const { optionMap, title, defaultSelected, variant = 'default' } = props;
   const options = Object.keys(optionMap);
 
   const [selected, setSelected] = useState(defaultSelected ?? options[0]);
@@ -28,7 +30,9 @@ const DictInfoSwitch = (props: DictInfoSwitchProps) => {
       </DictInfo.Title>
 
       {typeof selectedOptions === 'string' ? (
-        <DictInfo.Content>{selectedOptions}</DictInfo.Content>
+        <DictInfo.Content fullWidth={true} variant={variant}>
+          {selectedOptions}
+        </DictInfo.Content>
       ) : (
         selectedOptions.map((content) => (
           <DictInfo.Content key={content}>{content}</DictInfo.Content>

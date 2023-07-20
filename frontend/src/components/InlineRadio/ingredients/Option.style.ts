@@ -7,7 +7,6 @@ export const HiddenRadio = styled.input`
   &:checked + span {
     font-weight: bold;
     color: ${theme.color.primary};
-    text-shadow: 1.2px 1.2px 1.2px lightgrey;
   }
 `;
 

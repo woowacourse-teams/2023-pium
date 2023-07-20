@@ -16,6 +16,8 @@ declare module 'styled-components' {
       subTitle: string;
       title: string;
       input: string;
+      dictTitle: string;
+      dictContent: string;
     };
     width: {
       mobile: string;
