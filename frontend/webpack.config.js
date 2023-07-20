@@ -12,6 +12,7 @@ module.exports = {
     filename: 'bundle.js',
     assetModuleFilename: 'assets/[name][ext]',
     clean: true,
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '...'],
@@ -57,6 +58,7 @@ module.exports = {
     port: 8282,
     static: {
       directory: resolve(__dirname, 'public'),
+      publicPath: '.',
     },
     historyApiFallback: true,
   },
