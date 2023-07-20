@@ -85,7 +85,7 @@ const PetRegisterForm = () => {
       waterCycle: Number(form.waterCycle),
     };
 
-    petPlantsAPI.postForm(submitForm).catch();
+    petPlantsAPI.postForm(submitForm).catch(console.log);
     navigate(URL_PATH.MAIN);
   };
 
@@ -98,7 +98,7 @@ const PetRegisterForm = () => {
         setDictionaryPlant(data);
         dispatch({ type: 'SET', key: 'nickname', value: data.name });
       })
-      .catch();
+      .catch(console.log);
   }, []);
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
