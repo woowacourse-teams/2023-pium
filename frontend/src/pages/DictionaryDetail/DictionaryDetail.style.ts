@@ -4,42 +4,55 @@ export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
   gap: 24px;
-
-  width: 320px;
-  margin: 48px auto;
+  margin: 0 auto 48px auto;
 `;
 
 export const HeaderBox = styled.section`
   display: flex;
-  flex-direction: column;
-  gap: 20px;
   align-items: center;
+  justify-content: space-between;
+
+  width: 320px;
+  margin: 0 auto;
+  padding-bottom: 12px;
+
+  border-bottom: 1px solid ${(props) => props.theme.color.grayLight};
 `;
+
+export const NameBox = styled.div``;
 
 export const FamilyName = styled.p`
   margin-bottom: 4px;
-  font: ${(props) => props.theme.font.input};
+  font: 500 1.2rem/1.6rem 'NanumSquareRound';
   color: ${(props) => props.theme.color.sub};
-  text-align: center;
+  text-align: left;
 `;
 
 export const Name = styled.p`
-  font: 600 3.6rem/4rem 'NanumSquareRound';
+  font: 900 2.4rem/4rem 'NanumSquareRound';
   color: ${(props) => props.theme.color.sub};
-  text-align: center;
+  text-align: left;
 `;
 
 export const PlantImage = styled.img`
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+  width: 100%;
+  min-width: ${(props) => props.theme.width.mobile};
+  max-width: ${(props) => props.theme.width.pad};
+  height: 300px;
+  margin: 0 auto;
+
+  object-fit: cover;
 `;
 
 export const ContentBox = styled.section`
   display: flex;
   flex-direction: column;
   gap: 35px;
+  align-items: center;
+  justify-content: space-between;
 
+  width: 320px;
+  margin: 0 auto;
   div {
     font: ${(props) => props.theme.font.dictContent};
 

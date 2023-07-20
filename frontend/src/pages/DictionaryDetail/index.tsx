@@ -12,6 +12,7 @@ import {
   HeaderBox,
   ManageInfoBox,
   Name,
+  NameBox,
   PlantImage,
   PropBox,
   PropsBox,
@@ -54,22 +55,21 @@ const DictionaryDetail = () => {
 
   return (
     <Wrapper>
+      <PlantImage src={image} alt={name} />
       <HeaderBox>
-        <div>
-          <FamilyName>{familyName}</FamilyName>
+        <NameBox>
           <Name>{name}</Name>
-        </div>
-        <PlantImage src={image} alt={name} />
-      </HeaderBox>
-      <ContentBox>
+          <FamilyName>{familyName}</FamilyName>
+        </NameBox>
         <div>
           <DictInfo alignment="row">
-            <DictInfo.Title>난이도</DictInfo.Title>
             <DictInfo.Content variant={MANAGE_LEVEL_COLOR[manageLevel]}>
               {manageLevel}
             </DictInfo.Content>
           </DictInfo>
         </div>
+      </HeaderBox>
+      <ContentBox>
         <div>
           <DictInfoSwitch title="물 주기" optionMap={waterOptions} />
         </div>
