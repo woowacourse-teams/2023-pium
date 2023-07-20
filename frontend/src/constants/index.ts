@@ -21,6 +21,8 @@ export const URL_PATH = {
   DICT: `/dict/:id`,
   PET_LIST: '/pet',
   PET_DETAIL: `/pet/:id`,
+  PET_REGISTER_SEARCH: '/pet/register',
+  PET_REGISTER_FORM: '/pet/register/:id',
 } as const;
 
 export const SEASONS: Record<Season, SeasonKor> = {

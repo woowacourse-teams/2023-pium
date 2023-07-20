@@ -17,11 +17,11 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: 'pet/register',
+        path: URL_PATH.PET_REGISTER_SEARCH,
         element: <PetRegisterSearch />,
       },
       {
-        path: 'pet/register/:id',
+        path: URL_PATH.PET_REGISTER_FORM,
         element: <PetRegisterForm />,
       },
       {
