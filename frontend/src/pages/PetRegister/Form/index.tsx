@@ -18,7 +18,7 @@ import {
 } from './Form.style';
 import DictAPI from 'apis/dictionary';
 import petPlantsAPI from 'apis/pet';
-import { URL_PATH } from 'constants/index';
+import { NUMBER, URL_PATH } from 'constants/index';
 import { usePetPlantForm } from './reducer';
 
 const PetRegisterForm = () => {
@@ -51,7 +51,13 @@ const PetRegisterForm = () => {
   };
 
   const setWaterCycle = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'SET_NUMBER_INPUT', key: 'waterCycle', value });
+    dispatch({
+      type: 'SET_NUMBER_INPUT',
+      key: 'waterCycle',
+      value,
+      min: NUMBER.MIN_CYCLE_DATE,
+      max: NUMBER.MAX_CYCLE_DATE,
+    });
   };
 
   const validateWaterCycle = () => {
