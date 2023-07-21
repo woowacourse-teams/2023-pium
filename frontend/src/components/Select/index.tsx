@@ -27,10 +27,10 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
 
   return (
     <Wrapper>
-      <SelectedValue onClick={toggle} placeholder={value === ''}>
+      <SelectedValue onClick={toggle} $placeholder={value === ''}>
         {value || placeholder}
       </SelectedValue>
-      <IconArea rotate={isOpen}>
+      <IconArea $rotate={isOpen}>
         <TiArrowSortedDown size={18} />
       </IconArea>
       {isOpen && (

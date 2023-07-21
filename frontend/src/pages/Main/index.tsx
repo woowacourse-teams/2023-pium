@@ -10,6 +10,7 @@ import {
   StartButton,
   Wrapper,
 } from './Main.style';
+import useDictionaryNavigate from 'hooks/useDictrionaryNavigate';
 import { URL_PATH } from 'constants/index';
 import logo from 'assets/logo.svg';
 
@@ -19,6 +20,8 @@ const Main = () => {
   const navigateRegister = () => {
     navigate(URL_PATH.PET_REGISTER_SEARCH);
   };
+
+  const { goToProperDictPage, goToDictDetailPage } = useDictionaryNavigate();
 
   return (
     <Wrapper>
@@ -32,7 +35,11 @@ const Main = () => {
       <Logo src={logo} alt="logo" />
       <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
       <SearchBoxArea>
-        <SearchBox />
+        <SearchBox
+          onEnter={goToProperDictPage}
+          onNextClick={goToProperDictPage}
+          onResultClick={goToDictDetailPage}
+        />
       </SearchBoxArea>
     </Wrapper>
   );

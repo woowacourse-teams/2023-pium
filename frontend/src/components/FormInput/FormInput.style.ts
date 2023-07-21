@@ -23,7 +23,7 @@ export const Input = styled.input`
   }
 `;
 
-export const IconArea = styled.div`
+export const Button = styled.button`
   position: absolute;
   right: 8px;
 

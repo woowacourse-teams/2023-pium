@@ -1,6 +1,6 @@
+import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useState } from 'react';
 import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
 import {
   InputArea,
   ResultItem,
@@ -17,13 +17,16 @@ import { MESSAGE } from 'constants/index';
 import Dictionary from '../../queries/dictionaryPlants';
 
 interface SearchBoxProps {
-  onSelect?: (id: number) => void;
+  onResultClick?: (id: number) => void;
+  onEnter?: (name: string, searchResults?: DictNameSearchResult[]) => void;
+  onNextClick?: (name: string, searchResults?: DictNameSearchResult[]) => void;
 }
 
-const SearchBox = ({ onSelect }: SearchBoxProps) => {
+const SearchBox = (props: SearchBoxProps) => {
+  const { onResultClick, onEnter, onNextClick } = props;
+
   const [searchName, setSearchName] = useState('');
   const queryName = useDebounce<string>(searchName, 200);
-  const navigate = useNavigate();
 
   const { data: searchResults } = Dictionary.useSearchName(queryName);
 
@@ -33,29 +36,20 @@ const SearchBox = ({ onSelect }: SearchBoxProps) => {
     setSearchName(value);
   };
 
-  const search = () => {
-    if (!searchName || !searchResults) return;
-
-    const samePlant = searchResults.find(({ name }) => name === searchName);
-
-    if (!samePlant) {
-      navigate(`/dict?search=${searchName}`);
-      return;
-    }
-
-    navigate(`/dict/${samePlant.id}`);
-  };
-
   const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
     if (key !== 'Enter') return;
-    search();
+    onEnter?.(searchName, searchResults);
+  };
+
+  const handleResultClick = (plantId: number) => () => {
+    onResultClick?.(plantId);
+  };
+
+  const handleNextButtonClick = () => {
+    onNextClick?.(searchName, searchResults);
   };
 
   const hasSearchResult = searchResults && searchName !== '';
-
-  const selectResultItem = (id: number) => () => {
-    onSelect?.(id);
-  };
 
   return (
     <Wrapper>
@@ -67,7 +61,7 @@ const SearchBox = ({ onSelect }: SearchBoxProps) => {
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
         />
-        <EnterButton type="button" onClick={search}>
+        <EnterButton type="button" onClick={handleNextButtonClick}>
           <BiRightArrowAlt size="32" color="#333333" />
         </EnterButton>
       </InputArea>
@@ -75,7 +69,7 @@ const SearchBox = ({ onSelect }: SearchBoxProps) => {
         (searchResults.length ? (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
-              <ResultItem key={id} onClick={selectResultItem(id)}>
+              <ResultItem key={id} onClick={handleResultClick(id)}>
                 <ResultThumbnail alt={name} src={image} />
                 <Name>{name}</Name>
               </ResultItem>

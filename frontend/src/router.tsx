@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
+import DictionarySearch from 'pages/DictionarySearch';
 import Main from 'pages/Main';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.PET_REGISTER_FORM,
         element: <PetRegisterForm />,
+      },
+      {
+        path: '/dict',
+        element: <DictionarySearch />,
       },
       {
         path: URL_PATH.DICT,

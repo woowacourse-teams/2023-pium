@@ -11,6 +11,7 @@ export const HiddenRadio = styled.input`
 `;
 
 export const Label = styled.label`
+  cursor: pointer;
   display: inline-block;
   padding: 3px 13px;
 
