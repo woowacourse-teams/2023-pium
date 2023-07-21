@@ -14,7 +14,7 @@ const PetRegisterSearch = () => {
     <Wrapper>
       <Message>어떤 식물을 키우시나요?</Message>
       <SearchBoxArea>
-        <SearchBox onSelect={navigateForm} />
+        <SearchBox onResultClick={navigateForm} />
       </SearchBoxArea>
     </Wrapper>
   );
