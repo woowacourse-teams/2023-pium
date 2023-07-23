@@ -1,8 +1,9 @@
-import { AiFillWarning } from 'react-icons/ai';
-import { BsThermometerSun, BsThermometerSnow } from 'react-icons/bs';
-import { GiFragrance } from 'react-icons/gi';
-import { PiPottedPlantFill } from 'react-icons/pi';
-import { WiHumidity } from 'react-icons/wi';
+import Fragrance from 'components/@common/Svg/Fragrance';
+import Humidity from 'components/@common/Svg/Humidity';
+import PottedPlant from 'components/@common/Svg/PottedPlant';
+import ThermometerSnow from 'components/@common/Svg/ThermometerSnow';
+import ThermometerSun from 'components/@common/Svg/ThermometerSun';
+import Warning from 'components/@common/Svg/Warning';
 import DictInfo from 'components/DictInfo';
 import DictInfoSwitch from 'components/DictInfoSwitch';
 import {
@@ -84,7 +85,7 @@ const DictionaryDetail = () => {
         <PropsBox>
           {growSpeed !== '' && (
             <PropBox>
-              <PiPottedPlantFill color="#1BCC66" />
+              <PottedPlant color="#1BCC66" />
               <span>
                 생장 속도는 <Accent>{`"${growSpeed}"`}</Accent>이에요🌱
               </span>
@@ -93,7 +94,7 @@ const DictionaryDetail = () => {
 
           {requireHumidity !== '' && (
             <PropBox>
-              <WiHumidity color="#1BCC66" />
+              <Humidity color="#1BCC66" />
               <span>
                 권장 습도는 <Accent>{`"${requireHumidity}"`}</Accent>에요💧
               </span>
@@ -102,7 +103,7 @@ const DictionaryDetail = () => {
 
           {requireTemp !== '' && (
             <PropBox>
-              <BsThermometerSun color="#1BCC66" />
+              <ThermometerSun color="#1BCC66" />
               <span>
                 권장 온도는 <Accent>{`"${requireTemp}"`}</Accent>에요🥰
               </span>
@@ -111,7 +112,7 @@ const DictionaryDetail = () => {
 
           {minimumTemp !== '' && (
             <PropBox>
-              <BsThermometerSnow color="#1BCC66" />
+              <ThermometerSnow color="#1BCC66" />
               <span>
                 적어도 <Accent>{`"${minTemp} ${tempType}"`}</Accent> 에서 키워야 해요!🥶
               </span>
@@ -120,7 +121,7 @@ const DictionaryDetail = () => {
 
           {smell !== '' && (
             <PropBox>
-              <GiFragrance color="#1BCC66" />
+              <Fragrance color="#1BCC66" />
               <span>
                 냄새는 <Accent>{`"${smell}"`}</Accent>이에요🤧
               </span>
@@ -129,7 +130,7 @@ const DictionaryDetail = () => {
 
           {poison !== '' && (
             <PropBox>
-              <AiFillWarning color="#EB4D3D" />
+              <Warning color="#EB4D3D" />
               <span>
                 독성은 <Accent>{`"${poison}"`}</Accent> 이에요!🚨
               </span>

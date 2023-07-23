@@ -1,6 +1,7 @@
 import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useState } from 'react';
-import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
+import ArrowRight from 'components/@common/Svg/ArrowRight';
+import Search from 'components/@common/Svg/Search';
 import {
   InputArea,
   ResultItem,
@@ -54,7 +55,7 @@ const SearchBox = (props: SearchBoxProps) => {
   return (
     <Wrapper>
       <InputArea>
-        <BiSearch size="32" color="#1bcc66" />
+        <Search width={40} height={40} color="#1bcc66" />
         <Input
           type="text"
           value={searchName}
@@ -62,7 +63,7 @@ const SearchBox = (props: SearchBoxProps) => {
           onKeyDown={searchOnEnter}
         />
         <EnterButton type="button" onClick={handleNextButtonClick}>
-          <BiRightArrowAlt size="32" color="#333333" />
+          <ArrowRight width={32} height={32} color="#333333" />
         </EnterButton>
       </InputArea>
       {hasSearchResult &&

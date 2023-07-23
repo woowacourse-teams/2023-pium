@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from 'react';
-import { GrLinkNext } from 'react-icons/gr';
+import ArrowRight from 'components/@common/Svg/ArrowRight';
 import { Button, Input, Wrapper } from './FormInput.style';
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
@@ -12,7 +12,9 @@ const FormInput = (props: FormInputProps) => {
   return (
     <Wrapper>
       <Input type="text" {...inputProps} />
-      <Button>{nextCallback && <GrLinkNext size={16} onClick={nextCallback} />}</Button>
+      <Button>
+        {nextCallback && <ArrowRight width={20} height={20} onClick={nextCallback} />}
+      </Button>
     </Wrapper>
   );
 };
