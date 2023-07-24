@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import type { SVGProps } from 'react';
 
 const MaterialSymbolsWarningRounded = (props: SVGProps<SVGSVGElement>) => {
   return (

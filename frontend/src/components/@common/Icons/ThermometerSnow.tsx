@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import type { SVGProps } from 'react';
 
 const BiThermometerSnow = (props: SVGProps<SVGSVGElement>) => {
   return (
