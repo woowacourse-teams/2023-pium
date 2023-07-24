@@ -42,10 +42,29 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: npm build
+        continue-on-error: true
         run: npm run build
       
       - name: storyBook build
         run: npm run build-storybook
+        if: always()
+        
+      - name: CI Results
+        uses: actions/github-script@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const commentBody = job.status === 'success' ? 
+              ':heavy_check_mark: Build succeeded for this Pull Request.'
+              : ':warning: 배포에 실패했습니다. 스토리북 혹은 빌드 위치를 확인해주세요';
+              
+            github.issues.createComment({
+              issue_number: ${{ github.event.number }},
+              owner: woowacourse-teams,
+              repo: 2023-pium,
+              body: commentBody
+            })
+        if: always()
       
       - name: notificate on slack if build failed
         uses: 8398a7/action-slack@v3
