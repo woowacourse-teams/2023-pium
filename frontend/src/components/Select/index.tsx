@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import ArrowDropDown from 'components/@common/Svg/ArrowDropDown';
+import ArrowDropDown from 'components/@common/Icons/ArrowDropDown';
 import { Backdrop, IconArea, OptionBox, OptionItem, SelectedValue, Wrapper } from './Select.style';
 
 interface SelectProps {

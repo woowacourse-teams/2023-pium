@@ -1,9 +1,9 @@
-import Fragrance from 'components/@common/Svg/Fragrance';
-import Humidity from 'components/@common/Svg/Humidity';
-import PottedPlant from 'components/@common/Svg/PottedPlant';
-import ThermometerSnow from 'components/@common/Svg/ThermometerSnow';
-import ThermometerSun from 'components/@common/Svg/ThermometerSun';
-import Warning from 'components/@common/Svg/Warning';
+import Fragrance from 'components/@common/Icons/Fragrance';
+import Humidity from 'components/@common/Icons/Humidity';
+import PottedPlant from 'components/@common/Icons/PottedPlant';
+import ThermometerSnow from 'components/@common/Icons/ThermometerSnow';
+import ThermometerSun from 'components/@common/Icons/ThermometerSun';
+import Warning from 'components/@common/Icons/Warning';
 import DictInfo from 'components/DictInfo';
 import DictInfoSwitch from 'components/DictInfoSwitch';
 import {

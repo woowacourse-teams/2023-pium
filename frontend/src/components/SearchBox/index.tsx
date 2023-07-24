@@ -1,7 +1,7 @@
 import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useState } from 'react';
-import ArrowRight from 'components/@common/Svg/ArrowRight';
-import Search from 'components/@common/Svg/Search';
+import ArrowRight from 'components/@common/Icons/ArrowRight';
+import Search from 'components/@common/Icons/Search';
 import {
   InputArea,
   ResultItem,
