@@ -1,19 +1,19 @@
-import { DictPlantExtendCycles } from 'types/api/dictionary';
-import { Season, SeasonKor } from 'types/plants';
+import type { DictPlantExtendCycles, DictionaryPlant } from 'types/api/dictionary';
+import type { Season } from 'types/plants';
 import { useQuery } from '@tanstack/react-query';
 import DictAPI, { DICT } from 'apis/dictionary';
 import { SEASONS } from 'constants/index';
 
-const initialSeasonInfo: Record<SeasonKor, string> = {
+const initialWaterOptions: DictPlantExtendCycles['waterOptions'] = {
   봄: '',
   여름: '',
   가을: '',
   겨울: '',
 };
 
-const useDictionaryPlants = (id: number) => {
-  const { data: dictionary } = useQuery<DictPlantExtendCycles>({
-    queryKey: [`${DICT}/${id}`],
+const useDictDetail = (id: number) =>
+  useQuery<DictionaryPlant, Error, DictPlantExtendCycles>({
+    queryKey: [DICT, 'detail', id],
     queryFn: async () => {
       const response = await DictAPI.getDetail(id);
 
@@ -31,13 +31,10 @@ const useDictionaryPlants = (id: number) => {
         const [season, data] = cur as [Season, string];
         const key = SEASONS[season];
         return { ...prev, [key]: data };
-      }, initialSeasonInfo);
+      }, initialWaterOptions);
 
       return { ...data, waterOptions };
     },
   });
 
-  return { dictionary };
-};
-
-export default useDictionaryPlants;
+export default useDictDetail;

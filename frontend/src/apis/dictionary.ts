@@ -6,13 +6,13 @@ const getDetail = (id: number) => {
   return fetch(`${DICT}/${id}`, { method: 'GET' });
 };
 
-const getNameSearch = (name: string) => {
+const getSearch = (name: string) => {
   return fetch(`${DICT}?name=${name}`, { method: 'GET' });
 };
 
 const DictAPI = {
   getDetail,
-  getNameSearch,
+  getSearch,
 };
 
 export default DictAPI;
