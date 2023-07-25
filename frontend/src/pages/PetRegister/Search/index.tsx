@@ -7,7 +7,7 @@ const PetRegisterSearch = () => {
   const navigate = useNavigate();
 
   const navigateForm = (id: number) => {
-    navigate(generatePath(URL_PATH.PET_REGISTER_FORM, { id: String(id) }));
+    navigate(generatePath(URL_PATH.petRegisterForm, { id: String(id) }));
   };
 
   return (

@@ -11,7 +11,7 @@ import {
 
 interface FormInputBoxProps extends PropsWithChildren {
   title: string;
-  require?: boolean;
+  required?: boolean;
   status?: InputStatus;
   error?: string;
 }
@@ -19,7 +19,7 @@ interface FormInputBoxProps extends PropsWithChildren {
 const FormInputBox = ({
   children,
   title,
-  require = false,
+  required = false,
   status = 'default',
   error,
 }: FormInputBoxProps) => {
@@ -28,7 +28,7 @@ const FormInputBox = ({
       <ContentBox status={status}>
         <Title>
           {title}
-          <RequireFlag>{require ? '*' : ''}</RequireFlag>
+          <RequireFlag>{required ? '*' : ''}</RequireFlag>
         </Title>
         <InputBox>{children}</InputBox>
       </ContentBox>

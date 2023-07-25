@@ -1,6 +1,6 @@
 import SearchResultItem from 'components/SearchResultItem';
 import { Title, ResultArea, Wrapper } from './SearchResults.style';
-import Dictionary from '../../queries/dictionaryPlants';
+import useDictSearch from 'hooks/queries/dictionary/useDictSearch';
 
 interface SearchResultsProps {
   plantName: string;
@@ -8,14 +8,14 @@ interface SearchResultsProps {
 
 const SearchResults = (props: SearchResultsProps) => {
   const { plantName } = props;
-  const { data } = Dictionary.useSearchName(plantName);
+  const { data: searchResults } = useDictSearch(plantName);
 
-  const samePlant = data?.find(({ name }) => name === plantName);
-  const similarPlants = data?.filter(({ name }) => name !== plantName);
+  const samePlant = searchResults?.find(({ name }) => name === plantName);
+  const similarPlants = searchResults?.filter(({ name }) => name !== plantName);
 
   const hasSimilarPlant = similarPlants && similarPlants.length > 0;
 
-  if (!data || (!samePlant && !hasSimilarPlant)) {
+  if (!searchResults || (!samePlant && !hasSimilarPlant)) {
     return (
       <Wrapper>
         <Title>&quot;{plantName}&quot; 검색 결과가 없어요 😭</Title>

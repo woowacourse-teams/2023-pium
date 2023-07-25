@@ -3,7 +3,7 @@ import { URL_PATH } from 'constants/index';
 
 type Redirect = (typeof URL_PATH)[keyof typeof URL_PATH];
 
-const useInvalidIdParams = (redirect: Redirect = URL_PATH.MAIN) => {
+const useInvalidIdParams = (redirect: Redirect = URL_PATH.main) => {
   const { id } = useParams();
   const navigation = useNavigate();
 

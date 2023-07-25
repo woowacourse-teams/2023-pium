@@ -75,51 +75,64 @@ export const PlainExample: Story = {
   },
 };
 
-// const Counter = ({ onClickNext }: { onClickNext: () => void }) => {
-//   const [count, setCount] = useState(0);
+const Counter = ({ onClickNext }: { onClickNext: () => void }) => {
+  const [count, setCount] = useState(0);
 
-//   return (
-//     <div
-//       style={{
-//         border: '2px solid lightpink',
-//         height: '100px',
-//         padding: '20px',
-//       }}
-//     >
-//       <p style={{ fontSize: '2rem' }}>{count}원 모았습니다.</p>
-//       <div>
-//         <button type="button" onClick={() => setCount(count + 1)}>
-//           돈 벌기
-//         </button>
-//       </div>
-//       <div>
-//         <button type="button" onClick={onClickNext}>
-//           다음 통장 보여주기
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
+  return (
+    <div
+      style={{
+        border: '2px solid lightpink',
+        height: '100px',
+        padding: '20px',
+      }}
+    >
+      <p style={{ fontSize: '2rem' }}>{count}원 모았습니다.</p>
+      <div>
+        <button type="button" onClick={() => setCount(count + 1)}>
+          돈 벌기
+        </button>
+      </div>
+      <div>
+        <button type="button" onClick={onClickNext}>
+          다음 통장 보여주기
+        </button>
+      </div>
+    </div>
+  );
+};
 
-// /**
-//  * 역순으로 표시하지만 실제 DOM 순서를 꼬는 것이 아니기 때문에 버튼을 눌러 상태를 변경하더라도 상태는 변하지 않습니다.
-//  */
+/**
+ * 역순으로 표시하지만 실제 DOM 순서를 꼬는 것이 아니기 때문에 버튼을 눌러 상태를 변경하더라도 상태는 변하지 않습니다.
+ */
 
-// export const StateExample: Story = {
-//   render: () => {
-//     const { topIndex, showNextElement } = useStack(3);
-//     return (
-//       <Stack topIndex={topIndex}>
-//         <Stack.Element height="100px">
-//           <Counter  onClickNext={}/>
-//         </Stack.Element>
-//         <Stack.Element height="100px">
-//           <Counter />
-//         </Stack.Element>
-//         <Stack.Element height="100px">
-//           <Counter />
-//         </Stack.Element>
-//       </Stack>
-//     );
-//   },
-// };
+export const StateExample: Story = {
+  render: () => {
+    const { topIndex, showNextElement } = useStack(3);
+
+    return (
+      <Stack topIndex={topIndex}>
+        <Stack.Element height="100px">
+          <Counter
+            onClickNext={() => {
+              showNextElement(0);
+            }}
+          />
+        </Stack.Element>
+        <Stack.Element height="100px">
+          <Counter
+            onClickNext={() => {
+              showNextElement(1);
+            }}
+          />
+        </Stack.Element>
+        <Stack.Element height="100px">
+          <Counter
+            onClickNext={() => {
+              showNextElement(2);
+            }}
+          />
+        </Stack.Element>
+      </Stack>
+    );
+  },
+};
