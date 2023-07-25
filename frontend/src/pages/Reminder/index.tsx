@@ -1,14 +1,29 @@
-import { Reminder as ReminderType } from 'types/api/reminder';
+import {
+  ConvertReminderData,
+  Month,
+  MonthKeyReminderType,
+  ReminderExtendType,
+  Reminder as ReminderType,
+  TodayStatus,
+} from 'types/api/reminder';
 import { useQuery } from '@tanstack/react-query';
-import { ContentBox, HeaderBox, Title } from './Reminder.style';
+import {
+  ContentBox,
+  HeaderBox,
+  MonthTitle,
+  MonthReminderBox,
+  Title,
+  Wrapper,
+  ReminderCardBox,
+  InfoBox,
+  DateLabel,
+} from './Reminder.style';
 import reminderAPI from 'apis/reminder';
 
-interface ReminderResults {
-  data: ReminderType[];
-}
+const initialData: MonthKeyReminderType = {};
 
 const Reminder = () => {
-  const { data } = useQuery<ReminderResults>({
+  const { data: reminderData } = useQuery<{ data: ReminderType[] }, Error, ConvertReminderData>({
     queryKey: ['reminder'],
 
     queryFn: async () => {
@@ -16,17 +31,78 @@ const Reminder = () => {
       const results = await response.json();
       return results;
     },
+
+    select: (result) => {
+      const { data } = result;
+
+      const convertedData: MonthKeyReminderType = data.reduce((acc, cur) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, month, date] = cur.nextWaterDate.split('-') as [string, Month, string];
+
+        const status: TodayStatus =
+          cur.nextWaterDay === 0 ? 'exist' : cur.nextWaterDay > 0 ? 'none' : 'late';
+
+        const convertData: ReminderExtendType = {
+          ...cur,
+          status,
+          date: date,
+        };
+
+        const currentMonth = acc[month];
+
+        if (currentMonth !== undefined) {
+          return { ...acc, [month]: [...currentMonth, convertData] };
+        }
+
+        return {
+          ...acc,
+          [month]: [convertData],
+        };
+      }, initialData);
+
+      const status = data.every(({ nextWaterDay }) => nextWaterDay > 0)
+        ? 'none'
+        : data.find(({ nextWaterDay }) => nextWaterDay < 0)
+        ? 'late'
+        : 'exist';
+
+      return {
+        data: convertedData,
+        status,
+      };
+    },
   });
 
-  console.log(data);
+  if (reminderData === undefined) return null;
+
+  const scheduleReminder = Object.entries(reminderData.data);
+
+  const reminderBox = scheduleReminder.map(([month, value]) => {
+    return (
+      <MonthReminderBox key={month}>
+        <MonthTitle>{Number(month)}월</MonthTitle>
+        {value.map((data) => {
+          return (
+            <ReminderCardBox key={data.petPlantId}>
+              <InfoBox>
+                <DateLabel htmlFor={data.petPlantId + ''}>{data.date}</DateLabel>
+                <input id={data.petPlantId + ''} type="checkbox" />
+              </InfoBox>
+              <div></div>
+            </ReminderCardBox>
+          );
+        })}
+      </MonthReminderBox>
+    );
+  });
 
   return (
-    <article>
+    <Wrapper status={reminderData.status}>
       <HeaderBox>
         <Title>리마인더</Title>
       </HeaderBox>
-      <ContentBox>여기에 섹션이 들어갑니다.</ContentBox>
-    </article>
+      <ContentBox>{reminderBox}</ContentBox>
+    </Wrapper>
   );
 };
 
