@@ -75,7 +75,6 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
-      console.log(res);
       return res(ctx.delay(delay), ctx.status(200), ctx.json(REMINDER_DATA));
     }),
   ];

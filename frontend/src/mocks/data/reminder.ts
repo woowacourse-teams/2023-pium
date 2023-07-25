@@ -2,7 +2,7 @@ const REMINDER_DATA = {
   data: [
     {
       petPlantId: 1,
-      image: 'image.com',
+      image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
       nickName: '참새나무',
       dictionaryPlantName: '알로카시아',
       nextWaterDay: 3,
@@ -10,7 +10,7 @@ const REMINDER_DATA = {
     },
     {
       petPlantId: 2,
-      image: 'image.com',
+      image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
       nickName: '그레이나무',
       dictionaryPlantName: '스투키',
       nextWaterDay: 10,
