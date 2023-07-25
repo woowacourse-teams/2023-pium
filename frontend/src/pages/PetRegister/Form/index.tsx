@@ -1,5 +1,4 @@
-import type { DictionaryPlant } from 'types/api/dictionary';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DateInput from 'components/DateInput';
 import FormInput from 'components/FormInput';
@@ -16,9 +15,9 @@ import {
   FormArea,
   Wrapper,
 } from './Form.style';
-import DictAPI from 'apis/dictionary';
 import petPlantsAPI from 'apis/pet';
 import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
+import DictQuery from '../../../queries/dictionaryPlants';
 import { usePetPlantForm } from './reducer';
 
 const PetRegisterForm = () => {
@@ -28,7 +27,7 @@ const PetRegisterForm = () => {
   const { form, dispatch } = usePetPlantForm();
   const navigate = useNavigate();
 
-  const [dictionaryPlant, setDictionaryPlant] = useState<DictionaryPlant | null>(null);
+  const { data: dictionaryPlant } = DictQuery.useDetail(dictionaryPlantId);
 
   const stackElementHeight = '96px';
 
@@ -96,16 +95,10 @@ const PetRegisterForm = () => {
   };
 
   useEffect(() => {
-    DictAPI.getDetail(dictionaryPlantId)
-      .then(async (response) => {
-        if (!response.ok) return;
-
-        const data: DictionaryPlant = await response.json();
-        setDictionaryPlant(data);
-        dispatch({ type: 'SET', key: 'nickname', value: data.name });
-      })
-      .catch(console.log);
-  }, []);
+    if (dictionaryPlant) {
+      dispatch({ type: 'SET', key: 'nickname', value: dictionaryPlant.name });
+    }
+  }, [dictionaryPlant]);
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
 
