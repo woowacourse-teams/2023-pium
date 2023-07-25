@@ -35,7 +35,7 @@ export const Default: Story = {
 
 export const ChildrenDateInput: Story = {
   args: {
-    title: '마지막으로 물을 준 날짜가 언제인가요?',
+    title: '실험용',
     require: true,
     status: 'focus',
   },
