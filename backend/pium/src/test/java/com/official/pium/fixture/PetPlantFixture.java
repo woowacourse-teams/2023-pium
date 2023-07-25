@@ -2,7 +2,7 @@ package com.official.pium.fixture;
 
 import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 
@@ -29,7 +29,7 @@ public class PetPlantFixture {
             .build();
 
     public static class REQUEST {
-        public static PetPlantRequest 피우미_등록_요청 = PetPlantRequest.builder()
+        public static PetPlantCreateRequest 피우미_등록_요청 = PetPlantCreateRequest.builder()
                 .dictionaryPlantId(1L)
                 .nickname("피우미")
                 .location("베란다")

@@ -6,7 +6,7 @@ import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,7 +44,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_등록() {
-        PetPlantRequest request = PetPlantRequest.builder()
+        PetPlantCreateRequest request = PetPlantCreateRequest.builder()
                 .dictionaryPlantId(dictionaryPlant.getId())
                 .nickname("피우미")
                 .location("베란다")
