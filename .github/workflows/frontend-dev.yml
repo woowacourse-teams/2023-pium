@@ -48,23 +48,6 @@ jobs:
       - name: storyBook build
         run: npm run build-storybook
         if: always()
-        
-      - name: CI Results
-        uses: actions/github-script@v2
-        with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
-          script: |
-            const commentBody = job.status === 'success' ? 
-              ':heavy_check_mark: Build succeeded for this Pull Request.'
-              : ':warning: 빌드에 실패했습니다 😭';
-              
-            github.issues.createComment({
-              issue_number: ${{ github.event.number }},
-              owner: woowacourse-teams,
-              repo: 2023-pium,
-              body: commentBody
-            })
-        if: always()
       
       - name: notificate on slack if build failed
         uses: 8398a7/action-slack@v3
