@@ -15,9 +15,9 @@ import {
   FormArea,
   Wrapper,
 } from './Form.style';
+import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import PetAPI from 'apis/pet';
 import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
-import DictQuery from '../../../queries/dictionaryPlants';
 import { usePetPlantForm } from './reducer';
 
 const PetRegisterForm = () => {
@@ -27,7 +27,7 @@ const PetRegisterForm = () => {
   const { form, dispatch } = usePetPlantForm();
   const navigate = useNavigate();
 
-  const { data: dictionaryPlant } = DictQuery.useDetail(dictionaryPlantId);
+  const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
 
   const stackElementHeight = '96px';
 
