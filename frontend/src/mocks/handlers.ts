@@ -1,5 +1,6 @@
-import type { NewPetPlantRequest } from '../types/api/petPlant';
+import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
+import { BASE_URL } from 'constants/index';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
@@ -14,11 +15,14 @@ const validateParams = (delay: number, failRate: number) => {
   }
 };
 
+const DICT = `${BASE_URL}/dictionary-plants`;
+const PET = `${BASE_URL}/pet-plants`;
+
 export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
 
   return [
-    rest.get('/search', (req, res, ctx) => {
+    rest.get(DICT, (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }
@@ -29,7 +33,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200), ctx.json({ data: searchResult }));
     }),
 
-    rest.get('dictionary-plnats/:id', (req, res, ctx) => {
+    rest.get(`${DICT}/:id`, (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }
@@ -40,7 +44,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
     }),
 
-    rest.post<NewPetPlantRequest>('/pet-plants', async (req, res, ctx) => {
+    rest.post<NewPetPlantRequest>(PET, async (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }

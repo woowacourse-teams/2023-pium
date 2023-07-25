@@ -12,6 +12,7 @@ module.exports = {
     filename: 'bundle.js',
     assetModuleFilename: 'assets/[name][ext]',
     clean: true,
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '...'],
@@ -24,6 +25,7 @@ module.exports = {
       utils: resolve(__dirname, 'src', 'utils'),
       assets: resolve(__dirname, 'src', 'assets'),
       constants: resolve(__dirname, 'src', 'constants'),
+      contexts: resolve(__dirname, 'src', 'contexts'),
     },
   },
   module: {

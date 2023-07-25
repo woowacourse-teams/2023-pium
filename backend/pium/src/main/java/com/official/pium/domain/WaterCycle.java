@@ -3,6 +3,7 @@ package com.official.pium.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -22,4 +23,12 @@ public class WaterCycle {
 
     @Column(name = "water_cycle_winter")
     private String winter;
+
+    @Builder
+    private WaterCycle(String spring, String summer, String autumn, String winter) {
+        this.spring = spring;
+        this.summer = summer;
+        this.autumn = autumn;
+        this.winter = winter;
+    }
 }

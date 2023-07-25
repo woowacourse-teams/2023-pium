@@ -7,11 +7,21 @@ declare module 'styled-components' {
       primary: string;
       sub: string;
       accent: string;
+      gray: string;
+      grayLight: string;
+      grayDark: string;
     };
     font: {
       emphasize: string;
       subTitle: string;
       title: string;
+      input: string;
+      dictTitle: string;
+      dictContent: string;
+    };
+    width: {
+      mobile: string;
+      pad: string;
     };
   }
 }

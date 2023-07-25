@@ -1,6 +1,7 @@
 import type { DictNameSearchResult } from 'types/api/dictionary';
-import { useRef, useState } from 'react';
-import { BiSearch, BiRightArrowAlt } from 'react-icons/bi';
+import { useState } from 'react';
+import ArrowRight from 'components/@common/Icons/ArrowRight';
+import Search from 'components/@common/Icons/Search';
 import {
   InputArea,
   ResultItem,
@@ -12,68 +13,64 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
-import searchAPI from 'apis/search';
+import useDebounce from 'hooks/useDebounce';
 import { MESSAGE } from 'constants/index';
+import Dictionary from '../../queries/dictionaryPlants';
 
-const SearchBox = () => {
+interface SearchBoxProps {
+  onResultClick?: (id: number) => void;
+  onEnter?: (name: string, searchResults?: DictNameSearchResult[]) => void;
+  onNextClick?: (name: string, searchResults?: DictNameSearchResult[]) => void;
+}
+
+const SearchBox = (props: SearchBoxProps) => {
+  const { onResultClick, onEnter, onNextClick } = props;
+
   const [searchName, setSearchName] = useState('');
-  const [searchResults, setSearchResults] = useState<DictNameSearchResult[] | null>(null);
-  const timeoutId = useRef(0);
+  const queryName = useDebounce<string>(searchName, 200);
 
-  const changeSearch: React.ComponentProps<'input'>['onChange'] = ({ target: { value } }) => {
+  const { data: searchResults } = Dictionary.useSearchName(queryName);
+
+  const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
+    target: { value },
+  }) => {
     setSearchName(value);
-
-    if (timeoutId.current) {
-      clearTimeout(timeoutId.current);
-    }
-
-    timeoutId.current = window.setTimeout(() => {
-      search(value);
-      timeoutId.current = 0;
-    }, 150);
   };
 
-  const enterSearch: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
+  const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
     if (key !== 'Enter') return;
-
-    search(searchName);
+    onEnter?.(searchName, searchResults);
   };
 
-  const clickSearch = () => {
-    search(searchName);
+  const handleResultClick = (plantId: number) => () => {
+    onResultClick?.(plantId);
   };
 
-  const search = async (name: string) => {
-    if (name === '') {
-      setSearchResults(null);
-      return;
-    }
-
-    try {
-      const response = await searchAPI.getResult(name);
-      if (!response.ok) throw new Error();
-
-      const { data: searchResults } = await response.json();
-      setSearchResults(searchResults);
-    } catch {
-      return;
-    }
+  const handleNextButtonClick = () => {
+    onNextClick?.(searchName, searchResults);
   };
+
+  const hasSearchResult = searchResults && searchName !== '';
 
   return (
     <Wrapper>
       <InputArea>
-        <BiSearch size="32" color="#1bcc66" />
-        <Input type="text" value={searchName} onChange={changeSearch} onKeyDown={enterSearch} />
-        <EnterButton type="button" onClick={clickSearch}>
-          <BiRightArrowAlt size="32" color="#333333" />
+        <Search width={40} height={40} color="#1bcc66" />
+        <Input
+          type="text"
+          value={searchName}
+          onChange={handleSearchNameChange}
+          onKeyDown={searchOnEnter}
+        />
+        <EnterButton type="button" onClick={handleNextButtonClick}>
+          <ArrowRight width={32} height={32} color="#333333" />
         </EnterButton>
       </InputArea>
-      {searchResults &&
+      {hasSearchResult &&
         (searchResults.length ? (
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
-              <ResultItem key={id}>
+              <ResultItem key={id} onClick={handleResultClick(id)}>
                 <ResultThumbnail alt={name} src={image} />
                 <Name>{name}</Name>
               </ResultItem>

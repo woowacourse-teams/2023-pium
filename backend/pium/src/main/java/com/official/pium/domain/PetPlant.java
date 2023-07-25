@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Getter
@@ -73,7 +74,7 @@ public class PetPlant extends BaseEntity {
     private Integer waterCycle;
 
     @Builder
-    public PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location, String flowerpot, String light, String wind, @NotNull LocalDate birthDate, @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
+    private PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location, String flowerpot, String light, String wind, @NotNull LocalDate birthDate, @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
         this.dictionaryPlant = dictionaryPlant;
         this.member = member;
         this.nickname = nickname;
@@ -86,5 +87,19 @@ public class PetPlant extends BaseEntity {
         this.nextWaterDate = nextWaterDate;
         this.lastWaterDate = lastWaterDate;
         this.waterCycle = waterCycle;
+    }
+
+    public Long calculateNextWaterDay(LocalDate baseDate) {
+        if (baseDate.isAfter(nextWaterDate)) {
+            throw new IllegalArgumentException("물주기 남은 날짜는 음수가 될 수 없습니다. Date: " + baseDate);
+        }
+        return ChronoUnit.DAYS.between(baseDate, nextWaterDate);
+    }
+
+    public Long calculateDaySince(LocalDate currentDate) {
+        if (currentDate.isBefore(birthDate)) {
+            throw new IllegalArgumentException("함께한 날은 음수가 될 수 없습니다. Date: " + currentDate);
+        }
+        return ChronoUnit.DAYS.between(birthDate, currentDate) + 1;
     }
 }

@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
 
   width: 100%;
   height: 100%;
+  padding: 0 16px;
 `;
 
 export const LogoMessage = styled.p`
@@ -39,13 +40,14 @@ export const StartButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  width: 128px;
-  height: 48px;
+  width: 108px;
+  height: 40px;
 
-  font-size: 2.2rem;
-  color: #333333;
+  font-size: 2rem;
+  color: ${({ theme }) => theme.color.sub};
 
-  border-radius: 24px;
+  background: ${({ theme }) => theme.color.primary + '19'};
+  border-radius: 8px;
 
   transition: background-color 0.2s;
 

@@ -1,13 +1,14 @@
-import { useId, useState } from 'react';
-import { getToday, convertDateKorYear } from 'utils/date';
+import { useId } from 'react';
 import { Date, Wrapper, DateValue } from './DateInput.style';
+import { getToday, convertDateKorYear } from 'utils/date';
 
 interface DateInputProps {
-  initialValue: string;
+  value: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
 }
 
-const DateInput = ({ initialValue }: DateInputProps) => {
-  const [date, setDate] = useState(initialValue);
+const DateInput = ({ value, onChange, placeholder = '날짜를 입력해 주세요' }: DateInputProps) => {
   const today = getToday();
   const dateId = useId();
 
@@ -15,17 +16,18 @@ const DateInput = ({ initialValue }: DateInputProps) => {
     const { value } = event.target;
 
     if (value > today) {
-      setDate(today);
       return;
     }
 
-    setDate(value);
+    onChange?.(value);
   };
 
   return (
     <Wrapper>
-      <DateValue htmlFor={dateId}>{convertDateKorYear(date)}</DateValue>
-      <Date id={dateId} type="date" value={date} onChange={changeHandler} max={today} />
+      <DateValue htmlFor={dateId} $placeholder={value === ''}>
+        {value ? convertDateKorYear(value) : placeholder}
+      </DateValue>
+      <Date id={dateId} type="date" onChange={changeHandler} />
     </Wrapper>
   );
 };

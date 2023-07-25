@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
@@ -12,10 +13,12 @@ if (process.env.NODE_ENV === 'development') {
 
   worker.start({
     serviceWorker: {
-      url: './mockServiceWorker.js',
+      url: 'http://localhost:8282/mockServiceWorker.js',
     },
   });
 }
+
+const queryClient = new QueryClient();
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
@@ -24,7 +27,9 @@ root.render(
     <GlobalFont />
     <GlobalStyle />
     <ThemeProvider theme={theme}>
-      <App />
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
     </ThemeProvider>
   </StrictMode>
 );
