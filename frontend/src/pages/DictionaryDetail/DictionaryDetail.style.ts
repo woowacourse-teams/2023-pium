@@ -32,16 +32,6 @@ export const Name = styled.p`
   text-align: left;
 `;
 
-export const PlantImage = styled.img`
-  width: 100%;
-  min-width: ${(props) => props.theme.width.mobile};
-  max-width: ${(props) => props.theme.width.pad};
-  height: 300px;
-  margin: 0 auto;
-
-  object-fit: cover;
-`;
-
 export const ContentBox = styled.section`
   display: flex;
   flex-direction: column;

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import Image from 'components/@common/Image';
 import DateInput from 'components/DateInput';
 import FormInput from 'components/FormInput';
 import FormInputBox from 'components/FormInputBox';
-import Image from 'components/Image';
 import Select from 'components/Select';
 import Stack from 'components/Stack';
 import useStack from 'components/Stack/hooks/useStack';

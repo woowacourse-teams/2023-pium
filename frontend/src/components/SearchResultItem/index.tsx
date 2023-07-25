@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import Image from 'components/Image';
+import Image from 'components/@common/Image';
 import { Wrapper, Name } from './SearchResultItem.style';
 
 interface SearchResultItemProps {
