@@ -18,6 +18,7 @@ import {
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import PetAPI from 'apis/pet';
+import { getToday } from 'utils/date';
 import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
 import { usePetPlantForm } from './reducer';
 
@@ -30,10 +31,10 @@ const PetRegisterForm = () => {
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
   const { form, dispatch } = usePetPlantForm();
   const navigate = useNavigate();
-
   const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
 
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
+  const today = getToday();
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET', key: 'nickname', value });
@@ -44,11 +45,17 @@ const PetRegisterForm = () => {
   };
 
   const setBirthDate = (value: string) => {
+    if (value > today) {
+      return;
+    }
     dispatch({ type: 'SET', key: 'birthDate', value });
     showNextElement(1);
   };
 
   const setLastWaterDate = (value: string) => {
+    if (value > today) {
+      return;
+    }
     dispatch({ type: 'SET', key: 'lastWaterDate', value });
     showNextElement(2);
   };
@@ -130,12 +137,12 @@ const PetRegisterForm = () => {
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
-              <DateInput value={form.birthDate} onChange={setBirthDate} />
+              <DateInput value={form.birthDate} onChange={setBirthDate} max={today} />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getStatus(2)}>
-              <DateInput value={form.lastWaterDate} onChange={setLastWaterDate} />
+              <DateInput value={form.lastWaterDate} onChange={setLastWaterDate} max={today} />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
