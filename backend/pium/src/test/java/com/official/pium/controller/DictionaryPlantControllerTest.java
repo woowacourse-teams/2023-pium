@@ -1,6 +1,7 @@
 package com.official.pium.controller;
 
 
+import com.official.pium.UITest;
 import com.official.pium.fixture.DictionaryPlantFixture.RESPONSE;
 import com.official.pium.service.DictionaryPlantService;
 import com.official.pium.service.dto.DataResponse;
@@ -30,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @WebMvcTest(controllers = DictionaryPlantController.class)
-class DictionaryPlantControllerTest {
+class DictionaryPlantControllerTest extends UITest {
 
     @Autowired
     private MockMvc mockMvc;

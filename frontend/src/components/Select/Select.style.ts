@@ -1,11 +1,11 @@
 import { styled } from 'styled-components';
 
 interface IconAreaProps {
-  rotate: boolean;
+  $rotate: boolean;
 }
 
 interface SelectedValueProps {
-  placeholder?: boolean;
+  $placeholder?: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -29,7 +29,7 @@ export const SelectedValue = styled.p<SelectedValueProps>`
   width: 100%;
   height: 32px;
 
-  color: ${({ placeholder, theme }) => (placeholder ? theme.color.gray : 'black')};
+  color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.gray : 'black')};
 
   &:hover {
     background: #0000000c;
@@ -39,7 +39,7 @@ export const SelectedValue = styled.p<SelectedValueProps>`
 export const IconArea = styled.div<IconAreaProps>`
   position: absolute;
   right: 8px;
-  transform: ${(props) => props.rotate && 'rotate(0.5turn)'};
+  transform: ${(props) => props.$rotate && 'rotate(0.5turn)'};
 
   display: flex;
   align-items: center;

@@ -1,4 +1,3 @@
-import { CgEnter } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
 import SearchBox from 'components/SearchBox';
 import {
@@ -10,6 +9,7 @@ import {
   StartButton,
   Wrapper,
 } from './Main.style';
+import useDictionaryNavigate from 'hooks/useDictrionaryNavigate';
 import { URL_PATH } from 'constants/index';
 import logo from 'assets/logo.svg';
 
@@ -20,19 +20,22 @@ const Main = () => {
     navigate(URL_PATH.PET_REGISTER_SEARCH);
   };
 
+  const { goToProperDictPage, goToDictDetailPage } = useDictionaryNavigate();
+
   return (
     <Wrapper>
       <ButtonArea>
-        <StartButton onClick={navigateRegister}>
-          시작하기
-          <CgEnter />
-        </StartButton>
+        <StartButton onClick={navigateRegister}>시작하기</StartButton>
       </ButtonArea>
       <LogoMessage>식물을 쉽게</LogoMessage>
       <Logo src={logo} alt="logo" />
       <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
       <SearchBoxArea>
-        <SearchBox />
+        <SearchBox
+          onEnter={goToProperDictPage}
+          onNextClick={goToProperDictPage}
+          onResultClick={goToDictDetailPage}
+        />
       </SearchBoxArea>
     </Wrapper>
   );

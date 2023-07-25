@@ -12,7 +12,8 @@ export const Wrapper = styled.div`
 `;
 
 export const FormArea = styled.div`
-  overflow: scroll;
+  overflow-x: none;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;

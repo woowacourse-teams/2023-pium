@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TiArrowSortedDown } from 'react-icons/ti';
+import ArrowDropDown from 'components/@common/Icons/ArrowDropDown';
 import { Backdrop, IconArea, OptionBox, OptionItem, SelectedValue, Wrapper } from './Select.style';
 
 interface SelectProps {
@@ -27,11 +27,11 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
 
   return (
     <Wrapper>
-      <SelectedValue onClick={toggle} placeholder={value === ''}>
+      <SelectedValue onClick={toggle} $placeholder={value === ''}>
         {value || placeholder}
       </SelectedValue>
-      <IconArea rotate={isOpen}>
-        <TiArrowSortedDown size={18} />
+      <IconArea $rotate={isOpen}>
+        <ArrowDropDown width={24} height={24} />
       </IconArea>
       {isOpen && (
         <>
