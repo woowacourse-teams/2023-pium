@@ -7,6 +7,7 @@ import {
   TodayStatus,
 } from 'types/api/reminder';
 import { useQuery } from '@tanstack/react-query';
+import ReminderCard from 'components/ReminderCard';
 import {
   ContentBox,
   HeaderBox,
@@ -77,6 +78,8 @@ const Reminder = () => {
 
   const scheduleReminder = Object.entries(reminderData.data);
 
+  const actionCallback = (value: string) => console.log(value);
+
   const reminderBox = scheduleReminder.map(([month, value]) => {
     return (
       <MonthReminderBox key={month}>
@@ -88,7 +91,7 @@ const Reminder = () => {
                 <DateLabel htmlFor={data.petPlantId + ''}>{data.date}</DateLabel>
                 <input id={data.petPlantId + ''} type="checkbox" />
               </InfoBox>
-              <div></div>
+              <ReminderCard data={data} dateCallback={actionCallback} />
             </ReminderCardBox>
           );
         })}
