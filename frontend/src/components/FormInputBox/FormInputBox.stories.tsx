@@ -14,7 +14,7 @@ type Story = StoryObj<typeof FormInputBox>;
 export const Default: Story = {
   args: {
     title: '무엇을 입력해볼까요?',
-    require: true,
+    required: true,
   },
   render: ({ ...args }) => {
     return (
@@ -36,7 +36,7 @@ export const Default: Story = {
 export const ChildrenDateInput: Story = {
   args: {
     title: '마지막으로 물을 준 날짜가 언제인가요?',
-    require: true,
+    required: true,
     status: 'focus',
   },
   render: ({ ...args }) => {
