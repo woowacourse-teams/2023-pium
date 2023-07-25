@@ -6,6 +6,7 @@ import Main from 'pages/Main';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Root from 'pages/Root';
+import LoadingSpinner from 'components/@common/Spinner';
 import { URL_PATH } from './constants';
 
 const router = createBrowserRouter([
@@ -32,7 +33,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.dictDetail,
         element: (
-          <Suspense fallback={<div>로딩중입니다.</div>}>
+          <Suspense fallback={<LoadingSpinner />}>
             <DictionaryDetail />
           </Suspense>
         ),
