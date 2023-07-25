@@ -1,4 +1,3 @@
-import { CgEnter } from 'react-icons/cg';
 import { useNavigate } from 'react-router-dom';
 import SearchBox from 'components/SearchBox';
 import {
@@ -26,10 +25,7 @@ const Main = () => {
   return (
     <Wrapper>
       <ButtonArea>
-        <StartButton onClick={navigateRegister}>
-          시작하기
-          <CgEnter />
-        </StartButton>
+        <StartButton onClick={navigateRegister}>시작하기</StartButton>
       </ButtonArea>
       <LogoMessage>식물을 쉽게</LogoMessage>
       <Logo src={logo} alt="logo" />
