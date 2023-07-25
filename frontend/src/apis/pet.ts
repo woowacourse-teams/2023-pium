@@ -11,8 +11,8 @@ const postForm = (form: NewPetPlantRequest) => {
   });
 };
 
-const petPlantsAPI = {
+const PetAPI = {
   postForm,
 };
 
-export default petPlantsAPI;
+export default PetAPI;

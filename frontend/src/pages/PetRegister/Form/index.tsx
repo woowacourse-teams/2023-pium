@@ -15,7 +15,7 @@ import {
   FormArea,
   Wrapper,
 } from './Form.style';
-import petPlantsAPI from 'apis/pet';
+import PetAPI from 'apis/pet';
 import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
 import DictQuery from '../../../queries/dictionaryPlants';
 import { usePetPlantForm } from './reducer';
@@ -90,7 +90,7 @@ const PetRegisterForm = () => {
       waterCycle: Number(form.waterCycle),
     };
 
-    petPlantsAPI.postForm(submitForm).catch(console.log);
+    PetAPI.postForm(submitForm).catch(console.log);
     navigate(URL_PATH.MAIN);
   };
 
