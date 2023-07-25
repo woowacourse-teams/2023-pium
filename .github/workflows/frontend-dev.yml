@@ -42,7 +42,6 @@ jobs:
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: npm build
-        continue-on-error: true
         run: npm run build
       
       - name: storyBook build
