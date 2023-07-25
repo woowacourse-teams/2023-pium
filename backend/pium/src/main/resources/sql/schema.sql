@@ -51,8 +51,21 @@ CREATE TABLE IF NOT EXISTS pet_plant
     CONSTRAINT pk_pet_plant PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS history
+(
+    id           BIGINT AUTO_INCREMENT NOT NULL,
+    pet_plant_id BIGINT                NOT NULL,
+    water_date   DATE                  NOT NULL,
+    created_at   DATETIME              NOT NULL,
+    updated_at   DATETIME              NOT NULL,
+    CONSTRAINT pk_history PRIMARY KEY (id)
+);
+
 ALTER TABLE pet_plant
     ADD CONSTRAINT FK_PET_PLANT_ON_DICTIONARY_PLANT FOREIGN KEY (dictionary_plant_id) REFERENCES dictionary_plant (id);
 
 ALTER TABLE pet_plant
     ADD CONSTRAINT FK_PET_PLANT_ON_MEMBER FOREIGN KEY (member_id) REFERENCES member (id);
+
+ALTER TABLE history
+    ADD CONSTRAINT FK_HISTORY_ON_PET_PLANT FOREIGN KEY (pet_plant_id) REFERENCES pet_plant (id);
