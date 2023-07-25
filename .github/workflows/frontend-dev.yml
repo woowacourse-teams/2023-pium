@@ -27,6 +27,7 @@ jobs:
         with:
           node-version: 18.16.0
           cache: npm
+          cache-dependency-path: package-lock.json
           
       - name: Cache node_modules
         id: cache
