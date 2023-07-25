@@ -4,12 +4,12 @@ import { TagVariantType } from 'components/Tag';
 export const BASE_URL = 'http://api.pium.life';
 
 export const URL_PATH = {
-  MAIN: '/',
-  DICT: `/dict/:id`,
-  PET_LIST: '/pet',
-  PET_DETAIL: `/pet/:id`,
-  PET_REGISTER_SEARCH: '/pet/register',
-  PET_REGISTER_FORM: '/pet/register/:id',
+  main: '/',
+  dictDetail: `/dict/:id`,
+  petList: '/pet',
+  petDetail: `/pet/:id`,
+  petRegisterSearch: '/pet/register',
+  petRegisterForm: '/pet/register/:id',
 } as const;
 
 export const MESSAGE = {
@@ -57,6 +57,6 @@ export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
 } as const;
 
 export const NUMBER = {
-  MAX_CYCLE_DATE: 365,
-  MIN_CYCLE_DATE: 1,
+  maxCycleDate: 365,
+  minCycleDate: 1,
 } as const;

@@ -54,8 +54,8 @@ const PetRegisterForm = () => {
       type: 'SET_NUMBER_INPUT',
       key: 'waterCycle',
       value,
-      min: NUMBER.MIN_CYCLE_DATE,
-      max: NUMBER.MAX_CYCLE_DATE,
+      min: NUMBER.minCycleDate,
+      max: NUMBER.maxCycleDate,
     });
   };
 
@@ -91,7 +91,7 @@ const PetRegisterForm = () => {
     };
 
     PetAPI.postForm(submitForm).catch(console.log);
-    navigate(URL_PATH.MAIN);
+    navigate(URL_PATH.main);
   };
 
   useEffect(() => {

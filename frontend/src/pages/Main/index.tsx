@@ -17,7 +17,7 @@ const Main = () => {
   const navigate = useNavigate();
 
   const navigateRegister = () => {
-    navigate(URL_PATH.PET_REGISTER_SEARCH);
+    navigate(URL_PATH.petRegisterSearch);
   };
 
   const { goToProperDictPage, goToDictDetailPage } = useDictionaryNavigate();

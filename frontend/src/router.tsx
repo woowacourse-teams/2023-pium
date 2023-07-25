@@ -10,19 +10,19 @@ import { URL_PATH } from './constants';
 
 const router = createBrowserRouter([
   {
-    path: URL_PATH.MAIN,
+    path: URL_PATH.main,
     element: <Root />,
     children: [
       {
-        path: URL_PATH.MAIN,
+        path: URL_PATH.main,
         element: <Main />,
       },
       {
-        path: URL_PATH.PET_REGISTER_SEARCH,
+        path: URL_PATH.petRegisterSearch,
         element: <PetRegisterSearch />,
       },
       {
-        path: URL_PATH.PET_REGISTER_FORM,
+        path: URL_PATH.petRegisterForm,
         element: <PetRegisterForm />,
       },
       {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
         element: <DictionarySearch />,
       },
       {
-        path: URL_PATH.DICT,
+        path: URL_PATH.dictDetail,
         element: (
           <Suspense fallback={<div>로딩중입니다.</div>}>
             <DictionaryDetail />
