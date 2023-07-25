@@ -23,7 +23,7 @@ import { usePetPlantForm } from './reducer';
 const PetRegisterForm = () => {
   const { id } = useParams();
   const dictionaryPlantId = Number(id);
-  const { topIndex, showNextElement } = useStack(8);
+  const { topIndex, showNextElement } = useStack(9);
   const { form, dispatch } = usePetPlantForm();
   const navigate = useNavigate();
 
@@ -179,6 +179,11 @@ const PetRegisterForm = () => {
                 placeholder="통풍을 선택해 주세요"
               />
             </FormInputBox>
+          </Stack.Element>
+          <Stack.Element height={stackElementHeight}>
+            <Button type="submit" onClick={submit} disabled={!isValidForm}>
+              등록하기
+            </Button>
           </Stack.Element>
         </Stack>
       </FormArea>
