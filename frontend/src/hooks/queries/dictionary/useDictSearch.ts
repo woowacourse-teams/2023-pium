@@ -1,13 +1,13 @@
 import type { DictNameSearchResponse, DictNameSearchResult } from 'types/api/dictionary';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import DictAPI from 'apis/dictionary';
+import DictAPI, { DICT } from 'apis/dictionary';
 
-const useSearchName = (name: string) =>
+const useDictSearch = (name: string) =>
   useQuery<DictNameSearchResponse, Error, DictNameSearchResult[]>({
-    queryKey: ['search', name],
+    queryKey: [DICT, 'search', name],
 
     queryFn: async () => {
-      const response = await DictAPI.getNameSearch(name);
+      const response = await DictAPI.getSearch(name);
       const data = await response.json();
       return data;
     },
@@ -18,8 +18,4 @@ const useSearchName = (name: string) =>
     staleTime: Infinity,
   });
 
-const Dictionary = {
-  useSearchName,
-};
-
-export default Dictionary;
+export default useDictSearch;

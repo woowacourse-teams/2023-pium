@@ -35,11 +35,11 @@ export const NumberInput: Story = {
   },
 
   render: ({ nextCallback = () => console.log('clicked') }) => {
-    const { MAX_CYCLE_DATE, MIN_CYCLE_DATE } = NUMBER;
+    const { minCycleDate, maxCycleDate } = NUMBER;
 
     const { numberValue, changeCallback, keyDownHandler } = useNumberInput({
-      maxRange: MAX_CYCLE_DATE,
-      minRange: MIN_CYCLE_DATE,
+      maxRange: maxCycleDate,
+      minRange: minCycleDate,
     });
 
     return (

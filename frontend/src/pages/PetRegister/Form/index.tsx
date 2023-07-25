@@ -1,5 +1,4 @@
-import type { DictionaryPlant } from 'types/api/dictionary';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import DateInput from 'components/DateInput';
 import FormInput from 'components/FormInput';
@@ -16,9 +15,9 @@ import {
   FormArea,
   Wrapper,
 } from './Form.style';
-import DictAPI from 'apis/dictionary';
-import petPlantsAPI from 'apis/pet';
-import { NUMBER, URL_PATH } from 'constants/index';
+import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
+import PetAPI from 'apis/pet';
+import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
 import { usePetPlantForm } from './reducer';
 
 const PetRegisterForm = () => {
@@ -28,7 +27,7 @@ const PetRegisterForm = () => {
   const { form, dispatch } = usePetPlantForm();
   const navigate = useNavigate();
 
-  const [dictionaryPlant, setDictionaryPlant] = useState<DictionaryPlant | null>(null);
+  const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
 
   const stackElementHeight = '96px';
 
@@ -55,8 +54,8 @@ const PetRegisterForm = () => {
       type: 'SET_NUMBER_INPUT',
       key: 'waterCycle',
       value,
-      min: NUMBER.MIN_CYCLE_DATE,
-      max: NUMBER.MAX_CYCLE_DATE,
+      min: NUMBER.minCycleDate,
+      max: NUMBER.maxCycleDate,
     });
   };
 
@@ -91,21 +90,15 @@ const PetRegisterForm = () => {
       waterCycle: Number(form.waterCycle),
     };
 
-    petPlantsAPI.postForm(submitForm).catch(console.log);
-    navigate(URL_PATH.MAIN);
+    PetAPI.postForm(submitForm).catch(console.log);
+    navigate(URL_PATH.main);
   };
 
   useEffect(() => {
-    DictAPI.getDetail(dictionaryPlantId)
-      .then(async (response) => {
-        if (!response.ok) return;
-
-        const data: DictionaryPlant = await response.json();
-        setDictionaryPlant(data);
-        dispatch({ type: 'SET', key: 'nickname', value: data.name });
-      })
-      .catch(console.log);
-  }, []);
+    if (dictionaryPlant) {
+      dispatch({ type: 'SET', key: 'nickname', value: dictionaryPlant.name });
+    }
+  }, [dictionaryPlant]);
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
 
@@ -151,13 +144,7 @@ const PetRegisterForm = () => {
             <FormInputBox title="어떤 화분에서 키우고 있나요?" status={getStatus(4)}>
               <Select
                 value={form.flowerpot}
-                options={[
-                  '플라스틱/유리/캔',
-                  '물에 젖는 토분',
-                  '수경 재배',
-                  '행잉/목부작',
-                  '유약/고화도 토분',
-                ]}
+                options={OPTIONS.flowerPot}
                 onChange={setFlowerpot}
                 placeholder="화분의 종류를 선택해 주세요"
               />
@@ -167,7 +154,7 @@ const PetRegisterForm = () => {
             <FormInputBox title="화분의 위치는 어디인가요?" status={getStatus(5)}>
               <Select
                 value={form.location}
-                options={['거실', '사무실', '욕실', '베란다', '방/원룸', '주방', '기타']}
+                options={OPTIONS.location}
                 onChange={setLocation}
                 placeholder="화분의 위치를 선택해 주세요"
               />
@@ -177,13 +164,7 @@ const PetRegisterForm = () => {
             <FormInputBox title="빛을 어떻게 받고 있나요?" status={getStatus(6)}>
               <Select
                 value={form.light}
-                options={[
-                  '창문 밖에서 해를 받아요',
-                  '창문 안쪽에서 해를 받아요',
-                  '일반 조명 빛을 받아요',
-                  '식물용 조명 빛을 받아요',
-                  '해를 못 받아요',
-                ]}
+                options={OPTIONS.light}
                 onChange={setLight}
                 placeholder="채광을 선택해 주세요"
               />
@@ -193,12 +174,7 @@ const PetRegisterForm = () => {
             <FormInputBox title="바람은 얼마나 통하나요?" status={getStatus(7)}>
               <Select
                 value={form.wind}
-                options={[
-                  '5m 내 창문이 있어요',
-                  '5m 보다 멀리 창문이 있어요',
-                  '창문이 없지만 바람이 통해요',
-                  '바람이 안 통해요',
-                ]}
+                options={OPTIONS.wind}
                 onChange={setWind}
                 placeholder="통풍을 선택해 주세요"
               />

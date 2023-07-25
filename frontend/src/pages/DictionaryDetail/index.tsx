@@ -19,7 +19,7 @@ import {
   PropsBox,
   Wrapper,
 } from './DictionaryDetail.style';
-import useDictionaryPlants from 'hooks/useDictionaryPlants';
+import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useInvalidIdParams from 'hooks/useInvalidIdParams';
 import parseTemperature from 'utils/parseTemperature';
 import { MANAGE_LEVEL_COLOR } from 'constants/index';
@@ -27,7 +27,7 @@ import { MANAGE_LEVEL_COLOR } from 'constants/index';
 const DictionaryDetail = () => {
   const id = useInvalidIdParams();
 
-  const { dictionary } = useDictionaryPlants(id);
+  const { data: dictionary } = useDictDetail(id);
 
   if (!dictionary) {
     return null;
