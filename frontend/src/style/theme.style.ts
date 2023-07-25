@@ -17,6 +17,7 @@ const font = {
   input: 'normal 500 1.8rem/2.2rem "NanumSquareRound"',
   dictTitle: 'normal 600 1.8rem/2.2rem "NanumSquareRound"',
   dictContent: 'normal 400 1.4rem/1.8rem "NanumSquareRound"',
+  reminderCardContent: '500 1rem/1.5rem "NanumsquareRound"',
 };
 
 const width = {
