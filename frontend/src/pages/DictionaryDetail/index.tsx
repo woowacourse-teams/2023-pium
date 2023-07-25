@@ -13,7 +13,6 @@ import {
   HeaderBox,
   ManageInfoBox,
   Name,
-  NameBox,
   PlantImage,
   PropBox,
   PropsBox,
@@ -59,10 +58,10 @@ const DictionaryDetail = () => {
     <Wrapper>
       <PlantImage src={image} alt={name} />
       <HeaderBox>
-        <NameBox>
+        <div>
           <Name>{name}</Name>
           <FamilyName>{familyName}</FamilyName>
-        </NameBox>
+        </div>
         <div>
           <DictInfo alignment="row">
             <DictInfo.Content variant={MANAGE_LEVEL_COLOR[manageLevel]}>

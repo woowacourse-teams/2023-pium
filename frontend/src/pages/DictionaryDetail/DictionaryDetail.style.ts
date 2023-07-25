@@ -19,8 +19,6 @@ export const HeaderBox = styled.section`
   border-bottom: 1px solid ${(props) => props.theme.color.grayLight};
 `;
 
-export const NameBox = styled.div``;
-
 export const FamilyName = styled.p`
   margin-bottom: 4px;
   font: 500 1.2rem/1.6rem 'NanumSquareRound';
