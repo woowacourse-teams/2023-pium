@@ -1,6 +1,7 @@
 import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
+import REMINDER_DATA from './data/reminder';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
 
@@ -16,11 +17,13 @@ const validateParams = (delay: number, failRate: number) => {
 
 const DICT = '*/dictionary-plants';
 const PET = '*/pet-plants';
+const REMINDER = '*/reminder';
 
 export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
 
   return [
+    // 사전 식물 리스트 조회
     rest.get(DICT, (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
@@ -32,6 +35,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200), ctx.json({ data: searchResult }));
     }),
 
+    // 단일 사전 식물 정보 조회
     rest.get(`${DICT}/:id`, (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
@@ -43,6 +47,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
     }),
 
+    // 반려 식물 등록
     rest.post<NewPetPlantRequest>(PET, async (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
@@ -67,6 +72,11 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       } catch {
         return res(ctx.delay(delay), ctx.status(404));
       }
+    }),
+    //리마인더 조회
+    rest.get(REMINDER, (req, res, ctx) => {
+      console.log(res);
+      return res(ctx.delay(delay), ctx.status(200), ctx.json(REMINDER_DATA));
     }),
   ];
 };
