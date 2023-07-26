@@ -17,24 +17,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class PetPlantTest {
 
     @ParameterizedTest
-    @CsvSource(value = {"2022,7,1,7", "2022,7,3,5", "2022,7,5,3", "2022,7,7,1", "2022,7,8,0"})
-    void 물주기_남은_날짜_계산(int year, int month, int day, int nextWaterDay) {
-        PetPlant 산세베리아 = PetPlantFixture.산세베리아;
-
-        assertThat(산세베리아.calculateNextWaterDay(LocalDate.of(year, month, day)))
-                .isEqualTo(nextWaterDay);
-    }
-
-    @Test
-    void 물주기_계산시_물주기_날_이후의_날을_입력하면_예외_발생() {
-        PetPlant 산세베리아 = PetPlantFixture.산세베리아;
-
-        assertThatThrownBy(() -> 산세베리아.calculateNextWaterDay(LocalDate.of(2022, 7, 10)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("물주기 남은 날짜는 음수가 될 수 없습니다.");
-    }
-
-    @ParameterizedTest
     @CsvSource(value = {"2022,7,1,1", "2022,7,7,7", "2022,8,1,32"})
     void 반려_식물과_함께한_일수_계산(int year, int month, int day, int daySince) {
         PetPlant 산세베리아 = PetPlantFixture.산세베리아;

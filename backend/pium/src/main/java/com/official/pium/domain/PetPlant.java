@@ -89,13 +89,6 @@ public class PetPlant extends BaseEntity {
         this.waterCycle = waterCycle;
     }
 
-    public Long calculateNextWaterDay(LocalDate baseDate) {
-        if (baseDate.isAfter(nextWaterDate)) {
-            throw new IllegalArgumentException("물주기 남은 날짜는 음수가 될 수 없습니다. Date: " + baseDate);
-        }
-        return ChronoUnit.DAYS.between(baseDate, nextWaterDate);
-    }
-
     public Long calculateDaySince(LocalDate currentDate) {
         if (currentDate.isBefore(birthDate)) {
             throw new IllegalArgumentException("함께한 날은 음수가 될 수 없습니다. Date: " + currentDate);
