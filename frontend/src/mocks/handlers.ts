@@ -78,9 +78,15 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
-      const reminder = Reminder.getAll();
-      console.log(reminder, '22');
-      return res(ctx.delay(delay), ctx.status(200), ctx.json(reminder));
+      const { data } = Reminder.getAll();
+
+      data.sort((a, b) => {
+        if (a.nextWaterDate < b.nextWaterDate) return -1;
+        if (a.nextWaterDate > b.nextWaterDate) return 1;
+
+        return 0;
+      });
+      return res(ctx.delay(delay), ctx.status(200), ctx.json({ data }));
     }),
 
     rest.post(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {

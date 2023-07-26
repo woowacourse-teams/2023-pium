@@ -1,12 +1,3 @@
-import {
-  ConvertReminderData,
-  Month,
-  MonthKeyReminderType,
-  ReminderExtendType,
-  Reminder as ReminderType,
-  TodayStatus,
-} from 'types/api/reminder';
-import { useQuery } from '@tanstack/react-query';
 import CheckBox from 'components/@common/CheckBox';
 import ReminderCard from 'components/ReminderCard';
 import {
@@ -22,60 +13,12 @@ import {
   FillStyle,
   EmptyStyle,
 } from './Reminder.style';
+import useReminder from 'hooks/queries/reminder/useReminder';
 import reminderAPI from 'apis/reminder';
 import { getToday } from 'utils/date';
 
-const initialData: MonthKeyReminderType = {};
-
 const Reminder = () => {
-  const { data: reminderData } = useQuery<{ data: ReminderType[] }, Error, ConvertReminderData>({
-    queryKey: ['reminder'],
-
-    queryFn: async () => {
-      const response = await reminderAPI.getReminder();
-      const results = await response.json();
-      return results;
-    },
-
-    select: (result) => {
-      const { data } = result;
-
-      const convertedData: MonthKeyReminderType = data.reduce((acc, cur) => {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-        const [_, month, date] = cur.nextWaterDate.split('-') as [string, Month, string];
-
-        const status: TodayStatus = cur.dDay === 0 ? 'exist' : cur.dDay > 0 ? 'late' : 'none';
-
-        const convertData: ReminderExtendType = {
-          ...cur,
-          status,
-          date: date,
-        };
-
-        const currentMonth = acc[month];
-
-        if (currentMonth !== undefined) {
-          return { ...acc, [month]: [...currentMonth, convertData] };
-        }
-
-        return {
-          ...acc,
-          [month]: [convertData],
-        };
-      }, initialData);
-
-      const status = data.every(({ dDay }) => dDay < 0)
-        ? 'none'
-        : data.find(({ dDay }) => dDay > 0)
-        ? 'late'
-        : 'exist';
-
-      return {
-        data: convertedData,
-        status,
-      };
-    },
-  });
+  const { reminderData, refetch } = useReminder();
 
   if (reminderData === undefined) return null;
 
@@ -94,7 +37,7 @@ const Reminder = () => {
           if (!hasDate) dayMap.set(data.date, true);
           const id = data.petPlantId.toString();
 
-          const checkCallback = () => {
+          const checkCallback = async () => {
             const today = getToday();
             reminderAPI.waterPlant({
               id: data.petPlantId,
@@ -102,6 +45,7 @@ const Reminder = () => {
                 waterDate: today,
               },
             });
+            console.log(await refetch());
           };
 
           return (
