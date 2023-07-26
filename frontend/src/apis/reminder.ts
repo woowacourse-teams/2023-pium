@@ -18,7 +18,7 @@ const waterPlant = ({ id, body }: WaterPlantProps) => {
 
 const pushOff = ({ id, body }: PushOffProps) => {
   return fetch(`${REMINDER}/${id}`, {
-    method: 'POST',
+    method: 'PATCH',
     body: JSON.stringify(body),
   });
 };

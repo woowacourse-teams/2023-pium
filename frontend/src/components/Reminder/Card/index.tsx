@@ -12,7 +12,7 @@ import {
   DictionaryPlantName,
 } from './ReminderCard.style';
 import useReminderHooks from 'hooks/useReminderHooks';
-import { getParticularDateFromToday } from 'utils/date';
+import { getParticularDateFromToday, getToday } from 'utils/date';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
@@ -68,7 +68,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
         </Alert>
       </ContentBox>
       <ActionBox>
-        <DateInput value="" onChange={waterCallback} placeholder="날짜 선택" />
+        <DateInput value="" onChange={waterCallback} placeholder="날짜 선택" max={getToday()} />
         <PutOff type="button" onClick={pushOffHandler}>
           미루기
         </PutOff>

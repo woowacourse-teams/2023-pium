@@ -91,8 +91,17 @@ export const makeHandler = (delay = 0, failRate = 0) => {
 
     rest.post(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
       const { petPlantId } = req.params;
+      const { waterDate } = await req.json();
 
-      Reminder.water(Number(petPlantId));
+      Reminder.water(Number(petPlantId), waterDate);
+
+      return res(ctx.delay(delay), ctx.status(204));
+    }),
+
+    rest.patch(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
+      const { petPlantId } = req.params;
+      const { nextWaterDate } = await req.json();
+      Reminder.pushOff(Number(petPlantId), nextWaterDate);
 
       return res(ctx.delay(delay), ctx.status(204));
     }),

@@ -45,3 +45,21 @@ export const getParticularDateFromToday = (particularNumber: number) => {
 
   return particularDate.toISOString().slice(0, 10);
 };
+
+/**
+ *
+ * params들은 YYYY-MM-DD의 형태를 띈다
+ * @param prev 첫 번째 날짜
+ * @param next 두 번째 날짜
+ * @returns 두 날짜 사이에 차이
+ */
+
+export const getDaysBetweenDate = (prev: string, next: string) => {
+  const first = new Date(prev);
+  const second = new Date(next);
+
+  const diff = Math.abs(first.getTime() - second.getTime());
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+  return days;
+};
