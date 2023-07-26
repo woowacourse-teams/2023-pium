@@ -32,9 +32,13 @@ export const DictionaryPlantImageArea = styled.div`
   margin: 32px 0;
 `;
 
-export const ButtonArea = styled.div`
+export const ProgressBarArea = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
-  margin-top: 16px;
+  margin: 16px auto;
 `;
 
 export const Button = styled.button`
