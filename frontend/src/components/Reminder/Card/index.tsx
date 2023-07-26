@@ -13,7 +13,7 @@ import {
   NickName,
   DictionaryPlantName,
 } from './ReminderCard.style';
-import { getParticularDateFromToday, getToday } from 'utils/date';
+import { getParticularDateFromSpecificDay, getToday } from 'utils/date';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
@@ -35,15 +35,22 @@ const convertSubFix = (status: TodayStatus) => {
 const ReminderCard = ({ data }: ReminderCardProps) => {
   const { petPlantId, status, image, nickName, dictionaryPlantName, dDay } = data;
   const context = useContext(ReminderContext);
+  const today = getToday();
 
   const pushOffHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
-    const tomorrow = getParticularDateFromToday(1);
+    const specificDay = data.nextWaterDate > today ? new Date(data.nextWaterDate) : new Date();
+
+    const nextWaterDate = getParticularDateFromSpecificDay({
+      specificDay,
+      particularNumber: 1,
+    });
     const variables: PushOffProps = {
       id: petPlantId,
       body: {
-        nextWaterDate: tomorrow,
+        nextWaterDate,
       },
     };
+
     context?.pushOffCallback(variables);
   };
 
@@ -54,7 +61,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
         waterDate,
       },
     };
-    console.log(context);
+
     context?.waterCallback(variables);
   };
   return (

@@ -1,5 +1,5 @@
 import { Reminder } from "types/api/reminder";
-import { getDaysBetweenDate, getParticularDateFromToday, getToday } from "utils/date";
+import { getDaysBetweenDate, getParticularDateFromSpecificDay, getToday } from "utils/date";
 
 const KEY = 'MSW_REMINDER';
 
@@ -21,7 +21,7 @@ const water = (id:number,date:string) =>{ // 물을 준 것임. 물을 줬으니
 
     return {
       ...data,
-      nextWaterDate: getParticularDateFromToday(betweenDate+ranNum),
+      nextWaterDate: getParticularDateFromSpecificDay({particularNumber:betweenDate+ranNum}),
       dDay:-(betweenDate+ranNum)
     }
   })
@@ -36,6 +36,8 @@ const pushOff = (id:number,date:string) =>{// 여기는 미루기임. 입력된 
   const updatedData = data.map((data) => {
     const {petPlantId} = data
     if(id !== petPlantId) return data
+    
+    console.log(data.nextWaterDate,date,'22')
     const betweenDate = getDaysBetweenDate(getToday(), date);
 
     return {
