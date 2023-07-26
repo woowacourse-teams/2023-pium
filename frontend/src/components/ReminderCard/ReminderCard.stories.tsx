@@ -17,10 +17,46 @@ export const Default: Story = {
       image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
       nickName: '참새나무',
       dictionaryPlantName: '알로카시아',
-      nextWaterDay: 3,
+      dDay: 0,
+      nextWaterDate: '2023-07-26',
+      date: '26',
+      status: 'exist',
+    };
+    const dateCallback = (value: string) => console.log(value);
+
+    return <ReminderCard data={mockData} dateCallback={dateCallback} />;
+  },
+};
+
+export const Late: Story = {
+  render: () => {
+    const mockData: ReminderExtendType = {
+      petPlantId: 1,
+      image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+      nickName: '참새나무',
+      dictionaryPlantName: '알로카시아',
+      dDay: 19,
       nextWaterDate: '2023-07-07',
       date: '07',
       status: 'late',
+    };
+    const dateCallback = (value: string) => console.log(value);
+
+    return <ReminderCard data={mockData} dateCallback={dateCallback} />;
+  },
+};
+
+export const None: Story = {
+  render: () => {
+    const mockData: ReminderExtendType = {
+      petPlantId: 1,
+      image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+      nickName: '참새나무',
+      dictionaryPlantName: '알로카시아',
+      dDay: -3,
+      nextWaterDate: '2023-07-29',
+      date: '29',
+      status: 'none',
     };
     const dateCallback = (value: string) => console.log(value);
 

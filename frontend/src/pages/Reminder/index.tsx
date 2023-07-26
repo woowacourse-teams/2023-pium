@@ -40,8 +40,7 @@ const Reminder = () => {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, month, date] = cur.nextWaterDate.split('-') as [string, Month, string];
 
-        const status: TodayStatus =
-          cur.nextWaterDay === 0 ? 'exist' : cur.nextWaterDay > 0 ? 'none' : 'late';
+        const status: TodayStatus = cur.dDay === 0 ? 'exist' : cur.dDay > 0 ? 'late' : 'none';
 
         const convertData: ReminderExtendType = {
           ...cur,
@@ -61,9 +60,9 @@ const Reminder = () => {
         };
       }, initialData);
 
-      const status = data.every(({ nextWaterDay }) => nextWaterDay > 0)
+      const status = data.every(({ dDay }) => dDay < 0)
         ? 'none'
-        : data.find(({ nextWaterDay }) => nextWaterDay < 0)
+        : data.find(({ dDay }) => dDay > 0)
         ? 'late'
         : 'exist';
 
