@@ -89,17 +89,19 @@ public class PetPlant extends BaseEntity {
         this.waterCycle = waterCycle;
     }
 
-    public Long calculateNextWaterDay(LocalDate baseDate) {
-        if (baseDate.isAfter(nextWaterDate)) {
-            throw new IllegalArgumentException("물주기 남은 날짜는 음수가 될 수 없습니다. Date: " + baseDate);
-        }
-        return ChronoUnit.DAYS.between(baseDate, nextWaterDate);
-    }
-
     public Long calculateDaySince(LocalDate currentDate) {
         if (currentDate.isBefore(birthDate)) {
             throw new IllegalArgumentException("함께한 날은 음수가 될 수 없습니다. Date: " + currentDate);
         }
         return ChronoUnit.DAYS.between(birthDate, currentDate) + 1;
+    }
+
+    /**
+     * - 0 : 오늘 할 일
+     * - 음수 : 할 일
+     * - 양수 : 지각
+     */
+    public Long calculateDDay(LocalDate currentDate) {
+        return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
     }
 }
