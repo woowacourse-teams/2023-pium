@@ -55,5 +55,19 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       // todo: 등록된 식물의 내 식물 목록 id도 돌려주기
       return res(ctx.delay(delay), ctx.status(201));
     }),
+
+    rest.get(`${PET}/:petPlantId`, async (req, res, ctx) => {
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(500));
+      }
+
+      const { petPlantId } = req.params;
+      try {
+        const { data } = PetPlant.find(Number(petPlantId));
+        return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
+      } catch {
+        return res(ctx.delay(delay), ctx.status(404));
+      }
+    }),
   ];
 };
