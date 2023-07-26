@@ -5,7 +5,7 @@ import reminderAPI from 'apis/reminder';
 const useWater = () => {
   const { mutate } = useMutation({
     mutationFn: async ({ id, body }: WaterPlantProps) => {
-      reminderAPI.waterPlant({
+      await reminderAPI.waterPlant({
         id,
         body,
       });

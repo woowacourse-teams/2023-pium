@@ -11,7 +11,6 @@ const useReminderHooks = ({ enabled = true }: ReminderHooksProps) => {
   const { reminderData, refetch } = useReminder({ enabled, queryKey: ['reminder'] });
 
   const { mutate: water } = useWater();
-
   const { mutate: pushOff } = usePushOff();
 
   const waterMutate = (variables: WaterPlantProps) =>
@@ -28,7 +27,7 @@ const useReminderHooks = ({ enabled = true }: ReminderHooksProps) => {
       },
     });
 
-  return { reminderData, refetch, waterMutate, pushOffMutate };
+  return { reminderData, waterMutate, pushOffMutate };
 };
 
 export default useReminderHooks;

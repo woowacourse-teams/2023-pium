@@ -5,7 +5,7 @@ import reminderAPI from 'apis/reminder';
 const usePushOff = () => {
   const { mutate } = useMutation({
     mutationFn: async ({ id, body }: PushOffProps) => {
-      reminderAPI.pushOff({
+      await reminderAPI.pushOff({
         id,
         body,
       });

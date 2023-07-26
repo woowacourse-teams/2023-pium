@@ -1,4 +1,6 @@
 import { PushOffProps, ReminderExtendType, TodayStatus, WaterPlantProps } from 'types/api/reminder';
+import { ReminderContext } from 'contexts/reminderContext';
+import { useContext } from 'react';
 import DateInput from 'components/DateInput';
 import Image from 'components/Image';
 import {
@@ -11,7 +13,6 @@ import {
   NickName,
   DictionaryPlantName,
 } from './ReminderCard.style';
-import useReminderHooks from 'hooks/useReminderHooks';
 import { getParticularDateFromToday, getToday } from 'utils/date';
 
 interface ReminderCardProps {
@@ -33,7 +34,7 @@ const convertSubFix = (status: TodayStatus) => {
 
 const ReminderCard = ({ data }: ReminderCardProps) => {
   const { petPlantId, status, image, nickName, dictionaryPlantName, dDay } = data;
-  const { waterMutate, pushOffMutate } = useReminderHooks({ enabled: false });
+  const context = useContext(ReminderContext);
 
   const pushOffHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
     const tomorrow = getParticularDateFromToday(1);
@@ -43,18 +44,18 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
         nextWaterDate: tomorrow,
       },
     };
-    pushOffMutate(variables);
+    context?.pushOffCallback(variables);
   };
 
-  const waterCallback = (waterDate: string) => {
+  const waterHandler = (waterDate: string) => {
     const variables: WaterPlantProps = {
       id: petPlantId,
       body: {
         waterDate,
       },
     };
-
-    waterMutate(variables);
+    console.log(context);
+    context?.waterCallback(variables);
   };
   return (
     <Wrapper>
@@ -68,7 +69,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
         </Alert>
       </ContentBox>
       <ActionBox>
-        <DateInput value="" onChange={waterCallback} placeholder="날짜 선택" max={getToday()} />
+        <DateInput value="" onChange={waterHandler} placeholder="날짜 선택" max={getToday()} />
         <PutOff type="button" onClick={pushOffHandler}>
           미루기
         </PutOff>
