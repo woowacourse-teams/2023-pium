@@ -22,6 +22,7 @@ export interface PetPlantDetails extends Omit<NewPetPlantRequest, 'dictionaryPla
     name: DictionaryPlant['name'];
   };
 
-  nextWaterDay: number;
+  dDay: number;
   daySince: number;
+  nextWaterDate: string;
 }
