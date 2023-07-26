@@ -32,3 +32,16 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
   const anotherDay = Math.floor(new Date(another).getTime() / singleDay);
   return Math.abs(oneDay - anotherDay);
 };
+
+/**
+ * 오늘 날짜로부터 특정 일수 이전 혹은 이후의 날을 YYYY-MM-DD 형태로 반환합니다.
+ * @param particularNumber 특정 날짜
+ * @returns 'YYYY-MM-DD'
+ */
+export const getParticularDateFromToday = (particularNumber: number) => {
+  const today = new Date();
+
+  const particularDate = new Date(today.setDate(today.getDate() + particularNumber));
+
+  return particularDate.toISOString().slice(0, 10);
+};

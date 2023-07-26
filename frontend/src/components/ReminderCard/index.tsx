@@ -11,6 +11,7 @@ import {
   NickName,
   DictionaryPlantName,
 } from './ReminderCard.style';
+import { getParticularDateFromToday } from 'utils/date';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
@@ -33,6 +34,12 @@ const convertSubFix = (status: TodayStatus) => {
 const ReminderCard = (props: ReminderCardProps) => {
   const { data, dateCallback } = props;
   const { status, image, nickName, dictionaryPlantName, dDay } = data;
+
+  const pushOffHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
+    const tomorrow = getParticularDateFromToday(1);
+    dateCallback(tomorrow);
+  };
+
   return (
     <Wrapper>
       <StatusBar status={status} />
@@ -46,7 +53,9 @@ const ReminderCard = (props: ReminderCardProps) => {
       </ContentBox>
       <ActionBox>
         <DateInput value="" onChange={dateCallback} placeholder="날짜 선택" />
-        <PutOff type="button">미루기</PutOff>
+        <PutOff type="button" onClick={pushOffHandler}>
+          미루기
+        </PutOff>
       </ActionBox>
     </Wrapper>
   );
