@@ -12,7 +12,7 @@ import {
   Alert,
   NickName,
   DictionaryPlantName,
-} from './ReminderCard.style';
+} from './Card.style';
 import { getParticularDateFromSpecificDay, getToday } from 'utils/date';
 
 interface ReminderCardProps {
