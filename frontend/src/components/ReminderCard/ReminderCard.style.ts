@@ -36,13 +36,6 @@ export const StatusBar = styled.div<BackgroundProps>`
   border-radius: 8px 0 0 8px;
 `;
 
-export const Image = styled.img`
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  border-radius: 50%;
-`;
-
 export const ContentBox = styled.div`
   display: flex;
   flex-direction: column;

@@ -1,5 +1,5 @@
 import { TodayStatus } from 'types/api/reminder';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {
   status: TodayStatus;
@@ -84,4 +84,16 @@ export const DateLabel = styled.label`
   position: absolute;
   top: 8px;
   font: 700 2rem/2rem 'NanumSquareRound';
+`;
+
+export const FillStyle = css`
+  width: 24px;
+  height: 24px;
+  color: ${({ theme }) => theme.color.primary};
+`;
+
+export const EmptyStyle = css`
+  width: 24px;
+  height: 24px;
+  color: ${({ theme }) => theme.color.gray};
 `;

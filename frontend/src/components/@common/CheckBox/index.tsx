@@ -15,7 +15,7 @@ const CheckBox = ({ id, isChecked = false, fillStyle, emptyStyle }: CheckBoxProp
   const [checked, setChecked] = useState(isChecked);
 
   const checkHandler = () => setChecked((prev) => !prev);
-  console.log(fillStyle, emptyStyle);
+
   return (
     <Label htmlFor={id}>
       <Input id={id} />

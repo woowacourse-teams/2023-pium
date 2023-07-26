@@ -1,11 +1,11 @@
 import { ReminderExtendType, TodayStatus } from 'types/api/reminder';
 import DateInput from 'components/DateInput';
+import Image from 'components/Image';
 import {
   ActionBox,
   ContentBox,
   StatusBar,
   Wrapper,
-  Image,
   PutOff,
   Alert,
   NickName,
@@ -36,7 +36,7 @@ const ReminderCard = (props: ReminderCardProps) => {
   return (
     <Wrapper>
       <StatusBar status={status} />
-      <Image src={image} alt={`${nickName} 이미지`} />
+      <Image src={image} size="64px" type="circle" alt={`${nickName} 이미지`} />
       <ContentBox>
         <NickName>{nickName}</NickName>
         <DictionaryPlantName>{dictionaryPlantName}</DictionaryPlantName>

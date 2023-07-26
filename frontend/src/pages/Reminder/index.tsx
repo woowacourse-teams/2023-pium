@@ -7,6 +7,7 @@ import {
   TodayStatus,
 } from 'types/api/reminder';
 import { useQuery } from '@tanstack/react-query';
+import CheckBox from 'components/@common/CheckBox';
 import ReminderCard from 'components/ReminderCard';
 import {
   ContentBox,
@@ -18,6 +19,8 @@ import {
   ReminderCardBox,
   InfoBox,
   DateLabel,
+  FillStyle,
+  EmptyStyle,
 } from './Reminder.style';
 import reminderAPI from 'apis/reminder';
 
@@ -88,12 +91,12 @@ const Reminder = () => {
         {value.map((data) => {
           const hasDate = dayMap.has(data.date); // 있으면 true 없으면 false
           if (!hasDate) dayMap.set(data.date, true);
-
+          const id = data.petPlantId.toString();
           return (
             <ReminderCardBox key={data.petPlantId}>
               <InfoBox>
-                {!hasDate && <DateLabel htmlFor={data.petPlantId + ''}>{data.date}</DateLabel>}
-                <input id={data.petPlantId + ''} type="checkbox" />
+                {!hasDate && <DateLabel htmlFor={id}>{data.date}</DateLabel>}
+                <CheckBox id={id} fillStyle={FillStyle} emptyStyle={EmptyStyle} />
               </InfoBox>
               <ReminderCard data={data} dateCallback={actionCallback} />
             </ReminderCardBox>
