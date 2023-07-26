@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/SearchBox';
 import {
   ButtonArea,
@@ -37,6 +38,7 @@ const Main = () => {
           onResultClick={goToDictDetailPage}
         />
       </SearchBoxArea>
+      <Navbar currentPath={URL_PATH.main} />
     </Wrapper>
   );
 };

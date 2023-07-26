@@ -1,4 +1,5 @@
 import { generatePath, useNavigate } from 'react-router-dom';
+import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/SearchBox';
 import { Message, SearchBoxArea, Wrapper } from './Search.style';
 import { URL_PATH } from 'constants/index';
@@ -16,6 +17,7 @@ const PetRegisterSearch = () => {
       <SearchBoxArea>
         <SearchBox onResultClick={navigateForm} />
       </SearchBoxArea>
+      <Navbar currentPath={URL_PATH.petRegisterSearch} />
     </Wrapper>
   );
 };
