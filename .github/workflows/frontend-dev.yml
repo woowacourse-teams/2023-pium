@@ -55,5 +55,5 @@ jobs:
           author_name: 프론트엔드 빌드 결과 알림
           fields: repo, message, commit, author, action, eventName, ref, workflow, job, took
         env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FRONTEND }}
         if: always()
