@@ -10,7 +10,7 @@ import Stack from 'components/Stack';
 import useStack from 'components/Stack/hooks/useStack';
 import {
   Button,
-  ProgressBarArea,
+  Center,
   DictionaryPlantImageArea,
   DictionaryPlantName,
   FormArea,
@@ -115,9 +115,9 @@ const PetRegisterForm = () => {
         <DictionaryPlantImageArea>
           <Image size="160px" src={dictionaryPlant?.image} />
         </DictionaryPlantImageArea>
-        <ProgressBarArea>
+        <Center>
           <ProgressBar percentage={formProgressPercentage} width="90%" height="12px" />
-        </ProgressBarArea>
+        </Center>
         <Stack topIndex={topIndex}>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="별명이 뭔가요?" status={getStatus(0)}>
@@ -188,9 +188,11 @@ const PetRegisterForm = () => {
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-            <Button type="submit" onClick={submit} disabled={!isValidForm}>
-              등록하기
-            </Button>
+            <Center>
+              <Button type="submit" onClick={submit} disabled={!isValidForm}>
+                등록하기
+              </Button>
+            </Center>
           </Stack.Element>
         </Stack>
       </FormArea>
