@@ -50,16 +50,20 @@ export const ContentBox = styled.div`
 
   width: 128px;
   height: 68px;
+`;
 
-  p {
-    font: ${({ theme }) => theme.font.reminderCardContent};
-    color: ${({ theme }) => theme.color.grayDark};
-  }
+export const NickName = styled.p`
+  font: 600 1.4rem/2.1rem 'NanumsquareRound';
+  color: ${({ theme }) => theme.color.sub};
+`;
 
-  p:first-child {
-    font: 600 1.4rem/2.1rem 'NanumsquareRound';
-    color: ${({ theme }) => theme.color.sub};
-  }
+export const DictionaryPlantName = styled.p`
+  color: ${({ theme }) => theme.color.grayDark};
+`;
+
+export const Alert = styled.p<BackgroundProps>`
+  font: ${({ theme }) => theme.font.reminderCardContent};
+  color: ${({ status }) => convertCardStatusBar(status)};
 `;
 
 export const ActionBox = styled.div`

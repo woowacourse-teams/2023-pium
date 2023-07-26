@@ -1,22 +1,48 @@
-import { ReminderExtendType } from 'types/api/reminder';
+import { ReminderExtendType, TodayStatus } from 'types/api/reminder';
 import DateInput from 'components/DateInput';
-import { ActionBox, ContentBox, StatusBar, Wrapper, Image, PutOff } from './ReminderCard.style';
+import {
+  ActionBox,
+  ContentBox,
+  StatusBar,
+  Wrapper,
+  Image,
+  PutOff,
+  Alert,
+  NickName,
+  DictionaryPlantName,
+} from './ReminderCard.style';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
   dateCallback: (value: string) => void;
 }
 
+const convertSubFix = (status: TodayStatus) => {
+  switch (status) {
+    case 'exist':
+      return '오늘이에요!';
+    case 'late':
+      return '일 지났어요🥺';
+    case 'none':
+      return '일 남았습니다!';
+    default:
+      return '';
+  }
+};
+
 const ReminderCard = (props: ReminderCardProps) => {
   const { data, dateCallback } = props;
+  const { status, image, nickName, dictionaryPlantName, dDay } = data;
   return (
     <Wrapper>
-      <StatusBar status={data.status} />
-      <Image src={data.image} alt={`${data.nickName} 이미지`} />
+      <StatusBar status={status} />
+      <Image src={image} alt={`${nickName} 이미지`} />
       <ContentBox>
-        <p>{data.nickName}</p>
-        <p>{data.dictionaryPlantName}</p>
-        <p>D+ </p>
+        <NickName>{nickName}</NickName>
+        <DictionaryPlantName>{dictionaryPlantName}</DictionaryPlantName>
+        <Alert status={status}>
+          {status === 'exist' ? convertSubFix(status) : `${Math.abs(dDay)}${convertSubFix(status)}`}
+        </Alert>
       </ContentBox>
       <ActionBox>
         <DateInput value="" onChange={dateCallback} placeholder="날짜 선택" />
