@@ -9,12 +9,25 @@ interface CheckBoxProps {
   isChecked?: boolean;
   fillStyle?: CSSProp;
   emptyStyle?: CSSProp;
+  checkedCallback?: () => void;
 }
 
-const CheckBox = ({ id, isChecked = false, fillStyle, emptyStyle }: CheckBoxProps) => {
+const CheckBox = ({
+  id,
+  isChecked = false,
+  fillStyle,
+  emptyStyle,
+  checkedCallback,
+}: CheckBoxProps) => {
   const [checked, setChecked] = useState(isChecked);
 
-  const checkHandler = () => setChecked((prev) => !prev);
+  const checkHandler = () => {
+    setChecked((prev) => !prev);
+    if (!checked) {
+      // true인 경우에 실행되는 메서드
+      checkedCallback && checkedCallback();
+    }
+  };
 
   return (
     <Label htmlFor={id}>
