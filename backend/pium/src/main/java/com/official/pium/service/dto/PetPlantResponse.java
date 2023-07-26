@@ -28,6 +28,9 @@ public class PetPlantResponse {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate nextWaterDate;
+
     private DictionaryPlantResponse dictionaryPlant;
 
     @Getter

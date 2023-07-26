@@ -51,4 +51,14 @@ class PetPlantTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("함께한 날은 음수가 될 수 없습니다.");
     }
+
+    @ParameterizedTest
+    @CsvSource(value = {"2022,7,1,-7", "2022,7,8,0", "2022,7,11,3"})
+    void dDay를_계산(int year, int month, int day, int dDay) {
+        PetPlant 산세베리아 = PetPlantFixture.산세베리아;
+
+        Long result = 산세베리아.calculateDDay(LocalDate.of(year, month, day));
+
+        assertThat(result).isEqualTo(dDay);
+    }
 }

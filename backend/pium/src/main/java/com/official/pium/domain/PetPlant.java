@@ -102,4 +102,13 @@ public class PetPlant extends BaseEntity {
         }
         return ChronoUnit.DAYS.between(birthDate, currentDate) + 1;
     }
+
+    /**
+     * - 0 : 오늘 할 일
+     * - 음수 : 할 일
+     * - 양수 : 지각
+     */
+    public Long calculateDDay(LocalDate currentDate) {
+        return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
+    }
 }

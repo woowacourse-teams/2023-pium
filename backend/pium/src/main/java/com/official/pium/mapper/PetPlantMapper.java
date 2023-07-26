@@ -45,10 +45,11 @@ public class PetPlantMapper {
                 .lastWaterDate(petPlant.getLastWaterDate())
                 .waterCycle(petPlant.getWaterCycle())
                 .nextWaterDay(nextWaterDay)
+                .nextWaterDate(petPlant.getNextWaterDate())
                 .daySince(daySince)
                 .build();
     }
-    
+
     public static SinglePetPlantResponse toSinglePetPlantResponse(PetPlant petPlant, Long daySince) {
         return SinglePetPlantResponse.builder()
                 .id(petPlant.getId())
