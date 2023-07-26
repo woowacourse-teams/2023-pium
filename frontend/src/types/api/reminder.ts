@@ -36,3 +36,10 @@ export interface ConvertReminderData {
   data: MonthKeyReminderType;
   status: TodayStatus;
 }
+
+export interface WaterPlantProps {
+  id: number;
+  body: {
+    waterDate: string;
+  };
+}

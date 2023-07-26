@@ -82,10 +82,6 @@ const Reminder = () => {
   const scheduleReminder = Object.entries(reminderData.data);
 
   const actionCallback = (value: string) => console.log(value);
-  const checkCallback = () => {
-    const today = getToday();
-    actionCallback(today);
-  };
 
   const reminderBox = scheduleReminder.map(([month, value]) => {
     const dayMap = new Map();
@@ -97,6 +93,16 @@ const Reminder = () => {
           const hasDate = dayMap.has(data.date);
           if (!hasDate) dayMap.set(data.date, true);
           const id = data.petPlantId.toString();
+
+          const checkCallback = () => {
+            const today = getToday();
+            reminderAPI.waterPlant({
+              id: data.petPlantId,
+              body: {
+                waterDate: today,
+              },
+            });
+          };
 
           return (
             <ReminderCardBox key={data.petPlantId}>

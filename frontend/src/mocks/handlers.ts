@@ -4,6 +4,7 @@ import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import REMINDER_DATA from './data/reminder';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
+import Reminder from './storage/Reminder';
 
 const validateParams = (delay: number, failRate: number) => {
   if (failRate < 0 || failRate > 1) {
@@ -18,6 +19,8 @@ const validateParams = (delay: number, failRate: number) => {
 const DICT = '*/dictionary-plants';
 const PET = '*/pet-plants';
 const REMINDER = '*/reminder';
+
+sessionStorage.setItem('MSW_REMINDER', JSON.stringify(REMINDER_DATA));
 
 export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
@@ -75,7 +78,17 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
-      return res(ctx.delay(delay), ctx.status(200), ctx.json(REMINDER_DATA));
+      const reminder = Reminder.getAll();
+      console.log(reminder, '22');
+      return res(ctx.delay(delay), ctx.status(200), ctx.json(reminder));
+    }),
+
+    rest.post(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
+      const { petPlantId } = req.params;
+
+      Reminder.water(Number(petPlantId));
+
+      return res(ctx.delay(delay), ctx.status(204));
     }),
   ];
 };
