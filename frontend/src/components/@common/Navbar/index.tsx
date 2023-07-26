@@ -1,10 +1,10 @@
+import Calendar from 'components/@common/Icons/Calendar';
+import Home from 'components/@common/Icons/Home';
+import Plant from 'components/@common/Icons/Plant';
 import Reminder from 'components/@common/Icons/Reminder';
 import theme from '../../../style/theme.style';
 import { NavItem, NavItemArea, NavLabel, NavLink, Wrapper } from './Navbar.style';
 import { URL_PATH } from 'constants/index';
-import Calendar from '../Icons/Calendar';
-import Home from '../Icons/Home';
-import Plant from '../Icons/Plant';
 
 type PathKey = keyof typeof URL_PATH;
 type Path = (typeof URL_PATH)[PathKey];
