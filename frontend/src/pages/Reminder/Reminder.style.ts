@@ -63,6 +63,7 @@ export const MonthTitle = styled.p`
 
 export const ReminderCardBox = styled.div`
   display: flex;
+  gap: 8px;
   width: 312px;
 `;
 
