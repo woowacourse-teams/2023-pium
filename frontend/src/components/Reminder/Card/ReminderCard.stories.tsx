@@ -22,9 +22,8 @@ export const Default: Story = {
       date: '26',
       status: 'exist',
     };
-    const dateCallback = (value: string) => console.log(value);
 
-    return <ReminderCard data={mockData} dateCallback={dateCallback} />;
+    return <ReminderCard data={mockData} />;
   },
 };
 
@@ -40,9 +39,8 @@ export const Late: Story = {
       date: '07',
       status: 'late',
     };
-    const dateCallback = (value: string) => console.log(value);
 
-    return <ReminderCard data={mockData} dateCallback={dateCallback} />;
+    return <ReminderCard data={mockData} />;
   },
 };
 
@@ -58,8 +56,7 @@ export const None: Story = {
       date: '29',
       status: 'none',
     };
-    const dateCallback = (value: string) => console.log(value);
 
-    return <ReminderCard data={mockData} dateCallback={dateCallback} />;
+    return <ReminderCard data={mockData} />;
   },
 };

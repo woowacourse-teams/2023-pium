@@ -15,7 +15,7 @@ const MonthBox = ({ month, reminderDates }: MonthBoxProps) => {
     if (!hasDate) dayMap.set(info.date, true);
 
     const id = info.petPlantId.toString();
-    console.log(hasDate, '22');
+
     return <CardBox key={id} hasDate={hasDate} data={info} />;
   });
 

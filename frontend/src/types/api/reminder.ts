@@ -23,6 +23,10 @@ export interface Reminder {
   nextWaterDate: string;
 }
 
+export interface ReminderResult {
+  data: Reminder[];
+}
+
 export type MonthKeyReminderType = {
   [key in Month]?: ReminderExtendType[];
 };
@@ -41,5 +45,12 @@ export interface WaterPlantProps {
   id: number;
   body: {
     waterDate: string;
+  };
+}
+
+export interface PushOffProps {
+  id: number;
+  body: {
+    nextWaterDate: string;
   };
 }
