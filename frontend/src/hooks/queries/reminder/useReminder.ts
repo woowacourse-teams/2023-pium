@@ -2,16 +2,17 @@ import {
   ConvertReminderData,
   Month,
   MonthKeyReminderType,
-  Reminder,
   ReminderExtendType,
+  ReminderResult,
   TodayStatus,
 } from 'types/api/reminder';
 import { useQuery } from '@tanstack/react-query';
+import type { UndefinedInitialDataOptions } from '@tanstack/react-query/build/lib/queryOptions';
 import reminderAPI from 'apis/reminder';
 
 const initialData: MonthKeyReminderType = {};
 
-const convertReminderData = (result: { data: Reminder[] }): ConvertReminderData => {
+const convertReminderData = (result: ReminderResult): ConvertReminderData => {
   const { data } = result;
 
   const convertedData: MonthKeyReminderType = data.reduce((acc, cur) => {
@@ -50,14 +51,11 @@ const convertReminderData = (result: { data: Reminder[] }): ConvertReminderData 
   };
 };
 
-const useReminder = () => {
-  const { data: reminderData, refetch } = useQuery<
-    { data: Reminder[] },
-    Error,
-    ConvertReminderData
-  >({
-    queryKey: ['reminder'],
-
+const useReminder = (
+  props: UndefinedInitialDataOptions<ReminderResult, Error, ConvertReminderData>
+) => {
+  const { data: reminderData, refetch } = useQuery<ReminderResult, Error, ConvertReminderData>({
+    ...props,
     queryFn: async () => {
       const response = await reminderAPI.getReminder();
       const results = await response.json();
@@ -65,7 +63,6 @@ const useReminder = () => {
     },
     select: convertReminderData,
   });
-
   return { reminderData, refetch };
 };
 

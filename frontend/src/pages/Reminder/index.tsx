@@ -1,9 +1,9 @@
 import MonthBox from 'components/Reminder/MonthBox';
 import { ContentBox, HeaderBox, Title, Wrapper } from './Reminder.style';
-import useReminder from 'hooks/queries/reminder/useReminder';
+import useReminderHooks from 'hooks/useReminderHooks';
 
 const Reminder = () => {
-  const { reminderData } = useReminder();
+  const { reminderData } = useReminderHooks({});
 
   if (reminderData === undefined) return null;
 

@@ -1,4 +1,4 @@
-import { ReminderExtendType, TodayStatus } from 'types/api/reminder';
+import { PushOffProps, ReminderExtendType, TodayStatus, WaterPlantProps } from 'types/api/reminder';
 import DateInput from 'components/DateInput';
 import Image from 'components/Image';
 import {
@@ -11,11 +11,11 @@ import {
   NickName,
   DictionaryPlantName,
 } from './ReminderCard.style';
+import useReminderHooks from 'hooks/useReminderHooks';
 import { getParticularDateFromToday } from 'utils/date';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
-  dateCallback: (value: string) => void;
 }
 
 const convertSubFix = (status: TodayStatus) => {
@@ -31,15 +31,31 @@ const convertSubFix = (status: TodayStatus) => {
   }
 };
 
-const ReminderCard = (props: ReminderCardProps) => {
-  const { data, dateCallback } = props;
-  const { status, image, nickName, dictionaryPlantName, dDay } = data;
+const ReminderCard = ({ data }: ReminderCardProps) => {
+  const { petPlantId, status, image, nickName, dictionaryPlantName, dDay } = data;
+  const { waterMutate, pushOffMutate } = useReminderHooks({ enabled: false });
 
   const pushOffHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
     const tomorrow = getParticularDateFromToday(1);
-    dateCallback(tomorrow);
+    const variables: PushOffProps = {
+      id: petPlantId,
+      body: {
+        nextWaterDate: tomorrow,
+      },
+    };
+    pushOffMutate(variables);
   };
 
+  const waterCallback = (waterDate: string) => {
+    const variables: WaterPlantProps = {
+      id: petPlantId,
+      body: {
+        waterDate,
+      },
+    };
+
+    waterMutate(variables);
+  };
   return (
     <Wrapper>
       <StatusBar status={status} />
@@ -52,7 +68,7 @@ const ReminderCard = (props: ReminderCardProps) => {
         </Alert>
       </ContentBox>
       <ActionBox>
-        <DateInput value="" onChange={dateCallback} placeholder="날짜 선택" />
+        <DateInput value="" onChange={waterCallback} placeholder="날짜 선택" />
         <PutOff type="button" onClick={pushOffHandler}>
           미루기
         </PutOff>
