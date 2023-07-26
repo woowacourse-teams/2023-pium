@@ -80,14 +80,19 @@ const Reminder = () => {
   const actionCallback = (value: string) => console.log(value);
 
   const reminderBox = scheduleReminder.map(([month, value]) => {
+    const dayMap = new Map();
+
     return (
       <MonthReminderBox key={month}>
         <MonthTitle>{Number(month)}월</MonthTitle>
         {value.map((data) => {
+          const hasDate = dayMap.has(data.date); // 있으면 true 없으면 false
+          if (!hasDate) dayMap.set(data.date, true);
+
           return (
             <ReminderCardBox key={data.petPlantId}>
               <InfoBox>
-                <DateLabel htmlFor={data.petPlantId + ''}>{data.date}</DateLabel>
+                {!hasDate && <DateLabel htmlFor={data.petPlantId + ''}>{data.date}</DateLabel>}
                 <input id={data.petPlantId + ''} type="checkbox" />
               </InfoBox>
               <ReminderCard data={data} dateCallback={actionCallback} />

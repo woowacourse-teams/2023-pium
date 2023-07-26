@@ -19,9 +19,11 @@ const convertReminderBackground = (status: TodayStatus) => {
 };
 
 export const Wrapper = styled.section<BackgroundProps>`
-  position: fixed;
   width: 100%;
   height: 100%;
+  min-height: calc(100vh - 72px);
+  padding-bottom: 24px;
+
   background: ${({ status }) => convertReminderBackground(status)};
 `;
 
@@ -68,12 +70,18 @@ export const ReminderCardBox = styled.div`
 `;
 
 export const InfoBox = styled.div`
+  position: relative;
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  justify-content: center;
+
   width: 24px;
 `;
 
 export const DateLabel = styled.label`
+  position: absolute;
+  top: 8px;
   font: 700 2rem/2rem 'NanumSquareRound';
 `;
