@@ -54,7 +54,8 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
   } = petPlantDetails;
 
   const birthDateKorean = convertDateKorYear(birthDate);
-  const isBirthday = convertDateKorYear(birthDate) === convertDateKorYear(new Date());
+  const today = convertDateKorYear(new Date()).slice(5);
+  const isBirthday = today === birthDateKorean.slice(5);
 
   return (
     <Wrapper>
