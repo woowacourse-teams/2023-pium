@@ -74,7 +74,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
       name: '백엔드4',
     },
     imageUrl: 'https://images.unsplash.com/photo-1457530378978-8bac673b8062',
-    birthDate: '2023-06-06',
+    birthDate: getToday(),
     daySince: 9999,
 
     waterCycle: 22,
