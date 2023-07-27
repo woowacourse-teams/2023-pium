@@ -145,7 +145,7 @@ public class PetPlant extends BaseEntity {
 
     private void validateLocalDate(LocalDate localDate) {
         if (Objects.isNull(localDate)) {
-            throw new IllegalArgumentException("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. value: null");
+            throw new IllegalArgumentException("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
     }
 }

@@ -228,7 +228,7 @@ class PetPlantTest {
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "바람이 선선한 곳", 10, null, LocalDate.of(2022, 7, 8)))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. value: null");
+                    .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
 
         @Test
@@ -249,7 +249,7 @@ class PetPlantTest {
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "바람이 선선한 곳", 10, LocalDate.of(2022, 7, 8), null))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. value: null");
+                    .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
     }
 }
