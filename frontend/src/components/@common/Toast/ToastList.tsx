@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   position: fixed;
   bottom: 50px;
   left: 50%;
+  transform: translate(-50%, 0);
 
   display: flex;
   flex-direction: column;

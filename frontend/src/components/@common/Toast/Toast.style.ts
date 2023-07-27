@@ -20,9 +20,6 @@ const hide = keyframes`
 `;
 
 export const Wrapper = styled.div<{ type: ToastType; visible: boolean }>`
-  position: absolute;
-  top: 10%;
-
   display: flex;
   align-items: center;
 

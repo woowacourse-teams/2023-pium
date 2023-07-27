@@ -1,6 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import ToastProvider from 'contexts/toastContext';
 import useBoolean from 'hooks/useBoolean';
+import useToast from 'hooks/useToast';
 import Toast from '.';
+import ToastList from './ToastList';
 
 const meta: Meta<typeof Toast> = {
   component: Toast,
@@ -11,6 +14,16 @@ const meta: Meta<typeof Toast> = {
 
     return <>{isOpen && <Toast {...props} />}</>;
   },
+  decorators: [
+    (Story) => {
+      return (
+        <ToastProvider>
+          <Story />
+          <ToastList />
+        </ToastProvider>
+      );
+    },
+  ],
 };
 
 export default meta;
@@ -38,16 +51,14 @@ export const ToastWithPopupButton: Story = {
     message: '새로고침 해주세요',
   },
   render: (props) => {
-    const { boolean: isOpen, off, on } = useBoolean();
-
-    console.log(isOpen);
+    const { error } = useToast();
+    const addHandler = () => {
+      error(props.message);
+    };
     return (
-      <>
-        <button type="button" onClick={on}>
-          토스트 보기
-        </button>
-        {isOpen && <Toast {...props} toastClose={off} />}
-      </>
+      <button type="button" onClick={addHandler}>
+        토스트 추가하기
+      </button>
     );
   },
 };
