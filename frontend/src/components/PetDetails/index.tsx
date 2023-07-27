@@ -1,8 +1,33 @@
 import type { PetPlantDetails } from 'types/api/petPlant';
+import { generatePath } from 'react-router-dom';
+import Crown from 'components/@common/Icons/Crown';
+import Dictionary from 'components/@common/Icons/Dictionary';
+import Flowerpot from 'components/@common/Icons/Flowerpot';
+import House from 'components/@common/Icons/House';
+import Sun from 'components/@common/Icons/Sun';
+import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
-import { Wrapper } from './PetDetails.style';
+import {
+  InfoArea,
+  Bold,
+  ExpandedTextBox,
+  Environment,
+  Strong,
+  SubTitle,
+  Text,
+  Title,
+  TitleArea,
+  Wrapper,
+  Content,
+  Divider,
+  StyledLink,
+  EnvironmentTitle,
+  EnvironmentItem,
+} from './PetDetails.style';
+import theme from 'style/theme.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear } from 'utils/date';
+import { URL_PATH } from 'constants/index';
 
 interface PetDetailsProps {
   petPlantId: PetPlantDetails['id'];
@@ -10,7 +35,7 @@ interface PetDetailsProps {
 
 const PetDetails = ({ petPlantId }: PetDetailsProps) => {
   const { data: petPlantDetails } = usePetPlantDetails(petPlantId);
-  console.log(petPlantDetails);
+
   if (!petPlantDetails) return null;
 
   const {
@@ -28,53 +53,85 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
     wind,
   } = petPlantDetails;
 
+  const birthDateKorean = convertDateKorYear(birthDate);
+  const isBirthday = convertDateKorYear(birthDate) === convertDateKorYear(new Date());
+
   return (
     <Wrapper>
-      <Image type="wide" src={imageUrl} alt={`${nickname}(${dictName})`} height="300px" />
-      <h1>{nickname}</h1>
-      <h2>{dictName}</h2>
-      <p>
-        <span>생일</span>
-        <span>{convertDateKorYear(birthDate)}</span>
-      </p>
-      <p>
-        <span>함께한 지</span>
-        <span>{daySince}일</span>
-      </p>
-      <section>
-        <p>
-          <span>물 주기</span>
-          <span>
-            <span>{waterCycle}</span>일
-          </span>
-        </p>
-        <p>
-          <span>마지막 물울 준 날</span>
-          <span>{convertDateKorYear(lastWaterDate)}</span>
-        </p>
-        <p>
-          <span>마지막 물울 준 날</span>
-          <span>{convertDateKorYear(nextWaterDate)}</span>
-        </p>
-      </section>
-      <section>
-        <p>
-          <span>장소</span>
-          <span>{location}</span>
-        </p>
-        <p>
-          <span>화분</span>
-          <span>{flowerpot}</span>
-        </p>
-        <p>
-          <span>햇살</span>
-          <span>{light}</span>
-        </p>
-        <p>
-          <span>바람</span>
-          <span>{wind}</span>
-        </p>
-      </section>
+      <Image type="wide" src={imageUrl} alt={`${nickname}(${dictName})`} size="300px" />
+      <Content>
+        <TitleArea>
+          <Title>
+            {nickname}
+            {isBirthday && <Crown aria-hidden="true" />}
+          </Title>
+          <StyledLink to={generatePath(URL_PATH.dictDetail, { id: dictId.toString() })}>
+            <SubTitle>
+              {dictName}
+              <Dictionary aria-hidden="true" />
+            </SubTitle>
+          </StyledLink>
+        </TitleArea>
+        <Divider aria-hidden="true" />
+        <InfoArea>
+          <ExpandedTextBox>
+            <Text>생년월일</Text>
+            <Text>{birthDateKorean}</Text>
+          </ExpandedTextBox>
+          <ExpandedTextBox>
+            <Text>피움과 함께한 지</Text>
+            <Text>{daySince}일</Text>
+          </ExpandedTextBox>
+        </InfoArea>
+        <Divider aria-hidden="true" />
+        <InfoArea>
+          <ExpandedTextBox>
+            <Text>물 주기</Text>
+            <Bold>
+              <Strong>{waterCycle}</Strong>일마다
+            </Bold>
+          </ExpandedTextBox>
+          <ExpandedTextBox>
+            <Text>마지막 물주기</Text>
+            <Bold>{convertDateKorYear(lastWaterDate)}</Bold>
+          </ExpandedTextBox>
+          <ExpandedTextBox>
+            <Text>다음 물주기</Text>
+            <Bold>{convertDateKorYear(nextWaterDate)}</Bold>
+          </ExpandedTextBox>
+        </InfoArea>
+        <Divider aria-hidden="true" />
+        <Environment>
+          <EnvironmentItem>
+            <EnvironmentTitle>
+              <House color={theme.color.primary} aria-hidden="true" />
+              장소
+            </EnvironmentTitle>
+            {location}
+          </EnvironmentItem>
+          <EnvironmentItem>
+            <EnvironmentTitle>
+              <Flowerpot color={theme.color.primary} aria-hidden="true" />
+              화분
+            </EnvironmentTitle>
+            {flowerpot}
+          </EnvironmentItem>
+          <EnvironmentItem>
+            <EnvironmentTitle>
+              <Sun color={theme.color.primary} aria-hidden="true" />
+              햇살
+            </EnvironmentTitle>
+            {light}
+          </EnvironmentItem>
+          <EnvironmentItem>
+            <EnvironmentTitle>
+              <Wind color={theme.color.primary} aria-hidden="true" />
+              바람
+            </EnvironmentTitle>
+            {wind}
+          </EnvironmentItem>
+        </Environment>
+      </Content>
     </Wrapper>
   );
 };
