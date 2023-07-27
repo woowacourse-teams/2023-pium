@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import Calendar from 'components/@common/Icons/Calendar';
 import Home from 'components/@common/Icons/Home';
 import Plant from 'components/@common/Icons/Plant';
@@ -6,14 +7,8 @@ import theme from '../../../style/theme.style';
 import { NavItem, NavItemArea, NavLabel, NavLink, Wrapper } from './Navbar.style';
 import { URL_PATH } from 'constants/index';
 
-type PathKey = keyof typeof URL_PATH;
-type Path = (typeof URL_PATH)[PathKey];
-
-interface NavbarProps {
-  currentPath: Path;
-}
-
-const Navbar = ({ currentPath }: NavbarProps) => {
+const Navbar = () => {
+  const { pathname } = useLocation();
   const navItems = [
     {
       path: URL_PATH.main,
@@ -40,7 +35,7 @@ const Navbar = ({ currentPath }: NavbarProps) => {
   return (
     <Wrapper>
       {navItems.map(({ path, label, Icon }, index) => {
-        const active = currentPath === path;
+        const active = pathname === path;
         return (
           <NavLink key={index} to={path}>
             <NavItemArea $active={active}>
