@@ -1,11 +1,9 @@
 import { createPortal } from 'react-dom';
-import {
-  AiOutlineCheckCircle,
-  AiOutlineInfoCircle,
-  AiOutlineCloseCircle,
-  AiOutlineWarning,
-} from 'react-icons/ai';
 import { IconArea, Message, MessageArea, Title, Wrapper } from './Toast.style';
+import CheckCircle from '../Icons/CheckCircle';
+import CloseCircle from '../Icons/CloseCircle';
+import InfoCircle from '../Icons/InfoCircle';
+import Warning from '../Icons/Warning';
 
 export type ToastType = 'info' | 'success' | 'warning' | 'error';
 
@@ -23,10 +21,10 @@ const Toast = ({ type, title, message }: ToastProps) => {
       <IconArea>
         {
           {
-            info: <AiOutlineInfoCircle />,
-            success: <AiOutlineCheckCircle />,
-            warning: <AiOutlineWarning />,
-            error: <AiOutlineCloseCircle />,
+            info: <InfoCircle />,
+            success: <CheckCircle />,
+            warning: <Warning />,
+            error: <CloseCircle />,
           }[type]
         }
       </IconArea>
