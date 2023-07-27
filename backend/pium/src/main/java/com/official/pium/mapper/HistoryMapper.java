@@ -12,24 +12,19 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HistoryMapper {
 
-    public static HistoryResponse toHistoryResponse(Page<History> historyPageByPetPlantId) {
+    public static HistoryResponse toHistoryResponse(Page<History> historyPageByPetPlantId, boolean isLastPage) {
         List<LocalDate> waterDates = historyPageByPetPlantId
                 .map(History::getWaterDate)
                 .toList();
 
         int nowPage = historyPageByPetPlantId.getPageable().getPageNumber() + 1;
-        int totalPages = historyPageByPetPlantId.getTotalPages();
 
         return HistoryResponse.builder()
                 .page(nowPage)
                 .size(historyPageByPetPlantId.getSize())
                 .elementSize(historyPageByPetPlantId.getTotalElements())
-                .hasNext(isLastPage(nowPage, totalPages))
+                .hasNext(isLastPage)
                 .waterDateList(waterDates)
                 .build();
-    }
-
-    private static boolean isLastPage(int nowPage, int totalPages) {
-        return nowPage != totalPages;
     }
 }

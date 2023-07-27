@@ -19,6 +19,13 @@ public class HistoryService {
     public HistoryResponse read(Long petPlantId, Pageable pageable) {
         Page<History> historyPageByPetPlantId = historyRepository.findAllByPetPlantId(petPlantId, pageable);
 
-        return HistoryMapper.toHistoryResponse(historyPageByPetPlantId);
+        int nowPage = historyPageByPetPlantId.getPageable().getPageNumber() + 1;
+        int totalPages = historyPageByPetPlantId.getTotalPages();
+
+        return HistoryMapper.toHistoryResponse(historyPageByPetPlantId, isLastPage(nowPage,totalPages));
+    }
+
+    private boolean isLastPage(int nowPage, int totalPages) {
+        return nowPage != totalPages;
     }
 }
