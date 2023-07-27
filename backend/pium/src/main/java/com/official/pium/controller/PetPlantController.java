@@ -3,8 +3,9 @@ package com.official.pium.controller;
 import com.official.pium.domain.Member;
 import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -33,7 +34,7 @@ public class PetPlantController {
 
     @PostMapping
     public ResponseEntity<Void> create(
-            @RequestBody @Valid PetPlantRequest request,
+            @RequestBody @Valid PetPlantCreateRequest request,
             Member member) {
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
         return ResponseEntity.created(URI.create("/pet-plants/" + petPlantResponse.getId())).build();
@@ -44,5 +45,13 @@ public class PetPlantController {
             Member member) {
         DataResponse<List<SinglePetPlantResponse>> response = petPlantService.readAll(member);
         return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> update(
+            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
+            @RequestBody @Valid PetPlantUpdateRequest petPlantUpdateRequest) {
+        petPlantService.update(id, petPlantUpdateRequest);
+        return ResponseEntity.ok().build();
     }
 }
