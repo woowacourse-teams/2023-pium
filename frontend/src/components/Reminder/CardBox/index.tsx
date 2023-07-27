@@ -7,10 +7,10 @@ import ReminderCard from '../Card';
 
 interface CardBoxProps {
   data: ReminderExtendType;
-  notDate: boolean;
+  showDate: boolean;
 }
 
-const CardBox = ({ data, notDate }: CardBoxProps) => {
+const CardBox = ({ data, showDate }: CardBoxProps) => {
   const context = useContext(ReminderContext);
 
   const waterHandler = () => {
@@ -27,7 +27,7 @@ const CardBox = ({ data, notDate }: CardBoxProps) => {
   return (
     <ReminderCardBox key={data.petPlantId}>
       <InfoBox>
-        {!notDate && <DateLabel>{data.date}</DateLabel>}
+        {!showDate && <DateLabel>{data.date}</DateLabel>}
         <CheckButton type="button" onClick={waterHandler} />
       </InfoBox>
       <ReminderCard data={data} />

@@ -23,7 +23,7 @@ export const NotHasDate: Story = {
       status: 'today',
     };
 
-    return <CardBox data={mockData} notDate={true} />;
+    return <CardBox data={mockData} showDate={true} />;
   },
 };
 
@@ -40,6 +40,6 @@ export const HasDate: Story = {
       status: 'today',
     };
 
-    return <CardBox data={mockData} notDate={false} />;
+    return <CardBox data={mockData} showDate={false} />;
   },
 };

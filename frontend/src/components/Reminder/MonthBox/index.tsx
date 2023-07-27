@@ -11,12 +11,12 @@ const MonthBox = ({ month, reminderDates }: MonthBoxProps) => {
   const dayMap = new Map();
 
   const cardBoxes = reminderDates.map((info) => {
-    const notDate = dayMap.has(info.date);
-    if (!notDate) dayMap.set(info.date, true);
+    const showDate = dayMap.has(info.date);
+    if (!showDate) dayMap.set(info.date, true);
 
     const id = info.petPlantId.toString();
 
-    return <CardBox key={id} notDate={notDate} data={info} />;
+    return <CardBox key={id} showDate={showDate} data={info} />;
   });
 
   return (
