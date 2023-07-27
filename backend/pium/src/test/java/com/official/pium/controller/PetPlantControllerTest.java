@@ -131,7 +131,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 닉네임은 필수 값입니다.")))
                     .andDo(print());

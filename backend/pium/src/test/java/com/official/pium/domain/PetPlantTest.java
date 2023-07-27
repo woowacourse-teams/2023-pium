@@ -52,18 +52,7 @@ class PetPlantTest {
 
         @Test
         void 성공() {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8));
@@ -81,18 +70,7 @@ class PetPlantTest {
         @ParameterizedTest
         @NullAndEmptySource
         void 닉네임이_없으면_예외_발생(String nickname) {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant(nickname, "책상", "수경 재배", "거의 없음",
                     "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8)))
@@ -103,18 +81,7 @@ class PetPlantTest {
         @ParameterizedTest
         @NullAndEmptySource
         void 위치_정보가_없으면_예외_발생(String location) {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", location, "수경 재배", "거의 없음",
                     "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8)))
@@ -125,18 +92,7 @@ class PetPlantTest {
         @ParameterizedTest
         @NullAndEmptySource
         void 화분_정보가_없으면_예외_발생(String flowerpot) {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", flowerpot, "거의 없음",
                     "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8)))
@@ -147,18 +103,7 @@ class PetPlantTest {
         @ParameterizedTest
         @NullAndEmptySource
         void 조도_정보가_없으면_예외_발생(String light) {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", light,
                     "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8)))
@@ -169,18 +114,7 @@ class PetPlantTest {
         @ParameterizedTest
         @NullAndEmptySource
         void 바람_정보가_없으면_예외_발생(String wind) {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     wind, 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8)))
@@ -191,18 +125,7 @@ class PetPlantTest {
         @ParameterizedTest
         @ValueSource(ints = {-1, 0, 366})
         void 물주기_주기_범위가_잘못되면_예외_발생(int waterCycle) {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "바람 선선", waterCycle, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8)))
@@ -212,18 +135,7 @@ class PetPlantTest {
 
         @Test
         void 입양일_정보가_없으면_예외_발생() {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "바람이 선선한 곳", 10, null, LocalDate.of(2022, 7, 8)))
@@ -233,18 +145,7 @@ class PetPlantTest {
 
         @Test
         void 마지막_물주기_날짜_정보가_없으면_예외_발생() {
-            PetPlant petPlant = PetPlant.builder()
-                    .nickname("기영이")
-                    .imageUrl("https://image.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("창가")
-                    .wind("바람이 가끔 부는 곳")
-                    .flowerpot("플라스틱")
-                    .waterCycle(7)
-                    .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.of(2022, 7, 8))
-                    .build();
+            PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "바람이 선선한 곳", 10, LocalDate.of(2022, 7, 8), null))
