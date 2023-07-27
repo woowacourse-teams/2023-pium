@@ -14,7 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class PetPlantRequest {
+public class PetPlantCreateRequest {
 
     @NotNull
     private Long dictionaryPlantId;
