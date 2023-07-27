@@ -104,4 +104,34 @@ public class PetPlant extends BaseEntity {
     public Long calculateDDay(LocalDate currentDate) {
         return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
     }
+
+    public void water(LocalDate newWaterDate) {
+        if (newWaterDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("오늘 이후 날짜에 물을 줄 수는 없습니다. date: " + newWaterDate);
+        }
+
+        if (newWaterDate.isBefore(lastWaterDate)) {
+            throw new IllegalArgumentException("마지막으로 물을 준 날짜보다 이전 날짜에 물을 줄 수는 없습니다. date: " + newWaterDate);
+        }
+        this.nextWaterDate = newWaterDate.plusDays(waterCycle);
+        this.lastWaterDate = newWaterDate;
+    }
+
+    public void delay(LocalDate newWaterDate) {
+        if (newWaterDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("오늘보다 이전 날짜로 미룰 수는 없습니다. date: " + newWaterDate);
+        }
+
+        if (!newWaterDate.isEqual(calculateDelayedDate())) {
+            throw new IllegalArgumentException("해당 날짜로 물주기를 미룰 수 없습니다. date: " + newWaterDate);
+        }
+        this.nextWaterDate = newWaterDate;
+    }
+
+    private LocalDate calculateDelayedDate() {
+        if (nextWaterDate.isBefore(LocalDate.now())) {
+            return LocalDate.now().plusDays(1);
+        }
+        return nextWaterDate.plusDays(1);
+    }
 }
