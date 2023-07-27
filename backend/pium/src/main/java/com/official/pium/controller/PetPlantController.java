@@ -1,12 +1,9 @@
 package com.official.pium.controller;
 
+import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.PetPlantService;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
+import com.official.pium.service.dto.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +24,8 @@ public class PetPlantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PetPlantResponse> read(
-            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id) {
+            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
+            @Auth Member member) {
         PetPlantResponse petPlantResponse = petPlantService.read(id);
         return ResponseEntity.ok(petPlantResponse);
     }
@@ -35,14 +33,14 @@ public class PetPlantController {
     @PostMapping
     public ResponseEntity<Void> create(
             @RequestBody @Valid PetPlantCreateRequest request,
-            Member member) {
+            @Auth Member member) {
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
         return ResponseEntity.created(URI.create("/pet-plants/" + petPlantResponse.getId())).build();
     }
 
     @GetMapping
     public ResponseEntity<DataResponse<List<SinglePetPlantResponse>>> readAll(
-            Member member) {
+            @Auth Member member) {
         DataResponse<List<SinglePetPlantResponse>> response = petPlantService.readAll(member);
         return ResponseEntity.ok(response);
     }
