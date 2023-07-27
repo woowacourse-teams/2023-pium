@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import org.springframework.validation.annotation.Validated;
 
 @Entity
 @Getter
@@ -144,7 +145,7 @@ public class PetPlant extends BaseEntity {
     }
 
     private void validateLocalDate(LocalDate localDate) {
-        if (Objects.isNull(localDate)) {
+        if (localDate == null) {
             throw new IllegalArgumentException("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
     }
