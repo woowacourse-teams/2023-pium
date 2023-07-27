@@ -1,20 +1,22 @@
+import { MutationProps } from 'types/api/DataResponse';
 import { PushOffProps } from 'types/api/reminder';
-import { UseMutationOptions, useMutation } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import reminderAPI from 'apis/reminder';
 
-const usePushOff = <T>(props: UseMutationOptions<T, Error, PushOffProps>) =>
+const usePushOff = <T>({ successCallback, errorCallback }: MutationProps<T, PushOffProps>) =>
   useMutation({
-    ...props,
-    mutationFn: async ({ id, body }: PushOffProps): Promise<T> => {
+    mutationFn: async ({ id, body }: PushOffProps) => {
       const response = await reminderAPI.pushOff({
         id,
         body,
       });
 
-      const data = response.text() as unknown as Promise<T>;
-
+      const data = response.text() as Promise<T>;
       return data;
     },
+    onSuccess: (data, variable) => successCallback && successCallback(data, variable),
+    // TODO: 에러 처리하기 (toast 띄우기)
+    onError: (error, variable) => errorCallback && errorCallback(error, variable),
   });
 
 export default usePushOff;

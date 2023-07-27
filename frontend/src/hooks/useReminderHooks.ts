@@ -6,15 +6,17 @@ import useWater from './queries/reminder/useWater';
 const useReminderHooks = () => {
   const { data: reminderData, refetch } = useReminder({ queryKey: ['reminder'] });
 
-  const { mutate: water } = useWater({
-    onSuccess: refetch,
-    onError: (error) => {
+  const { mutate: water } = useWater<string>({
+    successCallback: () => {
+      refetch();
+    },
+    errorCallback: (error) => {
       console.log(error, 'error occurs');
     },
   });
-  const { mutate: pushOff } = usePushOff({
-    onSuccess: refetch,
-    onError: (error) => {
+  const { mutate: pushOff } = usePushOff<string>({
+    successCallback: () => refetch(),
+    errorCallback: (error) => {
       console.log(error, 'error occurs');
     },
   });
