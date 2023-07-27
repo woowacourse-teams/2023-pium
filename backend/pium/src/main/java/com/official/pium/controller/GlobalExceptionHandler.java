@@ -4,6 +4,7 @@ import com.official.pium.exception.dto.GlobalExceptionResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.StringJoiner;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -21,18 +22,20 @@ import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final String JOINER_DELIMITER = ", ";
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers, HttpStatusCode status,
                                                                   WebRequest request) {
-        StringBuilder stringBuilder = new StringBuilder();
-
         List<ObjectError> allErrors = ex.getBindingResult().getAllErrors();
-        for (ObjectError allError : allErrors) {
-            stringBuilder.append(allError.getDefaultMessage());
+        StringJoiner stringJoiner = new StringJoiner(JOINER_DELIMITER);
+
+        for (ObjectError error : allErrors) {
+            stringJoiner.add(error.getDefaultMessage());
         }
 
-        GlobalExceptionResponse globalExceptionResponse = createExceptionResponse(stringBuilder.toString());
+        GlobalExceptionResponse globalExceptionResponse = createExceptionResponse(stringJoiner.toString());
         return ResponseEntity.badRequest().body(globalExceptionResponse);
     }
 
