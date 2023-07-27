@@ -31,7 +31,7 @@ export const NotHasDate: Story = {
         dDay: 0,
         nextWaterDate: '2023-07-26',
         date: '26',
-        status: 'exist',
+        status: 'today',
       },
       {
         petPlantId: 7,
@@ -41,7 +41,7 @@ export const NotHasDate: Story = {
         dDay: 0,
         nextWaterDate: '2023-07-26',
         date: '26',
-        status: 'exist',
+        status: 'today',
       },
       {
         petPlantId: 8,
@@ -51,7 +51,7 @@ export const NotHasDate: Story = {
         dDay: 0,
         nextWaterDate: '2023-07-26',
         date: '26',
-        status: 'exist',
+        status: 'today',
       },
       {
         petPlantId: 9,
@@ -61,7 +61,7 @@ export const NotHasDate: Story = {
         dDay: -3,
         nextWaterDate: '2023-07-29',
         date: '29',
-        status: 'none',
+        status: 'future',
       },
       {
         petPlantId: 10,
@@ -71,7 +71,7 @@ export const NotHasDate: Story = {
         dDay: -3,
         nextWaterDate: '2023-07-29',
         date: '29',
-        status: 'none',
+        status: 'future',
       },
     ];
 

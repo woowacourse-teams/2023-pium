@@ -9,9 +9,9 @@ const convertReminderBackground = (status: TodayStatus) => {
   switch (status) {
     case 'late':
       return '#FCF3F3';
-    case 'exist':
+    case 'today':
       return '#F3FCF5';
-    case 'none':
+    case 'future':
       return '#F3F3F3';
     default:
       return '#F3F3F3';

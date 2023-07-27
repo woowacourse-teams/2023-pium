@@ -20,7 +20,7 @@ export const NotHasDate: Story = {
       dDay: 0,
       nextWaterDate: '2023-07-26',
       date: '26',
-      status: 'exist',
+      status: 'today',
     };
 
     return <CardBox data={mockData} notDate={true} />;
@@ -37,7 +37,7 @@ export const HasDate: Story = {
       dDay: 0,
       nextWaterDate: '2023-07-26',
       date: '26',
-      status: 'exist',
+      status: 'today',
     };
 
     return <CardBox data={mockData} notDate={false} />;

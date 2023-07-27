@@ -20,7 +20,7 @@ export const Default: Story = {
       dDay: 0,
       nextWaterDate: '2023-07-26',
       date: '26',
-      status: 'exist',
+      status: 'today',
     };
 
     return <ReminderCard data={mockData} />;
@@ -54,7 +54,7 @@ export const None: Story = {
       dDay: -3,
       nextWaterDate: '2023-07-29',
       date: '29',
-      status: 'none',
+      status: 'future',
     };
 
     return <ReminderCard data={mockData} />;

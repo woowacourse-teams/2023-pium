@@ -1,4 +1,4 @@
-export type TodayStatus = 'late' | 'exist' | 'none'; // 오늘 할 일에 대한 상태
+export type TodayStatus = 'late' | 'today' | 'future'; // 오늘 할 일에 대한 상태
 
 export type Month =
   | '01'

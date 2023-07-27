@@ -7,9 +7,9 @@ export const convertCardStatusBar = (status: TodayStatus) => {
   switch (status) {
     case 'late':
       return theme.color.accent;
-    case 'exist':
+    case 'today':
       return theme.color.primary;
-    case 'none':
+    case 'future':
       return theme.color.grayDark;
     default:
       return theme.color.grayDark;
