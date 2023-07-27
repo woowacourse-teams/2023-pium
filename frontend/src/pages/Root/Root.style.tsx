@@ -5,7 +5,7 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   width: 100%;
-  min-height: 100%;
+  height: 100%;
 
   background: white;
 `;
@@ -15,7 +15,7 @@ export const PageArea = styled.main`
 
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
-  min-height: 100%;
+  height: 100%;
 
   background: white;
 `;
