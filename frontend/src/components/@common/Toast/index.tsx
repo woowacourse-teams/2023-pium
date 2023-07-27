@@ -14,7 +14,7 @@ interface ToastProps {
 }
 
 const Toast = ({ type, title, message }: ToastProps) => {
-  const root = document.getElementById('toast-root')!;
+  const root = document.getElementById('toast-root') ?? document.body;
 
   return createPortal(
     <Wrapper type={type}>
