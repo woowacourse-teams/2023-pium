@@ -1,18 +1,20 @@
 import { PushOffProps } from 'types/api/reminder';
-import { useMutation } from '@tanstack/react-query';
+import { UseMutationOptions, useMutation } from '@tanstack/react-query';
 import reminderAPI from 'apis/reminder';
 
-const usePushOff = () => {
-  const { mutate } = useMutation({
-    mutationFn: async ({ id, body }: PushOffProps) => {
-      await reminderAPI.pushOff({
+const usePushOff = <T>(props: UseMutationOptions<T, Error, PushOffProps>) =>
+  useMutation({
+    ...props,
+    mutationFn: async ({ id, body }: PushOffProps): Promise<T> => {
+      const response = await reminderAPI.pushOff({
         id,
         body,
       });
+
+      const data = response.text() as unknown as Promise<T>;
+
+      return data;
     },
   });
-
-  return { mutate };
-};
 
 export default usePushOff;

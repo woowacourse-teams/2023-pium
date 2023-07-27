@@ -16,8 +16,7 @@ const convertReminderData = (result: ReminderResult): ConvertReminderData => {
   const { data } = result;
 
   const convertedData: MonthKeyReminderType = data.reduce((acc, cur) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [_, month, date] = cur.nextWaterDate.split('-') as [string, Month, string];
+    const [, month, date] = cur.nextWaterDate.split('-') as [string, Month, string];
 
     const status: TodayStatus = cur.dDay === 0 ? 'today' : cur.dDay > 0 ? 'late' : 'future';
 
@@ -53,8 +52,8 @@ const convertReminderData = (result: ReminderResult): ConvertReminderData => {
 
 const useReminder = (
   props: UndefinedInitialDataOptions<ReminderResult, Error, ConvertReminderData>
-) => {
-  const { data: reminderData, refetch } = useQuery<ReminderResult, Error, ConvertReminderData>({
+) =>
+  useQuery<ReminderResult, Error, ConvertReminderData>({
     ...props,
     queryFn: async () => {
       const response = await reminderAPI.getReminder();
@@ -63,7 +62,5 @@ const useReminder = (
     },
     select: convertReminderData,
   });
-  return { reminderData, refetch };
-};
 
 export default useReminder;

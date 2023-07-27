@@ -4,7 +4,7 @@ import { ContentBox, HeaderBox, Title, Wrapper } from './Reminder.style';
 import useReminderHooks from 'hooks/useReminderHooks';
 
 const Reminder = () => {
-  const { reminderData, waterMutate, pushOffMutate } = useReminderHooks({ enabled: true });
+  const { reminderData, waterMutate, pushOffMutate } = useReminderHooks();
 
   if (reminderData === undefined) return null;
 

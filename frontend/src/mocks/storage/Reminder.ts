@@ -37,7 +37,6 @@ const pushOff = (id:number,date:string) =>{// 여기는 미루기임. 입력된 
     const {petPlantId} = data
     if(id !== petPlantId) return data
     
-    console.log(data.nextWaterDate,date,'22')
     const betweenDate = getDaysBetweenDate(getToday(), date);
 
     return {
