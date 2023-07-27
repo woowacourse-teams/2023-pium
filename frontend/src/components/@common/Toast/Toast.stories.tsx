@@ -38,18 +38,15 @@ export const ToastWithPopupButton: Story = {
     message: '새로고침 해주세요',
   },
   render: (props) => {
-    const { boolean: isOpen, onTime } = useBoolean();
+    const { boolean: isOpen, off, on } = useBoolean();
 
-    const showToast = () => {
-      onTime(1000);
-    };
-
+    console.log(isOpen);
     return (
       <>
-        <button type="button" onClick={showToast}>
+        <button type="button" onClick={on}>
           토스트 보기
         </button>
-        {isOpen && <Toast {...props} />}
+        {isOpen && <Toast {...props} toastClose={off} />}
       </>
     );
   },

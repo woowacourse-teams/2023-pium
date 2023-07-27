@@ -1,16 +1,34 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 import { ToastType } from '.';
 
-export const Wrapper = styled.div<{ type: ToastType }>`
+const show = keyframes`
+0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+
+const hide = keyframes`
+0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+export const Wrapper = styled.div<{ type: ToastType; visible: boolean }>`
   position: absolute;
   top: 10%;
 
   display: flex;
+  align-items: center;
 
   width: max-content;
   height: max-content;
-  padding: 24px;
-  padding-right: 32px;
+  padding: 8px;
 
   color: white;
 
@@ -23,10 +41,12 @@ export const Wrapper = styled.div<{ type: ToastType }>`
     }[type])};
   border-radius: 8px;
   box-shadow: 0 0 8px ${(p) => p.theme.color.sub + '33'};
+
+  animation: ${({ visible }) => (visible ? show : hide)} 0.3s ease-out alternate;
 `;
 
 export const IconArea = styled.div`
-  margin-right: 12px;
+  margin-right: 4px;
 
   & > * {
     width: 2rem;
