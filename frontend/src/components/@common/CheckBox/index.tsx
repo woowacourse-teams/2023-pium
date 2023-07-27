@@ -31,7 +31,7 @@ const CheckBox = ({
 
   return (
     <Label htmlFor={id}>
-      <Input id={id} />
+      <Input type={'checkbox'} id={id} />
       {checked ? (
         <CheckboxFill onClick={checkHandler} customCSS={fillStyle} />
       ) : (
