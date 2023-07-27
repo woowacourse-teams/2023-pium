@@ -1,5 +1,6 @@
 package com.official.pium.controller;
 
+import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.DataResponse;
@@ -34,14 +35,14 @@ public class PetPlantController {
     @PostMapping
     public ResponseEntity<Void> create(
             @RequestBody @Valid PetPlantRequest request,
-            Member member) {
+            @Auth Member member) {
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
         return ResponseEntity.created(URI.create("/pet-plants/" + petPlantResponse.getId())).build();
     }
 
     @GetMapping
     public ResponseEntity<DataResponse<List<SinglePetPlantResponse>>> readAll(
-            Member member) {
+            @Auth Member member) {
         DataResponse<List<SinglePetPlantResponse>> response = petPlantService.readAll(member);
         return ResponseEntity.ok(response);
     }
