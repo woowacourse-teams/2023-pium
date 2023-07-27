@@ -17,7 +17,7 @@ const PetRegisterSearch = () => {
       <SearchBoxArea>
         <SearchBox onResultClick={navigateForm} />
       </SearchBoxArea>
-      <Navbar currentPath={URL_PATH.petRegisterSearch} />
+      <Navbar />
     </Wrapper>
   );
 };

@@ -38,7 +38,7 @@ const Main = () => {
           onResultClick={goToDictDetailPage}
         />
       </SearchBoxArea>
-      <Navbar currentPath={URL_PATH.main} />
+      <Navbar />
     </Wrapper>
   );
 };
