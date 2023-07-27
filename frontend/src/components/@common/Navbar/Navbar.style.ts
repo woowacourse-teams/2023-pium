@@ -11,9 +11,10 @@ export const Wrapper = styled.nav`
   justify-content: space-around;
 
   width: 100%;
-  height: 80px;
+  height: 68px;
   padding: 0 8px;
 
+  background: white;
   box-shadow: 0 -4px 2px -2px ${(props) => props.theme.color.grayLight};
 `;
 
@@ -40,11 +41,11 @@ export const NavItem = styled.div`
   justify-content: space-between;
 
   width: 100%;
-  height: 52px;
+  height: 44px;
 `;
 
 export const NavLabel = styled.p<{ $active?: boolean }>`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   color: ${({ $active, theme: { color } }) => ($active ? color.primary : color.sub)};
 `;
