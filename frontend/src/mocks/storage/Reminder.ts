@@ -21,7 +21,7 @@ const water = (id:number,date:string) =>{ // 물을 준 것임. 물을 줬으니
 
     return {
       ...data,
-      nextWaterDate: getParticularDateFromSpecificDay({particularNumber:betweenDate+ranNum}),
+      nextWaterDate: getParticularDateFromSpecificDay(betweenDate+ranNum),
       dDay:-(betweenDate+ranNum)
     }
   })

@@ -40,10 +40,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
   const pushOffHandler: React.MouseEventHandler<HTMLButtonElement> = () => {
     const specificDay = data.nextWaterDate > today ? new Date(data.nextWaterDate) : new Date();
 
-    const nextWaterDate = getParticularDateFromSpecificDay({
-      specificDay,
-      particularNumber: 1,
-    });
+    const nextWaterDate = getParticularDateFromSpecificDay(1, specificDay);
     const variables: PushOffProps = {
       id: petPlantId,
       body: {

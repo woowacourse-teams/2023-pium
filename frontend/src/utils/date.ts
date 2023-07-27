@@ -33,15 +33,17 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
   return Math.abs(oneDay - anotherDay);
 };
 
-interface SpecificDayProps {
-  specificDay?: Date;
-  particularNumber: number;
-}
+/*
+ * 오늘 날짜로부터 특정 일수 이전 혹은 이후의 날을 YYYY-MM-DD 형태로 반환합니다.
+ * @param particularNumber 특정 일수
+ * @param specificDay 기준이 되는 날짜 (기본값은 오늘)
+ * @returns
+ */
 
-export const getParticularDateFromSpecificDay = ({
-  particularNumber,
-  specificDay = new Date(),
-}: SpecificDayProps) => {
+export const getParticularDateFromSpecificDay = (
+  particularNumber: number,
+  specificDay = new Date()
+) => {
   const particularDate = new Date(specificDay.setDate(specificDay.getDate() + particularNumber));
 
   return particularDate.toISOString().slice(0, 10);
