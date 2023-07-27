@@ -24,7 +24,8 @@ export const storybookHandlers = [
 
   rest.get(`${BASE_URL}/pet-plants/:id`, async (req, res, ctx) => {
     const { id } = req.params;
-    const { data } = PetPlant.find((Number(id) % PET_PLANTS_DATA.length) + 1);
+    const petPlantId = Number(id) % PET_PLANTS_DATA.length;
+    const { data } = PetPlant.find(petPlantId % 4 === 0 ? 4 : petPlantId);
     return res(ctx.status(200), ctx.json(data));
   }),
 ];
