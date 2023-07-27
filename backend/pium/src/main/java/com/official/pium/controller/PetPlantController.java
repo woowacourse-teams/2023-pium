@@ -27,7 +27,8 @@ public class PetPlantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PetPlantResponse> read(
-            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id) {
+            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
+            @Auth Member member) {
         PetPlantResponse petPlantResponse = petPlantService.read(id);
         return ResponseEntity.ok(petPlantResponse);
     }
