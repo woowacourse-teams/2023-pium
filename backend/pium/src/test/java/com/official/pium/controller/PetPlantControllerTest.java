@@ -28,6 +28,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -113,6 +114,7 @@ class PetPlantControllerTest extends UITest {
 
         @ParameterizedTest
         @NullAndEmptySource
+        @ValueSource(strings = {" "})
         void 닉네임_없이_수정하면_400을_반환(String nickname) throws Exception {
             PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
                     .nickname(nickname)
@@ -137,6 +139,7 @@ class PetPlantControllerTest extends UITest {
 
         @ParameterizedTest
         @NullAndEmptySource
+        @ValueSource(strings = {" "})
         void 화분_정보_없이_수정하면_400을_반환(String flowerpot) throws Exception {
             PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
                     .nickname("피우미2")
@@ -161,6 +164,7 @@ class PetPlantControllerTest extends UITest {
 
         @ParameterizedTest
         @NullAndEmptySource
+        @ValueSource(strings = {" "})
         void 화분_위치_없이_수정하면_400을_반환(String location) throws Exception {
             PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
                     .nickname("피우미2")
@@ -231,6 +235,7 @@ class PetPlantControllerTest extends UITest {
 
         @ParameterizedTest
         @NullAndEmptySource
+        @ValueSource(strings = {" "})
         void 조도_정보_없이_수정하면_400을_반환(String light) throws Exception {
             PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
                     .nickname("피우미2")
@@ -255,6 +260,7 @@ class PetPlantControllerTest extends UITest {
 
         @ParameterizedTest
         @NullAndEmptySource
+        @ValueSource(strings = {" "})
         void 통풍_정보_없이_수정하면_400을_반환(String wind) throws Exception {
             PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
                     .nickname("피우미2")
