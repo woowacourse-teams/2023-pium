@@ -7,6 +7,7 @@ import House from 'components/@common/Icons/House';
 import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
+import theme from '../../style/theme.style';
 import {
   InfoArea,
   Bold,
@@ -24,7 +25,6 @@ import {
   EnvironmentTitle,
   EnvironmentItem,
 } from './PetDetails.style';
-import theme from 'style/theme.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear } from 'utils/date';
 import { URL_PATH } from 'constants/index';

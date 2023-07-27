@@ -3,10 +3,11 @@ import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
 import Main from 'pages/Main';
+import PetDetails from 'pages/PetDetails';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Root from 'pages/Root';
-import LoadingSpinner from 'components/@common/Spinner';
+import Spinner from 'components/@common/Spinner';
 import { URL_PATH } from './constants';
 
 const router = createBrowserRouter([
@@ -33,10 +34,14 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.dictDetail,
         element: (
-          <Suspense fallback={<LoadingSpinner />}>
+          <Suspense fallback={<Spinner />}>
             <DictionaryDetail />
           </Suspense>
         ),
+      },
+      {
+        path: URL_PATH.petDetail,
+        element: <PetDetails />,
       },
     ],
   },
