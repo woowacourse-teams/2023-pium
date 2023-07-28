@@ -1,5 +1,6 @@
 import { ReminderExtendType } from 'types/api/reminder';
 import type { Meta, StoryObj } from '@storybook/react';
+import { getParticularDateFromSpecificDay } from 'utils/date';
 import ReminderCard from '.';
 
 const meta: Meta<typeof ReminderCard> = {
@@ -18,9 +19,10 @@ export const Default: Story = {
       nickName: '참새나무',
       dictionaryPlantName: '알로카시아',
       dDay: 0,
-      nextWaterDate: '2023-07-26',
+      nextWaterDate: getParticularDateFromSpecificDay(0, new Date()),
       date: '26',
       status: 'today',
+      lastWaterDate: getParticularDateFromSpecificDay(-7, new Date()),
     };
 
     return <ReminderCard data={mockData} />;
@@ -35,9 +37,10 @@ export const Late: Story = {
       nickName: '참새나무',
       dictionaryPlantName: '알로카시아',
       dDay: 19,
-      nextWaterDate: '2023-07-07',
+      nextWaterDate: getParticularDateFromSpecificDay(-19, new Date()),
       date: '07',
       status: 'late',
+      lastWaterDate: getParticularDateFromSpecificDay(-26, new Date()),
     };
 
     return <ReminderCard data={mockData} />;
@@ -52,9 +55,10 @@ export const None: Story = {
       nickName: '참새나무',
       dictionaryPlantName: '알로카시아',
       dDay: -3,
-      nextWaterDate: '2023-07-29',
+      nextWaterDate: getParticularDateFromSpecificDay(3, new Date()),
       date: '29',
       status: 'future',
+      lastWaterDate: getParticularDateFromSpecificDay(-4, new Date()),
     };
 
     return <ReminderCard data={mockData} />;

@@ -21,6 +21,7 @@ export interface Reminder {
   dictionaryPlantName: string;
   dDay: number; // 음수면 지각 | 0이면 오늘 | 양수면 미래
   nextWaterDate: string;
+  lastWaterDate: string;
 }
 
 export interface ReminderResult {

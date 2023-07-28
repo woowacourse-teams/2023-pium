@@ -1,3 +1,7 @@
+import { getParticularDateFromSpecificDay, getToday } from 'utils/date';
+
+const TODAY = getToday();
+
 const REMINDER_DATA = {
   data: [
     {
@@ -5,16 +9,18 @@ const REMINDER_DATA = {
       image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
       nickName: '참새 나무',
       dictionaryPlantName: '알로카시아',
-      dDay: 19,
-      nextWaterDate: '2023-07-07',
+      dDay: 20,
+      nextWaterDate: getParticularDateFromSpecificDay(-20, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-27, new Date()),
     },
     {
       petPlantId: 2,
       image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
       nickName: '그레이 나무',
       dictionaryPlantName: '스투키',
-      dDay: 10,
-      nextWaterDate: '2023-07-16',
+      dDay: 11,
+      nextWaterDate: getParticularDateFromSpecificDay(-11, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-18, new Date()),
     },
     {
       petPlantId: 3,
@@ -22,7 +28,8 @@ const REMINDER_DATA = {
       nickName: '하마드 나무',
       dictionaryPlantName: '스투키',
       dDay: 3,
-      nextWaterDate: '2023-07-23',
+      nextWaterDate: getParticularDateFromSpecificDay(-3, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-10, new Date()),
     },
     {
       petPlantId: 4,
@@ -30,7 +37,8 @@ const REMINDER_DATA = {
       nickName: '주노 나무',
       dictionaryPlantName: '스투키',
       dDay: 3,
-      nextWaterDate: '2023-07-23',
+      nextWaterDate: getParticularDateFromSpecificDay(-3, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-10, new Date()),
     },
     {
       petPlantId: 5,
@@ -38,7 +46,8 @@ const REMINDER_DATA = {
       nickName: '조이 나무',
       dictionaryPlantName: '스투키',
       dDay: 1,
-      nextWaterDate: '2023-07-25',
+      nextWaterDate: getParticularDateFromSpecificDay(-1, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-8, new Date()),
     },
     {
       petPlantId: 6,
@@ -46,7 +55,8 @@ const REMINDER_DATA = {
       nickName: '쵸파 나무',
       dictionaryPlantName: '스투키',
       dDay: 0,
-      nextWaterDate: '2023-07-26',
+      nextWaterDate: TODAY,
+      lastWaterDate: getParticularDateFromSpecificDay(-7, new Date()),
     },
     {
       petPlantId: 7,
@@ -54,7 +64,8 @@ const REMINDER_DATA = {
       nickName: '클린 나무',
       dictionaryPlantName: '스투키',
       dDay: 0,
-      nextWaterDate: '2023-07-26',
+      nextWaterDate: TODAY,
+      lastWaterDate: getParticularDateFromSpecificDay(-7, new Date()),
     },
     {
       petPlantId: 8,
@@ -62,7 +73,8 @@ const REMINDER_DATA = {
       nickName: '피움 나무',
       dictionaryPlantName: '스투키',
       dDay: 0,
-      nextWaterDate: '2023-07-26',
+      nextWaterDate: TODAY,
+      lastWaterDate: getParticularDateFromSpecificDay(-7, new Date()),
     },
     {
       petPlantId: 9,
@@ -70,7 +82,8 @@ const REMINDER_DATA = {
       nickName: '포비 나무',
       dictionaryPlantName: '스투키',
       dDay: -3,
-      nextWaterDate: '2023-07-29',
+      nextWaterDate: getParticularDateFromSpecificDay(3, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-4, new Date()),
     },
     {
       petPlantId: 10,
@@ -78,7 +91,8 @@ const REMINDER_DATA = {
       nickName: '크론 나무',
       dictionaryPlantName: '스투키',
       dDay: -3,
-      nextWaterDate: '2023-07-29',
+      nextWaterDate: getParticularDateFromSpecificDay(3, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-4, new Date()),
     },
     {
       petPlantId: 11,
@@ -86,7 +100,8 @@ const REMINDER_DATA = {
       nickName: '빠삐용',
       dictionaryPlantName: '스투키',
       dDay: -7,
-      nextWaterDate: '2023-08-02',
+      nextWaterDate: getParticularDateFromSpecificDay(7, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(0, new Date()),
     },
     {
       petPlantId: 12,
@@ -94,7 +109,8 @@ const REMINDER_DATA = {
       nickName: '우테코',
       dictionaryPlantName: '스투키',
       dDay: -10,
-      nextWaterDate: '2023-08-05',
+      nextWaterDate: getParticularDateFromSpecificDay(10, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-14, new Date()),
     },
   ],
 };

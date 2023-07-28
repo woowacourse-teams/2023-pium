@@ -22,6 +22,7 @@ export const NotHasDate: Story = {
         nextWaterDate: '2023-07-07',
         date: '07',
         status: 'late',
+        lastWaterDate: '2023-07-01',
       },
       {
         petPlantId: 6,
@@ -32,6 +33,7 @@ export const NotHasDate: Story = {
         nextWaterDate: '2023-07-26',
         date: '26',
         status: 'today',
+        lastWaterDate: '2023-07-01',
       },
       {
         petPlantId: 7,
@@ -42,6 +44,7 @@ export const NotHasDate: Story = {
         nextWaterDate: '2023-07-26',
         date: '26',
         status: 'today',
+        lastWaterDate: '2023-07-01',
       },
       {
         petPlantId: 8,
@@ -52,6 +55,7 @@ export const NotHasDate: Story = {
         nextWaterDate: '2023-07-26',
         date: '26',
         status: 'today',
+        lastWaterDate: '2023-07-01',
       },
       {
         petPlantId: 9,
@@ -62,6 +66,7 @@ export const NotHasDate: Story = {
         nextWaterDate: '2023-07-29',
         date: '29',
         status: 'future',
+        lastWaterDate: '2023-07-01',
       },
       {
         petPlantId: 10,
@@ -72,6 +77,7 @@ export const NotHasDate: Story = {
         nextWaterDate: '2023-07-29',
         date: '29',
         status: 'future',
+        lastWaterDate: '2023-07-01',
       },
     ];
 
