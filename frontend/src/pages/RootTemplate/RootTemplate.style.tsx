@@ -5,17 +5,14 @@ export const Wrapper = styled.div`
   justify-content: center;
 
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 
   background: white;
 `;
 
-export const PageArea = styled.main`
-  position: relative;
-
+export const PageArea = styled.div`
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
-  height: 100%;
-
+  min-height: 100%;
   background: white;
 `;

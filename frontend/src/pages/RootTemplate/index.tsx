@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
-import { PageArea, Wrapper } from './Root.style';
+import { PageArea, Wrapper } from './RootTemplate.style';
 
-const Root = () => {
+const RootTemplate = () => {
   return (
     <Wrapper>
       <PageArea>
@@ -11,4 +11,4 @@ const Root = () => {
   );
 };
 
-export default Root;
+export default RootTemplate;
