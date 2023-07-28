@@ -12,9 +12,11 @@ const FormInput = (props: FormInputProps) => {
   return (
     <Wrapper>
       <Input type="text" {...inputProps} />
-      <Button>
-        {nextCallback && <ArrowRight width={20} height={20} onClick={nextCallback} />}
-      </Button>
+      {nextCallback && (
+        <Button type="button" aria-label="입력 완료" onClick={nextCallback}>
+          <ArrowRight width={20} height={20} />
+        </Button>
+      )}
     </Wrapper>
   );
 };

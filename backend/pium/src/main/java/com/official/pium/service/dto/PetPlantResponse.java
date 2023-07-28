@@ -19,14 +19,17 @@ public class PetPlantResponse {
     private String light;
     private String wind;
     private Integer waterCycle;
-    private Long nextWaterDay;
     private Long daySince;
+    private Long dDay;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate nextWaterDate;
 
     private DictionaryPlantResponse dictionaryPlant;
 
