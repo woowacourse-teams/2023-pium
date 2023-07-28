@@ -18,7 +18,7 @@ const SearchResults = (props: SearchResultsProps) => {
   if (!searchResults || (!samePlant && !hasSimilarPlant)) {
     return (
       <Wrapper>
-        <Title>&quot;{plantName}&quot; 검색 결과가 없어요 😭</Title>
+        <Title>검색 결과가 없어요 😭</Title>
       </Wrapper>
     );
   }
