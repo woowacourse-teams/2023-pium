@@ -2,15 +2,17 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.nav`
-  position: absolute;
+  position: fixed;
   bottom: 0;
-  left: 0;
+  left: 50%;
+  transform: translate(-50%);
 
   display: flex;
   align-items: center;
   justify-content: space-around;
 
   width: 100%;
+  max-width: ${(props) => props.theme.width.pad};
   height: 68px;
   padding: 0 8px;
 
