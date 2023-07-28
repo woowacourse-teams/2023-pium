@@ -1,23 +1,34 @@
 package com.official.pium.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 @Entity
 @Getter
 @Table(name = "pet_plant")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class PetPlant extends BaseEntity {
+
+    private static final int MIN_WATER_CYCLE = 1;
+    private static final int MAX_WATER_CYCLE = 365;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,8 +78,8 @@ public class PetPlant extends BaseEntity {
     @Column(name = "last_water_date", nullable = false)
     private LocalDate lastWaterDate;
 
-    @Min(1)
-    @Max(365)
+    @Min(MIN_WATER_CYCLE)
+    @Max(MAX_WATER_CYCLE)
     @NotNull
     @Column(name = "water_cycle", nullable = false)
     private Integer waterCycle;
@@ -103,6 +114,46 @@ public class PetPlant extends BaseEntity {
      */
     public Long calculateDDay(LocalDate currentDate) {
         return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
+    }
+
+    public void updatePetPlant(
+            String nickname, String location, String flowerpot, String light,
+            String wind, Integer waterCycle, LocalDate birthDate, LocalDate lastWaterDate
+    ) {
+        validateEmptyValue(nickname);
+        validateEmptyValue(location);
+        validateEmptyValue(flowerpot);
+        validateEmptyValue(light);
+        validateEmptyValue(wind);
+        validateWaterCycle(waterCycle);
+        validateLocalDate(birthDate);
+        validateLocalDate(lastWaterDate);
+        this.nickname = nickname;
+        this.location = location;
+        this.flowerpot = flowerpot;
+        this.light = light;
+        this.wind = wind;
+        this.waterCycle = waterCycle;
+        this.birthDate = birthDate;
+        this.lastWaterDate = lastWaterDate;
+    }
+
+    private void validateEmptyValue(String value) {
+        if (Objects.isNull(value) || value.isBlank()) {
+            throw new IllegalArgumentException("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + value);
+        }
+    }
+
+    private void validateWaterCycle(Integer waterCycle) {
+        if (waterCycle < MIN_WATER_CYCLE || waterCycle > MAX_WATER_CYCLE) {
+            throw new IllegalArgumentException("물주기 주기는 1이상 365이하의 값만 가능합니다. waterCycle: " + waterCycle);
+        }
+    }
+
+    private void validateLocalDate(LocalDate localDate) {
+        if (localDate == null) {
+            throw new IllegalArgumentException("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
+        }
     }
 
     public void water(LocalDate newWaterDate) {
