@@ -23,10 +23,10 @@ const pushOff = ({ id, body }: PushOffProps) => {
   });
 };
 
-const reminderAPI = {
+const ReminderAPI = {
   getReminder,
   waterPlant,
   pushOff,
 };
 
-export default reminderAPI;
+export default ReminderAPI;

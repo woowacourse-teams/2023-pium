@@ -1,12 +1,12 @@
 import { MutationProps } from 'types/api/DataResponse';
 import { WaterPlantProps } from 'types/api/reminder';
 import { useMutation } from '@tanstack/react-query';
-import reminderAPI from 'apis/reminder';
+import ReminderAPI from 'apis/reminder';
 
 const useWater = <T>({ successCallback, errorCallback }: MutationProps<T, WaterPlantProps>) =>
   useMutation({
     mutationFn: async ({ id, body }: WaterPlantProps) => {
-      const response = await reminderAPI.waterPlant({
+      const response = await ReminderAPI.waterPlant({
         id,
         body,
       });

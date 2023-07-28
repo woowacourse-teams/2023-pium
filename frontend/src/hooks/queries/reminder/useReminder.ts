@@ -8,7 +8,7 @@ import {
 } from 'types/api/reminder';
 import { useQuery } from '@tanstack/react-query';
 import type { UndefinedInitialDataOptions } from '@tanstack/react-query/build/lib/queryOptions';
-import reminderAPI from 'apis/reminder';
+import ReminderAPI from 'apis/reminder';
 
 const initialData: MonthKeyReminderType = {};
 
@@ -56,7 +56,7 @@ const useReminder = (
   useQuery<ReminderResult, Error, ConvertReminderData>({
     ...props,
     queryFn: async () => {
-      const response = await reminderAPI.getReminder();
+      const response = await ReminderAPI.getReminder();
       const results = await response.json();
       return results;
     },
