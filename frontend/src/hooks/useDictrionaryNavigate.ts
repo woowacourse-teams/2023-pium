@@ -1,12 +1,13 @@
 import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, generatePath } from 'react-router-dom';
+import { URL_PATH } from 'constants/index';
 
 const useDictionaryNavigate = () => {
   const navigate = useNavigate();
 
   const goToDictDetailPage = useCallback((plantId: number) => {
-    navigate(`/dict/${plantId}`);
+    navigate(generatePath(URL_PATH.dictDetail, { id: plantId.toString() }));
   }, []);
 
   const goToProperDictPage = useCallback(

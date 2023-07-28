@@ -23,7 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.petRegisterForm,
-        element: <PetRegisterForm />,
+        element: (
+          <Suspense fallback={<div>로딩중입니다.</div>}>
+            <PetRegisterForm />
+          </Suspense>
+        ),
       },
       {
         path: '/dict',

@@ -27,7 +27,9 @@ const Main = () => {
     <>
       <Wrapper>
         <ButtonArea>
-          <StartButton onClick={navigateRegister}>시작하기</StartButton>
+          <StartButton type="button" onClick={navigateRegister}>
+            시작하기
+          </StartButton>
         </ButtonArea>
         <LogoMessage>식물을 쉽게</LogoMessage>
         <Logo src={logo} alt="logo" />

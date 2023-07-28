@@ -6,3 +6,8 @@ export const Wrapper = styled.main`
   row-gap: 30px;
   padding: 30px 10px;
 `;
+
+export const Title = styled.h1`
+  padding-left: 10px;
+  font: ${({ theme }) => theme.font.title};
+`;
