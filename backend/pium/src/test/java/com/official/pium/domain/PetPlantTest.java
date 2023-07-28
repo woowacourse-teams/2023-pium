@@ -173,7 +173,7 @@ class PetPlantTest {
 
         LocalDate newWaterDate = LocalDate.now().plusDays(1);
 
-        산세베리아.delay(newWaterDate);
+        산세베리아.changeNextWaterDate(newWaterDate);
 
         assertThat(산세베리아.getNextWaterDate())
                 .isEqualTo(newWaterDate)
@@ -197,7 +197,7 @@ class PetPlantTest {
 
         LocalDate newWaterDate = LocalDate.now().plusDays(1);
 
-        테이블야자.delay(newWaterDate);
+        테이블야자.changeNextWaterDate(newWaterDate);
 
         assertThat(테이블야자.getNextWaterDate())
                 .isEqualTo(newWaterDate)
@@ -222,7 +222,7 @@ class PetPlantTest {
 
         LocalDate newWaterDate = 라벤더.getNextWaterDate().plusDays(1);
 
-        라벤더.delay(newWaterDate);
+        라벤더.changeNextWaterDate(newWaterDate);
 
         assertThat(라벤더.getNextWaterDate())
                 .isEqualTo(newWaterDate)
@@ -234,9 +234,9 @@ class PetPlantTest {
         PetPlant 산세베리아 = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(
-                () -> 산세베리아.delay(LocalDate.now().minusDays(1)))
+                () -> 산세베리아.changeNextWaterDate(LocalDate.now().minusDays(1)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("오늘보다 이전 날짜로 미룰 수는 없습니다.");
+                .hasMessageContaining("오늘보다 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
     }
 
     @Test

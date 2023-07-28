@@ -132,7 +132,7 @@ class ReminderServiceTest extends IntegrationTest {
         assertThatThrownBy(
                 () -> reminderService.delay(request, petPlant.getId(), member)
         ).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("오늘보다 이전 날짜로 미룰 수는 없습니다. date: " + newWaterDate);
+                .hasMessage("오늘보다 이전 날짜로 물주기 날짜를 변경할 수는 없습니다. date: " + newWaterDate);
     }
 
     @Test

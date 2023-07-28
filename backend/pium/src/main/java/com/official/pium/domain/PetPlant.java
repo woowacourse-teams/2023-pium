@@ -110,9 +110,7 @@ public class PetPlant extends BaseEntity {
     }
 
     /**
-     * - 0 : 오늘 할 일
-     * - 음수 : 할 일
-     * - 양수 : 지각
+     * - 0 : 오늘 할 일 - 음수 : 할 일 - 양수 : 지각
      */
     public Long calculateDDay(LocalDate currentDate) {
         return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
@@ -170,22 +168,11 @@ public class PetPlant extends BaseEntity {
         this.lastWaterDate = newWaterDate;
     }
 
-    public void delay(LocalDate newWaterDate) {
+    public void changeNextWaterDate(LocalDate newWaterDate) {
         if (newWaterDate.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("오늘보다 이전 날짜로 미룰 수는 없습니다. date: " + newWaterDate);
-        }
-
-        if (!newWaterDate.isEqual(calculateDelayedDate())) {
-            throw new IllegalArgumentException("해당 날짜로 물주기를 미룰 수 없습니다. date: " + newWaterDate);
+            throw new IllegalArgumentException("오늘보다 이전 날짜로 물주기 날짜를 변경할 수는 없습니다. date: " + newWaterDate);
         }
         this.nextWaterDate = newWaterDate;
-    }
-
-    private LocalDate calculateDelayedDate() {
-        if (nextWaterDate.isBefore(LocalDate.now())) {
-            return LocalDate.now().plusDays(1);
-        }
-        return nextWaterDate.plusDays(1);
     }
 
     public boolean isNotSameMember(Member member) {

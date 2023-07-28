@@ -47,7 +47,7 @@ public class ReminderService {
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
         checkMemberEquality(petPlant, member);
 
-        petPlant.delay(reminderUpdateRequest.getNextWaterDate());
+        petPlant.changeNextWaterDate(reminderUpdateRequest.getNextWaterDate());
     }
 
     private void checkMemberEquality(PetPlant petPlant, Member member) {
