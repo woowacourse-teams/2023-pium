@@ -1,6 +1,5 @@
 import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
-import { BASE_URL } from 'constants/index';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import SEARCH_DATA from './data/search';
 
@@ -16,7 +15,5 @@ export const storybookHandlers = [
     return res(ctx.status(200), ctx.json(DICTIONARY_PLANT_DATA));
   }),
 
-  rest.post<NewPetPlantRequest>(`${BASE_URL}/pet-plants`, async (req, res, ctx) =>
-    res(ctx.status(201))
-  ),
+  rest.post<NewPetPlantRequest>(`*/pet-plants`, async (req, res, ctx) => res(ctx.status(201))),
 ];

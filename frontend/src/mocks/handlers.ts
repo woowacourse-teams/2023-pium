@@ -1,6 +1,5 @@
 import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
-// import { BASE_URL } from 'constants/index';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
