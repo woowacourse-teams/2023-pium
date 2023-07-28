@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ReminderService {
+
     private final PetPlantRepository petPlantRepository;
     private final HistoryRepository historyRepository;
 
@@ -56,6 +57,8 @@ public class ReminderService {
                         petPlant.calculateDDay(LocalDate.now())))
                 .toList();
 
-        return DataResponse.<List<ReminderResponse>>builder().data(reminderResponses).build();
+        return DataResponse.<List<ReminderResponse>>builder()
+                .data(reminderResponses)
+                .build();
     }
 }
