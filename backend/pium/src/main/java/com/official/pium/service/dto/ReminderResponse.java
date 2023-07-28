@@ -22,4 +22,7 @@ public class ReminderResponse {
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate nextWaterDate;
+
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate lastWaterDate;
 }

@@ -70,6 +70,7 @@ public class PetPlantMapper {
                 .dictionaryPlantName(petPlant.getDictionaryPlant().getName())
                 .dDay(dDay)
                 .nextWaterDate(petPlant.getNextWaterDate())
+                .lastWaterDate(petPlant.getLastWaterDate())
                 .build();
     }
 }
