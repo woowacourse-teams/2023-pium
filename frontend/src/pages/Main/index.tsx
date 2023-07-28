@@ -24,22 +24,24 @@ const Main = () => {
   const { goToProperDictPage, goToDictDetailPage } = useDictionaryNavigate();
 
   return (
-    <Wrapper>
-      <ButtonArea>
-        <StartButton onClick={navigateRegister}>시작하기</StartButton>
-      </ButtonArea>
-      <LogoMessage>식물을 쉽게</LogoMessage>
-      <Logo src={logo} alt="logo" />
-      <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
-      <SearchBoxArea>
-        <SearchBox
-          onEnter={goToProperDictPage}
-          onNextClick={goToProperDictPage}
-          onResultClick={goToDictDetailPage}
-        />
-      </SearchBoxArea>
+    <>
+      <Wrapper>
+        <ButtonArea>
+          <StartButton onClick={navigateRegister}>시작하기</StartButton>
+        </ButtonArea>
+        <LogoMessage>식물을 쉽게</LogoMessage>
+        <Logo src={logo} alt="logo" />
+        <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
+        <SearchBoxArea>
+          <SearchBox
+            onEnter={goToProperDictPage}
+            onNextClick={goToProperDictPage}
+            onResultClick={goToDictDetailPage}
+          />
+        </SearchBoxArea>
+      </Wrapper>
       <Navbar />
-    </Wrapper>
+    </>
   );
 };
 
