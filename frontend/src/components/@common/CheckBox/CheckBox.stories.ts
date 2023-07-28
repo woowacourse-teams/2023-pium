@@ -4,9 +4,7 @@ import CheckBox from '.';
 
 const meta: Meta<typeof CheckBox> = {
   component: CheckBox,
-  args: {
-    id: '1234',
-  },
+  args: {},
 };
 
 export default meta;
@@ -15,7 +13,6 @@ type Story = StoryObj<typeof CheckBox>;
 
 export const Default: Story = {
   args: {
-    id: '1234',
     fillStyle: css`
       width: 24px;
       height: 24px;

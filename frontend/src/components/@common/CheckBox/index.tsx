@@ -1,25 +1,19 @@
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { CSSProp } from 'styled-components';
 import { Input, Label } from './CheckBox.style';
 import CheckBoxEmpty from '../Icons/CheckBoxEmpty';
 import CheckboxFill from '../Icons/CheckBoxFill';
 
 interface CheckBoxProps {
-  id: string;
   isChecked?: boolean;
   fillStyle?: CSSProp;
   emptyStyle?: CSSProp;
   checkedCallback?: () => void;
 }
 
-const CheckBox = ({
-  id,
-  isChecked = false,
-  fillStyle,
-  emptyStyle,
-  checkedCallback,
-}: CheckBoxProps) => {
+const CheckBox = ({ isChecked = false, fillStyle, emptyStyle, checkedCallback }: CheckBoxProps) => {
   const [checked, setChecked] = useState(isChecked);
+  const id = useId();
 
   const checkHandler = () => {
     setChecked((prev) => !prev);
