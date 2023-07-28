@@ -26,9 +26,10 @@ public class ReminderService {
     private final HistoryRepository historyRepository;
 
     @Transactional
-    public void water(ReminderCreateRequest reminderCreateRequest, Long petPlantId) {
+    public void water(ReminderCreateRequest reminderCreateRequest, Long petPlantId, Member member) {
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
+        checkMemberEquality(petPlant, member);
 
         petPlant.water(reminderCreateRequest.getWaterDate());
 
@@ -41,11 +42,18 @@ public class ReminderService {
     }
 
     @Transactional
-    public void delay(ReminderUpdateRequest reminderUpdateRequest, Long petPlantId) {
+    public void delay(ReminderUpdateRequest reminderUpdateRequest, Long petPlantId, Member member) {
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
+        checkMemberEquality(petPlant, member);
 
         petPlant.delay(reminderUpdateRequest.getNextWaterDate());
+    }
+
+    private void checkMemberEquality(PetPlant petPlant, Member member) {
+        if (petPlant.isNotSameMember(member)) {
+            throw new IllegalArgumentException("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + member.getId());
+        }
     }
 
     public DataResponse<List<ReminderResponse>> readAll(Member member) {

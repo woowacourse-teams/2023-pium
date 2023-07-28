@@ -85,7 +85,9 @@ public class PetPlant extends BaseEntity {
     private Integer waterCycle;
 
     @Builder
-    private PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location, String flowerpot, String light, String wind, @NotNull LocalDate birthDate, @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
+    private PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location,
+                     String flowerpot, String light, String wind, @NotNull LocalDate birthDate,
+                     @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
         this.dictionaryPlant = dictionaryPlant;
         this.member = member;
         this.nickname = nickname;
@@ -184,5 +186,9 @@ public class PetPlant extends BaseEntity {
             return LocalDate.now().plusDays(1);
         }
         return nextWaterDate.plusDays(1);
+    }
+
+    public boolean isNotSameMember(Member member) {
+        return !this.member.equals(member);
     }
 }

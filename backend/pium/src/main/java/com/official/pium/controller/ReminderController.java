@@ -1,5 +1,6 @@
 package com.official.pium.controller;
 
+import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.ReminderService;
 import com.official.pium.service.dto.DataResponse;
@@ -32,8 +33,8 @@ public class ReminderController {
     public ResponseEntity<Void> water(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
             @Valid @RequestBody ReminderCreateRequest reminderCreateRequest,
-            Member member) {
-        reminderService.water(reminderCreateRequest, petPlantId);
+            @Auth Member member) {
+        reminderService.water(reminderCreateRequest, petPlantId, member);
         return ResponseEntity.noContent().build();
     }
 
@@ -41,13 +42,13 @@ public class ReminderController {
     public ResponseEntity<Void> delay(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
             @Valid @RequestBody ReminderUpdateRequest reminderUpdateRequest,
-            Member member) {
-        reminderService.delay(reminderUpdateRequest, petPlantId);
+            @Auth Member member) {
+        reminderService.delay(reminderUpdateRequest, petPlantId, member);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public ResponseEntity<DataResponse<List<ReminderResponse>>> readAll(Member member) {
+    public ResponseEntity<DataResponse<List<ReminderResponse>>> readAll(@Auth Member member) {
         DataResponse<List<ReminderResponse>> dataResponse = reminderService.readAll(member);
         return ResponseEntity.ok(dataResponse);
     }

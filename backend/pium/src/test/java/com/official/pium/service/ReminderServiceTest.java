@@ -7,6 +7,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.History;
+import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.HistoryRepository;
@@ -29,6 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 class ReminderServiceTest extends IntegrationTest {
 
     private PetPlant petPlant;
+    private Member member;
+    private Member otherMember;
 
     @Autowired
     private ReminderService reminderService;
@@ -42,6 +45,8 @@ class ReminderServiceTest extends IntegrationTest {
     @BeforeEach
     void setUp() {
         petPlant = petPlantSupport.builder().build();
+        member = petPlant.getMember();
+        otherMember = memberSupport.builder().build();
     }
 
     @Test
@@ -50,7 +55,7 @@ class ReminderServiceTest extends IntegrationTest {
                 .waterDate(LocalDate.now())
                 .build();
 
-        reminderService.water(request, petPlant.getId());
+        reminderService.water(request, petPlant.getId(), member);
 
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
         LocalDate newWaterDate = request.getWaterDate();
@@ -73,7 +78,7 @@ class ReminderServiceTest extends IntegrationTest {
                 .build();
 
         assertThatThrownBy(
-                () -> reminderService.water(request, petPlant.getId())
+                () -> reminderService.water(request, petPlant.getId(), member)
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오늘 이후 날짜에 물을 줄 수는 없습니다. date: " + request.getWaterDate());
     }
@@ -85,9 +90,21 @@ class ReminderServiceTest extends IntegrationTest {
                 .build();
 
         assertThatThrownBy(
-                () -> reminderService.water(request, petPlant.getId())
+                () -> reminderService.water(request, petPlant.getId(), member)
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("마지막으로 물을 준 날짜보다 이전 날짜에 물을 줄 수는 없습니다. date: " + request.getWaterDate());
+    }
+
+    @Test
+    void 해당_반려_식물의_사용자와_물주기를_요청한_사용자가_다르면_예외_발생() {
+        ReminderCreateRequest request = ReminderCreateRequest.builder()
+                .waterDate(LocalDate.now())
+                .build();
+
+        assertThatThrownBy(
+                () -> reminderService.water(request, petPlant.getId(), otherMember)
+        ).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
     }
 
     @Test
@@ -97,7 +114,7 @@ class ReminderServiceTest extends IntegrationTest {
                 .nextWaterDate(newWaterDate)
                 .build();
 
-        reminderService.delay(request, petPlant.getId());
+        reminderService.delay(request, petPlant.getId(), member);
 
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
 
@@ -113,9 +130,21 @@ class ReminderServiceTest extends IntegrationTest {
                 .build();
 
         assertThatThrownBy(
-                () -> reminderService.delay(request, petPlant.getId())
+                () -> reminderService.delay(request, petPlant.getId(), member)
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오늘보다 이전 날짜로 미룰 수는 없습니다. date: " + newWaterDate);
+    }
+
+    @Test
+    void 해당_반려_식물의_사용자와_미루기를_요청한_사용자가_다르면_예외_발생() {
+        ReminderUpdateRequest request = ReminderUpdateRequest.builder()
+                .nextWaterDate(LocalDate.now().plusDays(1))
+                .build();
+
+        assertThatThrownBy(
+                () -> reminderService.delay(request, petPlant.getId(), otherMember)
+        ).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
     }
 
     @Test

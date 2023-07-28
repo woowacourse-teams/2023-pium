@@ -47,7 +47,7 @@ class ReminderControllerTest extends UITest {
     class 리마인더_ {
         @Test
         void 물을_주면_204를_반환() throws Exception {
-            willDoNothing().given(reminderService).water(any(), anyLong());
+            willDoNothing().given(reminderService).water(any(), anyLong(), any());
 
             mockMvc.perform(post("/reminders/{id}", 1L)
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
