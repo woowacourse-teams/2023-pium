@@ -2,11 +2,13 @@ package com.official.pium.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Assertions.tuple;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.BDDAssertions.tuple;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.IntegrationTest;
+import com.official.pium.domain.History;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
@@ -43,7 +45,7 @@ class ReminderServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 물주기() {
+    void 물을_주면_다음_물주기_날짜와_마지막으로_물을_준_날짜를_변경() {
         ReminderCreateRequest request = ReminderCreateRequest.builder()
                 .waterDate(LocalDate.now())
                 .build();
@@ -53,13 +55,14 @@ class ReminderServiceTest extends IntegrationTest {
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
         LocalDate newWaterDate = request.getWaterDate();
 
-        assertAll(
-                () -> assertThat(updatedPetPlant)
-                        .extracting("nextWaterDate", "lastWaterDate")
-                        .isEqualTo(List.of(newWaterDate.plusDays(petPlant.getWaterCycle()), newWaterDate)),
-                () -> assertThat(historyRepository.findAll())
-                        .extracting("petPlant", "waterDate")
-                        .contains(tuple(updatedPetPlant, newWaterDate))
+        assertSoftly(softly -> {
+                    softly.assertThat(updatedPetPlant)
+                            .extracting(PetPlant::getNextWaterDate, PetPlant::getLastWaterDate)
+                            .isEqualTo(List.of(newWaterDate.plusDays(petPlant.getWaterCycle()), newWaterDate));
+                    softly.assertThat(historyRepository.findAll())
+                            .extracting(History::getPetPlant, History::getWaterDate)
+                            .contains(tuple(updatedPetPlant, newWaterDate));
+                }
         );
     }
 
@@ -117,11 +120,14 @@ class ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 리마인더_전체_조회() {
-        DataResponse<List<ReminderResponse>> dataResponse = reminderService.readAll(petPlant.getMember());
+        DataResponse<List<ReminderResponse>> actual = reminderService.readAll(petPlant.getMember());
 
-        assertThat(dataResponse.getData())
+        List<ReminderResponse> expected = List.of(
+                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDDay(LocalDate.now())));
+
+        assertThat(actual.getData())
                 .hasSize(1)
-                .extracting(ReminderResponse::getPetPlantId)
-                .contains(petPlant.getId());
+                .usingRecursiveComparison()
+                .isEqualTo(expected);
     }
 }

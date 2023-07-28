@@ -155,9 +155,22 @@ class PetPlantTest {
         }
     }
 
-    @Test
-    void 지각_미루기() {
-        PetPlant 산세베리아 = PetPlantFixture.산세베리아;
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5})
+    void N일_지각_미루기(int days) {
+        PetPlant 산세베리아 = PetPlant.builder()
+                .nickname("크론")
+                .imageUrl("https://image2.com")
+                .light("자연광이 잘 드는 곳")
+                .location("거실")
+                .wind("바람 솔솔")
+                .flowerpot("정보 없음")
+                .waterCycle(7)
+                .birthDate(LocalDate.of(2022, 7, 1))
+                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                .nextWaterDate(LocalDate.now().minusDays(days))
+                .build();
+
         LocalDate newWaterDate = LocalDate.now().plusDays(1);
 
         산세베리아.delay(newWaterDate);
@@ -191,8 +204,9 @@ class PetPlantTest {
                 .isNotEqualTo(테이블야자.getNextWaterDate().plusDays(1));
     }
 
-    @Test
-    void 미래_할일_미루기() {
+    @ParameterizedTest
+    @ValueSource(ints = {1, 2, 3, 4, 5})
+    void N일_뒤의_할일_미루기(int days) {
         PetPlant 라벤더 = PetPlant.builder()
                 .nickname("피우미")
                 .imageUrl("https://image.com")
@@ -203,7 +217,7 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .lastWaterDate(LocalDate.of(2022, 7, 1))
-                .nextWaterDate(LocalDate.now().plusDays(6))
+                .nextWaterDate(LocalDate.now().plusDays(days))
                 .build();
 
         LocalDate newWaterDate = 라벤더.getNextWaterDate().plusDays(1);
@@ -234,7 +248,7 @@ class PetPlantTest {
         산세베리아.water(newWaterDate);
 
         assertThat(산세베리아)
-                .extracting("nextWaterDate", "lastWaterDate")
+                .extracting(PetPlant::getNextWaterDate, PetPlant::getLastWaterDate)
                 .isEqualTo(List.of(newNextWaterDate, newWaterDate));
     }
 
