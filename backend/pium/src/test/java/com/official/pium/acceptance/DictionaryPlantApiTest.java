@@ -39,7 +39,7 @@ class DictionaryPlantApiTest extends AcceptanceTest {
             DictionaryPlantResponse RESPONSE = RestAssured
                     .given().log().all()
                     .when()
-                    .get("/dictionary-plants/" + REQUEST.getId())
+                    .get("/dictionary-plants/{id}", REQUEST.getId())
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
