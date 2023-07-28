@@ -5,13 +5,13 @@ import DictionarySearch from 'pages/DictionarySearch';
 import Main from 'pages/Main';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
-import Root from 'pages/Root';
+import RootTemplate from 'pages/RootTemplate';
 import { URL_PATH } from './constants';
 
 const router = createBrowserRouter([
   {
     path: URL_PATH.main,
-    element: <Root />,
+    element: <RootTemplate />,
     children: [
       {
         path: URL_PATH.main,
