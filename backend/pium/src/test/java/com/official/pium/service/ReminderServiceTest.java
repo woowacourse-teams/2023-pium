@@ -114,7 +114,7 @@ class ReminderServiceTest extends IntegrationTest {
                 .nextWaterDate(newWaterDate)
                 .build();
 
-        reminderService.delay(request, petPlant.getId(), member);
+        reminderService.updateNextWaterDate(request, petPlant.getId(), member);
 
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
 
@@ -130,7 +130,7 @@ class ReminderServiceTest extends IntegrationTest {
                 .build();
 
         assertThatThrownBy(
-                () -> reminderService.delay(request, petPlant.getId(), member)
+                () -> reminderService.updateNextWaterDate(request, petPlant.getId(), member)
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("오늘보다 이전 날짜로 물주기 날짜를 변경할 수는 없습니다. date: " + newWaterDate);
     }
@@ -142,7 +142,7 @@ class ReminderServiceTest extends IntegrationTest {
                 .build();
 
         assertThatThrownBy(
-                () -> reminderService.delay(request, petPlant.getId(), otherMember)
+                () -> reminderService.updateNextWaterDate(request, petPlant.getId(), otherMember)
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
     }

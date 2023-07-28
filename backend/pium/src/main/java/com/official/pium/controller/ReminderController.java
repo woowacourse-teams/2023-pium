@@ -39,11 +39,11 @@ public class ReminderController {
     }
 
     @PatchMapping("/{petPlantId}")
-    public ResponseEntity<Void> delay(
+    public ResponseEntity<Void> updateNextWaterDate(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
             @Valid @RequestBody ReminderUpdateRequest reminderUpdateRequest,
             @Auth Member member) {
-        reminderService.delay(reminderUpdateRequest, petPlantId, member);
+        reminderService.updateNextWaterDate(reminderUpdateRequest, petPlantId, member);
         return ResponseEntity.noContent().build();
     }
 

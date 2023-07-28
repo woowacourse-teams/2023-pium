@@ -42,7 +42,7 @@ public class ReminderService {
     }
 
     @Transactional
-    public void delay(ReminderUpdateRequest reminderUpdateRequest, Long petPlantId, Member member) {
+    public void updateNextWaterDate(ReminderUpdateRequest reminderUpdateRequest, Long petPlantId, Member member) {
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
         checkMemberEquality(petPlant, member);
