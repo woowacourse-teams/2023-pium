@@ -23,7 +23,7 @@ import {
   Divider,
   StyledLink,
   EnvironmentTitle,
-  EnvironmentItem,
+  EnvironmentItem
 } from './PetDetails.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
@@ -50,7 +50,7 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
     location,
     flowerpot,
     light,
-    wind,
+    wind
   } = petPlantDetails;
 
   const birthDateKorean = convertDateKorYear(birthDate);
@@ -101,7 +101,7 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
           </ExpandedTextBox>
           <ExpandedTextBox>
             <Text>다음 물주기</Text>
-            <Bold>{daysBetweenNextWaterDate ? `${daysBetweenNextWaterDate}일 전` : '오늘!!'}</Bold>
+            <Bold>{daysBetweenNextWaterDate ? `${daysBetweenNextWaterDate}일 후` : '오늘!!'}</Bold>
           </ExpandedTextBox>
         </InfoArea>
         <Divider aria-hidden="true" />
