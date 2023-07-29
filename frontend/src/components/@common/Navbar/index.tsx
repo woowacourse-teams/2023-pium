@@ -40,7 +40,7 @@ const Navbar = () => {
           <NavLink key={index} to={path}>
             <NavItemArea $active={active}>
               <NavItem>
-                <Icon stroke={active ? theme.color.primary : '#888888'} />
+                <Icon aria-hidden stroke={active ? theme.color.primary : '#888888'} />
                 <NavLabel $active={active}>{label}</NavLabel>
               </NavItem>
             </NavItemArea>
