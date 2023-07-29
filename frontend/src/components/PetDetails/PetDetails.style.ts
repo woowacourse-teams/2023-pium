@@ -104,7 +104,7 @@ export const ExpandedTextBox = styled.p`
 export const Environment = styled.section`
   display: flex;
   flex-direction: column;
-  row-gap: 14px;
+  row-gap: 8px;
   align-items: center;
 
   width: 100%;
@@ -116,7 +116,7 @@ export const Environment = styled.section`
 
 export const EnvironmentItem = styled.p`
   display: flex;
-  column-gap: 30px;
+  column-gap: 8px;
   align-items: center;
 
   width: 100%;
@@ -129,6 +129,11 @@ export const EnvironmentTitle = styled.span`
   align-items: center;
   justify-content: center;
 
-  font-weight: bold;
+  width: 24px;
+  height: 24px;
+
   color: ${({ theme }) => theme.color.primary};
+
+  background: ${({ theme }) => theme.color.background};
+  border-radius: 50%;
 `;
