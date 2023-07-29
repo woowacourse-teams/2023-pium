@@ -19,8 +19,6 @@ export const StyledImage = styled.img<StyledImageProps>`
   display: inline-flex;
 
   width: ${({ type, size }) => (type === 'wide' ? '100%' : size)};
-  min-width: ${({ type, theme }) => (type === 'wide' ? theme.width.mobile : '')};
-  min-width: ${({ type, theme }) => (type === 'wide' ? theme.width.pad : '')};
   height: ${({ size }) => size};
   margin: ${({ type }) => (type === 'wide' ? '0 auto' : '')};
 
