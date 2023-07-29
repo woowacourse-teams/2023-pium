@@ -1,8 +1,9 @@
 package com.official.pium.controller;
 
+import com.official.pium.domain.Auth;
+import com.official.pium.domain.Member;
 import com.official.pium.service.HistoryService;
 import com.official.pium.service.dto.HistoryResponse;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
@@ -23,11 +24,12 @@ public class HistoryController {
 
     @GetMapping
     public ResponseEntity<HistoryResponse> read(
-            @NotNull(message = "반려 식물 ID가 포함되어야 합니다.") @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") @RequestParam("petPlantId") Long petPlantId,
-            @RequestParam Integer page,
-            @RequestParam Integer size) {
+            @RequestParam @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
+            @RequestParam @Positive(message = "페이지는 1이상의 값이어야 합니다.") Integer page,
+            @RequestParam @Positive(message = "페이지 크기는 1이상의 값이어야 합니다.") Integer size,
+            @Auth Member member) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        HistoryResponse historyResponse = historyService.read(petPlantId, pageRequest);
+        HistoryResponse historyResponse = historyService.read(petPlantId, pageRequest, member);
         return ResponseEntity.ok(historyResponse);
     }
 

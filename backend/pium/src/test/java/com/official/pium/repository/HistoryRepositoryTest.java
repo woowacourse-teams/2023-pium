@@ -1,31 +1,23 @@
 package com.official.pium.repository;
 
-import com.official.pium.config.JpaAuditingConfig;
+import com.official.pium.RepositoryTest;
 import com.official.pium.domain.*;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.FilterType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(
-        type = FilterType.ASSIGNABLE_TYPE,
-        classes = JpaAuditingConfig.class
-))
-class HistoryRepositoryTest {
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
+class HistoryRepositoryTest extends RepositoryTest {
 
-    private PetPlant petPlant;
-    private Member member;
-    private DictionaryPlant dictionaryPlant;
 
     @Autowired
     private HistoryRepository historyRepository;
@@ -36,12 +28,12 @@ class HistoryRepositoryTest {
     @Autowired
     private PetPlantRepository petPlantRepository;
 
-    @BeforeEach
-    void setUp() {
-        member = Member.builder().email("hello@aaa.com").build();
+    @Test
+    void 페이지_번호에_따른_다른_결과_조회() {
+        //given
+        Member member = Member.builder().email("hello@aaa.com").build();
         memberRepository.save(member);
-
-        dictionaryPlant = DictionaryPlant.builder()
+        DictionaryPlant dictionaryPlant = DictionaryPlant.builder()
                 .name("스투키")
                 .imageUrl("https://www.costco.co.kr/medias/sys_master/images/hd6/h37/31058517229598.jpg")
                 .familyName("선인장")
@@ -63,8 +55,7 @@ class HistoryRepositoryTest {
                                 .build()
                 ).build();
         dictionaryPlantRepository.save(dictionaryPlant);
-
-        petPlant = PetPlant.builder()
+        PetPlant petPlant = PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
                 .member(member)
                 .nickname("피우미")
@@ -79,10 +70,6 @@ class HistoryRepositoryTest {
                 .waterCycle(3)
                 .build();
         petPlantRepository.save(petPlant);
-    }
-
-    @Test
-    void 페이지_번호에_따른_다른_결과_조회() {
         History history1 = History.builder()
                 .petPlant(petPlant)
                 .waterDate(LocalDate.now())
@@ -92,6 +79,7 @@ class HistoryRepositoryTest {
                 .waterDate(LocalDate.now())
                 .build();
 
+        //when
         historyRepository.save(history1);
         historyRepository.save(history2);
         Pageable pageable1 = PageRequest.of(0, 1);
@@ -99,13 +87,16 @@ class HistoryRepositoryTest {
         Pageable pageable2 = PageRequest.of(1, 1);
         Page<History> histories2 = historyRepository.findAllByPetPlantId(petPlant.getId(), pageable2);
 
-        assertAll(
-                () -> assertThat(histories1.getContent().get(0).getId()).isEqualTo(history1.getId()),
-                () -> assertThat(histories2.getContent().get(0).getId()).isEqualTo(history2.getId()),
-                () -> assertThat(histories1.getTotalElements()).isEqualTo(2L),
-                () -> assertThat(histories2.getTotalElements()).isEqualTo(2L),
-                () -> assertThat(histories1.getTotalPages()).isEqualTo(2),
-                () -> assertThat(histories2.getTotalPages()).isEqualTo(2)
+        //then
+        assertSoftly(
+                softly -> {
+                    softly.assertThat(histories1.getContent().get(0).getId()).isEqualTo(history1.getId());
+                    softly.assertThat(histories2.getContent().get(0).getId()).isEqualTo(history2.getId());
+                    softly.assertThat(histories1.getTotalElements()).isEqualTo(2L);
+                    softly.assertThat(histories2.getTotalElements()).isEqualTo(2L);
+                    softly.assertThat(histories1.getTotalPages()).isEqualTo(2);
+                    softly.assertThat(histories2.getTotalPages()).isEqualTo(2);
+                }
         );
     }
 }

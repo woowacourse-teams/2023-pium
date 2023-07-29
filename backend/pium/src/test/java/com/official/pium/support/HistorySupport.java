@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @SuppressWarnings("NonAsciiCharacters")
 public class HistorySupport {
+
     private final HistoryRepository historyRepository;
     private final PetPlantSupport petPlantSupport;
 
