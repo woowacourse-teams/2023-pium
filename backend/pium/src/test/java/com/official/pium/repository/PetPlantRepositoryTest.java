@@ -1,5 +1,6 @@
 package com.official.pium.repository;
 
+import com.official.pium.RepositoryTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
 
@@ -17,8 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-@DataJpaTest
-class PetPlantRepositoryTest {
+class PetPlantRepositoryTest extends RepositoryTest {
 
     private Member member;
     private DictionaryPlant dictionaryPlant;

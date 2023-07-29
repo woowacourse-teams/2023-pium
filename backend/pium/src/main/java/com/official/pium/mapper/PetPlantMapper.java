@@ -3,7 +3,7 @@ package com.official.pium.mapper;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.service.dto.PetPlantRequest;
+import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 import lombok.AccessLevel;
@@ -15,7 +15,7 @@ import java.time.temporal.ChronoUnit;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PetPlantMapper {
 
-    public static PetPlant toPetPlant(PetPlantRequest request, DictionaryPlant dictionaryPlant, Member member) {
+    public static PetPlant toPetPlant(PetPlantCreateRequest request, DictionaryPlant dictionaryPlant, Member member) {
         return PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
                 .member(member)
@@ -32,7 +32,7 @@ public class PetPlantMapper {
                 .build();
     }
 
-    public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long nextWaterDay, Long daySince) {
+    public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long dDay, Long daySince) {
         return PetPlantResponse.builder()
                 .id(petPlant.getId())
                 .nickname(petPlant.getNickname())
@@ -44,11 +44,12 @@ public class PetPlantMapper {
                 .birthDate(petPlant.getBirthDate())
                 .lastWaterDate(petPlant.getLastWaterDate())
                 .waterCycle(petPlant.getWaterCycle())
-                .nextWaterDay(nextWaterDay)
+                .dDay(dDay)
+                .nextWaterDate(petPlant.getNextWaterDate())
                 .daySince(daySince)
                 .build();
     }
-    
+
     public static SinglePetPlantResponse toSinglePetPlantResponse(PetPlant petPlant, Long daySince) {
         return SinglePetPlantResponse.builder()
                 .id(petPlant.getId())
