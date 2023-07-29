@@ -7,13 +7,14 @@ import PetDetails from 'pages/PetDetails';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Root from 'pages/Root';
+import RootTemplate from 'pages/RootTemplate';
 import Spinner from 'components/@common/Spinner';
 import { URL_PATH } from './constants';
 
 const router = createBrowserRouter([
   {
     path: URL_PATH.main,
-    element: <Root />,
+    element: <RootTemplate />,
     children: [
       {
         path: URL_PATH.main,

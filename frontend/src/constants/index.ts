@@ -10,6 +10,8 @@ export const URL_PATH = {
   petDetail: `/pet/:id`,
   petRegisterSearch: '/pet/register',
   petRegisterForm: '/pet/register/:id',
+  calendar: '/calendar',
+  reminder: '/reminder',
 } as const;
 
 export const MESSAGE = {
