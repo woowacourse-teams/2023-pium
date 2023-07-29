@@ -19,3 +19,16 @@ export const getToday = () => {
   const localTime = new Date(Date.now() - timezoneOffset);
   return localTime.toISOString().slice(0, 10);
 };
+
+/**
+ * 두 날짜 사이의 날짜 간격을 음이 아닌 정수로 반환합니다.
+ * @param one `new Date()`의 인자로 들어갈 수 있는 값
+ * @param another `new Date()`의 인자로 들어갈 수 있는 값
+ * @returns 음이 아닌 정수
+ */
+export const getDaysBetween = (one: string | number | Date, another: string | number | Date) => {
+  const singleDay = 1000 * 60 * 60 * 24;
+  const oneDay = Math.floor(new Date(one).getTime() / singleDay);
+  const anotherDay = Math.floor(new Date(another).getTime() / singleDay);
+  return Math.abs(oneDay - anotherDay);
+};
