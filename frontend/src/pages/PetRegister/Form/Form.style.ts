@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -32,21 +32,27 @@ export const DictionaryPlantImageArea = styled.div`
   margin: 32px 0;
 `;
 
-export const ButtonArea = styled.div`
+export const Center = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
-  margin-top: 16px;
+  margin: 16px auto;
 `;
 
 export const Button = styled.button`
-  width: 100%;
-  height: 40px;
+  width: 90%;
+  height: 48px;
 
-  font-size: 1.8rem;
-  font-weight: 500;
-  color: ${(props) => props.theme.color.sub};
+  font-size: 2rem;
+  font-weight: 900;
+  line-height: 2.4rem;
+  color: ${({ theme }) => theme.color.background};
+  letter-spacing: 1px;
 
   background: ${(props) => props.theme.color.primary};
-  border-radius: 16px;
+  border-radius: 8px;
 
   &:disabled {
     color: ${(props) => props.theme.color.sub + '40'};

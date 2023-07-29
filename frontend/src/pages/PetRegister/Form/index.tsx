@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import ProgressBar from 'components/@common/ProgressBar';
 import DateInput from 'components/DateInput';
 import FormInput from 'components/FormInput';
 import FormInputBox from 'components/FormInputBox';
@@ -9,7 +10,7 @@ import Stack from 'components/Stack';
 import useStack from 'components/Stack/hooks/useStack';
 import {
   Button,
-  ButtonArea,
+  Center,
   DictionaryPlantImageArea,
   DictionaryPlantName,
   FormArea,
@@ -20,16 +21,19 @@ import PetAPI from 'apis/pet';
 import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
 import { usePetPlantForm } from './reducer';
 
+const STACK_SIZE = 9;
+const STACK_ELEMENT_HEIGHT = '96px';
+
 const PetRegisterForm = () => {
   const { id } = useParams();
   const dictionaryPlantId = Number(id);
-  const { topIndex, showNextElement } = useStack(8);
+  const { topIndex, showNextElement } = useStack(STACK_SIZE);
   const { form, dispatch } = usePetPlantForm();
   const navigate = useNavigate();
 
   const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
 
-  const stackElementHeight = '96px';
+  const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET', key: 'nickname', value });
@@ -111,8 +115,11 @@ const PetRegisterForm = () => {
         <DictionaryPlantImageArea>
           <Image size="160px" src={dictionaryPlant?.image} />
         </DictionaryPlantImageArea>
+        <Center>
+          <ProgressBar percentage={formProgressPercentage} width="90%" height="12px" />
+        </Center>
         <Stack topIndex={topIndex}>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="별명이 뭔가요?" status={getStatus(0)}>
               <FormInput
                 value={form.nickname}
@@ -121,17 +128,17 @@ const PetRegisterForm = () => {
               />
             </FormInputBox>
           </Stack.Element>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
               <DateInput value={form.birthDate} onChange={setBirthDate} />
             </FormInputBox>
           </Stack.Element>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getStatus(2)}>
               <DateInput value={form.lastWaterDate} onChange={setLastWaterDate} />
             </FormInputBox>
           </Stack.Element>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="며칠 주기로 물을 주나요?" status={getStatus(3)}>
               <FormInput
                 value={form.waterCycle}
@@ -140,7 +147,7 @@ const PetRegisterForm = () => {
               />
             </FormInputBox>
           </Stack.Element>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="어떤 화분에서 키우고 있나요?" status={getStatus(4)}>
               <Select
                 value={form.flowerpot}
@@ -150,7 +157,7 @@ const PetRegisterForm = () => {
               />
             </FormInputBox>
           </Stack.Element>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="화분의 위치는 어디인가요?" status={getStatus(5)}>
               <Select
                 value={form.location}
@@ -160,7 +167,7 @@ const PetRegisterForm = () => {
               />
             </FormInputBox>
           </Stack.Element>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="빛을 어떻게 받고 있나요?" status={getStatus(6)}>
               <Select
                 value={form.light}
@@ -170,7 +177,7 @@ const PetRegisterForm = () => {
               />
             </FormInputBox>
           </Stack.Element>
-          <Stack.Element height={stackElementHeight}>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="바람은 얼마나 통하나요?" status={getStatus(7)}>
               <Select
                 value={form.wind}
@@ -180,13 +187,15 @@ const PetRegisterForm = () => {
               />
             </FormInputBox>
           </Stack.Element>
+          <Stack.Element height={STACK_ELEMENT_HEIGHT}>
+            <Center>
+              <Button type="submit" onClick={submit} disabled={!isValidForm}>
+                등록하기
+              </Button>
+            </Center>
+          </Stack.Element>
         </Stack>
       </FormArea>
-      <ButtonArea>
-        <Button type="submit" onClick={submit} disabled={!isValidForm}>
-          등록하기
-        </Button>
-      </ButtonArea>
     </Wrapper>
   );
 };

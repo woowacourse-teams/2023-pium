@@ -1,7 +1,7 @@
 import { ManageLevel, Season, SeasonKor } from 'types/plants';
 import { TagVariantType } from 'components/Tag';
 
-export const BASE_URL = 'http://api.pium.life';
+export const BASE_URL = 'https://api.pium.life';
 
 export const URL_PATH = {
   main: '/',
@@ -10,6 +10,8 @@ export const URL_PATH = {
   petDetail: `/pet/:id`,
   petRegisterSearch: '/pet/register',
   petRegisterForm: '/pet/register/:id',
+  calendar: '/calendar',
+  reminder: '/reminder',
 } as const;
 
 export const MESSAGE = {

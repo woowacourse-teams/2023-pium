@@ -1,5 +1,6 @@
 package com.official.pium.config;
 
+import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +17,16 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterType().equals(Member.class);
+        return parameter.hasParameterAnnotation(Auth.class) && parameter.getParameterType().equals(Member.class);
     }
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-        return memberRepository.findByEmail("pium@gmail.com")
+
+        String token = webRequest.getHeader("Authorization");
+
+        return memberRepository.findByEmail(token)
                 .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
     }
 }
