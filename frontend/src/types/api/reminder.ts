@@ -49,7 +49,7 @@ export interface WaterPlantProps {
   };
 }
 
-export interface PushOffProps {
+export interface ChangeDateProps {
   id: number;
   body: {
     nextWaterDate: string;

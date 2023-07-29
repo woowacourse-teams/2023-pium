@@ -37,7 +37,7 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
  * 오늘 날짜로부터 특정 일수 이전 혹은 이후의 날을 YYYY-MM-DD 형태로 반환합니다.
  * @param particularNumber 특정 일수
  * @param specificDay 기준이 되는 날짜 (기본값은 오늘)
- * @returns
+ * @returns YYYY-MM-DD
  */
 
 export const getParticularDateFromSpecificDay = (

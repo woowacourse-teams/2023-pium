@@ -1,5 +1,5 @@
-import { PushOffProps, WaterPlantProps } from 'types/api/reminder';
-import usePushOff from './queries/reminder/usePushOff';
+import { ChangeDateProps, WaterPlantProps } from 'types/api/reminder';
+import useChangeDate from './queries/reminder/useChangeDate';
 import useReminder from './queries/reminder/useReminder';
 import useWater from './queries/reminder/useWater';
 
@@ -14,7 +14,7 @@ const useReminderHooks = () => {
       console.log(error, 'error occurs');
     },
   });
-  const { mutate: pushOff } = usePushOff<string>({
+  const { mutate: changeDate } = useChangeDate<string>({
     successCallback: () => refetch(),
     errorCallback: (error) => {
       console.log(error, 'error occurs');
@@ -23,9 +23,9 @@ const useReminderHooks = () => {
 
   const waterMutate = (variables: WaterPlantProps) => water(variables);
 
-  const pushOffMutate = (variables: PushOffProps) => pushOff(variables);
+  const changeDateMutate = (variables: ChangeDateProps) => changeDate(variables);
 
-  return { reminderData, waterMutate, pushOffMutate };
+  return { reminderData, waterMutate, changeDateMutate };
 };
 
 export default useReminderHooks;

@@ -30,7 +30,7 @@ const water = (id:number,date:string) =>{ // 물을 준 것임. 물을 줬으니
   sessionStorage.setItem(KEY, JSON.stringify({data:updatedData}))
 }
 
-const pushOff = (id:number,date:string) =>{// 여기는 미루기임. 입력된 날짜에 물을 줄 수 있도록 해야함.
+const changeDate = (id:number,date:string) =>{// 여기는 미루기임. 입력된 날짜에 물을 줄 수 있도록 해야함.
   const {data} = JSON.parse(sessionStorage.getItem(KEY) ?? '[]') as {data:Reminder[]}
   
   const updatedData = data.map((data) => {
@@ -51,6 +51,6 @@ const pushOff = (id:number,date:string) =>{// 여기는 미루기임. 입력된 
 
 
 
-const Reminder = { getAll,water,pushOff };
+const Reminder = { getAll,water,changeDate };
 
 export default Reminder;

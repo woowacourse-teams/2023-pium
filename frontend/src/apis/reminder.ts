@@ -1,4 +1,4 @@
-import { PushOffProps, WaterPlantProps } from 'types/api/reminder';
+import { ChangeDateProps, WaterPlantProps } from 'types/api/reminder';
 import { BASE_URL } from 'constants/index';
 
 export const REMINDER = `${BASE_URL}/reminders`;
@@ -16,7 +16,7 @@ const waterPlant = ({ id, body }: WaterPlantProps) => {
   });
 };
 
-const pushOff = ({ id, body }: PushOffProps) => {
+const changeDate = ({ id, body }: ChangeDateProps) => {
   return fetch(`${REMINDER}/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(body),
@@ -26,7 +26,7 @@ const pushOff = ({ id, body }: PushOffProps) => {
 const ReminderAPI = {
   getReminder,
   waterPlant,
-  pushOff,
+  changeDate,
 };
 
 export default ReminderAPI;

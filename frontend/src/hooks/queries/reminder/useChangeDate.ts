@@ -1,12 +1,12 @@
 import { MutationProps } from 'types/api/DataResponse';
-import { PushOffProps } from 'types/api/reminder';
+import { ChangeDateProps } from 'types/api/reminder';
 import { useMutation } from '@tanstack/react-query';
 import ReminderAPI from 'apis/reminder';
 
-const usePushOff = <T>({ successCallback, errorCallback }: MutationProps<T, PushOffProps>) =>
+const useChangeDate = <T>({ successCallback, errorCallback }: MutationProps<T, ChangeDateProps>) =>
   useMutation({
-    mutationFn: async ({ id, body }: PushOffProps) => {
-      const response = await ReminderAPI.pushOff({
+    mutationFn: async ({ id, body }: ChangeDateProps) => {
+      const response = await ReminderAPI.changeDate({
         id,
         body,
       });
@@ -19,4 +19,4 @@ const usePushOff = <T>({ successCallback, errorCallback }: MutationProps<T, Push
     onError: (error, variable) => errorCallback && errorCallback(error, variable),
   });
 
-export default usePushOff;
+export default useChangeDate;

@@ -18,7 +18,7 @@ const validateParams = (delay: number, failRate: number) => {
 
 const DICT = '*/dictionary-plants';
 const PET = '*/pet-plants';
-const REMINDER = '*/reminder';
+const REMINDER = '*/reminders';
 
 sessionStorage.setItem('MSW_REMINDER', JSON.stringify(REMINDER_DATA));
 
@@ -101,7 +101,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.patch(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
       const { petPlantId } = req.params;
       const { nextWaterDate } = await req.json();
-      Reminder.pushOff(Number(petPlantId), nextWaterDate);
+      Reminder.changeDate(Number(petPlantId), nextWaterDate);
 
       return res(ctx.delay(delay), ctx.status(204));
     }),

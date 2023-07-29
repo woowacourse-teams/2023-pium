@@ -4,7 +4,7 @@ import { ContentBox, HeaderBox, Title, Wrapper } from './Reminder.style';
 import useReminderHooks from 'hooks/useReminderHooks';
 
 const Reminder = () => {
-  const { reminderData, waterMutate, pushOffMutate } = useReminderHooks();
+  const { reminderData, waterMutate, changeDateMutate } = useReminderHooks();
 
   if (reminderData === undefined) return null;
 
@@ -15,7 +15,7 @@ const Reminder = () => {
   });
 
   return (
-    <ReminderProvider waterCallback={waterMutate} pushOffCallback={pushOffMutate}>
+    <ReminderProvider waterCallback={waterMutate} changeDateCallback={changeDateMutate}>
       <Wrapper status={reminderData.status}>
         <HeaderBox>
           <Title>리마인더</Title>
