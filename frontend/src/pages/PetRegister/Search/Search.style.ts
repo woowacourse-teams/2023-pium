@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,6 +8,7 @@ export const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   padding: 0 16px;
+  padding-bottom: 68px;
 `;
 
 export const Message = styled.p`
