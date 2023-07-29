@@ -89,7 +89,7 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
           <ExpandedTextBox>
             <Text>물 주기</Text>
             <Bold>
-              <Strong>{waterCycle}</Strong>일마다
+              <Strong>{waterCycle}</Strong> 일마다
             </Bold>
           </ExpandedTextBox>
           <ExpandedTextBox>
@@ -105,29 +105,49 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
         <Environment>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <House color={theme.color.primary} aria-hidden="true" />
-              장소
+              <House
+                color={theme.color.primary}
+                aria-label="장소"
+                aria-describedby="반려 식물이 놓인 공간"
+                width="20px"
+                height="20px"
+              />
             </EnvironmentTitle>
             {location}
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Flowerpot color={theme.color.primary} aria-hidden="true" />
-              화분
+              <Flowerpot
+                color={theme.color.primary}
+                aria-label="화분"
+                aria-describedby="반려 식물이 담긴 화분의 재질"
+                width="20px"
+                height="20px"
+              />
             </EnvironmentTitle>
             {flowerpot}
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Sun color={theme.color.primary} aria-hidden="true" />
-              햇살
+              <Sun
+                color={theme.color.primary}
+                aria-label="채광"
+                aria-describedby="반려 식물이 빛을 얼마나 받고 있는지"
+                width="20px"
+                height="20px"
+              />
             </EnvironmentTitle>
             {light}
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Wind color={theme.color.primary} aria-hidden="true" />
-              바람
+              <Wind
+                color={theme.color.primary}
+                aria-label="바람"
+                aria-describedby="반려 식물이 통풍이 잘 되는 위치인지"
+                width="20px"
+                height="20px"
+              />
             </EnvironmentTitle>
             {wind}
           </EnvironmentItem>
