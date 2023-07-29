@@ -14,6 +14,7 @@ const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) =>
       return data;
     },
 
+    refetchOnWindowFocus: false,
     suspense: true,
   });
 
