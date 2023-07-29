@@ -26,7 +26,7 @@ import {
   EnvironmentItem,
 } from './PetDetails.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
-import { convertDateKorYear } from 'utils/date';
+import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
 
 interface PetDetailsProps {
@@ -56,6 +56,9 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
   const birthDateKorean = convertDateKorYear(birthDate);
   const today = convertDateKorYear(new Date()).slice(5);
   const isBirthday = today === birthDateKorean.slice(5);
+
+  const daysBetweenLastWaterDate = getDaysBetween(Date.now(), lastWaterDate);
+  const daysBetweenNextWaterDate = getDaysBetween(Date.now(), nextWaterDate);
 
   return (
     <Wrapper>
@@ -94,11 +97,11 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
           </ExpandedTextBox>
           <ExpandedTextBox>
             <Text>마지막 물주기</Text>
-            <Bold>{convertDateKorYear(lastWaterDate)}</Bold>
+            <Bold>{daysBetweenLastWaterDate ? `${daysBetweenLastWaterDate}일 전` : '오늘!!'}</Bold>
           </ExpandedTextBox>
           <ExpandedTextBox>
             <Text>다음 물주기</Text>
-            <Bold>{convertDateKorYear(nextWaterDate)}</Bold>
+            <Bold>{daysBetweenNextWaterDate ? `${daysBetweenNextWaterDate}일 전` : '오늘!!'}</Bold>
           </ExpandedTextBox>
         </InfoArea>
         <Divider aria-hidden="true" />
