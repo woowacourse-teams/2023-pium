@@ -23,7 +23,7 @@ import {
   Divider,
   StyledLink,
   EnvironmentTitle,
-  EnvironmentItem
+  EnvironmentItem,
 } from './PetDetails.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
@@ -50,7 +50,7 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
     location,
     flowerpot,
     light,
-    wind
+    wind,
   } = petPlantDetails;
 
   const birthDateKorean = convertDateKorYear(birthDate);
