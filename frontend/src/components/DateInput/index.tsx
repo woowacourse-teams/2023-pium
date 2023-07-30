@@ -2,17 +2,14 @@ import { useId } from 'react';
 import { Date, Wrapper, DateValue } from './DateInput.style';
 import { convertDateKorYear } from 'utils/date';
 
-interface DateInputProps {
+interface DateInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
-  onChange?: (value: string) => void;
-  placeholder?: string;
-  min?: string;
-  max?: string;
+  changeCallback?: (value: string) => void;
 }
 
 const DateInput = ({
   value,
-  onChange,
+  changeCallback,
   placeholder = '날짜를 입력해 주세요',
   min,
   max,
@@ -22,7 +19,7 @@ const DateInput = ({
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;
 
-    onChange?.(value);
+    changeCallback?.(value);
   };
 
   return (
