@@ -71,3 +71,14 @@ export const Message = styled.p`
   font-size: 1.8rem;
   font-weight: 600;
 `;
+
+export const ToastListWrapper = styled.div`
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translate(-50%, 0);
+
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+`;
