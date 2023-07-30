@@ -44,7 +44,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.petList,
-        element: <PetList />,
+        element: (
+          <Suspense fallback={<div>로딩중입니다.</div>}>
+            <PetList />
+          </Suspense>
+        ),
       },
     ],
   },

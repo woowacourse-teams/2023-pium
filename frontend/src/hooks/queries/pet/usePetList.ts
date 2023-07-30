@@ -13,6 +13,7 @@ const usePetList = () =>
     select: ({ data }) => data,
     placeholderData: keepPreviousData,
     staleTime: Infinity,
+    suspense: true,
   });
 
 export default usePetList;
