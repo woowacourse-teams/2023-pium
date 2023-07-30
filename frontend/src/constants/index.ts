@@ -5,7 +5,7 @@ export const BASE_URL = 'https://api.pium.life';
 
 export const URL_PATH = {
   main: '/',
-  dictSearch: 'dict',
+  dictSearch: '/dict',
   dictDetail: '/dict/:id',
   petList: '/pet',
   petDetail: '/pet/:id',
