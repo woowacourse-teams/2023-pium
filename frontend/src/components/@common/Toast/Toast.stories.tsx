@@ -51,10 +51,11 @@ export const ToastWithPopupButton: Story = {
     message: '새로고침 해주세요',
   },
   render: (props) => {
-    const { error } = useToast();
+    const { addToast } = useToast();
     const addHandler = () => {
-      error(props.message);
+      addToast('error', props.message);
     };
+
     return (
       <button type="button" onClick={addHandler}>
         토스트 추가하기
