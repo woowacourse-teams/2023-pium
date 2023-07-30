@@ -4,6 +4,7 @@ import PottedPlant from 'components/@common/Icons/PottedPlant';
 import ThermometerSnow from 'components/@common/Icons/ThermometerSnow';
 import ThermometerSun from 'components/@common/Icons/ThermometerSun';
 import Warning from 'components/@common/Icons/Warning';
+import Image from 'components/@common/Image';
 import DictInfo from 'components/DictInfo';
 import DictInfoSwitch from 'components/DictInfoSwitch';
 import {
@@ -13,8 +14,6 @@ import {
   HeaderBox,
   ManageInfoBox,
   Name,
-  NameBox,
-  PlantImage,
   PropBox,
   PropsBox,
   Wrapper,
@@ -57,12 +56,12 @@ const DictionaryDetail = () => {
 
   return (
     <Wrapper>
-      <PlantImage src={image} alt={name} />
+      <Image type="wide" src={image} alt={name} size="300px" />
       <HeaderBox>
-        <NameBox>
+        <div>
           <Name>{name}</Name>
           <FamilyName>{familyName}</FamilyName>
-        </NameBox>
+        </div>
         <div>
           <DictInfo alignment="row">
             <DictInfo.Content variant={MANAGE_LEVEL_COLOR[manageLevel]}>

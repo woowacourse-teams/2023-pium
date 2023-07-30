@@ -19,8 +19,6 @@ export const HeaderBox = styled.section`
   border-bottom: 1px solid ${(props) => props.theme.color.grayLight};
 `;
 
-export const NameBox = styled.div``;
-
 export const FamilyName = styled.p`
   margin-bottom: 4px;
   font: 500 1.2rem/1.6rem 'NanumSquareRound';
@@ -32,16 +30,6 @@ export const Name = styled.p`
   font: 900 2.4rem/4rem 'NanumSquareRound';
   color: ${(props) => props.theme.color.sub};
   text-align: left;
-`;
-
-export const PlantImage = styled.img`
-  width: 100%;
-  min-width: ${(props) => props.theme.width.mobile};
-  max-width: ${(props) => props.theme.width.pad};
-  height: 300px;
-  margin: 0 auto;
-
-  object-fit: cover;
 `;
 
 export const ContentBox = styled.section`

@@ -59,5 +59,19 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.get(PET, (_, res, ctx) =>
       res(ctx.delay(delay), ctx.status(200), ctx.json({ data: PET_LIST }))
     ),
+
+    rest.get(`${PET}/:petPlantId`, async (req, res, ctx) => {
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(500));
+      }
+
+      const { petPlantId } = req.params;
+      try {
+        const { data } = PetPlant.find(Number(petPlantId));
+        return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
+      } catch {
+        return res(ctx.delay(delay), ctx.status(404));
+      }
+    }),
   ];
 };

@@ -2,11 +2,11 @@ import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useState } from 'react';
 import ArrowRight from 'components/@common/Icons/ArrowRight';
 import Search from 'components/@common/Icons/Search';
+import Image from 'components/@common/Image';
 import {
   InputArea,
   ResultItem,
   ResultList,
-  ResultThumbnail,
   Wrapper,
   Name,
   EnterButton,
@@ -71,7 +71,7 @@ const SearchBox = (props: SearchBoxProps) => {
           <ResultList>
             {searchResults.map(({ id, name, image }) => (
               <ResultItem key={id} onClick={handleResultClick(id)}>
-                <ResultThumbnail alt={name} src={image} />
+                <Image alt={name} src={image} type="circle" size="40px" />
                 <Name>{name}</Name>
               </ResultItem>
             ))}

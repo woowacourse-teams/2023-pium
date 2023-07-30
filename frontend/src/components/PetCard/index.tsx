@@ -1,5 +1,5 @@
 import type { Pet } from 'types/api/petPlant';
-import Image from 'components/Image';
+import Image from 'components/@common/Image';
 import {
   ContentArea,
   ContentRow,
