@@ -53,11 +53,11 @@ jobs:
           start: npm run start
 
       - name: Send slack notification if test failed
-        if: ${{ failure() }}
+        if: ${{ always() }}
         uses: 8398a7/action-slack@v3
         with:
           status: ${{ job.status }}
-          author_name: E2E 테스트 실패
+          author_name: E2E 테스트 실패(했을 때만 보낼 예정임)
           fields: workflow, job, pullRequest, message, author, action, eventName, took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FRONTEND }}
