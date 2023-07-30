@@ -1,31 +1,16 @@
-import { ToastContext } from 'contexts/toastContext';
-import { useContext } from 'react';
 import { createPortal } from 'react-dom';
-import { styled } from 'styled-components';
-import { ERROR } from 'constants/index';
+import { ToastListWrapper } from './Toast.style';
+import useToast from 'hooks/useToast';
 import Toast from '.';
 
 const ToastList = () => {
   const root = document.getElementById('toast-root') ?? document.body;
 
-  const context = useContext(ToastContext);
+  const { toastList } = useToast();
 
-  if (context === null) throw Error(ERROR.toastContext);
+  const toasts = toastList.map((props, idx) => <Toast key={props.id + idx} {...props} />);
 
-  const toasts = context.toastList.map((props, idx) => <Toast key={props.id + idx} {...props} />);
-
-  return createPortal(<Wrapper>{toasts}</Wrapper>, root);
+  return createPortal(<ToastListWrapper>{toasts}</ToastListWrapper>, root);
 };
 
 export default ToastList;
-
-const Wrapper = styled.div`
-  position: fixed;
-  bottom: 50px;
-  left: 50%;
-  transform: translate(-50%, 0);
-
-  display: flex;
-  flex-direction: column;
-  row-gap: 8px;
-`;
