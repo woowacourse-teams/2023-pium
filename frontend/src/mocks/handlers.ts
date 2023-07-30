@@ -1,6 +1,7 @@
 import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
+import PET_LIST from './data/petList';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
 
@@ -54,5 +55,9 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       // todo: 등록된 식물의 내 식물 목록 id도 돌려주기
       return res(ctx.delay(delay), ctx.status(201));
     }),
+
+    rest.get(PET, (_, res, ctx) =>
+      res(ctx.delay(delay), ctx.status(200), ctx.json({ data: PET_LIST }))
+    ),
   ];
 };
