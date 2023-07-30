@@ -26,7 +26,7 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper role="menu">
       <SelectedValue onClick={toggle} $placeholder={value === ''}>
         {value || placeholder}
       </SelectedValue>
@@ -38,7 +38,7 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
           <Backdrop onClick={close} />
           <OptionBox>
             {options.map((option) => (
-              <OptionItem key={option} onClick={select(option)}>
+              <OptionItem key={option} role="menuitem" onClick={select(option)}>
                 {option}
               </OptionItem>
             ))}
