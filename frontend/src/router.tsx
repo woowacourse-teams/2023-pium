@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
 import Main from 'pages/Main';
+import PetList from 'pages/PetList';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import RootTemplate from 'pages/RootTemplate';
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: '/dict',
+        path: URL_PATH.dictSearch,
         element: <DictionarySearch />,
       },
       {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             <DictionaryDetail />
           </Suspense>
         ),
+      },
+      {
+        path: URL_PATH.petList,
+        element: <PetList />,
       },
     ],
   },
