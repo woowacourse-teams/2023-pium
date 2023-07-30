@@ -41,6 +41,6 @@ export const RegisterButton = styled.button`
   line-height: 16px;
   color: white;
 
-  background: ${(props) => props.theme.color.primary + 'cc'};
+  background: ${(props) => props.theme.color.primary + 'bb'};
   border-radius: 16px;
 `;
