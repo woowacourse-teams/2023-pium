@@ -6,8 +6,8 @@ import {
 } from 'types/api/reminder';
 import { ReminderContext } from 'contexts/reminderContext';
 import { useContext } from 'react';
+import Image from 'components/@common/Image';
 import DateInput from 'components/DateInput';
-import Image from 'components/Image';
 import {
   ActionBox,
   ContentBox,
