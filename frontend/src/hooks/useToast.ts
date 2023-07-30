@@ -1,27 +1,30 @@
 import { ToastContext } from 'contexts/toastContext';
-import { useContext, useId } from 'react';
+import { useContext } from 'react';
+import { ToastType } from 'components/@common/Toast';
 import { ERROR } from 'constants/index';
 
+/**
+ *
+ * toast를 추가, 리스트를 반환하는 hooks
+ * @returns {addToast, toastList}
+ */
+
 const useToast = () => {
-  // 여기서 toast의 값을 추가, 삭제해야함.
   const context = useContext(ToastContext);
 
   if (context === null) throw Error(ERROR.toastContext);
 
-  const { setToastList } = context;
+  const { toastList, setToastList } = context;
 
-  const id = useId();
+  const id = self.crypto.randomUUID();
 
-  const success = (message: string) =>
-    setToastList((prev) => [...prev, { id, type: 'success', message }]);
-  const error = (message: string) =>
-    setToastList((prev) => [...prev, { id, type: 'error', message }]);
-  const info = (message: string) =>
-    setToastList((prev) => [...prev, { id, type: 'info', message }]);
-  const warning = (message: string) =>
-    setToastList((prev) => [...prev, { id, type: 'warning', message }]);
+  const addToast = (type: ToastType, message: string) => {
+    setToastList((prev) => [...prev, { id, type, message }]);
+  };
 
-  return { success, error, warning, info };
+  const clearToastList = () => setToastList([]);
+
+  return { addToast, toastList, clearToastList };
 };
 
 export default useToast;
