@@ -41,7 +41,18 @@ class PetPlantTest {
     @ParameterizedTest
     @CsvSource(value = {"2022,7,1,-7", "2022,7,8,0", "2022,7,11,3"})
     void dDay를_계산(int year, int month, int day, int dDay) {
-        PetPlant 산세베리아 = PetPlantFixture.산세베리아;
+        PetPlant 산세베리아 = PetPlant.builder()
+                .nickname("기영이")
+                .imageUrl("https://image.com")
+                .light("자연광이 잘 드는 곳")
+                .location("창가")
+                .wind("바람이 가끔 부는 곳")
+                .flowerpot("플라스틱")
+                .waterCycle(7)
+                .birthDate(LocalDate.of(2022, 7, 1))
+                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                .nextWaterDate(LocalDate.of(2022, 7, 8))
+                .build();
 
         Long result = 산세베리아.calculateDDay(LocalDate.of(year, month, day));
 
