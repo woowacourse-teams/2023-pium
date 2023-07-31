@@ -5,6 +5,7 @@ export const Wrapper = styled.div`
   height: 224px;
 
   background: white;
+  border: 1px solid ${({ theme }) => theme.color.gray};
   border-radius: 16px;
   box-shadow: 0 0 4px 1px ${(props) => props.theme.color.grayLight};
 `;
@@ -41,6 +42,7 @@ export const ContentRow = styled.div`
 
 export const DictionaryPlantName = styled.p`
   font-size: 1.4rem;
+  color: ${(props) => props.theme.color.grayDark};
 `;
 
 export const DaySince = styled.p`
@@ -48,6 +50,7 @@ export const DaySince = styled.p`
 `;
 
 export const DaySinceNumber = styled.span`
+  margin-left: 2px;
   font-size: 1.8rem;
   font-weight: 900;
   color: ${(props) => props.theme.color.primary};
