@@ -1,10 +1,9 @@
-import type { PetPlantCard } from 'types/api/petPlant';
+import type { PetPlant } from 'types/api/petPlant';
 import Crown from 'components/@common/Icons/Crown';
 import Image from 'components/@common/Image';
 import {
   ContentArea,
   ContentRow,
-  NicknameRow,
   DaySince,
   DaySinceNumber,
   DictionaryPlantName,
@@ -14,7 +13,7 @@ import {
 } from './PetCard.style';
 import { getToday } from 'utils/date';
 
-type PetCardProps = PetPlantCard;
+type PetCardProps = PetPlant;
 
 const PetCard = ({
   imageUrl,

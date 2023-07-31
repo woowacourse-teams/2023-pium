@@ -1,4 +1,4 @@
-const PET_LIST = [
+const PET_PLANT_CARD_LIST = [
   {
     id: 2,
     nickname: '기영이',
@@ -57,4 +57,4 @@ const PET_LIST = [
   },
 ];
 
-export default PET_LIST;
+export default PET_PLANT_CARD_LIST;

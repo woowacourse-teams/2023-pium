@@ -33,9 +33,9 @@ export interface NewPetPlantRequest
   dictionaryPlantId: DictionaryPlant['id'];
 }
 
-export interface PetPlantCard
+export interface PetPlant
   extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'birthDate' | 'daySince'> {
   dictionaryPlantName: DictionaryPlant['name'];
 }
 
-export type PetPlantCardListResponse = DataResponse<PetPlantCard[]>;
+export type PetPlantListResponse = DataResponse<PetPlant[]>;

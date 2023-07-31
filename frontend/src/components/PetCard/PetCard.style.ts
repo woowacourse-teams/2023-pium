@@ -29,12 +29,6 @@ export const ContentArea = styled.div`
   color: ${(props) => props.theme.color.sub};
 `;
 
-export const NicknameRow = styled.div`
-  display: flex;
-  align-items: center;
-  font-size: 2rem;
-`;
-
 export const Nickname = styled.p`
   width: 100%;
   font-size: 1.8rem;

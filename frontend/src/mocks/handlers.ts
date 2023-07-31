@@ -1,7 +1,7 @@
 import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
-import PET_LIST from './data/petList';
+import PET_LIST from './data/petPlantCardList';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
 
