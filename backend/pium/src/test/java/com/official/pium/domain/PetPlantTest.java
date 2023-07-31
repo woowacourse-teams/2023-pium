@@ -281,7 +281,7 @@ class PetPlantTest {
     }
 
     @Test
-    void 물주기() {
+    void 물을_주면_다음_물주기_날짜와_마지막으로_물을_준_날짜를_변경() {
         PetPlant 산세베리아 = PetPlantFixture.산세베리아;
         LocalDate newWaterDate = LocalDate.of(2022, 7, 7);
         LocalDate newNextWaterDate = newWaterDate.plusDays(산세베리아.getWaterCycle());

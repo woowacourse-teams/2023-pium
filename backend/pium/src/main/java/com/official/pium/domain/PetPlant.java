@@ -176,7 +176,7 @@ public class PetPlant extends BaseEntity {
         this.nextWaterDate = newWaterDate;
     }
 
-    public boolean isNotSameMember(Member member) {
+    public boolean isNotOwner(Member member) {
         return !Objects.equals(this.member, member);
     }
 

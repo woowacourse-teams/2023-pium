@@ -51,7 +51,7 @@ public class ReminderService {
     }
 
     private void checkMemberEquality(PetPlant petPlant, Member member) {
-        if (petPlant.isNotSameMember(member)) {
+        if (petPlant.isNotOwner(member)) {
             throw new IllegalArgumentException("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + member.getId());
         }
     }
