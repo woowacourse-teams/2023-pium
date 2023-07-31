@@ -25,7 +25,7 @@ const CheckBox = ({ isChecked = false, fillStyle, emptyStyle, checkedCallback }:
 
   return (
     <Label htmlFor={id}>
-      <Input type={'checkbox'} id={id} />
+      <Input type="checkbox" id={id} />
       {checked ? (
         <CheckboxFill onClick={checkHandler} customCSS={fillStyle} />
       ) : (
