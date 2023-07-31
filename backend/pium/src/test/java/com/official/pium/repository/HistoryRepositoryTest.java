@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 
@@ -17,7 +18,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class HistoryRepositoryTest extends RepositoryTest {
-
 
     @Autowired
     private HistoryRepository historyRepository;
@@ -33,43 +33,8 @@ class HistoryRepositoryTest extends RepositoryTest {
         //given
         Member member = Member.builder().email("hello@aaa.com").build();
         memberRepository.save(member);
-        DictionaryPlant dictionaryPlant = DictionaryPlant.builder()
-                .name("스투키")
-                .imageUrl("https://www.costco.co.kr/medias/sys_master/images/hd6/h37/31058517229598.jpg")
-                .familyName("선인장")
-                .smell("안남")
-                .poison("없음")
-                .manageLevel("어려움")
-                .growSpeed("빨리자람")
-                .requireTemp("20도")
-                .minimumTemp("0도")
-                .requireHumidity("15%")
-                .postingPlace("베란다 앞")
-                .specialManageInfo("물을 많이 주지않아도 됩니다.")
-                .waterCycle(
-                        WaterCycle.builder()
-                                .spring("겉흙이 마르면 촉촉하게")
-                                .summer("겉흙이 마르면 촉촉하게")
-                                .autumn("겉흙이 마르면 촉촉하게")
-                                .winter("겉흙이 마르면 촉촉하게")
-                                .build()
-                ).build();
-        dictionaryPlantRepository.save(dictionaryPlant);
-        PetPlant petPlant = PetPlant.builder()
-                .dictionaryPlant(dictionaryPlant)
-                .member(member)
-                .nickname("피우미")
-                .imageUrl("https://image.com")
-                .location("베란다")
-                .flowerpot("화분")
-                .light("밝아요")
-                .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .waterCycle(3)
-                .build();
-        petPlantRepository.save(petPlant);
+        DictionaryPlant dictionaryPlant = saveDictionaryPlant();
+        PetPlant petPlant = savePetPlant(member, dictionaryPlant);
         History history1 = History.builder()
                 .petPlant(petPlant)
                 .waterDate(LocalDate.now())
@@ -98,5 +63,50 @@ class HistoryRepositoryTest extends RepositoryTest {
                     softly.assertThat(histories2.getTotalPages()).isEqualTo(2);
                 }
         );
+    }
+
+    private PetPlant savePetPlant(Member member, DictionaryPlant dictionaryPlant) {
+        PetPlant petPlant = PetPlant.builder()
+                .dictionaryPlant(dictionaryPlant)
+                .member(member)
+                .nickname("피우미")
+                .imageUrl("https://image.com")
+                .location("베란다")
+                .flowerpot("화분")
+                .light("밝아요")
+                .wind("추워요")
+                .birthDate(LocalDate.now())
+                .nextWaterDate(LocalDate.now())
+                .lastWaterDate(LocalDate.now())
+                .waterCycle(3)
+                .build();
+        petPlantRepository.save(petPlant);
+        return petPlant;
+    }
+
+    private DictionaryPlant saveDictionaryPlant() {
+        DictionaryPlant dictionaryPlant = DictionaryPlant.builder()
+                .name("스투키")
+                .imageUrl("https://www.costco.co.kr/medias/sys_master/images/hd6/h37/31058517229598.jpg")
+                .familyName("선인장")
+                .smell("안남")
+                .poison("없음")
+                .manageLevel("어려움")
+                .growSpeed("빨리자람")
+                .requireTemp("20도")
+                .minimumTemp("0도")
+                .requireHumidity("15%")
+                .postingPlace("베란다 앞")
+                .specialManageInfo("물을 많이 주지않아도 됩니다.")
+                .waterCycle(
+                        WaterCycle.builder()
+                                .spring("겉흙이 마르면 촉촉하게")
+                                .summer("겉흙이 마르면 촉촉하게")
+                                .autumn("겉흙이 마르면 촉촉하게")
+                                .winter("겉흙이 마르면 촉촉하게")
+                                .build()
+                ).build();
+        dictionaryPlantRepository.save(dictionaryPlant);
+        return dictionaryPlant;
     }
 }

@@ -5,7 +5,6 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import org.springframework.validation.annotation.Validated;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -148,5 +147,9 @@ public class PetPlant extends BaseEntity {
         if (localDate == null) {
             throw new IllegalArgumentException("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
+    }
+
+    public boolean hasSameMember(Member member) {
+        return Objects.equals(this.member, member);
     }
 }
