@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -56,23 +56,8 @@ export const ResultItem = styled.div`
   border-top: solid 2px ${(p) => p.theme.color.primary + '40'};
 `;
 
-const skeletonBackground = keyframes`
-  0%    { background-color: rgba(27, 204, 10, 0.2) }
-  50%   { background-color: rgba(27, 204, 10, 0.5) }
-`;
-
-export const ResultThumbnail = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-right: 12px;
-
-  object-fit: cover;
-  border-radius: 50%;
-
-  animation: ${skeletonBackground} 1s infinite;
-`;
-
 export const Name = styled.p`
+  margin-left: 12px;
   font-size: 1.8rem;
   color: ${(p) => p.theme.color.sub};
 `;

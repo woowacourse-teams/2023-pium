@@ -1,7 +1,7 @@
 import { keyframes, styled } from 'styled-components';
 
 export interface StyledImageProps {
-  type: 'circle' | 'square';
+  type: 'circle' | 'square' | 'wide';
   size: string;
 }
 
@@ -18,8 +18,9 @@ const wave = (size: string) => keyframes`
 export const StyledImage = styled.img<StyledImageProps>`
   display: inline-flex;
 
-  width: ${({ size }) => size};
+  width: ${({ type, size }) => (type === 'wide' ? '100%' : size)};
   height: ${({ size }) => size};
+  margin: ${({ type }) => (type === 'wide' ? '0 auto' : '')};
 
   object-fit: cover;
   background: linear-gradient(
