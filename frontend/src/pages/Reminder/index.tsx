@@ -6,7 +6,7 @@ import useReminderHooks from 'hooks/useReminderHooks';
 const Reminder = () => {
   const { reminderData, waterMutate, changeDateMutate } = useReminderHooks();
 
-  if (reminderData === undefined) return null;
+  if (!reminderData) return null;
 
   const scheduleReminder = Object.entries(reminderData.data);
 

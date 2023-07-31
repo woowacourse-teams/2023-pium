@@ -74,13 +74,3 @@ export const ActionBox = styled.div`
     }
   }
 `;
-
-export const PutOff = styled.button`
-  width: 100%;
-  height: 50%;
-
-  font: ${({ theme }) => theme.font.reminderCardContent};
-  color: ${({ theme }) => theme.color.gray};
-
-  border-top: solid 0.5px ${({ theme: { color } }) => color.gray};
-`;

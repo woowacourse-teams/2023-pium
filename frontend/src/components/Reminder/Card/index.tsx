@@ -1,4 +1,4 @@
-import {
+import type {
   ChangeDateParams,
   ReminderExtendType,
   TodayStatus,
