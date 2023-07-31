@@ -155,9 +155,9 @@ class PetPlantTest {
         }
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5})
-    void N일_지각_미루기(int days) {
+    @ParameterizedTest(name = "{0}일 지각한 물주기 {1}일 뒤로 미루기")
+    @CsvSource({"1,2", "2,3", "3,2", "4,10"})
+    void N일_지각_미루기(int days, int plusDays) {
         PetPlant 산세베리아 = PetPlant.builder()
                 .nickname("크론")
                 .imageUrl("https://image2.com")
@@ -171,17 +171,16 @@ class PetPlantTest {
                 .nextWaterDate(LocalDate.now().minusDays(days))
                 .build();
 
-        LocalDate newWaterDate = LocalDate.now().plusDays(1);
+        LocalDate newWaterDate = LocalDate.now().plusDays(plusDays);
 
         산세베리아.changeNextWaterDate(newWaterDate);
 
-        assertThat(산세베리아.getNextWaterDate())
-                .isEqualTo(newWaterDate)
-                .isNotEqualTo(산세베리아.getNextWaterDate().plusDays(1));
+        assertThat(산세베리아.getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
-    @Test
-    void 오늘_할일_미루기() {
+    @ParameterizedTest(name = "오늘 할 일을 {0}일 뒤로 미루기")
+    @ValueSource(ints = {1, 2, 3, 4, 5})
+    void 오늘_할일_미루기(int days) {
         PetPlant 테이블야자 = PetPlant.builder()
                 .nickname("포비")
                 .imageUrl("https://image.com")
@@ -195,18 +194,16 @@ class PetPlantTest {
                 .nextWaterDate(LocalDate.now())
                 .build();
 
-        LocalDate newWaterDate = LocalDate.now().plusDays(1);
+        LocalDate newWaterDate = LocalDate.now().plusDays(days);
 
         테이블야자.changeNextWaterDate(newWaterDate);
 
-        assertThat(테이블야자.getNextWaterDate())
-                .isEqualTo(newWaterDate)
-                .isNotEqualTo(테이블야자.getNextWaterDate().plusDays(1));
+        assertThat(테이블야자.getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
-    @ParameterizedTest
-    @ValueSource(ints = {1, 2, 3, 4, 5})
-    void N일_뒤의_할일_미루기(int days) {
+    @ParameterizedTest(name = "{0}일 뒤의 물주기를 {1}일 뒤로 미루기")
+    @CsvSource({"1,2", "2,3", "3,2", "4,10"})
+    void N일_뒤의_할일_미루기(int days, int plusDays) {
         PetPlant 라벤더 = PetPlant.builder()
                 .nickname("피우미")
                 .imageUrl("https://image.com")
@@ -220,23 +217,56 @@ class PetPlantTest {
                 .nextWaterDate(LocalDate.now().plusDays(days))
                 .build();
 
-        LocalDate newWaterDate = 라벤더.getNextWaterDate().plusDays(1);
+        LocalDate newWaterDate = 라벤더.getNextWaterDate().plusDays(plusDays);
 
         라벤더.changeNextWaterDate(newWaterDate);
 
-        assertThat(라벤더.getNextWaterDate())
-                .isEqualTo(newWaterDate)
-                .isNotEqualTo(LocalDate.now().plusDays(1));
+        assertThat(라벤더.getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
-    @Test
-    void 미루는_날짜가_오늘보다_이전이면_예외_발생() {
+    @ParameterizedTest(name = "미루는 날짜가 오늘보다 {0}일 전이면 예외 발생")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+    void 미루는_날짜가_오늘_또는_이전이면_예외_발생(int days) {
         PetPlant 산세베리아 = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(
-                () -> 산세베리아.changeNextWaterDate(LocalDate.now().minusDays(1)))
+                () -> 산세베리아.changeNextWaterDate(LocalDate.now().minusDays(days)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("오늘보다 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
+                .hasMessageContaining("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
+    }
+
+    @ParameterizedTest(name = "{0}일 뒤의 물주기를 {1}일 전으로 앞 당기기")
+    @CsvSource({"1,2", "2,3", "4,2", "4,10"})
+    void N일_뒤의_물주기_날짜를_앞_당기기(int days, int minusDays) {
+        PetPlant 라벤더 = PetPlant.builder()
+                .nickname("피우미")
+                .imageUrl("https://image.com")
+                .light("자연광이 잘 드는 곳")
+                .location("거실")
+                .wind("바람이 많이 불지 않는 곳")
+                .flowerpot("유리")
+                .waterCycle(7)
+                .birthDate(LocalDate.of(2022, 7, 1))
+                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                .nextWaterDate(LocalDate.now().plusDays(days))
+                .build();
+
+        LocalDate newWaterDate = 라벤더.getNextWaterDate().plusDays(minusDays);
+
+        라벤더.changeNextWaterDate(newWaterDate);
+
+        assertThat(라벤더.getNextWaterDate()).isEqualTo(newWaterDate);
+    }
+
+    @ParameterizedTest(name = "미루는 날짜가 오늘보다 {0}일 전이면 예외 발생")
+    @ValueSource(ints = {0, 1, 2, 3, 4, 5})
+    void 당기는_물주기_날짜가_오늘보다_이전이면_예외_발생(int days) {
+        PetPlant 산세베리아 = PetPlantFixture.산세베리아;
+
+        assertThatThrownBy(
+                () -> 산세베리아.changeNextWaterDate(LocalDate.now().minusDays(days)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
     }
 
     @Test
@@ -268,6 +298,6 @@ class PetPlantTest {
 
         assertThatThrownBy(() -> 산세베리아.water(LocalDate.of(year, month, day)))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("마지막으로 물을 준 날짜보다 이전 날짜에 물을 줄 수는 없습니다.");
+                .hasMessageContaining("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다.");
     }
 }

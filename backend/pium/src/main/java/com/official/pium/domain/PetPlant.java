@@ -161,21 +161,21 @@ public class PetPlant extends BaseEntity {
             throw new IllegalArgumentException("오늘 이후 날짜에 물을 줄 수는 없습니다. date: " + newWaterDate);
         }
 
-        if (newWaterDate.isBefore(lastWaterDate)) {
-            throw new IllegalArgumentException("마지막으로 물을 준 날짜보다 이전 날짜에 물을 줄 수는 없습니다. date: " + newWaterDate);
+        if (newWaterDate.isEqual(lastWaterDate) || newWaterDate.isBefore(lastWaterDate)) {
+            throw new IllegalArgumentException("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다. date: " + newWaterDate);
         }
         this.nextWaterDate = newWaterDate.plusDays(waterCycle);
         this.lastWaterDate = newWaterDate;
     }
 
     public void changeNextWaterDate(LocalDate newWaterDate) {
-        if (newWaterDate.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("오늘보다 이전 날짜로 물주기 날짜를 변경할 수는 없습니다. date: " + newWaterDate);
+        if (newWaterDate.isEqual(LocalDate.now()) || newWaterDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다. date: " + newWaterDate);
         }
         this.nextWaterDate = newWaterDate;
     }
 
     public boolean isNotSameMember(Member member) {
-        return !this.member.equals(member);
+        return !Objects.equals(this.member, member);
     }
 }

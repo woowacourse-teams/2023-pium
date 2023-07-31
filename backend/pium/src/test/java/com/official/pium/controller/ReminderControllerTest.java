@@ -1,7 +1,6 @@
 package com.official.pium.controller;
 
 
-import static com.official.pium.fixture.MemberFixture.주노;
 import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_물주기_요청;
 import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_미루기_요청;
 import static com.official.pium.fixture.ReminderFixture.RESPONSE.리마인더_조회_응답;
@@ -45,9 +44,11 @@ class ReminderControllerTest extends UITest {
 
     @Nested
     class 리마인더_ {
+
         @Test
-        void 물을_주면_204를_반환() throws Exception {
-            willDoNothing().given(reminderService).water(any(), anyLong(), any());
+        void 정상적인_물주기_요청_시_204를_반환() throws Exception {
+            willDoNothing().given(reminderService)
+                    .water(any(), anyLong(), any());
 
             mockMvc.perform(post("/reminders/{id}", 1L)
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
@@ -57,19 +58,19 @@ class ReminderControllerTest extends UITest {
         }
 
         @Test
-        void 잘못된_ID로_물주기_요청시_400_반환() throws Exception {
-            Long id = -1L;
+        void 잘못된_ID로_물주기_요청_시_400_반환() throws Exception {
+            Long wrongId = -1L;
 
-            mockMvc.perform(post("/reminders/{id}", id)
+            mockMvc.perform(post("/reminders/{id}", wrongId)
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + id))
+                    .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))
                     .andDo(print());
         }
 
         @Test
-        void 미루면_204_반환() throws Exception {
+        void 정상적인_미루기_요청_시_204_반환() throws Exception {
             mockMvc.perform(patch("/reminders/{id}", 1L)
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -79,19 +80,20 @@ class ReminderControllerTest extends UITest {
 
         @Test
         void 잘못된_ID로_미루면_400_반환() throws Exception {
-            Long id = 0L;
+            Long wrongId = 0L;
 
-            mockMvc.perform(patch("/reminders/{id}", id)
+            mockMvc.perform(patch("/reminders/{id}", wrongId)
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + id))
+                    .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))
                     .andDo(print());
         }
 
         @Test
-        void 전체_조회시_200_반환() throws Exception {
-            given(reminderService.readAll(주노)).willReturn(리마인더_조회_응답);
+        void 전체_조회_시_200_반환() throws Exception {
+            given(reminderService.readAll(any()))
+                    .willReturn(리마인더_조회_응답);
 
             mockMvc.perform(get("/reminders")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
