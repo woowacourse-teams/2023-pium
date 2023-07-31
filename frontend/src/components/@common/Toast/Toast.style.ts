@@ -2,20 +2,22 @@ import { keyframes, styled } from 'styled-components';
 import { ToastType } from '.';
 
 const show = keyframes`
-0% {
-    opacity: 0;
+  0% {
+    transform: translateY(50%);
   }
   100% {
-    opacity: 1;
+    transform: translateY(0%);
   }
 `;
 
 const hide = keyframes`
-0% {
+ 0% {
     opacity: 1;
+    transform: translateY(0);
   }
   100% {
     opacity: 0;
+    transform: translateY(50%);
   }
 `;
 

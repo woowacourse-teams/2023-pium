@@ -16,10 +16,18 @@ const useToast = () => {
 
   const { toastList, setToastList } = context;
 
-  const id = self.crypto.randomUUID();
-
   const addToast = (type: ToastType, message: string) => {
+    const id = self.crypto.randomUUID();
+
     setToastList((prev) => [...prev, { id, type, message }]);
+
+    setTimeout(() => {
+      removeToast(id);
+    }, 2300);
+  };
+
+  const removeToast = (id: string) => {
+    setToastList((prevToasts) => prevToasts.filter((toast) => toast.id !== id));
   };
 
   const clearToastList = () => setToastList([]);

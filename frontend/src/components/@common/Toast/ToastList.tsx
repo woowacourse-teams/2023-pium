@@ -1,3 +1,4 @@
+import { memo, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { ToastListWrapper } from './Toast.style';
 import useToast from 'hooks/useToast';
@@ -8,9 +9,17 @@ const ToastList = () => {
 
   const { toastList } = useToast();
 
-  const toasts = toastList.map((props, idx) => <Toast key={props.id + idx} {...props} />);
+  const toasts = useMemo(
+    () => toastList.map((props, idx) => <Toast key={props.id + idx} {...props} />),
+    [toastList]
+  );
 
-  return createPortal(<ToastListWrapper>{toasts}</ToastListWrapper>, root);
+  return createPortal(
+    <>
+      {toastList.length > 0 && <ToastListWrapper aria-live="assertive">{toasts}</ToastListWrapper>}
+    </>,
+    root
+  );
 };
 
-export default ToastList;
+export default memo(ToastList);

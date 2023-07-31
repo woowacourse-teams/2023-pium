@@ -57,9 +57,11 @@ export const ToastWithPopupButton: Story = {
     };
 
     return (
-      <button type="button" onClick={addHandler}>
-        토스트 추가하기
-      </button>
+      <>
+        <button type="button" onClick={addHandler}>
+          토스트 추가하기
+        </button>
+      </>
     );
   },
 };
