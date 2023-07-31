@@ -1,24 +1,32 @@
-import { ChangeDateProps, WaterPlantProps } from 'types/api/reminder';
+import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
 import { BASE_URL } from 'constants/index';
 
 export const REMINDER = `${BASE_URL}/reminders`;
 
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: 'pium@example.com',
+};
+
 const getReminder = () => {
   return fetch(REMINDER, {
     method: 'GET',
+    headers,
   });
 };
 
-const waterPlant = ({ id, body }: WaterPlantProps) => {
+const waterPlant = ({ id, body }: WaterPlantParams) => {
   return fetch(`${REMINDER}/${id}`, {
     method: 'POST',
+    headers,
     body: JSON.stringify(body),
   });
 };
 
-const changeDate = ({ id, body }: ChangeDateProps) => {
+const changeDate = ({ id, body }: ChangeDateParams) => {
   return fetch(`${REMINDER}/${id}`, {
     method: 'PATCH',
+    headers,
     body: JSON.stringify(body),
   });
 };
