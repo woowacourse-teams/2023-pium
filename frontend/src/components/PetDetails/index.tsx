@@ -1,4 +1,4 @@
-import type { PetPlantDetails } from 'types/api/petPlant';
+import type { PetDetails } from 'types/api/petPlant';
 import { generatePath } from 'react-router-dom';
 import Crown from 'components/@common/Icons/Crown';
 import Dictionary from 'components/@common/Icons/Dictionary';
@@ -30,7 +30,7 @@ import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
 
 interface PetDetailsProps {
-  petPlantId: PetPlantDetails['id'];
+  petPlantId: PetDetails['id'];
 }
 
 const PetDetails = ({ petPlantId }: PetDetailsProps) => {

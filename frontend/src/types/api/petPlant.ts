@@ -1,7 +1,7 @@
 import type { DataResponse } from './DataResponse';
 import type { DictionaryPlant } from './dictionary';
 
-export interface PetDetails {
+export interface PetPlantDetails {
   id: number;
   nickname: string;
   imageUrl: string;
@@ -18,17 +18,17 @@ export interface PetDetails {
   nextWaterDate: string;
 }
 
-export interface NewPetRequest
+export interface NewPetPlantRequest
   extends Pick<
-    PetDetails,
+    PetPlantDetails,
     'nickname' | 'birthDate' | 'waterCycle' | 'location' | 'flowerpot' | 'light' | 'wind'
   > {
   dictionaryPlantId: DictionaryPlant['id'];
 }
 
-export interface PetCard
-  extends Pick<PetDetails, 'id' | 'nickname' | 'imageUrl' | 'birthDate' | 'daySince'> {
+export interface PetPlantCard
+  extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'birthDate' | 'daySince'> {
   dictionaryPlantName: DictionaryPlant['name'];
 }
 
-export type PetCardListResponse = DataResponse<PetCard[]>;
+export type PetPlantCardListResponse = DataResponse<PetPlantCard[]>;
