@@ -2,12 +2,11 @@ import { Link, generatePath } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
 import PetCard from 'components/PetCard';
 import { PetCardList, RegisterButton, Title, Wrapper } from './PetList.style';
-import usePetList from 'hooks/queries/pet/usePetList';
+import usePetPlantCardList from 'hooks/queries/pet/usePetPlantCardList';
 import { URL_PATH } from 'constants/index';
 
 const PetList = () => {
-  const { data: petList } = usePetList();
-
+  const { data: petPlantCardList } = usePetPlantCardList();
   return (
     <>
       <Wrapper>
@@ -16,9 +15,12 @@ const PetList = () => {
           <Link to={URL_PATH.petRegisterSearch}>
             <RegisterButton type="button">+</RegisterButton>
           </Link>
-          {petList?.map((pet) => (
-            <Link key={pet.id} to={generatePath(URL_PATH.petDetail, { id: String(pet.id) })}>
-              <PetCard pet={pet} />
+          {petPlantCardList?.map((petPlantCard) => (
+            <Link
+              key={petPlantCard.id}
+              to={generatePath(URL_PATH.petDetail, { id: String(petPlantCard.id) })}
+            >
+              <PetCard {...petPlantCard} />
             </Link>
           ))}
         </PetCardList>
@@ -27,4 +29,5 @@ const PetList = () => {
     </>
   );
 };
+
 export default PetList;

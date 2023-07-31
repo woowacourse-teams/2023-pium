@@ -13,7 +13,7 @@ import {
 
 type PetCardProps = PetPlantCard;
 
-const PetCard = ({ imageUrl, nickname, dictionaryPlantName, daySince }: PetCardProps) => (
+const PetCard = ({ imageUrl, nickname, daySince, dictionaryPlantName }: PetCardProps) => (
   <Wrapper>
     <ImageArea>
       <Image src={imageUrl} type="square" size="100%" />

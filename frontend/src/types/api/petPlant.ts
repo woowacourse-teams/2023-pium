@@ -27,7 +27,7 @@ export interface NewPetPlantRequest
 }
 
 export interface PetPlantCard
-  extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'birthDate' | 'daySince'> {
+  extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'daySince'> {
   dictionaryPlantName: DictionaryPlant['name'];
 }
 

@@ -2,7 +2,7 @@ import type { PetPlantCard, PetPlantCardListResponse } from 'types/api/petPlant'
 import { useQuery } from '@tanstack/react-query';
 import PetAPI, { PET } from 'apis/pet';
 
-const usePetList = () =>
+const usePetPlantCardList = () =>
   useQuery<PetPlantCardListResponse, Error, PetPlantCard[]>({
     queryKey: [PET, 'list'],
     queryFn: async () => {
@@ -14,4 +14,4 @@ const usePetList = () =>
     suspense: true,
   });
 
-export default usePetList;
+export default usePetPlantCardList;
