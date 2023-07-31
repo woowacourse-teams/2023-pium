@@ -1,5 +1,5 @@
 import type { PetListResponse, Pet } from 'types/api/petPlant';
-import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import PetAPI, { PET } from 'apis/pet';
 
 const usePetList = () =>
@@ -11,8 +11,6 @@ const usePetList = () =>
       return data;
     },
     select: ({ data }) => data,
-    placeholderData: keepPreviousData,
-    staleTime: Infinity,
     suspense: true,
   });
 
