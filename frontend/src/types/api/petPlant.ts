@@ -21,13 +21,20 @@ export interface PetPlantDetails {
 export interface NewPetPlantRequest
   extends Pick<
     PetPlantDetails,
-    'nickname' | 'birthDate' | 'waterCycle' | 'location' | 'flowerpot' | 'light' | 'wind'
+    | 'nickname'
+    | 'location'
+    | 'flowerpot'
+    | 'light'
+    | 'wind'
+    | 'birthDate'
+    | 'lastWaterDate'
+    | 'waterCycle'
   > {
   dictionaryPlantId: DictionaryPlant['id'];
 }
 
 export interface PetPlantCard
-  extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'daySince'> {
+  extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'birthDate' | 'daySince'> {
   dictionaryPlantName: DictionaryPlant['name'];
 }
 
