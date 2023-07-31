@@ -1,8 +1,8 @@
 import {
-  ChangeDateProps,
+  ChangeDateParams,
   ReminderExtendType,
   TodayStatus,
-  WaterPlantProps,
+  WaterPlantParams,
 } from 'types/api/reminder';
 import { ReminderContext } from 'contexts/reminderContext';
 import { useContext } from 'react';
@@ -40,7 +40,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
     //  changeDate에 대한 검증 실시. 변환하는 날이 오늘 다음날 보다 적다면 return
     if (changeDate < getParticularDateFromSpecificDay(1, new Date())) return;
 
-    const variables: ChangeDateProps = {
+    const variables: ChangeDateParams = {
       id: petPlantId,
       body: {
         nextWaterDate: changeDate,
@@ -54,7 +54,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
     // 물을 준 날이 이전에 줬던 날보다 이전이거나, 오늘 이후라면 return;
     if (waterDate < lastWaterDate || waterDate > today) return;
 
-    const variables: WaterPlantProps = {
+    const variables: WaterPlantParams = {
       id: petPlantId,
       body: {
         waterDate,

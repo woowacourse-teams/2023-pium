@@ -42,14 +42,14 @@ export interface ConvertReminderData {
   status: TodayStatus;
 }
 
-export interface WaterPlantProps {
+export interface WaterPlantParams {
   id: number;
   body: {
     waterDate: string;
   };
 }
 
-export interface ChangeDateProps {
+export interface ChangeDateParams {
   id: number;
   body: {
     nextWaterDate: string;

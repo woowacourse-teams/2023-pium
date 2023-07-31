@@ -1,9 +1,9 @@
-import { ChangeDateProps, WaterPlantProps } from 'types/api/reminder';
+import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
 import { createContext } from 'react';
 
 interface ReminderProps {
-  waterCallback: (variables: WaterPlantProps) => void;
-  changeDateCallback: (variables: ChangeDateProps) => void;
+  waterCallback: (variables: WaterPlantParams) => void;
+  changeDateCallback: (variables: ChangeDateParams) => void;
 }
 
 export type ReminderProviderProps = ReminderProps & React.PropsWithChildren;

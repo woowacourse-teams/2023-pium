@@ -1,4 +1,4 @@
-import { ChangeDateProps, WaterPlantProps } from 'types/api/reminder';
+import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
 import useChangeDate from './queries/reminder/useChangeDate';
 import useReminder from './queries/reminder/useReminder';
 import useWater from './queries/reminder/useWater';
@@ -21,9 +21,9 @@ const useReminderHooks = () => {
     },
   });
 
-  const waterMutate = (variables: WaterPlantProps) => water(variables);
+  const waterMutate = (variables: WaterPlantParams) => water(variables);
 
-  const changeDateMutate = (variables: ChangeDateProps) => changeDate(variables);
+  const changeDateMutate = (variables: ChangeDateParams) => changeDate(variables);
 
   return { reminderData, waterMutate, changeDateMutate };
 };
