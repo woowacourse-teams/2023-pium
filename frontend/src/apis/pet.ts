@@ -6,7 +6,10 @@ export const PET = `${BASE_URL}/pet-plants`;
 const getList = () => {
   return fetch(PET, {
     method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: 'pium@example.com',
+    },
   });
 };
 
