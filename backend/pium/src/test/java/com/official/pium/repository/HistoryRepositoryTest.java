@@ -41,22 +41,22 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .build();
         History history2 = History.builder()
                 .petPlant(petPlant)
-                .waterDate(LocalDate.now())
+                .waterDate(LocalDate.now().plusDays(1L))
                 .build();
 
         //when
         historyRepository.save(history1);
         historyRepository.save(history2);
-        Pageable pageable1 = PageRequest.of(0, 1);
+        Pageable pageable1 = PageRequest.of(0, 1, Sort.Direction.DESC, "waterDate");
         Page<History> histories1 = historyRepository.findAllByPetPlantId(petPlant.getId(), pageable1);
-        Pageable pageable2 = PageRequest.of(1, 1);
+        Pageable pageable2 = PageRequest.of(1, 1, Sort.Direction.DESC, "waterDate");
         Page<History> histories2 = historyRepository.findAllByPetPlantId(petPlant.getId(), pageable2);
 
         //then
         assertSoftly(
                 softly -> {
-                    softly.assertThat(histories1.getContent().get(0).getId()).isEqualTo(history1.getId());
-                    softly.assertThat(histories2.getContent().get(0).getId()).isEqualTo(history2.getId());
+                    softly.assertThat(histories1.getContent().get(0).getId()).isEqualTo(history2.getId());
+                    softly.assertThat(histories2.getContent().get(0).getId()).isEqualTo(history1.getId());
                     softly.assertThat(histories1.getTotalElements()).isEqualTo(2L);
                     softly.assertThat(histories2.getTotalElements()).isEqualTo(2L);
                     softly.assertThat(histories1.getTotalPages()).isEqualTo(2);

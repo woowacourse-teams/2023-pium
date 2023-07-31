@@ -26,7 +26,7 @@ public class HistoryService {
     private final HistoryRepository historyRepository;
     private final PetPlantRepository petPlantRepository;
 
-    public HistoryResponse read(Long petPlantId, Pageable pageable, Member member) {
+    public HistoryResponse read(Long petPlantId, HistoryPageRequest request, Member member) {
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("id에 해당하는 반려식물이 없습니다"));
 

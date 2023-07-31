@@ -1,6 +1,7 @@
 package com.official.pium.mapper;
 
 import com.official.pium.domain.History;
+import com.official.pium.service.dto.HistoryPageRequest;
 import com.official.pium.service.dto.HistoryResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,13 @@ public class HistoryMapper {
                 .elementSize(petPlantHistory.getTotalElements())
                 .hasNext(!petPlantHistory.isLast())
                 .waterDateList(waterDates)
+                .build();
+    }
+
+    public static HistoryPageRequest toHistoryPageRequest(Integer page, Integer size){
+        return HistoryPageRequest.builder()
+                .page(page)
+                .size(size)
                 .build();
     }
 }

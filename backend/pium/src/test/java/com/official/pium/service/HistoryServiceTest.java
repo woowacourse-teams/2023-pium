@@ -27,10 +27,10 @@ public class HistoryServiceTest extends IntegrationTest {
         historySupport.builder().petPlant(petPlant).build();
         historySupport.builder().petPlant(petPlant).build();
 
-        Pageable pageable1 = PageRequest.of(0, 2);
-        Pageable pageable2 = PageRequest.of(1, 2);
-        HistoryResponse historyResponse1 = historyService.read(petPlant.getId(), pageable1, petPlant.getMember());
-        HistoryResponse historyResponse2 = historyService.read(petPlant.getId(), pageable2, petPlant.getMember());
+        HistoryPageRequest historyPageRequest1 = HistoryMapper.toHistoryPageRequest(0, 2);
+        HistoryPageRequest historyPageRequest2 = HistoryMapper.toHistoryPageRequest(1, 2);
+        HistoryResponse historyResponse1 = historyService.read(petPlant.getId(), historyPageRequest1, petPlant.getMember());
+        HistoryResponse historyResponse2 = historyService.read(petPlant.getId(), historyPageRequest2, petPlant.getMember());
 
         SoftAssertions.assertSoftly(
                 softly -> {
@@ -49,7 +49,7 @@ public class HistoryServiceTest extends IntegrationTest {
     @Test
     void 반려식물_id에_해당하는_반려식물이_없으면_예외발생() {
         PetPlant petPlant = petPlantSupport.builder().build();
-        Pageable pageable = PageRequest.of(0, 2);
+        HistoryPageRequest historyPageRequest = HistoryMapper.toHistoryPageRequest(0, 2);
 
         assertThatThrownBy(
                 () -> historyService.read(2L, historyPageRequest, petPlant.getMember())
@@ -60,7 +60,7 @@ public class HistoryServiceTest extends IntegrationTest {
     @Test
     void 반려식물의_소유자와_파라미터의_멤버가_같지_않으면_예외발생() {
         PetPlant petPlant = petPlantSupport.builder().build();
-        Pageable pageable = PageRequest.of(0, 2);
+        HistoryPageRequest historyPageRequest = HistoryMapper.toHistoryPageRequest(0, 2);
 
         assertThatThrownBy(
                 () -> historyService.read(petPlant.getId(), historyPageRequest, memberSupport.builder().build())
@@ -74,10 +74,9 @@ public class HistoryServiceTest extends IntegrationTest {
         PetPlant petPlant = petPlantSupport.builder().build();
         historySupport.builder().petPlant(petPlant).build();
         historySupport.builder().petPlant(petPlant).build();
+        HistoryPageRequest historyPageRequest = HistoryMapper.toHistoryPageRequest(0, 2);
 
-        Pageable pageable = PageRequest.of(1, 1);
-
-        HistoryResponse historyResponse = historyService.read(petPlant.getId(), pageable, petPlant.getMember());
+        HistoryResponse historyResponse = historyService.read(petPlant.getId(), historyPageRequest, petPlant.getMember());
 
         assertThat(historyResponse.isHasNext()).isFalse();
     }
