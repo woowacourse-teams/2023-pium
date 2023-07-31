@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ToastProvider from 'contexts/toastContext';
-import useBoolean from 'hooks/useBoolean';
+import useBoolean from 'hooks/useModal';
 import useToast from 'hooks/useToast';
 import Toast from '.';
 import ToastList from './ToastList';
@@ -8,7 +8,7 @@ import ToastList from './ToastList';
 const meta: Meta<typeof Toast> = {
   component: Toast,
   render: (props) => {
-    const { boolean: isOpen, on } = useBoolean();
+    const { isOpen, on } = useBoolean();
 
     setTimeout(on);
 
