@@ -37,10 +37,10 @@ export const RegisterButton = styled.button`
   width: 160px;
   height: 224px;
 
-  font-size: 8rem;
-  line-height: 16px;
-  color: white;
+  font-size: 3.6rem;
+  color: ${(props) => props.theme.color.primary};
 
-  background: ${(props) => props.theme.color.primary + 'bb'};
+  background: ${(props) => props.theme.color.background};
+  border: solid 1px ${(props) => props.theme.color.primary};
   border-radius: 16px;
 `;
