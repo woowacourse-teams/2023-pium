@@ -62,9 +62,11 @@ const SearchBox = (props: SearchBoxProps) => {
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
         />
-        <EnterButton type="button" onClick={handleNextButtonClick}>
-          <ArrowRight width={32} height={32} color="#333333" />
-        </EnterButton>
+        {onNextClick && (
+          <EnterButton type="button" aria-label="이동하기" onClick={handleNextButtonClick}>
+            <ArrowRight width={32} height={32} color="#333333" />
+          </EnterButton>
+        )}
       </InputArea>
       {hasSearchResult &&
         (searchResults.length ? (

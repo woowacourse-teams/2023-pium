@@ -8,7 +8,8 @@
     "start": "webpack-dev-server --mode=development",
     "build": "NODE_ENV=production webpack",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build -o ./dist/storybook"
+    "build-storybook": "storybook build -o ./dist/storybook",
+    "cypress": "cypress open"
   },
   "license": "MIT",
   "dependencies": {
@@ -39,6 +40,7 @@
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
+    "cypress": "^12.17.2",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",
