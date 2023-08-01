@@ -1,5 +1,5 @@
 import type { ReminderResult } from 'types/api/reminder';
-import { getDaysBetweenDate, getParticularDateFromSpecificDay, getToday } from 'utils/date';
+import { getDaysBetween, getParticularDateFromSpecificDay, getToday } from 'utils/date';
 
 const KEY = 'MSW_REMINDER';
 
@@ -16,7 +16,7 @@ const water = (id: number, date: string) => {
     const { petPlantId } = data;
     if (id !== petPlantId) return data;
 
-    const betweenDate = getDaysBetweenDate(getToday(), date); // date에 물을 준거임... 다음 물주기는 언제가 될지 모름.
+    const betweenDate = getDaysBetween(getToday(), date); // date에 물을 준거임... 다음 물주기는 언제가 될지 모름.
     const ranNum = Math.ceil(Math.random() * 10);
 
     return {
@@ -37,7 +37,7 @@ const changeDate = (id: number, date: string) => {
     const { petPlantId } = data;
     if (id !== petPlantId) return data;
 
-    const betweenDate = getDaysBetweenDate(getToday(), date);
+    const betweenDate = getDaysBetween(getToday(), date);
 
     return {
       ...data,
