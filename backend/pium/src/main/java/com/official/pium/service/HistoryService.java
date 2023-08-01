@@ -30,7 +30,7 @@ public class HistoryService {
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("id에 해당하는 반려식물이 없습니다"));
 
-        if (!petPlant.hasSameMember(member)) {
+        if (petPlant.isNotOwnerOf(member)) {
             throw new IllegalArgumentException("다른 사용자의 반려식물을 조회할 수 없습니다");
         }
 

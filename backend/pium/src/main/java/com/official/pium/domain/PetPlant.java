@@ -173,10 +173,6 @@ public class PetPlant extends BaseEntity {
         return !Objects.equals(this.member, member);
     }
 
-    public boolean hasSameMember(Member member) {
-        return Objects.equals(this.member, member);
-    }
-
     @Override
     public final boolean equals(Object o) {
         if (this == o) {
@@ -203,5 +199,4 @@ public class PetPlant extends BaseEntity {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer()
                 .getPersistentClass().hashCode() : getClass().hashCode();
     }
-
 }
