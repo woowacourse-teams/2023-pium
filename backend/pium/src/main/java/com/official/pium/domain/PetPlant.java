@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.proxy.HibernateProxy;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -78,7 +79,9 @@ public class PetPlant extends BaseEntity {
     private Integer waterCycle;
 
     @Builder
-    private PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location, String flowerpot, String light, String wind, @NotNull LocalDate birthDate, @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
+    private PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location,
+                     String flowerpot, String light, String wind, @NotNull LocalDate birthDate,
+                     @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
         this.dictionaryPlant = dictionaryPlant;
         this.member = member;
         this.nickname = nickname;
@@ -101,9 +104,7 @@ public class PetPlant extends BaseEntity {
     }
 
     /**
-     * - 0 : 오늘 할 일
-     * - 음수 : 할 일
-     * - 양수 : 지각
+     * - 0 : 오늘 할 일 - 음수 : 할 일 - 양수 : 지각
      */
     public Long calculateDDay(LocalDate currentDate) {
         return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
@@ -149,7 +150,58 @@ public class PetPlant extends BaseEntity {
         }
     }
 
+    public void water(LocalDate newWaterDate) {
+        if (newWaterDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("오늘 이후 날짜에 물을 줄 수는 없습니다. date: " + newWaterDate);
+        }
+
+        if (newWaterDate.isEqual(lastWaterDate) || newWaterDate.isBefore(lastWaterDate)) {
+            throw new IllegalArgumentException("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다. date: " + newWaterDate);
+        }
+        this.nextWaterDate = newWaterDate.plusDays(waterCycle);
+        this.lastWaterDate = newWaterDate;
+    }
+
+    public void changeNextWaterDate(LocalDate newWaterDate) {
+        if (newWaterDate.isEqual(LocalDate.now()) || newWaterDate.isBefore(LocalDate.now())) {
+            throw new IllegalArgumentException("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다. date: " + newWaterDate);
+        }
+        this.nextWaterDate = newWaterDate;
+    }
+
+    public boolean isNotOwnerOf(Member member) {
+        return !Objects.equals(this.member, member);
+    }
+
     public boolean hasSameMember(Member member) {
         return Objects.equals(this.member, member);
     }
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
+        Class<?> oEffectiveClass =
+                o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass()
+                        : o.getClass();
+        Class<?> thisEffectiveClass =
+                this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer()
+                        .getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) {
+            return false;
+        }
+        PetPlant petPlant = (PetPlant) o;
+        return getId() != null && Objects.equals(getId(), petPlant.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer()
+                .getPersistentClass().hashCode() : getClass().hashCode();
+    }
+
 }

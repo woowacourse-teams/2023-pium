@@ -8,9 +8,10 @@ import com.official.pium.fixture.MemberFixture;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
-import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
@@ -52,7 +53,7 @@ public class PetPlantSupport {
                             .wind("testWind")
                             .birthDate(LocalDate.now())
                             .nextWaterDate(LocalDate.now())
-                            .lastWaterDate(LocalDate.now())
+                            .lastWaterDate(LocalDate.now().minusDays(1))
                             .waterCycle(3)
                             .build()
             );
