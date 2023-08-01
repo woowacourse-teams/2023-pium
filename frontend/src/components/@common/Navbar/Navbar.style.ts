@@ -30,7 +30,8 @@ export const NavItemArea = styled.div<{ $active?: boolean }>`
   width: 64px;
   height: 100%;
 
-  border-top: solid 2px ${({ $active, theme }) => ($active ? theme.color.primary : 'transparent')};
+  border-top: solid 2px
+    ${({ $active, theme: { color } }) => ($active ? color.primary : 'transparent')};
   border-bottom: solid 2px transparent;
 `;
 
@@ -47,5 +48,5 @@ export const NavItem = styled.div`
 export const NavLabel = styled.p<{ $active?: boolean }>`
   font-size: 1rem;
   font-weight: 700;
-  color: ${({ $active, theme: { color } }) => ($active ? color.primary : color.sub)};
+  color: ${({ $active, theme: { color } }) => ($active ? '#008929' : color.sub)};
 `;
