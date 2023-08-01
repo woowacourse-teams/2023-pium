@@ -32,7 +32,7 @@ const SUB_FIX = {
 const convertSubFix = (status: TodayStatus) => SUB_FIX[status];
 
 const ReminderCard = ({ data }: ReminderCardProps) => {
-  const { petPlantId, status, image, nickName, dictionaryPlantName, dDay, lastWaterDate } = data;
+  const { petPlantId, status, image, nickName, dictionaryPlantName, dday, lastWaterDate } = data;
   const context = useContext(ReminderContext);
   const today = getToday();
 
@@ -71,7 +71,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
         <NickName>{nickName}</NickName>
         <DictionaryPlantName>{dictionaryPlantName}</DictionaryPlantName>
         <Alert status={status}>
-          {status === 'today' ? convertSubFix(status) : `${Math.abs(dDay)}${convertSubFix(status)}`}
+          {status === 'today' ? convertSubFix(status) : `${Math.abs(dday)}${convertSubFix(status)}`}
         </Alert>
       </ContentBox>
       <ActionBox>

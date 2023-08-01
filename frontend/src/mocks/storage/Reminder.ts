@@ -22,7 +22,7 @@ const water = (id: number, date: string) => {
     return {
       ...data,
       nextWaterDate: getParticularDateFromSpecificDay(betweenDate + ranNum),
-      dDay: -(betweenDate + ranNum),
+      dday: -(betweenDate + ranNum),
     };
   });
 
@@ -42,7 +42,7 @@ const changeDate = (id: number, date: string) => {
     return {
       ...data,
       nextWaterDate: date,
-      dDay: -betweenDate,
+      dday: -betweenDate,
     };
   });
 

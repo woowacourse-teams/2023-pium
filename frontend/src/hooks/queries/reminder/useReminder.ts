@@ -18,7 +18,7 @@ const convertReminderData = (result: ReminderResult): ConvertReminderData => {
   const convertedData: MonthKeyReminderType = data.reduce((acc, cur) => {
     const [, month, date] = cur.nextWaterDate.split('-') as [string, Month, string];
 
-    const status: TodayStatus = cur.dDay === 0 ? 'today' : cur.dDay > 0 ? 'late' : 'future';
+    const status: TodayStatus = cur.dday === 0 ? 'today' : cur.dday > 0 ? 'late' : 'future';
 
     const convertData: ReminderExtendType = {
       ...cur,
@@ -38,9 +38,9 @@ const convertReminderData = (result: ReminderResult): ConvertReminderData => {
     };
   }, initialData);
 
-  const status = data.every(({ dDay }) => dDay < 0)
+  const status = data.every(({ dday }) => dday < 0)
     ? 'future'
-    : data.find(({ dDay }) => dDay > 0)
+    : data.find(({ dday }) => dday > 0)
     ? 'late'
     : 'today';
 

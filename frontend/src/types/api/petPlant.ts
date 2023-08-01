@@ -13,7 +13,7 @@ export interface PetPlantDetails {
   birthDate: string;
   lastWaterDate: string;
   waterCycle: number;
-  dDay: number;
+  dday: number;
   daySince: number;
   nextWaterDate: string;
 }
