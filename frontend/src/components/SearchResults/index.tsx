@@ -1,5 +1,5 @@
 import SearchResultItem from 'components/SearchResultItem';
-import { Title, ResultArea, Wrapper } from './SearchResults.style';
+import { Title, ResultList, Wrapper } from './SearchResults.style';
 import useDictSearch from 'hooks/queries/dictionary/useDictSearch';
 
 interface SearchResultsProps {
@@ -26,18 +26,30 @@ const SearchResults = (props: SearchResultsProps) => {
   return (
     <Wrapper>
       {samePlant && (
-        <ResultArea>
+        <>
           <Title>완전 똑같은 식물!!</Title>
-          <SearchResultItem id={samePlant.id} imageUrl={samePlant.image} name={samePlant.name} />
-        </ResultArea>
+          <ResultList>
+            <li>
+              <SearchResultItem
+                id={samePlant.id}
+                imageUrl={samePlant.image}
+                name={samePlant.name}
+              />
+            </li>
+          </ResultList>
+        </>
       )}
       {!!similarPlants?.length && (
-        <ResultArea>
+        <>
           <Title>비슷한 이름을 가진 식물</Title>
-          {similarPlants.map(({ id, name, image }) => (
-            <SearchResultItem key={id} id={id} name={name} imageUrl={image} />
-          ))}
-        </ResultArea>
+          <ResultList>
+            {similarPlants.map(({ id, name, image }) => (
+              <li key={id}>
+                <SearchResultItem id={id} name={name} imageUrl={image} />
+              </li>
+            ))}
+          </ResultList>
+        </>
       )}
     </Wrapper>
   );
