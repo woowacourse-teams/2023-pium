@@ -2,13 +2,11 @@ package com.official.pium.service.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDate;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.PastOrPresent;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import java.time.LocalDate;
 
 @Getter
 @Builder
@@ -38,10 +36,12 @@ public class PetPlantCreateRequest {
     private String wind;
 
     @NotNull
+    @PastOrPresent(message = "과거 또는 현재의 날짜여야 합니다. birthDate: ${validatedValue}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @NotNull
+    @PastOrPresent(message = "과거 또는 현재의 날짜여야 합니다. lastWaterDate: ${validatedValue}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
 }
