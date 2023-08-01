@@ -18,6 +18,7 @@ declare module 'styled-components' {
       input: string;
       dictTitle: string;
       dictContent: string;
+      reminderCardContent: string;
     };
     width: {
       mobile: string;
