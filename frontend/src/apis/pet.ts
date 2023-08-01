@@ -8,7 +8,7 @@ const getList = () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'pium@example.com',
+      Authorization: 'pium@gmail.com',
     },
   });
 };
@@ -18,7 +18,7 @@ const postForm = (form: NewPetPlantRequest) => {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'pium@example.com',
+      Authorization: 'pium@gmail.com',
     },
     body: JSON.stringify({ ...form }),
   });
