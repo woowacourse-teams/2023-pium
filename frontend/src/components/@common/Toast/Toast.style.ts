@@ -11,7 +11,7 @@ const show = keyframes`
 `;
 
 const hide = keyframes`
- 0% {
+  0% {
     opacity: 1;
     transform: translateY(0);
   }

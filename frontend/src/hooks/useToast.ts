@@ -4,11 +4,9 @@ import { ToastType } from 'components/@common/Toast';
 import { ERROR } from 'constants/index';
 
 /**
- *
  * toast를 추가, 리스트를 반환하는 hooks
  * @returns {addToast, toastList}
  */
-
 const useToast = () => {
   const context = useContext(ToastContext);
 
