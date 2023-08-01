@@ -49,7 +49,7 @@ public class PetPlantFixture {
                 .lastWaterDate(LocalDate.now())
                 .build();
 
-        public static PetPlantCreateRequest 반려_식물_등록_요청(Long dictionaryPlantId) {
+        public static PetPlantCreateRequest generatePetPlantCreateRequest(Long dictionaryPlantId) {
             return PetPlantCreateRequest.builder()
                     .dictionaryPlantId(dictionaryPlantId)
                     .nickname("피우미")

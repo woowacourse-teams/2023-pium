@@ -41,7 +41,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 존재하지_않는_사용자라면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            PetPlantCreateRequest request = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
+            PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
 
             GlobalExceptionResponse response = RestAssured
                     .given()
@@ -63,7 +63,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 등록된_반려_식물_ID_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            PetPlantCreateRequest request = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
+            PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
 
@@ -187,7 +187,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 반려_식물_정보_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            PetPlantCreateRequest request = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
+            PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
 
@@ -262,8 +262,8 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 반려_식물_목록_정보_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            PetPlantCreateRequest request = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
-            PetPlantCreateRequest request2 = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
+            PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
+            PetPlantCreateRequest request2 = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
             Long 반려_식물2_ID = 반려_식물_등록_요청(request2);
