@@ -13,12 +13,14 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HistoryMapper {
 
+    private static final int ADJUST_PAGE_VALUE = 1;
+
     public static HistoryResponse toHistoryResponse(Page<History> petPlantHistory) {
         List<LocalDate> waterDates = petPlantHistory
                 .map(History::getWaterDate)
                 .toList();
 
-        int currentPage = petPlantHistory.getPageable().getPageNumber() + 1;
+        int currentPage = petPlantHistory.getPageable().getPageNumber() + ADJUST_PAGE_VALUE;
 
         return HistoryResponse.builder()
                 .page(currentPage)
@@ -29,7 +31,7 @@ public class HistoryMapper {
                 .build();
     }
 
-    public static HistoryPageRequest toHistoryPageRequest(Integer page, Integer size){
+    public static HistoryPageRequest toHistoryPageRequest(Integer page, Integer size) {
         return HistoryPageRequest.builder()
                 .page(page)
                 .size(size)
