@@ -41,14 +41,16 @@ public class PetPlantService {
         return PetPlantMapper.toPetPlantResponse(petPlant, dDay, daySince);
     }
 
-    public PetPlantResponse read(Long id) {
+    public PetPlantResponse read(Long id, Member member) {
         PetPlant petPlant = petPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
 
-        Long dDay = petPlant.calculateDDay(LocalDate.now());
+        checkOwner(petPlant, member);
+
+        Long dday = petPlant.calculateDDay(LocalDate.now());
         Long daySince = petPlant.calculateDaySince(LocalDate.now());
 
-        return PetPlantMapper.toPetPlantResponse(petPlant, dDay, daySince);
+        return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 
     public DataResponse<List<SinglePetPlantResponse>> readAll(Member member) {
@@ -63,9 +65,11 @@ public class PetPlantService {
     }
 
     @Transactional
-    public void update(Long id, PetPlantUpdateRequest updateRequest) {
+    public void update(Long id, PetPlantUpdateRequest updateRequest, Member member) {
         PetPlant petPlant = petPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
+
+        checkOwner(petPlant, member);
 
         petPlant.updatePetPlant(
                 updateRequest.getNickname(), updateRequest.getLocation(),
@@ -73,5 +77,11 @@ public class PetPlantService {
                 updateRequest.getWind(), updateRequest.getWaterCycle(),
                 updateRequest.getBirthDate(), updateRequest.getLastWaterDate()
         );
+    }
+
+    private void checkOwner(PetPlant petPlant, Member member) {
+        if (petPlant.isNotOwnerOf(member)) {
+            throw new IllegalArgumentException("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + member.getId());
+        }
     }
 }

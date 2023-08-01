@@ -140,7 +140,7 @@ public class PetPlant extends BaseEntity {
     }
 
     private void validateEmptyValue(String value) {
-        if (Objects.isNull(value) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + value);
         }
     }
