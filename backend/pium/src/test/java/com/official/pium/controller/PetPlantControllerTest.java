@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.containsString;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,7 +18,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
+import com.official.pium.domain.Member;
 import com.official.pium.service.PetPlantService;
+import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import java.nio.charset.StandardCharsets;
@@ -50,28 +53,34 @@ class PetPlantControllerTest extends UITest {
     private ObjectMapper objectMapper;
 
     @Nested
-    class 반려_식물_ {
+    class 반려_식물_등록_ {
 
         @Test
-        void 등록하면_201을_반환() throws Exception {
+        void 정상_요청시_201을_반환() throws Exception {
             PetPlantResponse response = RESPONSE.피우미_응답;
-            given(petPlantService.create(any(), any()))
+            given(petPlantService.create(any(PetPlantCreateRequest.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(post("/pet-plants")
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(피우미_등록_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
                     .andDo(print());
         }
+    }
+
+    @Nested
+    class 반려_식물_조회_ {
 
         @Test
-        void 조회하면_200을_반환() throws Exception {
-            given(petPlantService.read(anyLong()))
+        void 정상_요청시_200을_반환() throws Exception {
+            given(petPlantService.read(anyLong(), any(Member.class)))
                     .willReturn(RESPONSE.피우미_응답);
 
             mockMvc.perform(get("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isOk())
@@ -81,19 +90,52 @@ class PetPlantControllerTest extends UITest {
         @Test
         void 잘못된_ID로_조회하면_400을_반환() throws Exception {
             mockMvc.perform(get("/pet-plants/{id}", -1L)
+                            .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
                     .andDo(print());
         }
+    }
+
+    @Nested
+    class 반려_식물_전체_조회_ {
 
         @Test
-        void 전체_조회하면_200을_반환() throws Exception {
-            given(petPlantService.readAll(any()))
+        void 정상_요청시_200을_반환() throws Exception {
+            given(petPlantService.readAll(any(Member.class)))
                     .willReturn(RESPONSE.식물_전체조회_응답);
 
-            mockMvc.perform(get("/pet-plants"))
+            mockMvc.perform(get("/pet-plants")
+                            .header("Authorization", "pium@gmail.com"))
+                    .andExpect(status().isOk())
+                    .andDo(print());
+        }
+    }
+
+    @Nested
+    class 반려_식물_수정_ {
+
+        @Test
+        void 정상_요청시_200_반환() throws Exception {
+            PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
+                    .nickname("피우미 2")
+                    .location("침대 옆")
+                    .flowerpot("유리병")
+                    .waterCycle(10)
+                    .light("빛 많이 필요함")
+                    .wind("바람이 잘 통하는 곳")
+                    .birthDate(LocalDate.now())
+                    .lastWaterDate(LocalDate.now())
+                    .build();
+            willDoNothing().given(petPlantService)
+                    .update(anyLong(), any(PetPlantUpdateRequest.class), any(Member.class));
+
+            mockMvc.perform(patch("/pet-plants/" + 1L)
+                            .header("Authorization", "pium@gmail.com")
+                            .content(objectMapper.writeValueAsString(updateRequest))
+                            .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -103,6 +145,7 @@ class PetPlantControllerTest extends UITest {
             Long wrongId = -1L;
 
             mockMvc.perform(patch("/pet-plants/{id}", wrongId)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(피우미_수정_요청))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -128,6 +171,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -152,6 +196,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -177,6 +222,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -200,6 +246,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -223,6 +270,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -248,6 +296,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -273,6 +322,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -296,6 +346,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -319,6 +370,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
