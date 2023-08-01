@@ -154,14 +154,42 @@ class ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 리마인더_전체_조회() {
+        PetPlant petPlant1 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(1));
+        PetPlant petPlant2 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(2));
+        PetPlant petPlant3 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(3));
+        PetPlant petPlant4 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(4));
+
         DataResponse<List<ReminderResponse>> actual = reminderService.readAll(petPlant.getMember());
 
+
         List<ReminderResponse> expected = List.of(
-                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDDay(LocalDate.now())));
+                PetPlantMapper.toReminderResponse(petPlant4, petPlant4.calculateDDay(LocalDate.now())),
+                PetPlantMapper.toReminderResponse(petPlant3, petPlant3.calculateDDay(LocalDate.now())),
+                PetPlantMapper.toReminderResponse(petPlant2, petPlant2.calculateDDay(LocalDate.now())),
+                PetPlantMapper.toReminderResponse(petPlant1, petPlant1.calculateDDay(LocalDate.now())),
+                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDDay(LocalDate.now()))
+        );
 
         assertThat(actual.getData())
-                .hasSize(1)
+                .hasSize(expected.size())
                 .usingRecursiveComparison()
                 .isEqualTo(expected);
+    }
+
+    private PetPlant savePetPlantWithNextWaterDate(LocalDate nextWaterDate) {
+        return petPlantRepository.save(PetPlant.builder()
+                .dictionaryPlant(petPlant.getDictionaryPlant())
+                .member(member)
+                .nickname("testNickName")
+                .imageUrl("testImageUrl")
+                .location("testLocation")
+                .flowerpot("testFlowerpot")
+                .light("testLight")
+                .wind("testWind")
+                .birthDate(LocalDate.now())
+                .nextWaterDate(nextWaterDate)
+                .lastWaterDate(LocalDate.now().minusDays(1))
+                .waterCycle(3)
+                .build());
     }
 }
