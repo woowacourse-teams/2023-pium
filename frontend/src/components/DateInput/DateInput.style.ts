@@ -16,8 +16,11 @@ export const DateValue = styled.label<{
 
   display: inline-block;
 
+  width: 100%;
+
   font: 500 1.8rem/2.2rem 'NanumSquareRound';
   color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.gray : 'black')};
+  text-align: center;
 `;
 
 export const Date = styled.input.attrs({ type: 'date' })`
