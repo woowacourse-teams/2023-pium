@@ -5,15 +5,13 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.exception.dto.GlobalExceptionResponse;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.SinglePetPlantResponse;
+import com.official.pium.service.dto.*;
 import com.official.pium.support.DictionaryPlantSupport;
 import com.official.pium.support.PetPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import org.assertj.core.api.Assertions;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -308,6 +306,124 @@ public class PetPlantApiTest extends AcceptanceTest {
 
             Assertions.assertThat(data)
                     .isEmpty();
+        }
+    }
+
+    @Nested
+    class 반려_식물_수정_시_ {
+
+        @Test
+        void 존재하지_않는_사용자라면_400_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlant petPlant = petPlantSupport.builder()
+                    .dictionaryPlant(dictionaryPlant)
+                    .build();
+
+            RestAssured
+                    .given()
+                    .log().all()
+                    .header("Authorization", "invalidMember")
+                    .when()
+                    .patch("/pet-plants/{id}", petPlant.getId())
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
+        }
+
+        @Test
+        void 본인의_반려_식물이_아니라면_403_반환() {
+            Member other = memberSupport.builder()
+                    .email("otherMember@gmail.com")
+                    .build();
+
+            PetPlant petPlant = petPlantSupport.builder().build();
+
+            RestAssured
+                    .given()
+                    .log().all()
+                    .header("Authorization", other.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", petPlant.getId())
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.FORBIDDEN.value());
+        }
+
+        @Test
+        void 수정_요청_정보로_업데이트() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlant petPlant = petPlantSupport.builder()
+                    .dictionaryPlant(dictionaryPlant)
+                    .build();
+
+            PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+
+            RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", petPlant.getId())
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.OK.value());
+
+            PetPlantResponse response = 반려_식물_단건_조회(petPlant.getId());
+
+            SoftAssertions.assertSoftly(softly -> {
+                softly.assertThat(response.getNickname()).isEqualTo(request.getNickname());
+                softly.assertThat(response.getFlowerpot()).isEqualTo(request.getFlowerpot());
+                softly.assertThat(response.getLocation()).isEqualTo(request.getLocation());
+                softly.assertThat(response.getWaterCycle()).isEqualTo(request.getWaterCycle());
+                softly.assertThat(response.getLight()).isEqualTo(request.getLight());
+                softly.assertThat(response.getWind()).isEqualTo(request.getWind());
+                softly.assertThat(response.getBirthDate()).isEqualTo(request.getBirthDate());
+                softly.assertThat(response.getLastWaterDate()).isEqualTo(request.getLastWaterDate());
+            });
+        }
+
+        @Test
+        void 존재하지_않는_반려_식물이라면_404_반환() {
+            PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+
+            GlobalExceptionResponse response = RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", 1)
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .extract().as(GlobalExceptionResponse.class);
+
+            assertThat(response.getMessage())
+                    .contains("일치하는 반려 식물이 존재하지 않습니다.");
+        }
+
+        @Test
+        void 잘못된_반려_식물_ID_라면_400_반환() {
+            PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+
+            GlobalExceptionResponse response = RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", -1)
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .extract().as(GlobalExceptionResponse.class);
+
+            assertThat(response.getMessage())
+                    .contains("반려 식물 ID는 1이상의 값이어야 합니다.");
         }
     }
 
