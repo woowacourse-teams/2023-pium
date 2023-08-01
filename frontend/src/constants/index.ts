@@ -9,6 +9,7 @@ export const URL_PATH = {
   dictDetail: '/dict/:id',
   petList: '/pet',
   petDetail: '/pet/:id',
+  petEdit: '/pet/:id/edit',
   petRegisterSearch: '/pet/register',
   petRegisterForm: '/pet/register/:id',
   calendar: '/calendar',
@@ -63,4 +64,5 @@ export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
 export const NUMBER = {
   maxCycleDate: 365,
   minCycleDate: 1,
+  maxNicknameLength: 30,
 } as const;

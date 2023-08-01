@@ -1,5 +1,5 @@
 import type { PetPlantDetails } from 'types/api/petPlant';
-import { generatePath } from 'react-router-dom';
+import { generatePath, useNavigate } from 'react-router-dom';
 import Crown from 'components/@common/Icons/Crown';
 import Dictionary from 'components/@common/Icons/Dictionary';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
@@ -24,6 +24,7 @@ import {
   StyledLink,
   EnvironmentTitle,
   EnvironmentItem,
+  EditButton,
 } from './PetDetails.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
@@ -35,6 +36,7 @@ interface PetDetailsProps {
 
 const PetDetails = ({ petPlantId }: PetDetailsProps) => {
   const { data: petPlantDetails } = usePetPlantDetails(petPlantId);
+  const navigate = useNavigate();
 
   if (!petPlantDetails) return null;
 
@@ -59,6 +61,10 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
 
   const daysBetweenLastWaterDate = getDaysBetween(Date.now(), lastWaterDate);
   const daysBetweenNextWaterDate = getDaysBetween(Date.now(), nextWaterDate);
+
+  const goToEditPage = () => {
+    navigate(generatePath(URL_PATH.petEdit, { id: petPlantId.toString() }));
+  };
 
   return (
     <Wrapper>
@@ -155,6 +161,9 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
             {wind}
           </EnvironmentItem>
         </Environment>
+        <EditButton type="button" onClick={goToEditPage}>
+          정보 수정하기
+        </EditButton>
       </Content>
     </Wrapper>
   );
