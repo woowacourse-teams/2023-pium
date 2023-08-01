@@ -9,6 +9,7 @@ type PetPlantFormAction =
       type: 'SET';
       key: keyof Omit<PetPlantForm, 'waterCycle'>;
       value: string;
+      maxLength?: number;
     }
   | {
       type: 'SET_NUMBER_INPUT';
@@ -35,7 +36,9 @@ const initialPetPlantForm: PetPlantForm = {
 const petPlantFormReducer = (petPlantForm: PetPlantForm, action: PetPlantFormAction) => {
   switch (action.type) {
     case 'SET': {
-      return { ...petPlantForm, [action.key]: action.value };
+      const { maxLength = Infinity } = action;
+
+      return { ...petPlantForm, [action.key]: action.value.slice(0, maxLength) };
     }
     case 'SET_NUMBER_INPUT': {
       if (action.value === '') {

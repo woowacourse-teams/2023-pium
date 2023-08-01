@@ -89,7 +89,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   };
 
   const setNickname: React.ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
-    dispatch({ type: 'SET', key: 'nickname', value });
+    dispatch({ type: 'SET', key: 'nickname', maxLength: NUMBER.maxNicknameLength, value });
   };
 
   const setBirthDate = (value: string) => {

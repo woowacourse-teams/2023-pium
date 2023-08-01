@@ -37,7 +37,7 @@ const PetRegisterForm = () => {
   const today = getToday();
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'SET', key: 'nickname', value });
+    dispatch({ type: 'SET', key: 'nickname', maxLength: NUMBER.maxNicknameLength, value });
   };
 
   const validateNickname = () => {
