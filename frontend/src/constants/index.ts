@@ -22,6 +22,7 @@ export const MESSAGE = {
 export const ERROR = {
   radioContext: '컴포넌트가 RadioProvider의 자손이 아닙니다!',
   stackContext: '컴포넌트가 StackProvider의 자손이 아닙니다!',
+  toastContext: '컴포넌트가 ToastProvider의 자손이 아닙니다!',
 } as const;
 
 export const GUIDE = {

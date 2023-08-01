@@ -19,7 +19,9 @@
       "utils/*": ["utils/*"],
       "assets/*": ["assets/*"],
       "constants/*": ["constants/*"]
-    }
+    },
+
+    "types": ["cypress"]
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "cypress/**/*"]
 }

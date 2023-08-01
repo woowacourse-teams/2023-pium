@@ -1,0 +1,64 @@
+name: Frontend E2E Test
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+    paths:
+      - frontend/**
+  pull_request:
+    branches:
+      - develop
+      - main
+    paths:
+      - frontend/**
+
+defaults:
+  run:
+    working-directory: frontend
+
+permissions:
+  checks: write
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up repository
+        uses: actions/checkout@v3
+
+      - name : Set up Node 18.16.0 
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.16.0
+          
+      - name: Cache node_modules
+        id: cache
+        uses: actions/cache@v3
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: | 
+            ${{ runner.os }}-node-
+          
+      - name: Install dependencies
+        run: npm ci
+        if: steps.cache.outputs.cache-hit != 'true'
+
+      - name: Run Cypress
+        uses: cypress-io/github-action@v5
+        with:
+          working-directory: frontend
+          start: npm run start
+
+      - name: Send slack notification if test failed
+        if: ${{ failure() }}
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          author_name: E2E 테스트 실패
+          fields: workflow, job, pullRequest, author, action, eventName, took, commit
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL_FRONTEND }}
+

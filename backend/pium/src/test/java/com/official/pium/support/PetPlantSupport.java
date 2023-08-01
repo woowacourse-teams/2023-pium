@@ -1,22 +1,22 @@
 package com.official.pium.support;
 
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.Member;
-import com.official.pium.domain.PetPlant;
-import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.repository.MemberRepository;
-import com.official.pium.repository.PetPlantRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
-
 import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
 import static com.official.pium.fixture.MemberFixture.주노;
 
+import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.Member;
+import com.official.pium.domain.PetPlant;
+import com.official.pium.fixture.DictionaryPlantFixture;
+import com.official.pium.fixture.MemberFixture;
+import com.official.pium.repository.DictionaryPlantRepository;
+import com.official.pium.repository.MemberRepository;
+import com.official.pium.repository.PetPlantRepository;
+import java.time.LocalDate;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
 @Component
 @RequiredArgsConstructor
-@SuppressWarnings("NonAsciiCharacters")
 public class PetPlantSupport {
 
     private final MemberRepository memberRepository;
@@ -45,8 +45,8 @@ public class PetPlantSupport {
         public PetPlant build() {
             return petPlantRepository.save(
                     PetPlant.builder()
-                            .dictionaryPlant(dictionaryPlant == null ? dictionaryPlantRepository.save(스투키) : dictionaryPlant)
-                            .member(member == null ? memberRepository.save(주노) : member)
+                            .dictionaryPlant(dictionaryPlant == null ? dictionaryPlantRepository.save(DictionaryPlantFixture.generateDictionaryPlant()) : dictionaryPlant)
+                            .member(member == null ? memberRepository.save(MemberFixture.generateMember()) : member)
                             .nickname("testNickName")
                             .imageUrl("testImageUrl")
                             .location("testLocation")
@@ -55,7 +55,7 @@ public class PetPlantSupport {
                             .wind("testWind")
                             .birthDate(LocalDate.now())
                             .nextWaterDate(LocalDate.now())
-                            .lastWaterDate(LocalDate.now())
+                            .lastWaterDate(LocalDate.now().minusDays(1))
                             .waterCycle(3)
                             .build()
             );
