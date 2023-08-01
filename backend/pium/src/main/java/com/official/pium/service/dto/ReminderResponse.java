@@ -14,15 +14,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ReminderResponse {
 
-	private Long petPlantId;
-	private String image;
-	private String nickName;
-	private String dictionaryPlantName;
-	private Long dDay;
+    private Long petPlantId;
+    private String image;
+    private String nickName;
+    private String dictionaryPlantName;
+    private Long dDay;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate nextWaterDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate nextWaterDate;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private LocalDate lastWaterDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate lastWaterDate;
 }
