@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import com.official.pium.fixture.MemberFixture;
 import com.official.pium.fixture.PetPlantFixture;
 import java.time.LocalDate;
 import java.util.List;
@@ -310,5 +311,43 @@ class PetPlantTest {
         assertThatThrownBy(() -> 산세베리아.water(LocalDate.of(year, month, day)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다.");
+    }
+
+    @Test
+    void 반려_식물의_주인이면_false_반환() {
+        PetPlant 산세베리아 = PetPlant.builder()
+                .member(MemberFixture.주노)
+                .nickname("크론")
+                .imageUrl("https://image2.com")
+                .light("자연광이 잘 드는 곳")
+                .location("거실")
+                .wind("바람 솔솔")
+                .flowerpot("정보 없음")
+                .waterCycle(7)
+                .birthDate(LocalDate.of(2022, 7, 1))
+                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                .nextWaterDate(LocalDate.now().minusDays(3))
+                .build();
+
+        assertThat(산세베리아.isNotOwnerOf(MemberFixture.주노)).isFalse();
+    }
+
+    @Test
+    void 반려_식물의_주인이_아니면_true_반환() {
+        PetPlant 산세베리아 = PetPlant.builder()
+                .member(MemberFixture.주노)
+                .nickname("크론")
+                .imageUrl("https://image2.com")
+                .light("자연광이 잘 드는 곳")
+                .location("거실")
+                .wind("바람 솔솔")
+                .flowerpot("정보 없음")
+                .waterCycle(7)
+                .birthDate(LocalDate.of(2022, 7, 1))
+                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                .nextWaterDate(LocalDate.now().minusDays(3))
+                .build();
+
+        assertThat(산세베리아.isNotOwnerOf(MemberFixture.그레이)).isTrue();
     }
 }
