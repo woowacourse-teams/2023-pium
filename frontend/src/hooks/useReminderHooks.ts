@@ -2,22 +2,28 @@ import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
 import useChangeDate from './queries/reminder/useChangeDate';
 import useReminder from './queries/reminder/useReminder';
 import useWater from './queries/reminder/useWater';
+import useToast from './useToast';
 
 const useReminderHooks = () => {
   const { data: reminderData, refetch } = useReminder({ queryKey: ['reminder'] });
-
+  const { addToast } = useToast();
   const { mutate: water } = useWater<string>({
     successCallback: () => {
       refetch();
+      addToast('success', '성공했습니다');
     },
     errorCallback: (error) => {
-      console.log(error, 'error occurs');
+      addToast('error', error.message);
     },
   });
+
   const { mutate: changeDate } = useChangeDate<string>({
-    successCallback: () => refetch(),
+    successCallback: () => {
+      refetch();
+      addToast('success', '성공했습니다');
+    },
     errorCallback: (error) => {
-      console.log(error, 'error occurs');
+      addToast('error', error.message);
     },
   });
 
