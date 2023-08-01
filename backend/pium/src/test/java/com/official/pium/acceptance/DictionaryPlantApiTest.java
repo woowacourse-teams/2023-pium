@@ -2,10 +2,10 @@ package com.official.pium.acceptance;
 
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.support.DictionaryPlantSupport;
 import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -34,79 +33,78 @@ class DictionaryPlantApiTest extends AcceptanceTest {
         @Test
         void 사전_식물_상세정보_조회_시_사전_식물_정보_반환() {
 
-            DictionaryPlant REQUEST = dictionaryPlantSupport.builder().build();
+            DictionaryPlant request = dictionaryPlantSupport.builder().build();
 
-            DictionaryPlantResponse RESPONSE = RestAssured
+            ExtractableResponse<Response> response = RestAssured
                     .given().log().all()
                     .when()
-                    .get("/dictionary-plants/{id}", REQUEST.getId())
+                    .get("/dictionary-plants/{id}", request.getId())
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
-                    .extract().as(DictionaryPlantResponse.class);
+                    .extract();
 
             assertSoftly(softly -> {
-                        softly.assertThat(RESPONSE.getId()).isEqualTo(REQUEST.getId());
-                        softly.assertThat(RESPONSE.getName()).isEqualTo(REQUEST.getName());
-                        softly.assertThat(RESPONSE.getImage()).isEqualTo(REQUEST.getImageUrl());
-                        softly.assertThat(RESPONSE.getFamilyName()).isEqualTo(REQUEST.getFamilyName());
-                        softly.assertThat(RESPONSE.getSmell()).isEqualTo(REQUEST.getSmell());
-                        softly.assertThat(RESPONSE.getPoison()).isEqualTo(REQUEST.getPoison());
-                        softly.assertThat(RESPONSE.getManageLevel()).isEqualTo(REQUEST.getManageLevel());
-                        softly.assertThat(RESPONSE.getGrowSpeed()).isEqualTo(REQUEST.getGrowSpeed());
-                        softly.assertThat(RESPONSE.getRequireTemp()).isEqualTo(REQUEST.getRequireTemp());
-                        softly.assertThat(RESPONSE.getMinimumTemp()).isEqualTo(REQUEST.getMinimumTemp());
-                        softly.assertThat(RESPONSE.getRequireHumidity()).isEqualTo(REQUEST.getRequireHumidity());
-                        softly.assertThat(RESPONSE.getPostingPlace()).isEqualTo(Arrays.asList(REQUEST.getPostingPlace().split(",")));
-                        softly.assertThat(RESPONSE.getSpecialManageInfo()).isEqualTo(REQUEST.getSpecialManageInfo());
+                        softly.assertThat(response.jsonPath().getLong("id")).isEqualTo(request.getId());
+                        softly.assertThat(response.jsonPath().getString("name")).isEqualTo(request.getName());
+                        softly.assertThat(response.jsonPath().getString("image")).isEqualTo(request.getImageUrl());
+                        softly.assertThat(response.jsonPath().getString("familyName")).isEqualTo(request.getFamilyName());
+                        softly.assertThat(response.jsonPath().getString("smell")).isEqualTo(request.getSmell());
+                        softly.assertThat(response.jsonPath().getString("poison")).isEqualTo(request.getPoison());
+                        softly.assertThat(response.jsonPath().getString("manageLevel")).isEqualTo(request.getManageLevel());
+                        softly.assertThat(response.jsonPath().getString("growSpeed")).isEqualTo(request.getGrowSpeed());
+                        softly.assertThat(response.jsonPath().getString("requireTemp")).isEqualTo(request.getRequireTemp());
+                        softly.assertThat(response.jsonPath().getString("minimumTemp")).isEqualTo(request.getMinimumTemp());
+                        softly.assertThat(response.jsonPath().getString("requireHumidity")).isEqualTo(request.getRequireHumidity());
+                        softly.assertThat(response.jsonPath().getList("postingPlace")).isEqualTo(List.of(request.getPostingPlace().split(",")));
+                        softly.assertThat(response.jsonPath().getString("specialManageInfo")).isEqualTo(request.getSpecialManageInfo());
                     }
             );
         }
 
         @Test
         void 존재하지_않는_사전_식물을_조회하면_예외_발생() {
-
+            Long notFoundId = 100L;
             RestAssured
                     .given().log().all()
                     .when()
-                    .get("/dictionary-plants/100")
+                    .get("/dictionary-plants/{id}", notFoundId)
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .assertThat().body("message", equalTo("사전 식물이 존재하지 않습니다. id: 100"));
+                    .assertThat().body("message", equalTo(String.format("사전 식물이 존재하지 않습니다. id: %d", notFoundId)));
         }
 
         @Test
         void 올바르지_않은_ID값으로_조회_시_예외_발생() {
-
+            Long inValidId = -1L;
             RestAssured
                     .given().log().all()
                     .when()
-                    .get("/dictionary-plants/-1")
+                    .get("/dictionary-plants/{id}", inValidId)
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .assertThat().body("message", equalTo("사전 식물 ID는 1이상의 값이어야 합니다. Value: -1"));
+                    .assertThat().body("message", equalTo(String.format("사전 식물 ID는 1이상의 값이어야 합니다. Value: %d", inValidId)));
         }
     }
 
     @Nested
     class 사전_식물_이름으로_조회 {
 
-        List<DictionaryPlant> 나무들 = List.of(
-                dictionaryPlantSupport.builder().name("주노나무").build(),
-                dictionaryPlantSupport.builder().name("그레이나무").build(),
-                dictionaryPlantSupport.builder().name("참새나무").build(),
-                dictionaryPlantSupport.builder().name("하마드나무").build(),
-                dictionaryPlantSupport.builder().name("조이나무").build(),
-                dictionaryPlantSupport.builder().name("쵸파나무").build(),
-                dictionaryPlantSupport.builder().name("클린나무").build()
-        );
-
         @Test
         void 일치하는_결과가_존재하면_배열로_결과를_반환() {
+            List<DictionaryPlant> 나무들 = List.of(
+                    dictionaryPlantSupport.builder().name("주노나무").build(),
+                    dictionaryPlantSupport.builder().name("그레이나무").build(),
+                    dictionaryPlantSupport.builder().name("참새나무").build(),
+                    dictionaryPlantSupport.builder().name("하마드나무").build(),
+                    dictionaryPlantSupport.builder().name("조이나무").build(),
+                    dictionaryPlantSupport.builder().name("쵸파나무").build(),
+                    dictionaryPlantSupport.builder().name("클린나무").build()
+            );
 
-            DataResponse response = RestAssured
+            ExtractableResponse<Response> response = RestAssured
                     .given().log().all()
                     .when()
                     .queryParam("name", "나무")
@@ -114,9 +112,9 @@ class DictionaryPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
-                    .extract().as(DataResponse.class);
+                    .extract();
 
-            Assertions.assertThat(response.getData())
+            Assertions.assertThat(response.jsonPath().getList("data"))
                     .usingRecursiveComparison()
                     .ignoringCollectionOrder()
                     .comparingOnlyFields("name")
@@ -126,7 +124,7 @@ class DictionaryPlantApiTest extends AcceptanceTest {
         @Test
         void 일치하는_결과가_존재하지_않으면_빈_배열_반환() {
 
-            DataResponse response = RestAssured
+            ExtractableResponse<Response> response = RestAssured
                     .given().log().all()
                     .when()
                     .queryParam("name", "개굴")
@@ -134,24 +132,24 @@ class DictionaryPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
-                    .extract().as(DataResponse.class);
+                    .extract();
 
-            Assertions.assertThat(response.getData())
+            Assertions.assertThat(response.jsonPath().getList("data"))
                     .isEqualTo(Collections.emptyList());
         }
 
         @Test
         void 조회하는_이름이_공백이면_예외_발생() {
-
+            String inValidParam = " ";
             RestAssured
                     .given().log().all()
                     .when()
-                    .queryParam("name", " ")
+                    .queryParam("name", inValidParam)
                     .get("/dictionary-plants")
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .assertThat().body("message", equalTo("검색어는 비어있을 수 없습니다. Value:  "));
+                    .assertThat().body("message", equalTo(String.format("검색어는 비어있을 수 없습니다. Value: %s", inValidParam)));
         }
     }
 }
