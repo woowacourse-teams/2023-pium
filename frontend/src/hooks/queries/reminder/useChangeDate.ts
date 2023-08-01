@@ -5,11 +5,8 @@ import ReminderAPI from 'apis/reminder';
 
 const useChangeDate = <T>({ successCallback, errorCallback }: MutationProps<T, ChangeDateParams>) =>
   useMutation({
-    mutationFn: async ({ id, body }: ChangeDateParams) => {
-      const response = await ReminderAPI.changeDate({
-        id,
-        body,
-      });
+    mutationFn: async (params: ChangeDateParams) => {
+      const response = await ReminderAPI.changeDate(params);
 
       const data = response.text() as Promise<T>;
       return data;
