@@ -9,7 +9,7 @@ interface CardBoxProps {
 
 const CardBox = ({ data, showDate }: CardBoxProps) => {
   return (
-    <ReminderCardBox>
+    <ReminderCardBox aria-label={`${data.date}일의 리마인더 정보`} tabIndex={0}>
       <InfoBox>{!showDate && <DateLabel>{data.date}</DateLabel>}</InfoBox>
       <ReminderCard data={data} />
     </ReminderCardBox>

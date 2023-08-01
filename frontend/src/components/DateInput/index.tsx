@@ -7,13 +7,8 @@ interface DateInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   changeCallback?: (value: string) => void;
 }
 
-const DateInput = ({
-  value,
-  changeCallback,
-  placeholder = '날짜를 입력해 주세요',
-  min,
-  max,
-}: DateInputProps) => {
+const DateInput = (props: DateInputProps) => {
+  const { value, changeCallback, placeholder = '날짜를 입력해 주세요', min, max } = props;
   const dateId = useId();
 
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -27,7 +22,14 @@ const DateInput = ({
       <DateValue htmlFor={dateId} $placeholder={value === ''}>
         {value ? convertDateKorYear(value) : placeholder}
       </DateValue>
-      <Date id={dateId} type="date" onChange={changeHandler} min={min} max={max} />
+      <Date
+        id={dateId}
+        type="date"
+        onChange={changeHandler}
+        min={min}
+        max={max}
+        aria-label={props['aria-label']}
+      />
     </Wrapper>
   );
 };

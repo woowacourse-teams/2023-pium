@@ -63,15 +63,23 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
 
     context?.waterCallback(variables);
   };
+
+  const alertMessage =
+    status === 'today' ? convertSubFix(status) : `${Math.abs(dday)}${convertSubFix(status)}`;
+
   return (
     <Wrapper>
       <StatusBar status={status} />
       <Image src={image} size="64px" type="circle" alt={`${nickName} 이미지`} />
-      <ContentBox>
-        <NickName>{nickName}</NickName>
-        <DictionaryPlantName>{dictionaryPlantName}</DictionaryPlantName>
-        <Alert status={status}>
-          {status === 'today' ? convertSubFix(status) : `${Math.abs(dday)}${convertSubFix(status)}`}
+      <ContentBox role="list">
+        <NickName role="listitem" aria-label="반려 식물 닉네임">
+          {nickName}
+        </NickName>
+        <DictionaryPlantName role="listitem" aria-label="반려 식물 사전 이름">
+          {dictionaryPlantName}
+        </DictionaryPlantName>
+        <Alert role="listitem" status={status} aria-label="물을 줘야하는 날">
+          {alertMessage}
         </Alert>
       </ContentBox>
       <ActionBox>

@@ -36,7 +36,7 @@ export const StatusBar = styled.div<BackgroundProps>`
   border-radius: 8px 0 0 8px;
 `;
 
-export const ContentBox = styled.div`
+export const ContentBox = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -45,23 +45,20 @@ export const ContentBox = styled.div`
   height: 68px;
 `;
 
-export const NickName = styled.p`
-  overflow: hidden;
-
+export const NickName = styled.li`
   font: 600 1.4rem/2.1rem 'NanumsquareRound';
   color: ${({ theme }) => theme.color.sub};
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-export const DictionaryPlantName = styled.p`
-  overflow: hidden;
+export const DictionaryPlantName = styled.li`
   color: ${({ theme }) => theme.color.grayDark};
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-export const Alert = styled.p<BackgroundProps>`
+export const Alert = styled.li<BackgroundProps>`
   font: ${({ theme }) => theme.font.reminderCardContent};
   color: ${({ status }) => convertCardStatusBar(status)};
 `;

@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const ReminderCardBox = styled.div`
+export const ReminderCardBox = styled.article`
   display: flex;
   gap: 8px;
   width: 312px;

@@ -18,7 +18,7 @@ const convertReminderBackground = (status: ReminderStatus) => {
   }
 };
 
-export const Wrapper = styled.section<BackgroundProps>`
+export const Wrapper = styled.div<BackgroundProps>`
   width: 100%;
   height: 100%;
   min-height: calc(100vh - 72px);
@@ -27,7 +27,7 @@ export const Wrapper = styled.section<BackgroundProps>`
   background: ${({ status }) => convertReminderBackground(status)};
 `;
 
-export const HeaderBox = styled.article`
+export const HeaderBox = styled.header`
   display: flex;
   align-items: center;
 
@@ -43,7 +43,7 @@ export const Title = styled.p`
   text-align: center;
 `;
 
-export const ContentBox = styled.article`
+export const ContentBox = styled.main`
   width: 100%;
   margin: 0 auto;
 `;
