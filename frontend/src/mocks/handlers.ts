@@ -1,6 +1,7 @@
 import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
+import PET_LIST from './data/petPlantCardList';
 import REMINDER_DATA from './data/reminder';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
@@ -63,6 +64,10 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(201));
     }),
 
+    rest.get(PET, (_, res, ctx) =>
+      res(ctx.delay(delay), ctx.status(200), ctx.json({ data: PET_LIST }))
+    ),
+
     rest.get(`${PET}/:petPlantId`, async (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
@@ -76,6 +81,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
         return res(ctx.delay(delay), ctx.status(404));
       }
     }),
+
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
       const { data } = Reminder.getAll();
