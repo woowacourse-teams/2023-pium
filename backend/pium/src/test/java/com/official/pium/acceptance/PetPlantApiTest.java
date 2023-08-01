@@ -39,7 +39,7 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_등록_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_400_반환() {
+        void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
 
@@ -53,7 +53,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .post("/pet-plants")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .statusCode(HttpStatus.NOT_FOUND.value())
                     .extract().as(GlobalExceptionResponse.class);
 
             Assertions.assertThat(response.getMessage())
@@ -151,7 +151,7 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_단건_조회_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_400_반환() {
+        void 존재하지_않는_사용자라면_404_반환() {
             PetPlant petPlant = petPlantSupport.builder().build();
 
             RestAssured
@@ -162,11 +162,11 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .get("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value());
         }
 
         @Test
-        void 본인의_반려_식물이_아니라면_403_반환() {
+        void 본인의_반려_식물이_아니라면_400_반환() {
             Member other = memberSupport.builder()
                     .email("otherMember@gmail.com")
                     .build();
@@ -181,7 +181,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .get("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.FORBIDDEN.value());
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
         }
 
         @Test
@@ -245,7 +245,7 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_전체_조회_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_400_반환() {
+        void 존재하지_않는_사용자라면_404_반환() {
             PetPlant petPlant = petPlantSupport.builder().build();
 
             RestAssured
@@ -256,7 +256,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .get("/pet-plants")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value());
         }
 
         @Test
@@ -313,25 +313,29 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_수정_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_400_반환() {
+        void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
                     .dictionaryPlant(dictionaryPlant)
                     .build();
 
+            PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+
             RestAssured
                     .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
                     .log().all()
                     .header("Authorization", "invalidMember")
                     .when()
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value());
         }
 
         @Test
-        void 본인의_반려_식물이_아니라면_403_반환() {
+        void 본인의_반려_식물이_아니라면_400_반환() {
             Member other = memberSupport.builder()
                     .email("otherMember@gmail.com")
                     .build();
@@ -346,7 +350,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.FORBIDDEN.value());
+                    .statusCode(HttpStatus.BAD_REQUEST.value());
         }
 
         @Test

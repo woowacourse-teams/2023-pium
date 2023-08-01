@@ -2,6 +2,7 @@ package com.official.pium.acceptance;
 
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.Member;
 import com.official.pium.exception.dto.GlobalExceptionResponse;
 import com.official.pium.service.dto.*;
 import com.official.pium.support.DictionaryPlantSupport;
@@ -38,7 +39,7 @@ public class ReminderApiTest extends AcceptanceTest {
     class 리마인더_조회_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_400_반환() {
+        void 존재하지_않는_사용자라면_404_반환() {
             RestAssured
                     .given()
                     .log().all()
@@ -47,7 +48,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .get("/reminders")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value());
         }
 
         @Test
@@ -98,7 +99,7 @@ public class ReminderApiTest extends AcceptanceTest {
     class 물주기_수행_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_400_반환() {
+        void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
             ReminderCreateRequest request = 리마인더_물주기_요청;
@@ -109,6 +110,29 @@ public class ReminderApiTest extends AcceptanceTest {
                     .body(request)
                     .log().all()
                     .header("Authorization", "invalidMember")
+                    .when()
+                    .post("/reminders/{petPlantId}", 반려_식물_ID)
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.NOT_FOUND.value());
+        }
+
+        @Test
+        void 본인의_반려_식물이_아니라면_400_반환() {
+            Member other = memberSupport.builder()
+                    .email("otherMember@gmail.com")
+                    .build();
+
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
+            ReminderCreateRequest request = 리마인더_물주기_요청;
+
+            RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", other.getEmail())
                     .when()
                     .post("/reminders/{petPlantId}", 반려_식물_ID)
                     .then()
@@ -291,7 +315,7 @@ public class ReminderApiTest extends AcceptanceTest {
     class 날짜_변경_수행_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_400_반환() {
+        void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
             ReminderUpdateRequest request = 리마인더_미루기_요청;
@@ -306,7 +330,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .patch("/reminders/{petPlantId}", 반려_식물_ID)
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value());
         }
 
         @Test
