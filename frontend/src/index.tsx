@@ -1,7 +1,9 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import ToastProvider from 'contexts/toastContext';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ThemeProvider } from 'styled-components';
+import ToastList from 'components/@common/Toast/ToastList';
 import { GlobalStyle } from './style/Global.style';
 import { GlobalFont } from './style/GlobalFont.style';
 import theme from './style/theme.style';
@@ -28,7 +30,10 @@ root.render(
     <GlobalStyle />
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <App />
+        <ToastProvider>
+          <App />
+          <ToastList />
+        </ToastProvider>
       </QueryClientProvider>
     </ThemeProvider>
   </StrictMode>
