@@ -18,7 +18,7 @@ public class AcceptanceTest {
     int port;
 
     @Autowired
-    private MemberSupport memberSupport;
+    protected MemberSupport memberSupport;
     protected Member member;
 
     @BeforeEach

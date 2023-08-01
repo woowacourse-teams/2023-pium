@@ -18,10 +18,17 @@ public class MemberSupport {
 
     public final class MemberBuilder {
 
+        private String email;
+
+        public MemberBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
         public Member build() {
             return memberRepository.save(
                     Member.builder()
-                            .email("test@test.com")
+                            .email(email == null ? "test@test.com" : email)
                             .build()
             );
         }
