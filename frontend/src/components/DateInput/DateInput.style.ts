@@ -19,7 +19,7 @@ export const DateValue = styled.label<{
   width: 100%;
 
   font: 500 1.8rem/2.2rem 'NanumSquareRound';
-  color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.gray : 'black')};
+  color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.sub100 : 'black')};
   text-align: center;
 `;
 

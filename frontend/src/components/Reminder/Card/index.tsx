@@ -1,7 +1,7 @@
 import type {
   ChangeDateParams,
   ReminderExtendType,
-  ReminderStatus,
+  TodayStatus,
   WaterPlantParams,
 } from 'types/api/reminder';
 import { ReminderContext } from 'contexts/reminderContext';
@@ -29,7 +29,7 @@ const SUB_FIX = {
   future: '일 남았습니다!',
 };
 
-const convertSubFix = (status: ReminderStatus) => SUB_FIX[status];
+const convertSubFix = (status: TodayStatus) => SUB_FIX[status];
 
 const ReminderCard = ({ data }: ReminderCardProps) => {
   const { petPlantId, status, image, nickName, dictionaryPlantName, dday, lastWaterDate } = data;

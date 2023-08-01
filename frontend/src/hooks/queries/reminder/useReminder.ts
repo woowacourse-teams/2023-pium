@@ -3,7 +3,7 @@ import type {
   Month,
   MonthArrangedReminder,
   ReminderExtendType,
-  ReminderStatus,
+  TodayStatus,
   ReminderResponse,
 } from 'types/api/reminder';
 import { useQuery } from '@tanstack/react-query';
@@ -16,7 +16,7 @@ const convertReminderData = (result: ReminderResponse): ArrangedReminderWithStat
   const convertedData: MonthArrangedReminder = data.reduce((acc, cur) => {
     const { dday, nextWaterDate } = cur;
     const [, month, date] = nextWaterDate.split('-') as [string, Month, string];
-    const status: ReminderStatus = dday === 0 ? 'today' : dday > 0 ? 'late' : 'future';
+    const status: TodayStatus = dday === 0 ? 'today' : dday > 0 ? 'late' : 'future';
 
     const extendedReminder: ReminderExtendType = {
       ...cur,

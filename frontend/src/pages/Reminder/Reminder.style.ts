@@ -1,21 +1,16 @@
-import { ReminderStatus } from 'types/api/reminder';
+import { TodayStatus } from 'types/api/reminder';
 import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {
-  status: ReminderStatus;
+  status: TodayStatus;
 }
 
-const convertReminderBackground = (status: ReminderStatus) => {
-  switch (status) {
-    case 'late':
-      return '#FCF3F3';
-    case 'today':
-      return '#F3FCF5';
-    case 'future':
-      return '#F3F3F3';
-    default:
-      return '#F3F3F3';
-  }
+const convertReminderBackground: {
+  [key in TodayStatus]: string;
+} = {
+  late: '#FCF3F3',
+  today: '#F3FCF5',
+  future: '#F3F3F3',
 };
 
 export const Wrapper = styled.div<BackgroundProps>`
@@ -24,7 +19,7 @@ export const Wrapper = styled.div<BackgroundProps>`
   min-height: calc(100vh - 72px);
   padding-bottom: 24px;
 
-  background: ${({ status }) => convertReminderBackground(status)};
+  background: ${({ status }) => convertReminderBackground[status]};
 `;
 
 export const HeaderBox = styled.header`

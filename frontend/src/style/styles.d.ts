@@ -10,6 +10,9 @@ declare module 'styled-components' {
       gray: string;
       grayLight: string;
       grayDark: string;
+      sub100: string;
+      fontPrimaryForBackground: string;
+      fontAccentForBackground: string;
     };
     font: {
       emphasize: string;
