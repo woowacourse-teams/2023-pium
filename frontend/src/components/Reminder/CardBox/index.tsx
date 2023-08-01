@@ -9,7 +9,7 @@ interface CardBoxProps {
 
 const CardBox = ({ data, showDate }: CardBoxProps) => {
   return (
-    <ReminderCardBox key={data.petPlantId}>
+    <ReminderCardBox>
       <InfoBox>{!showDate && <DateLabel>{data.date}</DateLabel>}</InfoBox>
       <ReminderCard data={data} />
     </ReminderCardBox>
