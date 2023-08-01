@@ -1,8 +1,10 @@
 import type { NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
+import REMINDER_DATA from './data/reminder';
 import SEARCH_DATA from './data/search';
 import PetPlant from './storage/PetPlant';
+import Reminder from './storage/Reminder';
 
 const validateParams = (delay: number, failRate: number) => {
   if (failRate < 0 || failRate > 1) {
@@ -16,11 +18,15 @@ const validateParams = (delay: number, failRate: number) => {
 
 const DICT = '*/dictionary-plants';
 const PET = '*/pet-plants';
+const REMINDER = '*/reminders';
+
+sessionStorage.setItem('MSW_REMINDER', JSON.stringify(REMINDER_DATA));
 
 export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
 
   return [
+    // 사전 식물 리스트 조회
     rest.get(DICT, (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
@@ -32,6 +38,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200), ctx.json({ data: searchResult }));
     }),
 
+    // 단일 사전 식물 정보 조회
     rest.get(`${DICT}/:id`, (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
@@ -43,6 +50,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
     }),
 
+    // 반려 식물 등록
     rest.post<NewPetPlantRequest>(PET, async (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
@@ -67,6 +75,35 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       } catch {
         return res(ctx.delay(delay), ctx.status(404));
       }
+    }),
+    //리마인더 조회
+    rest.get(REMINDER, (req, res, ctx) => {
+      const { data } = Reminder.getAll();
+
+      data.sort((a, b) => {
+        if (a.nextWaterDate < b.nextWaterDate) return -1;
+        if (a.nextWaterDate > b.nextWaterDate) return 1;
+
+        return 0;
+      });
+      return res(ctx.delay(delay), ctx.status(200), ctx.json({ data }));
+    }),
+
+    rest.post(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
+      const { petPlantId } = req.params;
+      const { waterDate } = await req.json();
+
+      Reminder.water(Number(petPlantId), waterDate);
+
+      return res(ctx.delay(delay), ctx.status(204));
+    }),
+
+    rest.patch(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
+      const { petPlantId } = req.params;
+      const { nextWaterDate } = await req.json();
+      Reminder.changeDate(Number(petPlantId), nextWaterDate);
+
+      return res(ctx.delay(delay), ctx.status(204));
     }),
   ];
 };
