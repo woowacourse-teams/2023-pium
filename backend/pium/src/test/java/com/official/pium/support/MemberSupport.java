@@ -21,7 +21,7 @@ public class MemberSupport {
         public Member build() {
             return memberRepository.save(
                     Member.builder()
-                            .email("사용자이메일@test.com")
+                            .email("test@test.com")
                             .build()
             );
         }
