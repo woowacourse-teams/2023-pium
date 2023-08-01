@@ -55,7 +55,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void petPlantId_값이_존재하지_않으면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
+            given(historyService.read(anyLong(), any(HistoryPageRequest.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(get("/history?petPlantId=&page=1&size=4")
@@ -68,7 +68,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void petPlantId_값이_1이상이_아니면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
+            given(historyService.read(anyLong(), any(HistoryPageRequest.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(get("/history?petPlantId=0&page=1&size=4")
@@ -82,7 +82,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void page_값이_1이상이_아니면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
+            given(historyService.read(anyLong(), any(HistoryPageRequest.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(get("/history?petPlantId=1&page=0&size=4")
@@ -96,7 +96,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void size_값이_1이상이_아니면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
+            given(historyService.read(anyLong(), any(HistoryPageRequest.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(get("/history?petPlantId=1&page=1&size=0")
