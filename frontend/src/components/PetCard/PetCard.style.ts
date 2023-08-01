@@ -30,8 +30,13 @@ export const ContentArea = styled.div`
 `;
 
 export const Nickname = styled.p`
+  overflow: hidden;
+
   width: 100%;
+
   font-size: 1.8rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const ContentRow = styled.div`
@@ -41,8 +46,14 @@ export const ContentRow = styled.div`
 `;
 
 export const DictionaryPlantName = styled.p`
+  overflow: hidden;
+
+  width: 70%;
+
   font-size: 1.4rem;
   color: ${(props) => props.theme.color.grayDark};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const DaySince = styled.p`

@@ -19,3 +19,14 @@ export const Default: Story = {
     daySince: 95,
   },
 };
+
+export const LongText: Story = {
+  args: {
+    id: 2,
+    nickname: '기영기영기영기영이',
+    imageUrl: 'https://images.unsplash.com/photo-1667342608690-828e1a839ead',
+    dictionaryPlantName: '스투스투스투스투키',
+    birthDate: '2023-07-08',
+    daySince: 95,
+  },
+};
