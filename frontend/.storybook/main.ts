@@ -9,6 +9,7 @@ const config: StorybookConfig = {
     '@storybook/addon-interactions',
     '@storybook/addon-viewport',
     'storybook-addon-react-router-v6',
+    '@storybook/addon-a11y',
   ],
   framework: {
     name: '@storybook/react-webpack5',
@@ -17,9 +18,7 @@ const config: StorybookConfig = {
   docs: {
     autodocs: true,
   },
-  staticDirs: [
-    '../public'
-  ],
+  staticDirs: ['../public'],
   webpackFinal: async (config) => {
     config!.resolve!.plugins = [new TsconfigPathsPlugin()];
     return config;
