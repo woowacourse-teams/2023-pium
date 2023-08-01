@@ -163,11 +163,11 @@ class ReminderServiceTest extends IntegrationTest {
 
 
         List<ReminderResponse> expected = List.of(
-                PetPlantMapper.toReminderResponse(petPlant4, petPlant4.calculateDDay(LocalDate.now())),
-                PetPlantMapper.toReminderResponse(petPlant3, petPlant3.calculateDDay(LocalDate.now())),
-                PetPlantMapper.toReminderResponse(petPlant2, petPlant2.calculateDDay(LocalDate.now())),
+                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDDay(LocalDate.now())),
                 PetPlantMapper.toReminderResponse(petPlant1, petPlant1.calculateDDay(LocalDate.now())),
-                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDDay(LocalDate.now()))
+                PetPlantMapper.toReminderResponse(petPlant2, petPlant2.calculateDDay(LocalDate.now())),
+                PetPlantMapper.toReminderResponse(petPlant3, petPlant3.calculateDDay(LocalDate.now())),
+                PetPlantMapper.toReminderResponse(petPlant4, petPlant4.calculateDDay(LocalDate.now()))
         );
 
         assertThat(actual.getData())

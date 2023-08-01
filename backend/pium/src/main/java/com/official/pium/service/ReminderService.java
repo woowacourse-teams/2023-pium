@@ -59,7 +59,7 @@ public class ReminderService {
     }
 
     public DataResponse<List<ReminderResponse>> readAll(Member member) {
-        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId(), Sort.by(Direction.DESC, "nextWaterDate"));
+        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId(), Sort.by(Direction.ASC, "nextWaterDate"));
 
         List<ReminderResponse> reminderResponses = petPlants.stream()
                 .map(petPlant -> PetPlantMapper.toReminderResponse(
