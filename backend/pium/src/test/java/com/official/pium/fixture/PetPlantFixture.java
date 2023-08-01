@@ -48,6 +48,20 @@ public class PetPlantFixture {
                 .birthDate(LocalDate.now())
                 .lastWaterDate(LocalDate.now())
                 .build();
+
+        public static PetPlantCreateRequest 반려_식물_등록_요청(Long dictionaryPlantId) {
+            return PetPlantCreateRequest.builder()
+                    .dictionaryPlantId(dictionaryPlantId)
+                    .nickname("피우미")
+                    .location("베란다")
+                    .flowerpot("플라스틱 화분")
+                    .waterCycle(3)
+                    .light("빛 많이 필요함")
+                    .wind("바람이 잘 통하는 곳")
+                    .birthDate(LocalDate.now())
+                    .lastWaterDate(LocalDate.now())
+                    .build();
+        }
     }
 
     public static class RESPONSE {

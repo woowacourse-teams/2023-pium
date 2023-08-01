@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDate;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -37,7 +38,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 존재하지_않는_사용자라면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            PetPlantCreateRequest request = 반려_식물_요청_정보(dictionaryPlant);
+            PetPlantCreateRequest request = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
 
             GlobalExceptionResponse response = RestAssured
                     .given()
@@ -60,7 +61,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 등록된_반려_식물_ID_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            PetPlantCreateRequest request = 반려_식물_요청_정보(dictionaryPlant);
+            PetPlantCreateRequest request = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
 
@@ -152,7 +153,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 반려_식물_정보_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            PetPlantCreateRequest request = 반려_식물_요청_정보(dictionaryPlant);
+            PetPlantCreateRequest request = REQUEST.반려_식물_등록_요청(dictionaryPlant.getId());
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
 
@@ -205,7 +206,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contains("반려 식물 ID는 1이상의 값이어야 합니다.");
         }
     }
-    
+
     private PetPlantResponse 반려_식물_단건_조회(Long petPlantId) {
         return RestAssured
                 .given()
@@ -236,19 +237,5 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .replaceAll("/pet-plants/", "");
 
         return Long.parseLong(petPlantId);
-    }
-
-    private PetPlantCreateRequest 반려_식물_요청_정보(DictionaryPlant dictionaryPlant) {
-        return PetPlantCreateRequest.builder()
-                .dictionaryPlantId(dictionaryPlant.getId())
-                .nickname("피우미")
-                .location("베란다 앞")
-                .flowerpot("플라스틱 화분")
-                .waterCycle(3)
-                .light("빛 많이")
-                .wind("바람 많이")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .build();
     }
 }
