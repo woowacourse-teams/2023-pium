@@ -33,7 +33,6 @@ class ReminderServiceTest extends IntegrationTest {
 
     private PetPlant petPlant;
     private Member member;
-    private Member otherMember;
 
     @Autowired
     private ReminderService reminderService;
@@ -48,7 +47,6 @@ class ReminderServiceTest extends IntegrationTest {
     void setUp() {
         petPlant = petPlantSupport.builder().build();
         member = petPlant.getMember();
-        otherMember = memberSupport.builder().build();
     }
 
     @Test
@@ -101,6 +99,7 @@ class ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물의_사용자와_물주기를_요청한_사용자가_다르면_예외_발생() {
+        Member otherMember = memberSupport.builder().build();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
                 .waterDate(LocalDate.now())
                 .build();
@@ -142,6 +141,7 @@ class ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물의_사용자와_미루기를_요청한_사용자가_다르면_예외_발생() {
+        Member otherMember = memberSupport.builder().build();
         ReminderUpdateRequest request = ReminderUpdateRequest.builder()
                 .nextWaterDate(LocalDate.now().plusDays(1))
                 .build();

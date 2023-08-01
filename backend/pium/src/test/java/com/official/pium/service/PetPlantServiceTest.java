@@ -28,7 +28,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 class PetPlantServiceTest extends IntegrationTest {
 
     private Member member;
-    private Member otherMember;
     private DictionaryPlant dictionaryPlant;
 
     @Autowired
@@ -41,7 +40,6 @@ class PetPlantServiceTest extends IntegrationTest {
     void setUp() {
         dictionaryPlant = dictionaryPlantSupport.builder().build();
         member = memberSupport.builder().build();
-        otherMember = memberSupport.builder().build();
     }
 
     @Test
@@ -86,6 +84,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_단건_조회시_주인이_아니면_예외_발생() {
+        Member otherMember = memberSupport.builder().build();
         PetPlant petPlant = petPlantSupport.builder().member(member).build();
 
         assertThatThrownBy(() -> petPlantService.read(petPlant.getId(), otherMember))
@@ -134,6 +133,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_수정시_주인이_아니면_예외_발생() {
+        Member otherMember = memberSupport.builder().build();
         PetPlant petPlant = petPlantSupport.builder().member(member).build();
         PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
                 .nickname("피우미 2")
