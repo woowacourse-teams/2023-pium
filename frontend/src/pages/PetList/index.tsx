@@ -12,13 +12,14 @@ const PetList = () => {
       <Wrapper>
         <Title>나의 식물 카드</Title>
         <PetCardList>
-          <Link to={URL_PATH.petRegisterSearch}>
+          <Link to={URL_PATH.petRegisterSearch} aria-label="식물 추가로 이동">
             <RegisterButton type="button">+</RegisterButton>
           </Link>
           {petPlantCardList?.map((petPlantCard) => (
             <Link
               key={petPlantCard.id}
               to={generatePath(URL_PATH.petDetail, { id: String(petPlantCard.id) })}
+              aria-label="식물 상세로 이동"
             >
               <PetCard {...petPlantCard} />
             </Link>
