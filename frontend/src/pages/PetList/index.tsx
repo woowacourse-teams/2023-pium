@@ -19,7 +19,7 @@ const PetList = () => {
             <Link
               key={petPlantCard.id}
               to={generatePath(URL_PATH.petDetail, { id: String(petPlantCard.id) })}
-              aria-label="식물 상세로 이동"
+              aria-label={`${petPlantCard.nickname} 상세로 이동`}
             >
               <PetCard {...petPlantCard} />
             </Link>
