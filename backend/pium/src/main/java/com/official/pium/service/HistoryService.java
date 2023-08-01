@@ -34,7 +34,7 @@ public class HistoryService {
             throw new IllegalArgumentException("다른 사용자의 반려식물을 조회할 수 없습니다");
         }
 
-        Page<History> historyPageByPetPlantId = historyRepository.findAllByPetPlantId(petPlantId, PageRequest.of(request.getPage(), request.getSize(), Sort.Direction.DESC,"waterDate"));
+        Page<History> historyPageByPetPlantId = historyRepository.findAllByPetPlantId(petPlantId, PageRequest.of(request.getPage(), request.getSize(), Sort.Direction.DESC, "waterDate"));
 
         return HistoryMapper.toHistoryResponse(historyPageByPetPlantId);
     }

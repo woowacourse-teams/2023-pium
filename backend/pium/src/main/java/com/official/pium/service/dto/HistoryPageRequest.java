@@ -13,6 +13,7 @@ public class HistoryPageRequest {
     @NotNull
     @Positive(message = "페이지는 1이상의 값이어야 합니다.")
     private Integer page;
+
     @NotNull
     @Positive(message = "페이지 크기는 1이상의 값이어야 합니다.")
     private Integer size;
