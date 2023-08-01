@@ -4,6 +4,7 @@ import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
+import PetList from 'pages/PetList';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Reminder from 'pages/Reminder';
@@ -27,13 +28,13 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petRegisterForm,
         element: (
-          <Suspense fallback={<div>로딩중입니다.</div>}>
+          <Suspense fallback={<Spinner />}>
             <PetRegisterForm />
           </Suspense>
         ),
       },
       {
-        path: '/dict',
+        path: URL_PATH.dictSearch,
         element: <DictionarySearch />,
       },
       {
@@ -45,10 +46,21 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: URL_PATH.petList,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <PetList />
+          </Suspense>
+        ),
+      },
+      {
         path: URL_PATH.petDetail,
         element: <PetDetails />,
       },
-      { path: URL_PATH.reminder, element: <Reminder /> },
+      {
+        path: URL_PATH.reminder,
+        element: <Reminder />,
+      },
     ],
   },
 ]);
