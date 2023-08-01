@@ -1,5 +1,8 @@
 package com.official.pium.support;
 
+import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
+import static com.official.pium.fixture.MemberFixture.주노;
+
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
@@ -52,7 +55,7 @@ public class PetPlantSupport {
                             .wind("testWind")
                             .birthDate(LocalDate.now())
                             .nextWaterDate(LocalDate.now())
-                            .lastWaterDate(LocalDate.now())
+                            .lastWaterDate(LocalDate.now().minusDays(1))
                             .waterCycle(3)
                             .build()
             );
