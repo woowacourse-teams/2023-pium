@@ -1,8 +1,11 @@
 package com.official.pium.fixture;
 
 import com.official.pium.domain.PetPlant;
-import com.official.pium.service.dto.*;
-
+import com.official.pium.service.dto.DataResponse;
+import com.official.pium.service.dto.PetPlantCreateRequest;
+import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.PetPlantUpdateRequest;
+import com.official.pium.service.dto.SinglePetPlantResponse;
 import java.time.LocalDate;
 import java.util.List;
 

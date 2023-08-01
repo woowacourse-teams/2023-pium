@@ -38,14 +38,16 @@ export const ResultMessage = styled.p`
   text-align: center;
 `;
 
-export const ResultList = styled.div`
+export const ResultList = styled.ul`
   overflow-x: none;
   overflow-y: auto;
   width: 100%;
   max-height: 336px;
 `;
 
-export const ResultItem = styled.div`
+export const ResultItem = styled.li`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
 
