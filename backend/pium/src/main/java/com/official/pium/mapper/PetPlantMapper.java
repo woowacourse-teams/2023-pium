@@ -33,6 +33,7 @@ public class PetPlantMapper {
     }
 
     public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long dDay, Long daySince) {
+        DictionaryPlant dictionaryPlant = petPlant.getDictionaryPlant();
         return PetPlantResponse.builder()
                 .id(petPlant.getId())
                 .nickname(petPlant.getNickname())
@@ -44,9 +45,14 @@ public class PetPlantMapper {
                 .birthDate(petPlant.getBirthDate())
                 .lastWaterDate(petPlant.getLastWaterDate())
                 .waterCycle(petPlant.getWaterCycle())
-                .dDay(dDay)
+                .dday(dDay)
                 .nextWaterDate(petPlant.getNextWaterDate())
                 .daySince(daySince)
+                .dictionaryPlant(PetPlantResponse.DictionaryPlantResponse.builder()
+                        .id(dictionaryPlant.getId())
+                        .name(dictionaryPlant.getName())
+                        .build()
+                )
                 .build();
     }
 
