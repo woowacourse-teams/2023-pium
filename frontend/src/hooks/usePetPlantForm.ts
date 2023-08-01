@@ -1,16 +1,8 @@
+import type { EditPetPlantRequest } from 'types/api/petPlant';
 import { useReducer } from 'react';
 import { inputValidate } from 'utils/validate';
 
-interface PetPlantForm {
-  nickname: string;
-  location: string;
-  flowerpot: string;
-  waterCycle: string;
-  light: string;
-  wind: string;
-  birthDate: string;
-  lastWaterDate: string;
-}
+export type PetPlantForm = Record<keyof EditPetPlantRequest, string>;
 
 type PetPlantFormAction =
   | {
@@ -65,8 +57,8 @@ const petPlantFormReducer = (petPlantForm: PetPlantForm, action: PetPlantFormAct
   }
 };
 
-export const usePetPlantForm = () => {
-  const [form, dispatch] = useReducer(petPlantFormReducer, initialPetPlantForm);
+export const usePetPlantForm = (initialForm = initialPetPlantForm) => {
+  const [form, dispatch] = useReducer(petPlantFormReducer, initialForm);
 
   return { form, dispatch };
 };

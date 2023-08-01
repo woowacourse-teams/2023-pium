@@ -20,7 +20,7 @@ import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import PetAPI from 'apis/pet';
 import { getToday } from 'utils/date';
 import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
-import { usePetPlantForm } from './reducer';
+import { usePetPlantForm } from '../../../hooks/usePetPlantForm';
 
 const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';

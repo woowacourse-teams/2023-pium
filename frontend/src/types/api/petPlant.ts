@@ -39,3 +39,5 @@ export interface PetPlant
 }
 
 export type PetPlantListResponse = DataResponse<PetPlant[]>;
+
+export type EditPetPlantRequest = Omit<NewPetPlantRequest, 'dictionaryPlantId'>;
