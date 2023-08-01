@@ -1,28 +1,41 @@
+import type { DataResponse } from './DataResponse';
 import type { DictionaryPlant } from './dictionary';
 
-export interface NewPetPlantRequest {
-  dictionaryPlantId: DictionaryPlant['id'];
+export interface PetPlantDetails {
+  id: number;
   nickname: string;
-  birthDate: string;
-
-  waterCycle: number;
-  lastWaterDate: string;
-
+  imageUrl: string;
+  dictionaryPlant: Pick<DictionaryPlant, 'id' | 'name'>;
   location: string;
   flowerpot: string;
   light: string;
   wind: string;
-}
-
-export interface PetPlantDetails extends Omit<NewPetPlantRequest, 'dictionaryPlantId'> {
-  id: number;
-  imageUrl: string;
-  dictionaryPlant: {
-    id: DictionaryPlant['id'];
-    name: DictionaryPlant['name'];
-  };
-
+  birthDate: string;
+  lastWaterDate: string;
+  waterCycle: number;
   dDay: number;
   daySince: number;
   nextWaterDate: string;
 }
+
+export interface NewPetPlantRequest
+  extends Pick<
+    PetPlantDetails,
+    | 'nickname'
+    | 'location'
+    | 'flowerpot'
+    | 'light'
+    | 'wind'
+    | 'birthDate'
+    | 'lastWaterDate'
+    | 'waterCycle'
+  > {
+  dictionaryPlantId: DictionaryPlant['id'];
+}
+
+export interface PetPlant
+  extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'birthDate' | 'daySince'> {
+  dictionaryPlantName: DictionaryPlant['name'];
+}
+
+export type PetPlantListResponse = DataResponse<PetPlant[]>;
