@@ -5,7 +5,7 @@ export const REMINDER = `${BASE_URL}/reminders`;
 
 const headers = {
   'Content-Type': 'application/json',
-  Authorization: 'pium@example.com',
+  Authorization: 'pium@gmail.com',
 };
 
 const getReminder = () => {
