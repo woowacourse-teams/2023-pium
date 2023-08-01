@@ -18,10 +18,10 @@ const Toast = ({ type, title, message }: ToastProps) => {
   const [visible, setVisible] = useState(true); // 애니메이션을 위한 상태
 
   const icon = {
-    info: <InfoCircle />,
-    success: <CheckCircle />,
-    warning: <Warning />,
-    error: <CloseCircle />,
+    info: <InfoCircle aria-label="정보 알림" />,
+    success: <CheckCircle aria-label="성공 알림" />,
+    warning: <Warning aria-label="경고 알림" />,
+    error: <CloseCircle aria-label="실패 알림" />,
   }[type];
 
   const handleToastClose = () => {
