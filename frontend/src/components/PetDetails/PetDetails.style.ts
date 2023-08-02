@@ -107,9 +107,9 @@ export const TimelineLink = styled(Link)`
 
   font-size: 1.4rem;
   font-weight: 700;
-  color: ${(props) => props.theme.color.primary};
+  color: #1c7fd0;
 
-  border: solid 1px ${(props) => props.theme.color.primary};
+  border: solid 1px #1c7fd0;
   border-radius: 8px;
 `;
 
