@@ -6,7 +6,6 @@ import com.official.pium.support.DictionaryPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -14,9 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
-import java.util.Collections;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -115,7 +114,7 @@ class DictionaryPlantApiTest extends AcceptanceTest {
                     .statusCode(HttpStatus.OK.value())
                     .extract();
 
-            Assertions.assertThat(response.jsonPath().getList("data"))
+            assertThat(response.jsonPath().getList("data"))
                     .usingRecursiveComparison()
                     .ignoringCollectionOrder()
                     .comparingOnlyFields("name")
@@ -134,14 +133,13 @@ class DictionaryPlantApiTest extends AcceptanceTest {
                     .statusCode(HttpStatus.OK.value())
                     .extract();
 
-            Assertions.assertThat(response.jsonPath().getList("data"))
-                    .isEqualTo(Collections.emptyList());
+            assertThat(response.jsonPath().getList("data")).isEmpty();
         }
 
         @Test
         void 조회하는_이름이_공백이면_예외_발생() {
             String inValidParam = " ";
-            
+
             RestAssured
                     .given().log().all()
                     .when()
