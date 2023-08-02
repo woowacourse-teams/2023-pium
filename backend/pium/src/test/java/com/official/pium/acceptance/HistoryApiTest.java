@@ -6,7 +6,6 @@ import com.official.pium.domain.Member;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import com.official.pium.support.DictionaryPlantSupport;
-import com.official.pium.support.PetPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -30,8 +29,6 @@ import static org.hamcrest.Matchers.equalTo;
 @SuppressWarnings("NonAsciiCharacters")
 public class HistoryApiTest extends AcceptanceTest {
 
-    @Autowired
-    protected PetPlantSupport petPlantSupport;
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
 
@@ -130,17 +127,7 @@ public class HistoryApiTest extends AcceptanceTest {
         void 요청_페이지가_최대값보다_크면_빈_배열_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             LocalDate lastWaterDate = LocalDate.now().minusDays(10);
-            PetPlantCreateRequest petPlantCreateRequest = PetPlantCreateRequest.builder()
-                    .dictionaryPlantId(dictionaryPlant.getId())
-                    .nickname("피우미")
-                    .location("베란다")
-                    .flowerpot("플라스틱 화분")
-                    .waterCycle(3)
-                    .light("빛 많이 필요함")
-                    .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(lastWaterDate)
-                    .build();
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(dictionaryPlant.getId(), lastWaterDate);
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, LocalDate.now().minusDays(8));
@@ -176,17 +163,7 @@ public class HistoryApiTest extends AcceptanceTest {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             LocalDate lastWaterDate = LocalDate.now().minusDays(3);
             LocalDate waterDate = LocalDate.now();
-            PetPlantCreateRequest petPlantCreateRequest = PetPlantCreateRequest.builder()
-                    .dictionaryPlantId(dictionaryPlant.getId())
-                    .nickname("피우미")
-                    .location("베란다")
-                    .flowerpot("플라스틱 화분")
-                    .waterCycle(3)
-                    .light("빛 많이 필요함")
-                    .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(lastWaterDate)
-                    .build();
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(dictionaryPlant.getId(), lastWaterDate);
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, waterDate);
@@ -216,17 +193,7 @@ public class HistoryApiTest extends AcceptanceTest {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             LocalDate lastWaterDate = LocalDate.now().minusDays(3);
             LocalDate waterDate = LocalDate.now();
-            PetPlantCreateRequest petPlantCreateRequest = PetPlantCreateRequest.builder()
-                    .dictionaryPlantId(dictionaryPlant.getId())
-                    .nickname("피우미")
-                    .location("베란다")
-                    .flowerpot("플라스틱 화분")
-                    .waterCycle(3)
-                    .light("빛 많이 필요함")
-                    .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(lastWaterDate)
-                    .build();
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(dictionaryPlant.getId(), lastWaterDate);
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, waterDate);
@@ -292,5 +259,19 @@ public class HistoryApiTest extends AcceptanceTest {
                 .replaceAll("/pet-plants/", "");
 
         return Long.parseLong(petPlantId);
+    }
+
+    private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId, LocalDate lastWaterDate) {
+        return PetPlantCreateRequest.builder()
+                .dictionaryPlantId(dictionaryPlantId)
+                .nickname("피우미")
+                .location("베란다")
+                .flowerpot("플라스틱 화분")
+                .waterCycle(3)
+                .light("빛 많이 필요함")
+                .wind("바람이 잘 통하는 곳")
+                .birthDate(LocalDate.now())
+                .lastWaterDate(lastWaterDate)
+                .build();
     }
 }
