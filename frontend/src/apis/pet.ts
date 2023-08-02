@@ -15,11 +15,11 @@ const getList = () => {
   });
 };
 
-const postForm = (form: NewPetPlantRequest) => {
+const register = (form: NewPetPlantRequest) => {
   return fetch(PET, {
     method: 'POST',
     headers,
-    body: JSON.stringify({ ...form }),
+    body: JSON.stringify(form),
   });
 };
 
@@ -40,7 +40,7 @@ const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
 
 const PetAPI = {
   getList,
-  postForm,
+  register,
   getDetails,
   edit,
 };

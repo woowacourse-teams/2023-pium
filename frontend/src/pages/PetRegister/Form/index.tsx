@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Image from 'components/@common/Image';
 import ProgressBar from 'components/@common/ProgressBar';
 import DateInput from 'components/DateInput';
@@ -17,9 +17,9 @@ import {
   Wrapper,
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
-import PetAPI from 'apis/pet';
+import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
 import { getToday } from 'utils/date';
-import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
+import { NUMBER, OPTIONS } from 'constants/index';
 import { usePetPlantForm } from '../../../hooks/usePetPlantForm';
 
 const STACK_SIZE = 9;
@@ -30,8 +30,8 @@ const PetRegisterForm = () => {
   const dictionaryPlantId = Number(id);
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
   const { form, dispatch } = usePetPlantForm();
-  const navigate = useNavigate();
   const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
+  const { mutate } = useRegisterPetPlant();
 
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
   const today = getToday();
@@ -95,14 +95,11 @@ const PetRegisterForm = () => {
   };
 
   const submit = () => {
-    const submitForm = {
+    mutate({
       ...form,
       dictionaryPlantId,
       waterCycle: Number(form.waterCycle),
-    };
-
-    PetAPI.postForm(submitForm).catch(console.log);
-    navigate(URL_PATH.main);
+    });
   };
 
   useEffect(() => {
