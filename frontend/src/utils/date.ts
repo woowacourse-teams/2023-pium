@@ -29,7 +29,8 @@ export const getDateToString = (date = new Date()) => {
  * @return new Date();
  */
 
-export const getStringToDate = (date: string) => {
+export const getStringToDate = (date: string | null) => {
+  if (!date) return new Date();
   return new Date(date);
 };
 
@@ -121,12 +122,12 @@ const isDateInRange = ({ dateToCheck, startDate, endDate }: DateInRange) => {
     return dateToCheckTime >= startDate.getTime() && dateToCheckTime <= endDate.getTime();
   }
 
-  if (endDate) {
+  if (endDate && !startDate) {
     return dateToCheckTime <= endDate.getTime();
   }
 
-  if (startDate) {
-    dateToCheckTime >= startDate.getTime();
+  if (startDate && !endDate) {
+    return dateToCheckTime >= startDate.getTime();
   }
 
   return true;
