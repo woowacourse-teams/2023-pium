@@ -37,8 +37,11 @@ const convertReminderData = (result: ReminderResponse): ArrangedReminderWithStat
     return acc;
   }, [] as MonthArrangedReminder);
 
-  const maxDday = Math.max(...data.map(({ dday }) => dday));
-  const status = maxDday < 0 ? 'future' : maxDday > 0 ? 'late' : 'today';
+  const status = data.every(({ dday }) => dday < 0)
+    ? 'future'
+    : data.find(({ dday }) => dday > 0)
+    ? 'late'
+    : 'today';
 
   return {
     data: convertedData,
