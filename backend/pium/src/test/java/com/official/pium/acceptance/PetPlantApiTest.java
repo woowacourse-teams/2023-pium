@@ -61,6 +61,24 @@ public class PetPlantApiTest extends AcceptanceTest {
         }
 
         @Test
+        void 존재하지_않는_사전_식물을_참조하면_404_반환() {
+            PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(3L);
+
+            RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .post("/pet-plants")
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("사전 식물이 존재하지 않습니다."));
+        }
+
+        @Test
         void 등록된_반려_식물_ID_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
@@ -332,7 +350,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             Member other = memberSupport.builder()
                     .email("otherMember@gmail.com")
                     .build();
-            
+
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
 
             RestAssured

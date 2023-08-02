@@ -6,17 +6,14 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.PetPlantRepository;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
+import com.official.pium.service.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
@@ -29,8 +26,7 @@ public class PetPlantService {
     @Transactional
     public PetPlantResponse create(PetPlantCreateRequest request, Member member) {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(request.getDictionaryPlantId())
-                .orElseThrow(
-                        () -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id : " + request.getDictionaryPlantId()));
+                .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + request.getDictionaryPlantId()));
 
         PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, member);
         petPlantRepository.save(petPlant);
