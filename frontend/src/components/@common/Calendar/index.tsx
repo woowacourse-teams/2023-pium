@@ -1,14 +1,14 @@
 import { CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
 import useCalendar from 'hooks/useCalendar';
-import { getDayInfo } from 'utils/date';
+import { getDateToString, getDayInfo } from 'utils/date';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
 import DaySmallBox from './DaySmallBox';
 
 interface CalendarProps {
   currentDate: Date;
-  dateCallback: () => void;
-  max?: string;
-  min?: string;
+  dateCallback: ((value: string) => void) | null;
+  max?: React.InputHTMLAttributes<HTMLInputElement>['max'];
+  min?: React.InputHTMLAttributes<HTMLInputElement>['min'];
 }
 
 const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
@@ -21,9 +21,12 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
     const { date, isShow, isToday, currentDate, isInRange } = getDayInfo({
       idx,
       monthInfo,
-      min: min ?? null,
-      max: max ?? null,
+      min,
+      max,
     });
+
+    const currentDay = isShow ? getDateToString(currentDate) : '';
+
     return isShow ? (
       <DaySmallBox
         key={idx}
@@ -31,12 +34,14 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
         isToday={isToday}
         currentDate={currentDate}
         isInRange={isInRange}
-        clickHandler={() => dateCallback()}
+        clickHandler={() => dateCallback?.(currentDay)}
       />
     ) : (
       <DaySmallBox key={idx} />
     );
   });
+
+  const yearMonth = `${year}년 ${month}월`;
 
   return (
     <Wrapper role="application" aria-label="달력" aria-roledescription="calendar">
@@ -44,9 +49,7 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
         <button type="button" onClick={prevMonth} aria-label="이전 달 보기">
           {'<'}
         </button>
-        <p role="alert">
-          {year}년 {month.replace('0', '')}월
-        </p>
+        <p role="alert">{yearMonth}</p>
         <button type="button" onClick={nextMonth} aria-label="다음 달 보기">
           {'>'}
         </button>
