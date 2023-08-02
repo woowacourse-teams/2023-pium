@@ -7,7 +7,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 public class DatabaseClearExtension implements BeforeEachCallback {
 
     @Override
-    public void beforeEach(ExtensionContext context) throws Exception {
+    public void beforeEach(ExtensionContext context) {
         DatabaseCleaner databaseCleaner = getDataCleaner(context);
         databaseCleaner.clear();
     }
