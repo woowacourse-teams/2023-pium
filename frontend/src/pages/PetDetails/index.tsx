@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
+import Loading from 'pages/Loading';
 import Navbar from 'components/@common/Navbar';
-import Spinner from 'components/@common/Spinner';
 import PetDetailsContent from 'components/PetDetails';
 
 const PetDetails = () => {
@@ -9,7 +9,7 @@ const PetDetails = () => {
 
   return (
     <>
-      <Suspense fallback={<Spinner />}>
+      <Suspense fallback={<Loading />}>
         <PetDetailsContent petPlantId={Number(id)} />
       </Suspense>
       <Navbar />

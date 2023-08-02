@@ -12,7 +12,7 @@ const color = {
 
 const font = {
   emphasize: '',
-  subTitle: '',
+  subTitle: 'normal 600 2rem/2.4rem "NanumSquareRound"',
   title: 'normal 700 3.2rem/4rem "NanumSquareRound"',
   input: 'normal 500 1.8rem/2.2rem "NanumSquareRound"',
   dictTitle: 'normal 600 1.8rem/2.2rem "NanumSquareRound"',

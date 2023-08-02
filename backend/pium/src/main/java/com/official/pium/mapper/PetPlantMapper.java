@@ -33,7 +33,7 @@ public class PetPlantMapper {
                 .build();
     }
 
-    public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long dDay, Long daySince) {
+    public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long dday, Long daySince) {
         return PetPlantResponse.builder()
                 .id(petPlant.getId())
                 .nickname(petPlant.getNickname())
@@ -45,7 +45,7 @@ public class PetPlantMapper {
                 .birthDate(petPlant.getBirthDate())
                 .lastWaterDate(petPlant.getLastWaterDate())
                 .waterCycle(petPlant.getWaterCycle())
-                .dDay(dDay)
+                .dday(dday)
                 .nextWaterDate(petPlant.getNextWaterDate())
                 .daySince(daySince)
                 .build();
@@ -62,13 +62,13 @@ public class PetPlantMapper {
                 .build();
     }
 
-    public static ReminderResponse toReminderResponse(PetPlant petPlant, Long dDay) {
+    public static ReminderResponse toReminderResponse(PetPlant petPlant, Long dday) {
         return ReminderResponse.builder()
                 .petPlantId(petPlant.getId())
                 .image(petPlant.getImageUrl())
                 .nickName(petPlant.getNickname())
                 .dictionaryPlantName(petPlant.getDictionaryPlant().getName())
-                .dDay(dDay)
+                .dday(dday)
                 .nextWaterDate(petPlant.getNextWaterDate())
                 .lastWaterDate(petPlant.getLastWaterDate())
                 .build();

@@ -1,9 +1,9 @@
-import { TodayStatus } from 'types/api/reminder';
+import { ReminderStatus } from 'types/api/reminder';
 import { styled } from 'styled-components';
 import { BackgroundProps } from 'pages/Reminder/Reminder.style';
 import theme from '../../../style/theme.style';
 
-export const convertCardStatusBar = (status: TodayStatus) => {
+export const convertCardStatusBar = (status: ReminderStatus) => {
   switch (status) {
     case 'late':
       return theme.color.accent;
@@ -46,12 +46,19 @@ export const ContentBox = styled.div`
 `;
 
 export const NickName = styled.p`
+  overflow: hidden;
+
   font: 600 1.4rem/2.1rem 'NanumsquareRound';
   color: ${({ theme }) => theme.color.sub};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const DictionaryPlantName = styled.p`
+  overflow: hidden;
   color: ${({ theme }) => theme.color.grayDark};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Alert = styled.p<BackgroundProps>`

@@ -65,7 +65,7 @@ public class PetPlantFixture {
                 .birthDate(LocalDate.now())
                 .lastWaterDate(LocalDate.now())
                 .waterCycle(3)
-                .dDay(1L)
+                .dday(1L)
                 .daySince(1L)
                 .dictionaryPlant(DictionaryPlantResponse.builder()
                         .id(1L)

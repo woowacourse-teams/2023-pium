@@ -14,6 +14,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -57,12 +59,12 @@ public class ReminderService {
     }
 
     public DataResponse<List<ReminderResponse>> readAll(Member member) {
-        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId());
+        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId(), Sort.by(Direction.ASC, "nextWaterDate"));
 
         List<ReminderResponse> reminderResponses = petPlants.stream()
                 .map(petPlant -> PetPlantMapper.toReminderResponse(
                         petPlant,
-                        petPlant.calculateDDay(LocalDate.now())))
+                        petPlant.calculateDday(LocalDate.now())))
                 .toList();
 
         return DataResponse.<List<ReminderResponse>>builder()

@@ -65,21 +65,31 @@ class PetPlantServiceTest extends IntegrationTest {
     void 존재하지_않는_반려_식물을_조회하면_예외_발생() {
         Long wrongId = -1L;
 
-        assertThatThrownBy(() -> petPlantService.read(wrongId))
+        assertThatThrownBy(() -> petPlantService.read(wrongId, member))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
     }
 
     @Test
     void 반려_식물_단건_조회() {
-        PetPlant petPlant = petPlantSupport.builder().build();
+        PetPlant petPlant = petPlantSupport.builder().member(member).build();
 
-        PetPlantResponse petPlantResponse = petPlantService.read(petPlant.getId());
+        PetPlantResponse petPlantResponse = petPlantService.read(petPlant.getId(), member);
 
         assertAll(
                 () -> assertThat(petPlantResponse.getId()).isEqualTo(petPlant.getId()),
                 () -> assertThat(petPlantResponse.getNickname()).isEqualTo(petPlant.getNickname())
         );
+    }
+
+    @Test
+    void 반려_식물_단건_조회시_주인이_아니면_예외_발생() {
+        Member otherMember = memberSupport.builder().build();
+        PetPlant petPlant = petPlantSupport.builder().member(member).build();
+
+        assertThatThrownBy(() -> petPlantService.read(petPlant.getId(), otherMember))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
     }
 
     @Test
@@ -94,7 +104,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_정보_수정() {
-        PetPlant petPlant = petPlantSupport.builder().build();
+        PetPlant petPlant = petPlantSupport.builder().member(member).build();
         PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
                 .nickname("피우미 2")
                 .location("침대 옆")
@@ -106,7 +116,7 @@ class PetPlantServiceTest extends IntegrationTest {
                 .lastWaterDate(LocalDate.now())
                 .build();
 
-        petPlantService.update(petPlant.getId(), updateRequest);
+        petPlantService.update(petPlant.getId(), updateRequest, member);
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
 
         assertAll(
@@ -119,6 +129,26 @@ class PetPlantServiceTest extends IntegrationTest {
                 () -> assertThat(updatedPetPlant.getBirthDate()).isEqualTo(updateRequest.getBirthDate()),
                 () -> assertThat(updatedPetPlant.getLastWaterDate()).isEqualTo(updateRequest.getLastWaterDate())
         );
+    }
+
+    @Test
+    void 반려_식물_수정시_주인이_아니면_예외_발생() {
+        Member otherMember = memberSupport.builder().build();
+        PetPlant petPlant = petPlantSupport.builder().member(member).build();
+        PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
+                .nickname("피우미 2")
+                .location("침대 옆")
+                .flowerpot("유리병")
+                .waterCycle(10)
+                .light("빛 많이 필요함")
+                .wind("바람이 잘 통하는 곳")
+                .birthDate(LocalDate.now())
+                .lastWaterDate(LocalDate.now())
+                .build();
+
+        assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, otherMember))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
     }
 
     @Test
@@ -135,7 +165,7 @@ class PetPlantServiceTest extends IntegrationTest {
                 .lastWaterDate(LocalDate.now())
                 .build();
 
-        assertThatThrownBy(() -> petPlantService.update(wrongId, updateRequest))
+        assertThatThrownBy(() -> petPlantService.update(wrongId, updateRequest, member))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
     }

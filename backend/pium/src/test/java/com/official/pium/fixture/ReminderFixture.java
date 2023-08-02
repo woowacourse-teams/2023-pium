@@ -31,7 +31,7 @@ public class ReminderFixture {
                                         .dictionaryPlantName("라벤더")
                                         .image("image.com")
                                         .nextWaterDate(LocalDate.now())
-                                        .dDay(0L)
+                                        .dday(0L)
                                         .build()
                         )
                 )

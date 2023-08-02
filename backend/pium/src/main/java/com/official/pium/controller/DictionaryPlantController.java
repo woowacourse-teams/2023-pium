@@ -31,7 +31,7 @@ public class DictionaryPlantController {
 
     @GetMapping
     public ResponseEntity<DataResponse<List<DictionaryPlantSearchResponse>>> searchDictionaryPlants(
-            @NotBlank(message = "검색어는 비어있을 수 없습니다.") @RequestParam("name") String name) {
+            @RequestParam @NotBlank(message = "검색어는 비어있을 수 없습니다.") String name) {
         DataResponse<List<DictionaryPlantSearchResponse>> dataResponse = dictionaryPlantService.search(name);
         return ResponseEntity.ok(dataResponse);
     }

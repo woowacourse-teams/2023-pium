@@ -1,12 +1,22 @@
 package com.official.pium.controller;
 
 
-import com.official.pium.UITest;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.official.pium.fixture.DictionaryPlantFixture.RESPONSE;
+import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.DictionaryPlantService;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -17,27 +27,19 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @WebMvcTest(controllers = DictionaryPlantController.class)
-class DictionaryPlantControllerTest extends UITest {
+class DictionaryPlantControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private DictionaryPlantService dictionaryPlantService;
+
+    @MockBean
+    private MemberRepository memberRepository;
 
     @Nested
     class 사전_식물_ {
@@ -69,7 +71,6 @@ class DictionaryPlantControllerTest extends UITest {
         @Test
         void 검색이_성공하면_200을_반환() throws Exception {
             DataResponse<List<DictionaryPlantSearchResponse>> response = RESPONSE.스투키_산세베리아_율마_검색결과;
-
             given(dictionaryPlantService.search(anyString()))
                     .willReturn(response);
 
