@@ -17,16 +17,20 @@ export const Wrapper = styled.div<BackgroundProps>`
   width: 100%;
   height: 100%;
   min-height: calc(100vh - 72px);
-  padding-bottom: 24px;
+  padding-bottom: 68px;
 
   background: ${({ status }) => convertReminderBackground[status]};
 `;
 
 export const HeaderBox = styled.header`
+  position: sticky;
+  z-index: 1;
+  top: 0;
+
   display: flex;
   align-items: center;
 
-  height: 72px;
+  height: 68px;
 
   background: ${(props) => props.theme.color.background};
   border-bottom: solid 1px ${(props) => props.theme.color.gray};
