@@ -3,12 +3,15 @@ package com.official.pium.acceptance;
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
-import com.official.pium.exception.dto.GlobalExceptionResponse;
-import com.official.pium.service.dto.*;
+import com.official.pium.service.dto.PetPlantCreateRequest;
+import com.official.pium.service.dto.ReminderCreateRequest;
+import com.official.pium.service.dto.ReminderUpdateRequest;
 import com.official.pium.support.DictionaryPlantSupport;
 import com.official.pium.support.PetPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -25,6 +28,7 @@ import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlant
 import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_물주기_요청;
 import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_미루기_요청;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -48,7 +52,8 @@ public class ReminderApiTest extends AcceptanceTest {
                     .get("/reminders")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
         }
 
         @Test
@@ -58,7 +63,7 @@ public class ReminderApiTest extends AcceptanceTest {
             Long 반려_식물2_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
             Long 반려_식물3_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
 
-            DataResponse response = RestAssured
+            ExtractableResponse<Response> response = RestAssured
                     .given()
                     .log().all()
                     .header("Authorization", member.getEmail())
@@ -67,10 +72,9 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
-                    .extract().as(DataResponse.class);
+                    .extract();
 
-            List<ReminderResponse> data = (List<ReminderResponse>) response.getData();
-            Assertions.assertThat(data)
+            Assertions.assertThat(response.jsonPath().getList("data"))
                     .usingRecursiveComparison()
                     .comparingOnlyFields("petPlantId")
                     .isEqualTo(List.of(반려_식물_ID, 반려_식물2_ID, 반려_식물3_ID));
@@ -78,7 +82,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 반려_식물이_없으면_빈_배열_반환() {
-            DataResponse response = RestAssured
+            ExtractableResponse<Response> response = RestAssured
                     .given()
                     .log().all()
                     .header("Authorization", member.getEmail())
@@ -87,10 +91,9 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
-                    .extract().as(DataResponse.class);
+                    .extract();
 
-            List<ReminderResponse> data = (List<ReminderResponse>) response.getData();
-            Assertions.assertThat(data)
+            Assertions.assertThat(response.jsonPath().getList("data"))
                     .isEmpty();
         }
     }
@@ -114,7 +117,8 @@ public class ReminderApiTest extends AcceptanceTest {
                     .post("/reminders/{petPlantId}", 반려_식물_ID)
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
         }
 
         @Test
@@ -137,14 +141,15 @@ public class ReminderApiTest extends AcceptanceTest {
                     .post("/reminders/{petPlantId}", 반려_식물_ID)
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .assertThat().body("message", containsString("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다."));
         }
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
             ReminderCreateRequest request = 리마인더_물주기_요청;
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -155,17 +160,14 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("일치하는 반려 식물이 존재하지 않습니다.");
+                    .assertThat().body("message", containsString("일치하는 반려 식물이 존재하지 않습니다."));
         }
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
             ReminderCreateRequest request = 리마인더_물주기_요청;
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -176,10 +178,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("반려 식물 ID는 1이상의 값이어야 합니다.");
+                    .assertThat().body("message", containsString("반려 식물 ID는 1이상의 값이어야 합니다."));
         }
 
         @Test
@@ -208,12 +207,12 @@ public class ReminderApiTest extends AcceptanceTest {
                     .log().all()
                     .statusCode(HttpStatus.NO_CONTENT.value());
 
-            PetPlantResponse response = 반려_식물_단건_조회(반려_식물_ID);
+            ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
             SoftAssertions.assertSoftly(softly -> {
-                softly.assertThat(response.getLastWaterDate()).isEqualTo(request.getWaterDate());
-                softly.assertThat(response.getNextWaterDate())
-                        .isEqualTo(request.getWaterDate().plusDays(petPlantCreateRequest.getWaterCycle()));
+                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getWaterDate().toString());
+                softly.assertThat(response.jsonPath().getString("nextWaterDate"))
+                        .isEqualTo(request.getWaterDate().plusDays(petPlantCreateRequest.getWaterCycle()).toString());
             });
         }
 
@@ -231,7 +230,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .waterDate(LocalDate.now().plusDays(3))
                     .build();
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -242,10 +241,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("오늘 이후 날짜에 물을 줄 수는 없습니다.");
+                    .assertThat().body("message", containsString("오늘 이후 날짜에 물을 줄 수는 없습니다."));
         }
 
         @Test
@@ -262,7 +258,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .waterDate(petPlantCreateRequest.getLastWaterDate())
                     .build();
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -273,10 +269,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다.");
+                    .assertThat().body("message", containsString("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다."));
         }
 
         @Test
@@ -293,7 +286,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .waterDate(petPlantCreateRequest.getLastWaterDate().minusDays(3))
                     .build();
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -304,10 +297,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다.");
+                    .assertThat().body("message", containsString("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다."));
         }
     }
 
@@ -330,14 +320,15 @@ public class ReminderApiTest extends AcceptanceTest {
                     .patch("/reminders/{petPlantId}", 반려_식물_ID)
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
         }
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
             ReminderUpdateRequest request = 리마인더_미루기_요청;
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -348,17 +339,14 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("일치하는 반려 식물이 존재하지 않습니다.");
+                    .assertThat().body("message", containsString("일치하는 반려 식물이 존재하지 않습니다."));
         }
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
             ReminderUpdateRequest request = 리마인더_미루기_요청;
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -369,10 +357,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("반려 식물 ID는 1이상의 값이어야 합니다.");
+                    .assertThat().body("message", containsString("반려 식물 ID는 1이상의 값이어야 합니다."));
         }
 
         @Test
@@ -401,10 +386,10 @@ public class ReminderApiTest extends AcceptanceTest {
                     .log().all()
                     .statusCode(HttpStatus.NO_CONTENT.value());
 
-            PetPlantResponse response = 반려_식물_단건_조회(반려_식물_ID);
+            ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
-            assertThat(response.getNextWaterDate())
-                    .isEqualTo(request.getNextWaterDate());
+            assertThat(response.jsonPath().getString("nextWaterDate"))
+                    .isEqualTo(request.getNextWaterDate().toString());
         }
 
         @Test
@@ -421,7 +406,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .nextWaterDate(LocalDate.now())
                     .build();
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -432,10 +417,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
+                    .assertThat().body("message", containsString("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다."));
         }
 
         @Test
@@ -452,7 +434,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .nextWaterDate(LocalDate.now().minusDays(3))
                     .build();
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -463,14 +445,11 @@ public class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
+                    .assertThat().body("message", containsString("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다."));
         }
     }
 
-    private PetPlantResponse 반려_식물_단건_조회(Long petPlantId) {
+    private ExtractableResponse<Response> 반려_식물_단건_조회(Long petPlantId) {
         return RestAssured
                 .given()
                 .log().all()
@@ -480,7 +459,7 @@ public class ReminderApiTest extends AcceptanceTest {
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(PetPlantResponse.class);
+                .extract();
     }
 
     private Long 반려_식물_등록_요청(PetPlantCreateRequest request) {

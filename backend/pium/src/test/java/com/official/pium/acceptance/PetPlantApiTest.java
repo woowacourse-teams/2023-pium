@@ -177,7 +177,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .assertThat().body("message", containsString("본인의 반려 식물이 아닙니다."));
+                    .assertThat().body("message", containsString("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다."));
         }
 
         @Test
@@ -339,7 +339,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .assertThat().body("message", containsString("본인의 반려식물이 아닙니다."));
+                    .assertThat().body("message", containsString("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다."));
         }
 
         @Test
