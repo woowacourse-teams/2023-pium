@@ -67,7 +67,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const waterCycleInputId = useId();
 
   const isValidForm = (newForm: PetPlantForm) =>
-    newForm.nickname !== '' && newForm.waterCycle !== '';
+    newForm.nickname.trim() !== '' && newForm.waterCycle !== '';
 
   const submit = () => {
     if (!isValidForm(form)) {
