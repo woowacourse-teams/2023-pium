@@ -89,7 +89,9 @@ class PetPlantControllerTest extends UITest {
 
         @Test
         void 잘못된_ID로_조회하면_400을_반환() throws Exception {
-            mockMvc.perform(get("/pet-plants/{id}", -1L)
+            Long wrongId = -1L;
+
+            mockMvc.perform(get("/pet-plants/{id}", wrongId)
                             .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -132,7 +134,7 @@ class PetPlantControllerTest extends UITest {
             willDoNothing().given(petPlantService)
                     .update(anyLong(), any(PetPlantUpdateRequest.class), any(Member.class));
 
-            mockMvc.perform(patch("/pet-plants/" + 1L)
+            mockMvc.perform(patch("/pet-plants/{id}" + 1L)
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON))
