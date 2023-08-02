@@ -36,6 +36,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
     @Autowired
     protected PetPlantSupport petPlantSupport;
+    
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
 

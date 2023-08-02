@@ -35,6 +35,7 @@ public class PetPlantApiTest extends AcceptanceTest {
 
     @Autowired
     protected PetPlantSupport petPlantSupport;
+
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
 
@@ -51,7 +52,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", "IllegalMember")
+                    .header("Authorization", "invalidMember")
                     .when()
                     .post("/pet-plants")
                     .then()
