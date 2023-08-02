@@ -9,7 +9,6 @@ const useWaterDateList = (petPlantId: PetPlantDetails['id']) =>
     queryFn: async ({ pageParam }) => {
       const response = await HistoryAPI.getPetPlant(petPlantId, pageParam);
       const data = await response.json();
-      console.log(data);
       return data;
     },
     defaultPageParam: 0,
