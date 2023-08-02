@@ -13,7 +13,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,6 +25,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.official.pium.fixture.PetPlantFixture.REQUEST;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.hamcrest.Matchers.containsString;
 
@@ -254,8 +254,6 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_404_반환() {
-            PetPlant petPlant = petPlantSupport.builder().build();
-
             RestAssured
                     .given()
                     .log().all()
@@ -288,7 +286,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .statusCode(HttpStatus.OK.value())
                     .extract();
 
-            Assertions.assertThat(response.jsonPath().getList("data"))
+            assertThat(response.jsonPath().getList("data"))
                     .usingRecursiveComparison()
                     .comparingOnlyFields("id")
                     .isEqualTo(List.of(반려_식물_ID, 반려_식물2_ID));
@@ -296,8 +294,6 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 반려_식물이_없으면_빈_배열_반환() {
-            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-
             ExtractableResponse<Response> response = RestAssured
                     .given()
                     .log().all()
@@ -309,7 +305,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .statusCode(HttpStatus.OK.value())
                     .extract();
 
-            Assertions.assertThat(response.jsonPath().getList("data"))
+            assertThat(response.jsonPath().getList("data"))
                     .isEmpty();
         }
     }
