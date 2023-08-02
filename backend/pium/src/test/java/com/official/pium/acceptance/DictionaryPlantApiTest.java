@@ -32,7 +32,6 @@ class DictionaryPlantApiTest extends AcceptanceTest {
 
         @Test
         void 사전_식물_상세정보_조회_시_사전_식물_정보_반환() {
-
             DictionaryPlant request = dictionaryPlantSupport.builder().build();
 
             ExtractableResponse<Response> response = RestAssured
@@ -65,6 +64,7 @@ class DictionaryPlantApiTest extends AcceptanceTest {
         @Test
         void 존재하지_않는_사전_식물을_조회하면_예외_발생() {
             Long notFoundId = 100L;
+
             RestAssured
                     .given().log().all()
                     .when()
@@ -78,6 +78,7 @@ class DictionaryPlantApiTest extends AcceptanceTest {
         @Test
         void 올바르지_않은_ID값으로_조회_시_예외_발생() {
             Long inValidId = -1L;
+
             RestAssured
                     .given().log().all()
                     .when()
@@ -123,7 +124,6 @@ class DictionaryPlantApiTest extends AcceptanceTest {
 
         @Test
         void 일치하는_결과가_존재하지_않으면_빈_배열_반환() {
-
             ExtractableResponse<Response> response = RestAssured
                     .given().log().all()
                     .when()
@@ -141,6 +141,7 @@ class DictionaryPlantApiTest extends AcceptanceTest {
         @Test
         void 조회하는_이름이_공백이면_예외_발생() {
             String inValidParam = " ";
+            
             RestAssured
                     .given().log().all()
                     .when()
