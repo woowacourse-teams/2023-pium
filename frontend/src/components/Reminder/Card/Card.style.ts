@@ -46,12 +46,19 @@ export const ContentBox = styled.div`
 `;
 
 export const NickName = styled.p`
+  overflow: hidden;
+
   font: 600 1.4rem/2.1rem 'NanumsquareRound';
   color: ${({ theme }) => theme.color.sub};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const DictionaryPlantName = styled.p`
+  overflow: hidden;
   color: ${({ theme }) => theme.color.grayDark};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const Alert = styled.p<BackgroundProps>`
