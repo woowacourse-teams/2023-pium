@@ -17,7 +17,7 @@ import {
   NickName,
   DictionaryPlantName,
 } from './Card.style';
-import { getParticularDateFromSpecificDay, getToday } from 'utils/date';
+import { getParticularDateFromSpecificDay, getDateToString } from 'utils/date';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
@@ -34,7 +34,7 @@ const convertSubFix = (status: TodayStatus) => SUB_FIX[status];
 const ReminderCard = ({ data }: ReminderCardProps) => {
   const { petPlantId, status, image, nickName, dictionaryPlantName, dday, lastWaterDate } = data;
   const context = useContext(ReminderContext);
-  const today = getToday();
+  const today = getDateToString();
 
   const changeDateHandler = (changeDate: string) => {
     //  changeDate에 대한 검증 실시. 변환하는 날이 오늘 다음날 보다 적다면 return

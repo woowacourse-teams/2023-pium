@@ -18,7 +18,7 @@ import {
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
-import { getToday } from 'utils/date';
+import { getDateToString } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 import { usePetPlantForm } from '../../../hooks/usePetPlantForm';
 
@@ -34,7 +34,7 @@ const PetRegisterForm = () => {
   const { mutate } = useRegisterPetPlant();
 
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
-  const today = getToday();
+  const today = getDateToString();
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET', key: 'nickname', maxLength: NUMBER.maxNicknameLength, value });
