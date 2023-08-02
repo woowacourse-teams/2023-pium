@@ -26,10 +26,10 @@ public class HistoryService {
 
     public HistoryResponse read(Long petPlantId, Pageable pageable, Member member) {
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
-                .orElseThrow(() -> new NoSuchElementException("id에 해당하는 반려식물이 없습니다"));
+                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id :" + petPlantId));
 
         if (petPlant.isNotOwnerOf(member)) {
-            throw new IllegalArgumentException("다른 사용자의 반려식물을 조회할 수 없습니다");
+            throw new IllegalArgumentException("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. id :" + member.getId());
         }
 
         Page<History> historyPageByPetPlantId = historyRepository.findAllByPetPlantId(petPlantId, pageable);

@@ -34,5 +34,4 @@ public class HistoryController {
         HistoryResponse historyResponse = historyService.read(petPlantId, pageable, member);
         return ResponseEntity.ok(historyResponse);
     }
-
 }
