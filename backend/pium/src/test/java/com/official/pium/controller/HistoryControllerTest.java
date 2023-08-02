@@ -3,7 +3,6 @@ package com.official.pium.controller;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
 import com.official.pium.service.HistoryService;
-import com.official.pium.service.dto.HistoryPageRequest;
 import com.official.pium.service.dto.HistoryResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -12,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -42,7 +42,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void 조회에_성공하면_200을_반환한다() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(anyLong(), any(HistoryPageRequest.class), any(Member.class)))
+            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(get("/history?petPlantId=1&page=1&size=4")
@@ -55,7 +55,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void petPlantId_값이_존재하지_않으면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
+            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(get("/history?petPlantId=&page=1&size=4")
@@ -68,7 +68,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void petPlantId_값이_1이상이_아니면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
+            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
 
             mockMvc.perform(get("/history?petPlantId=0&page=1&size=4")
@@ -78,34 +78,5 @@ public class HistoryControllerTest extends UITest {
                     .andExpect(jsonPath("$.message", equalTo("반려 식물 ID는 1이상의 값이어야 합니다. Value: 0")))
                     .andDo(print());
         }
-
-        @Test
-        void page_값이_1이상이_아니면_400_반환() throws Exception {
-            HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
-                    .willReturn(response);
-
-            mockMvc.perform(get("/history?petPlantId=1&page=0&size=4")
-                            .contentType(MediaType.APPLICATION_JSON)
-                    )
-                    .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message", equalTo("페이지는 1이상의 값이어야 합니다. Value: 0")))
-                    .andDo(print());
-        }
-
-        @Test
-        void size_값이_1이상이_아니면_400_반환() throws Exception {
-            HistoryResponse response = 히스토리;
-            given(historyService.read(any(), any(), any()))
-                    .willReturn(response);
-
-            mockMvc.perform(get("/history?petPlantId=1&page=1&size=0")
-                            .contentType(MediaType.APPLICATION_JSON)
-                    )
-                    .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message", equalTo("페이지 크기는 1이상의 값이어야 합니다. Value: 0")))
-                    .andDo(print());
-        }
     }
-
 }
