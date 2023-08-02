@@ -130,7 +130,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         }
 
         @Test
-        void 마지막으로_생일이_오늘_이후면_400_반환() {
+        void 생일이_오늘_이후면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = PetPlantCreateRequest.builder()
                     .dictionaryPlantId(dictionaryPlant.getId())
