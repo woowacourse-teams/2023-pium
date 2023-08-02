@@ -324,14 +324,21 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 본인의_반려_식물이_아니라면_400_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlant petPlant = petPlantSupport.builder()
+                    .member(member)
+                    .dictionaryPlant(dictionaryPlant)
+                    .build();
             Member other = memberSupport.builder()
                     .email("otherMember@gmail.com")
                     .build();
-
-            PetPlant petPlant = petPlantSupport.builder().build();
+            
+            PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
 
             RestAssured
                     .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
                     .log().all()
                     .header("Authorization", other.getEmail())
                     .when()
@@ -346,6 +353,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 수정_요청_정보로_업데이트() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
+                    .member(member)
                     .dictionaryPlant(dictionaryPlant)
                     .build();
 
