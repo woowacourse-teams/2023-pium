@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
+import Navbar from 'components/@common/Navbar';
 import Spinner from 'components/@common/Spinner';
 import PetDetailsContent from 'components/PetDetails';
 
@@ -7,9 +8,12 @@ const PetDetails = () => {
   const { id } = useParams();
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <PetDetailsContent petPlantId={Number(id)} />
-    </Suspense>
+    <>
+      <Suspense fallback={<Spinner />}>
+        <PetDetailsContent petPlantId={Number(id)} />
+      </Suspense>
+      <Navbar />
+    </>
   );
 };
 

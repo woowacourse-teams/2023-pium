@@ -1,4 +1,5 @@
 import ReminderProvider from 'contexts/reminderContext';
+import Navbar from 'components/@common/Navbar';
 import MonthBox from 'components/Reminder/MonthBox';
 import { ContentBox, HeaderBox, Title, Wrapper } from './Reminder.style';
 import useReminderHooks from 'hooks/useReminderHooks';
@@ -15,14 +16,17 @@ const Reminder = () => {
   });
 
   return (
-    <ReminderProvider waterCallback={waterMutate} changeDateCallback={changeDateMutate}>
-      <Wrapper status={reminderData.status}>
-        <HeaderBox>
-          <Title>리마인더</Title>
-        </HeaderBox>
-        <ContentBox>{reminderBox}</ContentBox>
-      </Wrapper>
-    </ReminderProvider>
+    <>
+      <ReminderProvider waterCallback={waterMutate} changeDateCallback={changeDateMutate}>
+        <Wrapper status={reminderData.status}>
+          <HeaderBox>
+            <Title>리마인더</Title>
+          </HeaderBox>
+          <ContentBox>{reminderBox}</ContentBox>
+        </Wrapper>
+      </ReminderProvider>
+      <Navbar />
+    </>
   );
 };
 
