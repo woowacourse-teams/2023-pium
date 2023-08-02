@@ -60,7 +60,6 @@ public class HistoryApiTest extends AcceptanceTest {
         void 본인의_반려_식물이_아니라면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
-
             Member other = memberSupport.builder()
                     .email("otherMember@gmail.com")
                     .build();
@@ -177,7 +176,6 @@ public class HistoryApiTest extends AcceptanceTest {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             LocalDate lastWaterDate = LocalDate.now().minusDays(3);
             LocalDate waterDate = LocalDate.now();
-
             PetPlantCreateRequest petPlantCreateRequest = PetPlantCreateRequest.builder()
                     .dictionaryPlantId(dictionaryPlant.getId())
                     .nickname("피우미")
@@ -261,7 +259,6 @@ public class HistoryApiTest extends AcceptanceTest {
     }
 
     private void 반려_식물_물주기(Long petPlantId, LocalDate waterDate) {
-
         ReminderCreateRequest request = ReminderCreateRequest.builder()
                 .waterDate(waterDate)
                 .build();
