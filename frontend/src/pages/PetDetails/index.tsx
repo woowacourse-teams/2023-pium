@@ -1,13 +1,13 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
-import Spinner from 'components/@common/Spinner';
+import Loading from 'pages/Loading';
 import PetDetailsContent from 'components/PetDetails';
 
 const PetDetails = () => {
   const { id } = useParams();
 
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<Loading />}>
       <PetDetailsContent petPlantId={Number(id)} />
     </Suspense>
   );
