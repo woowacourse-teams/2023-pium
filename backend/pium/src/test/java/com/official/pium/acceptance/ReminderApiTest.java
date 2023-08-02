@@ -182,7 +182,7 @@ public class ReminderApiTest extends AcceptanceTest {
         }
 
         @Test
-        void 반려_식물의_정보_수정() {
+        void 반려_식물의_물주기_정보_수정() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
                     dictionaryPlant.getId(),
