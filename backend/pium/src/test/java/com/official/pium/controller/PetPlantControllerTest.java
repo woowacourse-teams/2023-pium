@@ -134,7 +134,7 @@ class PetPlantControllerTest extends UITest {
             willDoNothing().given(petPlantService)
                     .update(anyLong(), any(PetPlantUpdateRequest.class), any(Member.class));
 
-            mockMvc.perform(patch("/pet-plants/{id}" + 1L)
+            mockMvc.perform(patch("/pet-plants/{id}", 1L)
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON))
