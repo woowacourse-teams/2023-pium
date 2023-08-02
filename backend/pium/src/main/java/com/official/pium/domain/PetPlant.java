@@ -113,7 +113,7 @@ public class PetPlant extends BaseEntity {
     /**
      * - 0 : 오늘 할 일 - 음수 : 할 일 - 양수 : 지각
      */
-    public Long calculateDDay(LocalDate currentDate) {
+    public Long calculateDday(LocalDate currentDate) {
         return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
     }
 
@@ -140,7 +140,7 @@ public class PetPlant extends BaseEntity {
     }
 
     private void validateEmptyValue(String value) {
-        if (Objects.isNull(value) || value.isBlank()) {
+        if (value == null || value.isBlank()) {
             throw new IllegalArgumentException("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + value);
         }
     }

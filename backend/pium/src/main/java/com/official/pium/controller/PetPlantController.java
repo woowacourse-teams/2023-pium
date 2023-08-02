@@ -26,7 +26,7 @@ public class PetPlantController {
     public ResponseEntity<PetPlantResponse> read(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
             @Auth Member member) {
-        PetPlantResponse petPlantResponse = petPlantService.read(id);
+        PetPlantResponse petPlantResponse = petPlantService.read(id, member);
         return ResponseEntity.ok(petPlantResponse);
     }
 
@@ -48,8 +48,9 @@ public class PetPlantController {
     @PatchMapping("/{id}")
     public ResponseEntity<Void> update(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
-            @RequestBody @Valid PetPlantUpdateRequest petPlantUpdateRequest) {
-        petPlantService.update(id, petPlantUpdateRequest);
+            @RequestBody @Valid PetPlantUpdateRequest petPlantUpdateRequest,
+            @Auth Member member) {
+        petPlantService.update(id, petPlantUpdateRequest, member);
         return ResponseEntity.ok().build();
     }
 }

@@ -64,7 +64,7 @@ public class ReminderService {
         List<ReminderResponse> reminderResponses = petPlants.stream()
                 .map(petPlant -> PetPlantMapper.toReminderResponse(
                         petPlant,
-                        petPlant.calculateDDay(LocalDate.now())))
+                        petPlant.calculateDday(LocalDate.now())))
                 .toList();
 
         return DataResponse.<List<ReminderResponse>>builder()
