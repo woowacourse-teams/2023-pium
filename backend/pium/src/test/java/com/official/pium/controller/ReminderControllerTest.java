@@ -17,7 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
+import com.official.pium.domain.Member;
 import com.official.pium.service.ReminderService;
+import com.official.pium.service.dto.ReminderCreateRequest;
+import com.official.pium.service.dto.ReminderUpdateRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -43,14 +46,15 @@ class ReminderControllerTest extends UITest {
     private ObjectMapper objectMapper;
 
     @Nested
-    class 리마인더_ {
+    class 리마인더_물주기_ {
 
         @Test
-        void 정상적인_물주기_요청_시_204를_반환() throws Exception {
+        void 정상_요청시_204를_반환() throws Exception {
             willDoNothing().given(reminderService)
-                    .water(any(), anyLong(), any());
+                    .water(any(ReminderCreateRequest.class), anyLong(), any(Member.class));
 
             mockMvc.perform(post("/reminders/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isNoContent())
@@ -58,20 +62,29 @@ class ReminderControllerTest extends UITest {
         }
 
         @Test
-        void 잘못된_ID로_물주기_요청_시_400_반환() throws Exception {
+        void 잘못된_ID로_요청시_400_반환() throws Exception {
             Long wrongId = -1L;
 
             mockMvc.perform(post("/reminders/{id}", wrongId)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))
                     .andDo(print());
         }
+    }
+
+    @Nested
+    class 리마인더_미루기_ {
 
         @Test
-        void 정상적인_미루기_요청_시_204_반환() throws Exception {
+        void 정상_요청시_204_반환() throws Exception {
+            willDoNothing().given(reminderService)
+                    .updateNextWaterDate(any(ReminderUpdateRequest.class), anyLong(), any(Member.class));
+
             mockMvc.perform(patch("/reminders/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isNoContent())
@@ -83,19 +96,25 @@ class ReminderControllerTest extends UITest {
             Long wrongId = 0L;
 
             mockMvc.perform(patch("/reminders/{id}", wrongId)
+                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))
                     .andDo(print());
         }
+    }
+
+    @Nested
+    class 리마인더_전체_조회_ {
 
         @Test
-        void 전체_조회_시_200_반환() throws Exception {
-            given(reminderService.readAll(any()))
+        void 정상_요청시_200_반환() throws Exception {
+            given(reminderService.readAll(any(Member.class)))
                     .willReturn(리마인더_조회_응답);
 
             mockMvc.perform(get("/reminders")
+                            .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isOk())
                     .andDo(print());

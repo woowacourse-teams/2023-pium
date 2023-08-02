@@ -9,6 +9,10 @@ public class MemberFixture {
             .email("junho5336@gmail.com")
             .build();
 
+    public static Member 그레이 = Member.builder()
+            .email("gray@gmail.com")
+            .build();
+
     public static Member generateMember() {
         return Member.builder()
                 .email("pium@gmail.com")

@@ -20,7 +20,7 @@ public class PetPlantResponse {
     private String wind;
     private Integer waterCycle;
     private Long daySince;
-    private Long dDay;
+    private Long dday;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
