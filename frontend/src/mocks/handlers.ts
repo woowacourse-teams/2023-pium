@@ -20,8 +20,10 @@ const validateParams = (delay: number, failRate: number) => {
 const DICT = '*/dictionary-plants';
 const PET = '*/pet-plants';
 const REMINDER = '*/reminders';
+const HISTORY = '*/history';
 
 sessionStorage.setItem('MSW_REMINDER', JSON.stringify(REMINDER_DATA));
+let pageParam = 0;
 
 export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
@@ -110,6 +112,36 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       Reminder.changeDate(Number(petPlantId), nextWaterDate);
 
       return res(ctx.delay(delay), ctx.status(204));
+    }),
+
+    rest.get(`${HISTORY}/:petPlantId`, (_req, res, ctx) => {
+      const waterDateList = [
+        `2023-0${12 - pageParam}-30`,
+        `2023-0${12 - pageParam}-27`,
+        `2023-0${12 - pageParam}-24`,
+        `2023-0${12 - pageParam}-21`,
+        `2023-0${12 - pageParam}-18`,
+        `2023-0${12 - pageParam}-15`,
+        `2023-0${12 - pageParam}-12`,
+        `2023-0${12 - pageParam}-09`,
+        `2023-0${12 - pageParam}-06`,
+        `2023-0${12 - pageParam}-03`,
+        `2023-0${12 - pageParam}-01`,
+      ];
+
+      const hasNext = pageParam < 6;
+
+      const page = {
+        page: pageParam,
+        size: 20,
+        elementSize: 100,
+        hasNext,
+        waterDateList: hasNext ? waterDateList : '1999-12-16',
+      };
+
+      pageParam += 1;
+
+      return res(ctx.delay(delay), ctx.status(200), ctx.json(page));
     }),
   ];
 };
