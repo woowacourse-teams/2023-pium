@@ -10,6 +10,8 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import java.util.NoSuchElementException;
+
 @RequiredArgsConstructor
 public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
@@ -27,6 +29,6 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         String token = webRequest.getHeader("Authorization");
 
         return memberRepository.findByEmail(token)
-                .orElseThrow(() -> new IllegalArgumentException("회원을 찾을 수 없습니다."));
+                .orElseThrow(() -> new NoSuchElementException("회원을 찾을 수 없습니다."));
     }
 }
