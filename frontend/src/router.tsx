@@ -5,6 +5,7 @@ import DictionarySearch from 'pages/DictionarySearch';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
 import PetList from 'pages/PetList';
+import PetPlantTimeline from 'pages/PetPlantTimeline';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Reminder from 'pages/Reminder';
@@ -60,6 +61,14 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.reminder,
         element: <Reminder />,
+      },
+      {
+        path: URL_PATH.timeline,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <PetPlantTimeline />
+          </Suspense>
+        ),
       },
     ],
   },
