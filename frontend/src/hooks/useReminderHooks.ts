@@ -1,4 +1,5 @@
 import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
+import { convertDateKorYear } from 'utils/date';
 import useChangeDate from './queries/reminder/useChangeDate';
 import useReminder from './queries/reminder/useReminder';
 import useWater from './queries/reminder/useWater';
@@ -8,9 +9,12 @@ const useReminderHooks = () => {
   const { data: reminderData, refetch } = useReminder({ queryKey: ['reminder'] });
   const { addToast } = useToast();
   const { mutate: water } = useWater<string>({
-    successCallback: () => {
+    successCallback: (_, variable) => {
       refetch();
-      addToast('success', '성공했습니다');
+      const {
+        body: { waterDate },
+      } = variable;
+      addToast('success', `${convertDateKorYear(waterDate)}에 물주기를 기록했습니다.`);
     },
     errorCallback: (error) => {
       addToast('error', error.message);
@@ -18,9 +22,12 @@ const useReminderHooks = () => {
   });
 
   const { mutate: changeDate } = useChangeDate<string>({
-    successCallback: () => {
+    successCallback: (_, variable) => {
       refetch();
-      addToast('success', '성공했습니다');
+      const {
+        body: { nextWaterDate },
+      } = variable;
+      addToast('success', `${convertDateKorYear(nextWaterDate)}로 물주기 날짜를 변경했습니다.`);
     },
     errorCallback: (error) => {
       addToast('error', error.message);

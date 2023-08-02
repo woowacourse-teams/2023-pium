@@ -73,12 +73,14 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
     <Wrapper>
       <StatusBar status={status} />
       <Image src={image} size="64px" type="circle" alt={`${nickName} 이미지`} />
-      <ContentBox role="group">
-        <NickName aria-label="반려 식물 닉네임">{nickName}</NickName>
-        <DictionaryPlantName aria-label="반려 식물 사전 이름">
+      <ContentBox role="list" tabIndex={0}>
+        <NickName role="listitem" aria-label="반려 식물 닉네임">
+          {nickName}
+        </NickName>
+        <DictionaryPlantName role="listitem" aria-label="반려 식물 사전 이름">
           {dictionaryPlantName}
         </DictionaryPlantName>
-        <Alert status={status} aria-label="물을 줘야하는 날">
+        <Alert status={status} role="listitem" aria-label="물을 줘야하는 날">
           {alertMessage}
         </Alert>
       </ContentBox>
