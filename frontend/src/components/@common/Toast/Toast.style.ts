@@ -76,6 +76,7 @@ export const Message = styled.p`
 
 export const ToastListWrapper = styled.div`
   position: fixed;
+  z-index: 3;
   bottom: 50px;
   left: 50%;
   transform: translate(-50%, 0);

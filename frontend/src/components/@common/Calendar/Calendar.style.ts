@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   width: 100%;
+  margin: 32px 0;
 `;
 
 export const HeaderBox = styled.header`
@@ -9,7 +10,8 @@ export const HeaderBox = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  margin-bottom: 16px;
+  width: 300px;
+  margin: 0 auto 16px auto;
 
   font: 900 2rem/3.2rem 'NanumSquareRound';
 `;
