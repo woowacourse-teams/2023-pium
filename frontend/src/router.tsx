@@ -61,7 +61,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.reminder,
-        element: <Reminder />,
+        element: (
+          <Suspense fallback={<Spinner />}>
+            <Reminder />
+          </Suspense>
+        ),
       },
     ],
   },
