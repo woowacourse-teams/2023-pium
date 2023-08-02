@@ -1,35 +1,44 @@
-import { useId } from 'react';
-import { Date, Wrapper, DateValue } from './DateInput.style';
-import { convertDateKorYear } from 'utils/date';
+import Calendar from 'components/@common/Calendar';
+import Modal from 'components/@common/Modal';
+import { Wrapper, DateValue } from './DateInput.style';
+import useModal from 'hooks/useModal';
+import useToast from 'hooks/useToast';
+import { convertDateKorYear, getStringToDate } from 'utils/date';
 
 interface DateInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
-  changeCallback?: (value: string) => void;
+  changeCallback?: (value: string) => boolean | void;
 }
 
 const DateInput = (props: DateInputProps) => {
-  const { value, changeCallback, placeholder = '날짜를 입력해 주세요', min, max } = props;
-  const dateId = useId();
+  const { value = '', changeCallback, placeholder = '날짜를 입력해 주세요', min, max } = props;
+  const { isOpen, on, off } = useModal();
+  const { addToast } = useToast();
 
-  const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    const { value } = event.target;
+  const dateCallbackHandler = (value: string) => {
+    if (changeCallback?.(value)) {
+      off();
+      return;
+    }
 
-    changeCallback?.(value);
+    addToast('warning', '범위 내 날짜가 아닙니다');
   };
+
+  console.log(min, max);
 
   return (
     <Wrapper>
-      <DateValue htmlFor={dateId} $placeholder={value === ''}>
+      <DateValue $placeholder={value === ''} onClick={on}>
         {value ? convertDateKorYear(value) : placeholder}
       </DateValue>
-      <Date
-        id={dateId}
-        type="date"
-        onChange={changeHandler}
-        min={min}
-        max={max}
-        aria-label={props['aria-label']}
-      />
+      <Modal isOpen={isOpen} closeModal={off}>
+        <Calendar
+          currentDate={getStringToDate(value === '' ? null : value)}
+          dateCallback={dateCallbackHandler}
+          min={min}
+          max={max}
+        />
+      </Modal>
     </Wrapper>
   );
 };
