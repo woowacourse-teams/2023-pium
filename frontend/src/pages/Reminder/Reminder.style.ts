@@ -1,11 +1,11 @@
-import { TodayStatus } from 'types/api/reminder';
+import { ReminderStatus } from 'types/api/reminder';
 import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {
-  status: TodayStatus;
+  status: ReminderStatus;
 }
 
-const convertReminderBackground = (status: TodayStatus) => {
+const convertReminderBackground = (status: ReminderStatus) => {
   switch (status) {
     case 'late':
       return '#FCF3F3';

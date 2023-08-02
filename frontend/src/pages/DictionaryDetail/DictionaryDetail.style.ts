@@ -36,7 +36,6 @@ export const ContentBox = styled.section`
   display: flex;
   flex-direction: column;
   gap: 35px;
-  align-items: center;
   justify-content: space-between;
 
   width: 320px;

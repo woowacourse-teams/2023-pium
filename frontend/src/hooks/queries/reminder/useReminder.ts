@@ -1,48 +1,44 @@
-import {
-  ConvertReminderData,
+import type {
+  ArrangedReminderWithStatus,
   Month,
-  MonthKeyReminderType,
+  MonthArrangedReminder,
   ReminderExtendType,
-  ReminderResult,
-  TodayStatus,
+  ReminderStatus,
+  ReminderResponse,
 } from 'types/api/reminder';
 import { useQuery } from '@tanstack/react-query';
 import type { UndefinedInitialDataOptions } from '@tanstack/react-query/build/lib/queryOptions';
 import ReminderAPI from 'apis/reminder';
 
-const initialData: MonthKeyReminderType = {};
-
-const convertReminderData = (result: ReminderResult): ConvertReminderData => {
+const convertReminderData = (result: ReminderResponse): ArrangedReminderWithStatus => {
   const { data } = result;
 
-  const convertedData: MonthKeyReminderType = data.reduce((acc, cur) => {
-    const [, month, date] = cur.nextWaterDate.split('-') as [string, Month, string];
+  const convertedData: MonthArrangedReminder = data.reduce((acc, cur) => {
+    const { dday, nextWaterDate } = cur;
+    const [, month, date] = nextWaterDate.split('-') as [string, Month, string];
+    const status: ReminderStatus = dday === 0 ? 'today' : dday > 0 ? 'late' : 'future';
 
-    const status: TodayStatus = cur.dDay === 0 ? 'today' : cur.dDay > 0 ? 'late' : 'future';
-
-    const convertData: ReminderExtendType = {
+    const extendedReminder: ReminderExtendType = {
       ...cur,
       status,
-      date: date,
+      date,
     };
 
-    const currentMonth = acc[month];
+    const hasSameMonthReminders = acc.length && acc[acc.length - 1][0] === month;
 
-    if (currentMonth !== undefined) {
-      return { ...acc, [month]: [...currentMonth, convertData] };
+    if (hasSameMonthReminders) {
+      const sameMonthReminders = acc[acc.length - 1][1];
+
+      sameMonthReminders.push(extendedReminder);
+    } else {
+      acc.push([month, [extendedReminder]]);
     }
 
-    return {
-      ...acc,
-      [month]: [convertData],
-    };
-  }, initialData);
+    return acc;
+  }, [] as MonthArrangedReminder);
 
-  const status = data.every(({ dDay }) => dDay < 0)
-    ? 'future'
-    : data.find(({ dDay }) => dDay > 0)
-    ? 'late'
-    : 'today';
+  const maxDday = Math.max(...data.map(({ dday }) => dday));
+  const status = maxDday < 0 ? 'future' : maxDday > 0 ? 'late' : 'today';
 
   return {
     data: convertedData,
@@ -51,9 +47,9 @@ const convertReminderData = (result: ReminderResult): ConvertReminderData => {
 };
 
 const useReminder = (
-  props: UndefinedInitialDataOptions<ReminderResult, Error, ConvertReminderData>
+  props: UndefinedInitialDataOptions<ReminderResponse, Error, ArrangedReminderWithStatus>
 ) =>
-  useQuery<ReminderResult, Error, ConvertReminderData>({
+  useQuery<ReminderResponse, Error, ArrangedReminderWithStatus>({
     ...props,
     queryFn: async () => {
       const response = await ReminderAPI.getReminder();

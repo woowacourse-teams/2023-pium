@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
+import Error from 'pages/Error';
+import Loading from 'pages/Loading';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
 import PetList from 'pages/PetList';
@@ -9,13 +11,13 @@ import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Reminder from 'pages/Reminder';
 import RootTemplate from 'pages/RootTemplate';
-import Spinner from 'components/@common/Spinner';
 import { URL_PATH } from './constants';
 
 const router = createBrowserRouter([
   {
     path: URL_PATH.main,
     element: <RootTemplate />,
+    errorElement: <Error />,
     children: [
       {
         path: URL_PATH.main,
@@ -28,7 +30,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petRegisterForm,
         element: (
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<Loading />}>
             <PetRegisterForm />
           </Suspense>
         ),
@@ -40,7 +42,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.dictDetail,
         element: (
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<Loading />}>
             <DictionaryDetail />
           </Suspense>
         ),
@@ -48,7 +50,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petList,
         element: (
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<Loading />}>
             <PetList />
           </Suspense>
         ),
@@ -59,7 +61,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.reminder,
-        element: <Reminder />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Reminder />
+          </Suspense>
+        ),
       },
     ],
   },
