@@ -94,12 +94,10 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   const setBirthDate = (value: string) => {
     dispatch({ type: 'SET', key: 'birthDate', value });
-    console.log(value);
   };
 
   const setLastWaterDate = (value: string) => {
     dispatch({ type: 'SET', key: 'lastWaterDate', value });
-    console.log(value);
   };
 
   const setWaterCycle: React.ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
