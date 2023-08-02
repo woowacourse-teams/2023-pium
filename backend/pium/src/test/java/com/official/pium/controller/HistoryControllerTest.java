@@ -62,8 +62,9 @@ public class HistoryControllerTest extends UITest {
             given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
 
-            mockMvc.perform(get("/history?petPlantId=")
+            mockMvc.perform(get("/history")
                             .header("Authorization", "pium@gmail.com")
+                            .param("petPlantId","")
                             .param("page", "1")
                             .param("size", "1")
                             .contentType(MediaType.APPLICATION_JSON)
