@@ -36,9 +36,9 @@ public class PetPlantService {
         petPlantRepository.save(petPlant);
 
         long daySince = petPlant.calculateDaySince(LocalDate.now());
-        long dDay = petPlant.calculateDDay(LocalDate.now());
+        long dday = petPlant.calculateDday(LocalDate.now());
 
-        return PetPlantMapper.toPetPlantResponse(petPlant, dDay, daySince);
+        return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 
     public PetPlantResponse read(Long id, Member member) {
@@ -47,7 +47,7 @@ public class PetPlantService {
 
         checkOwner(petPlant, member);
 
-        Long dday = petPlant.calculateDDay(LocalDate.now());
+        Long dday = petPlant.calculateDday(LocalDate.now());
         Long daySince = petPlant.calculateDaySince(LocalDate.now());
 
         return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);

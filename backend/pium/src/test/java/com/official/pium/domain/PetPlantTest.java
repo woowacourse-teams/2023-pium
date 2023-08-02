@@ -55,7 +55,7 @@ class PetPlantTest {
                 .nextWaterDate(LocalDate.of(2022, 7, 8))
                 .build();
 
-        Long result = 산세베리아.calculateDDay(LocalDate.of(year, month, day));
+        Long result = 산세베리아.calculateDday(LocalDate.of(year, month, day));
 
         assertThat(result).isEqualTo(dDay);
     }
