@@ -4,12 +4,15 @@ import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.exception.dto.GlobalExceptionResponse;
-import com.official.pium.service.dto.*;
+import com.official.pium.service.dto.PetPlantCreateRequest;
+import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.support.DictionaryPlantSupport;
 import com.official.pium.support.PetPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -23,8 +26,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.official.pium.fixture.PetPlantFixture.REQUEST;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.hamcrest.Matchers.containsString;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -43,7 +46,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -54,10 +57,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("회원을 찾을 수 없습니다.");
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
         }
 
         @Test
@@ -67,18 +67,18 @@ public class PetPlantApiTest extends AcceptanceTest {
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
 
-            PetPlantResponse response = 반려_식물_단건_조회(반려_식물_ID);
+            ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
             assertSoftly(softly -> {
-                softly.assertThat(response.getNickname()).isEqualTo(request.getNickname());
-                softly.assertThat(response.getLocation()).isEqualTo(request.getLocation());
-                softly.assertThat(response.getFlowerpot()).isEqualTo(request.getFlowerpot());
-                softly.assertThat(response.getLight()).isEqualTo(request.getLight());
-                softly.assertThat(response.getWind()).isEqualTo(request.getWind());
-                softly.assertThat(response.getWaterCycle()).isEqualTo(request.getWaterCycle());
-                softly.assertThat(response.getBirthDate()).isEqualTo(request.getBirthDate());
-                softly.assertThat(response.getLastWaterDate()).isEqualTo(request.getLastWaterDate());
-                softly.assertThat(response.getDictionaryPlant().getId()).isEqualTo(request.getDictionaryPlantId());
+                softly.assertThat(response.jsonPath().getString("nickname")).isEqualTo(request.getNickname());
+                softly.assertThat(response.jsonPath().getString("location")).isEqualTo(request.getLocation());
+                softly.assertThat(response.jsonPath().getString("flowerpot")).isEqualTo(request.getFlowerpot());
+                softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
+                softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
+                softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
+                softly.assertThat(response.jsonPath().getString("birthDate")).isEqualTo(request.getBirthDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getLastWaterDate().toString());
+                softly.assertThat(response.jsonPath().getObject("dictionaryPlant", PetPlantResponse.DictionaryPlantResponse.class).getId()).isEqualTo(request.getDictionaryPlantId());
             });
         }
 
@@ -97,7 +97,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .lastWaterDate(LocalDate.now().plusDays(2))
                     .build();
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -108,10 +108,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("과거 또는 현재의 날짜여야 합니다.");
+                    .assertThat().body("message", containsString("과거 또는 현재의 날짜여야 합니다."));
         }
 
         @Test
@@ -129,7 +126,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .lastWaterDate(LocalDate.now())
                     .build();
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -140,10 +137,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            Assertions.assertThat(response.getMessage())
-                    .contains("과거 또는 현재의 날짜여야 합니다.");
+                    .assertThat().body("message", containsString("과거 또는 현재의 날짜여야 합니다."));
         }
     }
 
@@ -162,7 +156,8 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .get("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
         }
 
         @Test
@@ -181,7 +176,8 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .get("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .assertThat().body("message", containsString("본인의 반려 식물이 아닙니다."));
         }
 
         @Test
@@ -191,24 +187,24 @@ public class PetPlantApiTest extends AcceptanceTest {
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
 
-            PetPlantResponse response = 반려_식물_단건_조회(반려_식물_ID);
+            ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
             assertSoftly(softly -> {
-                softly.assertThat(response.getNickname()).isEqualTo(request.getNickname());
-                softly.assertThat(response.getLocation()).isEqualTo(request.getLocation());
-                softly.assertThat(response.getFlowerpot()).isEqualTo(request.getFlowerpot());
-                softly.assertThat(response.getLight()).isEqualTo(request.getLight());
-                softly.assertThat(response.getWind()).isEqualTo(request.getWind());
-                softly.assertThat(response.getWaterCycle()).isEqualTo(request.getWaterCycle());
-                softly.assertThat(response.getBirthDate()).isEqualTo(request.getBirthDate());
-                softly.assertThat(response.getLastWaterDate()).isEqualTo(request.getLastWaterDate());
-                softly.assertThat(response.getDictionaryPlant().getId()).isEqualTo(request.getDictionaryPlantId());
+                softly.assertThat(response.jsonPath().getString("nickname")).isEqualTo(request.getNickname());
+                softly.assertThat(response.jsonPath().getString("location")).isEqualTo(request.getLocation());
+                softly.assertThat(response.jsonPath().getString("flowerpot")).isEqualTo(request.getFlowerpot());
+                softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
+                softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
+                softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
+                softly.assertThat(response.jsonPath().getString("birthDate")).isEqualTo(request.getBirthDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getLastWaterDate().toString());
+                softly.assertThat(response.jsonPath().getObject("dictionaryPlant", PetPlantResponse.DictionaryPlantResponse.class).getId()).isEqualTo(request.getDictionaryPlantId());
             });
         }
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .log().all()
                     .header("Authorization", member.getEmail())
@@ -217,15 +213,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("일치하는 반려 식물이 존재하지 않습니다.");
+                    .assertThat().body("message", containsString("일치하는 반려 식물이 존재하지 않습니다."));
         }
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .log().all()
                     .header("Authorization", member.getEmail())
@@ -234,10 +227,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("반려 식물 ID는 1이상의 값이어야 합니다.");
+                    .assertThat().body("message", containsString("반려 식물 ID는 1이상의 값이어야 합니다."));
         }
     }
 
@@ -256,7 +246,8 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .get("/pet-plants")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
         }
 
         @Test
@@ -268,7 +259,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
             Long 반려_식물2_ID = 반려_식물_등록_요청(request2);
 
-            DataResponse response = RestAssured
+            ExtractableResponse<Response> response = RestAssured
                     .given()
                     .log().all()
                     .header("Authorization", member.getEmail())
@@ -277,11 +268,9 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
-                    .extract().as(DataResponse.class);
+                    .extract();
 
-            List<SinglePetPlantResponse> data = (List<SinglePetPlantResponse>) response.getData();
-
-            Assertions.assertThat(data)
+            Assertions.assertThat(response.jsonPath().getList("data"))
                     .usingRecursiveComparison()
                     .comparingOnlyFields("id")
                     .isEqualTo(List.of(반려_식물_ID, 반려_식물2_ID));
@@ -291,7 +280,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 반려_식물이_없으면_빈_배열_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
 
-            DataResponse response = RestAssured
+            ExtractableResponse<Response> response = RestAssured
                     .given()
                     .log().all()
                     .header("Authorization", member.getEmail())
@@ -300,11 +289,9 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.OK.value())
-                    .extract().as(DataResponse.class);
+                    .extract();
 
-            List<SinglePetPlantResponse> data = (List<SinglePetPlantResponse>) response.getData();
-
-            Assertions.assertThat(data)
+            Assertions.assertThat(response.jsonPath().getList("data"))
                     .isEmpty();
         }
     }
@@ -331,7 +318,8 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value());
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
         }
 
         @Test
@@ -350,7 +338,8 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.BAD_REQUEST.value());
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .assertThat().body("message", containsString("본인의 반려식물이 아닙니다."));
         }
 
         @Test
@@ -374,17 +363,17 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .log().all()
                     .statusCode(HttpStatus.OK.value());
 
-            PetPlantResponse response = 반려_식물_단건_조회(petPlant.getId());
+            ExtractableResponse<Response> response = 반려_식물_단건_조회(petPlant.getId());
 
             SoftAssertions.assertSoftly(softly -> {
-                softly.assertThat(response.getNickname()).isEqualTo(request.getNickname());
-                softly.assertThat(response.getFlowerpot()).isEqualTo(request.getFlowerpot());
-                softly.assertThat(response.getLocation()).isEqualTo(request.getLocation());
-                softly.assertThat(response.getWaterCycle()).isEqualTo(request.getWaterCycle());
-                softly.assertThat(response.getLight()).isEqualTo(request.getLight());
-                softly.assertThat(response.getWind()).isEqualTo(request.getWind());
-                softly.assertThat(response.getBirthDate()).isEqualTo(request.getBirthDate());
-                softly.assertThat(response.getLastWaterDate()).isEqualTo(request.getLastWaterDate());
+                softly.assertThat(response.jsonPath().getString("nickname")).isEqualTo(request.getNickname());
+                softly.assertThat(response.jsonPath().getString("flowerpot")).isEqualTo(request.getFlowerpot());
+                softly.assertThat(response.jsonPath().getString("location")).isEqualTo(request.getLocation());
+                softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
+                softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
+                softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
+                softly.assertThat(response.jsonPath().getString("birthDate")).isEqualTo(request.getBirthDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getLastWaterDate().toString());
             });
         }
 
@@ -392,7 +381,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 존재하지_않는_반려_식물이라면_404_반환() {
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -403,17 +392,14 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.NOT_FOUND.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("일치하는 반려 식물이 존재하지 않습니다.");
+                    .assertThat().body("message", containsString("일치하는 반려 식물이 존재하지 않습니다."));
         }
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
 
-            GlobalExceptionResponse response = RestAssured
+            RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
@@ -424,14 +410,11 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .extract().as(GlobalExceptionResponse.class);
-
-            assertThat(response.getMessage())
-                    .contains("반려 식물 ID는 1이상의 값이어야 합니다.");
+                    .assertThat().body("message", containsString("반려 식물 ID는 1이상의 값이어야 합니다."));
         }
     }
 
-    private PetPlantResponse 반려_식물_단건_조회(Long petPlantId) {
+    private ExtractableResponse<Response> 반려_식물_단건_조회(Long petPlantId) {
         return RestAssured
                 .given()
                 .log().all()
@@ -441,7 +424,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.OK.value())
-                .extract().as(PetPlantResponse.class);
+                .extract();
     }
 
     private Long 반려_식물_등록_요청(PetPlantCreateRequest request) {
