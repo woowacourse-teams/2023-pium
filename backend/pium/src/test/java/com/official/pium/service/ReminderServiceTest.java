@@ -161,7 +161,6 @@ class ReminderServiceTest extends IntegrationTest {
 
         DataResponse<List<ReminderResponse>> actual = reminderService.readAll(petPlant.getMember());
 
-
         List<ReminderResponse> expected = List.of(
                 PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDDay(LocalDate.now())),
                 PetPlantMapper.toReminderResponse(petPlant1, petPlant1.calculateDDay(LocalDate.now())),
