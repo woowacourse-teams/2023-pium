@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
+import Error from 'pages/Error';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
 import PetList from 'pages/PetList';
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
   {
     path: URL_PATH.main,
     element: <RootTemplate />,
+    errorElement: <Error />,
     children: [
       {
         path: URL_PATH.main,
