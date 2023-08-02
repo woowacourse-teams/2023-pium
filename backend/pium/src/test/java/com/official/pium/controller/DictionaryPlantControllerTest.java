@@ -10,8 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.official.pium.UITest;
 import com.official.pium.fixture.DictionaryPlantFixture.RESPONSE;
+import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.DictionaryPlantService;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
@@ -30,13 +30,16 @@ import org.springframework.test.web.servlet.MockMvc;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @WebMvcTest(controllers = DictionaryPlantController.class)
-class DictionaryPlantControllerTest extends UITest {
+class DictionaryPlantControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
     private DictionaryPlantService dictionaryPlantService;
+
+    @MockBean
+    private MemberRepository memberRepository;
 
     @Nested
     class 사전_식물_ {
@@ -48,7 +51,6 @@ class DictionaryPlantControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/dictionary-plants/{dictionaryPlantId}", response.getId())
-                            .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value(1))
@@ -61,7 +63,6 @@ class DictionaryPlantControllerTest extends UITest {
         @Test
         void 상세_정보를_0이하의_ID값으로_조회하면_400을_반환() throws Exception {
             mockMvc.perform(get("/dictionary-plants/{dictionaryPlantId}", 0L)
-                            .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message", equalTo("사전 식물 ID는 1이상의 값이어야 합니다. Value: 0")));
@@ -73,16 +74,14 @@ class DictionaryPlantControllerTest extends UITest {
             given(dictionaryPlantService.search(anyString()))
                     .willReturn(response);
 
-            mockMvc.perform(get("/dictionary-plants?name=스투키")
-                            .header("Authorization", "pium@gmail.com"))
+            mockMvc.perform(get("/dictionary-plants?name=스투키"))
                     .andExpect(status().isOk())
                     .andDo(print());
         }
 
         @Test
         void 검색어가_비어있으면_400을_반환() throws Exception {
-            mockMvc.perform(get("/dictionary-plants?name=")
-                            .header("Authorization", "pium@gmail.com"))
+            mockMvc.perform(get("/dictionary-plants?name="))
                     .andExpect(status().isBadRequest())
                     .andDo(print());
         }
