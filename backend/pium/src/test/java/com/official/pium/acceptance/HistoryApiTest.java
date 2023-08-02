@@ -91,9 +91,11 @@ public class HistoryApiTest extends AcceptanceTest {
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
+            long invalidId = -1;
+
             RestAssured
                     .given()
-                    .queryParam("petPlantId", -1)
+                    .queryParam("petPlantId", invalidId)
                     .log().all()
                     .header("Authorization", member.getEmail())
                     .when()
@@ -108,11 +110,12 @@ public class HistoryApiTest extends AcceptanceTest {
         void 요청_페이지가_1보다_작으면_첫_페이지_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
+            int invalidPage = -1;
 
             RestAssured
                     .given()
                     .queryParam("petPlantId", 반려_식물_ID)
-                    .queryParam("page", -1)
+                    .queryParam("page", invalidPage)
                     .log().all()
                     .header("Authorization", member.getEmail())
                     .when()

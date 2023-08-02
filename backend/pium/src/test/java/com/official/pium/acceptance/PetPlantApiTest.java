@@ -237,12 +237,14 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
+            long invalidId = -1;
+
             RestAssured
                     .given()
                     .log().all()
                     .header("Authorization", member.getEmail())
                     .when()
-                    .get("/pet-plants/{id}", -1)
+                    .get("/pet-plants/{id}", invalidId)
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -421,6 +423,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+            long invalidId = -1;
 
             RestAssured
                     .given()
@@ -429,7 +432,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .log().all()
                     .header("Authorization", member.getEmail())
                     .when()
-                    .patch("/pet-plants/{id}", -1)
+                    .patch("/pet-plants/{id}", invalidId)
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())

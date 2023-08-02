@@ -7,7 +7,6 @@ import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import com.official.pium.service.dto.ReminderUpdateRequest;
 import com.official.pium.support.DictionaryPlantSupport;
-import com.official.pium.support.PetPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -34,9 +33,6 @@ import static org.hamcrest.Matchers.containsString;
 @SuppressWarnings("NonAsciiCharacters")
 public class ReminderApiTest extends AcceptanceTest {
 
-    @Autowired
-    protected PetPlantSupport petPlantSupport;
-    
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
 
@@ -167,6 +163,7 @@ public class ReminderApiTest extends AcceptanceTest {
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
             ReminderCreateRequest request = 리마인더_물주기_요청;
+            long invalidId = -1;
 
             RestAssured
                     .given()
@@ -175,7 +172,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .log().all()
                     .header("Authorization", member.getEmail())
                     .when()
-                    .post("/reminders/{id}", -1)
+                    .post("/reminders/{id}", invalidId)
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
@@ -346,6 +343,7 @@ public class ReminderApiTest extends AcceptanceTest {
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
             ReminderUpdateRequest request = 리마인더_미루기_요청;
+            int invalidId = -1;
 
             RestAssured
                     .given()
@@ -354,7 +352,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .log().all()
                     .header("Authorization", member.getEmail())
                     .when()
-                    .patch("/reminders/{id}", -1)
+                    .patch("/reminders/{id}", invalidId)
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
