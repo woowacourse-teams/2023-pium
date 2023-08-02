@@ -137,7 +137,7 @@ export const EnvironmentTitle = styled.span`
   border-radius: 50%;
 `;
 
-export const EditButton = styled.button`
+export const EditLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
