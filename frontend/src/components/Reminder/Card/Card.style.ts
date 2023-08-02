@@ -1,9 +1,9 @@
-import { TodayStatus } from 'types/api/reminder';
+import { ReminderStatus } from 'types/api/reminder';
 import { styled } from 'styled-components';
 import { BackgroundProps } from 'pages/Reminder/Reminder.style';
 import theme from '../../../style/theme.style';
 
-export const convertCardStatusBar = (status: TodayStatus) => {
+export const convertCardStatusBar = (status: ReminderStatus) => {
   switch (status) {
     case 'late':
       return theme.color.accent;
