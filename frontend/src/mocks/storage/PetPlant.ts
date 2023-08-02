@@ -27,7 +27,7 @@ const add = ({ dictionaryPlantId, ...rest }: NewPetPlantRequest) => {
     imageUrl: 'https://images.unsplash.com/photo-1516205651411-aef33a44f7c2',
     daySince: 0,
     nextWaterDate: makeNextWaterDate(rest.lastWaterDate, rest.waterCycle),
-    dDay: -rest.waterCycle,
+    dday: -rest.waterCycle,
     dictionaryPlant: {
       id: dictionaryPlantId,
       name: '피움',

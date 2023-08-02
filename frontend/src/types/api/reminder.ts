@@ -19,7 +19,7 @@ export interface Reminder {
   image: string;
   nickName: string;
   dictionaryPlantName: string;
-  dDay: number; // 음수면 지각 | 0이면 오늘 | 양수면 미래
+  dday: number; // 음수면 지각 | 0이면 오늘 | 양수면 미래
   nextWaterDate: string;
   lastWaterDate: string;
 }
