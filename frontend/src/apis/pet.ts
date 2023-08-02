@@ -29,7 +29,7 @@ const getDetails = (petPlantId: PetPlantDetails['id']) => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'pium@example.com',
+      Authorization: 'pium@gmail.com',
     },
   });
 };

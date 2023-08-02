@@ -5,7 +5,7 @@ describe('메인 화면', () => {
 
   it('로고와 소개 문구가 보인다.', () => {
     cy.contains('식물을 쉽게').should('be.visible');
-    cy.get('img[alt="logo"]').should('be.visible');
+    cy.get(`img[alt="피움 로고. 녹색으로 '피움'이라는 글자가 적혀 있다."]`).should('be.visible');
     cy.contains('피움에 등록된 식물을 검색해 보세요').should('be.visible');
   });
 
