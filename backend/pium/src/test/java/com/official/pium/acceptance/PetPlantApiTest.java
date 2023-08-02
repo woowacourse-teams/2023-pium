@@ -127,7 +127,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .assertThat().body("message", containsString("과거 또는 현재의 날짜여야 합니다."));
+                    .assertThat().body("message", containsString("마지막 물주기 날짜는 과거 또는 현재의 날짜여야 합니다."));
         }
 
         @Test
@@ -156,7 +156,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .assertThat().body("message", containsString("과거 또는 현재의 날짜여야 합니다."));
+                    .assertThat().body("message", containsString("입양일은 과거 또는 현재의 날짜여야 합니다."));
         }
     }
 

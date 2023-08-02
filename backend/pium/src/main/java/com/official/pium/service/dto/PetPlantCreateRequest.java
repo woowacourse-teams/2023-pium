@@ -36,12 +36,12 @@ public class PetPlantCreateRequest {
     private String wind;
 
     @NotNull
-    @PastOrPresent(message = "과거 또는 현재의 날짜여야 합니다. birthDate: ${validatedValue}")
+    @PastOrPresent(message = "입양일은 과거 또는 현재의 날짜여야 합니다. birthDate: ${validatedValue}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
 
     @NotNull
-    @PastOrPresent(message = "과거 또는 현재의 날짜여야 합니다. lastWaterDate: ${validatedValue}")
+    @PastOrPresent(message = "마지막 물주기 날짜는 과거 또는 현재의 날짜여야 합니다. lastWaterDate: ${validatedValue}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
 }
