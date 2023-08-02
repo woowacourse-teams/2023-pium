@@ -231,13 +231,13 @@ public class HistoryApiTest extends AcceptanceTest {
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, waterDate);
 
-            int pageRequest = 0;
-            int sizeRequest = 1;
+            int pageRequestParam = 0;
+            int sizeRequestParam = 1;
             ExtractableResponse<Response> response = RestAssured
                     .given()
                     .queryParam("petPlantId", 반려_식물_ID)
-                    .queryParam("page", pageRequest)
-                    .queryParam("size", sizeRequest)
+                    .queryParam("page", pageRequestParam)
+                    .queryParam("size", sizeRequestParam)
                     .log().all()
                     .header("Authorization", member.getEmail())
                     .when()
@@ -248,8 +248,8 @@ public class HistoryApiTest extends AcceptanceTest {
                     .extract();
 
             SoftAssertions.assertSoftly(softly -> {
-                softly.assertThat(response.jsonPath().getInt("page")).isEqualTo(pageRequest);
-                softly.assertThat(response.jsonPath().getInt("size")).isEqualTo(sizeRequest);
+                softly.assertThat(response.jsonPath().getInt("page")).isEqualTo(pageRequestParam);
+                softly.assertThat(response.jsonPath().getInt("size")).isEqualTo(sizeRequestParam);
                 softly.assertThat(response.jsonPath().getInt("elementSize")).isEqualTo(1);
                 softly.assertThat(response.jsonPath().getList("waterDateList"))
                         .usingRecursiveComparison()
