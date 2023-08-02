@@ -26,7 +26,7 @@ const DaySmallBox = ({
     <Wrapper>
       {date && (
         <DaySpan
-          isToday={isToday ?? undefined}
+          isToday={isToday ?? null}
           role={clickHandler ? 'button' : 'none'}
           onClick={clickHandler}
           aria-label={`${currentDate ? convertDateKorYear(currentDate) : date}`}

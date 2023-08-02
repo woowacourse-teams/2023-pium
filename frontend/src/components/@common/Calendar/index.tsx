@@ -1,5 +1,6 @@
 import { CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
 import useCalendar from 'hooks/useCalendar';
+import useToast from 'hooks/useToast';
 import { getDateToString, getDayInfo } from 'utils/date';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
 import DaySmallBox from './DaySmallBox';
@@ -15,6 +16,7 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
   const { monthInfo, prevMonth, nextMonth } = useCalendar(currentDate);
   const { year, month, monthFirstDay, monthLastDate } = monthInfo;
   const boxLength = monthFirstDay + monthLastDate <= 35 ? 35 : 42;
+  const { addToast } = useToast();
 
   const daysOfWeeks = DAYS_OF_THE_WEEK.map((day) => <DaySmallBox key={day} date={day} />);
   const days = Array.from({ length: boxLength }).map((_, idx) => {
@@ -26,6 +28,8 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
     });
 
     const currentDay = isShow ? getDateToString(currentDate) : '';
+    const clickHandler = () =>
+      isInRange ? dateCallback?.(currentDay) : addToast('warning', '범위 내 날짜가 아닙니다');
 
     return isShow ? (
       <DaySmallBox
@@ -34,7 +38,7 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
         isToday={isToday}
         currentDate={currentDate}
         isInRange={isInRange}
-        clickHandler={() => dateCallback?.(currentDay)}
+        clickHandler={clickHandler}
       />
     ) : (
       <DaySmallBox key={idx} />
