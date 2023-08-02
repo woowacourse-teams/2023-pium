@@ -7,7 +7,7 @@ import { convertDateKorYear, getStringToDate } from 'utils/date';
 
 interface DateInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
-  changeCallback?: (value: string) => boolean | void;
+  changeCallback?: (value: string) => boolean;
 }
 
 const DateInput = (props: DateInputProps) => {

@@ -31,7 +31,7 @@ const DaySmallBox = ({
           onClick={clickHandler}
           aria-label={`${currentDate ? convertDateKorYear(currentDate) : date}`}
           isInRange={isInRange}
-          tabIndex={clickHandler ? 0 : -1}
+          tabIndex={clickHandler && 0}
           onKeyDown={keyDownHandler}
         >
           {date}
