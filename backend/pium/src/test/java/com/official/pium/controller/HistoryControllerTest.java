@@ -45,7 +45,11 @@ public class HistoryControllerTest extends UITest {
             given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
 
-            mockMvc.perform(get("/history?petPlantId=1&page=1&size=4")
+            mockMvc.perform(get("/history")
+                            .header("Authorization", "pium@gmail.com")
+                            .param("petPlantId", "1")
+                            .param("page", "1")
+                            .param("size", "1")
                             .contentType(MediaType.APPLICATION_JSON)
                     )
                     .andExpect(status().isOk())
@@ -58,7 +62,11 @@ public class HistoryControllerTest extends UITest {
             given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
 
-            mockMvc.perform(get("/history?petPlantId=&page=1&size=4")
+            mockMvc.perform(get("/history")
+                            .header("Authorization", "pium@gmail.com")
+                            .param("petPlantId","")
+                            .param("page", "1")
+                            .param("size", "1")
                             .contentType(MediaType.APPLICATION_JSON)
                     )
                     .andExpect(status().isBadRequest())
@@ -71,7 +79,11 @@ public class HistoryControllerTest extends UITest {
             given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
 
-            mockMvc.perform(get("/history?petPlantId=0&page=1&size=4")
+            mockMvc.perform(get("/history")
+                            .header("Authorization", "pium@gmail.com")
+                            .param("petPlantId", "0")
+                            .param("page", "1")
+                            .param("size", "1")
                             .contentType(MediaType.APPLICATION_JSON)
                     )
                     .andExpect(status().isBadRequest())

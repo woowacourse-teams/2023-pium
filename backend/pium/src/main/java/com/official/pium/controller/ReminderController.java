@@ -32,7 +32,7 @@ public class ReminderController {
     @PostMapping("/{petPlantId}")
     public ResponseEntity<Void> water(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
-            @Valid @RequestBody ReminderCreateRequest reminderCreateRequest,
+            @RequestBody @Valid ReminderCreateRequest reminderCreateRequest,
             @Auth Member member) {
         reminderService.water(reminderCreateRequest, petPlantId, member);
         return ResponseEntity.noContent().build();
@@ -41,7 +41,7 @@ public class ReminderController {
     @PatchMapping("/{petPlantId}")
     public ResponseEntity<Void> updateNextWaterDate(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
-            @Valid @RequestBody ReminderUpdateRequest reminderUpdateRequest,
+            @RequestBody @Valid ReminderUpdateRequest reminderUpdateRequest,
             @Auth Member member) {
         reminderService.updateNextWaterDate(reminderUpdateRequest, petPlantId, member);
         return ResponseEntity.noContent().build();

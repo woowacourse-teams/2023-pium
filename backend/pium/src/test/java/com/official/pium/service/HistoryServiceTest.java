@@ -2,10 +2,13 @@ package com.official.pium.service;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.History;
+import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.service.dto.HistoryResponse;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +20,8 @@ import java.util.NoSuchElementException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
 public class HistoryServiceTest extends IntegrationTest {
 
     @Autowired
@@ -60,18 +65,18 @@ public class HistoryServiceTest extends IntegrationTest {
         assertThatThrownBy(
                 () -> historyService.read(2L, PageRequest.of(0, 2, Sort.Direction.DESC, "waterDate"), petPlant.getMember())
         ).isInstanceOf(NoSuchElementException.class)
-                .hasMessage("id에 해당하는 반려식물이 없습니다");
+                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id :" + 2L);
     }
 
     @Test
     void 반려식물의_소유자와_파라미터의_멤버가_같지_않으면_예외발생() {
         PetPlant petPlant = petPlantSupport.builder().build();
+        Member member = memberSupport.builder().build();
 
         assertThatThrownBy(
-                () -> historyService.read(petPlant.getId(), PageRequest.of(0, 2, Sort.Direction.DESC, "waterDate"), memberSupport.builder().build())
+                () -> historyService.read(petPlant.getId(), PageRequest.of(0, 2, Sort.Direction.DESC, "waterDate"), member)
         ).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("다른 사용자의 반려식물을 조회할 수 없습니다");
-
+                .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. id :" + member.getId());
     }
 
     @Test
