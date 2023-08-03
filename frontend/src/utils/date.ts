@@ -104,15 +104,12 @@ export const getMonthInfo = (date = new Date()): MonthInfo => {
   };
 };
 
-// 날짜 박스안에 들어갈 정보들.
-// 오늘인지 정보
-// 오늘 날짜
-// select되었는지 정보
-// 범위 밖의 날짜인지 정보
-
 interface DateInRange {
+  /** 날짜 체크를 하는 date */
   dateToCheck: Date;
+  /** 미니멈 date */
   startDate: Date | null;
+  /** 맥시멈 date */
   endDate: Date | null;
 }
 

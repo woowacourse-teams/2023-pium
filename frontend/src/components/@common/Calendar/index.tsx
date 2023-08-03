@@ -13,7 +13,7 @@ interface CalendarProps {
 }
 
 const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
-  const { monthInfo, prevMonth, nextMonth } = useCalendar(currentDate);
+  const { monthInfo, setPrevMonth, setNextMonth } = useCalendar(currentDate);
   const { year, month, monthFirstDay, monthLastDate } = monthInfo;
   const boxLength = monthFirstDay + monthLastDate <= 35 ? 35 : 42;
   const { addToast } = useToast();
@@ -50,11 +50,11 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
   return (
     <Wrapper role="application" aria-label="달력" aria-roledescription="calendar">
       <HeaderBox role="group">
-        <button type="button" onClick={prevMonth} aria-label="이전 달 보기">
+        <button type="button" onClick={setPrevMonth} aria-label="이전 달 보기">
           {'<'}
         </button>
         <p role="alert">{yearMonth}</p>
-        <button type="button" onClick={nextMonth} aria-label="다음 달 보기">
+        <button type="button" onClick={setNextMonth} aria-label="다음 달 보기">
           {'>'}
         </button>
       </HeaderBox>

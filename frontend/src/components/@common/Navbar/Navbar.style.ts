@@ -48,5 +48,6 @@ export const NavItem = styled.div`
 export const NavLabel = styled.p<{ $active?: boolean }>`
   font-size: 1rem;
   font-weight: 700;
-  color: ${({ $active, theme: { color } }) => ($active ? '#008929' : color.sub)};
+  color: ${({ $active, theme: { color } }) =>
+    $active ? color.fontPrimaryForBackground : color.sub};
 `;

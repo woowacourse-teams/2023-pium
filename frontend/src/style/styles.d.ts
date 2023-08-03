@@ -10,7 +10,7 @@ declare module 'styled-components' {
       gray: string;
       grayLight: string;
       grayDark: string;
-      sub100: string;
+      subLight: string;
       fontPrimaryForBackground: string;
       fontAccentForBackground: string;
     };
