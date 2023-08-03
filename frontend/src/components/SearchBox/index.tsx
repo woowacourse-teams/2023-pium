@@ -1,6 +1,6 @@
 import type { DictNameSearchResult } from 'types/api/dictionary';
 import { useState } from 'react';
-import ArrowRight from 'components/@common/Icons/ArrowRight';
+import ArrowRight from 'components/@common/Icons/ArrowRightAlt';
 import Search from 'components/@common/Icons/Search';
 import Image from 'components/@common/Image';
 import {
