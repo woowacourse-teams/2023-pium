@@ -46,6 +46,11 @@ export const Earth = styled.div`
   border-radius: 8px 8px 50% 50%;
 `;
 
+export const Sensor = styled.div`
+  width: 100%;
+  height: 32px;
+`;
+
 export const MonthArea = styled.div`
   position: relative;
   width: 100%;

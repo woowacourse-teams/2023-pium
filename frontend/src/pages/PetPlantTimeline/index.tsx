@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
-import Sensor from 'components/@common/Sensor';
 import {
   Day,
   Earth,
@@ -11,11 +10,13 @@ import {
   MonthHeader,
   Plant,
   PlantImage,
+  Sensor,
   Spot,
   TimelineItem,
   Water,
 } from './PetPlantTimeline.style';
 import useWaterDateList from 'hooks/queries/history/useWaterDateList';
+import useIntersectionRef from 'hooks/useIntersectionRef';
 import Sprout from 'assets/sprout.svg';
 import date2map from './date2map';
 
@@ -23,6 +24,8 @@ const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
   const { data: waterDateList, fetchNextPage } = useWaterDateList(Number(petPlantId));
   if (!waterDateList) return null;
+
+  const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
 
   const yearMap = date2map(waterDateList);
   const yearList = Object.entries(yearMap)
@@ -61,7 +64,7 @@ const PetPlantTimeline = () => {
           ));
         })}
         <Earth />
-        <Sensor fetcher={fetchNextPage} />
+        <Sensor ref={intersectionRef} />
       </Main>
       <Navbar />
     </>
