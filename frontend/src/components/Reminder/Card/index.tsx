@@ -66,7 +66,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
 
   const changeDateValidator = (changeDate: string) => {
     const tomorrow = getParticularDateFromSpecificDay(1);
-    console.log(tomorrow, changeDate);
+
     return isDateInRange({
       dateToCheck: getStringToDate(changeDate),
       startDate: getStringToDate(tomorrow),

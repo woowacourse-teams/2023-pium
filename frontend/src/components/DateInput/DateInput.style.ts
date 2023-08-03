@@ -15,6 +15,6 @@ export const DateValue = styled.button<{
   width: 100%;
 
   font: 500 1.2rem/2.2rem 'NanumSquareRound';
-  color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.sub100 : 'black')};
+  color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.subLight : 'black')};
   text-align: center;
 `;

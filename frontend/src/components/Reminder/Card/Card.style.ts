@@ -8,7 +8,7 @@ const convertCardStatusBar: {
 } = {
   late: theme.color.fontAccentForBackground,
   today: theme.color.fontPrimaryForBackground,
-  future: theme.color.sub100,
+  future: theme.color.subLight,
 };
 
 export const Wrapper = styled.div`
