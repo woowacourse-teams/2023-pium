@@ -19,10 +19,17 @@ public class DictionaryPlantSupport {
 
     public final class DictionaryPlantBuilder {
 
+        private String name;
+
+        public DictionaryPlantBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
         public DictionaryPlant build() {
             return dictionaryPlantRepository.save(
                     DictionaryPlant.builder()
-                            .name("스투키")
+                            .name(name == null ? "스투키" : name)
                             .imageUrl("https://www.costco.co.kr/medias/sys_master/images/hd6/h37/31058517229598.jpg")
                             .familyName("선인장")
                             .smell("안남")

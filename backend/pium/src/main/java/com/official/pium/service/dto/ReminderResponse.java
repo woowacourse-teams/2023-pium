@@ -18,7 +18,7 @@ public class ReminderResponse {
     private String image;
     private String nickName;
     private String dictionaryPlantName;
-    private Long dDay;
+    private Long dday;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate nextWaterDate;

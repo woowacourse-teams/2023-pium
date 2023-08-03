@@ -1,6 +1,7 @@
 package com.official.pium;
 
 import com.official.pium.support.DictionaryPlantSupport;
+import com.official.pium.support.HistorySupport;
 import com.official.pium.support.MemberSupport;
 import com.official.pium.support.PetPlantSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IntegrationTest {
 
     @Autowired
@@ -19,4 +20,7 @@ public class IntegrationTest {
 
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
+
+    @Autowired
+    protected HistorySupport historySupport;
 }

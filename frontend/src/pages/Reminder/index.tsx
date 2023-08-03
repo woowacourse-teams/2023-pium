@@ -8,10 +8,8 @@ const Reminder = () => {
 
   if (!reminderData) return null;
 
-  const scheduleReminder = Object.entries(reminderData.data);
-
-  const reminderBox = scheduleReminder.map(([month, value]) => {
-    return <MonthBox key={month} month={month} reminderDates={value} />;
+  const reminderBox = reminderData.data.map(([month, reminders]) => {
+    return <MonthBox key={JSON.stringify(reminders[0])} month={month} reminderDates={reminders} />;
   });
 
   return (

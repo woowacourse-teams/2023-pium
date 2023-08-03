@@ -19,7 +19,7 @@ const DictInfoSwitch = (props: DictInfoSwitchProps) => {
   const selectedOptions = optionMap[selected] ?? [];
 
   return (
-    <DictInfo alignment="column" contentDirection="row">
+    <DictInfo alignment="column" contentDirection="row" width="100%">
       <DictInfo.Title>
         {title}
         <InlineRadio name={title} value={selected} setValue={setSelected}>

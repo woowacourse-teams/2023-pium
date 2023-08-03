@@ -6,17 +6,14 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.PetPlantRepository;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
+import com.official.pium.service.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
@@ -29,26 +26,27 @@ public class PetPlantService {
     @Transactional
     public PetPlantResponse create(PetPlantCreateRequest request, Member member) {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(request.getDictionaryPlantId())
-                .orElseThrow(
-                        () -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id : " + request.getDictionaryPlantId()));
+                .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + request.getDictionaryPlantId()));
 
         PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, member);
         petPlantRepository.save(petPlant);
 
         long daySince = petPlant.calculateDaySince(LocalDate.now());
-        long dDay = petPlant.calculateDDay(LocalDate.now());
+        long dday = petPlant.calculateDday(LocalDate.now());
 
-        return PetPlantMapper.toPetPlantResponse(petPlant, dDay, daySince);
+        return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 
-    public PetPlantResponse read(Long id) {
+    public PetPlantResponse read(Long id, Member member) {
         PetPlant petPlant = petPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
 
-        Long dDay = petPlant.calculateDDay(LocalDate.now());
+        checkOwner(petPlant, member);
+
+        Long dday = petPlant.calculateDday(LocalDate.now());
         Long daySince = petPlant.calculateDaySince(LocalDate.now());
 
-        return PetPlantMapper.toPetPlantResponse(petPlant, dDay, daySince);
+        return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 
     public DataResponse<List<SinglePetPlantResponse>> readAll(Member member) {
@@ -63,9 +61,11 @@ public class PetPlantService {
     }
 
     @Transactional
-    public void update(Long id, PetPlantUpdateRequest updateRequest) {
+    public void update(Long id, PetPlantUpdateRequest updateRequest, Member member) {
         PetPlant petPlant = petPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
+
+        checkOwner(petPlant, member);
 
         petPlant.updatePetPlant(
                 updateRequest.getNickname(), updateRequest.getLocation(),
@@ -73,5 +73,11 @@ public class PetPlantService {
                 updateRequest.getWind(), updateRequest.getWaterCycle(),
                 updateRequest.getBirthDate(), updateRequest.getLastWaterDate()
         );
+    }
+
+    private void checkOwner(PetPlant petPlant, Member member) {
+        if (petPlant.isNotOwnerOf(member)) {
+            throw new IllegalArgumentException("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + member.getId());
+        }
     }
 }
