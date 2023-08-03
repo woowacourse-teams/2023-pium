@@ -1,6 +1,8 @@
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.div`
+  position: relative;
+
   width: 160px;
   height: 224px;
 
@@ -8,6 +10,15 @@ export const Wrapper = styled.div`
   border: 1px solid ${({ theme }) => theme.color.gray};
   border-radius: 16px;
   box-shadow: 0 0 4px 1px ${(props) => props.theme.color.grayLight};
+`;
+
+export const CrownArea = styled.div`
+  position: absolute;
+  top: -32px;
+  right: -8px;
+  transform: rotate(20deg);
+
+  font-size: 7rem;
 `;
 
 export const ImageArea = styled.div`
