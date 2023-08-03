@@ -22,6 +22,9 @@ const DaySmallBox = ({
     }
   };
 
+  const rangeAlert = isInRange ? '' : ' 범위 밖의 날짜입니다.';
+  const ariaLabel = currentDate ? convertDateKorYear(currentDate) + rangeAlert : date?.toString();
+
   return (
     <Wrapper>
       {date && (
@@ -29,7 +32,7 @@ const DaySmallBox = ({
           isToday={isToday ?? null}
           role={clickHandler ? 'button' : 'none'}
           onClick={clickHandler}
-          aria-label={`${currentDate ? convertDateKorYear(currentDate) : date}`}
+          aria-label={ariaLabel}
           isInRange={isInRange}
           tabIndex={clickHandler && 0}
           onKeyDown={keyDownHandler}

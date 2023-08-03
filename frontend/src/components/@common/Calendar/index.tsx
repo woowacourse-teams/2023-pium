@@ -60,7 +60,7 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
           <ArrowRight width={28} height={28} />
         </button>
       </HeaderBox>
-      <DaysBox>{daysOfWeeks}</DaysBox>
+      <DaysBox aria-hidden="true">{daysOfWeeks}</DaysBox>
       <CalendarBox>{days}</CalendarBox>
     </Wrapper>
   );

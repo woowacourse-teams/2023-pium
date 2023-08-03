@@ -86,7 +86,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
   return (
     <Wrapper>
       <StatusBar status={status} />
-      <Image src={image} size="64px" type="circle" alt={`${nickName} 이미지`} />
+      <Image src={image} size="64px" type="circle" alt={nickName} />
       <ContentBox role="list" tabIndex={0}>
         <NickName role="listitem" aria-label="반려 식물 닉네임">
           {nickName}
