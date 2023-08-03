@@ -1,37 +1,36 @@
-import { ReminderStatus } from 'types/api/reminder';
+import { TodayStatus } from 'types/api/reminder';
 import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {
-  status: ReminderStatus;
+  status: TodayStatus;
 }
 
-const convertReminderBackground = (status: ReminderStatus) => {
-  switch (status) {
-    case 'late':
-      return '#FCF3F3';
-    case 'today':
-      return '#F3FCF5';
-    case 'future':
-      return '#F3F3F3';
-    default:
-      return '#F3F3F3';
-  }
+const convertReminderBackground: {
+  [key in TodayStatus]: string;
+} = {
+  late: '#FCF3F3',
+  today: '#F3FCF5',
+  future: '#F3F3F3',
 };
 
-export const Wrapper = styled.section<BackgroundProps>`
+export const Wrapper = styled.div<BackgroundProps>`
   width: 100%;
   height: 100%;
   min-height: calc(100vh - 72px);
-  padding-bottom: 24px;
+  padding-bottom: 68px;
 
-  background: ${({ status }) => convertReminderBackground(status)};
+  background: ${({ status }) => convertReminderBackground[status]};
 `;
 
-export const HeaderBox = styled.article`
+export const HeaderBox = styled.header`
+  position: sticky;
+  z-index: ${({ theme: { zIndex } }) => zIndex.sticky};
+  top: 0;
+
   display: flex;
   align-items: center;
 
-  height: 72px;
+  height: 68px;
 
   background: ${(props) => props.theme.color.background};
   border-bottom: solid 1px ${(props) => props.theme.color.gray};
@@ -43,7 +42,7 @@ export const Title = styled.p`
   text-align: center;
 `;
 
-export const ContentBox = styled.article`
+export const ContentBox = styled.main`
   width: 100%;
   margin: 0 auto;
 `;

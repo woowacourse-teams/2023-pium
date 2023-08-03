@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from 'react';
-import ArrowRight from 'components/@common/Icons/ArrowRight';
+import ArrowRight from 'components/@common/Icons/ArrowRightAlt';
 import { Button, Input, Wrapper } from './FormInput.style';
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {

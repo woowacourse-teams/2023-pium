@@ -30,7 +30,7 @@ import {
 } from './PetPlantEditForm.style';
 import useEditPetPlant from 'hooks/queries/pet/useEditPetPlant';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
-import { convertDateKorYear, getParticularDateFromSpecificDay, getToday } from 'utils/date';
+import { convertDateKorYear, getParticularDateFromSpecificDay, getDateToString } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 
 const PetPlantEditForm = (props: PetPlantDetails) => {
@@ -158,7 +158,11 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
             <Text>생년월일</Text>
             <InputWrapper $width="180px">
               <HiddenLabel>생일 바꾸기</HiddenLabel>
-              <DateInput value={form.birthDate} changeCallback={setBirthDate} max={getToday()} />
+              <DateInput
+                value={form.birthDate}
+                changeCallback={setBirthDate}
+                max={getDateToString()}
+              />
             </InputWrapper>
           </ExpandedTextBox>
           <ExpandedTextBox>
@@ -191,7 +195,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
               <DateInput
                 value={form.lastWaterDate}
                 changeCallback={setLastWaterDate}
-                max={getToday()}
+                max={getDateToString()}
               />
             </InputWrapper>
           </ExpandedTextBox>

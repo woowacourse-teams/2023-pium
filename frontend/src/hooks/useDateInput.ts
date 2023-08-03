@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { getToday } from 'utils/date';
+import { getDateToString } from 'utils/date';
 
 const useDateInput = () => {
-  const today = getToday();
+  const today = getDateToString();
   const [date, setDate] = useState(today);
   const changeHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const { value } = event.target;

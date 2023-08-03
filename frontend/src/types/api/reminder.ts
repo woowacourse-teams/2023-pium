@@ -1,6 +1,6 @@
 import { DataResponse } from './DataResponse';
 
-export type ReminderStatus = 'late' | 'today' | 'future'; // 오늘 할 일에 대한 상태
+export type TodayStatus = 'late' | 'today' | 'future'; // 오늘 할 일에 대한 상태
 
 export type Month =
   | '01'
@@ -32,12 +32,12 @@ export type MonthArrangedReminder = Array<[Month, ReminderExtendType[]]>;
 
 export interface ReminderExtendType extends Reminder {
   date: string;
-  status: ReminderStatus;
+  status: TodayStatus;
 }
 
 export interface ArrangedReminderWithStatus {
   data: MonthArrangedReminder;
-  status: ReminderStatus;
+  status: TodayStatus;
 }
 
 export interface WaterPlantParams {

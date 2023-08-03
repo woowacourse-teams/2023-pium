@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import DateInput from 'components/DateInput';
-import { getToday } from 'utils/date';
+import { getDateToString } from 'utils/date';
 import FormInputBox from '.';
 
 const meta: Meta<typeof FormInputBox> = {
@@ -42,7 +42,7 @@ export const ChildrenDateInput: Story = {
   render: ({ ...args }) => {
     return (
       <FormInputBox {...args}>
-        <DateInput value={getToday()} />
+        <DateInput value={getDateToString()} />
       </FormInputBox>
     );
   },

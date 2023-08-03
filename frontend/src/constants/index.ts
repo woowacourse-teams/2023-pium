@@ -66,3 +66,5 @@ export const NUMBER = {
   minCycleDate: 1,
   maxNicknameLength: 30,
 } as const;
+
+export const DAYS_OF_THE_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;

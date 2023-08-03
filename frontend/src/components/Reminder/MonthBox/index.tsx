@@ -20,7 +20,7 @@ const MonthBox = ({ month, reminderDates }: MonthBoxProps) => {
   });
 
   return (
-    <MonthReminderBox>
+    <MonthReminderBox role="feed">
       <MonthTitle>{Number(month)}월</MonthTitle>
       {cardBoxes}
     </MonthReminderBox>
