@@ -1,7 +1,4 @@
 import type { HistoryResponse } from 'types/api/history';
-import type { PetPlantDetails } from 'types/api/petPlant';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import HistoryAPI, { HISTORY } from 'apis/history';
 
 type DateList = string[];
 
@@ -15,7 +12,7 @@ type MonthMap = Record<Month, Day[]>;
 type YearList = [Year, MonthList][];
 type MonthList = [Month, Day[]][];
 
-const convertHistoryResponseListToDateList = (historyResponseList: HistoryResponse[]) =>
+const convertHistoryResponseToDateList = (historyResponseList: HistoryResponse[]) =>
   historyResponseList.reduce<DateList>(
     (accWaterDateList, page) => accWaterDateList.concat(page.waterDateList),
     []
@@ -53,25 +50,9 @@ const convertYearMapToYearList = (yearMap: YearMap) => {
   return yearList;
 };
 
-const useYearList = (petPlantId: PetPlantDetails['id']) =>
-  useInfiniteQuery<HistoryResponse, Error, YearList, [string, PetPlantDetails['id']], number>({
-    queryKey: [HISTORY, petPlantId],
-    queryFn: async ({ pageParam }) => {
-      const response = await HistoryAPI.getPetPlant(petPlantId, pageParam);
-      const data = await response.json();
-      return data;
-    },
-    defaultPageParam: 0,
-    getNextPageParam: ({ hasNext }, _allPages, lastPageParam) => {
-      return hasNext ? lastPageParam + 1 : undefined;
-    },
-    suspense: true,
-    select: ({ pages }) => {
-      const dateList = convertHistoryResponseListToDateList(pages);
-      const yearMap = convertDateListToYearMap(dateList);
-      const yearList = convertYearMapToYearList(yearMap);
-      return yearList;
-    },
-  });
-
-export default useYearList;
+export const convertHistoryResponseListToYearList = (historyResponseList: HistoryResponse[]) => {
+  const dateList = convertHistoryResponseToDateList(historyResponseList);
+  const yearMap = convertDateListToYearMap(dateList);
+  const yearList = convertYearMapToYearList(yearMap);
+  return yearList;
+};
