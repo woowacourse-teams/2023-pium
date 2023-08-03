@@ -7,6 +7,7 @@ import Loading from 'pages/Loading';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
 import PetPlantCardList from 'pages/PetPlantCardList';
+import PetPlantEdit from 'pages/PetPlantEdit';
 import PetPlantTimeline from 'pages/PetPlantTimeline';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';

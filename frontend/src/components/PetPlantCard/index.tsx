@@ -12,7 +12,7 @@ import {
   Nickname,
   Wrapper,
 } from './PetPlantCard.style';
-import { getToday } from 'utils/date';
+import { getDateToString } from 'utils/date';
 
 const PetPlantCard = ({
   imageUrl,
@@ -23,7 +23,7 @@ const PetPlantCard = ({
 }: PetPlant) => {
   return (
     <Wrapper>
-      <CrownArea>{getToday() === birthDate && <Crown />}</CrownArea>
+      <CrownArea>{getDateToString() === birthDate && <Crown />}</CrownArea>
       <ImageArea>
         <Image src={imageUrl} type="square" size="100%" alt="반려 식물 이미지" />
       </ImageArea>
