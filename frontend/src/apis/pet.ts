@@ -1,43 +1,48 @@
-import type { NewPetPlantRequest, PetPlantDetails } from 'types/api/petPlant';
+import type { EditPetPlantRequest, NewPetPlantRequest, PetPlantDetails } from 'types/api/petPlant';
 import { BASE_URL } from 'constants/index';
 
 export const PET = `${BASE_URL}/pet-plants`;
 
+const headers = {
+  'Content-Type': 'application/json',
+  Authorization: 'pium@gmail.com',
+};
+
 const getList = () => {
   return fetch(PET, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'pium@gmail.com',
-    },
+    headers,
   });
 };
 
-const postForm = (form: NewPetPlantRequest) => {
+const register = (form: NewPetPlantRequest) => {
   return fetch(PET, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'pium@gmail.com',
-    },
-    body: JSON.stringify({ ...form }),
+    headers,
+    body: JSON.stringify(form),
   });
 };
 
 const getDetails = (petPlantId: PetPlantDetails['id']) => {
   return fetch(`${PET}/${petPlantId}`, {
     method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: 'pium@gmail.com',
-    },
+    headers,
+  });
+};
+
+const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
+  return fetch(`${PET}/${petPlantId}`, {
+    method: 'PATCH',
+    headers,
+    body: JSON.stringify(form),
   });
 };
 
 const PetAPI = {
   getList,
-  postForm,
+  register,
   getDetails,
+  edit,
 };
 
 export default PetAPI;

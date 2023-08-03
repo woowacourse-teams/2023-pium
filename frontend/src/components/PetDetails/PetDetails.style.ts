@@ -29,11 +29,10 @@ export const Title = styled.h1`
   display: flex;
   column-gap: 2px;
   align-items: center;
+  justify-content: center;
 
   font: ${({ theme }) => theme.font.title};
   font-size: 2.4rem;
-
-  ${singleLineText}
 `;
 
 export const StyledLink = styled(Link)`
@@ -157,4 +156,22 @@ export const EnvironmentTitle = styled.span`
 
   background: ${({ theme }) => theme.color.background};
   border-radius: 50%;
+`;
+
+export const EditLink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-right: auto;
+  margin-left: 0;
+
+  color: ${({ theme }) => theme.color.grayDark};
+
+  transition: color 0.2s linear;
+
+  &:focus,
+  &:hover {
+    color: ${({ theme }) => theme.color.primary};
+  }
 `;

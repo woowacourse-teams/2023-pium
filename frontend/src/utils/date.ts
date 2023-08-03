@@ -1,3 +1,6 @@
+import { DayInfo, MonthInfo } from 'types/date';
+import { dateValidate } from './validate';
+
 /**
  * 받은 날짜를 한국식으로 표현합니다.
  * @param date `new Date()`를 이용해 날짜 형태로 변경할 수 있는 값
@@ -11,13 +14,25 @@ export const convertDateKorYear = (date: string | number | Date) =>
   });
 
 /**
- * 오늘 날짜를 YYYY-MM-DD 형태의 string으로 반환합니다.
+ * 특정 날짜를 YYYY-MM-DD 형태의 string으로 반환합니다.
+ * @param date 입력 받은 특정 날짜
  * @returns 'YYYY-MM-DD'
  */
-export const getToday = () => {
-  const timezoneOffset = new Date().getTimezoneOffset() * 60 * 1000;
-  const localTime = new Date(Date.now() - timezoneOffset);
+export const getDateToString = (date = new Date()) => {
+  const timezoneOffset = date.getTimezoneOffset() * 60 * 1000;
+  const localTime = new Date(date.getTime() - timezoneOffset);
   return localTime.toISOString().slice(0, 10);
+};
+
+/**
+ * YYYY-MM-DD 형태의 값을 Date 형태로 반환합니다.
+ * @param date YYYY-MM-DD 형태의 날짜
+ * @return new Date();
+ */
+
+export const getStringToDate = (date: string | null) => {
+  if (!date) return new Date();
+  return new Date(date);
 };
 
 /**
@@ -27,14 +42,17 @@ export const getToday = () => {
  * @returns 음이 아닌 정수
  */
 export const getDaysBetween = (one: string | number | Date, another: string | number | Date) => {
-  const singleDay = 1000 * 60 * 60 * 24;
-  const oneDay = Math.floor(new Date(one).getTime() / singleDay);
-  const anotherDay = Math.floor(new Date(another).getTime() / singleDay);
-  return Math.abs(oneDay - anotherDay);
+  const first = new Date(one);
+  const second = new Date(another);
+
+  const diff = Math.abs(first.getTime() - second.getTime());
+  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+  return days;
 };
 
-/*
- * 오늘 날짜로부터 특정 일수 이전 혹은 이후의 날을 YYYY-MM-DD 형태로 반환합니다.
+/**
+ * 어떤 날부터 특정 일수 이전 혹은 이후의 날을 YYYY-MM-DD 형태로 반환합니다.
  * @param particularNumber 특정 일수
  * @param specificDay 기준이 되는 날짜 (기본값은 오늘)
  * @returns YYYY-MM-DD
@@ -65,4 +83,39 @@ export const getDaysBetweenDate = (prev: string, next: string) => {
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
 
   return days;
+};
+
+/**
+ * 날짜를 입력 받고, 해당 연,월과 첫 번째 요일 그리고 마지막 날짜를 반환하는 메서드
+ * @param date 현재 날짜
+ * @returns MonthInfo
+ */
+
+export const getMonthInfo = (date = new Date()): MonthInfo => {
+  const year = date.getFullYear(); // 연
+  const month = date.getMonth() + 1; // 월
+  const monthFirstDay = new Date(`${year}-${month}`).getDay(); // 첫 번째 요일
+  const monthLastDate = new Date(year, month, 0).getDate(); // 마지막 날짜
+
+  return {
+    year: year.toString(),
+    month: month.toString().padStart(2, '0'),
+    monthFirstDay,
+    monthLastDate,
+  };
+};
+
+export const getDayInfo = ({ idx, monthInfo, min, max }: DayInfo) => {
+  const date = idx - monthInfo.monthFirstDay + 1;
+  const isShow = date > 0 && date <= monthInfo.monthLastDate;
+
+  const currentDate = getStringToDate(`${monthInfo.year}-${monthInfo.month}-${date}`);
+  const isToday = isShow && getDateToString() === getDateToString(currentDate);
+
+  const startDate = min ? new Date(min) : null;
+  const endDate = max ? new Date(max) : null;
+
+  const isInRange = dateValidate.isDateInRange({ dateToCheck: currentDate, startDate, endDate });
+
+  return { date, isShow, isToday, currentDate, isInRange };
 };

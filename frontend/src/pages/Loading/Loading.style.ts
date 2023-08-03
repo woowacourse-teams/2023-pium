@@ -17,6 +17,7 @@ export const Wrapper = styled.main`
 
   min-width: ${({ theme }) => theme.width.mobile};
   max-width: ${({ theme }) => theme.width.pad};
+  height: calc(100vh - 68px);
   margin: auto;
 `;
 

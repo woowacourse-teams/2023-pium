@@ -1,6 +1,6 @@
-import { getParticularDateFromSpecificDay, getToday } from 'utils/date';
+import { getParticularDateFromSpecificDay, getDateToString } from 'utils/date';
 
-const TODAY = getToday();
+const TODAY = getDateToString();
 
 const REMINDER_DATA = {
   data: [

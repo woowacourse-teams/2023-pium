@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Image from 'components/@common/Image';
 import ProgressBar from 'components/@common/ProgressBar';
 import DateInput from 'components/DateInput';
@@ -17,10 +17,10 @@ import {
   Wrapper,
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
-import PetAPI from 'apis/pet';
-import { getToday } from 'utils/date';
-import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
-import { usePetPlantForm } from './reducer';
+import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
+import { getDateToString } from 'utils/date';
+import { NUMBER, OPTIONS } from 'constants/index';
+import { usePetPlantForm } from '../../../hooks/usePetPlantForm';
 
 const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';
@@ -30,14 +30,14 @@ const PetRegisterForm = () => {
   const dictionaryPlantId = Number(id);
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
   const { form, dispatch } = usePetPlantForm();
-  const navigate = useNavigate();
   const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
+  const { mutate } = useRegisterPetPlant();
 
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
-  const today = getToday();
+  const today = getDateToString();
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: 'SET', key: 'nickname', value });
+    dispatch({ type: 'SET', key: 'nickname', maxLength: NUMBER.maxNicknameLength, value });
   };
 
   const validateNickname = () => {
@@ -46,18 +46,21 @@ const PetRegisterForm = () => {
 
   const setBirthDate = (value: string) => {
     if (value > today) {
-      return;
+      return false;
     }
     dispatch({ type: 'SET', key: 'birthDate', value });
     showNextElement(1);
+
+    return true;
   };
 
   const setLastWaterDate = (value: string) => {
     if (value > today) {
-      return;
+      return false;
     }
     dispatch({ type: 'SET', key: 'lastWaterDate', value });
     showNextElement(2);
+    return true;
   };
 
   const setWaterCycle = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
@@ -95,14 +98,11 @@ const PetRegisterForm = () => {
   };
 
   const submit = () => {
-    const submitForm = {
+    mutate({
       ...form,
       dictionaryPlantId,
       waterCycle: Number(form.waterCycle),
-    };
-
-    PetAPI.postForm(submitForm).catch(console.log);
-    navigate(URL_PATH.main);
+    });
   };
 
   useEffect(() => {
@@ -137,12 +137,22 @@ const PetRegisterForm = () => {
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
-              <DateInput value={form.birthDate} changeCallback={setBirthDate} max={today} />
+              <DateInput
+                aria-label="생일(입양일) 선택"
+                value={form.birthDate}
+                changeCallback={setBirthDate}
+                max={today}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getStatus(2)}>
-              <DateInput value={form.lastWaterDate} changeCallback={setLastWaterDate} max={today} />
+              <DateInput
+                aria-label="마지막으로 물 준 날짜 선택"
+                value={form.lastWaterDate}
+                changeCallback={setLastWaterDate}
+                max={today}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>

@@ -1,4 +1,4 @@
-import type { NewPetPlantRequest } from 'types/api/petPlant';
+import type { EditPetPlantRequest, NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import PET_LIST from './data/petPlantCardList';
@@ -81,6 +81,14 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       } catch {
         return res(ctx.delay(delay), ctx.status(404));
       }
+    }),
+
+    rest.patch<EditPetPlantRequest>(`${PET}/:petPlantId`, async (req, res, ctx) => {
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(500));
+      }
+
+      return res(ctx.delay(delay), ctx.status(200));
     }),
 
     //리마인더 조회

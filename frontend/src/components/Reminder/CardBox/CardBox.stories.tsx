@@ -1,10 +1,22 @@
 import { ReminderExtendType } from 'types/api/reminder';
 import type { Meta, StoryObj } from '@storybook/react';
+import ToastProvider from 'contexts/toastContext';
+import ToastList from 'components/@common/Toast/ToastList';
 import { getParticularDateFromSpecificDay } from 'utils/date';
 import CardBox from '.';
 
 const meta: Meta<typeof CardBox> = {
   component: CardBox,
+  decorators: [
+    (Story) => {
+      return (
+        <ToastProvider>
+          <Story />
+          <ToastList />
+        </ToastProvider>
+      );
+    },
+  ],
 };
 
 export default meta;

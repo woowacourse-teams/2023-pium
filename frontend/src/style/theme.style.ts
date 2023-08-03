@@ -3,7 +3,10 @@ import { DefaultTheme } from 'styled-components';
 const color = {
   background: '#FFFFFF',
   primary: '#1BCC66',
+  fontPrimaryForBackground: '#008929',
+  fontAccentForBackground: '#d73a2e',
   sub: '#333333',
+  subLight: '#444444',
   accent: '#EB4D3D',
   gray: '#C8C8C8',
   grayLight: '#ECECEC',
@@ -25,10 +28,22 @@ const width = {
   pad: '768px',
 };
 
+const zIndex = {
+  dropdown: 1000,
+  sticky: 1020,
+  fixed: 1030,
+  modalBackdrop: 1040,
+  offcanvas: 1050,
+  modal: 1060,
+  popover: 1070,
+  tooltip: 1080,
+};
+
 const theme: DefaultTheme = {
   color,
   font,
   width,
+  zIndex,
 };
 
 export default theme;

@@ -61,6 +61,14 @@ const router = createBrowserRouter([
         element: <PetDetails />,
       },
       {
+        path: URL_PATH.petEdit,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <PetPlantEdit />
+          </Suspense>
+        ),
+      },
+      {
         path: URL_PATH.reminder,
         element: (
           <Suspense fallback={<Loading />}>

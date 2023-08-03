@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { keyframes, styled } from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -29,14 +30,14 @@ export const SearchBoxArea = styled.div`
   margin-top: 32px;
 `;
 
-export const ButtonArea = styled.div`
+export const StyledLink = styled(Link)`
   display: flex;
   justify-content: end;
   width: 100%;
   padding-top: 16px;
 `;
 
-export const StartButton = styled.button`
+export const LinkContent = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
