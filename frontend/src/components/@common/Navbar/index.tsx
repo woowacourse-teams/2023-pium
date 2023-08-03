@@ -15,11 +15,11 @@ const Navbar = () => {
       label: '메인',
       Icon: Home,
     },
-    {
-      path: URL_PATH.calendar,
-      label: '캘린더',
-      Icon: Calendar,
-    },
+    // {
+    //   path: URL_PATH.calendar,
+    //   label: '캘린더',
+    //   Icon: Calendar,
+    // },
     {
       path: URL_PATH.reminder,
       label: '리마인더',

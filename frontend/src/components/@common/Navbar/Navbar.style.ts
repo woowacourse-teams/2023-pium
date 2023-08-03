@@ -2,10 +2,8 @@ import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.nav`
-  position: fixed;
+  position: sticky;
   bottom: 0;
-  left: 50%;
-  transform: translate(-50%);
 
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-import type { NewPetPlantRequest } from 'types/api/petPlant';
+import type { EditPetPlantRequest, NewPetPlantRequest } from 'types/api/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import PET_PLANTS_DATA from './data/petPlants';
@@ -25,4 +25,8 @@ export const storybookHandlers = [
     const { data } = PetPlant.find(petPlantId % 4 === 0 ? 4 : petPlantId);
     return res(ctx.status(200), ctx.json(data));
   }),
+
+  rest.patch<EditPetPlantRequest>(`*/pet-plants/:id`, async (req, res, ctx) =>
+    res(ctx.status(200))
+  ),
 ];

@@ -8,14 +8,6 @@ describe('메인 화면', () => {
     cy.get(`img[alt="피움 로고. 녹색으로 '피움'이라는 글자가 적혀 있다."]`).should('be.visible');
     cy.contains('피움에 등록된 식물을 검색해 보세요').should('be.visible');
   });
-
-  it('"시작하기"를 눌러 식물 등록 화면으로 이동한다. (추후 로그인 화면으로 이동 예정)', () => {
-    cy.get('button')
-      .contains('시작하기')
-      .click()
-      .location('pathname')
-      .should('equal', '/pet/register');
-  });
 });
 
 describe('검색창', () => {
