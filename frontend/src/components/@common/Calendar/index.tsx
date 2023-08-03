@@ -3,6 +3,8 @@ import useCalendar from 'hooks/useCalendar';
 import useToast from 'hooks/useToast';
 import { getDateToString, getDayInfo } from 'utils/date';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
+import ArrowLeft from '../Icons/ArrowLeft';
+import ArrowRight from '../Icons/ArrowRight';
 import DaySmallBox from './DaySmallBox';
 
 interface CalendarProps {
@@ -51,11 +53,11 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
     <Wrapper role="application" aria-label="달력" aria-roledescription="calendar">
       <HeaderBox role="group">
         <button type="button" onClick={setPrevMonth} aria-label="이전 달 보기">
-          {'<'}
+          <ArrowLeft width={28} height={28} />
         </button>
         <p role="alert">{yearMonth}</p>
         <button type="button" onClick={setNextMonth} aria-label="다음 달 보기">
-          {'>'}
+          <ArrowRight width={28} height={28} />
         </button>
       </HeaderBox>
       <DaysBox>{daysOfWeeks}</DaysBox>
