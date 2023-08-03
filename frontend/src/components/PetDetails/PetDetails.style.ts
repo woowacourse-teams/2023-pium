@@ -91,6 +91,27 @@ export const Bold = styled.span`
   font-weight: bold;
 `;
 
+export const TimelineLinkArea = styled.div`
+  display: flex;
+  justify-content: end;
+`;
+
+export const TimelineLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 32px;
+  padding: 0 8px;
+
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1c7fd0;
+
+  border: solid 1px #1c7fd0;
+  border-radius: 8px;
+`;
+
 export const ExpandedTextBox = styled.p`
   display: flex;
   align-items: flex-end;

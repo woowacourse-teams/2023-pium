@@ -15,7 +15,7 @@ export const Title = styled.p`
   font-size: 2rem;
 `;
 
-export const PetCardList = styled.div`
+export const CardList = styled.div`
   overflow-y: auto;
   display: grid;
   grid-column-gap: 16px;
@@ -26,7 +26,7 @@ export const PetCardList = styled.div`
 
   width: 100%;
   height: 100%;
-  padding-bottom: 16px;
+  padding: 24px 0;
 `;
 
 export const RegisterButton = styled.button`

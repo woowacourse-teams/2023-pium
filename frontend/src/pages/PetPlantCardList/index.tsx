@@ -1,17 +1,17 @@
 import { Link, generatePath } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
-import PetCard from 'components/PetCard';
-import { PetCardList, RegisterButton, Title, Wrapper } from './PetList.style';
+import PetCard from 'components/PetPlantCard';
+import { CardList, RegisterButton, Title, Wrapper } from './PetPlantCardList.style';
 import usePetPlantCardList from 'hooks/queries/pet/usePetPlantCardList';
 import { URL_PATH } from 'constants/index';
 
-const PetList = () => {
+const PetPlantCardList = () => {
   const { data: petPlantCardList } = usePetPlantCardList();
   return (
     <>
       <Wrapper>
         <Title>나의 식물 카드</Title>
-        <PetCardList>
+        <CardList>
           <Link to={URL_PATH.petRegisterSearch} aria-label="식물 추가로 이동">
             <RegisterButton type="button">+</RegisterButton>
           </Link>
@@ -24,11 +24,11 @@ const PetList = () => {
               <PetCard {...petPlantCard} />
             </Link>
           ))}
-        </PetCardList>
+        </CardList>
       </Wrapper>
       <Navbar />
     </>
   );
 };
 
-export default PetList;
+export default PetPlantCardList;

@@ -6,8 +6,9 @@ import Error from 'pages/Error';
 import Loading from 'pages/Loading';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
-import PetList from 'pages/PetList';
+import PetPlantCardList from 'pages/PetPlantCardList';
 import PetPlantEdit from 'pages/PetPlantEdit';
+import PetPlantTimeline from 'pages/PetPlantTimeline';
 import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Reminder from 'pages/Reminder';
@@ -52,7 +53,7 @@ const router = createBrowserRouter([
         path: URL_PATH.petList,
         element: (
           <Suspense fallback={<Loading />}>
-            <PetList />
+            <PetPlantCardList />
           </Suspense>
         ),
       },
@@ -73,6 +74,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <Reminder />
+          </Suspense>
+        ),
+      },
+      {
+        path: URL_PATH.timeline,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <PetPlantTimeline />
           </Suspense>
         ),
       },

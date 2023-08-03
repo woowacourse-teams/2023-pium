@@ -9,6 +9,7 @@ export const URL_PATH = {
   dictDetail: '/dict/:id',
   petList: '/pet',
   petDetail: '/pet/:id',
+  timeline: '/pet/:id/timeline',
   petEdit: '/pet/:id/edit',
   petRegisterSearch: '/pet/register',
   petRegisterForm: '/pet/register/:id',
