@@ -32,3 +32,21 @@ export const CalendarBox = styled.section`
 export const DaysBox = styled(CalendarBox)`
   margin-bottom: 8px;
 `;
+
+export const AlertSpan = styled.span`
+  position: absolute;
+
+  overflow: hidden;
+
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  padding: 0;
+
+  white-space: nowrap;
+
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  clip-path: inset(50%);
+  border: 0;
+`;

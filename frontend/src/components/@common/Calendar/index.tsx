@@ -1,7 +1,7 @@
-import { CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
+import { useState } from 'react';
+import { AlertSpan, CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
 import useCalendar from 'hooks/useCalendar';
-import useToast from 'hooks/useToast';
-import { getDateToString, getDayInfo } from 'utils/date';
+import { convertDateKorYear, getDateToString, getDayInfo } from 'utils/date';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
 import ArrowLeft from '../Icons/ArrowLeft';
 import ArrowRight from '../Icons/ArrowRight';
@@ -18,7 +18,7 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
   const { monthInfo, setPrevMonth, setNextMonth } = useCalendar(currentDate);
   const { year, month, monthFirstDay, monthLastDate } = monthInfo;
   const boxLength = monthFirstDay + monthLastDate <= 35 ? 35 : 42;
-  const { addToast } = useToast();
+  const [message, setMessage] = useState('');
 
   const daysOfWeeks = DAYS_OF_THE_WEEK.map((day) => <DaySmallBox key={day} date={day} />);
   const days = Array.from({ length: boxLength }).map((_, idx) => {
@@ -31,7 +31,9 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
 
     const currentDay = isShow ? getDateToString(currentDate) : '';
     const clickHandler = () =>
-      isInRange ? dateCallback?.(currentDay) : addToast('warning', '범위 내 날짜가 아닙니다');
+      isInRange
+        ? dateCallback?.(currentDay)
+        : setMessage(`${convertDateKorYear(currentDate)}은 범위 내 날짜가 아닙니다`);
 
     return isShow ? (
       <DaySmallBox
@@ -61,7 +63,8 @@ const Calendar = ({ currentDate, min, max, dateCallback }: CalendarProps) => {
         </button>
       </HeaderBox>
       <DaysBox aria-hidden="true">{daysOfWeeks}</DaysBox>
-      <CalendarBox>{days}</CalendarBox>
+      <CalendarBox aria-live="assertive">{days}</CalendarBox>
+      <AlertSpan role="alert">{message}</AlertSpan>
     </Wrapper>
   );
 };

@@ -22,8 +22,7 @@ const DaySmallBox = ({
     }
   };
 
-  const rangeAlert = isInRange ? '' : ' 범위 밖의 날짜입니다.';
-  const ariaLabel = currentDate ? convertDateKorYear(currentDate) + rangeAlert : date?.toString();
+  const ariaLabel = currentDate ? convertDateKorYear(currentDate) : date?.toString();
 
   return (
     <Wrapper>
