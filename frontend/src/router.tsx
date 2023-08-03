@@ -71,7 +71,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.timeline,
         element: (
-          <Suspense fallback={<Spinner />}>
+          <Suspense fallback={<Loading />}>
             <PetPlantTimeline />
           </Suspense>
         ),
