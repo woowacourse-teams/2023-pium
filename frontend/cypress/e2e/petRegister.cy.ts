@@ -68,7 +68,10 @@ describe('반려 식물 등록하기', () => {
       .contains('등록하기')
       .click()
 
+      .get('#toast-root')
+      .contains('반려 식물 등록에 성공했어요')
+
       .location('pathname')
-      .should('equal', '/');
+      .should('equal', '/pet');
   });
 });

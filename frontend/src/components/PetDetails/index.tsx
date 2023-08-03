@@ -24,6 +24,7 @@ import {
   StyledLink,
   EnvironmentTitle,
   EnvironmentItem,
+  EditLink,
 } from './PetDetails.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
@@ -155,6 +156,9 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
             {wind}
           </EnvironmentItem>
         </Environment>
+        <EditLink to={generatePath(URL_PATH.petEdit, { id: petPlantId.toString() })}>
+          정보 수정하기
+        </EditLink>
       </Content>
     </Wrapper>
   );

@@ -1,5 +1,8 @@
-import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+
+interface InputWrapperProps {
+  $width?: string;
+}
 
 const singleLineText = css`
   overflow: hidden;
@@ -29,17 +32,11 @@ export const Title = styled.h1`
   display: flex;
   column-gap: 2px;
   align-items: center;
-  justify-content: center;
 
   font: ${({ theme }) => theme.font.title};
   font-size: 2.4rem;
-`;
 
-export const StyledLink = styled(Link)`
-  &:hover {
-    color: ${({ theme }) => theme.color.primary};
-    border-bottom: 1px solid ${({ theme }) => theme.color.primary};
-  }
+  ${singleLineText}
 `;
 
 export const SubTitle = styled.h2`
@@ -76,13 +73,6 @@ export const TitleArea = styled.div`
 export const Text = styled.span`
   font: ${({ theme }) => theme.font.dictContent};
   font-size: 1.6rem;
-`;
-
-export const Strong = styled.strong`
-  font: ${({ theme }) => theme.font.dictContent};
-  font-size: 2.4rem;
-  font-weight: bold;
-  color: ${({ theme }) => theme.color.primary};
 `;
 
 export const Bold = styled.span`
@@ -137,20 +127,76 @@ export const EnvironmentTitle = styled.span`
   border-radius: 50%;
 `;
 
-export const EditLink = styled(Link)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+export const InputWrapper = styled.div<InputWrapperProps>`
+  width: ${({ $width }) => $width};
+  border-bottom: 2px solid ${({ theme }) => theme.color.primary};
+`;
 
-  margin-right: auto;
-  margin-left: 0;
+export const HiddenLabel = styled.label`
+  position: absolute;
 
-  color: ${({ theme }) => theme.color.grayDark};
+  overflow: hidden;
 
-  transition: color 0.2s linear;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
 
-  &:focus,
-  &:hover {
-    color: ${({ theme }) => theme.color.primary};
+  white-space: nowrap;
+
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  border: 0;
+`;
+
+export const Input = styled.input`
+  height: 30px;
+  font-size: 2.5rem;
+  text-align: center;
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const NicknameInput = styled(Input)`
+  width: 100%;
+`;
+
+export const WaterCycleInput = styled(Input)`
+  width: 100px;
+  margin-bottom: 5px;
+`;
+
+export const Select = styled.select`
+  width: 100%;
+  height: 30px;
+
+  font-size: 1.6rem;
+  text-align: center;
+
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid ${(props) => props.theme.color.primary};
+`;
+
+export const Button = styled.button`
+  width: 100%;
+  height: 48px;
+
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 2.4rem;
+  color: ${({ theme }) => theme.color.background};
+  letter-spacing: 1px;
+
+  background: ${(props) => props.theme.color.primary};
+  border-radius: 8px;
+
+  &:disabled {
+    cursor: not-allowed;
+    color: ${(props) => props.theme.color.sub + '40'};
+    background: ${(props) => props.theme.color.primary + '40'};
   }
 `;
