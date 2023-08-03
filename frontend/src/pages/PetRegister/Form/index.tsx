@@ -18,7 +18,7 @@ import {
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
-import { getToday } from 'utils/date';
+import { getDateToString } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 import { usePetPlantForm } from '../../../hooks/usePetPlantForm';
 
@@ -34,7 +34,7 @@ const PetRegisterForm = () => {
   const { mutate } = useRegisterPetPlant();
 
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
-  const today = getToday();
+  const today = getDateToString();
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET', key: 'nickname', maxLength: NUMBER.maxNicknameLength, value });
@@ -46,18 +46,21 @@ const PetRegisterForm = () => {
 
   const setBirthDate = (value: string) => {
     if (value > today) {
-      return;
+      return false;
     }
     dispatch({ type: 'SET', key: 'birthDate', value });
     showNextElement(1);
+
+    return true;
   };
 
   const setLastWaterDate = (value: string) => {
     if (value > today) {
-      return;
+      return false;
     }
     dispatch({ type: 'SET', key: 'lastWaterDate', value });
     showNextElement(2);
+    return true;
   };
 
   const setWaterCycle = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
@@ -134,12 +137,22 @@ const PetRegisterForm = () => {
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
-              <DateInput value={form.birthDate} changeCallback={setBirthDate} max={today} />
+              <DateInput
+                aria-label="생일(입양일) 선택"
+                value={form.birthDate}
+                changeCallback={setBirthDate}
+                max={today}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getStatus(2)}>
-              <DateInput value={form.lastWaterDate} changeCallback={setLastWaterDate} max={today} />
+              <DateInput
+                aria-label="마지막으로 물 준 날짜 선택"
+                value={form.lastWaterDate}
+                changeCallback={setLastWaterDate}
+                max={today}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>

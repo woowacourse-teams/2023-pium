@@ -11,7 +11,7 @@ import {
   Nickname,
   Wrapper,
 } from './PetCard.style';
-import { getToday } from 'utils/date';
+import { getDateToString } from 'utils/date';
 
 const PetCard = ({ imageUrl, nickname, daySince, birthDate, dictionaryPlantName }: PetPlant) => {
   return (
@@ -21,7 +21,7 @@ const PetCard = ({ imageUrl, nickname, daySince, birthDate, dictionaryPlantName 
       </ImageArea>
       <ContentArea>
         <Nickname aria-label="식물 별명">
-          {nickname} {getToday() === birthDate && <Crown />}
+          {nickname} {getDateToString() === birthDate && <Crown />}
         </Nickname>
         <ContentRow>
           <DictionaryPlantName aria-label="식물 종류">{dictionaryPlantName}</DictionaryPlantName>

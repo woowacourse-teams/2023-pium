@@ -1,5 +1,5 @@
 import type { PetPlantDetails } from 'types/api/petPlant';
-import { getToday } from 'utils/date';
+import { getDateToString } from 'utils/date';
 import { OPTIONS } from 'constants/index';
 
 const PET_PLANTS_DATA: PetPlantDetails[] = [
@@ -74,11 +74,11 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
       name: '백엔드4',
     },
     imageUrl: 'https://images.unsplash.com/photo-1457530378978-8bac673b8062',
-    birthDate: getToday(),
+    birthDate: getDateToString(),
     daySince: 9999,
 
     waterCycle: 22,
-    lastWaterDate: getToday(),
+    lastWaterDate: getDateToString(),
     dday: -22,
     nextWaterDate: '2023-07-17',
 

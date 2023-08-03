@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const MonthReminderBox = styled.div`
+export const MonthReminderBox = styled.section`
   display: flex;
   flex-direction: column;
   gap: 20px;
