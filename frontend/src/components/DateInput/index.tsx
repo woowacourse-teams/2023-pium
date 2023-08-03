@@ -19,7 +19,7 @@ const DateInput = (props: DateInputProps) => {
     max,
     validator,
   } = props;
-  const { isOpen, on, off } = useModal();
+  const { isOpen, on, off, modalRef } = useModal();
 
   const dateCallbackHandler = (value: string) => {
     if (validator && !validator(value)) return;
@@ -33,14 +33,16 @@ const DateInput = (props: DateInputProps) => {
       <DateValue $placeholder={value === ''} onClick={on}>
         {value ? convertDateKorYear(value) : placeholder}
       </DateValue>
-      <Modal isOpen={isOpen} closeModal={off}>
-        <Calendar
-          currentDate={getStringToDate(value === '' ? null : value)}
-          dateCallback={dateCallbackHandler}
-          min={min}
-          max={max}
-        />
-      </Modal>
+      {
+        <Modal isOpen={isOpen} ref={modalRef} closeModal={off}>
+          <Calendar
+            currentDate={getStringToDate(value === '' ? null : value)}
+            dateCallback={dateCallbackHandler}
+            min={min}
+            max={max}
+          />
+        </Modal>
+      }
     </Wrapper>
   );
 };
