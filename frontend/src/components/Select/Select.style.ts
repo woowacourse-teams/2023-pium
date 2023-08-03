@@ -51,7 +51,7 @@ export const IconArea = styled.div<IconAreaProps>`
 
 export const Backdrop = styled.div`
   position: fixed;
-  z-index: 80;
+  z-index: ${({ theme: { zIndex } }) => zIndex.modalBackdrop};
   top: 0;
   left: 0;
 
@@ -61,7 +61,7 @@ export const Backdrop = styled.div`
 
 export const OptionBox = styled.ul`
   position: absolute;
-  z-index: 90;
+  z-index: ${({ theme: { zIndex } }) => zIndex.modal};
   top: 32px;
 
   width: 100%;

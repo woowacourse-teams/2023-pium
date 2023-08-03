@@ -1,22 +1,9 @@
 import styled from 'styled-components';
 
-export const Background = styled.div`
-  cursor: pointer;
-
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-
-  width: 100%;
-  height: 100%;
-
-  background-color: rgba(0, 0, 0, 0.25);
-`;
-
 export const ModalBox = styled.dialog`
   position: fixed;
-  z-index: 2;
+  z-index: ${({ theme: { zIndex } }) => zIndex.modal};
+  top: auto;
   bottom: 0;
 
   display: flex;
@@ -30,6 +17,20 @@ export const ModalBox = styled.dialog`
   background-color: ${({ theme: { color } }) => color.background};
   border: none;
   border-radius: 8px;
+
+  &::backdrop {
+    cursor: pointer;
+
+    position: fixed;
+    z-index: ${({ theme: { zIndex } }) => zIndex.modalBackdrop};
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.25);
+  }
 `;
 
 export const CloseButton = styled.button`

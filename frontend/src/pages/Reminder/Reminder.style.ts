@@ -24,7 +24,7 @@ export const Wrapper = styled.div<BackgroundProps>`
 
 export const HeaderBox = styled.header`
   position: sticky;
-  z-index: 1;
+  z-index: ${({ theme: { zIndex } }) => zIndex.sticky};
   top: 0;
 
   display: flex;
