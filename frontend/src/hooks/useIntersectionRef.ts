@@ -3,10 +3,10 @@ import createObserver from 'utils/createObserver';
 
 const useIntersectionRef = <T extends Element>(onIntersecting: () => void) => {
   const elementRef = useRef<T>(null);
-  const observer = createObserver(onIntersecting);
+  const observerRef = useRef(createObserver(onIntersecting));
 
   useEffect(() => {
-    if (elementRef.current) observer.observe(elementRef.current);
+    if (elementRef.current) observerRef.current.observe(elementRef.current);
   }, []);
 
   return elementRef;
