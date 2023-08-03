@@ -23,7 +23,6 @@ const REMINDER = '*/reminders';
 const HISTORY = '*/history';
 
 sessionStorage.setItem('MSW_REMINDER', JSON.stringify(REMINDER_DATA));
-let pageParam = 0;
 
 export const makeHandler = (delay = 0, failRate = 0) => {
   validateParams(delay, failRate);
@@ -114,7 +113,8 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(204));
     }),
 
-    rest.get(`${HISTORY}/:petPlantId`, (_req, res, ctx) => {
+    rest.get(`${HISTORY}/:petPlantId`, (req, res, ctx) => {
+      const pageParam = Number(req.url.searchParams.get('page') ?? 0);
       const waterDateList = [
         `2023-0${12 - pageParam}-30`,
         `2023-0${12 - pageParam}-27`,
@@ -138,8 +138,6 @@ export const makeHandler = (delay = 0, failRate = 0) => {
         hasNext,
         waterDateList: hasNext ? waterDateList : '1999-12-16',
       };
-
-      pageParam += 1;
 
       return res(ctx.delay(delay), ctx.status(200), ctx.json(page));
     }),
