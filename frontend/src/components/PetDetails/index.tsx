@@ -24,6 +24,8 @@ import {
   StyledLink,
   EnvironmentTitle,
   EnvironmentItem,
+  TimelineLinkArea,
+  TimelineLink,
   EditLink,
 } from './PetDetails.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
@@ -40,6 +42,7 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
   if (!petPlantDetails) return null;
 
   const {
+    id,
     imageUrl,
     nickname,
     dictionaryPlant: { id: dictId, name: dictName },
@@ -104,6 +107,11 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
             <Text>다음 물주기</Text>
             <Bold>{daysBetweenNextWaterDate ? `${daysBetweenNextWaterDate}일 후` : '오늘!!'}</Bold>
           </ExpandedTextBox>
+          <TimelineLinkArea>
+            <TimelineLink to={generatePath(URL_PATH.timeline, { id: String(id) })}>
+              타임라인 보기
+            </TimelineLink>
+          </TimelineLinkArea>
         </InfoArea>
         <Divider aria-hidden="true" />
         <Environment>
