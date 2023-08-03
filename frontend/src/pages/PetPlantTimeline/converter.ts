@@ -2,23 +2,23 @@ import type { HistoryResponse } from 'types/api/history';
 
 type DateList = string[];
 
-type Year = string;
-type Month = string;
 type Day = number;
+type Month = string;
+type Year = string;
 
-type YearMap = Record<Year, MonthMap>;
 type MonthMap = Record<Month, Day[]>;
+type YearMap = Record<Year, MonthMap>;
 
-type YearList = [Year, MonthList][];
 type MonthList = [Month, Day[]][];
+export type YearList = [Year, MonthList][];
 
-const convertHistoryResponseListToDateList = (historyResponseList: HistoryResponse[]) =>
+export const convertHistoryResponseListToDateList = (historyResponseList: HistoryResponse[]) =>
   historyResponseList.reduce<DateList>(
     (accWaterDateList, page) => accWaterDateList.concat(page.waterDateList),
     []
   );
 
-const convertDateListToYearMap = (dateList: string[]) => {
+export const convertDateListToYearMap = (dateList: string[]) => {
   const yearMap: YearMap = {};
 
   dateList.forEach((date) => {
@@ -38,7 +38,7 @@ const convertDateListToYearMap = (dateList: string[]) => {
   return yearMap;
 };
 
-const convertYearMapToYearList = (yearMap: YearMap) => {
+export const convertYearMapToYearList = (yearMap: YearMap) => {
   const convertMapToList = <T>(map: Record<string, T>) =>
     Object.entries(map).sort(([a], [b]) => Number(b) - Number(a));
 
@@ -47,12 +47,5 @@ const convertYearMapToYearList = (yearMap: YearMap) => {
     convertMapToList(monthMap),
   ]);
 
-  return yearList;
-};
-
-export const convertHistoryResponseListToYearList = (historyResponseList: HistoryResponse[]) => {
-  const dateList = convertHistoryResponseListToDateList(historyResponseList);
-  const yearMap = convertDateListToYearMap(dateList);
-  const yearList = convertYearMapToYearList(yearMap);
   return yearList;
 };

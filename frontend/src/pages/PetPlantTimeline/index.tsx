@@ -15,17 +15,15 @@ import {
   TimelineItem,
   Water,
 } from './PetPlantTimeline.style';
-import usePetPlantHistory from 'hooks/queries/history/usePetPlantHistory';
+import useYearList from 'hooks/queries/history/useYearList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
 import Sprout from 'assets/sprout.svg';
-import { convertHistoryResponseListToYearList } from './converter';
 
 const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
-  const { data, fetchNextPage } = usePetPlantHistory(Number(petPlantId));
-  if (!data) return null;
+  const { data: yearList, fetchNextPage } = useYearList(Number(petPlantId));
+  if (!yearList) return null;
 
-  const yearList = convertHistoryResponseListToYearList(data.pages);
   const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
 
   useEffect(() => {
