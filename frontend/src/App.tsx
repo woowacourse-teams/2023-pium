@@ -6,7 +6,7 @@ import router from './router';
 const App = () => {
   return (
     <ErrorBoundary fallback={<Error />}>
-      <RouterProvider router={router} />;
+      <RouterProvider router={router} />
     </ErrorBoundary>
   );
 };
