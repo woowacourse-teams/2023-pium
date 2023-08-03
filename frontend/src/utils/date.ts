@@ -1,4 +1,5 @@
 import { DayInfo, MonthInfo } from 'types/date';
+import { dateValidate } from './validate';
 
 /**
  * 받은 날짜를 한국식으로 표현합니다.
@@ -104,32 +105,6 @@ export const getMonthInfo = (date = new Date()): MonthInfo => {
   };
 };
 
-interface DateInRange {
-  /** 날짜 체크를 하는 date */
-  dateToCheck: Date;
-  /** 미니멈 date */
-  startDate: Date | null;
-  /** 맥시멈 date */
-  endDate: Date | null;
-}
-
-const isDateInRange = ({ dateToCheck, startDate, endDate }: DateInRange) => {
-  const dateToCheckTime = dateToCheck.getTime();
-  if (startDate && endDate) {
-    return dateToCheckTime >= startDate.getTime() && dateToCheckTime <= endDate.getTime();
-  }
-
-  if (endDate && !startDate) {
-    return dateToCheckTime <= endDate.getTime();
-  }
-
-  if (startDate && !endDate) {
-    return dateToCheckTime >= startDate.getTime();
-  }
-
-  return true;
-};
-
 export const getDayInfo = ({ idx, monthInfo, min, max }: DayInfo) => {
   const date = idx - monthInfo.monthFirstDay + 1;
   const isShow = date > 0 && date <= monthInfo.monthLastDate;
@@ -140,7 +115,7 @@ export const getDayInfo = ({ idx, monthInfo, min, max }: DayInfo) => {
   const startDate = min ? new Date(min) : null;
   const endDate = max ? new Date(max) : null;
 
-  const isInRange = isDateInRange({ dateToCheck: currentDate, startDate, endDate });
+  const isInRange = dateValidate.isDateInRange({ dateToCheck: currentDate, startDate, endDate });
 
   return { date, isShow, isToday, currentDate, isInRange };
 };

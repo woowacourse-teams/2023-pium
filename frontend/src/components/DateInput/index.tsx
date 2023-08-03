@@ -6,18 +6,25 @@ import { convertDateKorYear, getStringToDate } from 'utils/date';
 
 interface DateInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
-  changeCallback?: (value: string) => boolean;
+  changeCallback?: (value: string) => void;
+  validator?: (value: string) => boolean;
 }
 
 const DateInput = (props: DateInputProps) => {
-  const { value = '', changeCallback, placeholder = '날짜를 입력해 주세요', min, max } = props;
+  const {
+    value = '',
+    changeCallback,
+    placeholder = '날짜를 입력해 주세요',
+    min,
+    max,
+    validator,
+  } = props;
   const { isOpen, on, off } = useModal();
 
   const dateCallbackHandler = (value: string) => {
-    if (changeCallback && !changeCallback(value)) {
-      return;
-    }
+    if (validator && !validator(value)) return;
 
+    changeCallback?.(value);
     off();
   };
 

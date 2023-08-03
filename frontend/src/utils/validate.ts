@@ -40,3 +40,31 @@ export const inputValidate = {
    */
   checkECode: (value: string) => ['e', 'E', '+', '-', '.'].includes(value),
 };
+
+interface DateInRange {
+  /** 날짜 체크를 하는 date */
+  dateToCheck: Date;
+  /** 미니멈 date */
+  startDate?: Date | null;
+  /** 맥시멈 date */
+  endDate?: Date | null;
+}
+
+export const dateValidate = {
+  isDateInRange: ({ dateToCheck, startDate, endDate }: DateInRange) => {
+    const dateToCheckTime = dateToCheck.getTime();
+    if (startDate && endDate) {
+      return dateToCheckTime >= startDate.getTime() && dateToCheckTime <= endDate.getTime();
+    }
+
+    if (endDate && !startDate) {
+      return dateToCheckTime <= endDate.getTime();
+    }
+
+    if (startDate && !endDate) {
+      return dateToCheckTime >= startDate.getTime();
+    }
+
+    return true;
+  },
+};
