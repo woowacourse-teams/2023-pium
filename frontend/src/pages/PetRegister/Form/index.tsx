@@ -137,12 +137,22 @@ const PetRegisterForm = () => {
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
-              <DateInput value={form.birthDate} changeCallback={setBirthDate} max={today} />
+              <DateInput
+                aria-label="생일(입양일) 선택"
+                value={form.birthDate}
+                changeCallback={setBirthDate}
+                max={today}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
             <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getStatus(2)}>
-              <DateInput value={form.lastWaterDate} changeCallback={setLastWaterDate} max={today} />
+              <DateInput
+                aria-label="마지막으로 물 준 날짜 선택"
+                value={form.lastWaterDate}
+                changeCallback={setLastWaterDate}
+                max={today}
+              />
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>

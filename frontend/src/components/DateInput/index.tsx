@@ -30,19 +30,22 @@ const DateInput = (props: DateInputProps) => {
 
   return (
     <Wrapper>
-      <DateValue $placeholder={value === ''} onClick={on}>
+      <DateValue
+        type="button"
+        aria-label={props['aria-label']}
+        $placeholder={value === ''}
+        onClick={on}
+      >
         {value ? convertDateKorYear(value) : placeholder}
       </DateValue>
-      {
-        <Modal isOpen={isOpen} ref={modalRef} closeModal={off}>
-          <Calendar
-            currentDate={getStringToDate(value === '' ? null : value)}
-            dateCallback={dateCallbackHandler}
-            min={min}
-            max={max}
-          />
-        </Modal>
-      }
+      <Modal isOpen={isOpen} ref={modalRef} closeModal={off}>
+        <Calendar
+          currentDate={getStringToDate(value === '' ? null : value)}
+          dateCallback={dateCallbackHandler}
+          min={min}
+          max={max}
+        />
+      </Modal>
     </Wrapper>
   );
 };

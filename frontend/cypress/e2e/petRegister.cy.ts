@@ -1,4 +1,7 @@
+import { convertDateKorYear, getDateToString } from 'utils/date';
+
 describe('반려 식물 등록하기', () => {
+  const todayKorString = convertDateKorYear(getDateToString());
   beforeEach(() => {
     cy.visit('/pet/register');
   });
@@ -23,12 +26,17 @@ describe('반려 식물 등록하기', () => {
       .get('button[aria-label="입력 완료"]')
       .click()
 
-      .get('input[type="date"]')
-      .type('2023-07-28')
+      .get('button[aria-label="생일(입양일) 선택"]')
+      .click()
 
-      .get('input[type="date"]')
-      .last()
-      .type('2023-07-30')
+      .get(`span[aria-label="${todayKorString}"]`)
+      .click()
+
+      .get('button[aria-label="마지막으로 물 준 날짜 선택"]')
+      .click()
+
+      .get(`span[aria-label="${todayKorString}"]`)
+      .click()
 
       .get('input')
       .last()
