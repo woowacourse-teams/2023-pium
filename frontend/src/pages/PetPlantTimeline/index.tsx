@@ -40,7 +40,7 @@ const PetPlantTimeline = () => {
     <>
       <Main>
         <Plant>
-          <PlantImage src={Sprout} />
+          <PlantImage src={Sprout} alt="타임라인 꼭대기" />
         </Plant>
         {yearList.map(([year, monthMap]) => {
           const monthList = Object.entries(monthMap)
