@@ -19,9 +19,11 @@ export const convertDateKorYear = (date: string | number | Date) =>
  * @returns 'YYYY-MM-DD'
  */
 export const getDateToString = (date = new Date()) => {
-  const timezoneOffset = date.getTimezoneOffset() * 60 * 1000;
-  const localTime = new Date(date.getTime() - timezoneOffset);
-  return localTime.toISOString().slice(0, 10);
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
 };
 
 /**
@@ -30,9 +32,10 @@ export const getDateToString = (date = new Date()) => {
  * @return new Date();
  */
 
-export const getStringToDate = (date: string | null) => {
-  if (!date) return new Date();
-  return new Date(date);
+export const getStringToDate = (date: string | number | Date | null) => {
+  if (typeof date !== 'string') return new Date();
+  const [year, month, day] = date.split('-').map(Number);
+  return new Date(year, month - 1, day);
 };
 
 /**
@@ -42,8 +45,8 @@ export const getStringToDate = (date: string | null) => {
  * @returns 음이 아닌 정수
  */
 export const getDaysBetween = (one: string | number | Date, another: string | number | Date) => {
-  const first = new Date(one);
-  const second = new Date(another);
+  const first = getStringToDate(one);
+  const second = getStringToDate(another);
 
   const diff = Math.abs(first.getTime() - second.getTime());
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
@@ -64,7 +67,7 @@ export const getParticularDateFromSpecificDay = (
 ) => {
   const particularDate = new Date(specificDay.setDate(specificDay.getDate() + particularNumber));
 
-  return particularDate.toISOString().slice(0, 10);
+  return getDateToString(particularDate);
 };
 
 /**
@@ -76,8 +79,8 @@ export const getParticularDateFromSpecificDay = (
  */
 
 export const getDaysBetweenDate = (prev: string, next: string) => {
-  const first = new Date(prev);
-  const second = new Date(next);
+  const first = getStringToDate(prev);
+  const second = getStringToDate(next);
 
   const diff = Math.abs(first.getTime() - second.getTime());
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
@@ -94,7 +97,7 @@ export const getDaysBetweenDate = (prev: string, next: string) => {
 export const getMonthInfo = (date = new Date()): MonthInfo => {
   const year = date.getFullYear(); // 연
   const month = date.getMonth() + 1; // 월
-  const monthFirstDay = new Date(`${year}-${month}`).getDay(); // 첫 번째 요일
+  const monthFirstDay = new Date(year, month - 1).getDay(); // 첫 번째 요일
   const monthLastDate = new Date(year, month, 0).getDate(); // 마지막 날짜
 
   return {
