@@ -10,7 +10,7 @@ const useCalendar = (currentDate: Date) => {
     const prevMonth = Number(month) - 1 < 1 ? 12 : Number(month) - 1;
     const prevYear = Number(month) - 1 < 1 ? Number(year) - 1 : Number(year);
 
-    setMonthInfo(() => getMonthInfo(new Date(`${prevYear}-${prevMonth}`)));
+    setMonthInfo(() => getMonthInfo(new Date(prevYear, prevMonth - 1)));
   };
 
   const setNextMonth = () => {
@@ -18,7 +18,7 @@ const useCalendar = (currentDate: Date) => {
     const nextMonth = Number(month) + 1 > 12 ? 1 : Number(month) + 1;
     const nextYear = Number(month) + 1 > 12 ? Number(year) + 1 : Number(year);
 
-    setMonthInfo(() => getMonthInfo(new Date(`${nextYear}-${nextMonth}`)));
+    setMonthInfo(() => getMonthInfo(new Date(nextYear, nextMonth - 1)));
   };
 
   return { monthInfo, setPrevMonth, setNextMonth };
