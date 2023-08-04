@@ -38,6 +38,11 @@ export const ContentBox = styled.ul`
 
   width: 128px;
   height: 68px;
+
+  li {
+    overflow: hidden;
+    width: auto;
+  }
 `;
 
 export const NickName = styled.li`
