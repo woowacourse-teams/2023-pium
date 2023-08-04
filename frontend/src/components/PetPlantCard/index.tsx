@@ -12,7 +12,7 @@ import {
   Nickname,
   Wrapper,
 } from './PetPlantCard.style';
-import { getDateToString } from 'utils/date';
+import { convertDateKorYear } from 'utils/date';
 
 const PetPlantCard = ({
   imageUrl,
@@ -21,9 +21,13 @@ const PetPlantCard = ({
   birthDate,
   dictionaryPlantName,
 }: PetPlant) => {
+  const birthDateKorean = convertDateKorYear(birthDate);
+  const today = convertDateKorYear(new Date()).slice(5);
+  const isBirthday = today === birthDateKorean.slice(5);
+
   return (
     <Wrapper>
-      <CrownArea>{getDateToString() === birthDate && <Crown />}</CrownArea>
+      <CrownArea>{isBirthday && <Crown />}</CrownArea>
       <ImageArea>
         <Image src={imageUrl} type="square" size="100%" alt="반려 식물 이미지" />
       </ImageArea>
