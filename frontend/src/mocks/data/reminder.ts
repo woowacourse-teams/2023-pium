@@ -5,6 +5,15 @@ const TODAY = getDateToString();
 const REMINDER_DATA = {
   data: [
     {
+      petPlantId: 0,
+      image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+      nickName: '내가 만든 쿠키이이이이 히? 너는 절대 못먹지 캔츄바레 원잇  플리즈',
+      dictionaryPlantName: '이 편지는 영국에서 시작해서 그렇게 변화게 되어왔습니다.',
+      dday: 20,
+      nextWaterDate: getParticularDateFromSpecificDay(-20, new Date()),
+      lastWaterDate: getParticularDateFromSpecificDay(-27, new Date()),
+    },
+    {
       petPlantId: 1,
       image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
       nickName: '참새 나무',
