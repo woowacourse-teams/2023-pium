@@ -4,7 +4,7 @@ import { BASE_URL } from 'constants/index';
 export const HISTORY = `${BASE_URL}/history`;
 
 const getPetPlant = (petPlantId: PetPlantDetails['id'], page: number, size = 20) => {
-  const url = `${HISTORY}/${petPlantId}?page=${page}&size=${size}`;
+  const url = `${HISTORY}?petPlantId=${petPlantId}&page=${page}&size=${size}`;
 
   return fetch(url, {
     method: 'GET',

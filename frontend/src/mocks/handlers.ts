@@ -121,7 +121,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(204));
     }),
 
-    rest.get(`${HISTORY}/:petPlantId`, (req, res, ctx) => {
+    rest.get(`${HISTORY}`, (req, res, ctx) => {
       const pageParam = Number(req.url.searchParams.get('page') ?? 0);
       const waterDateList = [
         `2023-0${12 - pageParam}-30`,
