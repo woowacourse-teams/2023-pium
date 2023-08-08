@@ -6,7 +6,6 @@ import ErrorBoundary from 'components/@common/ErrorBoundary';
 import ToastList from 'components/@common/Toast/ToastList';
 import ToastProvider from 'contexts/toastContext';
 import { GlobalStyle } from 'style/Global.style';
-import { GlobalFont } from 'style/GlobalFont.style';
 import theme from 'style/theme.style';
 import router from './router';
 
@@ -15,7 +14,6 @@ const queryClient = new QueryClient();
 const App = () => {
   return (
     <>
-      <GlobalFont />
       <GlobalStyle />
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>

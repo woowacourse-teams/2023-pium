@@ -14,7 +14,7 @@ export const HeaderBox = styled.header`
   width: 300px;
   margin: 0 auto 16px auto;
 
-  font: 900 2rem/3.2rem 'GmarketSansMedium';
+  font: 900 2rem/3.2rem 'GmarketSans';
 `;
 
 export const CalendarBox = styled.section`
@@ -25,7 +25,7 @@ export const CalendarBox = styled.section`
   width: 300px;
   margin: 0 auto;
 
-  font: 500 1.6rem/2.4rem 'GmarketSansMedium';
+  font: 500 1.6rem/2.4rem 'GmarketSans';
   text-align: center;
 `;
 

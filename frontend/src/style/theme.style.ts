@@ -15,12 +15,12 @@ const color = {
 
 const font = {
   emphasize: '',
-  subTitle: 'normal 600 2rem/2.4rem "GmarketSansMedium"',
-  title: 'normal 700 3.2rem/4rem "GmarketSansMedium"',
-  input: 'normal 500 1.8rem/2.2rem "GmarketSansMedium"',
-  dictTitle: 'normal 600 1.8rem/2.2rem "GmarketSansMedium"',
-  dictContent: 'normal 400 1.4rem/1.8rem "GmarketSansMedium"',
-  reminderCardContent: '500 1rem/1.5rem "GmarketSansMedium"',
+  subTitle: 'normal 600 2rem/2.4rem "GmarketSans"',
+  title: 'normal 700 3.2rem/4rem "GmarketSans"',
+  input: 'normal 500 1.8rem/2.2rem "GmarketSans"',
+  dictTitle: 'normal 600 1.8rem/2.2rem "GmarketSans"',
+  dictContent: 'normal 400 1.4rem/1.8rem "GmarketSans"',
+  reminderCardContent: '500 1rem/1.5rem "GmarketSans"',
 };
 
 const width = {
