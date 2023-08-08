@@ -83,11 +83,11 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
         <Divider aria-hidden="true" />
         <InfoArea>
           <ExpandedTextBox>
-            <Text>생년월일</Text>
+            <Text>입양일</Text>
             <Text>{birthDateKorean}</Text>
           </ExpandedTextBox>
           <ExpandedTextBox>
-            <Text>피움과 함께한 지</Text>
+            <Text>함께한 지</Text>
             <Text>{daySince}일</Text>
           </ExpandedTextBox>
         </InfoArea>

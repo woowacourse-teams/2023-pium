@@ -166,7 +166,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
             </InputWrapper>
           </ExpandedTextBox>
           <ExpandedTextBox>
-            <Text>피움과 함께한 지</Text>
+            <Text>함께한 지</Text>
             <Text>{daySince}일</Text>
           </ExpandedTextBox>
         </InfoArea>
