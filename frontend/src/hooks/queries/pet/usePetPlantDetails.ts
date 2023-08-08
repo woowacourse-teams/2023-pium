@@ -1,4 +1,4 @@
-import type { PetPlantDetails } from 'types/api/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
 import PetAPI from 'apis/pet';
 

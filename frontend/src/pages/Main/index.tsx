@@ -1,5 +1,5 @@
 import Navbar from 'components/@common/Navbar';
-import SearchBox from 'components/SearchBox';
+import SearchBox from 'components/search/SearchBox';
 import {
   LinkContent,
   Logo,

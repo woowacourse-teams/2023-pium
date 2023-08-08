@@ -3,9 +3,9 @@ import Calendar from 'components/@common/Icons/Calendar';
 import Home from 'components/@common/Icons/Home';
 import Plant from 'components/@common/Icons/Plant';
 import Reminder from 'components/@common/Icons/Reminder';
-import theme from '../../../style/theme.style';
 import { NavItem, NavItemArea, NavLabel, NavLink, Wrapper } from './Navbar.style';
 import { URL_PATH } from 'constants/index';
+import theme from 'style/theme.style';
 
 const Navbar = () => {
   const { pathname } = useLocation();

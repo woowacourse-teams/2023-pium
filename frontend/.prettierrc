@@ -7,12 +7,15 @@
     "<THIRD_PARTY_MODULES>",
     "^pages/(.*)$",
     "^components/(.*)$",
-    "\\.style$",
+    "\\./(.*)\\.style$",
+    "^store/(.*)$",
+    "^contexts/(.*)$",
     "^hooks/(.*)$",
 
     "^apis/(.*)$",
     "^utils/(.*)$",
     "^constants/(.*)$",
+    "^style/(.*)$",
     "^assets/(.*)$",
 
     "^\\./?"

@@ -26,6 +26,8 @@ module.exports = {
       assets: resolve(__dirname, 'src', 'assets'),
       constants: resolve(__dirname, 'src', 'constants'),
       contexts: resolve(__dirname, 'src', 'contexts'),
+      store: resolve(__dirname, 'src', 'store'),
+      style: resolve(__dirname, 'src', 'style'),
     },
   },
   module: {
@@ -42,7 +44,7 @@ module.exports = {
         },
       },
       {
-        test: /\.(png|jpg|jpeg|svg|woff|woff2|eot|ttf|otf)$/i,
+        test: /\.(png|jpg|jpeg|svg)$/i,
         type: 'asset/resource',
       },
     ],

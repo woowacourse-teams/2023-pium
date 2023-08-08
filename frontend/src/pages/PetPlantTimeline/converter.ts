@@ -1,4 +1,4 @@
-import type { HistoryResponse } from 'types/api/history';
+import type { HistoryResponse } from 'types/history';
 
 type DateList = string[];
 

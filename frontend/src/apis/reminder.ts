@@ -1,4 +1,4 @@
-import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
+import { ChangeDateParams, WaterPlantParams } from 'types/reminder';
 import { BASE_URL } from 'constants/index';
 
 export const REMINDER = `${BASE_URL}/reminders`;

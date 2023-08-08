@@ -1,6 +1,6 @@
 import { generatePath, useNavigate } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
-import SearchBox from 'components/SearchBox';
+import SearchBox from 'components/search/SearchBox';
 import { Wrapper, Message, SearchBoxArea } from './Search.style';
 import { URL_PATH } from 'constants/index';
 

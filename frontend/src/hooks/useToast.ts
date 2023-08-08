@@ -1,6 +1,6 @@
-import { ToastContext } from 'contexts/toastContext';
 import { useContext } from 'react';
 import { ToastType } from 'components/@common/Toast';
+import { ToastContext } from 'contexts/toastContext';
 import { ERROR } from 'constants/index';
 
 /**

@@ -1,4 +1,4 @@
-import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
+import { ChangeDateParams, WaterPlantParams } from 'types/reminder';
 import { convertDateKorYear } from 'utils/date';
 import useChangeDate from './queries/reminder/useChangeDate';
 import useReminder from './queries/reminder/useReminder';

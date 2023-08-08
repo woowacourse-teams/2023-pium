@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import DateInput from 'components/@common/DateInput';
+import FormInput from 'components/@common/FormInput';
+import FormInputBox from 'components/@common/FormInputBox';
 import Image from 'components/@common/Image';
 import ProgressBar from 'components/@common/ProgressBar';
-import DateInput from 'components/DateInput';
-import FormInput from 'components/FormInput';
-import FormInputBox from 'components/FormInputBox';
-import Select from 'components/Select';
-import Stack from 'components/Stack';
-import useStack from 'components/Stack/hooks/useStack';
+import Select from 'components/@common/Select';
+import Stack from 'components/@common/Stack';
+import useStack from 'components/@common/Stack/hooks/useStack';
 import {
   Button,
   Center,
@@ -18,9 +18,9 @@ import {
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
+import { usePetPlantForm } from 'hooks/usePetPlantForm';
 import { getDateToString } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
-import { usePetPlantForm } from '../../../hooks/usePetPlantForm';
 
 const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';
@@ -136,9 +136,9 @@ const PetRegisterForm = () => {
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-            <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
+            <FormInputBox title="입양일이 언제인가요?" status={getStatus(1)}>
               <DateInput
-                aria-label="생일(입양일) 선택"
+                aria-label="입양일 선택"
                 value={form.birthDate}
                 changeCallback={setBirthDate}
                 max={today}
