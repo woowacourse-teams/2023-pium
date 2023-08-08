@@ -1,4 +1,4 @@
-import { DayInfo, MonthInfo } from 'types/date';
+import { DayInfo, Month, MonthInfo } from 'types/date';
 import { dateValidate } from './validate';
 
 /**
@@ -20,7 +20,7 @@ export const convertDateKorYear = (date: string | number | Date) =>
  */
 export const getDateToString = (date = new Date()) => {
   const year = date.getFullYear();
-  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const month = (date.getMonth() + 1).toString().padStart(2, '0') as Month;
   const day = date.getDate().toString().padStart(2, '0');
 
   return `${year}-${month}-${day}`;
@@ -58,7 +58,7 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
  * 어떤 날부터 특정 일수 이전 혹은 이후의 날을 YYYY-MM-DD 형태로 반환합니다.
  * @param particularNumber 특정 일수
  * @param specificDay 기준이 되는 날짜 (기본값은 오늘)
- * @returns YYYY-MM-DD
+ * @returns DateFormat
  */
 
 export const getParticularDateFromSpecificDay = (
