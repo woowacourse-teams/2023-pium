@@ -4,7 +4,6 @@ import type {
   TodayStatus,
   WaterPlantParams,
 } from 'types/api/reminder';
-import { ReminderContext } from 'contexts/reminderContext';
 import { useContext } from 'react';
 import Image from 'components/@common/Image';
 import DateInput from 'components/DateInput';
@@ -17,6 +16,7 @@ import {
   NickName,
   DictionaryPlantName,
 } from './Card.style';
+import { ReminderContext } from 'contexts/reminderContext';
 import { getDateToString, getParticularDateFromSpecificDay, getStringToDate } from 'utils/date';
 import { dateValidate } from 'utils/validate';
 

@@ -7,9 +7,9 @@
     "<THIRD_PARTY_MODULES>",
     "^pages/(.*)$",
     "^components/(.*)$",
-    "\\.style$",
+    "\\./(.*)\\.style$",
     "^store/(.*)$",
-    "^context/(.*)$",
+    "^contexts/(.*)$",
     "^hooks/(.*)$",
 
     "^apis/(.*)$",
