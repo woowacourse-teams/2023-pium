@@ -8,11 +8,14 @@
     "^pages/(.*)$",
     "^components/(.*)$",
     "\\.style$",
+    "^store/(.*)$",
+    "^context/(.*)$",
     "^hooks/(.*)$",
 
     "^apis/(.*)$",
     "^utils/(.*)$",
     "^constants/(.*)$",
+    "^style/(.*)$",
     "^assets/(.*)$",
 
     "^\\./?"

@@ -26,6 +26,8 @@ module.exports = {
       assets: resolve(__dirname, 'src', 'assets'),
       constants: resolve(__dirname, 'src', 'constants'),
       contexts: resolve(__dirname, 'src', 'contexts'),
+      store: resolve(__dirname, 'src', 'store'),
+      style: resolve(__dirname, 'src', 'style'),
     },
   },
   module: {

@@ -11,6 +11,7 @@
 
     "baseUrl": "src",
     "paths": {
+      "api/*": ["api/*"],
       "types/*": ["types/*"],
       "pages/*": ["pages/*"],
       "components/*": ["components/*"],
@@ -18,7 +19,9 @@
       "hooks/*": ["hooks/*"],
       "utils/*": ["utils/*"],
       "assets/*": ["assets/*"],
-      "constants/*": ["constants/*"]
+      "constants/*": ["constants/*"],
+      "style/*": ["style/*"],
+      "store/*": ["store/*"]
     },
 
     "types": ["cypress"]
