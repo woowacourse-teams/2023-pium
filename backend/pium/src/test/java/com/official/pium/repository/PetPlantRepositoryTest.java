@@ -39,20 +39,7 @@ class PetPlantRepositoryTest extends RepositoryTest {
 
     @Test
     void 반려_식물_저장() {
-        PetPlant petPlant = PetPlant.builder()
-                .dictionaryPlant(dictionaryPlant)
-                .member(member)
-                .nickname("피우미")
-                .imageUrl("https://image.com")
-                .location("베란다")
-                .flowerpot("화분")
-                .light("밝아요")
-                .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .waterCycle(3)
-                .build();
+        PetPlant petPlant = createPetPlant();
 
         PetPlant savePetPlant = petPlantRepository.save(petPlant);
 
@@ -64,7 +51,25 @@ class PetPlantRepositoryTest extends RepositoryTest {
 
     @Test
     void 반려_식물_조회() {
-        PetPlant petPlant = PetPlant.builder()
+        PetPlant petPlant = createPetPlant();
+
+        PetPlant savePetPlant = petPlantRepository.save(petPlant);
+
+        assertThat(petPlantRepository.findById(savePetPlant.getId())).isPresent();
+    }
+
+    @Test
+    void 반려_식물_삭제() {
+        PetPlant petPlant = createPetPlant();
+        petPlantRepository.save(petPlant);
+
+        petPlantRepository.delete(petPlant);
+
+        assertThat(petPlantRepository.findById(petPlant.getId())).isEmpty();
+    }
+
+    private PetPlant createPetPlant() {
+        return PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
                 .member(member)
                 .nickname("피우미")
@@ -78,9 +83,5 @@ class PetPlantRepositoryTest extends RepositoryTest {
                 .lastWaterDate(LocalDate.now())
                 .waterCycle(3)
                 .build();
-
-        PetPlant savePetPlant = petPlantRepository.save(petPlant);
-
-        assertThat(petPlantRepository.findById(savePetPlant.getId())).isPresent();
     }
 }
