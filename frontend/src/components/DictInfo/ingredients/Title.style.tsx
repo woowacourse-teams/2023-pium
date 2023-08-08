@@ -1,5 +1,5 @@
 import { styled } from 'styled-components';
-import theme from '../../../style/theme.style';
+import theme from 'style/theme.style';
 
 const Title = styled.p`
   display: inline-flex;

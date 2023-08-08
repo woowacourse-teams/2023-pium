@@ -1,5 +1,5 @@
-import theme from '../../../style/theme.style';
 import { CircleSpinner } from './Spinner.style';
+import theme from 'style/theme.style';
 
 interface SpinnerProps {
   diameter?: string;

@@ -6,7 +6,6 @@ import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
 import DateInput from 'components/DateInput';
-import theme from '../../style/theme.style';
 import {
   InfoArea,
   Bold,
@@ -32,6 +31,7 @@ import useEditPetPlant from 'hooks/queries/pet/useEditPetPlant';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import { convertDateKorYear, getParticularDateFromSpecificDay, getDateToString } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
+import theme from 'style/theme.style';
 
 const PetPlantEditForm = (props: PetPlantDetails) => {
   const {

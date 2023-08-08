@@ -18,9 +18,9 @@ import {
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
+import { usePetPlantForm } from 'hooks/usePetPlantForm';
 import { getDateToString } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
-import { usePetPlantForm } from '../../../hooks/usePetPlantForm';
 
 const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';

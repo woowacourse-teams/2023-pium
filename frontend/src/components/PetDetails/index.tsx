@@ -7,7 +7,6 @@ import House from 'components/@common/Icons/House';
 import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
-import theme from '../../style/theme.style';
 import {
   InfoArea,
   Bold,
@@ -31,6 +30,7 @@ import {
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
+import theme from 'style/theme.style';
 
 interface PetDetailsProps {
   petPlantId: PetPlantDetails['id'];
