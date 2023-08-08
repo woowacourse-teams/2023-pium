@@ -1,6 +1,6 @@
-import { DataResponse } from 'types/api/DataResponse';
-import type { Reminder, ReminderExtendType, TodayStatus } from 'types/api/reminder';
+import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
+import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
 import type { UndefinedInitialDataOptions } from '@tanstack/react-query/build/lib/queryOptions';
 import ReminderAPI from 'apis/reminder';

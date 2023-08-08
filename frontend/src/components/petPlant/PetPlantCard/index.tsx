@@ -1,4 +1,4 @@
-import type { PetPlantItem } from 'types/api/petPlant';
+import type { PetPlantItem } from 'types/petPlant';
 import Crown from 'components/@common/Icons/Crown';
 import Image from 'components/@common/Image';
 import {

@@ -1,5 +1,5 @@
-import type { DataResponse } from 'types/api/DataResponse';
-import type { Reminder } from 'types/api/reminder';
+import type { DataResponse } from 'types/DataResponse';
+import type { Reminder } from 'types/reminder';
 import { getDaysBetween, getParticularDateFromSpecificDay, getDateToString } from 'utils/date';
 
 const KEY = 'MSW_REMINDER';

@@ -1,4 +1,4 @@
-import type { EditPetPlantRequest, PetPlantDetails } from 'types/api/petPlant';
+import type { EditPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { generatePath, useNavigate } from 'react-router-dom';
 import useToast from 'hooks/useToast';

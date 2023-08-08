@@ -1,4 +1,4 @@
-import type { DictNameSearchResult } from 'types/api/dictionaryPlant';
+import type { DictNameSearchResult } from 'types/dictionaryPlant';
 import { useCallback } from 'react';
 import { useNavigate, generatePath } from 'react-router-dom';
 import { URL_PATH } from 'constants/index';

@@ -1,4 +1,4 @@
-import type { EditPetPlantRequest, NewPetPlantRequest, PetPlantDetails } from 'types/api/petPlant';
+import type { EditPetPlantRequest, NewPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { BASE_URL } from 'constants/index';
 
 export const PET = `${BASE_URL}/pet-plants`;

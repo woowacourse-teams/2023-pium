@@ -1,4 +1,4 @@
-import type { PetPlantDetails } from 'types/api/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { getDateToString } from 'utils/date';
 import { OPTIONS } from 'constants/index';
 

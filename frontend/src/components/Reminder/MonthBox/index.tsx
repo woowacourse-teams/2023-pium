@@ -1,4 +1,4 @@
-import { ReminderExtendType } from 'types/api/reminder';
+import { ReminderExtendType } from 'types/reminder';
 import { MonthReminderBox, MonthTitle } from './MonthBox.style';
 import CardBox from '../CardBox';
 

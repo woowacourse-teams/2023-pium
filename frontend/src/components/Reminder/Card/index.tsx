@@ -3,7 +3,7 @@ import type {
   ReminderExtendType,
   TodayStatus,
   WaterPlantParams,
-} from 'types/api/reminder';
+} from 'types/reminder';
 import { useContext } from 'react';
 import DateInput from 'components/@common/DateInput';
 import Image from 'components/@common/Image';

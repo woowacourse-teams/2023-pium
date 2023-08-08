@@ -1,4 +1,4 @@
-import type { PetPlantDetails } from 'types/api/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { generatePath } from 'react-router-dom';
 import Crown from 'components/@common/Icons/Crown';
 import Dictionary from 'components/@common/Icons/Dictionary';

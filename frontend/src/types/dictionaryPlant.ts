@@ -1,5 +1,3 @@
-import { ManageLevel, Season } from 'types/plants';
-
 export interface DictionaryPlant {
   id: number;
   name: string;
@@ -18,3 +16,7 @@ export interface DictionaryPlant {
 }
 
 export type DictNameSearchResult = Pick<DictionaryPlant, 'id' | 'name' | 'image'>;
+
+export type Season = 'spring' | 'summer' | 'autumn' | 'winter';
+export type SeasonKor = '봄' | '여름' | '가을' | '겨울';
+export type ManageLevel = '초보자' | '경험자' | '전문가';

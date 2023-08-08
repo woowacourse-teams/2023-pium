@@ -1,4 +1,4 @@
-import type { EditPetPlantRequest, NewPetPlantRequest } from 'types/api/petPlant';
+import type { EditPetPlantRequest, NewPetPlantRequest } from 'types/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import PET_LIST from './data/petPlantCardList';

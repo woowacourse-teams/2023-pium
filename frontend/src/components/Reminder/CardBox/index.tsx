@@ -1,4 +1,4 @@
-import { ReminderExtendType } from 'types/api/reminder';
+import { ReminderExtendType } from 'types/reminder';
 import { DateLabel, InfoBox, ReminderCardBox } from './CardBox.style';
 import ReminderCard from '../Card';
 

@@ -1,4 +1,4 @@
-import type { EditPetPlantRequest, PetPlantDetails } from 'types/api/petPlant';
+import type { EditPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
 import DateInput from 'components/@common/DateInput';
 import Flowerpot from 'components/@common/Icons/Flowerpot';

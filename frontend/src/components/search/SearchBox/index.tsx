@@ -1,4 +1,4 @@
-import type { DictNameSearchResult } from 'types/api/dictionaryPlant';
+import type { DictNameSearchResult } from 'types/dictionaryPlant';
 import { useState } from 'react';
 import ArrowRight from 'components/@common/Icons/ArrowRightAlt';
 import Search from 'components/@common/Icons/Search';

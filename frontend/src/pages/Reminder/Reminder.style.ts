@@ -1,4 +1,4 @@
-import { TodayStatus } from 'types/api/reminder';
+import { TodayStatus } from 'types/reminder';
 import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {

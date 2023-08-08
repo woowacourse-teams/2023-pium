@@ -1,4 +1,4 @@
-import { TodayStatus } from 'types/api/reminder';
+import { TodayStatus } from 'types/reminder';
 import { styled } from 'styled-components';
 import { BackgroundProps } from 'pages/Reminder/Reminder.style';
 import theme from 'style/theme.style';

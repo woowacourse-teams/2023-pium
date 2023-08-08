@@ -1,4 +1,4 @@
-import { ChangeDateParams, WaterPlantParams } from 'types/api/reminder';
+import { ChangeDateParams, WaterPlantParams } from 'types/reminder';
 import { createContext } from 'react';
 
 interface ReminderProps {
