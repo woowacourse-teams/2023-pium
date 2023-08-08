@@ -1,4 +1,4 @@
-import type { DictPlantExtendCycles, DictionaryPlant } from 'types/api/dictionary';
+import type { DictPlantExtendCycles, DictionaryPlant } from 'types/api/dictionaryPlant';
 import type { Season } from 'types/plants';
 import { useQuery } from '@tanstack/react-query';
 import DictAPI, { DICT } from 'apis/dictionary';

@@ -1,4 +1,4 @@
-import type { DictNameSearchResponse, DictNameSearchResult } from 'types/api/dictionary';
+import type { DictNameSearchResponse, DictNameSearchResult } from 'types/api/dictionaryPlant';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import DictAPI, { DICT } from 'apis/dictionary';
 

@@ -1,5 +1,5 @@
 import type { DataResponse } from './DataResponse';
-import type { DictionaryPlant } from './dictionary';
+import type { DictionaryPlant } from './dictionaryPlant';
 
 export interface PetPlantDetails {
   id: number;
