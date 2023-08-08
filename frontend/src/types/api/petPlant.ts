@@ -1,4 +1,3 @@
-import type { DataResponse } from './DataResponse';
 import type { DictionaryPlant } from './dictionaryPlant';
 
 export interface PetPlantDetails {
@@ -33,11 +32,9 @@ export interface NewPetPlantRequest
   dictionaryPlantId: DictionaryPlant['id'];
 }
 
-export interface PetPlant
+export interface PetPlantItem
   extends Pick<PetPlantDetails, 'id' | 'nickname' | 'imageUrl' | 'birthDate' | 'daySince'> {
   dictionaryPlantName: DictionaryPlant['name'];
 }
-
-export type PetPlantListResponse = DataResponse<PetPlant[]>;
 
 export type EditPetPlantRequest = Omit<NewPetPlantRequest, 'dictionaryPlantId'>;
