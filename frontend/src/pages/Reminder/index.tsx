@@ -1,5 +1,5 @@
 import Navbar from 'components/@common/Navbar';
-import MonthBox from 'components/reminder/MonthBox';
+import MonthBox from 'components/xxxFolderName/MonthBox';
 import { ContentBox, HeaderBox, Title, Wrapper } from './Reminder.style';
 import ReminderProvider from 'contexts/reminderContext';
 import useReminderHooks from 'hooks/useReminderHooks';
