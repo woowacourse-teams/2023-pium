@@ -26,7 +26,7 @@ describe('반려 식물 등록하기', () => {
       .get('button[aria-label="입력 완료"]')
       .click()
 
-      .get('button[aria-label="생일(입양일) 선택"]')
+      .get('button[aria-label="입양일 선택"]')
       .click()
 
       .get(`span[aria-label="${todayKorString}"]`)

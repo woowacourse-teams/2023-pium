@@ -1,9 +1,10 @@
-import type { DictNameSearchResponse, DictNameSearchResult } from 'types/api/dictionary';
+import type { DataResponse } from 'types/DataResponse';
+import type { DictNameSearchResult } from 'types/dictionaryPlant';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import DictAPI, { DICT } from 'apis/dictionary';
 
 const useDictSearch = (name: string) =>
-  useQuery<DictNameSearchResponse, Error, DictNameSearchResult[]>({
+  useQuery<DataResponse<DictNameSearchResult[]>, Error, DictNameSearchResult[]>({
     queryKey: [DICT, 'search', name],
 
     queryFn: async () => {

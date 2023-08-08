@@ -1,12 +1,5 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import ToastProvider from 'contexts/toastContext';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { ThemeProvider } from 'styled-components';
-import ToastList from 'components/@common/Toast/ToastList';
-import { GlobalStyle } from './style/Global.style';
-import { GlobalFont } from './style/GlobalFont.style';
-import theme from './style/theme.style';
 import App from './App';
 
 if (process.env.NODE_ENV === 'development') {
@@ -20,21 +13,10 @@ if (process.env.NODE_ENV === 'development') {
   });
 }
 
-const queryClient = new QueryClient();
-
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <StrictMode>
-    <GlobalFont />
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
-      <QueryClientProvider client={queryClient}>
-        <ToastProvider>
-          <App />
-          <ToastList />
-        </ToastProvider>
-      </QueryClientProvider>
-    </ThemeProvider>
+    <App />
   </StrictMode>
 );

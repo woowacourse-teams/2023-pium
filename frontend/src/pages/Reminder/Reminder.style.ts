@@ -1,4 +1,4 @@
-import { TodayStatus } from 'types/api/reminder';
+import { TodayStatus } from 'types/reminder';
 import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {
@@ -38,7 +38,7 @@ export const HeaderBox = styled.header`
 
 export const Title = styled.p`
   width: 100%;
-  font: normal 2.4rem /3.2rem 'NanumSquareRound';
+  font: normal 2.4rem /3.2rem 'GmarketSans';
   text-align: center;
 `;
 
@@ -59,7 +59,7 @@ export const MonthReminderBox = styled.div`
 
 export const MonthTitle = styled.p`
   width: 100%;
-  font: 900 2.8rem/4rem 'NanumSquareRound';
+  font: 900 2.8rem/4rem 'GmarketSans';
 `;
 
 export const ReminderCardBox = styled.div`
@@ -82,7 +82,7 @@ export const InfoBox = styled.div`
 export const DateLabel = styled.label`
   position: absolute;
   top: 8px;
-  font: 700 2rem/2rem 'NanumSquareRound';
+  font: 700 2rem/2rem 'GmarketSans';
 `;
 
 export const FillStyle = css`

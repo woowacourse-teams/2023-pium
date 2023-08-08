@@ -21,13 +21,13 @@ export const HeaderBox = styled.section`
 
 export const FamilyName = styled.p`
   margin-bottom: 4px;
-  font: 500 1.2rem/1.6rem 'NanumSquareRound';
+  font: 500 1.2rem/1.6rem 'GmarketSans';
   color: ${(props) => props.theme.color.sub};
   text-align: left;
 `;
 
 export const Name = styled.p`
-  font: 900 2.4rem/4rem 'NanumSquareRound';
+  font: 900 2.4rem/4rem 'GmarketSans';
   color: ${(props) => props.theme.color.sub};
   text-align: left;
 `;

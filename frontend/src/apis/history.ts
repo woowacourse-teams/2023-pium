@@ -1,4 +1,4 @@
-import type { PetPlantDetails } from 'types/api/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { BASE_URL } from 'constants/index';
 
 export const HISTORY = `${BASE_URL}/history`;

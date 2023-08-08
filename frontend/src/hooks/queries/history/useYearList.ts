@@ -1,5 +1,5 @@
-import type { HistoryResponse } from 'types/api/history';
-import type { PetPlantDetails } from 'types/api/petPlant';
+import type { HistoryResponse } from 'types/history';
+import type { PetPlantDetails } from 'types/petPlant';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import type { YearList } from 'pages/PetPlantTimeline/converter';
 import {

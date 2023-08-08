@@ -1,19 +1,19 @@
-import type {
-  ArrangedReminderWithStatus,
-  Month,
-  MonthArrangedReminder,
-  ReminderExtendType,
-  TodayStatus,
-  ReminderResponse,
-} from 'types/api/reminder';
+import { DataResponse } from 'types/DataResponse';
+import { Month } from 'types/date';
+import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
 import type { UndefinedInitialDataOptions } from '@tanstack/react-query/build/lib/queryOptions';
 import ReminderAPI from 'apis/reminder';
 
-const convertReminderData = (result: ReminderResponse): ArrangedReminderWithStatus => {
+interface ArrangedReminderWithStatus {
+  data: Array<[Month, ReminderExtendType[]]>;
+  status: TodayStatus;
+}
+
+const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminderWithStatus => {
   const { data } = result;
 
-  const convertedData: MonthArrangedReminder = data.reduce((acc, cur) => {
+  const convertedData: Array<[Month, ReminderExtendType[]]> = data.reduce((acc, cur) => {
     const { dday, nextWaterDate } = cur;
     const [, month, date] = nextWaterDate.split('-') as [string, Month, string];
     const status: TodayStatus = dday === 0 ? 'today' : dday > 0 ? 'late' : 'future';
@@ -35,7 +35,7 @@ const convertReminderData = (result: ReminderResponse): ArrangedReminderWithStat
     }
 
     return acc;
-  }, [] as MonthArrangedReminder);
+  }, [] as Array<[Month, ReminderExtendType[]]>);
 
   const status = data.every(({ dday }) => dday < 0)
     ? 'future'
@@ -50,9 +50,9 @@ const convertReminderData = (result: ReminderResponse): ArrangedReminderWithStat
 };
 
 const useReminder = (
-  props: UndefinedInitialDataOptions<ReminderResponse, Error, ArrangedReminderWithStatus>
+  props: UndefinedInitialDataOptions<DataResponse<Reminder[]>, Error, ArrangedReminderWithStatus>
 ) =>
-  useQuery<ReminderResponse, Error, ArrangedReminderWithStatus>({
+  useQuery<DataResponse<Reminder[]>, Error, ArrangedReminderWithStatus>({
     ...props,
     queryFn: async () => {
       const response = await ReminderAPI.getReminder();

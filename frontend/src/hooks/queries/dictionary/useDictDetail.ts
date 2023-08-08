@@ -1,8 +1,11 @@
-import type { DictPlantExtendCycles, DictionaryPlant } from 'types/api/dictionary';
-import type { Season } from 'types/plants';
+import type { DictionaryPlant, Season, SeasonKor } from 'types/dictionaryPlant';
 import { useQuery } from '@tanstack/react-query';
 import DictAPI, { DICT } from 'apis/dictionary';
 import { SEASONS } from 'constants/index';
+
+interface DictPlantExtendCycles extends DictionaryPlant {
+  waterOptions: Record<SeasonKor, string>;
+}
 
 const initialWaterOptions: DictPlantExtendCycles['waterOptions'] = {
   봄: '',

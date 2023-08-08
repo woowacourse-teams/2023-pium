@@ -6,8 +6,8 @@ import ThermometerSun from 'components/@common/Icons/ThermometerSun';
 import Warning from 'components/@common/Icons/Warning';
 import Image from 'components/@common/Image';
 import Navbar from 'components/@common/Navbar';
-import DictInfo from 'components/DictInfo';
-import DictInfoSwitch from 'components/DictInfoSwitch';
+import DictInfo from 'components/dictionaryPlant/DictInfo';
+import DictInfoSwitch from 'components/dictionaryPlant/DictInfoSwitch';
 import {
   Accent,
   ContentBox,

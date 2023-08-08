@@ -1,4 +1,4 @@
-import { NewPetPlantRequest, PetPlantDetails } from '../../types/api/petPlant';
+import { NewPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import PET_PLANTS_DATA from '../data/petPlants';
 
 const KEY = 'MSW_PET_PLANTS';

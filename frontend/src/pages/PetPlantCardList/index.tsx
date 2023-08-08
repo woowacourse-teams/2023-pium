@@ -1,6 +1,6 @@
 import { Link, generatePath } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
-import PetCard from 'components/PetPlantCard';
+import PetCard from 'components/petPlant/PetPlantCard';
 import { CardList, RegisterButton, Title, Wrapper } from './PetPlantCardList.style';
 import usePetPlantCardList from 'hooks/queries/pet/usePetPlantCardList';
 import { URL_PATH } from 'constants/index';

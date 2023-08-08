@@ -1,4 +1,4 @@
-import type { EditPetPlantRequest } from 'types/api/petPlant';
+import type { EditPetPlantRequest } from 'types/petPlant';
 import { useReducer } from 'react';
 import { inputValidate } from 'utils/validate';
 
