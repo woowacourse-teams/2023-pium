@@ -155,9 +155,9 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
         <InfoArea>
           <ExpandedTextBox>
-            <Text>생년월일</Text>
+            <Text>입양일</Text>
             <InputWrapper $width="180px">
-              <HiddenLabel>생일 바꾸기</HiddenLabel>
+              <HiddenLabel>입양일 바꾸기</HiddenLabel>
               <DateInput
                 value={form.birthDate}
                 changeCallback={setBirthDate}

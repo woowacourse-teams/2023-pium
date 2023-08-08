@@ -136,9 +136,9 @@ const PetRegisterForm = () => {
             </FormInputBox>
           </Stack.Element>
           <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-            <FormInputBox title="생일(입양일)이 언제인가요?" status={getStatus(1)}>
+            <FormInputBox title="입양일이 언제인가요?" status={getStatus(1)}>
               <DateInput
-                aria-label="생일(입양일) 선택"
+                aria-label="입양일 선택"
                 value={form.birthDate}
                 changeCallback={setBirthDate}
                 max={today}
