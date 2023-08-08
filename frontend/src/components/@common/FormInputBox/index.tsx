@@ -1,4 +1,3 @@
-import type { InputStatus } from 'types/inputs';
 import type { PropsWithChildren } from 'react';
 import {
   ContentBox,
@@ -8,6 +7,8 @@ import {
   Title,
   Wrapper,
 } from './FormInputBox.style';
+
+export type InputStatus = 'default' | 'focus' | 'error';
 
 interface FormInputBoxProps extends PropsWithChildren {
   title: string;
