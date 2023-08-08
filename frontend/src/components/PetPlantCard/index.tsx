@@ -1,4 +1,4 @@
-import type { PetPlant } from 'types/api/petPlant';
+import type { PetPlantItem } from 'types/api/petPlant';
 import Crown from 'components/@common/Icons/Crown';
 import Image from 'components/@common/Image';
 import {
@@ -20,7 +20,7 @@ const PetPlantCard = ({
   daySince,
   birthDate,
   dictionaryPlantName,
-}: PetPlant) => {
+}: PetPlantItem) => {
   const birthDateKorean = convertDateKorYear(birthDate);
   const today = convertDateKorYear(new Date()).slice(5);
   const isBirthday = today === birthDateKorean.slice(5);

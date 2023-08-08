@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
 
 
   * {
-    font-family: "NanumSquareRound", "Noto Sans KR", sans-serif;
+    font-family: "GmarketSansMedium", "Noto Sans KR", sans-serif;
   }
 
   html, body, #root {

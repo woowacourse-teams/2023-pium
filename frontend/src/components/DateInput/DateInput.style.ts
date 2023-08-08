@@ -14,7 +14,7 @@ export const DateValue = styled.button<{
 
   width: 100%;
 
-  font: 500 1.2rem/2.2rem 'NanumSquareRound';
+  font: 500 1.2rem/2.2rem 'GmarketSansMedium';
   color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.subLight : 'black')};
   text-align: center;
 `;

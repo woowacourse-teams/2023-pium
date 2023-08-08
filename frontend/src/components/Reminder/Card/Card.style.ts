@@ -46,7 +46,7 @@ export const ContentBox = styled.ul`
 `;
 
 export const NickName = styled.li`
-  font: 600 1.4rem/2.1rem 'NanumsquareRound';
+  font: 600 1.4rem/2.1rem 'GmarketSansMedium';
   color: ${({ theme }) => theme.color.sub};
   text-overflow: ellipsis;
   white-space: nowrap;
