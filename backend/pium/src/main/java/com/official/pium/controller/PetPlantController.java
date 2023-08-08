@@ -62,4 +62,12 @@ public class PetPlantController {
         petPlantService.update(id, petPlantUpdateRequest, member);
         return ResponseEntity.ok().build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<PetPlantResponse> delete(
+            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
+            @Auth Member member) {
+        petPlantService.delete(id, member);
+        return ResponseEntity.noContent().build();
+    }
 }

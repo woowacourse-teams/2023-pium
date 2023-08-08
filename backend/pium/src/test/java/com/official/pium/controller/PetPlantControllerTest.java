@@ -8,6 +8,7 @@ import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -379,6 +380,33 @@ class PetPlantControllerTest extends UITest {
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("마지막 물주기 날짜는 필수 값입니다.")))
+                    .andDo(print());
+        }
+    }
+
+    @Nested
+    class 반려_식물_삭제_ {
+
+        @Test
+        void 정상_요청시_200_반환() throws Exception {
+            willDoNothing().given(petPlantService)
+                    .delete(anyLong(), any(Member.class));
+
+            mockMvc.perform(delete("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com"))
+                    .andExpect(status().isNoContent())
+                    .andDo(print());
+        }
+
+        @Test
+        void 잘못된_ID로_삭제하면_400을_반환() throws Exception {
+            Long wrongId = -1L;
+
+            mockMvc.perform(delete("/pet-plants/{id}", wrongId)
+                            .header("Authorization", "pium@gmail.com"))
+                    .andDo(print())
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
                     .andDo(print());
         }
     }
