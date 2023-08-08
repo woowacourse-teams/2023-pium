@@ -5,6 +5,7 @@ import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
+import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
@@ -25,6 +26,7 @@ public class PetPlantService {
 
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
+    private final HistoryRepository historyRepository;
 
     @Transactional
     public PetPlantResponse create(PetPlantCreateRequest request, Member member) {
@@ -77,6 +79,17 @@ public class PetPlantService {
                 updateRequest.getWind(), updateRequest.getWaterCycle(),
                 updateRequest.getBirthDate(), updateRequest.getLastWaterDate()
         );
+    }
+
+    @Transactional
+    public void delete(Long id, Member member) {
+        PetPlant petPlant = petPlantRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
+
+        checkOwner(petPlant, member);
+
+        historyRepository.deleteAllByPetPlantId(petPlant.getId());
+        petPlantRepository.delete(petPlant);
     }
 
     private void checkOwner(PetPlant petPlant, Member member) {

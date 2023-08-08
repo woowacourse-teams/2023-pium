@@ -2,12 +2,15 @@ package com.official.pium.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
@@ -22,6 +25,7 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -35,6 +39,9 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Autowired
     private PetPlantRepository petPlantRepository;
+
+    @Autowired
+    private HistoryRepository historyRepository;
 
     @BeforeEach
     void setUp() {
@@ -139,15 +146,17 @@ class PetPlantServiceTest extends IntegrationTest {
         petPlantService.update(petPlant.getId(), updateRequest, member);
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
 
-        assertAll(
-                () -> assertThat(updatedPetPlant.getId()).isEqualTo(petPlant.getId()),
-                () -> assertThat(updatedPetPlant.getNickname()).isEqualTo(updateRequest.getNickname()),
-                () -> assertThat(updatedPetPlant.getFlowerpot()).isEqualTo(updateRequest.getFlowerpot()),
-                () -> assertThat(updatedPetPlant.getLight()).isEqualTo(updateRequest.getLight()),
-                () -> assertThat(updatedPetPlant.getWind()).isEqualTo(updateRequest.getWind()),
-                () -> assertThat(updatedPetPlant.getWaterCycle()).isEqualTo(updateRequest.getWaterCycle()),
-                () -> assertThat(updatedPetPlant.getBirthDate()).isEqualTo(updateRequest.getBirthDate()),
-                () -> assertThat(updatedPetPlant.getLastWaterDate()).isEqualTo(updateRequest.getLastWaterDate())
+        assertSoftly(
+                softly -> {
+                    assertThat(updatedPetPlant.getId()).isEqualTo(petPlant.getId());
+                    assertThat(updatedPetPlant.getNickname()).isEqualTo(updateRequest.getNickname());
+                    assertThat(updatedPetPlant.getFlowerpot()).isEqualTo(updateRequest.getFlowerpot());
+                    assertThat(updatedPetPlant.getLight()).isEqualTo(updateRequest.getLight());
+                    assertThat(updatedPetPlant.getWind()).isEqualTo(updateRequest.getWind());
+                    assertThat(updatedPetPlant.getWaterCycle()).isEqualTo(updateRequest.getWaterCycle());
+                    assertThat(updatedPetPlant.getBirthDate()).isEqualTo(updateRequest.getBirthDate());
+                    assertThat(updatedPetPlant.getLastWaterDate()).isEqualTo(updateRequest.getLastWaterDate());
+                }
         );
     }
 
@@ -188,5 +197,48 @@ class PetPlantServiceTest extends IntegrationTest {
         assertThatThrownBy(() -> petPlantService.update(wrongId, updateRequest, member))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
+    }
+
+    @Test
+    void 반려_식물_단건_삭제() {
+        PetPlant petPlant = petPlantSupport.builder().member(member).build();
+
+        assertDoesNotThrow(() -> petPlantService.delete(petPlant.getId(), member));
+    }
+
+    @Test
+    void 반려_식물_삭제시_히스토리도_함께_삭제된다() {
+        PetPlant petPlant = petPlantSupport.builder().dictionaryPlant(dictionaryPlant).member(member).build();
+        historySupport.builder().petPlant(petPlant).build();
+        historySupport.builder().petPlant(petPlant).build();
+        PageRequest pageRequest = PageRequest.of(1, 10);
+
+        petPlantService.delete(petPlant.getId(), member);
+
+        assertSoftly(
+                softly -> {
+                    softly.assertThat(petPlantRepository.findById(petPlant.getId())).isEmpty();
+                    softly.assertThat(historyRepository.findAllByPetPlantId(petPlant.getId(), pageRequest).getContent()).isEmpty();
+                }
+        );
+    }
+
+    @Test
+    void 존재하지_않는_반려_식물을_삭제하면_예외_발생() {
+        Long wrongId = -1L;
+
+        assertThatThrownBy(() -> petPlantService.delete(wrongId, member))
+                .isInstanceOf(NoSuchElementException.class)
+                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
+    }
+
+    @Test
+    void 반려_식물_삭제시_주인이_아니면_예외_발생() {
+        Member otherMember = memberSupport.builder().build();
+        PetPlant petPlant = petPlantSupport.builder().member(member).build();
+
+        assertThatThrownBy(() -> petPlantService.delete(petPlant.getId(), otherMember))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
     }
 }
