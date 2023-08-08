@@ -1,5 +1,4 @@
-import { ManageLevel, Season, SeasonKor } from 'types/plants';
-import { DataResponse } from './DataResponse';
+import { ManageLevel, Season } from 'types/plants';
 
 export interface DictionaryPlant {
   id: number;
@@ -18,10 +17,4 @@ export interface DictionaryPlant {
   waterCycle: Record<Season, string>;
 }
 
-export interface DictPlantExtendCycles extends DictionaryPlant {
-  waterOptions: Record<SeasonKor, string>;
-}
-
 export type DictNameSearchResult = Pick<DictionaryPlant, 'id' | 'name' | 'image'>;
-
-export type DictNameSearchResponse = DataResponse<DictNameSearchResult[]>;
