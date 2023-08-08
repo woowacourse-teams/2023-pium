@@ -2,6 +2,9 @@ name: Frontend Build Test
 
 on:
   push:
+    branches:
+      - develop
+      - main
     paths: 'frontend/**'
   pull_request:
     branches:
