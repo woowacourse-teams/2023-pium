@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import DateInput from 'components/@common/DateInput';
+import FormInput from 'components/@common/FormInput';
+import FormInputBox from 'components/@common/FormInputBox';
 import Image from 'components/@common/Image';
 import ProgressBar from 'components/@common/ProgressBar';
-import DateInput from 'components/DateInput';
-import FormInput from 'components/FormInput';
-import FormInputBox from 'components/FormInputBox';
-import Select from 'components/Select';
-import Stack from 'components/Stack';
-import useStack from 'components/Stack/hooks/useStack';
+import Select from 'components/@common/Select';
+import Stack from 'components/@common/Stack';
+import useStack from 'components/@common/Stack/hooks/useStack';
 import {
   Button,
   Center,

@@ -1,4 +1,4 @@
-import SearchResultItem from 'components/SearchResultItem';
+import SearchResultItem from 'components/search/SearchResultItem';
 import { Title, ResultList, Wrapper } from './SearchResults.style';
 import useDictSearch from 'hooks/queries/dictionary/useDictSearch';
 

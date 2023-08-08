@@ -5,8 +5,8 @@ import type {
   WaterPlantParams,
 } from 'types/api/reminder';
 import { useContext } from 'react';
+import DateInput from 'components/@common/DateInput';
 import Image from 'components/@common/Image';
-import DateInput from 'components/DateInput';
 import {
   ActionBox,
   ContentBox,

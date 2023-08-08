@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import DictInfo from 'components/DictInfo';
-import InlineRadio from 'components/InlineRadio';
-import { TagVariantType } from 'components/Tag';
+import InlineRadio from 'components/@common/InlineRadio';
+import { TagVariantType } from 'components/@common/Tag';
+import DictInfo from 'components/dictionaryPlant/DictInfo';
 
 interface DictInfoSwitchProps {
   title: string;

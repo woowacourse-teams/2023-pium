@@ -1,4 +1,4 @@
-import Content from 'components/Tag';
+import Content from 'components/@common/Tag';
 import { Flexbox, SizedFlexBox } from './Main.style';
 import Title from './Title.style';
 import getFilteredChildren from 'utils/getFilteredChildren';

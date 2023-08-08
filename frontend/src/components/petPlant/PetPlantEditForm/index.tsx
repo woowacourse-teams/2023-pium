@@ -1,11 +1,11 @@
 import type { EditPetPlantRequest, PetPlantDetails } from 'types/api/petPlant';
 import { useId } from 'react';
+import DateInput from 'components/@common/DateInput';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
 import House from 'components/@common/Icons/House';
 import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
-import DateInput from 'components/DateInput';
 import {
   InfoArea,
   Bold,

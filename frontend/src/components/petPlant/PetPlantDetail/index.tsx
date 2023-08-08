@@ -26,7 +26,7 @@ import {
   TimelineLinkArea,
   TimelineLink,
   EditLink,
-} from './PetDetails.style';
+} from './PetPlantDetail.style';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
@@ -36,7 +36,7 @@ interface PetDetailsProps {
   petPlantId: PetPlantDetails['id'];
 }
 
-const PetDetails = ({ petPlantId }: PetDetailsProps) => {
+const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
   const { data: petPlantDetails } = usePetPlantDetails(petPlantId);
 
   if (!petPlantDetails) return null;
@@ -172,4 +172,4 @@ const PetDetails = ({ petPlantId }: PetDetailsProps) => {
   );
 };
 
-export default PetDetails;
+export default PetPlantDetail;

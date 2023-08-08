@@ -1,5 +1,5 @@
 import { ManageLevel, Season, SeasonKor } from 'types/plants';
-import { TagVariantType } from 'components/Tag';
+import { TagVariantType } from 'components/@common/Tag';
 
 export const BASE_URL = 'https://api.pium.life';
 

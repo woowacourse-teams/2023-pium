@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import DateInput from 'components/DateInput';
+import DateInput from 'components/@common/DateInput';
 import { getDateToString } from 'utils/date';
 import FormInputBox from '.';
 
