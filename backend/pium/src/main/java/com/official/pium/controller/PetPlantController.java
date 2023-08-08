@@ -64,7 +64,7 @@ public class PetPlantController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<PetPlantResponse> delete(
+    public ResponseEntity<Void> delete(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
             @Auth Member member) {
         petPlantService.delete(id, member);
