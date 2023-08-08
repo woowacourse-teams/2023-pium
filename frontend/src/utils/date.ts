@@ -71,24 +71,6 @@ export const getParticularDateFromSpecificDay = (
 };
 
 /**
- *
- * params들은 YYYY-MM-DD의 형태를 띈다
- * @param prev 첫 번째 날짜
- * @param next 두 번째 날짜
- * @returns 두 날짜 사이에 차이
- */
-
-export const getDaysBetweenDate = (prev: string, next: string) => {
-  const first = getStringToDate(prev);
-  const second = getStringToDate(next);
-
-  const diff = Math.abs(first.getTime() - second.getTime());
-  const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-
-  return days;
-};
-
-/**
  * 날짜를 입력 받고, 해당 연,월과 첫 번째 요일 그리고 마지막 날짜를 반환하는 메서드
  * @param date 현재 날짜
  * @returns MonthInfo

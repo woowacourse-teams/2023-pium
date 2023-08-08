@@ -1,4 +1,3 @@
-import type { DateFormat } from 'types/date';
 import { PetPlantDetails } from './petPlant';
 
 export type TodayStatus = 'late' | 'today' | 'future'; // 오늘 할 일에 대한 상태
