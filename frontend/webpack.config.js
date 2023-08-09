@@ -1,5 +1,6 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DotEnv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 
@@ -53,6 +54,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: resolve(__dirname, 'public', 'index.html'),
     }),
+    new DotEnv(),
     ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
   ],
   devServer: {
