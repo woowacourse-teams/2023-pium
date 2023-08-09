@@ -1,21 +1,5 @@
 package com.official.pium.controller;
 
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_등록_요청;
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
-import static com.official.pium.fixture.PetPlantFixture.RESPONSE;
-import static org.hamcrest.Matchers.containsString;
-import static org.mockito.BDDMockito.any;
-import static org.mockito.BDDMockito.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
@@ -23,8 +7,6 @@ import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -37,6 +19,29 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_등록_요청;
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
+import static com.official.pium.fixture.PetPlantFixture.RESPONSE;
+import static org.hamcrest.Matchers.containsString;
+import static org.mockito.BDDMockito.any;
+import static org.mockito.BDDMockito.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -65,6 +70,10 @@ class PetPlantControllerTest extends UITest {
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(피우미_등록_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("petPlant/create/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
+                    )
                     .andExpect(status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
                     .andDo(print());
@@ -76,13 +85,18 @@ class PetPlantControllerTest extends UITest {
 
         @Test
         void 정상_요청시_200을_반환() throws Exception {
+            PetPlantResponse response = RESPONSE.피우미_응답;
             given(petPlantService.read(anyLong(), any(Member.class)))
-                    .willReturn(RESPONSE.피우미_응답);
+                    .willReturn(response);
 
             mockMvc.perform(get("/pet-plants/{id}", 1L)
                             .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
+                    .andDo(document("petPlant/findById/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -111,6 +125,10 @@ class PetPlantControllerTest extends UITest {
 
             mockMvc.perform(get("/pet-plants")
                             .header("Authorization", "pium@gmail.com"))
+                    .andDo(document("petPlant/findAll/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -138,6 +156,10 @@ class PetPlantControllerTest extends UITest {
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(document("petPlant/update/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -151,7 +173,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(피우미_수정_요청))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
                     .andDo(print());

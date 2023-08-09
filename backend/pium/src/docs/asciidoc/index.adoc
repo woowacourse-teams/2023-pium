@@ -1,0 +1,8 @@
+= Pium Application API Document
+:doctype: book
+:source-highlighter: highlightjs
+:sectlinks:
+:toc: left
+:toclevels: 3
+
+include::petPlant.adoc[]

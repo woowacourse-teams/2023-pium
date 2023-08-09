@@ -1,0 +1,31 @@
+==  반려 식물(PetPlant)
+
+=== 반려 식물 조회
+
+==== Request
+
+include::{snippets}/petPlant/findById/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/petPlant/findById/http-response.adoc[]
+
+=== 반려 식물 전체 조회
+
+==== Request
+
+include::{snippets}/petPlant/findAll/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/petPlant/findAll/http-response.adoc[]
+
+=== 반려 식물 수정
+
+==== Request
+
+include::{snippets}/petPlant/update/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/petPlant/update/http-response.adoc[]
