@@ -1,3 +1,4 @@
+import type { DateFormat } from 'types/date';
 import type { EditPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
 import DateInput from 'components/@common/DateInput';
@@ -29,7 +30,12 @@ import {
 } from './PetPlantEditForm.style';
 import useEditPetPlant from 'hooks/queries/pet/useEditPetPlant';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
-import { convertDateKorYear, getParticularDateFromSpecificDay, getDateToString } from 'utils/date';
+import {
+  convertDateKorYear,
+  getParticularDateFromSpecificDay,
+  getDateToString,
+  isDateFormat,
+} from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 import theme from 'style/theme.style';
 
@@ -75,8 +81,16 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       return;
     }
 
-    const requestForm: EditPetPlantRequest = {
+    const { birthDate: formBirthDate, lastWaterDate: formLastWaterDate } = form;
+
+    if (!(isDateFormat(formBirthDate) && isDateFormat(formLastWaterDate))) {
+      return;
+    }
+
+    const requestForm = {
       ...form,
+      birthDate: formBirthDate,
+      lastWaterDate: formLastWaterDate,
       waterCycle: Number(form.waterCycle),
     };
 

@@ -1,3 +1,4 @@
+import type { DateFormat } from './date';
 import type { DictionaryPlant } from './dictionaryPlant';
 
 export interface PetPlantDetails {
@@ -9,12 +10,12 @@ export interface PetPlantDetails {
   flowerpot: string;
   light: string;
   wind: string;
-  birthDate: string;
-  lastWaterDate: string;
+  birthDate: DateFormat;
+  lastWaterDate: DateFormat;
   waterCycle: number;
   dday: number;
   daySince: number;
-  nextWaterDate: string;
+  nextWaterDate: DateFormat;
 }
 
 export interface NewPetPlantRequest

@@ -16,7 +16,7 @@ interface CalendarProps {
 }
 
 const Calendar = (props: CalendarProps) => {
-  const { currentDate, min = '1945/08/15', max = '2222/02/22', dateCallback } = props;
+  const { currentDate, min = '1945/08/15', max = '2099/12/31', dateCallback } = props;
 
   const { monthInfo, setPrevMonth, setNextMonth } = useCalendar(currentDate);
   const { year, month, monthFirstDay, monthLastDate } = monthInfo;

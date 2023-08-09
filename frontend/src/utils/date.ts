@@ -60,22 +60,27 @@ export const convertDateKorYear = (date: string | number | Date) =>
  * @param date 입력 받은 특정 날짜
  * @returns 'YYYY-MM-DD'
  */
-export const getDateToString = (date = new Date()) => {
+export const getDateToString = (date = new Date()): DateFormat => {
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0') as Month;
   const day = date.getDate().toString().padStart(2, '0');
 
-  return `${year}-${month}-${day}`;
+  const dateString = `${year}-${month}-${day}`;
+
+  if (!isDateFormat(dateString)) throw new Error(ERROR.dateFormat);
+
+  return dateString;
 };
 
 /**
- * YYYY-MM-DD 형태의 값을 Date 형태로 반환합니다.
- * @param date YYYY-MM-DD 형태의 날짜
- * @return new Date();
+ * 문자열 형태의 날짜 값을 Date 형태로 반환합니다.
+ *
+ * IOS Safari에서 YYYY-MM-DD 형태의 문자열을 new Date()의 인자로 줄 수 없는 문제 해결을 위한 함수.
+ * @param date 문자열
+ * @return new Date(YYYY, MM, DD);
  */
-
-export const getStringToDate = (date: string | number | Date | null) => {
-  if (typeof date !== 'string') return new Date();
+export const getStringToDate = (date: string) => {
+  if (!date.includes('-')) return new Date(date);
   const [year, month, day] = date.split('-').map(Number);
   return new Date(year, month - 1, day);
 };
@@ -87,8 +92,11 @@ export const getStringToDate = (date: string | number | Date | null) => {
  * @returns 음이 아닌 정수
  */
 export const getDaysBetween = (one: string | number | Date, another: string | number | Date) => {
-  const first = getStringToDate(one);
-  const second = getStringToDate(another);
+  const first = typeof one === 'string' && isDateFormat(one) ? getStringToDate(one) : new Date(one);
+  const second =
+    typeof another === 'string' && isDateFormat(another)
+      ? getStringToDate(another)
+      : new Date(another);
 
   const diff = Math.abs(first.getTime() - second.getTime());
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
@@ -102,7 +110,6 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
  * @param specificDay 기준이 되는 날짜 (기본값은 오늘)
  * @returns DateFormat
  */
-
 export const getParticularDateFromSpecificDay = (
   particularNumber: number,
   specificDay = new Date()
@@ -113,20 +120,22 @@ export const getParticularDateFromSpecificDay = (
 };
 
 /**
- * 날짜를 입력 받고, 해당 연,월과 첫 번째 요일 그리고 마지막 날짜를 반환하는 메서드
+ * 날짜를 입력 받아 해당 연, 월과 첫 번째 요일 그리고 마지막 날짜를 반환하는 메서드
  * @param date 현재 날짜
  * @returns MonthInfo
  */
-
 export const getMonthInfo = (date = new Date()): MonthInfo => {
-  const year = date.getFullYear(); // 연
-  const month = date.getMonth() + 1; // 월
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
   const monthFirstDay = new Date(year, month - 1).getDay(); // 첫 번째 요일
   const monthLastDate = new Date(year, month, 0).getDate(); // 마지막 날짜
 
+  const validatedYear = year.toString();
+  if (!isYear(validatedYear)) throw new Error(ERROR.yearFormat);
+
   return {
-    year: year.toString(),
-    month: month.toString().padStart(2, '0'),
+    year: validatedYear,
+    month: month.toString().padStart(2, '0') as Month,
     monthFirstDay,
     monthLastDate,
   };
