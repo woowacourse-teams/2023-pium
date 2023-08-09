@@ -9,12 +9,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -34,6 +30,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDate;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -59,7 +57,7 @@ class ReminderControllerTest extends UITest {
 
             mockMvc.perform(post("/reminders/{id}", 1L)
                             .header("Authorization", "pium@gmail.com")
-                            .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
+                            .content(objectMapper.writeValueAsString(리마인더_물주기_요청(LocalDate.of(2023, 7, 1))))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/water/",
                             preprocessRequest(prettyPrint()),
@@ -75,7 +73,7 @@ class ReminderControllerTest extends UITest {
 
             mockMvc.perform(post("/reminders/{id}", wrongId)
                             .header("Authorization", "pium@gmail.com")
-                            .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
+                            .content(objectMapper.writeValueAsString(리마인더_물주기_요청(LocalDate.of(2023, 7, 1))))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))
@@ -93,7 +91,7 @@ class ReminderControllerTest extends UITest {
 
             mockMvc.perform(patch("/reminders/{id}", 1L)
                             .header("Authorization", "pium@gmail.com")
-                            .content(objectMapper.writeValueAsString(리마인더_미루기_요청))
+                            .content(objectMapper.writeValueAsString(리마인더_미루기_요청(LocalDate.of(2023, 7, 1))))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/delay/",
                             preprocessRequest(prettyPrint()),
@@ -109,7 +107,7 @@ class ReminderControllerTest extends UITest {
 
             mockMvc.perform(patch("/reminders/{id}", wrongId)
                             .header("Authorization", "pium@gmail.com")
-                            .content(objectMapper.writeValueAsString(리마인더_미루기_요청))
+                            .content(objectMapper.writeValueAsString(리마인더_미루기_요청(LocalDate.of(2023, 7, 1))))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))

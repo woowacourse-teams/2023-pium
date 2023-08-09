@@ -9,19 +9,16 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.PetPlantRepository;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
+import com.official.pium.service.dto.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -52,8 +49,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2021, 3, 5))
+                .lastWaterDate(LocalDate.of(2020, 2, 1))
                 .build();
 
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
@@ -72,8 +69,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(1999, 2, 3))
+                .lastWaterDate(LocalDate.of(1999, 3, 4))
                 .build();
 
         assertThatThrownBy(() -> petPlantService.create(request, member))
@@ -132,8 +129,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .waterCycle(10)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2023, 1, 3))
+                .lastWaterDate(LocalDate.of(2023, 1, 3))
                 .build();
 
         petPlantService.update(petPlant.getId(), updateRequest, member);
@@ -162,8 +159,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .waterCycle(10)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2023, 1, 3))
+                .lastWaterDate(LocalDate.of(2023, 1, 3))
                 .build();
 
         assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, otherMember))
@@ -181,8 +178,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .waterCycle(10)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2023, 1, 3))
+                .lastWaterDate(LocalDate.of(2023, 1, 3))
                 .build();
 
         assertThatThrownBy(() -> petPlantService.update(wrongId, updateRequest, member))

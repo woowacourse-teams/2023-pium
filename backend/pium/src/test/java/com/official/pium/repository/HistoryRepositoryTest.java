@@ -3,15 +3,7 @@ package com.official.pium.repository;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.RepositoryTest;
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.History;
-import com.official.pium.domain.HistoryCategory;
-import com.official.pium.domain.HistoryContent;
-import com.official.pium.domain.HistoryType;
-import com.official.pium.domain.Member;
-import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.WaterCycle;
-import java.time.LocalDate;
+import com.official.pium.domain.*;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -20,6 +12,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
+import java.time.LocalDate;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -93,9 +87,9 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .flowerpot("화분")
                 .light("밝아요")
                 .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2021, 6, 4))
+                .nextWaterDate(LocalDate.of(2021, 6, 4))
+                .lastWaterDate(LocalDate.of(2021, 6, 4))
                 .waterCycle(3)
                 .build();
         petPlantRepository.save(petPlant);

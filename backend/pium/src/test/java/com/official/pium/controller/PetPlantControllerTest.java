@@ -4,21 +4,12 @@ import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_등록
 import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
 import static com.official.pium.fixture.PetPlantFixture.RESPONSE;
 import static org.hamcrest.Matchers.containsString;
-import static org.mockito.BDDMockito.any;
-import static org.mockito.BDDMockito.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
+import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
@@ -146,8 +137,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 5))
                     .build();
             willDoNothing().given(petPlantService)
                     .update(anyLong(), any(PetPlantUpdateRequest.class), any(Member.class));
@@ -189,8 +180,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2023, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -214,8 +205,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -240,8 +231,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -264,8 +255,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(null)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -288,8 +279,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(-10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -314,8 +305,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light(light)
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -340,8 +331,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("밝은 곳")
                     .wind(wind)
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -365,7 +356,7 @@ class PetPlantControllerTest extends UITest {
                     .light("밝은 곳")
                     .wind("바람이 불어오는 곳")
                     .birthDate(null)
-                    .lastWaterDate(LocalDate.now())
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -388,7 +379,7 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("밝은 곳")
                     .wind("바람이 불어오는 곳")
-                    .birthDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
                     .lastWaterDate(null)
                     .build();
 

@@ -7,12 +7,13 @@ import com.official.pium.RepositoryTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDate;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -48,9 +49,9 @@ class PetPlantRepositoryTest extends RepositoryTest {
                 .flowerpot("화분")
                 .light("밝아요")
                 .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2020, 1, 3))
+                .nextWaterDate(LocalDate.of(2020, 1, 3))
+                .lastWaterDate(LocalDate.of(2020, 1, 3))
                 .waterCycle(3)
                 .build();
 
@@ -73,9 +74,9 @@ class PetPlantRepositoryTest extends RepositoryTest {
                 .flowerpot("화분")
                 .light("밝아요")
                 .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2020, 1, 3))
+                .nextWaterDate(LocalDate.of(2020, 1, 3))
+                .lastWaterDate(LocalDate.of(2020, 1, 3))
                 .waterCycle(3)
                 .build();
 

@@ -1,13 +1,13 @@
 package com.official.pium.fixture;
 
+import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResponse;
+import static com.official.pium.service.dto.PetPlantResponse.builder;
+
 import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.*;
 
 import java.time.LocalDate;
 import java.util.List;
-
-import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResponse;
-import static com.official.pium.service.dto.PetPlantResponse.builder;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class PetPlantFixture {
@@ -45,8 +45,8 @@ public class PetPlantFixture {
                 .waterCycle(10)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2020, 1, 3))
+                .lastWaterDate(LocalDate.of(2020, 1, 3))
                 .build();
 
         public static PetPlantCreateRequest generatePetPlantCreateRequest(Long dictionaryPlantId) {
@@ -58,8 +58,8 @@ public class PetPlantFixture {
                     .waterCycle(3)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
         }
     }
@@ -73,9 +73,9 @@ public class PetPlantFixture {
                 .flowerpot("플라스틱 화분")
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now().plusDays(1))
+                .birthDate(LocalDate.of(2000, 6, 13))
+                .lastWaterDate(LocalDate.of(2020, 1, 3))
+                .nextWaterDate(LocalDate.of(2020, 1, 15))
                 .waterCycle(3)
                 .dday(1L)
                 .daySince(1L)
@@ -93,7 +93,7 @@ public class PetPlantFixture {
                                         .nickname("엄청 큰 피우미")
                                         .imageUrl("https://image.com")
                                         .dictionaryPlantName("스투키")
-                                        .birthDate(LocalDate.now())
+                                        .birthDate(LocalDate.of(2020, 6, 16))
                                         .daySince(3L)
                                         .build()
                         )

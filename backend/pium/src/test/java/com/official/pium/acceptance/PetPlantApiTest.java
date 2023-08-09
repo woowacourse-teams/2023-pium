@@ -18,8 +18,6 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import java.time.LocalDate;
-import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -27,6 +25,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -115,7 +116,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .waterCycle(3)
                     .light("빛 많이")
                     .wind("바람 많이")
-                    .birthDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
                     .lastWaterDate(LocalDate.now().plusDays(2))
                     .build();
 
@@ -145,7 +146,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .light("빛 많이")
                     .wind("바람 많이")
                     .birthDate(LocalDate.now().plusDays(2))
-                    .lastWaterDate(LocalDate.now())
+                    .lastWaterDate(LocalDate.of(2022, 2, 3))
                     .build();
 
             RestAssured
