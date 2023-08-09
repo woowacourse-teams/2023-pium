@@ -1,9 +1,11 @@
 package com.official.pium.service.dto;
 
-import lombok.*;
-
-import java.time.LocalDate;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Builder
@@ -15,5 +17,5 @@ public class HistoryResponse {
     private Integer size;
     private Long elementSize;
     private boolean hasNext;
-    private List<LocalDate> waterDateList;
+    private List<SingleHistoryResponse> data;
 }

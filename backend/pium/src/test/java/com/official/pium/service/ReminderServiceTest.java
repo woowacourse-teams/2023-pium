@@ -64,8 +64,9 @@ class ReminderServiceTest extends IntegrationTest {
                     softly.assertThat(updatedPetPlant)
                             .extracting(PetPlant::getNextWaterDate, PetPlant::getLastWaterDate)
                             .isEqualTo(List.of(newWaterDate.plusDays(petPlant.getWaterCycle()), newWaterDate));
+                    // findByHistoryCategory
                     softly.assertThat(historyRepository.findAll())
-                            .extracting(History::getPetPlant, History::getWaterDate)
+                            .extracting(History::getPetPlant, History::getDate)
                             .contains(tuple(updatedPetPlant, newWaterDate));
                 }
         );

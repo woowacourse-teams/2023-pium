@@ -3,16 +3,25 @@ package com.official.pium.controller;
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.PetPlantService;
-import com.official.pium.service.dto.*;
+import com.official.pium.service.dto.DataResponse;
+import com.official.pium.service.dto.PetPlantCreateRequest;
+import com.official.pium.service.dto.PetPlantResponse;
+import com.official.pium.service.dto.PetPlantUpdateRequest;
+import com.official.pium.service.dto.SinglePetPlantResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import java.net.URI;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Validated
 @RestController

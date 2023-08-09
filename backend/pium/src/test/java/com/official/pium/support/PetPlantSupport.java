@@ -8,10 +8,9 @@ import com.official.pium.fixture.MemberFixture;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
+import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import java.time.LocalDate;
 
 @Component
 @RequiredArgsConstructor
@@ -43,7 +42,8 @@ public class PetPlantSupport {
         public PetPlant build() {
             return petPlantRepository.save(
                     PetPlant.builder()
-                            .dictionaryPlant(dictionaryPlant == null ? dictionaryPlantRepository.save(DictionaryPlantFixture.generateDictionaryPlant()) : dictionaryPlant)
+                            .dictionaryPlant(dictionaryPlant == null ? dictionaryPlantRepository.save(
+                                    DictionaryPlantFixture.generateDictionaryPlant()) : dictionaryPlant)
                             .member(member == null ? memberRepository.save(MemberFixture.generateMember()) : member)
                             .nickname("testNickName")
                             .imageUrl("testImageUrl")
