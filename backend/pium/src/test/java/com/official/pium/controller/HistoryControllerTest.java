@@ -5,6 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -37,10 +39,10 @@ public class HistoryControllerTest extends UITest {
     private HistoryService historyService;
 
     @Nested
-    class 히스토리_조회_시 {
+    class 히스토리_단건_조회_ {
 
         @Test
-        void 조회에_성공하면_200을_반환한다() throws Exception {
+        void 정상_요청시_200을_반환한다() throws Exception {
             HistoryResponse response = 히스토리;
             given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
                     .willReturn(response);
@@ -51,6 +53,10 @@ public class HistoryControllerTest extends UITest {
                             .param("page", "1")
                             .param("size", "1")
                             .contentType(MediaType.APPLICATION_JSON)
+                    )
+                    .andDo(document("history/findByPetPlantId/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());

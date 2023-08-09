@@ -8,3 +8,4 @@
 include::dictionaryPlant.adoc[]
 include::petPlant.adoc[]
 include::reminder.adoc[]
+include::history.adoc[]

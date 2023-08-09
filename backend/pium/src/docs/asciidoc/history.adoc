@@ -1,0 +1,11 @@
+== 타임라인(History)
+
+=== 타임라인 단건 조회
+
+==== Request
+
+include::{snippets}/history/findByPetPlantId/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/history/findByPetPlantId/http-response.adoc[]
