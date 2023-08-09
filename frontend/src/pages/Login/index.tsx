@@ -2,13 +2,11 @@ import { useNavigate } from 'react-router-dom';
 import ArrowLeft from 'components/@common/Icons/ArrowLeft';
 import KakaoLoginLarge from 'components/@common/Icons/KakaoLoginLarge';
 import { LoginBox, Title, Wrapper } from './Login.style';
+import useKakao from 'hooks/useKakao';
 
 const Login = () => {
   const navigate = useNavigate();
-
-  const onClickLogin = () => {
-    console.log('login click');
-  };
+  const { kakaoLoginHandler } = useKakao();
 
   return (
     <Wrapper>
@@ -22,7 +20,7 @@ const Login = () => {
             aria-label="카카오 로그인"
             width="270px"
             height="68px"
-            onClick={onClickLogin}
+            onClick={kakaoLoginHandler}
           />
         </div>
       </LoginBox>

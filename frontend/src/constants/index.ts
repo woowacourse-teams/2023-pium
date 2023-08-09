@@ -16,6 +16,7 @@ export const URL_PATH = {
   calendar: '/calendar',
   reminder: '/reminder',
   login: '/login',
+  authorization: '/authorization',
 } as const;
 
 export const MESSAGE = {

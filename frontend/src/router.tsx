@@ -5,6 +5,7 @@ import DictionarySearch from 'pages/DictionarySearch';
 import Error from 'pages/Error';
 import Loading from 'pages/Loading';
 import Login from 'pages/Login';
+import Authorization from 'pages/Login/Authorization';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
 import PetPlantCardList from 'pages/PetPlantCardList';
@@ -93,6 +94,10 @@ const router = createBrowserRouter([
             <Login />
           </Suspense>
         ),
+      },
+      {
+        path: URL_PATH.authorization,
+        element: <Authorization />,
       },
     ],
   },
