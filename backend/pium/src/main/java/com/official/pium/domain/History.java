@@ -1,6 +1,7 @@
 package com.official.pium.domain;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -34,13 +36,24 @@ public class History extends BaseEntity {
     private PetPlant petPlant;
 
     @NotNull
-    @Column(name = "water_date", nullable = false)
-    private LocalDate waterDate;
+    @Column(name = "event_date", nullable = false)
+    private LocalDate date;
+
+    @NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "history_category_id", nullable = false)
+    private HistoryCategory historyCategory;
+
+    @Valid
+    @Embedded
+    private HistoryContent historyContent;
 
     @Builder
-    private History(@NotNull PetPlant petPlant, @NotNull LocalDate waterDate) {
+    private History(PetPlant petPlant, LocalDate date, HistoryCategory historyCategory, HistoryContent historyContent) {
         this.petPlant = petPlant;
-        this.waterDate = waterDate;
+        this.date = date;
+        this.historyCategory = historyCategory;
+        this.historyContent = historyContent;
     }
 
     @Override

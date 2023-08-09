@@ -1,5 +1,10 @@
 package com.official.pium.acceptance;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.hamcrest.Matchers.containsString;
+
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
@@ -13,6 +18,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.time.LocalDate;
+import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -20,14 +27,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static com.official.pium.fixture.PetPlantFixture.REQUEST;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.hamcrest.Matchers.containsString;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -95,9 +94,13 @@ public class PetPlantApiTest extends AcceptanceTest {
                 softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
                 softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
                 softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
-                softly.assertThat(response.jsonPath().getString("birthDate")).isEqualTo(request.getBirthDate().toString());
-                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getLastWaterDate().toString());
-                softly.assertThat(response.jsonPath().getObject("dictionaryPlant", PetPlantResponse.DictionaryPlantResponse.class).getId()).isEqualTo(request.getDictionaryPlantId());
+                softly.assertThat(response.jsonPath().getString("birthDate"))
+                        .isEqualTo(request.getBirthDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate"))
+                        .isEqualTo(request.getLastWaterDate().toString());
+                softly.assertThat(
+                        response.jsonPath().getObject("dictionaryPlant", PetPlantResponse.DictionaryPlantResponse.class)
+                                .getId()).isEqualTo(request.getDictionaryPlantId());
             });
         }
 
@@ -215,9 +218,13 @@ public class PetPlantApiTest extends AcceptanceTest {
                 softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
                 softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
                 softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
-                softly.assertThat(response.jsonPath().getString("birthDate")).isEqualTo(request.getBirthDate().toString());
-                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getLastWaterDate().toString());
-                softly.assertThat(response.jsonPath().getObject("dictionaryPlant", PetPlantResponse.DictionaryPlantResponse.class).getId()).isEqualTo(request.getDictionaryPlantId());
+                softly.assertThat(response.jsonPath().getString("birthDate"))
+                        .isEqualTo(request.getBirthDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate"))
+                        .isEqualTo(request.getLastWaterDate().toString());
+                softly.assertThat(
+                        response.jsonPath().getObject("dictionaryPlant", PetPlantResponse.DictionaryPlantResponse.class)
+                                .getId()).isEqualTo(request.getDictionaryPlantId());
             });
         }
 
@@ -397,8 +404,10 @@ public class PetPlantApiTest extends AcceptanceTest {
                 softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
                 softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
                 softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
-                softly.assertThat(response.jsonPath().getString("birthDate")).isEqualTo(request.getBirthDate().toString());
-                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getLastWaterDate().toString());
+                softly.assertThat(response.jsonPath().getString("birthDate"))
+                        .isEqualTo(request.getBirthDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate"))
+                        .isEqualTo(request.getLastWaterDate().toString());
             });
         }
 

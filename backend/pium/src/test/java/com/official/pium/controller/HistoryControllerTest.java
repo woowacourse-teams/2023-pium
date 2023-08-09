@@ -1,5 +1,15 @@
 package com.official.pium.controller;
 
+import static com.official.pium.fixture.HistoryFixture.RESPONSE.히스토리;
+import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
 import com.official.pium.service.HistoryService;
@@ -14,16 +24,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-
-import static com.official.pium.fixture.HistoryFixture.RESPONSE.히스토리;
-import static org.hamcrest.Matchers.equalTo;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -64,7 +64,7 @@ public class HistoryControllerTest extends UITest {
 
             mockMvc.perform(get("/history")
                             .header("Authorization", "pium@gmail.com")
-                            .param("petPlantId","")
+                            .param("petPlantId", "")
                             .param("page", "1")
                             .param("size", "1")
                             .contentType(MediaType.APPLICATION_JSON)
