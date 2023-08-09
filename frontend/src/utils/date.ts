@@ -51,8 +51,8 @@ export const isYear = (target: string): target is Year => {
 export const isKoreanDateFormat = (target: string): target is KoreanDateFormat => {
   if (target.trim().length !== 13) return false;
 
-  const [yearString, monthDateString] = target.trim().split('년');
-  const [monthString, dateFormatString] = monthDateString.split('월');
+  const [yearString, monthDateString] = target.trim().split('년 ');
+  const [monthString, dateFormatString] = monthDateString.split('월 ');
   const [dateString] = dateFormatString.split('일');
 
   return isDateFormat(`${yearString}-${monthString}-${dateString}`);
@@ -64,11 +64,8 @@ export const isKoreanDateFormat = (target: string): target is KoreanDateFormat =
  * @returns 'YYYY년 MM월 DD일'
  */
 export const convertDateKorYear = (date: string | number | Date): KoreanDateFormat => {
-  const result = new Date(date).toLocaleDateString('ko-KR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
+  const [year, month, dateValue] = getDateToString(new Date(date)).split('-');
+  const result = `${year}년 ${month}월 ${dateValue}일`;
 
   if (!isKoreanDateFormat(result)) throw new Error(ERROR.dateFormat);
 
