@@ -1,25 +1,25 @@
 import { useLocation } from 'react-router-dom';
-import Calendar from 'components/@common/Icons/Calendar';
+import { useRecoilValue } from 'recoil';
+import AccountCircle from 'components/@common/Icons/AccountCircle';
 import Home from 'components/@common/Icons/Home';
 import Plant from 'components/@common/Icons/Plant';
 import Reminder from 'components/@common/Icons/Reminder';
 import { NavItem, NavItemArea, NavLabel, NavLink, Wrapper } from './Navbar.style';
+import { userInfo } from 'store/atoms/userInfo';
 import { URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const { isLogin } = useRecoilValue(userInfo);
+
   const navItems = [
     {
       path: URL_PATH.main,
       label: '메인',
       Icon: Home,
     },
-    // {
-    //   path: URL_PATH.calendar,
-    //   label: '캘린더',
-    //   Icon: Calendar,
-    // },
+
     {
       path: URL_PATH.reminder,
       label: '리마인더',
@@ -29,6 +29,11 @@ const Navbar = () => {
       path: URL_PATH.petList,
       label: '내 식물',
       Icon: Plant,
+    },
+    {
+      path: isLogin ? URL_PATH.myPage : URL_PATH.login,
+      label: isLogin ? '마이페이지' : '로그인',
+      Icon: AccountCircle,
     },
   ];
 

@@ -17,6 +17,7 @@ export const URL_PATH = {
   reminder: '/reminder',
   login: '/login',
   authorization: '/authorization',
+  myPage: 'myPage',
 } as const;
 
 export const MESSAGE = {

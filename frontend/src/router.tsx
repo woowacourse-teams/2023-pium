@@ -7,6 +7,7 @@ import Loading from 'pages/Loading';
 import Login from 'pages/Login';
 import Authorization from 'pages/Login/Authorization';
 import Main from 'pages/Main';
+import MyPage from 'pages/MyPage';
 import PetDetails from 'pages/PetDetails';
 import PetPlantCardList from 'pages/PetPlantCardList';
 import PetPlantEdit from 'pages/PetPlantEdit';
@@ -98,6 +99,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.authorization,
         element: <Authorization />,
+      },
+      {
+        path: URL_PATH.myPage,
+        element: <MyPage />,
       },
     ],
   },
