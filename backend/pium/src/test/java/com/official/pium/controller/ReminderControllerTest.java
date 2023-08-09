@@ -8,6 +8,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -57,6 +61,10 @@ class ReminderControllerTest extends UITest {
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("reminder/water/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
+                    )
                     .andExpect(status().isNoContent())
                     .andDo(print());
         }
@@ -87,6 +95,10 @@ class ReminderControllerTest extends UITest {
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("reminder/delay/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
+                    )
                     .andExpect(status().isNoContent())
                     .andDo(print());
         }
@@ -116,6 +128,10 @@ class ReminderControllerTest extends UITest {
             mockMvc.perform(get("/reminders")
                             .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("reminder/findAll/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }

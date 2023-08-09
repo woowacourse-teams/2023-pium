@@ -1,11 +1,7 @@
 package com.official.pium.fixture;
 
 import com.official.pium.domain.PetPlant;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
+import com.official.pium.service.dto.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -38,8 +34,8 @@ public class PetPlantFixture {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2022, 4, 1))
+                .lastWaterDate(LocalDate.of(2023, 5, 5))
                 .build();
 
         public static PetPlantUpdateRequest 피우미_수정_요청 = PetPlantUpdateRequest.builder()
@@ -93,6 +89,7 @@ public class PetPlantFixture {
                 DataResponse.<List<SinglePetPlantResponse>>builder().data(
                         List.of(
                                 SinglePetPlantResponse.builder()
+                                        .id(1L)
                                         .nickname("엄청 큰 피우미")
                                         .imageUrl("https://image.com")
                                         .dictionaryPlantName("스투키")

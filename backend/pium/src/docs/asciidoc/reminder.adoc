@@ -1,0 +1,31 @@
+== 리마인더(Reminder)
+
+=== 전체 조회
+
+==== Request
+
+include::{snippets}/reminder/findAll/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/reminder/findAll/http-response.adoc[]
+
+=== 미루기 요청
+
+==== Request
+
+include::{snippets}/reminder/delay/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/reminder/delay/http-response.adoc[]
+
+=== 물주기 요청
+
+==== Request
+
+include::{snippets}/reminder/water/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/reminder/water/http-response.adoc[]
