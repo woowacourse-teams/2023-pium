@@ -1,23 +1,22 @@
 package com.official.pium.acceptance;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.hamcrest.Matchers.equalTo;
+
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.support.DictionaryPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.hamcrest.Matchers.equalTo;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -53,9 +52,12 @@ class DictionaryPlantApiTest extends AcceptanceTest {
                         softly.assertThat(response.jsonPath().getString("growSpeed")).isEqualTo(request.getGrowSpeed());
                         softly.assertThat(response.jsonPath().getString("requireTemp")).isEqualTo(request.getRequireTemp());
                         softly.assertThat(response.jsonPath().getString("minimumTemp")).isEqualTo(request.getMinimumTemp());
-                        softly.assertThat(response.jsonPath().getString("requireHumidity")).isEqualTo(request.getRequireHumidity());
-                        softly.assertThat(response.jsonPath().getList("postingPlace")).isEqualTo(List.of(request.getPostingPlace().split(",")));
-                        softly.assertThat(response.jsonPath().getString("specialManageInfo")).isEqualTo(request.getSpecialManageInfo());
+                        softly.assertThat(response.jsonPath().getString("requireHumidity"))
+                                .isEqualTo(request.getRequireHumidity());
+                        softly.assertThat(response.jsonPath().getList("postingPlace"))
+                                .isEqualTo(List.of(request.getPostingPlace().split(",")));
+                        softly.assertThat(response.jsonPath().getString("specialManageInfo"))
+                                .isEqualTo(request.getSpecialManageInfo());
                     }
             );
         }
@@ -85,7 +87,8 @@ class DictionaryPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .assertThat().body("message", equalTo(String.format("사전 식물 ID는 1이상의 값이어야 합니다. Value: %d", inValidId)));
+                    .assertThat()
+                    .body("message", equalTo(String.format("사전 식물 ID는 1이상의 값이어야 합니다. Value: %d", inValidId)));
         }
     }
 

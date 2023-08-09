@@ -1,5 +1,11 @@
 package com.official.pium.acceptance;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
+import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_물주기_요청;
+import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_미루기_요청;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
@@ -11,6 +17,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.time.LocalDate;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -19,15 +27,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
-import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_물주기_요청;
-import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_미루기_요청;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -208,7 +207,8 @@ public class ReminderApiTest extends AcceptanceTest {
             ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
             SoftAssertions.assertSoftly(softly -> {
-                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getWaterDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate"))
+                        .isEqualTo(request.getWaterDate().toString());
                 softly.assertThat(response.jsonPath().getString("nextWaterDate"))
                         .isEqualTo(request.getWaterDate().plusDays(petPlantCreateRequest.getWaterCycle()).toString());
             });
@@ -479,7 +479,8 @@ public class ReminderApiTest extends AcceptanceTest {
         return Long.parseLong(petPlantId);
     }
 
-    private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId, LocalDate lastWaterDate) {
+    private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId,
+                                                                         LocalDate lastWaterDate) {
         return PetPlantCreateRequest.builder()
                 .dictionaryPlantId(dictionaryPlantId)
                 .nickname("피우미")
