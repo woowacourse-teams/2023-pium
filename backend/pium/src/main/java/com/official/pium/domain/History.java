@@ -45,6 +45,7 @@ public class History extends BaseEntity {
     private HistoryCategory historyCategory;
 
     @Valid
+    @NotNull
     @Embedded
     private HistoryContent historyContent;
 
