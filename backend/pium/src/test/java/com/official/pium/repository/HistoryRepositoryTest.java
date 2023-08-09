@@ -3,7 +3,15 @@ package com.official.pium.repository;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.RepositoryTest;
-import com.official.pium.domain.*;
+import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.History;
+import com.official.pium.domain.HistoryCategory;
+import com.official.pium.domain.HistoryContent;
+import com.official.pium.domain.HistoryType;
+import com.official.pium.domain.Member;
+import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.WaterCycle;
+import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -12,8 +20,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
-import java.time.LocalDate;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")

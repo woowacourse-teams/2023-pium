@@ -6,7 +6,6 @@ import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse.WaterCycleResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
-
 import java.util.List;
 
 @SuppressWarnings("NonAsciiCharacters")
