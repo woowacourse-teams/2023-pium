@@ -1,7 +1,7 @@
 package com.official.pium.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.RepositoryTest;
 import com.official.pium.domain.DictionaryPlant;
@@ -43,9 +43,11 @@ class PetPlantRepositoryTest extends RepositoryTest {
 
         PetPlant savePetPlant = petPlantRepository.save(petPlant);
 
-        assertAll(
-                () -> assertThat(savePetPlant).isNotNull(),
-                () -> assertThat(savePetPlant.getId()).isEqualTo(petPlant.getId())
+        assertSoftly(
+                softly -> {
+                    softly.assertThat(savePetPlant).isNotNull();
+                    softly.assertThat(savePetPlant.getId()).isEqualTo(petPlant.getId());
+                }
         );
     }
 
