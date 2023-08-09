@@ -80,6 +80,29 @@ class PetPlantTest {
             );
         }
 
+        @Test
+        void waterCycle_변경_시_다음_물주는_날짜_변경() {
+            PetPlant petPlant = PetPlant.builder()
+                    .member(MemberFixture.주노)
+                    .nickname("크론")
+                    .imageUrl("https://image2.com")
+                    .light("자연광이 잘 드는 곳")
+                    .location("거실")
+                    .wind("바람 솔솔")
+                    .flowerpot("정보 없음")
+                    .waterCycle(7)
+                    .birthDate(LocalDate.of(2022, 7, 1))
+                    .lastWaterDate(LocalDate.of(2022, 7, 1))
+                    .nextWaterDate(LocalDate.now().minusDays(3))
+                    .build();
+
+            petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
+                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8));
+
+            assertThat(petPlant.getNextWaterDate())
+                    .isEqualTo(LocalDate.now().plusDays(petPlant.getWaterCycle()));
+        }
+
         @ParameterizedTest
         @NullAndEmptySource
         void 닉네임이_없으면_예외_발생(String nickname) {
