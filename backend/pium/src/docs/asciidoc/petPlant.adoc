@@ -1,6 +1,16 @@
-==  반려 식물(PetPlant)
+== 반려 식물(PetPlants)
 
-=== 반려 식물 조회
+=== 반려 식물 등록
+
+==== Request
+
+include::{snippets}/petPlant/create/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/petPlant/create/http-response.adoc[]
+
+=== 반려 식물 단건 조회
 
 ==== Request
 

@@ -1,0 +1,21 @@
+== 사전 식물(DictionaryPlants)
+
+=== 사전 식물 단건 조회
+
+==== Request
+
+include::{snippets}/dictionaryPlant/findById/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/dictionaryPlant/findById/http-response.adoc[]
+
+=== 사전 식물 이름으로 조회
+
+==== Request
+
+include::{snippets}/dictionaryPlant/findByName/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/dictionaryPlant/findByName/http-response.adoc[]
