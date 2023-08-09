@@ -1,5 +1,47 @@
-import { DayInfo, Month, MonthInfo } from 'types/date';
+import type { DateFormat, DayInfo, Month, MonthInfo, Year } from 'types/date';
+import { ERROR } from 'constants/index';
 import { dateValidate } from './validate';
+
+/**
+ * 주어진 문자열이 20, 21세기의 YYYY-MM-DD 형식을 만족하는 `DateFormat` 타입인지 반환
+ * @param target 임의의 문자열
+ * @returns `DateFormat` 형식이면 true, 아니면 false
+ */
+export const isDateFormat = (target: string): target is DateFormat => {
+  if (target.trim().length !== 10) return false;
+
+  const [yearString, monthString, dateString] = target.trim().split('-');
+
+  if (!yearString || !monthString || !dateString) return false;
+  if (yearString.length !== 4 || monthString.length !== 2 || dateString.length !== 2) {
+    return false;
+  }
+
+  const [year, month, dateValue] = target.trim().split('-').map(Number);
+  const date = new Date(year, month - 1, dateValue);
+
+  if (
+    year !== date.getFullYear() ||
+    month !== date.getMonth() + 1 ||
+    dateValue !== date.getDate()
+  ) {
+    return false;
+  }
+
+  if (date < new Date(1900, 1, 1) || date > new Date(2099, 12, 31)) return false;
+
+  return true;
+};
+
+/**
+ * 주어진 연도가 20세기 또는 21세기인지 판별합니다.
+ * @param target 연도를 표현하는 문자열
+ * @returns 20세기 또는 21세기면 true, 아니면 false
+ */
+export const isYear = (target: string): target is Year => {
+  const value = Number(target);
+  return value >= 1900 && value < 2100;
+};
 
 /**
  * 받은 날짜를 한국식으로 표현합니다.

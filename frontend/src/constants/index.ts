@@ -25,6 +25,8 @@ export const ERROR = {
   radioContext: '컴포넌트가 RadioProvider의 자손이 아닙니다!',
   stackContext: '컴포넌트가 StackProvider의 자손이 아닙니다!',
   toastContext: '컴포넌트가 ToastProvider의 자손이 아닙니다!',
+  dateFormat: '주어진 값은 DateFormat 타입으로 변환할 수 없습니다.',
+  yearFormat: '주어진 연도는 20세기 또는 21세기가 아닙니다.',
 } as const;
 
 export const GUIDE = {
