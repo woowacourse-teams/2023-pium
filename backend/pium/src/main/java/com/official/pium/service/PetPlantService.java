@@ -89,7 +89,7 @@ public class PetPlantService {
         checkOwner(petPlant, member);
 
         historyRepository.deleteAllByPetPlantId(petPlant.getId());
-        petPlantRepository.delete(petPlant);
+        petPlantRepository.deleteById(petPlant.getId());
     }
 
     private void checkOwner(PetPlant petPlant, Member member) {
