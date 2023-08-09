@@ -20,9 +20,26 @@ export const DaySpan = styled.span<DayProps>`
   width: 40px;
   height: 40px;
 
-  color: ${({ isToday, isInRange, theme: { color } }) =>
-    isToday ? color.background : isInRange ? color.sub : color.grayDark};
+  color: ${({ isToday, isInRange, theme: { color } }) => {
+    if (isToday) return color.background;
+    if (isInRange) return color.sub;
+    return color.grayDark;
+  }};
 
-  background: ${({ isToday, theme: { color } }) => (isToday ? color.accent : color.background)};
+  background: ${({ isToday, isInRange, theme: { color } }) => {
+    if (isToday && isInRange) return color.accent;
+    if (isToday) return color.accent + '5F';
+    return color.background;
+  }};
   border-radius: 50%;
+
+  &:hover {
+    color: ${({ isToday, isInRange, theme: { color } }) =>
+      isToday || isInRange ? color.background : color.grayDark};
+    background: ${({ isToday, isInRange, theme: { color } }) => {
+      if (isToday && !isInRange) return color.accent + '5F';
+      if (!isToday && !isInRange) return color.background;
+      return color.accent;
+    }};
+  }
 `;
