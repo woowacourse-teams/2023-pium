@@ -1,9 +1,9 @@
-import type { DateFormat, DayInfo, Month, MonthInfo, Year } from 'types/date';
+import type { DateFormat, DayInfo, KoreanDateFormat, Month, MonthInfo, Year } from 'types/date';
 import { ERROR } from 'constants/index';
 import { dateValidate } from './validate';
 
 /**
- * 주어진 문자열이 20, 21세기의 YYYY-MM-DD 형식을 만족하는 `DateFormat` 타입인지 반환
+ * 주어진 문자열이 20, 21세기의 'YYYY-MM-DD' 형태인지 판별합니다.
  * @param target 임의의 문자열
  * @returns `DateFormat` 형식이면 true, 아니면 false
  */
@@ -44,16 +44,36 @@ export const isYear = (target: string): target is Year => {
 };
 
 /**
+ * 주어진 문자열이 20, 21세기의 'YYYY년 MM월 DD일' 형태인지 판별합니다.
+ * @param target 임의의 문자열
+ * @returns `KoreanDateFormat` 형식이면 true, 아니면 false
+ */
+export const isKoreanDateFormat = (target: string): target is KoreanDateFormat => {
+  if (target.trim().length !== 13) return false;
+
+  const [yearString, monthDateString] = target.trim().split('년');
+  const [monthString, dateFormatString] = monthDateString.split('월');
+  const [dateString] = dateFormatString.split('일');
+
+  return isDateFormat(`${yearString}-${monthString}-${dateString}`);
+};
+
+/**
  * 받은 날짜를 한국식으로 표현합니다.
  * @param date `new Date()`를 이용해 날짜 형태로 변경할 수 있는 값
  * @returns 'YYYY년 MM월 DD일'
  */
-export const convertDateKorYear = (date: string | number | Date) =>
-  new Date(date).toLocaleDateString('ko-KR', {
+export const convertDateKorYear = (date: string | number | Date): KoreanDateFormat => {
+  const result = new Date(date).toLocaleDateString('ko-KR', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
+
+  if (!isKoreanDateFormat(result)) throw new Error(ERROR.dateFormat);
+
+  return result;
+};
 
 /**
  * 특정 날짜를 YYYY-MM-DD 형태의 string으로 반환합니다.

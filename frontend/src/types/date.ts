@@ -8,6 +8,8 @@ export type Day = `${'0' | '1' | '2'}${DecimalDigit}` | '30' | '31';
 
 export type DateFormat = `${Year}-${Month}-${Day}`;
 
+export type KoreanDateFormat = `${Year}년 ${Month}월 ${Day}일`;
+
 export interface MonthInfo {
   year: Year;
   month: Month;
