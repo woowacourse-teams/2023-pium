@@ -15,6 +15,7 @@ export const URL_PATH = {
   petRegisterForm: '/pet/register/:id',
   calendar: '/calendar',
   reminder: '/reminder',
+  login: '/login',
 } as const;
 
 export const MESSAGE = {

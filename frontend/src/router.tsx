@@ -4,6 +4,7 @@ import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
 import Error from 'pages/Error';
 import Loading from 'pages/Loading';
+import Login from 'pages/Login';
 import Main from 'pages/Main';
 import PetDetails from 'pages/PetDetails';
 import PetPlantCardList from 'pages/PetPlantCardList';
@@ -82,6 +83,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loading />}>
             <PetPlantTimeline />
+          </Suspense>
+        ),
+      },
+      {
+        path: URL_PATH.login,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Login />
           </Suspense>
         ),
       },
