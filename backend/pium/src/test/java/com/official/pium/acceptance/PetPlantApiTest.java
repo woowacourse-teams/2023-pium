@@ -452,7 +452,7 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_삭제_시_ {
 
         @Test
-        void 정상_삭제_후_204를_반환하고_조회할_수_없다() {
+        void 정상_삭제_후_204를_반환_및_조회_불가() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
@@ -518,7 +518,6 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .statusCode(HttpStatus.BAD_REQUEST.value())
                     .assertThat().body("message", containsString("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다."));
         }
-
     }
 
     private ExtractableResponse<Response> 반려_식물_단건_조회(Long petPlantId) {

@@ -37,8 +37,8 @@ class MemberRepositoryTest extends RepositoryTest {
     void 사용자_조회() {
         Member member = Member.builder().email("hello@aaa.com").build();
 
-        Member save = memberRepository.save(member);
+        Member saveMember = memberRepository.save(member);
 
-        assertThat(memberRepository.findById(save.getId())).isPresent();
+        assertThat(memberRepository.findById(saveMember.getId())).isPresent();
     }
 }
