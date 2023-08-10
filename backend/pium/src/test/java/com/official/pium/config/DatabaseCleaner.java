@@ -1,6 +1,5 @@
 package com.official.pium.config;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class DatabaseCleaner {
     private EntityManager entityManager;
 
     @SuppressWarnings("unchecked")
-    @PostConstruct
     private void findDatabaseTableNames() {
         List<Object[]> tableInfos = entityManager.createNativeQuery("SHOW TABLES").getResultList();
         for (Object[] tableInfo : tableInfos) {
@@ -36,6 +34,7 @@ public class DatabaseCleaner {
 
     @Transactional
     public void clear() {
+        findDatabaseTableNames();
         entityManager.clear();
         truncate();
     }
