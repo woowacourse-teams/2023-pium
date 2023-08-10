@@ -41,11 +41,12 @@ const Navbar = () => {
     <Wrapper>
       {navItems.map(({ path, label, Icon }, index) => {
         const active = pathname === path;
+        const color = active ? theme.color.primary : '#888888';
         return (
           <NavLink key={index} to={path}>
             <NavItemArea $active={active}>
               <NavItem>
-                <Icon aria-hidden stroke={active ? theme.color.primary : '#888888'} />
+                <Icon aria-hidden stroke={color} fill={color} />
                 <NavLabel $active={active}>{label}</NavLabel>
               </NavItem>
             </NavItemArea>
