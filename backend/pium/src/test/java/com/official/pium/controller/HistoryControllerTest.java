@@ -5,6 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -61,6 +63,9 @@ public class HistoryControllerTest extends UITest {
                     .andDo(document("history/findByPetPlantId/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
                             queryParameters(
                                     parameterWithName("petPlantId").description("반려 식물 아이디"),
                                     parameterWithName("page").description("페이지 번호 (0부터 시작)"),

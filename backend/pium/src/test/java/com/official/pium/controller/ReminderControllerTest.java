@@ -8,13 +8,17 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,14 +61,19 @@ class ReminderControllerTest extends UITest {
         void 정상_요청시_204를_반환() throws Exception {
             willDoNothing().given(reminderService)
                     .water(any(ReminderCreateRequest.class), anyLong(), any(Member.class));
-
             mockMvc.perform(post("/reminders/{id}", 1L)
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청(LocalDate.of(2023, 7, 1))))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/water/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
+                            pathParameters(
+                                    parameterWithName("id").description("리마인더 ID")
+                            ))
                     )
                     .andExpect(status().isNoContent())
                     .andDo(print());
@@ -98,7 +107,13 @@ class ReminderControllerTest extends UITest {
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/delay/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
+                            pathParameters(
+                                    parameterWithName("id").description("리마인더 ID")
+                            ))
                     )
                     .andExpect(status().isNoContent())
                     .andDo(print());
@@ -131,7 +146,10 @@ class ReminderControllerTest extends UITest {
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/findAll/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());

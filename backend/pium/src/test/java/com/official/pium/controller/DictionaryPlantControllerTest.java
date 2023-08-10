@@ -11,6 +11,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -57,11 +58,14 @@ class DictionaryPlantControllerTest {
             DictionaryPlantResponse response = RESPONSE.스투키_단일_조회_응답;
             given(dictionaryPlantService.read(anyLong()))
                     .willReturn(response);
-            mockMvc.perform(get("/dictionary-plants/{dictionaryPlantId}", response.getId())
+            mockMvc.perform(get("/dictionary-plants/{id}", response.getId())
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("dictionaryPlant/findById/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            pathParameters(
+                                    parameterWithName("id").description("사전 식물 ID")
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.id").value(1))

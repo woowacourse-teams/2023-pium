@@ -8,14 +8,18 @@ import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -72,7 +76,10 @@ class PetPlantControllerTest extends UITest {
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("petPlant/create/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ))
                     )
                     .andExpect(status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
@@ -95,7 +102,13 @@ class PetPlantControllerTest extends UITest {
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andDo(document("petPlant/findById/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
+                            pathParameters(
+                                    parameterWithName("id").description("반려 식물 ID")
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());
@@ -127,7 +140,10 @@ class PetPlantControllerTest extends UITest {
                             .header("Authorization", "pium@gmail.com"))
                     .andDo(document("petPlant/findAll/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());
@@ -158,7 +174,13 @@ class PetPlantControllerTest extends UITest {
                             .contentType(MediaType.APPLICATION_JSON))
                     .andDo(document("petPlant/update/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
+                            pathParameters(
+                                    parameterWithName("id").description("반려 식물 ID")
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());
