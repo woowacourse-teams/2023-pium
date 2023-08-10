@@ -7,6 +7,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.History;
+import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
@@ -47,6 +48,11 @@ class ReminderServiceTest extends IntegrationTest {
     void setUp() {
         petPlant = petPlantSupport.builder().build();
         member = petPlant.getMember();
+        for (HistoryType type : HistoryType.values()) {
+            historyCategorySupport.builder()
+                    .historyType(type)
+                    .build();
+        }
     }
 
     @Test
