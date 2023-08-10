@@ -67,7 +67,7 @@ public class HistoryControllerTest extends UITest {
                                     headerWithName("Authorization").description("사용자 인증 정보")
                             ),
                             queryParameters(
-                                    parameterWithName("petPlantId").description("반려 식물 아이디"),
+                                    parameterWithName("petPlantId").description("반려 식물 ID"),
                                     parameterWithName("page").description("페이지 번호 (0부터 시작)"),
                                     parameterWithName("size").description("페이지 크기")
                             ))
