@@ -58,6 +58,8 @@ public class HistoryControllerTest extends UITest {
                             .param("petPlantId", "1")
                             .param("page", "1")
                             .param("size", "1")
+                            .param("sort", "date")
+                            .param("direction", "DESC")
                             .contentType(MediaType.APPLICATION_JSON)
                     )
                     .andDo(document("history/findByPetPlantId/",
@@ -66,10 +68,13 @@ public class HistoryControllerTest extends UITest {
                             requestHeaders(
                                     headerWithName("Authorization").description("사용자 인증 정보")
                             ),
+
                             queryParameters(
                                     parameterWithName("petPlantId").description("반려 식물 ID"),
                                     parameterWithName("page").description("페이지 번호 (0부터 시작)"),
-                                    parameterWithName("size").description("페이지 크기")
+                                    parameterWithName("size").description("페이지 크기"),
+                                    parameterWithName("sort").description("(선택) 정렬 조건 : id / date(기본값) / historyCategory").optional(),
+                                    parameterWithName("direction").description("(선택) 정렬 방향 : ASC / DESC(기본값)").optional()
                             ))
                     )
                     .andExpect(status().isOk())
