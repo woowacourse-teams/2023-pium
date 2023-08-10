@@ -17,8 +17,13 @@ import {
   DictionaryPlantName,
 } from './Card.style';
 import { ReminderContext } from 'contexts/reminderContext';
-import { getDateToString, getParticularDateFromSpecificDay, getStringToDate } from 'utils/date';
-import { dateValidate } from 'utils/validate';
+import {
+  getDateToString,
+  getParticularDateFromSpecificDay,
+  getStringToDate,
+  isDateFormat,
+} from 'utils/date';
+import { DateValidate } from 'utils/validate';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
@@ -36,10 +41,11 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
   const { petPlantId, status, image, nickName, dictionaryPlantName, dday, lastWaterDate } = data;
   const context = useContext(ReminderContext);
   const today = getDateToString();
-  const { isDateInRange } = dateValidate;
+  const { isDateInRange } = DateValidate;
 
   const changeDateHandler = (changeDate: string) => {
-    //  changeDate에 대한 검증 실시. 변환하는 날이 오늘 다음날 보다 적다면 return
+    if (!isDateFormat(changeDate)) return;
+
     const variables: ChangeDateParams = {
       id: petPlantId,
       body: {
@@ -51,7 +57,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
     return true;
   };
   const waterHandler = (waterDate: string) => {
-    // 물을 준 날이 이전에 줬던 날보다 이전이거나, 오늘 이후라면 return;
+    if (!isDateFormat(waterDate)) return;
 
     const variables: WaterPlantParams = {
       id: petPlantId,
