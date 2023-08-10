@@ -17,6 +17,7 @@ include::{snippets}/reminder/findAll/http-response.adoc[]
 
 include::{snippets}/reminder/delay/http-request.adoc[]
 include::{snippets}/reminder/delay/request-headers.adoc[]
+include::{snippets}/reminder/delay/path-parameters.adoc[]
 
 ==== Response
 
@@ -28,6 +29,7 @@ include::{snippets}/reminder/delay/http-response.adoc[]
 
 include::{snippets}/reminder/water/http-request.adoc[]
 include::{snippets}/reminder/water/request-headers.adoc[]
+include::{snippets}/reminder/water/path-parameters.adoc[]
 
 ==== Response
 

@@ -17,6 +17,7 @@ include::{snippets}/petPlant/create/http-response.adoc[]
 
 include::{snippets}/petPlant/findById/http-request.adoc[]
 include::{snippets}/petPlant/findById/request-headers.adoc[]
+include::{snippets}/petPlant/findById/path-parameters.adoc[]
 
 ==== Response
 
@@ -39,6 +40,7 @@ include::{snippets}/petPlant/findAll/http-response.adoc[]
 
 include::{snippets}/petPlant/update/http-request.adoc[]
 include::{snippets}/petPlant/update/request-headers.adoc[]
+include::{snippets}/petPlant/update/path-parameters.adoc[]
 
 ==== Response
 

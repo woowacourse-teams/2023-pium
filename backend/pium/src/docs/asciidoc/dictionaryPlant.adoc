@@ -5,6 +5,7 @@
 ==== Request
 
 include::{snippets}/dictionaryPlant/findById/http-request.adoc[]
+include::{snippets}/dictionaryPlant/findById/path-parameters.adoc[]
 
 ==== Response
 
