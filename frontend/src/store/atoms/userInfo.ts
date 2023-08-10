@@ -2,12 +2,14 @@ import { atom } from 'recoil';
 
 interface UserInfo {
   isLogin: boolean;
-  id: number;
+  id: string;
 }
 
+const id = localStorage.getItem('userId') ?? -1;
+
 const initialUserInfo: UserInfo = {
-  isLogin: false,
-  id: -1,
+  isLogin: id === -1 ? false : true,
+  id: `${id}`,
 };
 
 export const userInfo = atom<UserInfo>({

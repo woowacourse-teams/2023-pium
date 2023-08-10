@@ -18,9 +18,10 @@ const Authorization = () => {
         try {
           const token = await getToken(code);
           const userInfo = await getUserInfo(token);
+          localStorage.setItem('userId', userInfo.id);
           setUserInfo({
             isLogin: true,
-            id: userInfo.id,
+            id: `${userInfo.id}`,
           });
         } finally {
           navigate(URL_PATH.main);
