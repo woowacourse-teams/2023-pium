@@ -6,10 +6,12 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -55,7 +57,6 @@ class DictionaryPlantControllerTest {
             DictionaryPlantResponse response = RESPONSE.스투키_단일_조회_응답;
             given(dictionaryPlantService.read(anyLong()))
                     .willReturn(response);
-
             mockMvc.perform(get("/dictionary-plants/{dictionaryPlantId}", response.getId())
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("dictionaryPlant/findById/",
@@ -88,10 +89,13 @@ class DictionaryPlantControllerTest {
             given(dictionaryPlantService.search(anyString()))
                     .willReturn(response);
 
-            mockMvc.perform(get("/dictionary-plants?name=스투"))
+            mockMvc.perform(get("/dictionary-plants").param("name", "스투"))
                     .andDo(document("dictionaryPlant/findByName/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("name").description("사전 식물 검색 파라미터")
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());

@@ -15,6 +15,7 @@ include::{snippets}/dictionaryPlant/findById/http-response.adoc[]
 ==== Request
 
 include::{snippets}/dictionaryPlant/findByName/http-request.adoc[]
+include::{snippets}/dictionaryPlant/findByName/query-parameters.adoc[]
 
 ==== Response
 
