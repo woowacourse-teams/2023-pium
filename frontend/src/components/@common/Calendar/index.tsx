@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AlertSpan, Button, CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
 import useCalendar from 'hooks/useCalendar';
 import { convertDateKorYear, getDateToString, getDayInfo } from 'utils/date';
-import { dateValidate } from 'utils/validate';
+import { DateValidate } from 'utils/validate';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
 import ArrowLeft from '../Icons/ArrowLeft';
 import ArrowRight from '../Icons/ArrowRight';
@@ -53,12 +53,12 @@ const Calendar = (props: CalendarProps) => {
   });
 
   const yearMonth = `${year}년 ${month}월`;
-  const isPrevMonthOutOfRange = !dateValidate.isDateInRange({
+  const isPrevMonthOutOfRange = !DateValidate.isDateInRange({
     dateToCheck: new Date(Number(year), Number(month) - 2, 28),
     startDate: new Date(min),
     endDate: new Date(max),
   });
-  const isNextMonthOutOfRange = !dateValidate.isDateInRange({
+  const isNextMonthOutOfRange = !DateValidate.isDateInRange({
     dateToCheck: new Date(Number(year), Number(month), 1),
     startDate: new Date(min),
     endDate: new Date(max),

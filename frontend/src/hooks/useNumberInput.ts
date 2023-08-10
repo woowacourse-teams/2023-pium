@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { inputValidate } from 'utils/validate';
+import { InputValidate } from 'utils/validate';
 
 interface NumberInputProps {
   maxRange?: number;
@@ -8,7 +8,7 @@ interface NumberInputProps {
 
 const useNumberInput = ({ maxRange, minRange }: NumberInputProps) => {
   const [numberValue, setNumberValue] = useState<number | ''>('');
-  const { checkNumber, checkRange, checkECode } = inputValidate;
+  const { checkNumber, checkRange, checkECode } = InputValidate;
 
   const changeCallback = (value: string) => {
     if (value === '') {

@@ -1,6 +1,6 @@
 import type { DateFormat, DayInfo, KoreanDateFormat, Month, MonthInfo, Year } from 'types/date';
 import { ERROR } from 'constants/index';
-import { dateValidate } from './validate';
+import { DateValidate } from './validate';
 
 /**
  * 주어진 문자열이 20, 21세기의 'YYYY-MM-DD' 형태인지 판별합니다.
@@ -183,7 +183,7 @@ export const getDayInfo = ({ idx, monthInfo, min, max }: DayInfo) => {
   const startDate = min ? new Date(min) : null;
   const endDate = max ? new Date(max) : null;
 
-  const isInRange = dateValidate.isDateInRange({ dateToCheck: currentDate, startDate, endDate });
+  const isInRange = DateValidate.isDateInRange({ dateToCheck: currentDate, startDate, endDate });
 
   return { date, isShow, isToday, currentDate, isInRange };
 };

@@ -23,7 +23,7 @@ import {
   getStringToDate,
   isDateFormat,
 } from 'utils/date';
-import { dateValidate } from 'utils/validate';
+import { DateValidate } from 'utils/validate';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
@@ -41,7 +41,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
   const { petPlantId, status, image, nickName, dictionaryPlantName, dday, lastWaterDate } = data;
   const context = useContext(ReminderContext);
   const today = getDateToString();
-  const { isDateInRange } = dateValidate;
+  const { isDateInRange } = DateValidate;
 
   const changeDateHandler = (changeDate: string) => {
     if (!isDateFormat(changeDate)) return;
