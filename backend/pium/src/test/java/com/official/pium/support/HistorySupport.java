@@ -3,6 +3,7 @@ package com.official.pium.support;
 import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryCategory;
 import com.official.pium.domain.HistoryContent;
+import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryRepository;
 import java.time.LocalDate;
@@ -58,7 +59,7 @@ public class HistorySupport {
             return historyRepository.save(
                     History.builder()
                             .date(date == null ? LocalDate.of(2022, 3, 4) : date)
-                            .historyCategory(historyCategory == null ? historyCategorySupport.builder().build()
+                            .historyCategory(historyCategory == null ? historyCategorySupport.findByHistoryCategory(HistoryType.LAST_WATER_DATE)
                                     : historyCategory)
                             .historyContent(HistoryContent.builder()
                                     .previous(previous == null ? "변경 전 값" : previous)

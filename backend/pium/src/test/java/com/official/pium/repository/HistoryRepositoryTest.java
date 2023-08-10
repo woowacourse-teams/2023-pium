@@ -12,6 +12,7 @@ import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.domain.WaterCycle;
 import java.time.LocalDate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -40,6 +41,14 @@ class HistoryRepositoryTest extends RepositoryTest {
     @Autowired
     private HistoryCategoryRepository historyCategoryRepository;
 
+    @BeforeEach
+    void setUp() {
+        for (HistoryType type : HistoryType.values()) {
+            historyCategoryRepository.save(HistoryCategory.builder()
+                    .historyType(type)
+                    .build());
+        }
+    }
 
     @Test
     void 페이지_번호에_따른_다른_결과_조회() {
@@ -52,14 +61,14 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .petPlant(petPlant)
                 .date(LocalDate.of(2022, 1, 1))
                 .historyContent(generateHistoryContent("이전", "현재"))
-                .historyCategory(generateHistoryCategory("waterCycle"))
+                .historyCategory(findHistoryCategory(HistoryType.FLOWERPOT))
                 .build();
 
         History history2 = History.builder()
                 .petPlant(petPlant)
                 .date(LocalDate.of(2022, 1, 3))
                 .historyContent(generateHistoryContent("이전", "현재"))
-                .historyCategory(generateHistoryCategory("waterCycle"))
+                .historyCategory(findHistoryCategory(HistoryType.FLOWERPOT))
                 .build();
 
         //when
@@ -135,9 +144,7 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .build();
     }
 
-    private HistoryCategory generateHistoryCategory(String type) {
-        return historyCategoryRepository.save(HistoryCategory.builder()
-                .historyType(HistoryType.from(type))
-                .build());
+    private HistoryCategory findHistoryCategory(HistoryType historyType) {
+        return historyCategoryRepository.findByHistoryType(historyType).get();
     }
 }
