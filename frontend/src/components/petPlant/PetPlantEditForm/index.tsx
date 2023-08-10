@@ -1,5 +1,4 @@
-import type { DateFormat } from 'types/date';
-import type { EditPetPlantRequest, PetPlantDetails } from 'types/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
 import DateInput from 'components/@common/DateInput';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
