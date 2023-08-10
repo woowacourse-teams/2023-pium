@@ -1,5 +1,7 @@
 package com.official.pium.service;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_등록_요청;
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -51,17 +53,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_등록() {
-        PetPlantCreateRequest request = PetPlantCreateRequest.builder()
-                .dictionaryPlantId(dictionaryPlant.getId())
-                .nickname("피우미")
-                .location("베란다")
-                .flowerpot("플라스틱 화분")
-                .waterCycle(3)
-                .light("빛 많이 필요함")
-                .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .build();
+        PetPlantCreateRequest request = 피우미_등록_요청;
 
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
 
@@ -132,16 +124,7 @@ class PetPlantServiceTest extends IntegrationTest {
     @Test
     void 반려_식물_정보_수정() {
         PetPlant petPlant = petPlantSupport.builder().member(member).build();
-        PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
-                .nickname("피우미 2")
-                .location("침대 옆")
-                .flowerpot("유리병")
-                .waterCycle(10)
-                .light("빛 많이 필요함")
-                .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .build();
+        PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
 
         petPlantService.update(petPlant.getId(), updateRequest, member);
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
@@ -164,16 +147,7 @@ class PetPlantServiceTest extends IntegrationTest {
     void 반려_식물_수정시_주인이_아니면_예외_발생() {
         Member otherMember = memberSupport.builder().build();
         PetPlant petPlant = petPlantSupport.builder().member(member).build();
-        PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
-                .nickname("피우미 2")
-                .location("침대 옆")
-                .flowerpot("유리병")
-                .waterCycle(10)
-                .light("빛 많이 필요함")
-                .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .build();
+        PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
 
         assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, otherMember))
                 .isInstanceOf(IllegalArgumentException.class)
@@ -183,16 +157,7 @@ class PetPlantServiceTest extends IntegrationTest {
     @Test
     void 존재하지_않는_반려_식물을_수정하면_예외_발생() {
         Long wrongId = -1L;
-        PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
-                .nickname("피우미 2")
-                .location("침대 옆")
-                .flowerpot("유리병")
-                .waterCycle(10)
-                .light("빛 많이 필요함")
-                .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .build();
+        PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
 
         assertThatThrownBy(() -> petPlantService.update(wrongId, updateRequest, member))
                 .isInstanceOf(NoSuchElementException.class)
@@ -218,7 +183,8 @@ class PetPlantServiceTest extends IntegrationTest {
         assertSoftly(
                 softly -> {
                     softly.assertThat(petPlantRepository.findById(petPlant.getId())).isEmpty();
-                    softly.assertThat(historyRepository.findAllByPetPlantId(petPlant.getId(), pageRequest).getContent()).isEmpty();
+                    softly.assertThat(historyRepository.findAllByPetPlantId(petPlant.getId(), pageRequest).getContent())
+                            .isEmpty();
                 }
         );
     }
