@@ -78,6 +78,8 @@ export const convertDateKorYear = (date: string | number | Date): KoreanDateForm
  * @returns 'YYYY-MM-DD'
  */
 export const getDateToString = (date = new Date()): DateFormat => {
+  if (date.toString() === 'Invalid Date') throw new RangeError(ERROR.invalidDate);
+
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0') as Month;
   const day = date.getDate().toString().padStart(2, '0');
@@ -97,9 +99,18 @@ export const getDateToString = (date = new Date()): DateFormat => {
  * @return new Date(YYYY, MM, DD);
  */
 export const getStringToDate = (date: string) => {
-  if (!date.includes('-')) return new Date(date);
+  if (!date.includes('-')) {
+    const target = new Date(date);
+    if (target.toString() === 'Invalid Date') throw new RangeError(ERROR.invalidDate);
+    return target;
+  }
+
   const [year, month, day] = date.split('-').map(Number);
-  return new Date(year, month - 1, day);
+  const target = new Date(year, month - 1, day);
+
+  if (target.toString() === 'Invalid Date') throw new RangeError(ERROR.invalidDate);
+
+  return target;
 };
 
 /**
@@ -114,6 +125,10 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
     typeof another === 'string' && isDateFormat(another)
       ? getStringToDate(another)
       : new Date(another);
+
+  if (first.toString() === 'Invalid Date' || second.toString() === 'Invalid Date') {
+    throw new RangeError(ERROR.invalidDate);
+  }
 
   const diff = Math.abs(first.getTime() - second.getTime());
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
