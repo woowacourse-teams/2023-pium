@@ -20,6 +20,6 @@ export interface MonthInfo {
 export interface DayInfo {
   idx: number;
   monthInfo: MonthInfo;
-  min: React.InputHTMLAttributes<HTMLInputElement>['max'];
-  max: React.InputHTMLAttributes<HTMLInputElement>['min'];
+  min: React.InputHTMLAttributes<HTMLInputElement>['min'];
+  max: React.InputHTMLAttributes<HTMLInputElement>['max'];
 }
