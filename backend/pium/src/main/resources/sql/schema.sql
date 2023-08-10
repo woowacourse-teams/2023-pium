@@ -68,7 +68,7 @@ create TABLE IF NOT EXISTS history
 create TABLE IF NOT EXISTS history_category
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
-    category_type VARCHAR(255)         NOT NULL,
+    history_type VARCHAR(255)         NOT NULL,
     created_at   DATETIME              NOT NULL,
     updated_at   DATETIME              NOT NULL,
     CONSTRAINT pk_history_category PRIMARY KEY (id)
@@ -88,5 +88,4 @@ alter table history
 alter table history
     add CONSTRAINT FK_HISTORY_ON_HISTORY_CATEGORY FOREIGN KEY (history_category_id) REFERENCES history_category (id);
 
-alter table member
-    modify column CONSTRAINT UQ_KAKAO_ID UNIQUE (kakao_id);
+ALTER TABLE member ADD UNIQUE (kakao_id);
