@@ -2,7 +2,6 @@ import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
-import type { UndefinedInitialDataOptions } from '@tanstack/react-query/build/lib/queryOptions';
 import ReminderAPI from 'apis/reminder';
 
 interface ArrangedReminderWithStatus {
@@ -49,11 +48,9 @@ const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminder
   };
 };
 
-const useReminder = (
-  props: UndefinedInitialDataOptions<DataResponse<Reminder[]>, Error, ArrangedReminderWithStatus>
-) =>
+const useReminder = () =>
   useQuery<DataResponse<Reminder[]>, Error, ArrangedReminderWithStatus>({
-    ...props,
+    queryKey: ['reminder'],
     queryFn: async () => {
       const response = await ReminderAPI.getReminder();
       const results = await response.json();
