@@ -20,7 +20,6 @@ import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import java.time.LocalDate;
 import java.util.List;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -397,7 +396,7 @@ public class PetPlantApiTest extends AcceptanceTest {
 
             ExtractableResponse<Response> response = 반려_식물_단건_조회(petPlant.getId());
 
-            SoftAssertions.assertSoftly(softly -> {
+            assertSoftly(softly -> {
                 softly.assertThat(response.jsonPath().getString("nickname")).isEqualTo(request.getNickname());
                 softly.assertThat(response.jsonPath().getString("flowerpot")).isEqualTo(request.getFlowerpot());
                 softly.assertThat(response.jsonPath().getString("location")).isEqualTo(request.getLocation());
@@ -446,6 +445,78 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
                     .assertThat().body("message", containsString("반려 식물 ID는 1이상의 값이어야 합니다."));
+        }
+    }
+
+    @Nested
+    class 반려_식물_삭제_시_ {
+
+        @Test
+        void 정상_삭제_후_204를_반환_및_조회_불가() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
+            Long 반려_식물_ID = 반려_식물_등록_요청(request);
+
+            RestAssured
+                    .given()
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .delete("/pet-plants/{id}", 반려_식물_ID)
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.NO_CONTENT.value());
+
+            RestAssured
+                    .given()
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .get("/pet-plants/{id}", 반려_식물_ID)
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("일치하는 반려 식물이 존재하지 않습니다. id: " + 반려_식물_ID));
+        }
+
+        @Test
+        void 존재하지_않는_사용자라면_404_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlant petPlant = petPlantSupport.builder()
+                    .dictionaryPlant(dictionaryPlant)
+                    .build();
+
+            RestAssured
+                    .given()
+                    .log().all()
+                    .header("Authorization", "invalidMember")
+                    .when()
+                    .delete("/pet-plants/{id}", petPlant.getId())
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.NOT_FOUND.value())
+                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
+        }
+
+        @Test
+        void 본인의_반려_식물이_아니라면_400_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlant petPlant = petPlantSupport.builder()
+                    .member(member)
+                    .dictionaryPlant(dictionaryPlant)
+                    .build();
+            Member other = memberSupport.builder()
+                    .email("otherMember@gmail.com")
+                    .build();
+
+            RestAssured
+                    .given()
+                    .log().all()
+                    .header("Authorization", other.getEmail())
+                    .when()
+                    .delete("/pet-plants/{id}", petPlant.getId())
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .assertThat().body("message", containsString("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다."));
         }
     }
 

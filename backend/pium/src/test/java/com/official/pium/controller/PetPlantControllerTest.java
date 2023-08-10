@@ -12,6 +12,7 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -222,7 +223,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("화분 정보는 필수 값입니다.")))
                     .andDo(print());
@@ -248,7 +248,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("화분 위치는 필수 값입니다.")))
                     .andDo(print());
@@ -272,7 +271,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("물주기 주기 값은 필수 값입니다.")))
                     .andDo(print());
@@ -296,7 +294,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("물주기 주기 값은 양수만 가능합니다.")))
                     .andDo(print());
@@ -322,7 +319,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("조도 정보는 필수 값입니다.")))
                     .andDo(print());
@@ -348,7 +344,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("통풍 정보는 필수 값입니다.")))
                     .andDo(print());
@@ -372,7 +367,6 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 입양일은 필수 값입니다.")))
                     .andDo(print());
@@ -396,9 +390,34 @@ class PetPlantControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
-                    .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("마지막 물주기 날짜는 필수 값입니다.")))
+                    .andDo(print());
+        }
+    }
+
+    @Nested
+    class 반려_식물_삭제_ {
+
+        @Test
+        void 정상_요청시_200_반환() throws Exception {
+            willDoNothing().given(petPlantService)
+                    .delete(anyLong(), any(Member.class));
+
+            mockMvc.perform(delete("/pet-plants/{id}", 1L)
+                            .header("Authorization", "pium@gmail.com"))
+                    .andExpect(status().isNoContent())
+                    .andDo(print());
+        }
+
+        @Test
+        void 잘못된_ID로_삭제하면_400을_반환() throws Exception {
+            Long wrongId = -1L;
+
+            mockMvc.perform(delete("/pet-plants/{id}", wrongId)
+                            .header("Authorization", "pium@gmail.com"))
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
                     .andDo(print());
         }
     }

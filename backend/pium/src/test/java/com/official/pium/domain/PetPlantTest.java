@@ -2,7 +2,7 @@ package com.official.pium.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.fixture.PetPlantFixture;
@@ -70,13 +70,15 @@ class PetPlantTest {
             petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8));
 
-            assertAll(
-                    () -> assertThat(petPlant.getNickname()).isEqualTo("기철이"),
-                    () -> assertThat(petPlant.getLocation()).isEqualTo("책상"),
-                    () -> assertThat(petPlant.getFlowerpot()).isEqualTo("수경 재배"),
-                    () -> assertThat(petPlant.getLight()).isEqualTo("거의 없음"),
-                    () -> assertThat(petPlant.getWind()).isEqualTo("통풍이 잘 됨"),
-                    () -> assertThat(petPlant.getWaterCycle()).isEqualTo(10)
+            assertSoftly(
+                    softly -> {
+                        softly.assertThat(petPlant.getNickname()).isEqualTo("기철이");
+                        softly.assertThat(petPlant.getLocation()).isEqualTo("책상");
+                        softly.assertThat(petPlant.getFlowerpot()).isEqualTo("수경 재배");
+                        softly.assertThat(petPlant.getLight()).isEqualTo("거의 없음");
+                        softly.assertThat(petPlant.getWind()).isEqualTo("통풍이 잘 됨");
+                        softly.assertThat(petPlant.getWaterCycle()).isEqualTo(10);
+                    }
             );
         }
 

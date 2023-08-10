@@ -1,7 +1,7 @@
 package com.official.pium.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.RepositoryTest;
 import com.official.pium.domain.DictionaryPlant;
@@ -39,32 +39,39 @@ class PetPlantRepositoryTest extends RepositoryTest {
 
     @Test
     void 반려_식물_저장() {
-        PetPlant petPlant = PetPlant.builder()
-                .dictionaryPlant(dictionaryPlant)
-                .member(member)
-                .nickname("피우미")
-                .imageUrl("https://image.com")
-                .location("베란다")
-                .flowerpot("화분")
-                .light("밝아요")
-                .wind("추워요")
-                .birthDate(LocalDate.of(2020, 1, 3))
-                .nextWaterDate(LocalDate.of(2020, 1, 3))
-                .lastWaterDate(LocalDate.of(2020, 1, 3))
-                .waterCycle(3)
-                .build();
+        PetPlant petPlant = createPetPlant();
 
         PetPlant savePetPlant = petPlantRepository.save(petPlant);
 
-        assertAll(
-                () -> assertThat(savePetPlant).isNotNull(),
-                () -> assertThat(savePetPlant.getId()).isEqualTo(petPlant.getId())
+        assertSoftly(
+                softly -> {
+                    softly.assertThat(savePetPlant).isNotNull();
+                    softly.assertThat(savePetPlant.getId()).isEqualTo(petPlant.getId());
+                }
         );
     }
 
     @Test
     void 반려_식물_조회() {
-        PetPlant petPlant = PetPlant.builder()
+        PetPlant petPlant = createPetPlant();
+
+        PetPlant savePetPlant = petPlantRepository.save(petPlant);
+
+        assertThat(petPlantRepository.findById(savePetPlant.getId())).isPresent();
+    }
+
+    @Test
+    void 반려_식물_삭제() {
+        PetPlant petPlant = createPetPlant();
+        petPlantRepository.save(petPlant);
+
+        petPlantRepository.delete(petPlant);
+
+        assertThat(petPlantRepository.findById(petPlant.getId())).isEmpty();
+    }
+
+    private PetPlant createPetPlant() {
+        return PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
                 .member(member)
                 .nickname("피우미")
@@ -78,9 +85,5 @@ class PetPlantRepositoryTest extends RepositoryTest {
                 .lastWaterDate(LocalDate.of(2020, 1, 3))
                 .waterCycle(3)
                 .build();
-
-        PetPlant savePetPlant = petPlantRepository.save(petPlant);
-
-        assertThat(petPlantRepository.findById(savePetPlant.getId())).isPresent();
     }
 }
