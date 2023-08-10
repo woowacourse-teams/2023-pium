@@ -13,7 +13,7 @@ export const Wrapper = styled.main`
   row-gap: 30px;
   justify-content: center;
 
-  margin: 0 auto 48px auto;
+  margin: 0 auto 100px auto;
 `;
 
 export const Content = styled.div`
