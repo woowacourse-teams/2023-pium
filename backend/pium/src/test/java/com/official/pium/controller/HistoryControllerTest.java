@@ -6,10 +6,12 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,7 +60,12 @@ public class HistoryControllerTest extends UITest {
                     )
                     .andDo(document("history/findByPetPlantId/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()))
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("petPlantId").description("반려 식물 아이디"),
+                                    parameterWithName("page").description("페이지 번호 (0부터 시작)"),
+                                    parameterWithName("size").description("페이지 크기")
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());

@@ -5,6 +5,7 @@
 ==== Request
 
 include::{snippets}/history/findByPetPlantId/http-request.adoc[]
+include::{snippets}/history/findByPetPlantId/query-parameters.adoc[]
 
 ==== Response
 
