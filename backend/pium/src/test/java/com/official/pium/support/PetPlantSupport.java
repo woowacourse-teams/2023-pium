@@ -28,6 +28,7 @@ public class PetPlantSupport {
 
         private Member member;
         private DictionaryPlant dictionaryPlant;
+        private LocalDate lastWaterDate;
 
         public PetPlantBuilder member(Member member) {
             this.member = member;
@@ -36,6 +37,11 @@ public class PetPlantSupport {
 
         public PetPlantBuilder dictionaryPlant(DictionaryPlant dictionaryPlant) {
             this.dictionaryPlant = dictionaryPlant;
+            return this;
+        }
+
+        public PetPlantBuilder lastWaterDate(LocalDate lastWaterDate) {
+            this.lastWaterDate = lastWaterDate;
             return this;
         }
 
@@ -53,7 +59,7 @@ public class PetPlantSupport {
                             .wind("testWind")
                             .birthDate(LocalDate.now())
                             .nextWaterDate(LocalDate.now())
-                            .lastWaterDate(LocalDate.now().minusDays(1))
+                            .lastWaterDate(lastWaterDate == null ? LocalDate.now().minusDays(1) : lastWaterDate)
                             .waterCycle(3)
                             .build()
             );

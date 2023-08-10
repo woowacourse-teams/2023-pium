@@ -12,6 +12,7 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
+import com.official.pium.service.dto.ReminderCreateRequest;
 import com.official.pium.support.DictionaryPlantSupport;
 import com.official.pium.support.PetPlantSupport;
 import io.restassured.RestAssured;
@@ -411,6 +412,66 @@ public class PetPlantApiTest extends AcceptanceTest {
         }
 
         @Test
+        void 수정_요청_정보로_업데이트시_마지막_물주기_날짜가_직전_날짜보다_같으면_400_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlant petPlant = petPlantSupport.builder()
+                    .member(member)
+                    .dictionaryPlant(dictionaryPlant)
+                    .lastWaterDate(LocalDate.of(2022, 4, 1))
+                    .build();
+
+            LocalDate firstWaterDate = petPlant.getLastWaterDate().plusDays(2);
+            반려_식물_물주기(petPlant, firstWaterDate);
+            LocalDate secondWaterDate = firstWaterDate.plusDays(3);
+            반려_식물_물주기(petPlant, secondWaterDate);
+
+            PetPlantUpdateRequest request = REQUEST.generatePetPlantUpdateRequest(firstWaterDate);
+
+            RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", petPlant.getId())
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .body("message", containsString("마지막으로 물 준 날짜는 직전 값보다 같거나 이전일 수 없습니다."));
+        }
+
+        @Test
+        void 수정_요청_정보로_업데이트시_마지막_물주기_날짜가_직전_날짜보다_이전이면_400_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlant petPlant = petPlantSupport.builder()
+                    .member(member)
+                    .dictionaryPlant(dictionaryPlant)
+                    .lastWaterDate(LocalDate.of(2022, 4, 1))
+                    .build();
+
+            LocalDate firstWaterDate = petPlant.getLastWaterDate().plusDays(1);
+            반려_식물_물주기(petPlant, firstWaterDate);
+            LocalDate secondWaterDate = firstWaterDate.plusDays(3);
+            반려_식물_물주기(petPlant, secondWaterDate);
+
+            PetPlantUpdateRequest request = REQUEST.generatePetPlantUpdateRequest(firstWaterDate.minusDays(3));
+
+            RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", petPlant.getId())
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.BAD_REQUEST.value())
+                    .body("message", containsString("마지막으로 물 준 날짜는 직전 값보다 같거나 이전일 수 없습니다."));
+        }
+
+        @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
 
@@ -549,5 +610,23 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .replaceAll("/pet-plants/", "");
 
         return Long.parseLong(petPlantId);
+    }
+
+    private void 반려_식물_물주기(PetPlant petPlant, LocalDate firstWaterDate) {
+        ReminderCreateRequest request = ReminderCreateRequest.builder()
+                .waterDate(firstWaterDate)
+                .build();
+
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(request)
+                .log().all()
+                .header("Authorization", member.getEmail())
+                .when()
+                .post("/reminders/{id}", petPlant.getId())
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.NO_CONTENT.value());
     }
 }
