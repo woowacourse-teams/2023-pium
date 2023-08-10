@@ -2,10 +2,11 @@ const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
+const Dotenv = require('dotenv-webpack');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-module.exports = {
+module.exports = (env) => ({
   entry: resolve(__dirname, 'src', 'index.tsx'),
   output: {
     path: resolve(__dirname, 'dist'),
@@ -54,6 +55,9 @@ module.exports = {
       template: resolve(__dirname, 'public', 'index.html'),
     }),
     ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
+    new Dotenv({
+      path: resolve(__dirname, 'env', `${env.environment}.env`),
+    }),
   ],
   devServer: {
     open: true,
@@ -63,4 +67,4 @@ module.exports = {
     },
     historyApiFallback: true,
   },
-};
+});
