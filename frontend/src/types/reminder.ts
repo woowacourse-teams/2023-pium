@@ -1,4 +1,5 @@
-import { PetPlantDetails } from './petPlant';
+import type { DateFormat } from './date';
+import type { PetPlantDetails } from './petPlant';
 
 export type TodayStatus = 'late' | 'today' | 'future'; // 오늘 할 일에 대한 상태
 
@@ -20,13 +21,13 @@ export interface ReminderExtendType extends Reminder {
 export interface WaterPlantParams {
   id: number;
   body: {
-    waterDate: string;
+    waterDate: DateFormat;
   };
 }
 
 export interface ChangeDateParams {
   id: number;
   body: {
-    nextWaterDate: string;
+    nextWaterDate: DateFormat;
   };
 }
