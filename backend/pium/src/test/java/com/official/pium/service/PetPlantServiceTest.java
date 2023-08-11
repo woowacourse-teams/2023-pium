@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryRepository;
@@ -17,6 +18,7 @@ import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
+import com.official.pium.service.dto.ReminderCreateRequest;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 import java.time.LocalDate;
 import java.util.List;
@@ -39,6 +41,9 @@ class PetPlantServiceTest extends IntegrationTest {
     private PetPlantService petPlantService;
 
     @Autowired
+    private ReminderService reminderService;
+
+    @Autowired
     private PetPlantRepository petPlantRepository;
 
     @Autowired
@@ -48,6 +53,11 @@ class PetPlantServiceTest extends IntegrationTest {
     void setUp() {
         dictionaryPlant = dictionaryPlantSupport.builder().build();
         member = memberSupport.builder().build();
+        for (HistoryType type : HistoryType.values()) {
+            historyCategorySupport.builder()
+                    .historyType(type)
+                    .build();
+        }
     }
 
     @Test
@@ -215,5 +225,86 @@ class PetPlantServiceTest extends IntegrationTest {
         assertThatThrownBy(() -> petPlantService.delete(petPlant.getId(), otherMember))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
+    }
+
+    @Test
+    void 반려_식물_정보_수정시_마지막으로_물준_날짜가_직전값과_같으면_예외_발생() {
+        // given
+        LocalDate baseDate = LocalDate.of(2022, 3, 4);
+        PetPlant petPlant = petPlantSupport.builder()
+                .member(member)
+                .lastWaterDate(baseDate)
+                .build();
+        historySupport.builder().petPlant(petPlant).build();
+
+        LocalDate firstDate = petPlant.getLastWaterDate().plusDays(1);
+        ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
+                .waterDate(firstDate)
+                .build();
+
+        reminderService.water(createRequest, petPlant.getId(), member);
+
+        LocalDate secondDate = firstDate.plusDays(1);
+        ReminderCreateRequest createRequest2 = ReminderCreateRequest.builder()
+                .waterDate(secondDate)
+                .build();
+
+        reminderService.water(createRequest2, petPlant.getId(), member);
+
+        PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
+                .nickname("피우미 2")
+                .location("침대 옆")
+                .flowerpot("유리병")
+                .waterCycle(10)
+                .light("빛 많이 필요함")
+                .wind("바람이 잘 통하는 곳")
+                .birthDate(LocalDate.now())
+                .lastWaterDate(firstDate)
+                .build();
+
+        // when & then
+        assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, member))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
+    }
+
+    @Test
+    void 반려_식물_정보_수정시_마지막으로_물준_날짜가_직전값보다_이전이면_예외_발생() {
+        // given
+        LocalDate baseDate = LocalDate.of(2022, 3, 4);
+        PetPlant petPlant = petPlantSupport.builder()
+                .member(member)
+                .lastWaterDate(baseDate)
+                .build();
+
+        LocalDate firstDate = petPlant.getLastWaterDate().plusDays(1);
+        ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
+                .waterDate(firstDate)
+                .build();
+
+        reminderService.water(createRequest, petPlant.getId(), member);
+
+        LocalDate secondDate = firstDate.plusDays(1);
+        ReminderCreateRequest createRequest2 = ReminderCreateRequest.builder()
+                .waterDate(secondDate)
+                .build();
+
+        reminderService.water(createRequest2, petPlant.getId(), member);
+
+        PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
+                .nickname("피우미 2")
+                .location("침대 옆")
+                .flowerpot("유리병")
+                .waterCycle(10)
+                .light("빛 많이 필요함")
+                .wind("바람이 잘 통하는 곳")
+                .birthDate(LocalDate.now())
+                .lastWaterDate(firstDate.minusDays(5))
+                .build();
+
+        // when & then
+        assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, member))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
     }
 }

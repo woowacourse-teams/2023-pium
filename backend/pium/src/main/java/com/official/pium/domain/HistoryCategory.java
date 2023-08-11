@@ -24,11 +24,11 @@ public class HistoryCategory extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @NotNull
-    @Column(name = "history_type", nullable = false)
+    @Column(name = "history_type", nullable = false, unique = true)
     private HistoryType historyType;
 
     @Builder
-    private HistoryCategory(HistoryType historyType) {
+    private HistoryCategory(@NotNull HistoryType historyType) {
         this.historyType = historyType;
     }
 }
