@@ -65,6 +65,19 @@ public class PetPlantFixture {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
         }
+
+        public static PetPlantUpdateRequest generatePetPlantUpdateRequest(LocalDate lastWaterDate) {
+            return PetPlantUpdateRequest.builder()
+                    .nickname("피우미 2")
+                    .location("침대 옆")
+                    .flowerpot("유리병")
+                    .waterCycle(10)
+                    .light("빛 많이 필요함")
+                    .wind("바람이 잘 통하는 곳")
+                    .birthDate(LocalDate.now())
+                    .lastWaterDate(lastWaterDate)
+                    .build();
+        }
     }
 
     public static class RESPONSE {

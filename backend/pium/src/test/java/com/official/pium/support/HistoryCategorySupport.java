@@ -17,6 +17,10 @@ public class HistoryCategorySupport {
         return new HistoryCategoryBuilder();
     }
 
+    public HistoryCategory findByHistoryCategory(HistoryType historyType) {
+        return historyCategoryRepository.findByHistoryType(historyType).get();
+    }
+
     public final class HistoryCategoryBuilder {
 
         private HistoryType historyType;
