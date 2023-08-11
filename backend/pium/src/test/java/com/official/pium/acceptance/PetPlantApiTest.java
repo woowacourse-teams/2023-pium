@@ -412,7 +412,7 @@ public class PetPlantApiTest extends AcceptanceTest {
         }
 
         @Test
-        void 수정_요청_정보로_업데이트시_마지막_물주기_날짜가_직전_날짜보다_같으면_400_반환() {
+        void 수정_요청_정보로_업데이트시_마지막_물주기_날짜가_직전_날짜와_같으면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
                     .member(member)
