@@ -5,12 +5,12 @@ export const REMINDER = `${BASE_URL}/reminders`;
 
 const headers = {
   'Content-Type': 'application/json',
-  Authorization: 'pium@gmail.com',
 };
 
 const getReminder = () => {
   return fetch(REMINDER, {
     method: 'GET',
+    credentials: 'include',
     headers,
   });
 };
@@ -18,6 +18,7 @@ const getReminder = () => {
 const waterPlant = ({ id, body }: WaterPlantParams) => {
   return fetch(`${REMINDER}/${id}`, {
     method: 'POST',
+    credentials: 'include',
     headers,
     body: JSON.stringify(body),
   });
@@ -26,6 +27,7 @@ const waterPlant = ({ id, body }: WaterPlantParams) => {
 const changeDate = ({ id, body }: ChangeDateParams) => {
   return fetch(`${REMINDER}/${id}`, {
     method: 'PATCH',
+    credentials: 'include',
     headers,
     body: JSON.stringify(body),
   });

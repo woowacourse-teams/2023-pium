@@ -10,8 +10,8 @@ const getPetPlant = (petPlantId: PetPlantDetails['id'], page: number, size = 20)
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'pium@gmail.com',
     },
+    credentials: 'include',
   });
 };
 
