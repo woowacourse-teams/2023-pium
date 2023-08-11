@@ -1,39 +1,40 @@
 const KAKAO_AUTH_URL = 'https://kauth.kakao.com';
-const KAKAO_API_URL = 'https://kapi.kakao.com';
-const GRANT_TYPE = 'authorization_code';
 
 const CLIENT_ID = `${process.env.KAKAO_REST_KEY}`;
-const REDIRECT_URI =
-  process.env.NODE_ENV === 'development'
-    ? `${process.env.KAKAO_REDIRECT_DEVELOP}`
-    : `${process.env.KAKAO_REDIRECT_PRODUCTION}`;
+const REDIRECT_URI = `${process.env.KAKAO_REDIRECT_URL}`;
+const HOST = `${process.env.HOST}`;
 
 const AUTHORIZATION_URL = `${KAKAO_AUTH_URL}/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-const getToken = async (code: string) => {
-  const response = await fetch(
-    `${KAKAO_AUTH_URL}/oauth/token?grant_type=${GRANT_TYPE}&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&code=${code}`,
-    {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-      },
-    }
-  );
-  const { access_token } = await response.json();
-  return access_token;
+// TODO: 현재 sessionId가 유효한 값인지 확인하는 API 작성 필요
+// -> 해당 API를 통해 로그인 여부 확인.
+
+const getSessionId = async (code: string) => {
+  const response = await fetch(`${HOST}/login?code=${code}`, {
+    method: 'POST',
+  });
+  const data = await response.json();
+
+  return data;
 };
 
-const getUserInfo = async (token: string) => {
-  const response = await fetch(`${KAKAO_API_URL}/v2/user/me`, {
+const logout = async () => {
+  const response = await fetch(`${HOST}/logout`, {
     method: 'POST',
-    headers: {
-      'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
-      Authorization: `Bearer ${token}`,
-    },
   });
-
+  // TODO: 여기서 로그아웃에 대한 처리 확인하기
   const data = await response.json();
+
+  return data;
+};
+
+const withdraw = async () => {
+  const response = await fetch(`${HOST}/withdraw`, {
+    method: 'POST',
+  });
+  // TODO: 여기서 회원 탈퇴에 대한 처리 확인하기
+  const data = await response.json();
+
   return data;
 };
 
@@ -42,9 +43,10 @@ const getAuthorization = () => {
 };
 
 const Auth = {
-  getToken,
-  getUserInfo,
+  getSessionId,
   getAuthorization,
+  logout,
+  withdraw,
 };
 
 export default Auth;
