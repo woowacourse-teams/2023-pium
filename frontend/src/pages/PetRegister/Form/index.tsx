@@ -19,7 +19,7 @@ import {
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
 import { usePetPlantForm } from 'hooks/usePetPlantForm';
-import { getDateToString } from 'utils/date';
+import { getDateToString, isDateFormat } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 
 const STACK_SIZE = 9;
@@ -98,11 +98,21 @@ const PetRegisterForm = () => {
   };
 
   const submit = () => {
-    mutate({
+    const { birthDate: formBirthDate, lastWaterDate: formLastWaterDate } = form;
+
+    if (!(isDateFormat(formBirthDate) && isDateFormat(formLastWaterDate))) {
+      return;
+    }
+
+    const requestForm = {
       ...form,
       dictionaryPlantId,
+      birthDate: formBirthDate,
+      lastWaterDate: formLastWaterDate,
       waterCycle: Number(form.waterCycle),
-    });
+    };
+
+    mutate(requestForm);
   };
 
   useEffect(() => {

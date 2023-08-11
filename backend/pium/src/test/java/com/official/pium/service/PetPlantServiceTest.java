@@ -70,8 +70,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2021, 3, 5))
+                .lastWaterDate(LocalDate.of(2020, 2, 1))
                 .build();
 
         PetPlantResponse petPlantResponse = petPlantService.create(request, member);
@@ -90,8 +90,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(1999, 2, 3))
+                .lastWaterDate(LocalDate.of(1999, 3, 4))
                 .build();
 
         assertThatThrownBy(() -> petPlantService.create(request, member))

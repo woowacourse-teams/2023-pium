@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.1.1'
     id 'io.spring.dependency-management' version '1.1.0'
+    id "org.asciidoctor.jvm.convert" version "3.3.2"
 }
 
 group = 'com.official'
@@ -11,6 +12,7 @@ java {
 }
 
 configurations {
+    asciidoctorExt
     compileOnly {
         extendsFrom annotationProcessor
     }
@@ -35,8 +37,48 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.rest-assured:rest-assured'
+
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+}
+
+ext {
+    snippetsDir = file('build/generated-snippets')
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    configurations 'asciidoctorExt'
+    baseDirFollowsSourceFile()
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+asciidoctor.doFirst {
+    delete file('src/main/resources/static/docs')
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+task copyDocument(type: Copy) {
+    dependsOn asciidoctor
+    from file("${asciidoctor.outputDir}")
+    into file("src/main/resources/static/docs")
+}
+
+build {
+    dependsOn copyDocument
+}
+
+bootJar {
+    dependsOn asciidoctor
+    from ("${asciidoctor.outputDir}") {
+        into 'static/docs'
+    }
+    archiveFileName = 'pium.jar'
 }

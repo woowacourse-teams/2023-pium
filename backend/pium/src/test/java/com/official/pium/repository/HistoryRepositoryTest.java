@@ -102,9 +102,9 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .flowerpot("화분")
                 .light("밝아요")
                 .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2021, 6, 4))
+                .nextWaterDate(LocalDate.of(2021, 6, 4))
+                .lastWaterDate(LocalDate.of(2021, 6, 4))
                 .waterCycle(3)
                 .build();
         petPlantRepository.save(petPlant);

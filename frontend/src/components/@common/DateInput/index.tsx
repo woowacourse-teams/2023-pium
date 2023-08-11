@@ -40,7 +40,7 @@ const DateInput = (props: DateInputProps) => {
       </DateValue>
       <Modal isOpen={isOpen} ref={modalRef} closeModal={off}>
         <Calendar
-          currentDate={getStringToDate(value === '' ? null : value)}
+          currentDate={value === '' ? new Date() : getStringToDate(value)}
           dateCallback={dateCallbackHandler}
           min={min}
           max={max}
