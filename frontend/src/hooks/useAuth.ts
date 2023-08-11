@@ -16,8 +16,6 @@ const useAuth = () => {
       const response = await getSessionId(code);
 
       throwOnInvalidStatus(response);
-
-      return await response.json();
     },
     onSuccess: () => navigate(URL_PATH.main),
     onError: (error: Error) => {
@@ -31,7 +29,6 @@ const useAuth = () => {
       const response = await logout();
 
       throwOnInvalidStatus(response);
-      return await response.json();
     },
     onSuccess: () => {
       navigate(URL_PATH.main);
@@ -48,7 +45,6 @@ const useAuth = () => {
       const response = await withdraw();
 
       throwOnInvalidStatus(response);
-      return await response.json();
     },
     onSuccess: () => {
       navigate(URL_PATH.main);
