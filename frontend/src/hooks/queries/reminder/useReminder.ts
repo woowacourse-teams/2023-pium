@@ -4,6 +4,7 @@ import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
 import type { UndefinedInitialDataOptions } from '@tanstack/react-query/build/lib/queryOptions';
 import ReminderAPI from 'apis/reminder';
+import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
 interface ArrangedReminderWithStatus {
   data: Array<[Month, ReminderExtendType[]]>;
@@ -56,6 +57,9 @@ const useReminder = (
     ...props,
     queryFn: async () => {
       const response = await ReminderAPI.getReminder();
+
+      throwOnInvalidStatus(response);
+
       const results = await response.json();
       return results;
     },

@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { generatePath, useNavigate } from 'react-router-dom';
 import useToast from 'hooks/useToast';
 import PetAPI from 'apis/pet';
+import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
 
 const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
@@ -12,7 +13,7 @@ const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
   return useMutation<void, Error, EditPetPlantRequest>({
     mutationFn: async (form) => {
       const response = await PetAPI.edit(petPlantId, form);
-      if (response.status !== 200) throw new Error('Edit failed');
+      throwOnInvalidStatus(response);
     },
 
     onSuccess: () => {

@@ -8,6 +8,7 @@ import {
   convertYearMapToYearList,
 } from 'pages/PetPlantTimeline/converter';
 import HistoryAPI, { HISTORY } from 'apis/history';
+import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
 const useYearList = (petPlantId: PetPlantDetails['id']) =>
   useInfiniteQuery<
@@ -20,6 +21,9 @@ const useYearList = (petPlantId: PetPlantDetails['id']) =>
     queryKey: [HISTORY, petPlantId],
     queryFn: async ({ pageParam }) => {
       const response = await HistoryAPI.getPetPlant(petPlantId, pageParam);
+
+      throwOnInvalidStatus(response);
+
       const data = await response.json();
       return data;
     },
