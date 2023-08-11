@@ -1,28 +1,25 @@
 package com.official.pium.service;
 
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.History;
-import com.official.pium.domain.HistoryType;
-import com.official.pium.domain.Member;
-import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.*;
+import com.official.pium.event.history.HistoryEvent;
+import com.official.pium.event.history.LastWaterDateEvent;
+import com.official.pium.event.history.PetPlantHistory;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
+import com.official.pium.service.dto.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,6 +29,7 @@ public class PetPlantService {
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
+    private final ApplicationEventPublisher publisher;
 
     @Transactional
     public PetPlantResponse create(PetPlantCreateRequest request, Member member) {
@@ -80,12 +78,25 @@ public class PetPlantService {
 
         validateLastWaterDate(updateRequest, petPlant);
 
+        PetPlantHistory previousPetPlantHistory = new PetPlantHistory(petPlant);
         petPlant.updatePetPlant(
                 updateRequest.getNickname(), updateRequest.getLocation(),
                 updateRequest.getFlowerpot(), updateRequest.getLight(),
                 updateRequest.getWind(), updateRequest.getWaterCycle(),
                 updateRequest.getBirthDate(), updateRequest.getLastWaterDate()
         );
+        PetPlantHistory currentPetPlantHistory = new PetPlantHistory(petPlant);
+        publishPetPlantHistories(petPlant, previousPetPlantHistory, currentPetPlantHistory);
+    }
+
+    private void publishPetPlantHistories(PetPlant petPlant, PetPlantHistory previousPetPlantHistory, PetPlantHistory currentPetPlantHistory) {
+        List<HistoryEvent> historyEvents = previousPetPlantHistory.generateUpdateHistoryEvents(petPlant.getId(), currentPetPlantHistory, LocalDate.now());
+        for (HistoryEvent historyEvent : historyEvents) {
+            publisher.publishEvent(historyEvent);
+        }
+
+        LastWaterDateEvent lastWaterDateEvent = previousPetPlantHistory.generateUpdateLastWaterDateHistoryEvent(petPlant.getId(), petPlant.getLastWaterDate());
+        publisher.publishEvent(lastWaterDateEvent);
     }
 
     @Transactional
