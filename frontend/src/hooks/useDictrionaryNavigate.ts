@@ -6,9 +6,12 @@ import { URL_PATH } from 'constants/index';
 const useDictionaryNavigate = () => {
   const navigate = useNavigate();
 
-  const goToDictDetailPage = useCallback((plantId: number) => {
-    navigate(generatePath(URL_PATH.dictDetail, { id: plantId.toString() }));
-  }, []);
+  const goToDictDetailPage = useCallback(
+    (plantId: number) => {
+      navigate(generatePath(URL_PATH.dictDetail, { id: plantId.toString() }));
+    },
+    [navigate]
+  );
 
   const goToProperDictPage = useCallback(
     (searchName: string, searchResults?: DictNameSearchResult[]) => {
@@ -23,7 +26,7 @@ const useDictionaryNavigate = () => {
 
       goToDictDetailPage(samePlant.id);
     },
-    []
+    [navigate, goToDictDetailPage]
   );
 
   return { goToDictDetailPage, goToProperDictPage };
