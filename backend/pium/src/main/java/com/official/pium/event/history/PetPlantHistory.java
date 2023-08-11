@@ -37,7 +37,7 @@ public class PetPlantHistory {
         this.lastWaterDate = petPlant.getLastWaterDate().toString();
     }
 
-    public List<HistoryEvent> createHistory(Long petPlantId, PetPlantHistory other, LocalDate date) {
+    public List<HistoryEvent> generateCreateHistoryEvents(Long petPlantId, PetPlantHistory other, LocalDate date) {
         List<HistoryEvent> events = new ArrayList<>();
 
         if (!location.equals(other.location)) {
