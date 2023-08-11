@@ -10,6 +10,7 @@ import lombok.Getter;
 @Getter
 @Builder
 public class PetPlantHistory {
+    
     private final String location;
     private final String flowerpot;
     private final String light;
