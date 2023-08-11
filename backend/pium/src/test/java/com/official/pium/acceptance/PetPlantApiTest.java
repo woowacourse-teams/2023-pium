@@ -438,7 +438,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .body("message", containsString("마지막으로 물 준 날짜는 직전 값보다 같거나 이전일 수 없습니다."));
+                    .body("message", containsString("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다."));
         }
 
         @Test
@@ -468,7 +468,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.BAD_REQUEST.value())
-                    .body("message", containsString("마지막으로 물 준 날짜는 직전 값보다 같거나 이전일 수 없습니다."));
+                    .body("message", containsString("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다."));
         }
 
         @Test

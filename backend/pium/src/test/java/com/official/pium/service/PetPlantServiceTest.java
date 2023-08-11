@@ -236,7 +236,7 @@ class PetPlantServiceTest extends IntegrationTest {
                 .lastWaterDate(baseDate)
                 .build();
         historySupport.builder().petPlant(petPlant).build();
-        
+
         LocalDate firstDate = petPlant.getLastWaterDate().plusDays(1);
         ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
                 .waterDate(firstDate)
@@ -265,7 +265,7 @@ class PetPlantServiceTest extends IntegrationTest {
         // when & then
         assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, member))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("마지막으로 물 준 날짜는 직전 값보다 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
+                .hasMessage("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
     }
 
     @Test
@@ -305,6 +305,6 @@ class PetPlantServiceTest extends IntegrationTest {
         // when & then
         assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, member))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("마지막으로 물 준 날짜는 직전 값보다 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
+                .hasMessage("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
     }
 }

@@ -115,7 +115,7 @@ public class PetPlantService {
             History history = content.get(0);
             LocalDate prevDate = history.getDate();
             if (updateRequest.getLastWaterDate().isBefore(prevDate) || updateRequest.getLastWaterDate().isEqual(prevDate)) {
-                throw new IllegalArgumentException("마지막으로 물 준 날짜는 직전 값보다 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
+                throw new IllegalArgumentException("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
             }
         }
     }
