@@ -1,5 +1,13 @@
+import { ToastItem } from 'types/toast';
 import { keyframes, styled } from 'styled-components';
-import { ToastType } from '.';
+import theme from 'style/theme.style';
+
+const toastBackgroundColors: Record<ToastItem['type'], string> = {
+  info: theme.color.primary,
+  success: '#3fa2ed',
+  warning: '#ec9b40',
+  error: theme.color.accent,
+};
 
 const show = keyframes`
   0% {
@@ -21,7 +29,7 @@ const hide = keyframes`
   }
 `;
 
-export const Wrapper = styled.div<{ type: ToastType; visible: boolean }>`
+export const Wrapper = styled.div<{ type: ToastItem['type']; visible: boolean }>`
   display: flex;
   align-items: center;
 
@@ -29,19 +37,13 @@ export const Wrapper = styled.div<{ type: ToastType; visible: boolean }>`
   height: max-content;
   padding: 8px;
 
-  color: white;
+  color: #ffffff;
 
-  background: ${({ type, theme }) =>
-    ({
-      info: theme.color.primary,
-      success: '#3fa2ed',
-      warning: '#ec9b40',
-      error: theme.color.accent,
-    }[type])};
+  background: ${({ type }) => toastBackgroundColors[type]};
   border-radius: 8px;
   box-shadow: 0 0 8px ${(p) => p.theme.color.sub + '33'};
 
-  animation: ${({ visible }) => (visible ? show : hide)} 0.3s ease-out alternate;
+  animation: ${({ visible }) => (visible ? show : hide)} 0.2s ease-out alternate;
 `;
 
 export const IconArea = styled.div`
