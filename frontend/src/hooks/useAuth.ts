@@ -35,7 +35,6 @@ const useAuth = () => {
       navigate(URL_PATH.main);
       setUserInfo({
         isLogin: false,
-        id: '-1',
       });
     },
     throwOnError: true,
@@ -52,7 +51,6 @@ const useAuth = () => {
       navigate(URL_PATH.main);
       setUserInfo({
         isLogin: false,
-        id: '-1',
       });
     },
     throwOnError: true,
