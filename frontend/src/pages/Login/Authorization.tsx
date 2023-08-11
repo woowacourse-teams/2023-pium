@@ -8,6 +8,7 @@ const Authorization = () => {
 
   useEffect(() => {
     if (code !== null) {
+      console.log(code, 'effect Code');
       userLogin.mutate(code);
     }
   }, [code]);

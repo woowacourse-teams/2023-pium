@@ -21,6 +21,9 @@ const useAuth = () => {
     onError: (error: Error) => {
       throw new Error(error.message);
     },
+    onMutate: (code: string) => {
+      console.log(code, 'mutate code@@@');
+    },
     throwOnError: true,
   });
 
