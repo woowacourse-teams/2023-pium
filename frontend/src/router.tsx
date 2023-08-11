@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
-import Error from 'pages/Error';
+import NotFound from 'pages/Error/NotFound';
 import Loading from 'pages/Loading';
 import Login from 'pages/Login';
 import Authorization from 'pages/Login/Authorization';
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
   {
     path: URL_PATH.main,
     element: <RootTemplate />,
-    errorElement: <Error />,
+    errorElement: <NotFound />,
     children: [
       {
         path: URL_PATH.main,
