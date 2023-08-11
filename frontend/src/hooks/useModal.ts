@@ -1,28 +1,16 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
+import useSwitch from './useSwitch';
 
 const useModal = (initialState = false) => {
-  const [isOpen, setIsOpen] = useState(initialState);
+  const { isOn: isOpen, on, off } = useSwitch(initialState);
   const modalRef = useRef<HTMLDialogElement>(null);
-
-  const on = () => {
-    setIsOpen(true);
-  };
-
-  const off = () => {
-    setIsOpen(false);
-  };
-
-  const onTime = (ms: number) => {
-    on();
-    setTimeout(off, ms);
-  };
+  const body = useRef(document.body);
 
   const keyDownHandler = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       off();
     }
   };
-  const body = useRef(document.body);
 
   useEffect(() => {
     if (isOpen) {
@@ -40,7 +28,7 @@ const useModal = (initialState = false) => {
     };
   }, [isOpen]);
 
-  return { isOpen, on, off, onTime, modalRef };
+  return { isOpen, on, off, modalRef };
 };
 
 export default useModal;
