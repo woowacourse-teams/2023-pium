@@ -10,6 +10,9 @@ const getSessionId = (code: string) => {
   return fetch(`${BASE_URL}/login?code=${code}`, {
     method: 'GET',
     credentials: 'include',
+    headers: {
+      'Content-Type': 'application/json',
+    },
   });
 };
 
