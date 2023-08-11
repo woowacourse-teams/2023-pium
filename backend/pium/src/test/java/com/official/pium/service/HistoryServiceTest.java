@@ -20,18 +20,19 @@ import org.springframework.data.domain.Sort;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class HistoryServiceTest extends IntegrationTest {
+class HistoryServiceTest extends IntegrationTest {
 
     @Autowired
     private HistoryService historyService;
 
     @Test
     void 반려_식물_단건_히스토리_조회() {
+        LocalDate baseDate = LocalDate.of(2022, 7, 1);
         PetPlant petPlant = petPlantSupport.builder().build();
-        History history1 = createHistory(petPlant, LocalDate.now());
-        History history2 = createHistory(petPlant, LocalDate.now().plusDays(1));
-        History history3 = createHistory(petPlant, LocalDate.now().plusDays(2));
-        History history4 = createHistory(petPlant, LocalDate.now().plusDays(3));
+        History history1 = createHistory(petPlant, baseDate);
+        History history2 = createHistory(petPlant, baseDate.plusDays(1));
+        History history3 = createHistory(petPlant, baseDate.plusDays(2));
+        History history4 = createHistory(petPlant, baseDate.plusDays(3));
         HistoryResponse historyResponse1 = historyService.read(petPlant.getId(),
                 PageRequest.of(0, 2, Sort.Direction.DESC, "date"), petPlant.getMember());
         HistoryResponse historyResponse2 = historyService.read(petPlant.getId(),

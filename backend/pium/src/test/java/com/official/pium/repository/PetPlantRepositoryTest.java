@@ -80,9 +80,9 @@ class PetPlantRepositoryTest extends RepositoryTest {
                 .flowerpot("화분")
                 .light("밝아요")
                 .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2020, 1, 3))
+                .nextWaterDate(LocalDate.of(2020, 1, 3))
+                .lastWaterDate(LocalDate.of(2020, 1, 3))
                 .waterCycle(3)
                 .build();
     }

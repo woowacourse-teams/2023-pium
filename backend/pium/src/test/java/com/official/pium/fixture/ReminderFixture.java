@@ -12,13 +12,17 @@ public class ReminderFixture {
 
     public static class REQUEST {
 
-        public static ReminderCreateRequest 리마인더_물주기_요청 = ReminderCreateRequest.builder()
-                .waterDate(LocalDate.now())
-                .build();
+        public static ReminderCreateRequest 리마인더_물주기_요청(LocalDate date) {
+            return ReminderCreateRequest.builder()
+                    .waterDate(date)
+                    .build();
+        }
 
-        public static ReminderUpdateRequest 리마인더_미루기_요청 = ReminderUpdateRequest.builder()
-                .nextWaterDate(LocalDate.now().plusDays(1))
-                .build();
+        public static ReminderUpdateRequest 리마인더_미루기_요청(LocalDate date) {
+            return ReminderUpdateRequest.builder()
+                    .nextWaterDate(date)
+                    .build();
+        }
     }
 
     public static class RESPONSE {
@@ -30,8 +34,9 @@ public class ReminderFixture {
                                         .nickName("기철이")
                                         .dictionaryPlantName("라벤더")
                                         .image("image.com")
-                                        .nextWaterDate(LocalDate.now())
+                                        .nextWaterDate(LocalDate.of(2020, 1, 3))
                                         .dday(0L)
+                                        .lastWaterDate(LocalDate.of(2020, 1, 3))
                                         .build()
                         )
                 )

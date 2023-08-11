@@ -128,15 +128,16 @@ public class HistoryApiTest extends AcceptanceTest {
         @Test
         void 요청_페이지가_최대값보다_크면_빈_배열_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            LocalDate lastWaterDate = LocalDate.now().minusDays(10);
+            LocalDate baseDate = LocalDate.of(2023, 1, 3);
+            LocalDate lastWaterDate = baseDate.minusDays(10);
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
                     dictionaryPlant.getId(), lastWaterDate);
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
-            반려_식물_물주기(반려_식물_ID, LocalDate.now().minusDays(8));
-            반려_식물_물주기(반려_식물_ID, LocalDate.now().minusDays(5));
-            반려_식물_물주기(반려_식물_ID, LocalDate.now().minusDays(3));
-            반려_식물_물주기(반려_식물_ID, LocalDate.now());
+            반려_식물_물주기(반려_식물_ID, baseDate.minusDays(8));
+            반려_식물_물주기(반려_식물_ID, baseDate.minusDays(5));
+            반려_식물_물주기(반려_식물_ID, baseDate.minusDays(3));
+            반려_식물_물주기(반려_식물_ID, baseDate);
 
             ExtractableResponse<Response> response = RestAssured
                     .given()
@@ -164,8 +165,8 @@ public class HistoryApiTest extends AcceptanceTest {
         @Test
         void 단건_히스토리_정보_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            LocalDate lastWaterDate = LocalDate.now().minusDays(3);
-            LocalDate waterDate = LocalDate.now();
+            LocalDate lastWaterDate = LocalDate.of(2022, 1, 13);
+            LocalDate waterDate = lastWaterDate.plusDays(3);
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
                     dictionaryPlant.getId(), lastWaterDate);
 
@@ -196,8 +197,8 @@ public class HistoryApiTest extends AcceptanceTest {
         @Test
         void 단건_히스토리_정보_반환_페이징_요청() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            LocalDate lastWaterDate = LocalDate.now().minusDays(3);
-            LocalDate waterDate = LocalDate.now();
+            LocalDate lastWaterDate = LocalDate.of(2020, 4, 5);
+            LocalDate waterDate = lastWaterDate.plusDays(3);
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
                     dictionaryPlant.getId(), lastWaterDate);
 
@@ -278,7 +279,7 @@ public class HistoryApiTest extends AcceptanceTest {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
+                .birthDate(LocalDate.of(2000, 7, 2))
                 .lastWaterDate(lastWaterDate)
                 .build();
     }

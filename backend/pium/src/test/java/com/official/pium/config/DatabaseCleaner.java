@@ -34,6 +34,7 @@ public class DatabaseCleaner {
 
     @Transactional
     public void clear() {
+        tableNames.clear();
         findDatabaseTableNames();
         entityManager.clear();
         truncate();
