@@ -1,11 +1,14 @@
 import React from 'react';
+import StatusError from 'apis/statusError';
 
 interface ErrorBoundaryProps {
   fallback?: React.ReactNode;
+  statusCode?: number;
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean;
+  error: Error | StatusError | null;
+  statusCode?: number;
 }
 
 class ErrorBoundary extends React.Component<
@@ -15,19 +18,28 @@ class ErrorBoundary extends React.Component<
   constructor(props: React.PropsWithChildren<ErrorBoundaryProps>) {
     super(props);
     this.state = {
-      hasError: false,
+      error: null,
     };
   }
 
-  static getDerivedStateFromError() {
-    return { hasError: true };
+  static getDerivedStateFromError(error: Error | StatusError) {
+    if (error instanceof StatusError) {
+      return {
+        error,
+        statusCode: error.statusCode,
+      };
+    }
+
+    return { error };
   }
 
   render() {
-    const { children, fallback } = this.props;
-    const { hasError } = this.state;
+    const { children, fallback, statusCode: statusCodeProps } = this.props;
+    const { error, statusCode } = this.state;
 
-    return hasError ? fallback : children;
+    if (statusCodeProps !== statusCode && error !== null) throw error;
+
+    return error !== null ? fallback : children;
   }
 }
 
