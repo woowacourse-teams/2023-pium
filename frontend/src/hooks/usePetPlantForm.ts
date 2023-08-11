@@ -22,7 +22,7 @@ type PetPlantFormAction =
       type: 'INIT';
     };
 
-const initialPetPlantForm: PetPlantForm = {
+export const initialPetPlantForm: PetPlantForm = {
   nickname: '기영이',
   location: '',
   flowerpot: '',
