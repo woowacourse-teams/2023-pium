@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userInfo } from 'store/atoms/userInfo';
 import Auth from 'apis/auth';
+import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
 
 const useAuth = () => {
@@ -11,7 +12,13 @@ const useAuth = () => {
   const navigate = useNavigate();
 
   const userLogin = useMutation({
-    mutationFn: (code: string) => getSessionId(code),
+    mutationFn: async (code: string) => {
+      const response = await getSessionId(code);
+
+      throwOnInvalidStatus(response);
+
+      return await response.json();
+    },
     onSuccess: () => navigate(URL_PATH.main),
     onError: (error: Error) => {
       throw new Error(error.message);
@@ -20,7 +27,12 @@ const useAuth = () => {
   });
 
   const userLogout = useMutation({
-    mutationFn: logout,
+    mutationFn: async () => {
+      const response = await logout();
+
+      throwOnInvalidStatus(response);
+      return await response.json();
+    },
     onSuccess: () => {
       navigate(URL_PATH.main);
       setUserInfo({
@@ -28,10 +40,16 @@ const useAuth = () => {
         id: '-1',
       });
     },
+    throwOnError: true,
   });
 
   const userWithdraw = useMutation({
-    mutationFn: withdraw,
+    mutationFn: async () => {
+      const response = await withdraw();
+
+      throwOnInvalidStatus(response);
+      return await response.json();
+    },
     onSuccess: () => {
       navigate(URL_PATH.main);
       setUserInfo({
@@ -39,6 +57,7 @@ const useAuth = () => {
         id: '-1',
       });
     },
+    throwOnError: true,
   });
 
   return { userLogin, userLogout, userWithdraw };
