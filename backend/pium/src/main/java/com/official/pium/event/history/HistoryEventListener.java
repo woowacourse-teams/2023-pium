@@ -21,21 +21,21 @@ public class HistoryEventListener {
     private final HistoryCategoryRepository historyCategoryRepository;
 
     @EventListener
-    public void savePetPlantHistory(HistoryEvent event) {
+    public void savePetPlantHistory(HistoryEvent historyEvent) {
 
-        PetPlant petPlant = petPlantRepository.findById(event.getPetPlantId())
-                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + event.getPetPlantId()));
+        PetPlant petPlant = petPlantRepository.findById(historyEvent.getPetPlantId())
+                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + historyEvent.getPetPlantId()));
 
-        HistoryCategory historyCategory = historyCategoryRepository.findByHistoryType(event.getHistoryType())
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 히스토리 타입입니다. type: " + event.getHistoryType()));
+        HistoryCategory historyCategory = historyCategoryRepository.findByHistoryType(historyEvent.getHistoryType())
+                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 히스토리 타입입니다. type: " + historyEvent.getHistoryType()));
 
         History history = History.builder()
                 .petPlant(petPlant)
-                .date(event.getDate())
+                .date(historyEvent.getDate())
                 .historyCategory(historyCategory)
                 .historyContent(HistoryContent.builder()
-                        .previous(event.getPrevious())
-                        .current(event.getCurrent())
+                        .previous(historyEvent.getPrevious())
+                        .current(historyEvent.getCurrent())
                         .build())
                 .build();
 
