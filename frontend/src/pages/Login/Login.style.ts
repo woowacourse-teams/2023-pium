@@ -1,8 +1,31 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.main`
+  position: relative;
+
   display: flex;
   flex-direction: column;
+
+  height: 100%;
+
+  background: ${({ theme: { color } }) => color.subLight};
+`;
+
+export const ContentBox = styled.section`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 300px;
+  height: 300px;
+
+  background: ${({ theme: { color } }) => color.grayLight};
+  border-radius: 8px;
 `;
 
 export const Title = styled.p`
@@ -15,11 +38,19 @@ export const Title = styled.p`
 `;
 
 export const LoginBox = styled.section`
+  position: fixed;
+  bottom: 40px;
+
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
 
   width: 100%;
-  margin-top: 200px;
+`;
+
+export const GoToMain = styled.button`
+  width: 148px;
+  height: 59px;
+  background: ${({ theme }) => theme.color.grayLight};
+  border-radius: 8px;
 `;
