@@ -14,7 +14,8 @@ const useAuth = () => {
   const userLogin = useMutation({
     mutationFn: async (code: string) => {
       const response = await getSessionId(code);
-
+      console.log(response.headers, 'header');
+      console.log(response, 'response');
       throwOnInvalidStatus(response);
     },
     onSuccess: () => navigate(URL_PATH.main),
