@@ -7,11 +7,12 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryCategoryRepository;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.NoSuchElementException;
 
 @Component
 @RequiredArgsConstructor
@@ -21,7 +22,8 @@ public class HistoryEventListener {
     private final HistoryRepository historyRepository;
     private final HistoryCategoryRepository historyCategoryRepository;
 
-    @TransactionalEventListener(phase = TransactionPhase.BEFORE_COMMIT)
+    @EventListener
+    @Transactional
     public void savePetPlantHistory(HistoryEvent historyEvent) {
 
         PetPlant petPlant = petPlantRepository.findById(historyEvent.getPetPlantId())
