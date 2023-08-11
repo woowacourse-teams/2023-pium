@@ -36,3 +36,6 @@ out/
 ### VS Code ###
 .vscode/
 *.DS_Store
+
+### RestDocs ###
+**/src/main/resources/static/docs/

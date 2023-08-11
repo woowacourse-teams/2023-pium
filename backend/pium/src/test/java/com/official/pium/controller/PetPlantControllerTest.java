@@ -8,10 +8,18 @@ import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -66,6 +74,13 @@ class PetPlantControllerTest extends UITest {
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(피우미_등록_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("petPlant/create/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ))
+                    )
                     .andExpect(status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
                     .andDo(print());
@@ -73,17 +88,28 @@ class PetPlantControllerTest extends UITest {
     }
 
     @Nested
-    class 반려_식물_조회_ {
+    class 반려_식물_단건_조회_ {
 
         @Test
         void 정상_요청시_200을_반환() throws Exception {
+            PetPlantResponse response = RESPONSE.피우미_응답;
             given(petPlantService.read(anyLong(), any(Member.class)))
-                    .willReturn(RESPONSE.피우미_응답);
+                    .willReturn(response);
 
             mockMvc.perform(get("/pet-plants/{id}", 1L)
                             .header("Authorization", "pium@gmail.com")
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
+                    .andDo(document("petPlant/findById/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
+                            pathParameters(
+                                    parameterWithName("id").description("반려 식물 ID")
+                            ))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -112,6 +138,13 @@ class PetPlantControllerTest extends UITest {
 
             mockMvc.perform(get("/pet-plants")
                             .header("Authorization", "pium@gmail.com"))
+                    .andDo(document("petPlant/findAll/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -129,8 +162,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 5))
                     .build();
             willDoNothing().given(petPlantService)
                     .update(anyLong(), any(PetPlantUpdateRequest.class), any(Member.class));
@@ -139,6 +172,16 @@ class PetPlantControllerTest extends UITest {
                             .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(document("petPlant/update/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
+                            pathParameters(
+                                    parameterWithName("id").description("반려 식물 ID")
+                            ))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -168,8 +211,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2023, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -193,8 +236,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -218,8 +261,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -241,8 +284,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(null)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -264,8 +307,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(-10)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -289,8 +332,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light(light)
                     .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -314,8 +357,8 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("밝은 곳")
                     .wind(wind)
-                    .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -338,7 +381,7 @@ class PetPlantControllerTest extends UITest {
                     .light("밝은 곳")
                     .wind("바람이 불어오는 곳")
                     .birthDate(null)
-                    .lastWaterDate(LocalDate.now())
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
@@ -360,7 +403,7 @@ class PetPlantControllerTest extends UITest {
                     .waterCycle(10)
                     .light("밝은 곳")
                     .wind("바람이 불어오는 곳")
-                    .birthDate(LocalDate.now())
+                    .birthDate(LocalDate.of(2020, 1, 3))
                     .lastWaterDate(null)
                     .build();
 
