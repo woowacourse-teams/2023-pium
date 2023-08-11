@@ -1,7 +1,7 @@
 import { ManageLevel, Season, SeasonKor } from 'types/dictionaryPlant';
 import { TagVariantType } from 'components/@common/Tag';
 
-export const BASE_URL = 'https://api.pium.life';
+export const BASE_URL = process.env.HOST;
 
 export const URL_PATH = {
   main: '/',
@@ -32,6 +32,8 @@ export const ERROR = {
 
 export const GUIDE = {
   search: '피움에 등록된 식물을 검색해 보세요!',
+  login: '로그인 후 이용 가능한 서비스입니다.',
+  sessionExpire: '세션이 만료됐습니다. 다시 로그인해주세요.',
 } as const;
 
 export const OPTIONS = {
