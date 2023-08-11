@@ -6,7 +6,7 @@ const ReactRefreshTypeScript = require('react-refresh-typescript');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
-module.exports = {
+module.exports = (env) => ({
   entry: resolve(__dirname, 'src', 'index.tsx'),
   output: {
     path: resolve(__dirname, 'dist'),
@@ -54,7 +54,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: resolve(__dirname, 'public', 'index.html'),
     }),
-    new DotEnv(),
+    new DotEnv({
+      path: resolve(__dirname, 'env', `${env.environment}.env`),
+    }),
     ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
   ],
   devServer: {
@@ -65,4 +67,4 @@ module.exports = {
     },
     historyApiFallback: true,
   },
-};
+});
