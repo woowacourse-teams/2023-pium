@@ -19,7 +19,7 @@ public class PetPlantHistory {
     private final String lastWaterDate;
 
     @Builder
-    public PetPlantHistory(String location, String flowerpot, String light, String wind, String waterCycle, String lastWaterDate) {
+    private PetPlantHistory(String location, String flowerpot, String light, String wind, String waterCycle, String lastWaterDate) {
         this.location = location;
         this.flowerpot = flowerpot;
         this.light = light;
