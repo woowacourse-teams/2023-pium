@@ -235,7 +235,8 @@ class PetPlantServiceTest extends IntegrationTest {
                 .member(member)
                 .lastWaterDate(baseDate)
                 .build();
-
+        historySupport.builder().petPlant(petPlant).build();
+        
         LocalDate firstDate = petPlant.getLastWaterDate().plusDays(1);
         ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
                 .waterDate(firstDate)

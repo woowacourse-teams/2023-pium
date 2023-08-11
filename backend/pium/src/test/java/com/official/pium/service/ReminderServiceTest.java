@@ -30,7 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class ReminderServiceTest extends IntegrationTest {
+class
+ReminderServiceTest extends IntegrationTest {
 
     private PetPlant petPlant;
     private Member member;

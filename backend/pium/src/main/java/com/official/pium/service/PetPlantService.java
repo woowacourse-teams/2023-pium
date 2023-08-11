@@ -2,6 +2,7 @@ package com.official.pium.service;
 
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.History;
+import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
@@ -107,7 +108,7 @@ public class PetPlantService {
     private void validateLastWaterDate(PetPlantUpdateRequest updateRequest, PetPlant petPlant) {
         int pageNumber = 1;
         int pageSize = 1;
-        Page<History> currentHistory = historyRepository.findAllByPetPlantId(petPlant.getId(), PageRequest.of(pageNumber, pageSize, Direction.DESC, "date"));
+        Page<History> currentHistory = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(petPlant.getId(), HistoryType.LAST_WATER_DATE, PageRequest.of(pageNumber, pageSize, Direction.DESC, "date"));
         List<History> content = currentHistory.getContent();
 
         if (!content.isEmpty()) {
