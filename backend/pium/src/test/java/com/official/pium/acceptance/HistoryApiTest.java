@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
@@ -273,14 +274,14 @@ public class HistoryApiTest extends AcceptanceTest {
 
             ExtractableResponse<Response> petPlantResponse = 반려_식물_단건_조회(반려_식물_ID);
             List<String> currentResponses = response.jsonPath().getList("data.content.current");
-            assertSoftly(softly -> softly.assertThat(currentResponses).containsExactlyInAnyOrder(
+            assertThat(currentResponses).containsExactlyInAnyOrder(
                     petPlantResponse.jsonPath().getString("location"),
                     petPlantResponse.jsonPath().getString("flowerpot"),
                     petPlantResponse.jsonPath().getString("light"),
                     petPlantResponse.jsonPath().getString("wind"),
                     petPlantResponse.jsonPath().getString("waterCycle"),
                     petPlantResponse.jsonPath().getString("lastWaterDate")
-            ));
+            );
         }
     }
 
