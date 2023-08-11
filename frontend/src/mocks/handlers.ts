@@ -93,6 +93,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
 
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
+      validateParams(delay, failRate);
       const { data } = Reminder.getAll();
 
       data.sort((a, b) => {

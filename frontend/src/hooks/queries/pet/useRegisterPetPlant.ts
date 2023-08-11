@@ -24,6 +24,7 @@ const useRegisterPetPlant = () => {
     onError: () => {
       addToast('error', '반려 식물 정보 등록에 실패했어요.');
     },
+    throwOnError: true,
   });
 };
 

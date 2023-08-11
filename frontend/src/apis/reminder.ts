@@ -2,7 +2,7 @@ import { ChangeDateParams, WaterPlantParams } from 'types/reminder';
 import { BASE_URL } from 'constants/index';
 
 export const REMINDER = `${BASE_URL}/reminders`;
-
+console.log(BASE_URL, '22');
 const headers = {
   'Content-Type': 'application/json',
   Authorization: 'pium@gmail.com',

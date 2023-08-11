@@ -24,6 +24,7 @@ const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
     onError: () => {
       addToast('error', '반려 식물 정보 수정에 실패했어요.');
     },
+    throwOnError: true,
   });
 };
 

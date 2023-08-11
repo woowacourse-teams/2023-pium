@@ -16,6 +16,7 @@ const usePetPlantCardList = () =>
     },
     select: ({ data }) => data,
     suspense: true,
+    throwOnError: true,
   });
 
 export default usePetPlantCardList;

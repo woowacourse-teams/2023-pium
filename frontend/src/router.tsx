@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
 import NotFound from 'pages/Error/NotFound';
+import UnAuthorize from 'pages/Error/UnAuthorize';
 import Loading from 'pages/Loading';
 import Login from 'pages/Login';
 import Authorization from 'pages/Login/Authorization';
@@ -16,6 +17,7 @@ import PetRegisterForm from 'pages/PetRegister/Form';
 import PetRegisterSearch from 'pages/PetRegister/Search';
 import Reminder from 'pages/Reminder';
 import RootTemplate from 'pages/RootTemplate';
+import ErrorBoundary from 'components/@common/ErrorBoundary';
 import { URL_PATH } from './constants';
 
 const router = createBrowserRouter([
@@ -35,9 +37,11 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petRegisterForm,
         element: (
-          <Suspense fallback={<Loading />}>
-            <PetRegisterForm />
-          </Suspense>
+          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+            <Suspense fallback={<Loading />}>
+              <PetRegisterForm />
+            </Suspense>
+          </ErrorBoundary>
         ),
       },
       {
@@ -55,37 +59,49 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petList,
         element: (
-          <Suspense fallback={<Loading />}>
-            <PetPlantCardList />
-          </Suspense>
+          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+            <Suspense fallback={<Loading />}>
+              <PetPlantCardList />
+            </Suspense>
+          </ErrorBoundary>
         ),
       },
       {
         path: URL_PATH.petDetail,
-        element: <PetDetails />,
+        element: (
+          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+            <PetDetails />
+          </ErrorBoundary>
+        ),
       },
       {
         path: URL_PATH.petEdit,
         element: (
-          <Suspense fallback={<Loading />}>
-            <PetPlantEdit />
-          </Suspense>
+          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+            <Suspense fallback={<Loading />}>
+              <PetPlantEdit />
+            </Suspense>
+          </ErrorBoundary>
         ),
       },
       {
         path: URL_PATH.reminder,
         element: (
-          <Suspense fallback={<Loading />}>
-            <Reminder />
-          </Suspense>
+          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+            <Suspense fallback={<Loading />}>
+              <Reminder />
+            </Suspense>
+          </ErrorBoundary>
         ),
       },
       {
         path: URL_PATH.timeline,
         element: (
-          <Suspense fallback={<Loading />}>
-            <PetPlantTimeline />
-          </Suspense>
+          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+            <Suspense fallback={<Loading />}>
+              <PetPlantTimeline />
+            </Suspense>
+          </ErrorBoundary>
         ),
       },
       {
@@ -102,7 +118,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.myPage,
-        element: <MyPage />,
+        element: (
+          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+            <MyPage />
+          </ErrorBoundary>
+        ),
       },
     ],
   },

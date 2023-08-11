@@ -3,7 +3,7 @@ import { Button, SadPiumiImage, Section, Text, Title, Wrapper } from './Error.st
 import { URL_PATH } from 'constants/index';
 import sadpiumi from 'assets/sadpiumi.svg';
 
-const Error = () => {
+const NotFound = () => {
   const navigate = useNavigate();
 
   const reloadWindow = () => location.reload();
@@ -32,4 +32,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default NotFound;

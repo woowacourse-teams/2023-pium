@@ -17,6 +17,7 @@ const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) =>
 
     refetchOnWindowFocus: false,
     suspense: true,
+    throwOnError: true,
   });
 
 export default usePetPlantDetails;

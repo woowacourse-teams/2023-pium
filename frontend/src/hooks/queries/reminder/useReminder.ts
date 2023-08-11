@@ -64,6 +64,8 @@ const useReminder = (
       return results;
     },
     select: convertReminderData,
+    throwOnError: true,
+    suspense: true,
   });
 
 export default useReminder;

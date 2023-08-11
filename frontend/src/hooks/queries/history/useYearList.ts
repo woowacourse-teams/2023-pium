@@ -38,6 +38,7 @@ const useYearList = (petPlantId: PetPlantDetails['id']) =>
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
+    throwOnError: true,
   });
 
 export default useYearList;
