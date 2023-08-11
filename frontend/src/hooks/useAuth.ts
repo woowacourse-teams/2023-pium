@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userInfo } from 'store/atoms/userInfo';
@@ -11,22 +11,16 @@ const useAuth = () => {
   const setUserInfo = useSetRecoilState(userInfo);
   const navigate = useNavigate();
 
-  const userLogin = useMutation({
-    mutationFn: async (code: string) => {
-      const response = await getSessionId(code);
-      console.log(response.headers, 'header');
-      console.log(response, 'response');
-      throwOnInvalidStatus(response);
-    },
-    onSuccess: () => navigate(URL_PATH.main),
-    onError: (error: Error) => {
-      throw new Error(error.message);
-    },
-    onMutate: (code: string) => {
-      console.log(code, 'mutate code@@@');
-    },
-    throwOnError: true,
-  });
+  const userLogin = (code: string) =>
+    useQuery({
+      queryKey: ['getSession'],
+      queryFn: async () => {
+        const response = await getSessionId(code);
+
+        throwOnInvalidStatus(response);
+      },
+      throwOnError: true,
+    });
 
   const userLogout = useMutation({
     mutationFn: async () => {
