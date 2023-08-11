@@ -10,7 +10,7 @@ export const Item = styled.div`
   height: 40px;
 
   & + & {
-    margin-top: 32px;
+    margin-top: 40px;
   }
 `;
 

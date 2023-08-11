@@ -93,7 +93,7 @@ export const DayArea = styled.div`
   display: flex;
 
   width: 100%;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 
   font-weight: 500;
 `;
