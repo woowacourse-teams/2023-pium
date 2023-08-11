@@ -1,6 +1,7 @@
 package com.official.pium.event.history;
 
 import com.official.pium.domain.HistoryType;
+import com.official.pium.domain.PetPlant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,15 +9,33 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-@Builder
 public class PetPlantHistory {
-    
+
     private final String location;
     private final String flowerpot;
     private final String light;
     private final String wind;
     private final String waterCycle;
     private final String lastWaterDate;
+
+    @Builder
+    public PetPlantHistory(String location, String flowerpot, String light, String wind, String waterCycle, String lastWaterDate) {
+        this.location = location;
+        this.flowerpot = flowerpot;
+        this.light = light;
+        this.wind = wind;
+        this.waterCycle = waterCycle;
+        this.lastWaterDate = lastWaterDate;
+    }
+
+    public PetPlantHistory(PetPlant petPlant) {
+        this.location = petPlant.getLocation();
+        this.flowerpot = petPlant.getFlowerpot();
+        this.light = petPlant.getLight();
+        this.wind = petPlant.getWind();
+        this.waterCycle = petPlant.getWaterCycle().toString();
+        this.lastWaterDate = petPlant.getLastWaterDate().toString();
+    }
 
     public List<HistoryEvent> createHistory(Long petPlantId, PetPlantHistory other, LocalDate date) {
         List<HistoryEvent> events = new ArrayList<>();
