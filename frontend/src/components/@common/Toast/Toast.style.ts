@@ -29,7 +29,7 @@ const hide = keyframes`
   }
 `;
 
-export const Wrapper = styled.div<{ type: ToastItem['type']; visible: boolean }>`
+export const Wrapper = styled.div<{ $type: ToastItem['type']; $visible: boolean }>`
   display: flex;
   align-items: center;
 
@@ -39,11 +39,11 @@ export const Wrapper = styled.div<{ type: ToastItem['type']; visible: boolean }>
 
   color: #ffffff;
 
-  background: ${({ type }) => toastBackgroundColors[type]};
+  background: ${({ $type }) => toastBackgroundColors[$type]};
   border-radius: 8px;
   box-shadow: 0 0 8px ${(p) => p.theme.color.sub + '33'};
 
-  animation: ${({ visible }) => (visible ? show : hide)} 0.2s ease-out alternate;
+  animation: ${({ $visible }) => ($visible ? show : hide)} 0.2s ease-out alternate;
 `;
 
 export const IconArea = styled.div`

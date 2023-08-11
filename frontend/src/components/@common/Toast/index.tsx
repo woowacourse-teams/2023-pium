@@ -25,7 +25,7 @@ const Toast = ({ type, title, message }: ToastItem) => {
   }, [handleToastClose]);
 
   return (
-    <Wrapper type={type} visible={visible} role="alert">
+    <Wrapper $type={type} $visible={visible} role="alert">
       <IconArea>{icons[type]}</IconArea>
       <MessageArea>
         {title && <Title>{title}</Title>}
