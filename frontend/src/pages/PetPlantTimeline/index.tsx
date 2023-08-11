@@ -22,13 +22,14 @@ import Sprout from 'assets/sprout.svg';
 const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
   const { data: yearList, fetchNextPage } = useYearList(Number(petPlantId));
-  if (!yearList) return null;
 
   const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  if (!yearList) return null;
 
   return (
     <>
