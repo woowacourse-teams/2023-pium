@@ -1,6 +1,6 @@
 import type { EditPetPlantRequest } from 'types/petPlant';
 import { useReducer } from 'react';
-import { inputValidate } from 'utils/validate';
+import { InputValidate } from 'utils/validate';
 
 export type PetPlantForm = Record<keyof EditPetPlantRequest, string>;
 
@@ -46,8 +46,8 @@ const petPlantFormReducer = (petPlantForm: PetPlantForm, action: PetPlantFormAct
       }
 
       if (
-        !inputValidate.checkNumber(action.value) ||
-        !inputValidate.checkRange(Number(action.value), action.min, action.max)
+        !InputValidate.checkNumber(action.value) ||
+        !InputValidate.checkRange(Number(action.value), action.min, action.max)
       ) {
         return { ...petPlantForm };
       }

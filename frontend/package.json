@@ -5,8 +5,10 @@
   "main": "src/index.tsx",
   "scripts": {
     "test": "echo test is not prepared",
-    "start": "webpack-dev-server --mode=development",
-    "build": "NODE_ENV=production webpack",
+    "local": "cross-env webpack-dev-server --mode=development --env environment=local",
+    "dev": "cross-env webpack-dev-server --mode=production --env environment=development",
+    "build-dev": "cross-env NODE_ENV=production webpack --env environment=development",
+    "build-prod": "cross-env NODE_ENV=production webpack --env environment=production",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o ./dist/storybook",
     "cypress": "cypress open"
@@ -42,7 +44,9 @@
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.61.0",
     "@typescript-eslint/parser": "^5.61.0",
+    "cross-env": "^7.0.3",
     "cypress": "^12.17.2",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.27.5",

@@ -1,4 +1,5 @@
-import { NewPetPlantRequest, PetPlantDetails } from 'types/petPlant';
+import type { NewPetPlantRequest, PetPlantDetails } from 'types/petPlant';
+import { getDateToString } from 'utils/date';
 import PET_PLANTS_DATA from '../data/petPlants';
 
 const KEY = 'MSW_PET_PLANTS';
@@ -7,7 +8,7 @@ const makeNextWaterDate = (date: string, days: number) => {
   const newDate = new Date(date);
   newDate.setDate(newDate.getDate() + days);
 
-  return `${newDate.getFullYear()}-${newDate.getMonth() + 1}-${newDate.getDay()}`;
+  return getDateToString(newDate);
 };
 
 const getAll = (): PetPlantDetails[] => {
