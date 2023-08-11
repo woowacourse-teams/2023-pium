@@ -1,11 +1,9 @@
 package com.official.pium.service;
 
-import com.official.pium.domain.History;
-import com.official.pium.domain.HistoryCategory;
-import com.official.pium.domain.HistoryContent;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.event.history.HistoryEvent;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.HistoryCategoryRepository;
 import com.official.pium.repository.HistoryRepository;
@@ -18,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -31,30 +30,21 @@ public class ReminderService {
     private final PetPlantRepository petPlantRepository;
     private final HistoryRepository historyRepository;
     private final HistoryCategoryRepository historyCategoryRepository;
+    private final ApplicationEventPublisher publisher;
 
     @Transactional
     public void water(ReminderCreateRequest reminderCreateRequest, Long petPlantId, Member member) {
+
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
+
         checkOwner(petPlant, member);
-        LocalDate prevDate = petPlant.getLastWaterDate();
+
+        String previousWaterDate = petPlant.getLastWaterDate().toString();
         petPlant.water(reminderCreateRequest.getWaterDate());
+        String currentWaterDate = petPlant.getLastWaterDate().toString();
 
-        HistoryCategory historyCategory = historyCategoryRepository.findByHistoryType(HistoryType.LAST_WATER_DATE)
-                .orElseThrow(
-                        () -> new NoSuchElementException("존재하지 않는 히스토리 타입입니다. type: " + HistoryType.LAST_WATER_DATE));
-
-        History history = History.builder()
-                .petPlant(petPlant)
-                .date(reminderCreateRequest.getWaterDate())
-                .historyCategory(historyCategory)
-                .historyContent(HistoryContent.builder()
-                        .previous(prevDate.toString())
-                        .current(petPlant.getLastWaterDate().toString())
-                        .build())
-                .build();
-
-        historyRepository.save(history);
+        publisher.publishEvent(new HistoryEvent(petPlantId, previousWaterDate, currentWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.now()));
     }
 
     @Transactional
