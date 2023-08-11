@@ -17,15 +17,17 @@ export const Minimal: Story = {
   },
 };
 
+const Controlled = () => {
+  const options = ['포도', '딸기', '사과'];
+  const [value, setValue] = useState(options[0]);
+
+  const onChange = (options: string) => {
+    setValue(options);
+  };
+
+  return <Select value={value} options={options} onChange={onChange}></Select>;
+};
+
 export const General: Story = {
-  render: () => {
-    const options = ['포도', '딸기', '사과'];
-    const [value, setValue] = useState(options[0]);
-
-    const onChange = (options: string) => {
-      setValue(options);
-    };
-
-    return <Select value={value} options={options} onChange={onChange}></Select>;
-  },
+  render: Controlled,
 };
