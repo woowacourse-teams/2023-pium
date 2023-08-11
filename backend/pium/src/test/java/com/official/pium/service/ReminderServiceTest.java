@@ -57,19 +57,20 @@ class ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 정상적인_물주기_시_다음_물주기_날짜와_마지막으로_물을_준_날짜를_변경() {
+        PetPlant petPlant1 = petPlantSupport.builder().member(member).lastWaterDate(LocalDate.of(2022, 3, 4)).build();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
-                .waterDate(petPlant.getLastWaterDate().plusDays(2))
+                .waterDate(petPlant1.getLastWaterDate().plusDays(2))
                 .build();
 
-        reminderService.water(request, petPlant.getId(), member);
+        reminderService.water(request, petPlant1.getId(), member);
 
-        PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
+        PetPlant updatedPetPlant = petPlantRepository.findById(petPlant1.getId()).get();
         LocalDate newWaterDate = request.getWaterDate();
 
         assertSoftly(softly -> {
                     softly.assertThat(updatedPetPlant)
                             .extracting(PetPlant::getNextWaterDate, PetPlant::getLastWaterDate)
-                            .isEqualTo(List.of(newWaterDate.plusDays(petPlant.getWaterCycle()), newWaterDate));
+                            .isEqualTo(List.of(newWaterDate.plusDays(petPlant1.getWaterCycle()), newWaterDate));
                     // findByHistoryCategory
                     softly.assertThat(historyRepository.findAll())
                             .extracting(History::getPetPlant, History::getDate)
