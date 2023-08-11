@@ -114,7 +114,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.authorization,
-        element: <Authorization />,
+        element: (
+          <Suspense fallback={<Loading />}>
+            <Authorization />,
+          </Suspense>
+        ),
       },
       {
         path: URL_PATH.myPage,

@@ -22,6 +22,7 @@ const useAuth = () => {
         return data;
       },
       throwOnError: true,
+      suspense: true,
     });
 
   const userLogout = useMutation({
