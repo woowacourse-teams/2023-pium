@@ -129,6 +129,9 @@ public class PetPlant extends BaseEntity {
         validateWaterCycle(waterCycle);
         validateLocalDate(birthDate);
         validateLocalDate(lastWaterDate);
+        if (!Objects.equals(waterCycle, this.waterCycle)) {
+            this.nextWaterDate = lastWaterDate.plusDays(waterCycle);
+        }
         this.nickname = nickname;
         this.location = location;
         this.flowerpot = flowerpot;
