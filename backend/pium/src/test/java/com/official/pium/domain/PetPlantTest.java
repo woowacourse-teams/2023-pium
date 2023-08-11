@@ -99,10 +99,10 @@ class PetPlantTest {
                     .build();
 
             petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8));
+                    "통풍이 잘 됨", 10, LocalDate.of(2000, 2, 3), LocalDate.of(2022, 1, 6));
 
             assertThat(petPlant.getNextWaterDate())
-                    .isEqualTo(LocalDate.now().plusDays(petPlant.getWaterCycle()));
+                    .isEqualTo(petPlant.getLastWaterDate().plusDays(petPlant.getWaterCycle()));
         }
 
         @ParameterizedTest
