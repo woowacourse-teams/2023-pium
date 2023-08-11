@@ -2,18 +2,20 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ToastProvider from 'contexts/toastContext';
 import useBoolean from 'hooks/useModal';
 import useToast from 'hooks/useToast';
-import Toast from '.';
+import Toast, { type ToastProps } from '.';
 import ToastList from './ToastList';
+
+const ToastItem = (props: ToastProps) => {
+  const { isOpen, on } = useBoolean();
+
+  setTimeout(on);
+
+  return <>{isOpen && <Toast {...props} />}</>;
+};
 
 const meta: Meta<typeof Toast> = {
   component: Toast,
-  render: (props) => {
-    const { isOpen, on } = useBoolean();
-
-    setTimeout(on);
-
-    return <>{isOpen && <Toast {...props} />}</>;
-  },
+  render: ToastItem,
   decorators: [
     (Story) => {
       return (
@@ -45,23 +47,26 @@ export const Success: Story = {
   },
 };
 
+const Interactive = (props: ToastProps) => {
+  const { type } = props;
+  const { addToast } = useToast();
+  const addHandler = () => {
+    addToast(type, props.message);
+  };
+
+  return (
+    <>
+      <button type="button" onClick={addHandler}>
+        토스트 추가하기
+      </button>
+    </>
+  );
+};
+
 export const ToastWithPopupButton: Story = {
   args: {
     type: 'error',
     message: '새로고침 해주세요',
   },
-  render: (props) => {
-    const { addToast } = useToast();
-    const addHandler = () => {
-      addToast('error', props.message);
-    };
-
-    return (
-      <>
-        <button type="button" onClick={addHandler}>
-          토스트 추가하기
-        </button>
-      </>
-    );
-  },
+  render: Interactive,
 };

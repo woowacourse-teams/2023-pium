@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import { IconArea, Message, MessageArea, Title, Wrapper } from './Toast.style';
 import CheckCircle from '../Icons/CheckCircle';
 import CloseCircle from '../Icons/CloseCircle';
@@ -24,9 +24,9 @@ const Toast = ({ type, title, message }: ToastProps) => {
     error: <CloseCircle aria-label="실패 알림" />,
   }[type];
 
-  const handleToastClose = () => {
+  const handleToastClose = useCallback(() => {
     setVisible(false);
-  };
+  }, []);
 
   useEffect(() => {
     setTimeout(handleToastClose, 2000);

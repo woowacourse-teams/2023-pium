@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 `;
 
 export const DaySpan = styled.span<DayProps>`
-  cursor: ${({ $isInRange }) => $isInRange ? 'pointer' : 'default'};
+  cursor: ${({ $isInRange }) => ($isInRange ? 'pointer' : 'default')};
 
   display: flex;
   align-items: center;
