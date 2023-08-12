@@ -48,6 +48,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     birthDate,
     daySince,
     waterCycle,
+    secondLastWaterDate,
     lastWaterDate,
     nextWaterDate,
     location,
@@ -211,6 +212,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
               <DateInput
                 value={form.lastWaterDate}
                 changeCallback={setLastWaterDate}
+                min={getDateToString(
+                  new Date(
+                    secondLastWaterDate ??
+                      getParticularDateFromSpecificDay(-365, new Date(lastWaterDate))
+                  )
+                )}
                 max={getDateToString()}
               />
             </InputWrapper>
