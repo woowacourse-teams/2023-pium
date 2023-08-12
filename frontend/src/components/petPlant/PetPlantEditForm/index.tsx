@@ -74,8 +74,22 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const nicknameInputId = useId();
   const waterCycleInputId = useId();
 
-  const isValidForm = (newForm: PetPlantForm) =>
-    newForm.nickname.trim() !== '' && newForm.waterCycle !== '';
+  const isValidForm = (newForm: PetPlantForm) => {
+    if (
+      newForm.birthDate === birthDate &&
+      newForm.flowerpot === flowerpot &&
+      newForm.lastWaterDate === lastWaterDate &&
+      newForm.light === light &&
+      newForm.location === location &&
+      newForm.nickname === nickname &&
+      Number(newForm.waterCycle) === waterCycle &&
+      newForm.wind === wind
+    ) {
+      return false;
+    }
+
+    return newForm.nickname.trim() !== '' && newForm.waterCycle !== '';
+  };
 
   const submit = () => {
     if (!isValidForm(form)) {
