@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ToastProvider from 'contexts/toastContext';
-import useBoolean from 'hooks/useModal';
+import useSwitch from 'hooks/useSwitch';
 import useToast from 'hooks/useToast';
 import Toast, { type ToastProps } from '.';
 import ToastList from './ToastList';
 
 const ToastItem = (props: ToastProps) => {
-  const { isOpen, on } = useBoolean();
+  const { isOn, on } = useSwitch();
 
   setTimeout(on);
 
-  return <>{isOpen && <Toast {...props} />}</>;
+  return <>{isOn && <Toast {...props} />}</>;
 };
 
 const meta: Meta<typeof Toast> = {
