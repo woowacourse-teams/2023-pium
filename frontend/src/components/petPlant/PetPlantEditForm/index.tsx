@@ -171,7 +171,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       : getParticularDateFromSpecificDay(Number(form.waterCycle), new Date(form.lastWaterDate))
   );
 
-  const daySince = getDaysBetween(new Date(), form.birthDate);
+  const daySince = getDaysBetween(new Date(), form.birthDate) + 1;
 
   return (
     <Wrapper>

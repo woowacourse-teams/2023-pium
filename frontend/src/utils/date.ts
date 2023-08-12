@@ -115,6 +115,7 @@ export const getStringToDate = (date: string) => {
 
 /**
  * 두 날짜 사이의 날짜 간격을 음이 아닌 정수로 반환합니다.
+ * 서로 같은 두 날 사이의 간격은 0일입니다.
  * @param one `new Date()`의 인자로 들어갈 수 있는 값
  * @param another `new Date()`의 인자로 들어갈 수 있는 값
  * @returns 음이 아닌 정수
@@ -129,6 +130,16 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
   if (first.toString() === 'Invalid Date' || second.toString() === 'Invalid Date') {
     throw new RangeError(ERROR.invalidDate);
   }
+
+  first.setHours(0);
+  first.setMinutes(0);
+  first.setSeconds(0);
+  first.setMilliseconds(0);
+
+  second.setHours(0);
+  second.setMinutes(0);
+  second.setSeconds(0);
+  second.setMilliseconds(0);
 
   const diff = Math.abs(first.getTime() - second.getTime());
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
