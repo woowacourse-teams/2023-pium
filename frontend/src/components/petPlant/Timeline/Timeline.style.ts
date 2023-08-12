@@ -80,7 +80,7 @@ export const MonthArea = styled.div`
   width: 100%;
 `;
 
-export const MonthHeader = styled.p`
+export const MonthHeader = styled.div`
   position: sticky;
   z-index: ${(props) => props.theme.zIndex.sticky + 2};
   top: 80px;
@@ -98,7 +98,7 @@ export const DayArea = styled.div`
   font-weight: 500;
 `;
 
-export const DayHeader = styled.p`
+export const DayHeader = styled.div`
   position: sticky;
   z-index: ${(props) => props.theme.zIndex.sticky + 1};
   top: 80px;
