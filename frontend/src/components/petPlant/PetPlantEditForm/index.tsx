@@ -85,7 +85,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       newForm.lastWaterDate === lastWaterDate &&
       newForm.light === light &&
       newForm.location === location &&
-      newForm.nickname === nickname &&
+      newForm.nickname.trim() === nickname.trim() &&
       Number(newForm.waterCycle) === waterCycle &&
       newForm.wind === wind
     ) {
@@ -110,6 +110,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
     const requestForm = {
       ...form,
+      nickname: form.nickname.trim(),
       birthDate: formBirthDate,
       lastWaterDate: formLastWaterDate,
       waterCycle: Number(form.waterCycle),
