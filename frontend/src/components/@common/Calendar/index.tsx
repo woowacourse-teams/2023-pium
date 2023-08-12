@@ -54,7 +54,7 @@ const Calendar = (props: CalendarProps) => {
 
   const yearMonth = `${year}년 ${month}월`;
   const isPrevMonthOutOfRange = !DateValidate.isDateInRange({
-    dateToCheck: new Date(Number(year), Number(month) - 2, 28),
+    dateToCheck: new Date(Number(year), Number(month) - 1, 0),
     startDate: new Date(min),
     endDate: new Date(max),
   });
