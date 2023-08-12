@@ -103,7 +103,6 @@ class HistoryServiceTest extends IntegrationTest {
         assertThat(historyResponse.isHasNext()).isFalse();
     }
 
-
     private History createHistory(PetPlant petPlant, LocalDate date) {
         return historySupport.builder()
                 .petPlant(petPlant)
