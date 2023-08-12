@@ -45,6 +45,7 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
   return (
     <Wrapper>
       <SelectedValue
+        type="button"
         onClick={toggle}
         $placeholder={value === ''}
         aria-label={`값 선택 메뉴 열기. 현재 선택된 값: ${value || '없음'}`}

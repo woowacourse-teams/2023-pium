@@ -334,7 +334,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           <PrimaryButton type="submit" onClick={handleSubmitClick} disabled={!isValidForm(form)}>
             저장하기
           </PrimaryButton>
-          <SecondaryButton type="button" onClick={goToPetDetailsPage}>
+          <SecondaryButton type="button" role="link" onClick={goToPetDetailsPage}>
             취소하기
           </SecondaryButton>
         </ButtonArea>
