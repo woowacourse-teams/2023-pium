@@ -169,18 +169,6 @@ export const WaterCycleInput = styled(Input)`
   margin-bottom: 5px;
 `;
 
-export const Select = styled.select`
-  width: 100%;
-  height: 30px;
-
-  font-size: 1.6rem;
-  text-align: center;
-
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid ${(props) => props.theme.color.primary};
-`;
-
 export const ButtonArea = styled.div`
   display: flex;
   column-gap: 10px;

@@ -7,6 +7,7 @@ import House from 'components/@common/Icons/House';
 import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
+import Select from 'components/@common/Select';
 import {
   InfoArea,
   Bold,
@@ -25,7 +26,6 @@ import {
   HiddenLabel,
   NicknameInput,
   WaterCycleInput,
-  Select,
   PrimaryButton,
   SecondaryButton,
   ButtonArea,
@@ -149,19 +149,19 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     });
   };
 
-  const setFlowerpot: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setFlowerpot = (value: string) => {
     dispatch({ type: 'SET', key: 'flowerpot', value });
   };
 
-  const setLocation: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setLocation = (value: string) => {
     dispatch({ type: 'SET', key: 'location', value });
   };
 
-  const setLight: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setLight = (value: string) => {
     dispatch({ type: 'SET', key: 'light', value });
   };
 
-  const setWind: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setWind = (value: string) => {
     dispatch({ type: 'SET', key: 'wind', value });
   };
 
@@ -263,13 +263,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={location} onChange={setLocation}>
-              {OPTIONS.location.map((locationOption) => (
-                <option key={locationOption} value={locationOption}>
-                  {locationOption}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.location}
+                options={OPTIONS.location}
+                onChange={setLocation}
+                placeholder="화분이 놓인 장소"
+              />
+            </InputWrapper>
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
@@ -281,13 +282,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={flowerpot} onChange={setFlowerpot}>
-              {OPTIONS.flowerPot.map((pot) => (
-                <option key={pot} value={pot}>
-                  {pot}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.flowerpot}
+                options={OPTIONS.flowerPot}
+                onChange={setFlowerpot}
+                placeholder="화분 종류"
+              />
+            </InputWrapper>
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
@@ -299,13 +301,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={light} onChange={setLight}>
-              {OPTIONS.light.map((lightOption) => (
-                <option key={lightOption} value={lightOption}>
-                  {lightOption}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.light}
+                options={OPTIONS.light}
+                onChange={setLight}
+                placeholder="채광"
+              />
+            </InputWrapper>
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
@@ -317,13 +320,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={wind} onChange={setWind}>
-              {OPTIONS.wind.map((windOption) => (
-                <option key={windOption} value={windOption}>
-                  {windOption}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.wind}
+                options={OPTIONS.wind}
+                onChange={setWind}
+                placeholder="통풍"
+              />
+            </InputWrapper>
           </EnvironmentItem>
         </Environment>
         <ButtonArea>
