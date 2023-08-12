@@ -2,7 +2,7 @@ import { useId } from 'react';
 import { CheckboxLabel, Wrapper } from './CheckButton.style';
 
 interface Props {
-  children: string;
+  children: React.ReactNode;
   checked: boolean;
   onClick?: React.ComponentProps<'label'>['onClick'];
 }
