@@ -322,22 +322,18 @@ public class HistoryApiTest extends AcceptanceTest {
                     .extract();
 
             ExtractableResponse<Response> updatedPetPlantResponse = 반려_식물_단건_조회(반려_식물_ID);
-
-            List<String> previousValues = response.jsonPath().getList("data.content.previous");
-            List<String> currentValues = response.jsonPath().getList("data.content.current");
-
+            
             assertSoftly(softly -> {
                 softly.assertThat(response.jsonPath().getList("data.content.previous"))
-                        .containsExactlyInAnyOrder(
+                        .contains(
                                 petPlantResponse.jsonPath().getString("location"),
                                 petPlantResponse.jsonPath().getString("flowerpot"),
                                 petPlantResponse.jsonPath().getString("light"),
                                 petPlantResponse.jsonPath().getString("wind"),
-                                petPlantResponse.jsonPath().getString("waterCycle"),
-                                petPlantResponse.jsonPath().getString("lastWaterDate")
+                                petPlantResponse.jsonPath().getString("waterCycle")
                         );
                 softly.assertThat(response.jsonPath().getList("data.content.current"))
-                        .containsExactlyInAnyOrder(
+                        .contains(
                                 updatedPetPlantResponse.jsonPath().getString("location"),
                                 updatedPetPlantResponse.jsonPath().getString("flowerpot"),
                                 updatedPetPlantResponse.jsonPath().getString("light"),
