@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from 'react-router-dom';
+import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import Error from 'pages/Error';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
 import ToastList from 'components/@common/Toast/ToastList';
-import ToastProvider from 'contexts/toastContext';
 import { GlobalStyle } from 'style/Global.style';
 import theme from 'style/theme.style';
 import router from './router';
@@ -18,10 +18,10 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <ErrorBoundary fallback={<Error />}>
-            <ToastProvider>
+            <RecoilRoot>
               <RouterProvider router={router} />
               <ToastList />
-            </ToastProvider>
+            </RecoilRoot>
           </ErrorBoundary>
         </QueryClientProvider>
       </ThemeProvider>

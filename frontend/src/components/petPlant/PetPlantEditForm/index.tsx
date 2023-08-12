@@ -28,6 +28,7 @@ import {
   Button,
 } from './PetPlantEditForm.style';
 import useEditPetPlant from 'hooks/queries/pet/useEditPetPlant';
+import useAddToast from 'hooks/useAddToast';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import {
   convertDateKorYear,
@@ -67,6 +68,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   });
 
   const { mutate } = useEditPetPlant(petPlantId);
+  const addToast = useAddToast();
 
   const nicknameInputId = useId();
   const waterCycleInputId = useId();
@@ -76,13 +78,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   const submit = () => {
     if (!isValidForm(form)) {
-      alert('별명과 물 주기 주기는 공백이 아니어야 해요.');
+      addToast('warning', '별명과 물 주기 주기는 공백이 아니어야 해요.');
       return;
     }
 
     const { birthDate: formBirthDate, lastWaterDate: formLastWaterDate } = form;
 
     if (!(isDateFormat(formBirthDate) && isDateFormat(formLastWaterDate))) {
+      addToast('error', '잘못된 날짜 형식입니다.');
       return;
     }
 

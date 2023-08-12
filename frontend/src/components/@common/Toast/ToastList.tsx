@@ -1,22 +1,23 @@
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { createPortal } from 'react-dom';
+import { useRecoilValue } from 'recoil';
 import { ToastListWrapper } from './Toast.style';
-import useToast from 'hooks/useToast';
+import toasts from 'store/atoms/toasts';
 import Toast from '.';
 
 const ToastList = () => {
+  const toastList = useRecoilValue(toasts);
   const root = document.getElementById('toast-root') ?? document.body;
-
-  const { toastList } = useToast();
-
-  const toasts = useMemo(
-    () => toastList.map((props, idx) => <Toast key={props.id + idx} {...props} />),
-    [toastList]
-  );
 
   return createPortal(
     <>
-      {toastList.length > 0 && <ToastListWrapper aria-live="assertive">{toasts}</ToastListWrapper>}
+      {toastList.length > 0 && (
+        <ToastListWrapper aria-live="assertive">
+          {toastList.map((props) => (
+            <Toast key={props.id} {...props} />
+          ))}
+        </ToastListWrapper>
+      )}
     </>,
     root
   );
