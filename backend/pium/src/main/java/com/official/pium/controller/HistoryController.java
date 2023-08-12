@@ -1,5 +1,7 @@
 package com.official.pium.controller;
 
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.HistoryService;
@@ -15,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import static org.springframework.data.domain.Sort.Direction.DESC;
-
 @Validated
 @RequiredArgsConstructor
 @RestController
@@ -28,7 +28,7 @@ public class HistoryController {
     @GetMapping
     public ResponseEntity<HistoryResponse> read(
             @RequestParam @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
-            @PageableDefault(size = 20, sort = "waterDate", direction = DESC) Pageable pageable,
+            @PageableDefault(size = 20, sort = "date", direction = DESC) Pageable pageable,
             @Auth Member member) {
 
         HistoryResponse historyResponse = historyService.read(petPlantId, pageable, member);

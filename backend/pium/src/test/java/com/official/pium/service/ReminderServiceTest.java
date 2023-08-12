@@ -7,6 +7,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.History;
+import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.mapper.PetPlantMapper;
@@ -29,7 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class ReminderServiceTest extends IntegrationTest {
+class
+ReminderServiceTest extends IntegrationTest {
 
     private PetPlant petPlant;
     private Member member;
@@ -47,25 +49,32 @@ class ReminderServiceTest extends IntegrationTest {
     void setUp() {
         petPlant = petPlantSupport.builder().build();
         member = petPlant.getMember();
+        for (HistoryType type : HistoryType.values()) {
+            historyCategorySupport.builder()
+                    .historyType(type)
+                    .build();
+        }
     }
 
     @Test
     void 정상적인_물주기_시_다음_물주기_날짜와_마지막으로_물을_준_날짜를_변경() {
+        PetPlant petPlant1 = petPlantSupport.builder().member(member).lastWaterDate(LocalDate.of(2022, 3, 4)).build();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
-                .waterDate(LocalDate.now())
+                .waterDate(petPlant1.getLastWaterDate().plusDays(2))
                 .build();
 
-        reminderService.water(request, petPlant.getId(), member);
+        reminderService.water(request, petPlant1.getId(), member);
 
-        PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
+        PetPlant updatedPetPlant = petPlantRepository.findById(petPlant1.getId()).get();
         LocalDate newWaterDate = request.getWaterDate();
 
         assertSoftly(softly -> {
                     softly.assertThat(updatedPetPlant)
                             .extracting(PetPlant::getNextWaterDate, PetPlant::getLastWaterDate)
-                            .isEqualTo(List.of(newWaterDate.plusDays(petPlant.getWaterCycle()), newWaterDate));
+                            .isEqualTo(List.of(newWaterDate.plusDays(petPlant1.getWaterCycle()), newWaterDate));
+                    // findByHistoryCategory
                     softly.assertThat(historyRepository.findAll())
-                            .extracting(History::getPetPlant, History::getWaterDate)
+                            .extracting(History::getPetPlant, history -> LocalDate.parse(history.getHistoryContent().getCurrent()))
                             .contains(tuple(updatedPetPlant, newWaterDate));
                 }
         );
@@ -101,7 +110,7 @@ class ReminderServiceTest extends IntegrationTest {
     void 반려_식물의_사용자와_물주기를_요청한_사용자가_다르면_예외_발생() {
         Member otherMember = memberSupport.builder().build();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
-                .waterDate(LocalDate.now())
+                .waterDate(petPlant.getLastWaterDate().plusDays(3))
                 .build();
 
         assertThatThrownBy(
@@ -143,7 +152,7 @@ class ReminderServiceTest extends IntegrationTest {
     void 반려_식물의_사용자와_미루기를_요청한_사용자가_다르면_예외_발생() {
         Member otherMember = memberSupport.builder().build();
         ReminderUpdateRequest request = ReminderUpdateRequest.builder()
-                .nextWaterDate(LocalDate.now().plusDays(1))
+                .nextWaterDate(petPlant.getNextWaterDate().plusDays(1))
                 .build();
 
         assertThatThrownBy(
@@ -154,19 +163,20 @@ class ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 리마인더_전체_조회() {
-        PetPlant petPlant1 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(1));
-        PetPlant petPlant2 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(2));
-        PetPlant petPlant3 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(3));
-        PetPlant petPlant4 = savePetPlantWithNextWaterDate(LocalDate.now().plusDays(4));
+        LocalDate baseDate = LocalDate.now();
+        PetPlant petPlant1 = savePetPlantWithNextWaterDate(baseDate.plusDays(1));
+        PetPlant petPlant2 = savePetPlantWithNextWaterDate(baseDate.plusDays(2));
+        PetPlant petPlant3 = savePetPlantWithNextWaterDate(baseDate.plusDays(3));
+        PetPlant petPlant4 = savePetPlantWithNextWaterDate(baseDate.plusDays(4));
 
         DataResponse<List<ReminderResponse>> actual = reminderService.readAll(petPlant.getMember());
 
         List<ReminderResponse> expected = List.of(
-                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDday(LocalDate.now())),
-                PetPlantMapper.toReminderResponse(petPlant1, petPlant1.calculateDday(LocalDate.now())),
-                PetPlantMapper.toReminderResponse(petPlant2, petPlant2.calculateDday(LocalDate.now())),
-                PetPlantMapper.toReminderResponse(petPlant3, petPlant3.calculateDday(LocalDate.now())),
-                PetPlantMapper.toReminderResponse(petPlant4, petPlant4.calculateDday(LocalDate.now()))
+                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDday(baseDate)),
+                PetPlantMapper.toReminderResponse(petPlant1, petPlant1.calculateDday(baseDate)),
+                PetPlantMapper.toReminderResponse(petPlant2, petPlant2.calculateDday(baseDate)),
+                PetPlantMapper.toReminderResponse(petPlant3, petPlant3.calculateDday(baseDate)),
+                PetPlantMapper.toReminderResponse(petPlant4, petPlant4.calculateDday(baseDate))
         );
 
         assertThat(actual.getData())
@@ -185,9 +195,9 @@ class ReminderServiceTest extends IntegrationTest {
                 .flowerpot("testFlowerpot")
                 .light("testLight")
                 .wind("testWind")
-                .birthDate(LocalDate.now())
+                .birthDate(LocalDate.of(2000, 7, 1))
                 .nextWaterDate(nextWaterDate)
-                .lastWaterDate(LocalDate.now().minusDays(1))
+                .lastWaterDate(LocalDate.of(2022, 7, 1))
                 .waterCycle(3)
                 .build());
     }

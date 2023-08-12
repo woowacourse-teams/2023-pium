@@ -1,5 +1,11 @@
 package com.official.pium.acceptance;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
+import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_물주기_요청;
+import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_미루기_요청;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.containsString;
+
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
@@ -11,6 +17,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.time.LocalDate;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -19,15 +27,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
-import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_물주기_요청;
-import static com.official.pium.fixture.ReminderFixture.REQUEST.리마인더_미루기_요청;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.containsString;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -101,8 +100,9 @@ public class ReminderApiTest extends AcceptanceTest {
         @Test
         void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
-            ReminderCreateRequest request = 리마인더_물주기_요청;
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantCreateRequest(dictionaryPlant.getId());
+            Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
+            ReminderCreateRequest request = 리마인더_물주기_요청(petPlantCreateRequest.getLastWaterDate().plusDays(1));
 
             RestAssured
                     .given()
@@ -125,8 +125,9 @@ public class ReminderApiTest extends AcceptanceTest {
                     .build();
 
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
-            ReminderCreateRequest request = 리마인더_물주기_요청;
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantCreateRequest(dictionaryPlant.getId());
+            Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
+            ReminderCreateRequest request = 리마인더_물주기_요청(petPlantCreateRequest.getLastWaterDate().plusDays(1));
 
             RestAssured
                     .given()
@@ -144,7 +145,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
-            ReminderCreateRequest request = 리마인더_물주기_요청;
+            ReminderCreateRequest request = 리마인더_물주기_요청(LocalDate.of(2023, 1, 1));
 
             RestAssured
                     .given()
@@ -162,7 +163,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
-            ReminderCreateRequest request = 리마인더_물주기_요청;
+            ReminderCreateRequest request = 리마인더_물주기_요청(LocalDate.of(2022, 3, 1));
             long invalidId = -1;
 
             RestAssured
@@ -189,9 +190,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
 
-            ReminderCreateRequest request = ReminderCreateRequest.builder()
-                    .waterDate(LocalDate.of(2023, 7, 1))
-                    .build();
+            ReminderCreateRequest request = 리마인더_물주기_요청(LocalDate.of(2023, 7, 1));
 
             RestAssured
                     .given()
@@ -208,7 +207,8 @@ public class ReminderApiTest extends AcceptanceTest {
             ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
             SoftAssertions.assertSoftly(softly -> {
-                softly.assertThat(response.jsonPath().getString("lastWaterDate")).isEqualTo(request.getWaterDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate"))
+                        .isEqualTo(request.getWaterDate().toString());
                 softly.assertThat(response.jsonPath().getString("nextWaterDate"))
                         .isEqualTo(request.getWaterDate().plusDays(petPlantCreateRequest.getWaterCycle()).toString());
             });
@@ -305,8 +305,9 @@ public class ReminderApiTest extends AcceptanceTest {
         @Test
         void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
-            ReminderUpdateRequest request = 리마인더_미루기_요청;
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantCreateRequest(dictionaryPlant.getId());
+            Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
+            ReminderUpdateRequest request = 리마인더_미루기_요청(petPlantCreateRequest.getLastWaterDate().plusDays(1));
 
             RestAssured
                     .given()
@@ -324,7 +325,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
-            ReminderUpdateRequest request = 리마인더_미루기_요청;
+            ReminderUpdateRequest request = 리마인더_미루기_요청(LocalDate.of(2023, 7, 1));
 
             RestAssured
                     .given()
@@ -342,7 +343,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
-            ReminderUpdateRequest request = 리마인더_미루기_요청;
+            ReminderUpdateRequest request = 리마인더_미루기_요청(LocalDate.of(2023, 7, 1));
             int invalidId = -1;
 
             RestAssured
@@ -479,7 +480,8 @@ public class ReminderApiTest extends AcceptanceTest {
         return Long.parseLong(petPlantId);
     }
 
-    private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId, LocalDate lastWaterDate) {
+    private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId,
+                                                                         LocalDate lastWaterDate) {
         return PetPlantCreateRequest.builder()
                 .dictionaryPlantId(dictionaryPlantId)
                 .nickname("피우미")
@@ -488,7 +490,7 @@ public class ReminderApiTest extends AcceptanceTest {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
+                .birthDate(LocalDate.of(2020, 1, 3))
                 .lastWaterDate(lastWaterDate)
                 .build();
     }

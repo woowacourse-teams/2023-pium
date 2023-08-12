@@ -1,3 +1,4 @@
+import type { DateFormat } from './date';
 import { PetPlantDetails } from './petPlant';
 
 export interface HistoryResponse {
@@ -10,7 +11,7 @@ export interface HistoryResponse {
 
 export interface HistoryItem {
   type: HistoryType;
-  date: string;
+  date: DateFormat;
   content: {
     previous: string | null;
     current: string;

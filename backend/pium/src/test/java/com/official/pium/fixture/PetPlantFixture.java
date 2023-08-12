@@ -1,5 +1,8 @@
 package com.official.pium.fixture;
 
+import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResponse;
+import static com.official.pium.service.dto.PetPlantResponse.builder;
+
 import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
@@ -8,9 +11,6 @@ import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 import java.time.LocalDate;
 import java.util.List;
-
-import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResponse;
-import static com.official.pium.service.dto.PetPlantResponse.builder;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class PetPlantFixture {
@@ -37,8 +37,8 @@ public class PetPlantFixture {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2022, 4, 1))
+                .lastWaterDate(LocalDate.of(2023, 5, 5))
                 .build();
 
         public static PetPlantUpdateRequest 피우미_수정_요청 = PetPlantUpdateRequest.builder()
@@ -48,8 +48,8 @@ public class PetPlantFixture {
                 .waterCycle(10)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2020, 1, 3))
+                .lastWaterDate(LocalDate.of(2020, 1, 3))
                 .build();
 
         public static PetPlantCreateRequest generatePetPlantCreateRequest(Long dictionaryPlantId) {
@@ -61,8 +61,21 @@ public class PetPlantFixture {
                     .waterCycle(3)
                     .light("빛 많이 필요함")
                     .wind("바람이 잘 통하는 곳")
+                    .birthDate(LocalDate.of(2020, 1, 3))
+                    .lastWaterDate(LocalDate.of(2020, 1, 3))
+                    .build();
+        }
+
+        public static PetPlantUpdateRequest generatePetPlantUpdateRequest(LocalDate lastWaterDate) {
+            return PetPlantUpdateRequest.builder()
+                    .nickname("피우미 2")
+                    .location("침대 옆")
+                    .flowerpot("유리병")
+                    .waterCycle(10)
+                    .light("빛 많이 필요함")
+                    .wind("바람이 잘 통하는 곳")
                     .birthDate(LocalDate.now())
-                    .lastWaterDate(LocalDate.now())
+                    .lastWaterDate(lastWaterDate)
                     .build();
         }
     }
@@ -76,8 +89,9 @@ public class PetPlantFixture {
                 .flowerpot("플라스틱 화분")
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2000, 6, 13))
+                .lastWaterDate(LocalDate.of(2020, 1, 3))
+                .nextWaterDate(LocalDate.of(2020, 1, 15))
                 .waterCycle(3)
                 .dday(1L)
                 .daySince(1L)
@@ -91,10 +105,11 @@ public class PetPlantFixture {
                 DataResponse.<List<SinglePetPlantResponse>>builder().data(
                         List.of(
                                 SinglePetPlantResponse.builder()
+                                        .id(1L)
                                         .nickname("엄청 큰 피우미")
                                         .imageUrl("https://image.com")
                                         .dictionaryPlantName("스투키")
-                                        .birthDate(LocalDate.now())
+                                        .birthDate(LocalDate.of(2020, 6, 16))
                                         .daySince(3L)
                                         .build()
                         )

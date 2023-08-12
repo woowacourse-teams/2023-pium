@@ -1,6 +1,7 @@
 package com.official.pium;
 
 import com.official.pium.support.DictionaryPlantSupport;
+import com.official.pium.support.HistoryCategorySupport;
 import com.official.pium.support.HistorySupport;
 import com.official.pium.support.MemberSupport;
 import com.official.pium.support.PetPlantSupport;
@@ -23,4 +24,7 @@ public class IntegrationTest {
 
     @Autowired
     protected HistorySupport historySupport;
+
+    @Autowired
+    protected HistoryCategorySupport historyCategorySupport;
 }

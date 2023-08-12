@@ -2,7 +2,7 @@ import { InputHTMLAttributes } from 'react';
 import ArrowRight from 'components/@common/Icons/ArrowRightAlt';
 import { Button, Input, Wrapper } from './FormInput.style';
 
-interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   nextCallback?: () => void;
 }
 

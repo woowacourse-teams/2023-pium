@@ -50,7 +50,7 @@ jobs:
         uses: cypress-io/github-action@v5
         with:
           working-directory: frontend
-          start: npm run start
+          start: npm run local
 
       - name: Send slack notification if test failed
         if: ${{ failure() }}

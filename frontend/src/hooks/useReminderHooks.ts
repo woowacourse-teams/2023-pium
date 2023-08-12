@@ -6,7 +6,7 @@ import useWater from './queries/reminder/useWater';
 import useToast from './useToast';
 
 const useReminderHooks = () => {
-  const { data: reminderData, refetch } = useReminder({ queryKey: ['reminder'] });
+  const { data: reminderData, refetch } = useReminder();
   const { addToast } = useToast();
   const { mutate: water } = useWater<string>({
     successCallback: (_, variable) => {

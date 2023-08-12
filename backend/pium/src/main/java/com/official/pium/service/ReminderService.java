@@ -1,9 +1,11 @@
 package com.official.pium.service;
 
-import com.official.pium.domain.History;
+import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.event.history.HistoryEvent;
 import com.official.pium.mapper.PetPlantMapper;
+import com.official.pium.repository.HistoryCategoryRepository;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
@@ -14,6 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -26,21 +29,22 @@ public class ReminderService {
 
     private final PetPlantRepository petPlantRepository;
     private final HistoryRepository historyRepository;
+    private final HistoryCategoryRepository historyCategoryRepository;
+    private final ApplicationEventPublisher publisher;
 
     @Transactional
     public void water(ReminderCreateRequest reminderCreateRequest, Long petPlantId, Member member) {
+
         PetPlant petPlant = petPlantRepository.findById(petPlantId)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + petPlantId));
+
         checkOwner(petPlant, member);
 
+        String previousWaterDate = petPlant.getLastWaterDate().toString();
         petPlant.water(reminderCreateRequest.getWaterDate());
+        String currentWaterDate = petPlant.getLastWaterDate().toString();
 
-        History history = History.builder()
-                .petPlant(petPlant)
-                .waterDate(reminderCreateRequest.getWaterDate())
-                .build();
-
-        historyRepository.save(history);
+        publisher.publishEvent(new HistoryEvent(petPlantId, previousWaterDate, currentWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.now()));
     }
 
     @Transactional
@@ -59,7 +63,8 @@ public class ReminderService {
     }
 
     public DataResponse<List<ReminderResponse>> readAll(Member member) {
-        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId(), Sort.by(Direction.ASC, "nextWaterDate"));
+        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId(),
+                Sort.by(Direction.ASC, "nextWaterDate"));
 
         List<ReminderResponse> reminderResponses = petPlants.stream()
                 .map(petPlant -> PetPlantMapper.toReminderResponse(

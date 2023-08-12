@@ -28,11 +28,11 @@ const DaySmallBox = ({
     <Wrapper>
       {date && (
         <DaySpan
-          isToday={isToday ?? null}
+          $isToday={isToday ?? null}
           role={clickHandler ? 'button' : 'none'}
           onClick={clickHandler}
           aria-label={ariaLabel}
-          isInRange={isInRange}
+          $isInRange={isInRange}
           tabIndex={clickHandler && 0}
           onKeyDown={keyDownHandler}
         >

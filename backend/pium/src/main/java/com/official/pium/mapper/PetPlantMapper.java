@@ -3,15 +3,15 @@ package com.official.pium.mapper;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.event.history.PetPlantHistory;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.ReminderResponse;
 import com.official.pium.service.dto.SinglePetPlantResponse;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PetPlantMapper {
@@ -77,6 +77,17 @@ public class PetPlantMapper {
                 .dday(dday)
                 .nextWaterDate(petPlant.getNextWaterDate())
                 .lastWaterDate(petPlant.getLastWaterDate())
+                .build();
+    }
+
+    public static PetPlantHistory toPetPlantHistory(PetPlant petPlant) {
+        return PetPlantHistory.builder()
+                .location(petPlant.getLocation())
+                .flowerpot(petPlant.getFlowerpot())
+                .light(petPlant.getLight())
+                .wind(petPlant.getWind())
+                .waterCycle(petPlant.getWaterCycle().toString())
+                .lastWaterDate(petPlant.getLastWaterDate().toString())
                 .build();
     }
 }

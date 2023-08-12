@@ -1,5 +1,9 @@
 package com.official.pium.acceptance;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
@@ -10,6 +14,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.time.LocalDate;
+import java.util.List;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -17,13 +23,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -129,14 +128,16 @@ public class HistoryApiTest extends AcceptanceTest {
         @Test
         void 요청_페이지가_최대값보다_크면_빈_배열_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            LocalDate lastWaterDate = LocalDate.now().minusDays(10);
-            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(dictionaryPlant.getId(), lastWaterDate);
+            LocalDate baseDate = LocalDate.of(2023, 1, 3);
+            LocalDate lastWaterDate = baseDate.minusDays(10);
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
+                    dictionaryPlant.getId(), lastWaterDate);
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
-            반려_식물_물주기(반려_식물_ID, LocalDate.now().minusDays(8));
-            반려_식물_물주기(반려_식물_ID, LocalDate.now().minusDays(5));
-            반려_식물_물주기(반려_식물_ID, LocalDate.now().minusDays(3));
-            반려_식물_물주기(반려_식물_ID, LocalDate.now());
+            반려_식물_물주기(반려_식물_ID, baseDate.minusDays(8));
+            반려_식물_물주기(반려_식물_ID, baseDate.minusDays(5));
+            반려_식물_물주기(반려_식물_ID, baseDate.minusDays(3));
+            반려_식물_물주기(반려_식물_ID, baseDate);
 
             ExtractableResponse<Response> response = RestAssured
                     .given()
@@ -157,16 +158,17 @@ public class HistoryApiTest extends AcceptanceTest {
                 softly.assertThat(response.jsonPath().getInt("size")).isEqualTo(1);
                 softly.assertThat(response.jsonPath().getInt("elementSize")).isEqualTo(4);
                 softly.assertThat(response.jsonPath().getBoolean("hasNext")).isFalse();
-                softly.assertThat(response.jsonPath().getList("waterDateList")).isEmpty();
+                softly.assertThat(response.jsonPath().getList("data")).isEmpty();
             });
         }
 
         @Test
         void 단건_히스토리_정보_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            LocalDate lastWaterDate = LocalDate.now().minusDays(3);
-            LocalDate waterDate = LocalDate.now();
-            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(dictionaryPlant.getId(), lastWaterDate);
+            LocalDate lastWaterDate = LocalDate.of(2022, 1, 13);
+            LocalDate waterDate = lastWaterDate.plusDays(3);
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
+                    dictionaryPlant.getId(), lastWaterDate);
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, waterDate);
@@ -185,8 +187,9 @@ public class HistoryApiTest extends AcceptanceTest {
 
             SoftAssertions.assertSoftly(softly -> {
                 softly.assertThat(response.jsonPath().getInt("elementSize")).isEqualTo(1);
-                softly.assertThat(response.jsonPath().getList("waterDateList"))
+                softly.assertThat(response.jsonPath().getList("data"))
                         .usingRecursiveComparison()
+                        .comparingOnlyFields("date")
                         .isEqualTo(List.of(waterDate.toString()));
             });
         }
@@ -194,9 +197,10 @@ public class HistoryApiTest extends AcceptanceTest {
         @Test
         void 단건_히스토리_정보_반환_페이징_요청() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            LocalDate lastWaterDate = LocalDate.now().minusDays(3);
-            LocalDate waterDate = LocalDate.now();
-            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(dictionaryPlant.getId(), lastWaterDate);
+            LocalDate lastWaterDate = LocalDate.of(2020, 4, 5);
+            LocalDate waterDate = lastWaterDate.plusDays(3);
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
+                    dictionaryPlant.getId(), lastWaterDate);
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, waterDate);
@@ -221,8 +225,9 @@ public class HistoryApiTest extends AcceptanceTest {
                 softly.assertThat(response.jsonPath().getInt("page")).isEqualTo(pageRequestParam);
                 softly.assertThat(response.jsonPath().getInt("size")).isEqualTo(sizeRequestParam);
                 softly.assertThat(response.jsonPath().getInt("elementSize")).isEqualTo(1);
-                softly.assertThat(response.jsonPath().getList("waterDateList"))
+                softly.assertThat(response.jsonPath().getList("data"))
                         .usingRecursiveComparison()
+                        .comparingOnlyFields("date")
                         .isEqualTo(List.of(waterDate.toString()));
             });
         }
@@ -264,7 +269,8 @@ public class HistoryApiTest extends AcceptanceTest {
         return Long.parseLong(petPlantId);
     }
 
-    private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId, LocalDate lastWaterDate) {
+    private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId,
+                                                                         LocalDate lastWaterDate) {
         return PetPlantCreateRequest.builder()
                 .dictionaryPlantId(dictionaryPlantId)
                 .nickname("피우미")
@@ -273,7 +279,7 @@ public class HistoryApiTest extends AcceptanceTest {
                 .waterCycle(3)
                 .light("빛 많이 필요함")
                 .wind("바람이 잘 통하는 곳")
-                .birthDate(LocalDate.now())
+                .birthDate(LocalDate.of(2000, 7, 2))
                 .lastWaterDate(lastWaterDate)
                 .build();
     }

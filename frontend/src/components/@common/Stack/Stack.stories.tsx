@@ -36,6 +36,37 @@ const TestButton = ({
   );
 };
 
+const Plain = () => {
+  const { topIndex, showNextElement, isLastElementShown } = useStack(6);
+
+  const onClick = () => {
+    showNextElement(topIndex);
+  };
+
+  return (
+    <Stack topIndex={topIndex}>
+      <Stack.Element height="30px">
+        <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
+      </Stack.Element>
+      <Stack.Element height="100px">
+        <TestButton type="big" onClick={onClick} isLastElementShown={isLastElementShown} />
+      </Stack.Element>
+      <Stack.Element height="30px">
+        <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
+      </Stack.Element>
+      <Stack.Element height="30px">
+        <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
+      </Stack.Element>
+      <Stack.Element height="100px">
+        <TestButton type="big" onClick={onClick} isLastElementShown={isLastElementShown} />
+      </Stack.Element>
+      <Stack.Element height="30px">
+        <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
+      </Stack.Element>
+    </Stack>
+  );
+};
+
 /**
  * Stack 안쪽 컴포넌트에서 useStackContext의 showNextElment를 호출하여 다음 스택 요소를 보여줍니다.
  *
@@ -43,36 +74,7 @@ const TestButton = ({
  */
 
 export const PlainExample: Story = {
-  render: () => {
-    const { topIndex, showNextElement, isLastElementShown } = useStack(6);
-
-    const onClick = () => {
-      showNextElement(topIndex);
-    };
-
-    return (
-      <Stack topIndex={topIndex}>
-        <Stack.Element height="30px">
-          <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
-        </Stack.Element>
-        <Stack.Element height="100px">
-          <TestButton type="big" onClick={onClick} isLastElementShown={isLastElementShown} />
-        </Stack.Element>
-        <Stack.Element height="30px">
-          <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
-        </Stack.Element>
-        <Stack.Element height="30px">
-          <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
-        </Stack.Element>
-        <Stack.Element height="100px">
-          <TestButton type="big" onClick={onClick} isLastElementShown={isLastElementShown} />
-        </Stack.Element>
-        <Stack.Element height="30px">
-          <TestButton type="small" onClick={onClick} isLastElementShown={isLastElementShown} />
-        </Stack.Element>
-      </Stack>
-    );
-  },
+  render: Plain,
 };
 
 const Counter = ({ onClickNext }: { onClickNext: () => void }) => {
@@ -101,38 +103,40 @@ const Counter = ({ onClickNext }: { onClickNext: () => void }) => {
   );
 };
 
+const CounterStack = () => {
+  const { topIndex, showNextElement } = useStack(3);
+
+  return (
+    <Stack topIndex={topIndex}>
+      <Stack.Element height="100px">
+        <Counter
+          onClickNext={() => {
+            showNextElement(0);
+          }}
+        />
+      </Stack.Element>
+      <Stack.Element height="100px">
+        <Counter
+          onClickNext={() => {
+            showNextElement(1);
+          }}
+        />
+      </Stack.Element>
+      <Stack.Element height="100px">
+        <Counter
+          onClickNext={() => {
+            showNextElement(2);
+          }}
+        />
+      </Stack.Element>
+    </Stack>
+  );
+};
+
 /**
  * 역순으로 표시하지만 실제 DOM 순서를 꼬는 것이 아니기 때문에 버튼을 눌러 상태를 변경하더라도 상태는 변하지 않습니다.
  */
 
 export const StateExample: Story = {
-  render: () => {
-    const { topIndex, showNextElement } = useStack(3);
-
-    return (
-      <Stack topIndex={topIndex}>
-        <Stack.Element height="100px">
-          <Counter
-            onClickNext={() => {
-              showNextElement(0);
-            }}
-          />
-        </Stack.Element>
-        <Stack.Element height="100px">
-          <Counter
-            onClickNext={() => {
-              showNextElement(1);
-            }}
-          />
-        </Stack.Element>
-        <Stack.Element height="100px">
-          <Counter
-            onClickNext={() => {
-              showNextElement(2);
-            }}
-          />
-        </Stack.Element>
-      </Stack>
-    );
-  },
+  render: CounterStack,
 };
