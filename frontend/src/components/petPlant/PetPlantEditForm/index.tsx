@@ -1,5 +1,6 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
+import { generatePath, useNavigate } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
 import House from 'components/@common/Icons/House';
@@ -25,7 +26,9 @@ import {
   NicknameInput,
   WaterCycleInput,
   Select,
-  Button,
+  PrimaryButton,
+  SecondaryButton,
+  ButtonArea,
 } from './PetPlantEditForm.style';
 import useEditPetPlant from 'hooks/queries/pet/useEditPetPlant';
 import useAddToast from 'hooks/useAddToast';
@@ -36,7 +39,7 @@ import {
   getDateToString,
   isDateFormat,
 } from 'utils/date';
-import { NUMBER, OPTIONS } from 'constants/index';
+import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
 const PetPlantEditForm = (props: PetPlantDetails) => {
@@ -71,6 +74,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const { mutate } = useEditPetPlant(petPlantId);
   const addToast = useAddToast();
 
+  const navigate = useNavigate();
   const nicknameInputId = useId();
   const waterCycleInputId = useId();
 
@@ -117,6 +121,10 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const handleSubmitClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     submit();
+  };
+
+  const goToPetDetailsPage = () => {
+    navigate(generatePath(URL_PATH.petDetail, { id: petPlantId.toString() }), { replace: true });
   };
 
   const setNickname: React.ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -316,9 +324,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
             </Select>
           </EnvironmentItem>
         </Environment>
-        <Button type="submit" onClick={handleSubmitClick} disabled={!isValidForm(form)}>
-          다시 저장하기
-        </Button>
+        <ButtonArea>
+          <PrimaryButton type="submit" onClick={handleSubmitClick} disabled={!isValidForm(form)}>
+            저장하기
+          </PrimaryButton>
+          <SecondaryButton type="button" onClick={goToPetDetailsPage}>
+            취소하기
+          </SecondaryButton>
+        </ButtonArea>
       </Content>
     </Wrapper>
   );

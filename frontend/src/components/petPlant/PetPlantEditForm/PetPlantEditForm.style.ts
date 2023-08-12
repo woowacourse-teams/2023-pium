@@ -181,22 +181,43 @@ export const Select = styled.select`
   border-bottom: 2px solid ${(props) => props.theme.color.primary};
 `;
 
-export const Button = styled.button`
+export const ButtonArea = styled.div`
+  display: flex;
+  column-gap: 10px;
+`;
+
+const Button = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
   height: 48px;
 
   font-size: 2rem;
   font-weight: 700;
-  line-height: 2.4rem;
-  color: ${({ theme }) => theme.color.background};
   letter-spacing: 1px;
 
-  background: ${(props) => props.theme.color.primary};
   border-radius: 8px;
 
   &:disabled {
     cursor: not-allowed;
+  }
+`;
+
+export const PrimaryButton = styled(Button)`
+  color: ${({ theme }) => theme.color.background};
+  background: ${(props) => props.theme.color.primary};
+
+  &:disabled {
     color: ${(props) => props.theme.color.sub + '40'};
     background: ${(props) => props.theme.color.primary + '40'};
   }
+`;
+
+export const SecondaryButton = styled(Button)`
+  font-weight: normal;
+  color: ${({ theme }) => theme.color.sub};
+  background: ${(props) => props.theme.color.background};
+  border: 1px solid ${({ theme }) => theme.color.primary};
 `;
