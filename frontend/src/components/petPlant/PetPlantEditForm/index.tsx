@@ -38,6 +38,7 @@ import {
   getParticularDateFromSpecificDay,
   getDateToString,
   isDateFormat,
+  getDaysBetween,
 } from 'utils/date';
 import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
@@ -49,7 +50,6 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     nickname,
     dictionaryPlant: { name: dictName },
     birthDate,
-    daySince,
     waterCycle,
     secondLastWaterDate,
     lastWaterDate,
@@ -166,10 +166,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   };
 
   const newNextWaterDate = convertDateKorYear(
-    lastWaterDate === form.lastWaterDate
+    lastWaterDate === form.lastWaterDate && waterCycle === Number(form.waterCycle)
       ? nextWaterDate
       : getParticularDateFromSpecificDay(Number(form.waterCycle), new Date(form.lastWaterDate))
   );
+
+  const daySince = getDaysBetween(new Date(), form.birthDate);
 
   return (
     <Wrapper>
