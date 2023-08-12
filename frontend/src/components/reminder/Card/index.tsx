@@ -17,6 +17,7 @@ import {
   DictionaryPlantName,
 } from './Card.style';
 import { ReminderContext } from 'contexts/reminderContext';
+import useAddToast from 'hooks/useAddToast';
 import {
   getDateToString,
   getParticularDateFromSpecificDay,
@@ -40,11 +41,16 @@ const convertSubFix = (status: TodayStatus) => SUB_FIX[status];
 const ReminderCard = ({ data }: ReminderCardProps) => {
   const { petPlantId, status, image, nickName, dictionaryPlantName, dday, lastWaterDate } = data;
   const context = useContext(ReminderContext);
+  const addToast = useAddToast();
+
   const today = getDateToString();
   const { isDateInRange } = DateValidate;
 
   const changeDateHandler = (changeDate: string) => {
-    if (!isDateFormat(changeDate)) return;
+    if (!isDateFormat(changeDate)) {
+      addToast('error', '올바른 날짜 형식이 아니에요.');
+      return;
+    }
 
     const variables: ChangeDateParams = {
       id: petPlantId,
@@ -57,7 +63,10 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
     return true;
   };
   const waterHandler = (waterDate: string) => {
-    if (!isDateFormat(waterDate)) return;
+    if (!isDateFormat(waterDate)) {
+      addToast('error', '올바른 날짜 형식이 아니에요.');
+      return;
+    }
 
     const variables: WaterPlantParams = {
       id: petPlantId,

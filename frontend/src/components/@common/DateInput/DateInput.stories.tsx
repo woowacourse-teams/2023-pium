@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import ToastList from 'components/@common/Toast/ToastList';
-import ToastProvider from 'contexts/toastContext';
 import {
   getDateToString,
   getParticularDateFromSpecificDay,
@@ -15,10 +14,10 @@ const meta: Meta<typeof DateInput> = {
   decorators: [
     (Story) => {
       return (
-        <ToastProvider>
+        <>
           <Story />
           <ToastList />
-        </ToastProvider>
+        </>
       );
     },
   ],
