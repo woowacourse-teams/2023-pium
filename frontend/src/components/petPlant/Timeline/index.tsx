@@ -68,7 +68,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
       {(isLoading || isFetchingNextPage) && (
         <>
           {isLoading && <YearHeader />}
-          {Array(6)
+          {Array(10)
             .fill(null)
             .map((_, index) => (
               <>
