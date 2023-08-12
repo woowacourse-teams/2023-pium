@@ -15,9 +15,9 @@ import theme from 'style/theme.style';
 const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
 
-  const { isOn: isCheckedWater, toggle: toggleWater } = useSwitch(true);
-  const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useSwitch(true);
-  const { isOn: isCheckedSetting, toggle: toggleSetting } = useSwitch(true);
+  const { isOn: isCheckedWater, toggle: toggleWater } = useSwitch();
+  const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useSwitch();
+  const { isOn: isCheckedSetting, toggle: toggleSetting } = useSwitch();
 
   const [filter, setFilter] = useState<HistoryType[]>([
     'flowerpot',
