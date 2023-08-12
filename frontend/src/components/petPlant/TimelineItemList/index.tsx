@@ -5,15 +5,15 @@ import Sun from 'components/@common/Icons/Sun';
 import Water from 'components/@common/Icons/Water';
 import Wind from 'components/@common/Icons/Wind';
 import type { TimelineItem } from 'components/petPlant/Timeline/converter';
-import { IconArea, Item, ItemContent, ItemHead, Wrapper } from './TimelineDayItem.style';
+import { IconArea, Item, ItemContent, ItemHead, Wrapper } from './TimelineItemList.style';
 import { getDaysBetween } from 'utils/date';
 import theme from 'style/theme.style';
 
-interface TimelineDayItemProps {
+interface TimelineItemListProps {
   timelineItemList: TimelineItem[];
 }
 
-const TimelineDayItem = ({ timelineItemList }: TimelineDayItemProps) => {
+const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => {
   const TYPE_MESSAGE_MAP = {
     waterCycle: '물 주기를 ',
     flowerpot: '화분을 ',
@@ -72,4 +72,4 @@ const TimelineDayItem = ({ timelineItemList }: TimelineDayItemProps) => {
   );
 };
 
-export default TimelineDayItem;
+export default TimelineItemList;

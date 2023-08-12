@@ -18,7 +18,7 @@ import {
 import useYearList from 'hooks/queries/history/useYearList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
 import Sprout from 'assets/sprout.svg';
-import TimelineDayItem from '../TimelineDayItem';
+import TimelineItemList from '../TimelineItemList';
 
 interface TimelineProps {
   petPlantId: PetPlantDetails['id'];
@@ -49,7 +49,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
                       {day}일<Spot />
                     </DayHeader>
                     <TimelineArea>
-                      <TimelineDayItem timelineItemList={timelineItemList} />
+                      <TimelineItemList timelineItemList={timelineItemList} />
                     </TimelineArea>
                   </DayArea>
                 ))}
