@@ -10,6 +10,8 @@ import {
   Plant,
   PlantImage,
   Sensor,
+  SkeletonItem,
+  SkeletonItemContent,
   Spot,
   TimelineArea,
   YearArea,
@@ -26,7 +28,12 @@ interface TimelineProps {
 }
 
 const Timeline = ({ petPlantId, filter }: TimelineProps) => {
-  const { data: yearList, fetchNextPage } = useYearList(Number(petPlantId), filter);
+  const {
+    data: yearList,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useYearList(Number(petPlantId), filter);
   const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
 
   return (
@@ -57,7 +64,20 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
             ))}
           </YearArea>
         ))}
-      <Earth />
+      {isFetchingNextPage &&
+        Array(6)
+          .fill(null)
+          .map((_, index) => (
+            <DayArea key={index}>
+              <DayHeader />
+              <TimelineArea>
+                <SkeletonItem>
+                  <SkeletonItemContent />
+                </SkeletonItem>
+              </TimelineArea>
+            </DayArea>
+          ))}
+      {!hasNextPage && <Earth />}
       <Sensor ref={intersectionRef} />
     </>
   );

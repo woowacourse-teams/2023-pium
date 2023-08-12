@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 
 export const Plant = styled.div`
   position: absolute;
@@ -131,4 +131,26 @@ export const Spot = styled.div`
 export const TimelineArea = styled.div`
   width: 60%;
   padding: 0 16px;
+`;
+
+const skeletonBackground = keyframes`
+  0%    { background-color: rgba(165, 165, 165, 0.1) }
+  50%   { background-color: rgba(165, 165, 165, 0.3) }
+  100%  { background-color: rgba(165, 165, 165, 0.1) }
+`;
+
+export const SkeletonItem = styled.div`
+  display: flex;
+  align-items: center;
+  height: 40px;
+`;
+
+export const SkeletonItemContent = styled.p`
+  width: 160px;
+  height: 1.8rem;
+  margin: 0 8px;
+
+  border-radius: 4px;
+
+  animation: ${skeletonBackground} 1s infinite;
 `;
