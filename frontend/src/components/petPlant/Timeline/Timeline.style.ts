@@ -147,7 +147,7 @@ export const SkeletonItem = styled.div`
 
 export const SkeletonItemContent = styled.p`
   width: 160px;
-  height: 1.8rem;
+  height: 1.6rem;
   margin: 0 8px;
 
   border-radius: 4px;
