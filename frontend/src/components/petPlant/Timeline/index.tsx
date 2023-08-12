@@ -65,22 +65,25 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
             ))}
           </YearArea>
         ))}
-      {(isLoading || isFetchingNextPage) &&
-        Array(6)
-          .fill(null)
-          .map((_, index) => (
-            <>
-              {isLoading && <YearHeader />}
-              <DayArea key={index}>
-                <DayHeader />
-                <TimelineArea>
-                  <SkeletonItem>
-                    <SkeletonItemContent />
-                  </SkeletonItem>
-                </TimelineArea>
-              </DayArea>
-            </>
-          ))}
+      {(isLoading || isFetchingNextPage) && (
+        <>
+          {isLoading && <YearHeader />}
+          {Array(6)
+            .fill(null)
+            .map((_, index) => (
+              <>
+                <DayArea key={index}>
+                  <DayHeader />
+                  <TimelineArea>
+                    <SkeletonItem>
+                      <SkeletonItemContent />
+                    </SkeletonItem>
+                  </TimelineArea>
+                </DayArea>
+              </>
+            ))}
+        </>
+      )}
       {!hasNextPage && <Earth />}
       <Sensor ref={intersectionRef} />
     </>
