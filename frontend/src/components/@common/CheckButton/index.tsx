@@ -12,7 +12,7 @@ const CheckButton = ({ children, checked, onClick }: Props) => {
 
   return (
     <Wrapper>
-      <input id={id} type="checkbox" checked={checked} />
+      <input id={id} type="checkbox" checked={checked} readOnly />
       <CheckboxLabel htmlFor={id} onClick={onClick}>
         {children}
       </CheckboxLabel>
