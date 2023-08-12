@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AlertSpan, Button, CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
 import useCalendar from 'hooks/useCalendar';
-import { convertDateKorYear, getDateToString, getDayInfo } from 'utils/date';
+import { convertDateKorYear, getDateToString, getDayInfo, getDaysBetween } from 'utils/date';
 import { DateValidate } from 'utils/validate';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
 import ArrowLeft from '../Icons/ArrowLeft';
@@ -9,21 +9,22 @@ import ArrowRight from '../Icons/ArrowRight';
 import DaySmallBox from './DaySmallBox';
 
 interface CalendarProps {
-  currentDate: Date;
+  selectedDate: Date | null;
   dateCallback: ((value: string) => void) | null;
   max?: React.InputHTMLAttributes<HTMLInputElement>['max'];
   min?: React.InputHTMLAttributes<HTMLInputElement>['min'];
 }
 
 const Calendar = (props: CalendarProps) => {
-  const { currentDate, min = '1945/08/15', max = '2099/12/31', dateCallback } = props;
+  const { selectedDate, min = '1945/08/15', max = '2099/12/31', dateCallback } = props;
 
-  const { monthInfo, setPrevMonth, setNextMonth } = useCalendar(currentDate);
+  const { monthInfo, setPrevMonth, setNextMonth } = useCalendar(selectedDate ?? new Date());
   const { year, month, monthFirstDay, monthLastDate } = monthInfo;
   const boxLength = monthFirstDay + monthLastDate <= 35 ? 35 : 42;
   const [message, setMessage] = useState('');
 
   const daysOfWeeks = DAYS_OF_THE_WEEK.map((day) => <DaySmallBox key={day} date={day} />);
+
   const days = Array.from({ length: boxLength }).map((_, idx) => {
     const { date, isShow, isToday, currentDate, isInRange } = getDayInfo({
       idx,
@@ -43,6 +44,7 @@ const Calendar = (props: CalendarProps) => {
         key={idx}
         date={date}
         isToday={isToday}
+        isSelected={selectedDate !== null && getDaysBetween(currentDate, selectedDate) === 0}
         currentDate={currentDate}
         isInRange={isInRange}
         clickHandler={clickHandler}
