@@ -1,14 +1,13 @@
 import type { HistoryType } from 'types/history';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { styled } from 'styled-components';
 import CheckButton from 'components/@common/CheckButton';
 import Stopwatch from 'components/@common/Icons/Stopwatch';
 import TreePlantPot from 'components/@common/Icons/TreePlantPot';
 import Water from 'components/@common/Icons/Water';
 import Navbar from 'components/@common/Navbar';
 import Timeline from 'components/petPlant/Timeline';
-import { Header, Main } from './PetPlantTimeline.style';
+import { ButtonLabel, Header, Main } from './PetPlantTimeline.style';
 import useToggle from 'hooks/useToggle';
 import theme from 'style/theme.style';
 
@@ -62,7 +61,3 @@ const PetPlantTimeline = () => {
 };
 
 export default PetPlantTimeline;
-
-const ButtonLabel = styled.span`
-  margin-left: 1rem;
-`;

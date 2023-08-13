@@ -17,6 +17,10 @@ export const Header = styled.header`
   box-shadow: 0 2px 2px -2px ${(props) => props.theme.color.gray};
 `;
 
+export const ButtonLabel = styled.span`
+  margin-left: 1rem;
+`;
+
 export const Main = styled.main`
   position: relative;
 
