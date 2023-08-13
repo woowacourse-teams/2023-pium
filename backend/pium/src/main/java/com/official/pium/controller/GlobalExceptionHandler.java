@@ -45,9 +45,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalExceptionResponse> handleException(Exception e) {
-        String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(SERVER_ERROR_MESSAGE);
-        log.error(message);
+        log.error(SERVER_ERROR_MESSAGE, e);
         return ResponseEntity.internalServerError().body(exceptionResponse);
     }
 
