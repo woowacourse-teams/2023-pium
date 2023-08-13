@@ -7,8 +7,8 @@
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %clr(%5level) %cyan(%logger) - %msg%n"/>
     <property name="FILE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %5level %logger - %msg%n"/>
     가
-    <!--local-->
 
+    <!--local-->
     <include resource="console-appender.xml"/>
 
     <root level="INFO">
@@ -32,7 +32,7 @@
         </logger>
     </springProfile>
 
-    <!-- prod  -->
+    <!--prod-->
     <springProfile name="prod">
         <include resource="file-error-appender.xml"/>
         <include resource="slack-notification-appender.xml"/>

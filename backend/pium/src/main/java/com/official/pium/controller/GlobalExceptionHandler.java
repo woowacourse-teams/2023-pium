@@ -23,6 +23,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
+    private static final String SERVER_ERROR_MESSAGE = "서버에서 오류가 발생했습니다.";
     private static final String JOINER_DELIMITER = ", ";
 
     @Override
@@ -45,9 +46,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<GlobalExceptionResponse> handleException(Exception e) {
         String message = e.getMessage();
-        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(SERVER_ERROR_MESSAGE);
         log.error(message);
-        return ResponseEntity.badRequest().body(exceptionResponse);
+        return ResponseEntity.internalServerError().body(exceptionResponse);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
