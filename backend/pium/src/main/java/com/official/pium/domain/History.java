@@ -63,13 +63,13 @@ public class History extends BaseEntity {
     }
 
     private void validateHistoryContent(HistoryContent historyContent) {
-        if (Objects.isNull(historyContent)) {
+        if (historyContent == null) {
             throw new IllegalArgumentException("히스토리 상세 정보는 null이 될 수 없습니다. historyContent: null");
         }
-        if (Objects.isNull(historyContent.getPrevious())) {
+        if (historyContent.getPrevious() == null) {
             throw new IllegalArgumentException("히스토리 상세 정보는 null이 될 수 없습니다. historyContent.previous: null");
         }
-        if (Objects.isNull(historyContent.getCurrent())) {
+        if (historyContent.getCurrent() == null) {
             throw new IllegalArgumentException("히스토리 상세 정보는 null이 될 수 없습니다. historyContent.current: null");
         }
     }
