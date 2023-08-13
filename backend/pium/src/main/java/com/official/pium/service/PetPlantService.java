@@ -5,6 +5,8 @@ import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.event.history.HistoryEvent;
+import com.official.pium.event.history.PetPlantHistory;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.HistoryRepository;
@@ -14,15 +16,17 @@ import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.SinglePetPlantResponse;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
@@ -32,6 +36,7 @@ public class PetPlantService {
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
+    private final ApplicationEventPublisher publisher;
 
     @Transactional
     public PetPlantResponse create(PetPlantCreateRequest request, Member member) {
@@ -44,6 +49,12 @@ public class PetPlantService {
 
         long daySince = petPlant.calculateDaySince(LocalDate.now());
         long dday = petPlant.calculateDday(LocalDate.now());
+
+        PetPlantHistory petPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
+        List<HistoryEvent> historyEvents = petPlantHistory.generateCreateHistoryEvents(petPlant.getId(), LocalDate.now());
+        for (HistoryEvent historyEvent : historyEvents) {
+            publisher.publishEvent(historyEvent);
+        }
 
         return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }

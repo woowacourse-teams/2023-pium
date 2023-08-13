@@ -1,64 +1,76 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 const useModal = (initialState = false) => {
   const [isOpen, setIsOpen] = useState(initialState);
   const modalRef = useRef<HTMLDialogElement>(null);
 
-  const on = () => {
+  const on = useCallback(() => {
     setIsOpen(true);
-  };
+  }, []);
 
-  const off = () => {
+  const off = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
-  const onTime = (ms: number) => {
-    on();
-    setTimeout(off, ms);
-  };
+  const onTime = useCallback(
+    (ms: number) => {
+      on();
+      setTimeout(off, ms);
+    },
+    [on, off]
+  );
 
-  const keyDownHandler = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      off();
-    }
-  };
+  const keyDownHandler = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        off();
+      }
+    },
+    [off]
+  );
 
-  const closeOnBackdropClick = (event: MouseEvent) => {
-    if (!modalRef.current) return;
+  const closeOnBackdropClick = useCallback(
+    (event: MouseEvent) => {
+      if (!modalRef.current) return;
 
-    const dialog = modalRef.current.getBoundingClientRect();
-    const isClickInsideDialog =
-      dialog.top <= event.clientY &&
-      event.clientY <= dialog.top + dialog.height &&
-      dialog.left <= event.clientX &&
-      event.clientX <= dialog.left + dialog.width;
+      const dialog = modalRef.current.getBoundingClientRect();
+      const isClickInsideDialog =
+        dialog.top <= event.clientY &&
+        event.clientY <= dialog.top + dialog.height &&
+        dialog.left <= event.clientX &&
+        event.clientX <= dialog.left + dialog.width;
 
-    if (!isClickInsideDialog) off();
-  };
+      if (!isClickInsideDialog) off();
+    },
+    [off]
+  );
 
-  const body = useRef(document.body);
+  const bodyRef = useRef(document.body);
 
   useEffect(() => {
-    if (isOpen) {
-      modalRef.current?.showModal();
-      modalRef.current?.addEventListener('click', closeOnBackdropClick);
+    const dialog = modalRef.current;
+    const body = bodyRef.current;
 
-      body.current.querySelector('#root')?.setAttribute('aria-hidden', 'true');
-      body.current.style.overflowY = 'hidden';
+    if (isOpen) {
+      dialog?.showModal();
+      dialog?.addEventListener('click', closeOnBackdropClick);
+
+      body.querySelector('#root')?.setAttribute('aria-hidden', 'true');
+      body.style.overflowY = 'hidden';
 
       window.addEventListener('keydown', keyDownHandler);
     }
 
     return () => {
-      modalRef.current?.close();
-      modalRef.current?.removeEventListener('click', closeOnBackdropClick);
+      dialog?.close();
+      dialog?.removeEventListener('click', closeOnBackdropClick);
 
-      body.current.querySelector('#root')?.setAttribute('aria-hidden', 'false');
-      body.current.style.overflowY = 'auto';
+      body.querySelector('#root')?.setAttribute('aria-hidden', 'false');
+      body.style.overflowY = 'auto';
 
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [isOpen]);
+  }, [isOpen, on, off, keyDownHandler, closeOnBackdropClick]);
 
   return { isOpen, on, off, onTime, modalRef };
 };

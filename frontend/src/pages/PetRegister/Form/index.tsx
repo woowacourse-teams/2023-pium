@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
 import FormInput from 'components/@common/FormInput';
@@ -18,7 +17,8 @@ import {
 } from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
-import { usePetPlantForm } from 'hooks/usePetPlantForm';
+import useAddToast from 'hooks/useAddToast';
+import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import { getDateToString, isDateFormat } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 
@@ -29,9 +29,13 @@ const PetRegisterForm = () => {
   const { id } = useParams();
   const dictionaryPlantId = Number(id);
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
-  const { form, dispatch } = usePetPlantForm();
   const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
+  const { form, dispatch } = usePetPlantForm({
+    ...initialPetPlantForm,
+    nickname: dictionaryPlant ? dictionaryPlant.name : '피우미',
+  });
   const { mutate } = useRegisterPetPlant();
+  const addToast = useAddToast();
 
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
   const today = getDateToString();
@@ -101,6 +105,7 @@ const PetRegisterForm = () => {
     const { birthDate: formBirthDate, lastWaterDate: formLastWaterDate } = form;
 
     if (!(isDateFormat(formBirthDate) && isDateFormat(formLastWaterDate))) {
+      addToast('error', '잘못된 날짜 형식입니다.');
       return;
     }
 
@@ -114,12 +119,6 @@ const PetRegisterForm = () => {
 
     mutate(requestForm);
   };
-
-  useEffect(() => {
-    if (dictionaryPlant) {
-      dispatch({ type: 'SET', key: 'nickname', value: dictionaryPlant.name });
-    }
-  }, [dictionaryPlant]);
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
 
