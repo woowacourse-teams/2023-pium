@@ -27,6 +27,13 @@ const withdraw = () => {
   });
 };
 
+const checkSessionId = () => {
+  return fetch(`${BASE_URL}/member.me`, {
+    method: 'POST',
+    credentials: 'include',
+  });
+};
+
 const getAuthorization = () => {
   window.location.href = AUTHORIZATION_URL;
 };
@@ -36,6 +43,7 @@ const Auth = {
   getAuthorization,
   logout,
   withdraw,
+  checkSessionId,
 };
 
 export default Auth;

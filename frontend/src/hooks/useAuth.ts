@@ -7,7 +7,7 @@ import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
 
 const useAuth = () => {
-  const { getSessionId, logout, withdraw } = Auth;
+  const { getSessionId, logout, withdraw, checkSessionId } = Auth;
   const setUserInfo = useSetRecoilState(userInfo);
   const navigate = useNavigate();
 
@@ -57,7 +57,28 @@ const useAuth = () => {
     throwOnError: true,
   });
 
-  return { userLogin, userLogout, userWithdraw };
+  const checkUserSessionId = useMutation({
+    mutationFn: async () => {
+      const response = await checkSessionId();
+      throwOnInvalidStatus(response);
+
+      return await response.json();
+    },
+    onError: () => {
+      navigate(URL_PATH.main);
+      setUserInfo({
+        isLogin: false,
+      });
+    },
+    onSuccess: () => {
+      setUserInfo({
+        isLogin: true,
+      });
+    },
+    retry: false,
+  });
+
+  return { userLogin, userLogout, userWithdraw, checkUserSessionId };
 };
 
 export default useAuth;
