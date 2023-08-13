@@ -1,14 +1,19 @@
 package com.official.pium.event.history;
 
+import jakarta.validation.constraints.NotNull;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-
-import java.time.LocalDate;
+import org.springframework.validation.annotation.Validated;
 
 @Getter
+@Validated
 @RequiredArgsConstructor
 public class LastWaterDateEvent {
 
+    @NotNull
     private final Long petPlantId;
+
+    @NotNull
     private final LocalDate currentWaterDate;
 }
