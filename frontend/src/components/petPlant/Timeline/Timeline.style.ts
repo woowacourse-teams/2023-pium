@@ -1,13 +1,18 @@
 import { keyframes, styled } from 'styled-components';
 
+export const Wrapper = styled.div`
+  position: relative;
+  min-height: calc(100vh + 64px);
+`;
+
 export const Plant = styled.div`
   position: absolute;
-  top: 80px;
+  top: 16px;
   left: 40%;
   transform: translate(-50%);
 
   width: 2px;
-  height: calc(100% - 80px);
+  height: calc(100% + 64px);
 
   background: ${(props) => props.theme.color.primary};
 `;
@@ -55,7 +60,7 @@ export const Month = styled.p`
 
 export const Earth = styled.div`
   position: absolute;
-  bottom: 0;
+  bottom: -96px;
   left: 40%;
   transform: translate(-50%);
 
@@ -63,9 +68,9 @@ export const Earth = styled.div`
   height: 80px;
 
   background-color: #733813;
-  border-top: solid 8px #441a00;
+  border-top: solid 12px #441a00;
   border-bottom: solid 12px #bb764c;
-  border-radius: 8px 8px 50% 50%;
+  border-radius: 50%;
 `;
 
 export const Sensor = styled.div`

@@ -14,6 +14,7 @@ import {
   SkeletonItemContent,
   Spot,
   TimelineArea,
+  Wrapper,
   YearArea,
   YearHeader,
 } from './Timeline.style';
@@ -38,7 +39,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
 
   return (
-    <>
+    <Wrapper>
       <Plant>
         <PlantImage src={Sprout} alt="타임라인 꼭대기" />
       </Plant>
@@ -86,7 +87,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
       )}
       {!hasNextPage && <Earth />}
       <Sensor ref={intersectionRef} />
-    </>
+    </Wrapper>
   );
 };
 
