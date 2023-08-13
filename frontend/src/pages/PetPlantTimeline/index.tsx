@@ -1,5 +1,5 @@
 import type { HistoryType } from 'types/history';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { styled } from 'styled-components';
 import CheckButton from 'components/@common/CheckButton';
@@ -14,6 +14,7 @@ import theme from 'style/theme.style';
 
 const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
+  if (!petPlantId) throw new Error();
 
   const { isOn: isCheckedWater, toggle: toggleWater } = useToggle();
   const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useToggle();
@@ -36,7 +37,6 @@ const PetPlantTimeline = () => {
     setFilter(newFilter);
   };
 
-  if (!petPlantId) return null;
   return (
     <>
       <Header>
