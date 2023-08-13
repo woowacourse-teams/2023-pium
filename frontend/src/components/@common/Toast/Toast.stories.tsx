@@ -1,12 +1,12 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ToastProvider from 'contexts/toastContext';
-import useSwitch from 'hooks/useSwitch';
 import useToast from 'hooks/useToast';
+import useToggle from 'hooks/useToggle';
 import Toast, { type ToastProps } from '.';
 import ToastList from './ToastList';
 
 const ToastItem = (props: ToastProps) => {
-  const { isOn, on } = useSwitch();
+  const { isOn, on } = useToggle();
 
   setTimeout(on);
 

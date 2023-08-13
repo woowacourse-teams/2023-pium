@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
-import useSwitch from './useSwitch';
+import useToggle from './useToggle';
 
 const useModal = (initialState = false) => {
-  const { isOn: isOpen, on: open, off: close } = useSwitch(initialState);
+  const { isOn: isOpen, on: open, off: close } = useToggle(initialState);
   const modalRef = useRef<HTMLDialogElement>(null);
   const bodyRef = useRef(document.body);
 

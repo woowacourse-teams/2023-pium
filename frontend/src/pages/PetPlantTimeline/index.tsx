@@ -9,15 +9,15 @@ import Water from 'components/@common/Icons/Water';
 import Navbar from 'components/@common/Navbar';
 import Timeline from 'components/petPlant/Timeline';
 import { Header, Main } from './PetPlantTimeline.style';
-import useSwitch from 'hooks/useSwitch';
+import useToggle from 'hooks/useToggle';
 import theme from 'style/theme.style';
 
 const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
 
-  const { isOn: isCheckedWater, toggle: toggleWater } = useSwitch();
-  const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useSwitch();
-  const { isOn: isCheckedSetting, toggle: toggleSetting } = useSwitch();
+  const { isOn: isCheckedWater, toggle: toggleWater } = useToggle();
+  const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useToggle();
+  const { isOn: isCheckedSetting, toggle: toggleSetting } = useToggle();
 
   const [filter, setFilter] = useState<HistoryType[]>([
     'flowerpot',

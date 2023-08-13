@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-const useSwitch = (initialState = false) => {
+const useToggle = (initialState = false) => {
   const [isOn, setIsOn] = useState(initialState);
 
   const on = useCallback(() => {
@@ -18,4 +18,4 @@ const useSwitch = (initialState = false) => {
   return { isOn, on, off, toggle };
 };
 
-export default useSwitch;
+export default useToggle;
