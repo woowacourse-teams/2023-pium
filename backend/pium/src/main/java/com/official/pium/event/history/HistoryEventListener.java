@@ -1,9 +1,14 @@
 package com.official.pium.event.history;
 
-import com.official.pium.domain.*;
+import com.official.pium.domain.History;
+import com.official.pium.domain.HistoryCategory;
+import com.official.pium.domain.HistoryContent;
+import com.official.pium.domain.HistoryType;
+import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryCategoryRepository;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.data.domain.Page;
@@ -11,8 +16,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @Component
 @RequiredArgsConstructor
@@ -54,15 +57,21 @@ public class HistoryEventListener {
 
         Page<History> historyAboutLastWaterDate = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(lastWaterDateEvent.getPetPlantId(), HistoryType.LAST_WATER_DATE, TOP_ORDER_BY_DATE_DESC);
 
-        if (historyAboutLastWaterDate.getSize() == JUST_ONE) {
-            for (History history : historyAboutLastWaterDate.getContent()) {
-                history.updateHistoryContent(
-                        HistoryContent.builder()
-                                .previous(history.getHistoryContent().getPrevious())
-                                .current(lastWaterDateEvent.getCurrentWaterDate().toString())
-                                .build()
-                );
-            }
+        validateContentSize(historyAboutLastWaterDate);
+
+        for (History history : historyAboutLastWaterDate.getContent()) {
+            history.updateHistoryContent(
+                    HistoryContent.builder()
+                            .previous(history.getHistoryContent().getPrevious())
+                            .current(lastWaterDateEvent.getCurrentWaterDate().toString())
+                            .build()
+            );
+        }
+    }
+
+    private static void validateContentSize(Page<History> historyAboutLastWaterDate) {
+        if (historyAboutLastWaterDate.getSize() != JUST_ONE) {
+            throw new IllegalArgumentException("최근 물주기 정보는 하나의 값만 존재해야합니다. size: " + historyAboutLastWaterDate.getSize());
         }
     }
 }
