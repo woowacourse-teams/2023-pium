@@ -22,14 +22,13 @@ const PetPlantTimeline = () => {
   const [filter, setFilter] = useState<HistoryType[]>([]);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-
     const newFilter: HistoryType[] = [];
     if (isCheckedWater) newFilter.push('lastWaterDate');
     if (isCheckedWaterCycle) newFilter.push('waterCycle');
     if (isCheckedSetting) newFilter.push('flowerpot', 'light', 'location');
 
     setFilter(newFilter);
+    window.scrollTo(0, 0);
   }, [isCheckedWater, isCheckedWaterCycle, isCheckedSetting]);
 
   return (

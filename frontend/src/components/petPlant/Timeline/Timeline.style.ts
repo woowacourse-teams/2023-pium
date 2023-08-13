@@ -68,8 +68,8 @@ export const Earth = styled.div`
   height: 80px;
 
   background-color: #733813;
-  border-top: solid 12px #441a00;
-  border-bottom: solid 12px #bb764c;
+  border-top: solid 8px #bb764c;
+  border-bottom: solid 12px #441a00;
   border-radius: 50%;
 `;
 
