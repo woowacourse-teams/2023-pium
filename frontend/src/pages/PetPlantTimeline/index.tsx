@@ -13,7 +13,7 @@ import theme from 'style/theme.style';
 
 const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
-  if (!petPlantId) throw new Error();
+  if (!petPlantId) throw new Error('petPlantId가 없습니다.');
 
   const { isOn: isCheckedWater, toggle: toggleWater } = useToggle();
   const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useToggle();
