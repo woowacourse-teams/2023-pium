@@ -1,12 +1,12 @@
+import type { DataResponse } from './DataResponse';
 import type { DateFormat } from './date';
 import { PetPlantDetails } from './petPlant';
 
-export interface HistoryResponse {
+export interface HistoryResponse extends DataResponse<HistoryItem[]> {
   page: number;
   size: number;
   elementSize: number;
   hasNext: boolean;
-  data: HistoryItem[];
 }
 
 export interface HistoryItem {
