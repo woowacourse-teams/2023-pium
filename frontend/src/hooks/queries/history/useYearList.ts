@@ -1,6 +1,6 @@
 import type { HistoryResponse, HistoryType } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import type { YearList } from 'components/petPlant/Timeline/converter';
 import {
   convertHistoryItemListToYearMap,
@@ -33,6 +33,8 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData,
   });
 
 export default useYearList;
