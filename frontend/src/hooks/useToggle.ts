@@ -12,8 +12,8 @@ const useToggle = (initialState = false) => {
   }, []);
 
   const toggle = useCallback(() => {
-    setIsOn(!isOn);
-  }, [isOn]);
+    setIsOn((prev) => !prev);
+  }, []);
 
   return { isOn, on, off, toggle };
 };
