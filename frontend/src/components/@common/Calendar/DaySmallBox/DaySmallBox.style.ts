@@ -41,12 +41,11 @@ export const DaySpan = styled.span<DayProps>`
   border-radius: 50%;
 
   &:hover {
-    color: ${({ $isToday, $isInRange, theme: { color } }) =>
-      $isToday || $isInRange ? color.background : color.grayDark};
-    background: ${({ $isToday, $isInRange, theme: { color } }) => {
-      if ($isToday && !$isInRange) return color.accent + '5F';
-      if (!$isToday && !$isInRange) return color.background;
-      return color.accent;
+    color: ${({ $isInRange, theme: { color } }) => {
+      if ($isInRange) return color.background;
+    }};
+    background: ${({ $isInRange, theme: { color } }) => {
+      if ($isInRange) return color.accent;
     }};
   }
 `;
