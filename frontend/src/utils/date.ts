@@ -131,15 +131,8 @@ export const getDaysBetween = (one: string | number | Date, another: string | nu
     throw new RangeError(ERROR.invalidDate);
   }
 
-  first.setHours(0);
-  first.setMinutes(0);
-  first.setSeconds(0);
-  first.setMilliseconds(0);
-
-  second.setHours(0);
-  second.setMinutes(0);
-  second.setSeconds(0);
-  second.setMilliseconds(0);
+  first.setHours(0, 0, 0, 0);
+  second.setHours(0, 0, 0, 0);
 
   const diff = Math.abs(first.getTime() - second.getTime());
   const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
