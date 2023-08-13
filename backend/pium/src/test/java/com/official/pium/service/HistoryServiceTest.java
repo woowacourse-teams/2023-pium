@@ -2,6 +2,7 @@ package com.official.pium.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.History;
@@ -11,7 +12,6 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.HistoryResponse;
 import java.time.LocalDate;
 import java.util.NoSuchElementException;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -49,7 +49,7 @@ class HistoryServiceTest extends IntegrationTest {
         HistoryResponse historyResponse2 = historyService.read(petPlant.getId(),
                 PageRequest.of(1, 2, Sort.Direction.DESC, "date"), petPlant.getMember());
 
-        SoftAssertions.assertSoftly(
+        assertSoftly(
                 softly -> {
                     softly.assertThat(historyResponse1.getData().get(0).getDate()).isEqualTo(history4.getDate());
                     softly.assertThat(historyResponse1.getData().get(1).getDate()).isEqualTo(history3.getDate());
