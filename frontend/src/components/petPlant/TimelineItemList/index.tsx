@@ -1,3 +1,4 @@
+import type { HistoryType } from 'types/history';
 import ArrowRightAlt from 'components/@common/Icons/ArrowRightAlt';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
 import Stopwatch from 'components/@common/Icons/Stopwatch';
@@ -13,14 +14,14 @@ interface TimelineItemListProps {
   timelineItemList: TimelineItem[];
 }
 
-const HISTORY_TYPE_ICON_MAP = {
+const HISTORY_TYPE_ICON_MAP: Record<Exclude<HistoryType, 'lastWaterDate'>, React.ReactElement> = {
   waterCycle: <Stopwatch />,
   flowerpot: <Flowerpot color={theme.color.primary} />,
   light: <Sun color={theme.color.primary} />,
   location: <Wind color={theme.color.primary} />,
 };
 
-const HISTORY_TYPE_KOREAN_MAP = {
+const HISTORY_TYPE_KOREAN_MAP: Record<Exclude<HistoryType, 'lastWaterDate'>, string> = {
   waterCycle: '물 주기를 ',
   flowerpot: '화분을 ',
   light: '채광을 ',
