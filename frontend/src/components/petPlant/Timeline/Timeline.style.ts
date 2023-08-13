@@ -32,7 +32,7 @@ export const YearArea = styled.div`
 
 export const YearHeader = styled.p`
   position: sticky;
-  z-index: ${(props) => props.theme.zIndex.sticky + 3};
+  z-index: ${(props) => props.theme.zIndex.sticky + 1};
   top: 40px;
 
   display: flex;
@@ -87,7 +87,7 @@ export const MonthArea = styled.div`
 
 export const MonthHeader = styled.div`
   position: sticky;
-  z-index: ${(props) => props.theme.zIndex.sticky + 2};
+  z-index: ${(props) => props.theme.zIndex.sticky};
   top: 80px;
   height: 0;
 `;
@@ -105,7 +105,7 @@ export const DayArea = styled.div`
 
 export const DayHeader = styled.div`
   position: sticky;
-  z-index: ${(props) => props.theme.zIndex.sticky + 1};
+  z-index: ${(props) => props.theme.zIndex.sticky};
   top: 80px;
 
   display: flex;
