@@ -38,11 +38,19 @@ const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
   });
 };
 
+const erase = (petPlantId: PetPlantDetails['id']) => {
+  return fetch(`${PET}/${petPlantId}`, {
+    method: 'DELETE',
+    headers,
+  });
+};
+
 const PetAPI = {
   getList,
   register,
   getDetails,
   edit,
+  erase,
 };
 
 export default PetAPI;
