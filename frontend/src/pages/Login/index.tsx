@@ -1,6 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import KakaoLoginLarge from 'components/@common/Icons/KakaoLoginLarge';
-import { ContentBox, GoToMain, LoginBox, Title, Wrapper } from './Login.style';
+import {
+  ContentBox,
+  GoToMain,
+  LoginBox,
+  PlantImg,
+  PrimaryText,
+  Text,
+  Wrapper,
+} from './Login.style';
 import Auth from 'apis/auth';
 import { URL_PATH } from 'constants/index';
 
@@ -13,7 +21,12 @@ const Login = () => {
   return (
     <Wrapper>
       <ContentBox>
-        <Title>식물 오답노트 피움</Title>
+        <Text>식물을 잘</Text>
+        <Text>관리하고 싶다면?</Text>
+        <Text>
+          함께 해요 <PrimaryText>피움</PrimaryText>
+        </Text>
+        <PlantImg src="" alt="대충 식물 이미지 넣음" />
       </ContentBox>
 
       <LoginBox>
