@@ -19,61 +19,36 @@ const PetPlantTimeline = () => {
   const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useToggle();
   const { isOn: isCheckedSetting, toggle: toggleSetting } = useToggle();
 
-  const [filter, setFilter] = useState<HistoryType[]>([
-    'flowerpot',
-    'lastWaterDate',
-    'light',
-    'location',
-    'waterCycle',
-  ]);
+  const [filter, setFilter] = useState<HistoryType[]>([]);
 
-  const onClickWater = () => {
+  const toggleCheckButton = (toggler: () => void) => () => {
     window.scrollTo(0, 0);
-    toggleWater();
-    if (isCheckedWater) {
-      setFilter(filter.filter((type) => type !== 'lastWaterDate'));
-    } else {
-      setFilter([...filter, 'lastWaterDate']);
-    }
+    toggler();
+    setCheckedFilter();
   };
 
-  const onClickWaterCycle = () => {
-    window.scrollTo(0, 0);
-    toggleWaterCycle();
-    if (isCheckedWaterCycle) {
-      setFilter(filter.filter((type) => type !== 'waterCycle'));
-    } else {
-      setFilter([...filter, 'waterCycle']);
-    }
-  };
+  const setCheckedFilter = () => {
+    const newFilter: HistoryType[] = [];
+    if (isCheckedWater) newFilter.push('lastWaterDate');
+    if (isCheckedWaterCycle) newFilter.push('waterCycle');
+    if (isCheckedSetting) newFilter.concat(['flowerpot', 'light', 'location']);
 
-  const onClickSetting = () => {
-    window.scrollTo(0, 0);
-    toggleSetting();
-    if (isCheckedSetting) {
-      setFilter(filter.filter((type) => !['flowerpot', 'light', 'location'].includes(type)));
-    } else {
-      setFilter([...filter, 'flowerpot', 'light', 'location']);
-    }
+    setFilter(newFilter);
   };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   if (!petPlantId) return null;
   return (
     <>
       <Header>
-        <CheckButton checked={isCheckedWater} onClick={onClickWater}>
+        <CheckButton checked={isCheckedWater} onClick={toggleCheckButton(toggleWater)}>
           <Water fill={isCheckedWater ? 'white' : theme.color.water} />
           <ButtonLabel>물 준 날</ButtonLabel>
         </CheckButton>
-        <CheckButton checked={isCheckedWaterCycle} onClick={onClickWaterCycle}>
+        <CheckButton checked={isCheckedWaterCycle} onClick={toggleCheckButton(toggleWaterCycle)}>
           <Stopwatch stroke={isCheckedWaterCycle ? 'white' : 'black'} />
           <ButtonLabel>물 주기 설정</ButtonLabel>
         </CheckButton>
-        <CheckButton checked={isCheckedSetting} onClick={onClickSetting}>
+        <CheckButton checked={isCheckedSetting} onClick={toggleCheckButton(toggleSetting)}>
           <TreePlantPot stroke={isCheckedSetting ? 'white' : theme.color.primary} />
           <ButtonLabel>환경 설정</ButtonLabel>
         </CheckButton>
