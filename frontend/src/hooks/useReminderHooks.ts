@@ -3,11 +3,11 @@ import { convertDateKorYear } from 'utils/date';
 import useChangeDate from './queries/reminder/useChangeDate';
 import useReminder from './queries/reminder/useReminder';
 import useWater from './queries/reminder/useWater';
-import useToast from './useToast';
+import useAddToast from './useAddToast';
 
 const useReminderHooks = () => {
   const { data: reminderData, refetch } = useReminder();
-  const { addToast } = useToast();
+  const addToast = useAddToast();
   const { mutate: water } = useWater<string>({
     successCallback: (_, variable) => {
       refetch();

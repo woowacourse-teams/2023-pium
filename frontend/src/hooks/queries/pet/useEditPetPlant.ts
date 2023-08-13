@@ -1,13 +1,13 @@
 import type { EditPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { generatePath, useNavigate } from 'react-router-dom';
-import useToast from 'hooks/useToast';
+import useAddToast from 'hooks/useAddToast';
 import PetAPI from 'apis/pet';
 import { URL_PATH } from 'constants/index';
 
 const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
   const navigate = useNavigate();
-  const { addToast } = useToast();
+  const addToast = useAddToast();
 
   return useMutation<void, Error, EditPetPlantRequest>({
     mutationFn: async (form) => {

@@ -1,7 +1,6 @@
 import { ReminderExtendType } from 'types/reminder';
 import type { Meta, StoryObj } from '@storybook/react';
 import ToastList from 'components/@common/Toast/ToastList';
-import ToastProvider from 'contexts/toastContext';
 import { getParticularDateFromSpecificDay } from 'utils/date';
 import ReminderCard from '.';
 
@@ -10,10 +9,10 @@ const meta: Meta<typeof ReminderCard> = {
   decorators: [
     (Story) => {
       return (
-        <ToastProvider>
+        <>
           <Story />
           <ToastList />
-        </ToastProvider>
+        </>
       );
     },
   ],

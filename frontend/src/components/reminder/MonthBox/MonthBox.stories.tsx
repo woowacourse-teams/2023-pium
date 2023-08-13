@@ -1,7 +1,6 @@
 import { ReminderExtendType } from 'types/reminder';
 import type { Meta, StoryObj } from '@storybook/react';
 import ToastList from 'components/@common/Toast/ToastList';
-import ToastProvider from 'contexts/toastContext';
 import MonthBox from '.';
 
 const meta: Meta<typeof MonthBox> = {
@@ -9,10 +8,10 @@ const meta: Meta<typeof MonthBox> = {
   decorators: [
     (Story) => {
       return (
-        <ToastProvider>
+        <>
           <Story />
           <ToastList />
-        </ToastProvider>
+        </>
       );
     },
   ],

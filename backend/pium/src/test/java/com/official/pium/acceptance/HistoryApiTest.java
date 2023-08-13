@@ -1,5 +1,11 @@
 package com.official.pium.acceptance;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
@@ -11,21 +17,14 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -322,7 +321,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .extract();
 
             ExtractableResponse<Response> updatedPetPlantResponse = 반려_식물_단건_조회(반려_식물_ID);
-            
+
             assertSoftly(softly -> {
                 softly.assertThat(response.jsonPath().getList("data.content.previous"))
                         .contains(
