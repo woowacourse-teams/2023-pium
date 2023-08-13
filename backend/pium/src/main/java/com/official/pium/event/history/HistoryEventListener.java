@@ -21,9 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class HistoryEventListener {
 
-    private static final int JUST_ONE = 1;
-    private static final PageRequest TOP_ORDER_BY_DATE_DESC = PageRequest.of(0, 1, Sort.Direction.DESC, "date");
-
     private final PetPlantRepository petPlantRepository;
     private final HistoryRepository historyRepository;
     private final HistoryCategoryRepository historyCategoryRepository;
@@ -54,6 +51,7 @@ public class HistoryEventListener {
     @EventListener
     @Transactional
     public void updateLastWaterDateHistory(LastWaterDateEvent lastWaterDateEvent) {
+        final PageRequest TOP_ORDER_BY_DATE_DESC = PageRequest.of(0, 1, Sort.Direction.DESC, "date");
 
         Page<History> historyAboutLastWaterDate = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(lastWaterDateEvent.getPetPlantId(), HistoryType.LAST_WATER_DATE, TOP_ORDER_BY_DATE_DESC);
 
@@ -70,7 +68,7 @@ public class HistoryEventListener {
     }
 
     private static void validateContentSize(Page<History> historyAboutLastWaterDate) {
-        if (historyAboutLastWaterDate.getSize() != JUST_ONE) {
+        if (historyAboutLastWaterDate.getSize() != 1) {
             throw new IllegalArgumentException("최근 물주기 정보는 하나의 값만 존재해야합니다. size: " + historyAboutLastWaterDate.getSize());
         }
     }
