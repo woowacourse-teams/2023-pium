@@ -67,9 +67,9 @@ public class HistoryEventListener {
         }
     }
 
-    private static void validateContentSize(Page<History> historyAboutLastWaterDate) {
+    private void validateContentSize(Page<History> historyAboutLastWaterDate) {
         if (historyAboutLastWaterDate.getSize() != 1) {
-            throw new IllegalArgumentException("최근 물주기 정보는 하나의 값만 존재해야합니다. size: " + historyAboutLastWaterDate.getSize());
+            throw new IllegalStateException("최근 물주기 정보는 하나의 값만 존재해야합니다. size: " + historyAboutLastWaterDate.getSize());
         }
     }
 }
