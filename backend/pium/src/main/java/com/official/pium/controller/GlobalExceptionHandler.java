@@ -7,6 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
@@ -34,26 +36,50 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
             stringJoiner.add(error.getDefaultMessage());
         }
 
-        GlobalExceptionResponse globalExceptionResponse = createExceptionResponse(stringJoiner.toString());
+        String message = stringJoiner.toString();
+        GlobalExceptionResponse globalExceptionResponse = createExceptionResponse(message);
+        log.info(message);
         return ResponseEntity.badRequest().body(globalExceptionResponse);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<GlobalExceptionResponse> handleException(Exception e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.error(message);
+        return ResponseEntity.badRequest().body(exceptionResponse);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<GlobalExceptionResponse> handleIllegalArgumentException(IllegalArgumentException e) {
-        GlobalExceptionResponse exceptionResponse = createExceptionResponse(e.getMessage());
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.info(message);
         return ResponseEntity.badRequest().body(exceptionResponse);
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleIllegalStateException(IllegalStateException e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.warn(message);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<GlobalExceptionResponse> handleNoSuchElementException(NoSuchElementException e) {
-        GlobalExceptionResponse exceptionResponse = createExceptionResponse(e.getMessage());
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.warn(message);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public ResponseEntity<GlobalExceptionResponse> handleConstraintViolationException(ConstraintViolationException e) {
         StringBuilder stringBuilder = getExceptionMessages(e);
-        GlobalExceptionResponse exceptionResponse = createExceptionResponse(stringBuilder.toString());
+        String message = stringBuilder.toString();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.info(message);
         return ResponseEntity.badRequest().body(exceptionResponse);
     }
 
