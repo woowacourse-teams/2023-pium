@@ -7,6 +7,8 @@ export const Wrapper = styled.div`
 `;
 
 export const CheckboxLabel = styled.label`
+  cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,7 +22,6 @@ export const CheckboxLabel = styled.label`
 
   background-color: ${(props) => props.theme.color.grayLight};
   border-radius: 8px;
-
   input:checked ~ & {
     font-weight: 500;
     color: white;
