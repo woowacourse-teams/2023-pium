@@ -59,19 +59,24 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
         <>
           <Backdrop onClick={close} />
           <OptionBox role="menu">
-            {options.map((option) => (
-              <OptionItem
-                key={option}
-                role="menuitem"
-                onClick={() => select(option)}
-                tabIndex={0}
-                onKeyDown={({ key }: React.KeyboardEvent<HTMLLIElement>) => {
-                  if (key === 'Enter' || key === ' ') select(option);
-                }}
-              >
-                {option}
-              </OptionItem>
-            ))}
+            {options.map((option) => {
+              const selectOnClick = () => select(option);
+              const selectOnEnterOrSpace = ({ key }: React.KeyboardEvent<HTMLLIElement>) => {
+                if (key === 'Enter' || key === ' ') select(option);
+              };
+
+              return (
+                <OptionItem
+                  key={option}
+                  role="menuitem"
+                  tabIndex={0}
+                  onClick={selectOnClick}
+                  onKeyDown={selectOnEnterOrSpace}
+                >
+                  {option}
+                </OptionItem>
+              );
+            })}
           </OptionBox>
         </>
       )}
