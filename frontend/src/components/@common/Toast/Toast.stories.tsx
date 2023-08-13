@@ -1,11 +1,11 @@
+import type { ToastItem } from 'types/toast';
 import type { Meta, StoryObj } from '@storybook/react';
-import ToastProvider from 'contexts/toastContext';
-import useToast from 'hooks/useToast';
 import useToggle from 'hooks/useToggle';
-import Toast, { type ToastProps } from '.';
+import Toast from '.';
 import ToastList from './ToastList';
+import useAddToast from 'hooks/useAddToast';
 
-const ToastItem = (props: ToastProps) => {
+const ToastItem = (props: ToastItem) => {
   const { isOn, on } = useToggle();
 
   setTimeout(on);
@@ -19,10 +19,10 @@ const meta: Meta<typeof Toast> = {
   decorators: [
     (Story) => {
       return (
-        <ToastProvider>
+        <>
           <Story />
           <ToastList />
-        </ToastProvider>
+        </>
       );
     },
   ],
@@ -47,9 +47,9 @@ export const Success: Story = {
   },
 };
 
-const Interactive = (props: ToastProps) => {
+const Interactive = (props: ToastItem) => {
   const { type } = props;
-  const { addToast } = useToast();
+  const addToast = useAddToast();
   const addHandler = () => {
     addToast(type, props.message);
   };
