@@ -35,15 +35,15 @@ const PetPlantTimeline = () => {
     <>
       <Header>
         <CheckButton checked={isCheckedWater} onClick={toggleWater}>
-          <Water fill={isCheckedWater ? 'white' : theme.color.water} />
+          <Water fill={isCheckedWater ? 'white' : theme.color.water} aria-hidden />
           <ButtonLabel>물 준 날</ButtonLabel>
         </CheckButton>
         <CheckButton checked={isCheckedWaterCycle} onClick={toggleWaterCycle}>
-          <Stopwatch stroke={isCheckedWaterCycle ? 'white' : 'black'} />
+          <Stopwatch stroke={isCheckedWaterCycle ? 'white' : 'black'} aria-hidden />
           <ButtonLabel>물 주기 설정</ButtonLabel>
         </CheckButton>
         <CheckButton checked={isCheckedSetting} onClick={toggleSetting}>
-          <TreePlantPot stroke={isCheckedSetting ? 'white' : theme.color.primary} />
+          <TreePlantPot stroke={isCheckedSetting ? 'white' : theme.color.primary} aria-hidden />
           <ButtonLabel>환경 설정</ButtonLabel>
         </CheckButton>
       </Header>
