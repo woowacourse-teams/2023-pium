@@ -56,10 +56,12 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
                   {previous && (
                     <>
                       {previous}
+                      {type === 'waterCycle' ? '일' : ''}
                       <ArrowRightAlt />
                     </>
                   )}
                   {current}
+                  {type === 'waterCycle' ? '일' : ''}
                 </ItemContent>
               </div>
             </Item>
