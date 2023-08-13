@@ -1,6 +1,7 @@
 package com.official.pium.event.history;
 
 import com.official.pium.domain.HistoryType;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
 import lombok.Getter;
@@ -15,15 +16,15 @@ public class HistoryEvent {
     @NotNull
     private final Long petPlantId;
 
-    @NotNull
+    @NotBlank
     private final String previous;
 
-    @NotNull
+    @NotBlank
     private final String current;
 
     @NotNull
     private final HistoryType historyType;
-    
+
     @NotNull
     private final LocalDate date;
 }
