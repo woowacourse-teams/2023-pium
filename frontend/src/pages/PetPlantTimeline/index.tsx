@@ -22,7 +22,6 @@ const PetPlantTimeline = () => {
   const [filter, setFilter] = useState<HistoryType[]>([]);
 
   const onClickWater = () => {
-    window.scrollTo(0, 0);
     toggleWater();
     if (isCheckedWater) {
       setFilter(filter.filter((type) => type !== 'lastWaterDate'));
@@ -32,7 +31,6 @@ const PetPlantTimeline = () => {
   };
 
   const onClickWaterCycle = () => {
-    window.scrollTo(0, 0);
     toggleWaterCycle();
     if (isCheckedWaterCycle) {
       setFilter(filter.filter((type) => type !== 'waterCycle'));
@@ -42,7 +40,6 @@ const PetPlantTimeline = () => {
   };
 
   const onClickSetting = () => {
-    window.scrollTo(0, 0);
     toggleSetting();
     if (isCheckedSetting) {
       setFilter(

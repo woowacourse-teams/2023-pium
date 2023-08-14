@@ -1,5 +1,6 @@
 import { HistoryType } from 'types/history';
 import { PetPlantDetails } from 'types/petPlant';
+import { useEffect } from 'react';
 import {
   DayArea,
   DayHeader,
@@ -37,6 +38,10 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
     fetchNextPage,
   } = useYearList(Number(petPlantId), filter);
   const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [filter]);
 
   return (
     <Wrapper>
