@@ -1,9 +1,27 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { ModalBox } from '../Modal/Modal.style';
 
+const alert = keyframes`
+  0% { transform: rotate(1deg); }
+  25% { transform: rotate(0deg); }
+  50% { transform: rotate(-1deg); }
+  100% { transform: rotate(0deg); }
+`;
+
 export const ConfirmBox = styled(ModalBox)`
+  top: calc(50vh - 50%);
+
   row-gap: 20px;
+
+  max-width: ${({ theme: { width } }) => width.pad};
+  margin: auto;
   padding: 30px 0;
+
+  animation: ${alert} 0.15s linear 2;
+
+  &::backdrop {
+    cursor: default;
+  }
 `;
 
 const textBox = css`
