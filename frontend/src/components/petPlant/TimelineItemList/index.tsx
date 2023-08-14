@@ -9,6 +9,7 @@ import Wind from 'components/@common/Icons/Wind';
 import type { TimelineItem } from 'components/petPlant/Timeline/converter';
 import { IconArea, Item, ItemContent, ItemHead, Wrapper } from './TimelineItemList.style';
 import { getDaysBetween } from 'utils/date';
+import { NO_PREVIOUS_VALUE } from 'constants/index';
 import theme from 'style/theme.style';
 
 interface TimelineItemListProps {
@@ -34,6 +35,8 @@ const SETTING_KOREAN_MAP: Record<SettingType, string> = {
 const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
   <Wrapper>
     {timelineItemList.map(({ type, previous, current }, index) => {
+      const hasPrevious = previous !== NO_PREVIOUS_VALUE;
+
       switch (type) {
         case 'lastWaterDate':
           return (
@@ -42,7 +45,7 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
                 <Water />
               </IconArea>
               <ItemHead>
-                {previous ? `${getDaysBetween(previous, current)}일 만에` : '처음'} 물을 줬어요
+                {hasPrevious ? `${getDaysBetween(previous, current)}일 만에` : '처음'} 물을 줬어요
               </ItemHead>
             </Item>
           );
@@ -53,9 +56,9 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
                 <Stopwatch />
               </IconArea>
               <div>
-                <ItemHead>물 주기를 {previous ? '변경' : '설정'}했어요</ItemHead>
+                <ItemHead>물 주기를 {hasPrevious ? '변경' : '설정'}했어요</ItemHead>
                 <ItemContent>
-                  {previous && (
+                  {hasPrevious && (
                     <>
                       {previous}일 <ArrowRightAlt />
                     </>
@@ -71,9 +74,9 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
               <IconArea>{SETTING_ICON_MAP[type]}</IconArea>
               <div>
                 <ItemHead>
-                  {SETTING_KOREAN_MAP[type]} {previous ? '변경' : '설정'}했어요
+                  {SETTING_KOREAN_MAP[type]} {hasPrevious ? '변경' : '설정'}했어요
                 </ItemHead>
-                {previous && <ItemContent>{`'${previous}'에서`}</ItemContent>}
+                {hasPrevious && <ItemContent>{`'${previous}'에서`}</ItemContent>}
                 <ItemContent>{`'${current}'`}</ItemContent>
               </div>
             </Item>

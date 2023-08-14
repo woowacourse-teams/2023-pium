@@ -1,3 +1,5 @@
+import { NO_PREVIOUS_VALUE } from 'constants/index';
+
 export const generatePage = (pageParam: number, filter: string[], hasNext: boolean) => {
   const page = hasNext
     ? [
@@ -183,7 +185,7 @@ export const generatePage = (pageParam: number, filter: string[], hasNext: boole
           type: 'waterCycle',
           date: '2022-12-16',
           content: {
-            previous: null,
+            previous: NO_PREVIOUS_VALUE,
             current: '3',
           },
         },
@@ -191,7 +193,7 @@ export const generatePage = (pageParam: number, filter: string[], hasNext: boole
           type: 'lastWaterDate',
           date: '2022-12-16',
           content: {
-            previous: null,
+            previous: NO_PREVIOUS_VALUE,
             current: '2022-12-16',
           },
         },
@@ -199,7 +201,7 @@ export const generatePage = (pageParam: number, filter: string[], hasNext: boole
           type: 'flowerpot',
           date: '2022-12-16',
           content: {
-            previous: null,
+            previous: NO_PREVIOUS_VALUE,
             current: '플라스틱/유리/캔',
           },
         },
@@ -207,7 +209,7 @@ export const generatePage = (pageParam: number, filter: string[], hasNext: boole
           type: 'light',
           date: '2022-12-16',
           content: {
-            previous: null,
+            previous: NO_PREVIOUS_VALUE,
             current: '식물용 조명 빛을 받아요',
           },
         },
@@ -215,7 +217,7 @@ export const generatePage = (pageParam: number, filter: string[], hasNext: boole
           type: 'location',
           date: '2022-12-16',
           content: {
-            previous: null,
+            previous: NO_PREVIOUS_VALUE,
             current: '주방',
           },
         },
@@ -223,7 +225,7 @@ export const generatePage = (pageParam: number, filter: string[], hasNext: boole
           type: 'wind',
           date: '2022-12-16',
           content: {
-            previous: null,
+            previous: NO_PREVIOUS_VALUE,
             current: '5m 내 창문이 있어요',
           },
         },

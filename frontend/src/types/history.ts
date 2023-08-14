@@ -1,3 +1,4 @@
+import { NO_PREVIOUS_VALUE } from 'constants/index';
 import type { DataResponse } from './DataResponse';
 import type { DateFormat } from './date';
 import type { PetPlantDetails } from './petPlant';
@@ -13,7 +14,7 @@ export interface HistoryItem {
   type: HistoryType;
   date: DateFormat;
   content: {
-    previous: string | null;
+    previous: string | typeof NO_PREVIOUS_VALUE;
     current: string;
   };
 }
