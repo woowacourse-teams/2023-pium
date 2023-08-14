@@ -58,6 +58,12 @@ export const makeHandler = (delay = 0, failRate = 0) => {
         return res(ctx.delay(delay), ctx.status(500));
       }
 
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION.slice(0, 10) !== sessionStorage.getItem('sessionId')) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
       const newPlant = await req.json();
 
       PetPlant.add(newPlant);
@@ -65,9 +71,15 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(201));
     }),
 
-    rest.get(PET, (_, res, ctx) =>
-      res(ctx.delay(delay), ctx.status(200), ctx.json({ data: PET_LIST }))
-    ),
+    rest.get(PET, (reqr, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION.slice(0, 10) !== sessionStorage.getItem('sessionId')) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      return res(ctx.delay(delay), ctx.status(200), ctx.json({ data: PET_LIST }));
+    }),
 
     rest.get(`${PET}/:petPlantId`, async (req, res, ctx) => {
       if (Math.random() < failRate) {
@@ -149,6 +161,34 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       };
 
       return res(ctx.delay(delay), ctx.status(200), ctx.json(page));
+    }),
+
+    rest.get('/login', (req, res, ctx) => {
+      const code = req.url.searchParams.get('code') ?? null;
+
+      if (code === null) {
+        return res(
+          ctx.delay(delay),
+          ctx.status(401),
+          ctx.json({ message: '유효하지 않은 code입니다' })
+        );
+      }
+
+      return res(
+        ctx.cookie('JSESSION', `${code}`),
+        ctx.status(200),
+        ctx.json({ sessionId: code.slice(0, 10) })
+      );
+    }),
+
+    rest.post('/member/me', (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION.slice(0, 10) !== sessionStorage.getItem('sessionId')) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      return res(ctx.delay(delay), ctx.status(201), ctx.json({ message: '유효한 사용자' }));
     }),
   ];
 };

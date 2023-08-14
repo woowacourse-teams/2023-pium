@@ -19,6 +19,10 @@ const useAuth = () => {
 
         throwOnInvalidStatus(response);
         const data = await response.json();
+
+        const { sessionId } = data;
+        sessionStorage.setItem('sessionId', sessionId);
+        setUserInfo({ isLogin: true });
         return data;
       },
       throwOnError: true,
