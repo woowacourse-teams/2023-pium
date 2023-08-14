@@ -1,18 +1,23 @@
 import { rest } from 'msw';
-import { generatePage, lastPage } from '../data/history';
+import { generatePage } from '../data/history';
 
 const HISTORY = '*/history';
 
 const historyHandlers = [
   rest.get(`${HISTORY}`, (req, res, ctx) => {
     const pageParam = Number(req.url.searchParams.get('page') ?? 0);
+    const filterParam = req.url.searchParams.get('filter');
+    const filter = filterParam
+      ? filterParam.slice(1, -1).split(',')
+      : ['lastWaterDate', 'waterCycle', 'location', 'wind', 'flowerpot', 'light'];
+
     const hasNext = pageParam < 6;
     const page = {
       page: pageParam,
       size: 20,
       elementSize: 100,
       hasNext,
-      data: hasNext ? generatePage(pageParam) : lastPage,
+      data: generatePage(pageParam, filter, hasNext),
     };
 
     return res(ctx.delay(100), ctx.status(200), ctx.json(page));
