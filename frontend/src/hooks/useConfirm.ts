@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
 import confirmState from 'store/atoms/confirm';
 import { ERROR } from 'constants/index';
@@ -20,29 +21,32 @@ interface ConfirmParams {
 const useConfirm = () => {
   const setConfirmState = useSetRecoilState(confirmState);
 
-  const confirm = (confirmText: ConfirmParams) => {
-    const { title = null, message } = confirmText;
+  const confirm = useCallback(
+    (confirmText: ConfirmParams) => {
+      const { title = null, message } = confirmText;
 
-    const userAnswer = new Promise<boolean>((resolve) => {
-      const resolveAndClose = (userAnswer: boolean) => {
-        resolve(userAnswer);
-        setConfirmState((prev) => ({ ...prev, isOpen: false }));
-      };
-
-      setConfirmState(({ isOpen: prevIsOpen }) => {
-        if (prevIsOpen) throw new Error(ERROR.simultaneousConfirm);
-
-        return {
-          title,
-          message,
-          isOpen: true,
-          setAnswer: resolveAndClose,
+      const userAnswer = new Promise<boolean>((resolve) => {
+        const resolveAndClose = (userAnswer: boolean) => {
+          resolve(userAnswer);
+          setConfirmState((prev) => ({ ...prev, isOpen: false }));
         };
-      });
-    });
 
-    return userAnswer;
-  };
+        setConfirmState(({ isOpen: prevIsOpen }) => {
+          if (prevIsOpen) throw new Error(ERROR.simultaneousConfirm);
+
+          return {
+            title,
+            message,
+            isOpen: true,
+            setAnswer: resolveAndClose,
+          };
+        });
+      });
+
+      return userAnswer;
+    },
+    [setConfirmState]
+  );
 
   return confirm;
 };
