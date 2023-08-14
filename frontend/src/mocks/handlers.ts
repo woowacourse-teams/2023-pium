@@ -201,11 +201,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
         );
       }
 
-      return res(
-        ctx.cookie('JSESSION', `${code}`),
-        ctx.status(200),
-        ctx.json({ sessionId: code.slice(0, 10) })
-      );
+      return res(ctx.cookie('JSESSION', `${code}`), ctx.status(200));
     }),
 
     rest.post('/member/me', (req, res, ctx) => {

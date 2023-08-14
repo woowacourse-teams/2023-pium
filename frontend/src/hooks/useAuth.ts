@@ -12,20 +12,18 @@ const useAuth = () => {
   const navigate = useNavigate();
 
   const userLogin = (code: string) =>
-    useQuery({
+    useQuery<null, Error, void>({
       queryKey: ['getSession'],
       queryFn: async () => {
         const response = await getSessionId(code);
 
         throwOnInvalidStatus(response);
-        const data = await response.json();
-
-        const { sessionId } = data;
-
+        const cookie = document.cookie;
+        const [_, cookieValue] = cookie.split('=');
+        const sessionId = cookieValue.slice(0, 10);
         sessionStorage.setItem('sessionId', JSON.stringify(sessionId));
         setUserInfo({ isLogin: true });
-
-        return data;
+        return null;
       },
       throwOnError: true,
       suspense: true,
@@ -36,7 +34,6 @@ const useAuth = () => {
       const response = await logout();
 
       throwOnInvalidStatus(response);
-      return await response.text();
     },
     onSuccess: () => {
       navigate(URL_PATH.main);
