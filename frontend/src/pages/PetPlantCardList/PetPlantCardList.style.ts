@@ -16,6 +16,7 @@ export const Title = styled.p`
 `;
 
 export const CardList = styled.div`
+  overflow-x: hidden;
   overflow-y: auto;
   display: grid;
   grid-column-gap: 16px;
