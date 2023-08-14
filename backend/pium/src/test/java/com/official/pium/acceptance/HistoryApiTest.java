@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import io.restassured.RestAssured;
@@ -283,6 +282,79 @@ public class HistoryApiTest extends AcceptanceTest {
                     petPlantResponse.jsonPath().getString("lastWaterDate")
             );
         }
+    }
+
+    @Nested
+    class 반려_식물_수정_후_반려_식물_단건_히스토리_조회_시_ {
+
+        @Test
+        void 수정된_정보를_포함한_단건_히스토리_정보_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            LocalDate lastWaterDate = LocalDate.of(2022, 1, 13);
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
+                    dictionaryPlant.getId(), lastWaterDate);
+            Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
+            PetPlantUpdateRequest petPlantUpdateRequest = PetPlantUpdateRequest.builder()
+                    .nickname("changedValue")
+                    .flowerpot("changedValue")
+                    .location("changedValue")
+                    .waterCycle(123)
+                    .light("changedValue")
+                    .wind("changedValue")
+                    .birthDate(LocalDate.of(1899, 1, 1))
+                    .lastWaterDate(petPlantCreateRequest.getLastWaterDate().minusDays(2))
+                    .build();
+            ExtractableResponse<Response> petPlantResponse = 반려_식물_단건_조회(반려_식물_ID);
+            반려_식물_수정_요청(반려_식물_ID, petPlantUpdateRequest);
+            ExtractableResponse<Response> response = RestAssured
+                    .given()
+                    .queryParam("petPlantId", 반려_식물_ID)
+                    .queryParam("size", 100)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .get("/history")
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.OK.value())
+                    .extract();
+
+            ExtractableResponse<Response> updatedPetPlantResponse = 반려_식물_단건_조회(반려_식물_ID);
+
+            assertSoftly(softly -> {
+                softly.assertThat(response.jsonPath().getList("data.content.previous"))
+                        .contains(
+                                petPlantResponse.jsonPath().getString("location"),
+                                petPlantResponse.jsonPath().getString("flowerpot"),
+                                petPlantResponse.jsonPath().getString("light"),
+                                petPlantResponse.jsonPath().getString("wind"),
+                                petPlantResponse.jsonPath().getString("waterCycle")
+                        );
+                softly.assertThat(response.jsonPath().getList("data.content.current"))
+                        .contains(
+                                updatedPetPlantResponse.jsonPath().getString("location"),
+                                updatedPetPlantResponse.jsonPath().getString("flowerpot"),
+                                updatedPetPlantResponse.jsonPath().getString("light"),
+                                updatedPetPlantResponse.jsonPath().getString("wind"),
+                                updatedPetPlantResponse.jsonPath().getString("waterCycle"),
+                                updatedPetPlantResponse.jsonPath().getString("lastWaterDate")
+                        );
+            });
+        }
+    }
+
+    private void 반려_식물_수정_요청(Long petPlantId, PetPlantUpdateRequest petPlantUpdateRequest) {
+        RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .body(petPlantUpdateRequest)
+                .log().all()
+                .header("Authorization", member.getEmail())
+                .when()
+                .patch("/pet-plants/{petPlantId}", petPlantId)
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value());
     }
 
     private void 반려_식물_물주기(Long petPlantId, LocalDate waterDate) {

@@ -11,6 +11,7 @@ export interface PetPlantDetails {
   light: string;
   wind: string;
   birthDate: DateFormat;
+  secondLastWaterDate: DateFormat | null;
   lastWaterDate: DateFormat;
   waterCycle: number;
   dday: number;

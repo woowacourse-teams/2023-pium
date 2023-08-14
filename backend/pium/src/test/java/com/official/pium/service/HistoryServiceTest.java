@@ -1,12 +1,17 @@
 package com.official.pium.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.HistoryResponse;
-import org.assertj.core.api.SoftAssertions;
+import java.time.LocalDate;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -14,12 +19,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-
-import java.time.LocalDate;
-import java.util.NoSuchElementException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -50,7 +49,7 @@ class HistoryServiceTest extends IntegrationTest {
         HistoryResponse historyResponse2 = historyService.read(petPlant.getId(),
                 PageRequest.of(1, 2, Sort.Direction.DESC, "date"), petPlant.getMember());
 
-        SoftAssertions.assertSoftly(
+        assertSoftly(
                 softly -> {
                     softly.assertThat(historyResponse1.getData().get(0).getDate()).isEqualTo(history4.getDate());
                     softly.assertThat(historyResponse1.getData().get(1).getDate()).isEqualTo(history3.getDate());

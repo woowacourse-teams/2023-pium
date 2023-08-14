@@ -377,4 +377,44 @@ class PetPlantTest {
 
         assertThat(petPlant.isNotOwnerOf(MemberFixture.그레이)).isTrue();
     }
+
+    @Test
+    void 마지막으로_물_준_날짜가_다르면_true_반환() {
+        LocalDate lastWaterDate = LocalDate.of(2022, 7, 1);
+        PetPlant petPlant = PetPlant.builder()
+                .member(MemberFixture.주노)
+                .nickname("크론")
+                .imageUrl("https://image2.com")
+                .light("자연광이 잘 드는 곳")
+                .location("거실")
+                .wind("바람 솔솔")
+                .flowerpot("정보 없음")
+                .waterCycle(7)
+                .birthDate(LocalDate.of(2022, 7, 1))
+                .lastWaterDate(lastWaterDate)
+                .nextWaterDate(LocalDate.of(2022, 7, 17))
+                .build();
+
+        assertThat(petPlant.isDifferentLastWaterDate(lastWaterDate.plusDays(3))).isTrue();
+    }
+
+    @Test
+    void 마지막으로_물_준_날짜가_같으면_false_반환() {
+        LocalDate lastWaterDate = LocalDate.of(2022, 7, 1);
+        PetPlant petPlant = PetPlant.builder()
+                .member(MemberFixture.주노)
+                .nickname("크론")
+                .imageUrl("https://image2.com")
+                .light("자연광이 잘 드는 곳")
+                .location("거실")
+                .wind("바람 솔솔")
+                .flowerpot("정보 없음")
+                .waterCycle(7)
+                .birthDate(LocalDate.of(2022, 7, 1))
+                .lastWaterDate(lastWaterDate)
+                .nextWaterDate(LocalDate.of(2022, 7, 17))
+                .build();
+
+        assertThat(petPlant.isDifferentLastWaterDate(lastWaterDate)).isFalse();
+    }
 }
