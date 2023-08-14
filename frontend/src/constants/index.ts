@@ -60,12 +60,6 @@ export const SEASONS: Record<Season, SeasonKor> = {
   winter: '겨울',
 } as const;
 
-export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
-  초보자: 'default',
-  경험자: 'primary',
-  전문가: 'accent',
-} as const;
-
 export const NUMBER = {
   maxCycleDate: 365,
   minCycleDate: 1,
@@ -75,3 +69,5 @@ export const NUMBER = {
 export const DAYS_OF_THE_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;
 
 export const NO_PREVIOUS_VALUE = 'EMPTY';
+
+export const NO_INFORMATION = '정보없음';
