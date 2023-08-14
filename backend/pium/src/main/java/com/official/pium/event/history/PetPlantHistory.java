@@ -31,12 +31,12 @@ public class PetPlantHistory {
 
     public List<HistoryEvent> generateCreateHistoryEvents(Long petPlantId, LocalDate date) {
         List<HistoryEvent> events = new ArrayList<>();
-        events.add(new HistoryEvent(petPlantId, EMPTY, location, HistoryType.LOCATION, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, flowerpot, HistoryType.FLOWERPOT, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, light, HistoryType.LIGHT, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, wind, HistoryType.WIND, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, waterCycle, HistoryType.WATER_CYCLE, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.parse(lastWaterDate)));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, location, HistoryType.LOCATION, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, flowerpot, HistoryType.FLOWERPOT, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, light, HistoryType.LIGHT, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, wind, HistoryType.WIND, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, waterCycle, HistoryType.WATER_CYCLE, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.parse(lastWaterDate)));
         return events;
     }
 }

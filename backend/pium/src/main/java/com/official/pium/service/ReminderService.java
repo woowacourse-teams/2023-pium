@@ -40,7 +40,7 @@ public class ReminderService {
         petPlant.water(reminderCreateRequest.getWaterDate());
         LocalDate currentWaterDate = petPlant.getLastWaterDate();
 
-        publisher.publishEvent(new HistoryEvent(petPlantId, previousWaterDate.toString(), currentWaterDate.toString(), HistoryType.LAST_WATER_DATE, currentWaterDate));
+        publisher.publishEvent(HistoryEvent.of(petPlantId, previousWaterDate.toString(), currentWaterDate.toString(), HistoryType.LAST_WATER_DATE, currentWaterDate));
     }
 
     @Transactional
