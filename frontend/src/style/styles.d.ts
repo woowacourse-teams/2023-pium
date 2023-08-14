@@ -13,6 +13,7 @@ declare module 'styled-components' {
       subLight: string;
       fontPrimaryForBackground: string;
       fontAccentForBackground: string;
+      water: string;
     };
     font: {
       emphasize: string;

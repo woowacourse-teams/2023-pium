@@ -15,6 +15,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
     daySince: 9,
 
     waterCycle: 10,
+    secondLastWaterDate: null,
     lastWaterDate: '2023-07-07',
     dday: 2,
     nextWaterDate: '2023-07-17',
@@ -36,6 +37,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
     daySince: 99,
 
     waterCycle: 5,
+    secondLastWaterDate: '2023-07-02',
     lastWaterDate: '2023-07-07',
     dday: -1,
     nextWaterDate: '2023-07-17',
@@ -57,6 +59,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
     daySince: 999,
 
     waterCycle: 10,
+    secondLastWaterDate: '2023-06-28',
     lastWaterDate: '2023-07-07',
     dday: 0,
     nextWaterDate: '2023-07-17',
@@ -78,6 +81,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
     daySince: 9999,
 
     waterCycle: 22,
+    secondLastWaterDate: '2023-06-28',
     lastWaterDate: getDateToString(),
     dday: -22,
     nextWaterDate: '2023-07-17',

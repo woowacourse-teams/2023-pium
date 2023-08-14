@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 interface DayProps {
   $isToday: boolean | null;
+  $isSelected: boolean;
   $isInRange: boolean;
 }
 
@@ -20,26 +21,31 @@ export const DaySpan = styled.span<DayProps>`
   width: 40px;
   height: 40px;
 
-  color: ${({ $isToday, $isInRange, theme: { color } }) => {
-    if ($isToday) return color.background;
+  color: ${({ $isSelected, $isInRange, theme: { color } }) => {
+    if ($isSelected) return color.background;
     if ($isInRange) return color.sub;
     return color.grayDark;
   }};
 
-  background: ${({ $isToday, $isInRange, theme: { color } }) => {
-    if ($isToday && $isInRange) return color.accent;
-    if ($isToday) return color.accent + '5F';
+  background: ${({ $isSelected, $isInRange, theme: { color } }) => {
+    if ($isSelected && $isInRange) return color.accent;
+    if ($isSelected) return color.accent + '5F';
     return color.background;
   }};
+  border: 2px solid
+    ${({ $isToday, $isInRange, theme: { color } }) => {
+      if ($isToday && $isInRange) return color.accent;
+      if ($isToday) return color.accent + '5F';
+      return 'none';
+    }};
   border-radius: 50%;
 
   &:hover {
-    color: ${({ $isToday, $isInRange, theme: { color } }) =>
-      $isToday || $isInRange ? color.background : color.grayDark};
-    background: ${({ $isToday, $isInRange, theme: { color } }) => {
-      if ($isToday && !$isInRange) return color.accent + '5F';
-      if (!$isToday && !$isInRange) return color.background;
-      return color.accent;
+    color: ${({ $isInRange, theme: { color } }) => {
+      if ($isInRange) return color.background;
+    }};
+    background: ${({ $isInRange, theme: { color } }) => {
+      if ($isInRange) return color.accent;
     }};
   }
 `;
