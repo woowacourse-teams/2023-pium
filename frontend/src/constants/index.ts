@@ -66,4 +66,6 @@ export const NUMBER = {
 
 export const DAYS_OF_THE_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;
 
+export const NO_PREVIOUS_VALUE = 'EMPTY';
+
 export const NO_INFORMATION = '정보없음';
