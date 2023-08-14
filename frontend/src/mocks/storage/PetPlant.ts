@@ -67,6 +67,15 @@ const giveWater = (petPlantId: PetPlantDetails['id'], lastWaterDate: string) => 
   sessionStorage.setItem(KEY, JSON.stringify(list));
 };
 
-const PetPlant = { getAll, add, find, mutate, giveWater };
+const remove = (petPlantId: PetPlantDetails['id']) => {
+  const list = getAll();
+  const newList = list.filter(({ id }) => id !== petPlantId);
+
+  if (list.length === newList.length) throw new Error('반려 식물로 등록되지 않은 식물이에요.');
+
+  sessionStorage.setItem(KEY, JSON.stringify(newList));
+};
+
+const PetPlant = { getAll, add, find, mutate, giveWater, remove };
 
 export default PetPlant;

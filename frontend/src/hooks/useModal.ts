@@ -39,7 +39,6 @@ const useModal = (initialState = false) => {
       dialog?.showModal();
       dialog?.addEventListener('click', closeOnBackdropClick);
 
-      body.querySelector('#root')?.setAttribute('aria-hidden', 'true');
       body.style.overflowY = 'hidden';
 
       window.addEventListener('keydown', keyDownHandler);
@@ -49,7 +48,6 @@ const useModal = (initialState = false) => {
       dialog?.close();
       dialog?.removeEventListener('click', closeOnBackdropClick);
 
-      body.querySelector('#root')?.setAttribute('aria-hidden', 'false');
       body.style.overflowY = 'auto';
 
       window.removeEventListener('keydown', keyDownHandler);
