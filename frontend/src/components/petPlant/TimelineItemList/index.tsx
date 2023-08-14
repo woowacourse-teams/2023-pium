@@ -31,21 +31,6 @@ const SETTING_KOREAN_MAP: Record<SettingType, string> = {
   wind: '바람 환경을',
 };
 
-const LIGHT_CUTBACK_MAP: Record<string, string> = {
-  '창문 밖에서 해를 받아요': '창문 밖',
-  '창문 안쪽에서 해를 받아요': '창문 안쪽',
-  '일반 조명 빛을 받아요': '일반 조명',
-  '식물용 조명 빛을 받아요': '식물용 조명',
-  '해를 못 받아요': '채광 없음',
-};
-
-const WIND_CUTBACK_MAP: Record<string, string> = {
-  '5m 내 창문이 있어요': '5m 내 창문',
-  '5m 보다 멀리 창문이 있어요': '5m 멀리 창문',
-  '창문이 없지만 바람이 통해요': '창문 없음',
-  '바람이 안 통해요': '바람 없음',
-};
-
 const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
   <Wrapper>
     {timelineItemList.map(({ type, previous, current }, index) => {
@@ -81,13 +66,6 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
             </Item>
           );
         default:
-          if (type === 'light') {
-            previous = previous ? LIGHT_CUTBACK_MAP[previous] : previous;
-            current = LIGHT_CUTBACK_MAP[current];
-          } else if (type === 'wind') {
-            previous = previous ? WIND_CUTBACK_MAP[previous] : previous;
-            current = WIND_CUTBACK_MAP[current];
-          }
           return (
             <Item key={type + index}>
               <IconArea>{SETTING_ICON_MAP[type]}</IconArea>
@@ -95,14 +73,8 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
                 <ItemHead>
                   {SETTING_KOREAN_MAP[type]} {previous ? '변경' : '설정'}했어요
                 </ItemHead>
-                <ItemContent>
-                  {previous && (
-                    <>
-                      {previous} <ArrowRightAlt />
-                    </>
-                  )}
-                  {current}
-                </ItemContent>
+                {previous && <ItemContent>{`'${previous}'에서`}</ItemContent>}
+                <ItemContent>{`'${current}'`}</ItemContent>
               </div>
             </Item>
           );
