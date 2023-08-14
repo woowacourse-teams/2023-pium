@@ -27,6 +27,7 @@ const add = ({ dictionaryPlantId, ...rest }: NewPetPlantRequest) => {
     id: getAll.length + 1,
     imageUrl: 'https://images.unsplash.com/photo-1516205651411-aef33a44f7c2',
     daySince: 0,
+    secondLastWaterDate: null,
     nextWaterDate: makeNextWaterDate(rest.lastWaterDate, rest.waterCycle),
     dday: -rest.waterCycle,
     dictionaryPlant: {
@@ -66,6 +67,15 @@ const giveWater = (petPlantId: PetPlantDetails['id'], lastWaterDate: string) => 
   sessionStorage.setItem(KEY, JSON.stringify(list));
 };
 
-const PetPlant = { getAll, add, find, mutate, giveWater };
+const remove = (petPlantId: PetPlantDetails['id']) => {
+  const list = getAll();
+  const newList = list.filter(({ id }) => id !== petPlantId);
+
+  if (list.length === newList.length) throw new Error('반려 식물로 등록되지 않은 식물이에요.');
+
+  sessionStorage.setItem(KEY, JSON.stringify(newList));
+};
+
+const PetPlant = { getAll, add, find, mutate, giveWater, remove };
 
 export default PetPlant;

@@ -19,13 +19,13 @@ const DateInput = (props: DateInputProps) => {
     max,
     validator,
   } = props;
-  const { isOpen, on, off, modalRef } = useModal();
+  const { isOpen, open, close, modalRef } = useModal();
 
   const dateCallbackHandler = (value: string) => {
     if (validator && !validator(value)) return;
 
     changeCallback?.(value);
-    off();
+    close();
   };
 
   return (
@@ -34,13 +34,13 @@ const DateInput = (props: DateInputProps) => {
         type="button"
         aria-label={props['aria-label']}
         $placeholder={value === ''}
-        onClick={on}
+        onClick={open}
       >
         {value ? convertDateKorYear(value) : placeholder}
       </DateValue>
-      <Modal isOpen={isOpen} ref={modalRef} closeModal={off}>
+      <Modal isOpen={isOpen} ref={modalRef} closeModal={close}>
         <Calendar
-          currentDate={value === '' ? new Date() : getStringToDate(value)}
+          selectedDate={value === '' ? null : getStringToDate(value)}
           dateCallback={dateCallbackHandler}
           min={min}
           max={max}

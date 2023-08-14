@@ -1,25 +1,25 @@
-import type { HistoryResponse } from 'types/history';
+import type { HistoryResponse, HistoryType } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
-import { useInfiniteQuery } from '@tanstack/react-query';
-import type { YearList } from 'pages/PetPlantTimeline/converter';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
+import type { YearList } from 'components/petPlant/Timeline/converter';
 import {
-  convertDateListToYearMap,
-  convertHistoryResponseListToDateList,
+  convertHistoryItemListToYearMap,
+  convertHistoryResponseListToHistoryItemList,
   convertYearMapToYearList,
-} from 'pages/PetPlantTimeline/converter';
+} from 'components/petPlant/Timeline/converter';
 import HistoryAPI, { HISTORY } from 'apis/history';
 
-const useYearList = (petPlantId: PetPlantDetails['id']) =>
+const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) =>
   useInfiniteQuery<
     HistoryResponse,
     Error,
     YearList,
-    [typeof HISTORY, PetPlantDetails['id']],
+    [typeof HISTORY, PetPlantDetails['id'], HistoryType[]],
     number
   >({
-    queryKey: [HISTORY, petPlantId],
+    queryKey: [HISTORY, petPlantId, filter],
     queryFn: async ({ pageParam }) => {
-      const response = await HistoryAPI.getPetPlant(petPlantId, pageParam);
+      const response = await HistoryAPI.getPetPlant(petPlantId, pageParam, 20, filter);
       const data = await response.json();
       return data;
     },
@@ -27,13 +27,14 @@ const useYearList = (petPlantId: PetPlantDetails['id']) =>
     getNextPageParam: ({ hasNext }, _allPages, lastPageParam) => {
       return hasNext ? lastPageParam + 1 : undefined;
     },
-    suspense: true,
     select: (data) => {
-      const dateList = convertHistoryResponseListToDateList(data.pages);
-      const yearMap = convertDateListToYearMap(dateList);
+      const historyItemList = convertHistoryResponseListToHistoryItemList(data.pages);
+      const yearMap = convertHistoryItemListToYearMap(historyItemList);
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData,
   });
 
 export default useYearList;

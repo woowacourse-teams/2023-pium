@@ -1,16 +1,16 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import type { ToastItem } from 'types/toast';
-import useAddToast from 'hooks/useAddToast';
-import useModal from 'hooks/useModal';
+import type { Meta, StoryObj } from '@storybook/react';
+import useToggle from 'hooks/useToggle';
 import Toast from '.';
 import ToastList from './ToastList';
+import useAddToast from 'hooks/useAddToast';
 
 const ToastItem = (props: ToastItem) => {
-  const { isOpen, on } = useModal();
+  const { isOn, on } = useToggle();
 
   setTimeout(on);
 
-  return <>{isOpen && <Toast {...props} />}</>;
+  return <>{isOn && <Toast {...props} />}</>;
 };
 
 const meta: Meta<typeof Toast> = {

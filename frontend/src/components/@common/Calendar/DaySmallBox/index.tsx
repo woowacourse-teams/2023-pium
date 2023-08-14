@@ -4,6 +4,7 @@ import { convertDateKorYear } from 'utils/date';
 interface DaySmallBoxProps {
   date?: number | string;
   isToday?: boolean;
+  isSelected?: boolean;
   currentDate?: Date;
   clickHandler?: () => void;
   isInRange?: boolean;
@@ -12,6 +13,7 @@ interface DaySmallBoxProps {
 const DaySmallBox = ({
   date,
   isToday = false,
+  isSelected,
   clickHandler,
   currentDate,
   isInRange = false,
@@ -29,6 +31,7 @@ const DaySmallBox = ({
       {date && (
         <DaySpan
           $isToday={isToday ?? null}
+          $isSelected={Boolean(isSelected)}
           role={clickHandler ? 'button' : 'none'}
           onClick={clickHandler}
           aria-label={ariaLabel}

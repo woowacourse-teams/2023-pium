@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const showModal = keyframes({
+  '0%': {
+    bottom: '-100%',
+  },
+
+  '100%': {
+    bottom: '0',
+  },
+});
 
 export const ModalBox = styled.dialog`
   position: fixed;
@@ -17,6 +27,8 @@ export const ModalBox = styled.dialog`
   background-color: ${({ theme: { color } }) => color.background};
   border: none;
   border-radius: 8px;
+
+  animation: ${showModal} 0.3s ease-out;
 
   &::backdrop {
     cursor: pointer;
