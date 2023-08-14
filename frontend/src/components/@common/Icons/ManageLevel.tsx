@@ -13,7 +13,7 @@ const PATH_DATA: Record<ManageLevel, string> = {
 
 const ManageLevel = (props: ManageLevelIconProps) => {
   const { level = '정보없음', ...rest } = props;
-  console.log(level);
+
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32" {...rest}>
       <path
