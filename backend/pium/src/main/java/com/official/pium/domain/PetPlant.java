@@ -183,6 +183,10 @@ public class PetPlant extends BaseEntity {
         return !Objects.equals(this.member, member);
     }
 
+    public boolean isDifferentLastWaterDate(LocalDate lastWaterDate) {
+        return !this.lastWaterDate.isEqual(lastWaterDate);
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) {
