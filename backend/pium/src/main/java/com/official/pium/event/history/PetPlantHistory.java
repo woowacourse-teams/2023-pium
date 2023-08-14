@@ -39,4 +39,37 @@ public class PetPlantHistory {
         events.add(HistoryEvent.of(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.parse(lastWaterDate)));
         return events;
     }
+
+    public List<HistoryEvent> generateUpdateHistoryEvents(Long petPlantId, PetPlantHistory other, LocalDate date) {
+        List<HistoryEvent> events = new ArrayList<>();
+
+        if (!location.equals(other.location)) {
+            events.add(HistoryEvent.of(petPlantId, location, other.location, HistoryType.LOCATION, date));
+        }
+
+        if (!flowerpot.equals(other.flowerpot)) {
+            events.add(HistoryEvent.of(petPlantId, flowerpot, other.flowerpot, HistoryType.FLOWERPOT, date));
+        }
+
+        if (!light.equals(other.light)) {
+            events.add(HistoryEvent.of(petPlantId, light, other.light, HistoryType.LIGHT, date));
+        }
+
+        if (!wind.equals(other.wind)) {
+            events.add(HistoryEvent.of(petPlantId, wind, other.wind, HistoryType.WIND, date));
+        }
+
+        if (!waterCycle.equals(other.waterCycle)) {
+            events.add(HistoryEvent.of(petPlantId, waterCycle, other.waterCycle, HistoryType.WATER_CYCLE, date));
+        }
+
+        return events;
+    }
+
+    public LastWaterDateEvent generateUpdateLastWaterDateHistoryEvent(Long petPlantId, LocalDate otherLastWaterDate) {
+        if (!lastWaterDate.equals(otherLastWaterDate.toString())) {
+            return new LastWaterDateEvent(petPlantId, otherLastWaterDate);
+        }
+        return null;
+    }
 }

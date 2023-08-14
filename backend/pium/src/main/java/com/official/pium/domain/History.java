@@ -57,6 +57,23 @@ public class History extends BaseEntity {
         this.historyContent = historyContent;
     }
 
+    public void updateHistoryContent(HistoryContent historyContent) {
+        validateHistoryContent(historyContent);
+        this.historyContent = historyContent;
+    }
+
+    private void validateHistoryContent(HistoryContent historyContent) {
+        if (historyContent == null) {
+            throw new IllegalArgumentException("히스토리 상세 정보는 null이 될 수 없습니다. historyContent: null");
+        }
+        if (historyContent.getPrevious() == null) {
+            throw new IllegalArgumentException("히스토리 상세 정보는 null이 될 수 없습니다. historyContent.previous: null");
+        }
+        if (historyContent.getCurrent() == null) {
+            throw new IllegalArgumentException("히스토리 상세 정보는 null이 될 수 없습니다. historyContent.current: null");
+        }
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) {

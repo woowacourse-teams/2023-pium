@@ -1,11 +1,13 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
+import { generatePath, useNavigate } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
 import House from 'components/@common/Icons/House';
 import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
+import Select from 'components/@common/Select';
 import {
   InfoArea,
   Bold,
@@ -24,8 +26,9 @@ import {
   HiddenLabel,
   NicknameInput,
   WaterCycleInput,
-  Select,
-  Button,
+  PrimaryButton,
+  SecondaryButton,
+  ButtonArea,
 } from './PetPlantEditForm.style';
 import useEditPetPlant from 'hooks/queries/pet/useEditPetPlant';
 import useAddToast from 'hooks/useAddToast';
@@ -35,8 +38,9 @@ import {
   getParticularDateFromSpecificDay,
   getDateToString,
   isDateFormat,
+  getDaysBetween,
 } from 'utils/date';
-import { NUMBER, OPTIONS } from 'constants/index';
+import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
 const PetPlantEditForm = (props: PetPlantDetails) => {
@@ -46,8 +50,8 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     nickname,
     dictionaryPlant: { name: dictName },
     birthDate,
-    daySince,
     waterCycle,
+    secondLastWaterDate,
     lastWaterDate,
     nextWaterDate,
     location,
@@ -70,11 +74,26 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const { mutate } = useEditPetPlant(petPlantId);
   const addToast = useAddToast();
 
+  const navigate = useNavigate();
   const nicknameInputId = useId();
   const waterCycleInputId = useId();
 
-  const isValidForm = (newForm: PetPlantForm) =>
-    newForm.nickname.trim() !== '' && newForm.waterCycle !== '';
+  const isValidForm = (newForm: PetPlantForm) => {
+    if (
+      newForm.birthDate === birthDate &&
+      newForm.flowerpot === flowerpot &&
+      newForm.lastWaterDate === lastWaterDate &&
+      newForm.light === light &&
+      newForm.location === location &&
+      newForm.nickname.trim() === nickname.trim() &&
+      Number(newForm.waterCycle) === waterCycle &&
+      newForm.wind === wind
+    ) {
+      return false;
+    }
+
+    return newForm.nickname.trim() !== '' && newForm.waterCycle !== '';
+  };
 
   const submit = () => {
     if (!isValidForm(form)) {
@@ -91,6 +110,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
     const requestForm = {
       ...form,
+      nickname: form.nickname.trim(),
       birthDate: formBirthDate,
       lastWaterDate: formLastWaterDate,
       waterCycle: Number(form.waterCycle),
@@ -102,6 +122,10 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const handleSubmitClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     submit();
+  };
+
+  const goToPetDetailsPage = () => {
+    navigate(generatePath(URL_PATH.petDetail, { id: petPlantId.toString() }), { replace: true });
   };
 
   const setNickname: React.ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -126,27 +150,29 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     });
   };
 
-  const setFlowerpot: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setFlowerpot = (value: string) => {
     dispatch({ type: 'SET', key: 'flowerpot', value });
   };
 
-  const setLocation: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setLocation = (value: string) => {
     dispatch({ type: 'SET', key: 'location', value });
   };
 
-  const setLight: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setLight = (value: string) => {
     dispatch({ type: 'SET', key: 'light', value });
   };
 
-  const setWind: React.ChangeEventHandler<HTMLSelectElement> = ({ target: { value } }) => {
+  const setWind = (value: string) => {
     dispatch({ type: 'SET', key: 'wind', value });
   };
 
   const newNextWaterDate = convertDateKorYear(
-    lastWaterDate === form.lastWaterDate
+    lastWaterDate === form.lastWaterDate && waterCycle === Number(form.waterCycle)
       ? nextWaterDate
       : getParticularDateFromSpecificDay(Number(form.waterCycle), new Date(form.lastWaterDate))
   );
+
+  const daySince = getDaysBetween(new Date(), form.birthDate) + 1;
 
   return (
     <Wrapper>
@@ -211,6 +237,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
               <DateInput
                 value={form.lastWaterDate}
                 changeCallback={setLastWaterDate}
+                min={getDateToString(
+                  new Date(
+                    secondLastWaterDate ??
+                      getParticularDateFromSpecificDay(-365, new Date(lastWaterDate))
+                  )
+                )}
                 max={getDateToString()}
               />
             </InputWrapper>
@@ -232,13 +264,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={location} onChange={setLocation}>
-              {OPTIONS.location.map((locationOption) => (
-                <option key={locationOption} value={locationOption}>
-                  {locationOption}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.location}
+                options={OPTIONS.location}
+                onChange={setLocation}
+                placeholder="화분이 놓인 장소"
+              />
+            </InputWrapper>
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
@@ -250,13 +283,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={flowerpot} onChange={setFlowerpot}>
-              {OPTIONS.flowerPot.map((pot) => (
-                <option key={pot} value={pot}>
-                  {pot}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.flowerpot}
+                options={OPTIONS.flowerPot}
+                onChange={setFlowerpot}
+                placeholder="화분 종류"
+              />
+            </InputWrapper>
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
@@ -268,13 +302,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={light} onChange={setLight}>
-              {OPTIONS.light.map((lightOption) => (
-                <option key={lightOption} value={lightOption}>
-                  {lightOption}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.light}
+                options={OPTIONS.light}
+                onChange={setLight}
+                placeholder="채광"
+              />
+            </InputWrapper>
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
@@ -286,18 +321,24 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
                 height="20px"
               />
             </EnvironmentTitle>
-            <Select defaultValue={wind} onChange={setWind}>
-              {OPTIONS.wind.map((windOption) => (
-                <option key={windOption} value={windOption}>
-                  {windOption}
-                </option>
-              ))}
-            </Select>
+            <InputWrapper $width="100%">
+              <Select
+                value={form.wind}
+                options={OPTIONS.wind}
+                onChange={setWind}
+                placeholder="통풍"
+              />
+            </InputWrapper>
           </EnvironmentItem>
         </Environment>
-        <Button type="submit" onClick={handleSubmitClick} disabled={!isValidForm(form)}>
-          다시 저장하기
-        </Button>
+        <ButtonArea>
+          <PrimaryButton type="submit" onClick={handleSubmitClick} disabled={!isValidForm(form)}>
+            저장하기
+          </PrimaryButton>
+          <SecondaryButton type="button" role="link" onClick={goToPetDetailsPage}>
+            취소하기
+          </SecondaryButton>
+        </ButtonArea>
       </Content>
     </Wrapper>
   );

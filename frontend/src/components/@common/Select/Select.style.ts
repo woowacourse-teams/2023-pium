@@ -21,7 +21,7 @@ export const Wrapper = styled.div`
   font: ${(props) => props.theme.font.input};
 `;
 
-export const SelectedValue = styled.p<SelectedValueProps>`
+export const SelectedValue = styled.button<SelectedValueProps>`
   display: flex;
   align-items: center;
   justify-content: center;
