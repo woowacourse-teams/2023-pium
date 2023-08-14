@@ -8,7 +8,9 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.PetPlantCreateRequest;
+import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
@@ -289,6 +291,8 @@ public class HistoryApiTest extends AcceptanceTest {
 
         @Test
         void 수정된_정보를_포함한_단건_히스토리_정보_반환() {
+            String sessionId = 로그인_요청();
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             LocalDate lastWaterDate = LocalDate.of(2022, 1, 13);
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
@@ -311,7 +315,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .queryParam("petPlantId", 반려_식물_ID)
                     .queryParam("size", 100)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -344,12 +348,14 @@ public class HistoryApiTest extends AcceptanceTest {
     }
 
     private void 반려_식물_수정_요청(Long petPlantId, PetPlantUpdateRequest petPlantUpdateRequest) {
+        String sessionId = 로그인_요청();
+
         RestAssured
                 .given()
                 .contentType(ContentType.JSON)
                 .body(petPlantUpdateRequest)
                 .log().all()
-                .header("Authorization", member.getEmail())
+                .sessionId(sessionId)
                 .when()
                 .patch("/pet-plants/{petPlantId}", petPlantId)
                 .then()

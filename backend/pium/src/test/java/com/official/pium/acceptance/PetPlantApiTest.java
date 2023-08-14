@@ -488,6 +488,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest createRequest = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
             Long 반려_식물_ID = 반려_식물_등록_요청(createRequest);
+            String sessionId = 로그인_요청();
 
             PetPlantUpdateRequest request = REQUEST.generatePetPlantUpdateRequest(
                     createRequest.getLastWaterDate().plusDays(2));
@@ -497,7 +498,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", 반려_식물_ID)
                     .then()
@@ -525,7 +526,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", 반려_식물_ID)
                     .then()
