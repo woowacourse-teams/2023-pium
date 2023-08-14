@@ -54,7 +54,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<GlobalExceptionResponse> handleIllegalStateException(IllegalStateException e) {
         String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
-        log.warn(message, e);
+        log.error(message, e);
         return ResponseEntity.internalServerError().body(exceptionResponse);
     }
 
