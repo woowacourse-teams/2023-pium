@@ -1,5 +1,5 @@
 import type { HistoryType } from 'types/history';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CheckButton from 'components/@common/CheckButton';
 import Stopwatch from 'components/@common/Icons/Stopwatch';
@@ -21,28 +21,47 @@ const PetPlantTimeline = () => {
 
   const [filter, setFilter] = useState<HistoryType[]>([]);
 
-  useEffect(() => {
-    const newFilter: HistoryType[] = [];
-    if (isCheckedWater) newFilter.push('lastWaterDate');
-    if (isCheckedWaterCycle) newFilter.push('waterCycle');
-    if (isCheckedSetting) newFilter.push('flowerpot', 'light', 'location');
-
-    setFilter(newFilter);
+  const onClickWater = () => {
     window.scrollTo(0, 0);
-  }, [isCheckedWater, isCheckedWaterCycle, isCheckedSetting]);
+    toggleWater();
+    if (isCheckedWater) {
+      setFilter(filter.filter((type) => type !== 'lastWaterDate'));
+    } else {
+      setFilter([...filter, 'lastWaterDate']);
+    }
+  };
 
+  const onClickWaterCycle = () => {
+    window.scrollTo(0, 0);
+    toggleWaterCycle();
+    if (isCheckedWaterCycle) {
+      setFilter(filter.filter((type) => type !== 'waterCycle'));
+    } else {
+      setFilter([...filter, 'waterCycle']);
+    }
+  };
+
+  const onClickSetting = () => {
+    window.scrollTo(0, 0);
+    toggleSetting();
+    if (isCheckedSetting) {
+      setFilter(filter.filter((type) => !['flowerpot', 'light', 'location'].includes(type)));
+    } else {
+      setFilter([...filter, 'flowerpot', 'light', 'location']);
+    }
+  };
   return (
     <>
       <Header>
-        <CheckButton checked={isCheckedWater} onClick={toggleWater}>
+        <CheckButton checked={isCheckedWater} onClick={onClickWater}>
           <Water fill={isCheckedWater ? 'white' : theme.color.water} aria-hidden />
           <ButtonLabel>물 준 날</ButtonLabel>
         </CheckButton>
-        <CheckButton checked={isCheckedWaterCycle} onClick={toggleWaterCycle}>
+        <CheckButton checked={isCheckedWaterCycle} onClick={onClickWaterCycle}>
           <Stopwatch stroke={isCheckedWaterCycle ? 'white' : 'black'} aria-hidden />
           <ButtonLabel>물 주기 설정</ButtonLabel>
         </CheckButton>
-        <CheckButton checked={isCheckedSetting} onClick={toggleSetting}>
+        <CheckButton checked={isCheckedSetting} onClick={onClickSetting}>
           <TreePlantPot stroke={isCheckedSetting ? 'white' : theme.color.primary} aria-hidden />
           <ButtonLabel>환경 설정</ButtonLabel>
         </CheckButton>
