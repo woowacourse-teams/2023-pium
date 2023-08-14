@@ -25,7 +25,11 @@ const ToggleExample = (props: ToggleExampleProps) => {
 
   const saveUserAnswer = async () => {
     const userAnswer = await confirm({ title, message });
-    setAnswer(userAnswer);
+    if (userAnswer && (await confirm({ message: '정말요?' }))) {
+      setAnswer(userAnswer);
+    } else {
+      setAnswer(false);
+    }
   };
 
   return (
