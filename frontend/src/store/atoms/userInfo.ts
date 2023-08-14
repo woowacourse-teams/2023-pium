@@ -4,10 +4,10 @@ interface UserInfo {
   isLogin: boolean;
 }
 
-const sessionId = JSON.parse(sessionStorage.getItem('sessionId') ?? 'none');
-console.log(sessionId, 'sessionId');
+const sessionId = sessionStorage.getItem('sessionId');
+
 const initialUserInfo: UserInfo = {
-  isLogin: sessionId === 'none' ? false : true,
+  isLogin: sessionId === null ? false : true,
 };
 
 export const userInfo = atom<UserInfo>({

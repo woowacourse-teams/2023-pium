@@ -21,8 +21,10 @@ const useAuth = () => {
         const data = await response.json();
 
         const { sessionId } = data;
-        sessionStorage.setItem('sessionId', sessionId);
+
+        sessionStorage.setItem('sessionId', JSON.stringify(sessionId));
         setUserInfo({ isLogin: true });
+
         return data;
       },
       throwOnError: true,
