@@ -16,7 +16,7 @@ const Confirm = () => {
 
   return (
     isOpen && (
-      <ConfirmBox ref={modalRef}>
+      <ConfirmBox ref={modalRef} key={Math.random()}>
         {title && <Title>{title}</Title>}
         <Message>{message}</Message>
         <ButtonArea>
