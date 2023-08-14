@@ -19,7 +19,7 @@ describe('반려 식물 등록하기', () => {
       .click()
 
       .get('p')
-      .contains('스킨답서스')
+      .contains('투명 피우미')
       .should('be.visible')
       .get('input')
       .type('{selectAll}{backspace}피우미')
