@@ -50,20 +50,20 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.internalServerError().body(exceptionResponse);
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleIllegalStateException(IllegalStateException e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.warn(message, e);
+        return ResponseEntity.internalServerError().body(exceptionResponse);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<GlobalExceptionResponse> handleIllegalArgumentException(IllegalArgumentException e) {
         String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
         log.info(message);
         return ResponseEntity.badRequest().body(exceptionResponse);
-    }
-
-    @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<GlobalExceptionResponse> handleIllegalStateException(IllegalStateException e) {
-        String message = e.getMessage();
-        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
-        log.warn(message);
-        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(NoSuchElementException.class)
