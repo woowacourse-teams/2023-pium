@@ -13,8 +13,6 @@ import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
-import com.official.pium.support.DictionaryPlantSupport;
-import com.official.pium.support.PetPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
@@ -25,18 +23,11 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 public class PetPlantApiTest extends AcceptanceTest {
-
-    @Autowired
-    protected PetPlantSupport petPlantSupport;
-
-    @Autowired
-    protected DictionaryPlantSupport dictionaryPlantSupport;
 
     @Nested
     class 반려_식물_등록_시_ {
@@ -45,31 +36,33 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
+            String sessionId = "invalidSessionId";
 
             RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", "invalidMember")
+                    .sessionId(sessionId)
                     .when()
                     .post("/pet-plants")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .assertThat().body("message", containsString("로그인이 필요합니다"));
         }
 
         @Test
         void 존재하지_않는_사전_식물을_참조하면_404_반환() {
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(3L);
+            String sessionId = 로그인_요청();
 
             RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .post("/pet-plants")
                     .then()
@@ -84,7 +77,6 @@ public class PetPlantApiTest extends AcceptanceTest {
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
 
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
-
             ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
             assertSoftly(softly -> {
@@ -106,6 +98,7 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 마지막으로_물_준_날짜가_오늘_이후면_400_반환() {
+            String sessionId = 로그인_요청();
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = PetPlantCreateRequest.builder()
                     .dictionaryPlantId(dictionaryPlant.getId())
@@ -124,7 +117,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .post("/pet-plants")
                     .then()
@@ -135,6 +128,8 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 생일이_오늘_이후면_400_반환() {
+            String sessionId = 로그인_요청();
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = PetPlantCreateRequest.builder()
                     .dictionaryPlantId(dictionaryPlant.getId())
@@ -153,7 +148,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .post("/pet-plants")
                     .then()
@@ -167,33 +162,33 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_단건_조회_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_404_반환() {
+        void 존재하지_않는_사용자라면_401_반환() {
+            String sessionId = "invalidSessionId";
+
             PetPlant petPlant = petPlantSupport.builder().build();
 
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", "invalidMember")
+                    .sessionId(sessionId)
                     .when()
                     .get("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .assertThat().body("message", containsString("로그인이 필요합니다"));
         }
 
         @Test
         void 본인의_반려_식물이_아니라면_400_반환() {
-            Member other = memberSupport.builder()
-                    .email("otherMember@gmail.com")
-                    .build();
+            String sessionId = 로그인_요청();
 
             PetPlant petPlant = petPlantSupport.builder().build();
 
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", other.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -230,10 +225,12 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
+            String sessionId = 로그인_요청();
+
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/pet-plants/{id}", 1)
                     .then()
@@ -244,12 +241,14 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
+            String sessionId = 로그인_요청();
+
             long invalidId = -1;
 
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/pet-plants/{id}", invalidId)
                     .then()
@@ -263,21 +262,25 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_전체_조회_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_404_반환() {
+        void 존재하지_않는_사용자라면_401_반환() {
+            String sessionId = "invalidSessionId";
+
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", "invalidMember")
+                    .sessionId(sessionId)
                     .when()
                     .get("/pet-plants")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .assertThat().body("message", containsString("로그인이 필요합니다"));
         }
 
         @Test
         void 반려_식물_목록_정보_반환() {
+            String sessionId = 로그인_요청();
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
             PetPlantCreateRequest request2 = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
@@ -288,7 +291,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             ExtractableResponse<Response> response = RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/pet-plants")
                     .then()
@@ -304,10 +307,12 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 반려_식물이_없으면_빈_배열_반환() {
+            String sessionId = 로그인_요청();
+
             ExtractableResponse<Response> response = RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/pet-plants")
                     .then()
@@ -324,7 +329,9 @@ public class PetPlantApiTest extends AcceptanceTest {
     class 반려_식물_수정_시_ {
 
         @Test
-        void 존재하지_않는_사용자라면_404_반환() {
+        void 존재하지_않는_사용자라면_401_반환() {
+            String sessionId = "invalidSessionId";
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
                     .dictionaryPlant(dictionaryPlant)
@@ -337,25 +344,24 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", "invalidMember")
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .assertThat().body("message", containsString("로그인이 필요합니다"));
         }
 
         @Test
         void 본인의_반려_식물이_아니라면_400_반환() {
+            String sessionId = 로그인_요청();
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
                     .member(member)
                     .dictionaryPlant(dictionaryPlant)
                     .build();
-            Member other = memberSupport.builder()
-                    .email("otherMember@gmail.com")
-                    .build();
 
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
 
@@ -364,7 +370,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", other.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -376,8 +382,11 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 수정_요청_정보로_업데이트() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            Member newMember = memberSupport.builder().kakaoId(54321L).build();
+            String sessionId = 로그인_요청();
+
             PetPlant petPlant = petPlantSupport.builder()
-                    .member(member)
+                    .member(newMember)
                     .dictionaryPlant(dictionaryPlant)
                     .build();
 
@@ -388,7 +397,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -414,8 +423,11 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 수정_요청_정보로_업데이트시_마지막_물주기_날짜가_직전_날짜와_같으면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            Member newMember = memberSupport.builder().kakaoId(54321L).build();
+            String sessionId = 로그인_요청();
+
             PetPlant petPlant = petPlantSupport.builder()
-                    .member(member)
+                    .member(newMember)
                     .dictionaryPlant(dictionaryPlant)
                     .lastWaterDate(LocalDate.of(2022, 4, 1))
                     .build();
@@ -432,7 +444,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -444,8 +456,11 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 수정_요청_정보로_업데이트시_마지막_물주기_날짜가_직전_날짜보다_이전이면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            Member newMember = memberSupport.builder().kakaoId(54321L).build();
+            String sessionId = 로그인_요청();
+
             PetPlant petPlant = petPlantSupport.builder()
-                    .member(member)
+                    .member(newMember)
                     .dictionaryPlant(dictionaryPlant)
                     .lastWaterDate(LocalDate.of(2022, 4, 1))
                     .build();
@@ -462,7 +477,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -473,6 +488,8 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
+            String sessionId = 로그인_요청();
+
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
 
             RestAssured
@@ -480,7 +497,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", 1)
                     .then()
@@ -491,6 +508,8 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
+            String sessionId = 로그인_요청();
+
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
             long invalidId = -1;
 
@@ -499,7 +518,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .patch("/pet-plants/{id}", invalidId)
                     .then()
@@ -514,6 +533,8 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 정상_삭제_후_204를_반환_및_조회_불가() {
+            String sessionId = 로그인_요청();
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
             Long 반려_식물_ID = 반려_식물_등록_요청(request);
@@ -521,7 +542,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .delete("/pet-plants/{id}", 반려_식물_ID)
                     .then()
                     .log().all()
@@ -530,7 +551,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .get("/pet-plants/{id}", 반려_식물_ID)
                     .then()
                     .log().all()
@@ -539,7 +560,9 @@ public class PetPlantApiTest extends AcceptanceTest {
         }
 
         @Test
-        void 존재하지_않는_사용자라면_404_반환() {
+        void 존재하지_않는_사용자라면_401_반환() {
+            String sessionId = "invalidSessionId";
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
                     .dictionaryPlant(dictionaryPlant)
@@ -548,30 +571,29 @@ public class PetPlantApiTest extends AcceptanceTest {
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", "invalidMember")
+                    .sessionId(sessionId)
                     .when()
                     .delete("/pet-plants/{id}", petPlant.getId())
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .assertThat().body("message", containsString("로그인이 필요합니다"));
         }
 
         @Test
         void 본인의_반려_식물이_아니라면_400_반환() {
+            String sessionId = 로그인_요청();
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
                     .member(member)
                     .dictionaryPlant(dictionaryPlant)
                     .build();
-            Member other = memberSupport.builder()
-                    .email("otherMember@gmail.com")
-                    .build();
 
             RestAssured
                     .given()
                     .log().all()
-                    .header("Authorization", other.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .delete("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -582,10 +604,12 @@ public class PetPlantApiTest extends AcceptanceTest {
     }
 
     private ExtractableResponse<Response> 반려_식물_단건_조회(Long petPlantId) {
+        String sessionId = 로그인_요청();
+
         return RestAssured
                 .given()
                 .log().all()
-                .header("Authorization", member.getEmail())
+                .sessionId(sessionId)
                 .when()
                 .get("/pet-plants/{id}", petPlantId)
                 .then()
@@ -595,12 +619,14 @@ public class PetPlantApiTest extends AcceptanceTest {
     }
 
     private Long 반려_식물_등록_요청(PetPlantCreateRequest request) {
+        String sessionId = 로그인_요청();
+
         String petPlantId = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
                 .body(request)
                 .log().all()
-                .header("Authorization", member.getEmail())
+                .sessionId(sessionId)
                 .when()
                 .post("/pet-plants")
                 .then()
@@ -613,6 +639,7 @@ public class PetPlantApiTest extends AcceptanceTest {
     }
 
     private void 반려_식물_물주기(PetPlant petPlant, LocalDate firstWaterDate) {
+        String sessionId = 로그인_요청();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
                 .waterDate(firstWaterDate)
                 .build();
@@ -622,11 +649,24 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .body(request)
                 .log().all()
-                .header("Authorization", member.getEmail())
+                .sessionId(sessionId)
                 .when()
                 .post("/reminders/{id}", petPlant.getId())
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.NO_CONTENT.value());
+    }
+
+    private String 로그인_요청() {
+        return RestAssured.given()
+                .log().all()
+                .queryParam("code", "authorizationCode")
+                .when()
+                .get("/login")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .sessionId();
     }
 }

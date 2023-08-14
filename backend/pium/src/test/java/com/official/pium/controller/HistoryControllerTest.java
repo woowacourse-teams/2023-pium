@@ -5,8 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -54,7 +53,7 @@ public class HistoryControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .param("petPlantId", "1")
                             .param("page", "1")
                             .param("size", "1")
@@ -65,16 +64,16 @@ public class HistoryControllerTest extends UITest {
                     .andDo(document("history/findByPetPlantId/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ),
+                            requestCookies(),
 
                             queryParameters(
                                     parameterWithName("petPlantId").description("반려 식물 ID"),
                                     parameterWithName("page").description("페이지 번호 (0부터 시작)"),
                                     parameterWithName("size").description("페이지 크기"),
-                                    parameterWithName("sort").description("(선택) 정렬 조건 : id / date(기본값) / historyCategory").optional(),
-                                    parameterWithName("direction").description("(선택) 정렬 방향 : ASC / DESC(기본값)").optional()
+                                    parameterWithName("sort").description(
+                                            "(선택) 정렬 조건 : id / date(기본값) / historyCategory").optional(),
+                                    parameterWithName("direction").description("(선택) 정렬 방향 : ASC / DESC(기본값)")
+                                            .optional()
                             ))
                     )
                     .andExpect(status().isOk())
@@ -88,7 +87,7 @@ public class HistoryControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .param("petPlantId", "")
                             .param("page", "1")
                             .param("size", "1")
@@ -105,7 +104,7 @@ public class HistoryControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .param("petPlantId", "0")
                             .param("page", "1")
                             .param("size", "1")

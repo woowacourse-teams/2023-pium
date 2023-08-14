@@ -53,7 +53,7 @@ class HistoryRepositoryTest extends RepositoryTest {
     @Test
     void 페이지_번호에_따른_다른_결과_조회() {
         //given
-        Member member = Member.builder().email("hello@aaa.com").build();
+        Member member = Member.builder().build();
         memberRepository.save(member);
         DictionaryPlant dictionaryPlant = saveDictionaryPlant();
         PetPlant petPlant = savePetPlant(member, dictionaryPlant);

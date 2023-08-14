@@ -74,7 +74,8 @@ ReminderServiceTest extends IntegrationTest {
                             .isEqualTo(List.of(newWaterDate.plusDays(petPlant1.getWaterCycle()), newWaterDate));
                     // findByHistoryCategory
                     softly.assertThat(historyRepository.findAll())
-                            .extracting(History::getPetPlant, history -> LocalDate.parse(history.getHistoryContent().getCurrent()))
+                            .extracting(History::getPetPlant,
+                                    history -> LocalDate.parse(history.getHistoryContent().getCurrent()))
                             .contains(tuple(updatedPetPlant, newWaterDate));
                 }
         );
@@ -108,7 +109,7 @@ ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물의_사용자와_물주기를_요청한_사용자가_다르면_예외_발생() {
-        Member otherMember = memberSupport.builder().build();
+        Member otherMember = memberSupport.builder().kakaoId(54321L).build();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
                 .waterDate(petPlant.getLastWaterDate().plusDays(3))
                 .build();
@@ -150,7 +151,7 @@ ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물의_사용자와_미루기를_요청한_사용자가_다르면_예외_발생() {
-        Member otherMember = memberSupport.builder().build();
+        Member otherMember = memberSupport.builder().kakaoId(54321L).build();
         ReminderUpdateRequest request = ReminderUpdateRequest.builder()
                 .nextWaterDate(petPlant.getNextWaterDate().plusDays(1))
                 .build();

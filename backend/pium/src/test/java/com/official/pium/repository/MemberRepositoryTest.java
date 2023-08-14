@@ -19,9 +19,7 @@ class MemberRepositoryTest extends RepositoryTest {
 
     @Test
     void 사용자_저장() {
-        Member member = Member.builder()
-                .email("hello@aaa.com")
-                .build();
+        Member member = Member.builder().build();
 
         Member save = memberRepository.save(member);
 
@@ -35,7 +33,7 @@ class MemberRepositoryTest extends RepositoryTest {
 
     @Test
     void 사용자_조회() {
-        Member member = Member.builder().email("hello@aaa.com").build();
+        Member member = Member.builder().build();
 
         Member saveMember = memberRepository.save(member);
 

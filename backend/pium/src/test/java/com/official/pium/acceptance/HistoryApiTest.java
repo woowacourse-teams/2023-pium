@@ -1,72 +1,64 @@
 package com.official.pium.acceptance;
 
-import com.official.pium.AcceptanceTest;
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.Member;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.ReminderCreateRequest;
-import com.official.pium.support.DictionaryPlantSupport;
-import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
-import java.util.List;
-
 import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 
+import com.official.pium.AcceptanceTest;
+import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.PetPlant;
+import com.official.pium.service.dto.PetPlantCreateRequest;
+import com.official.pium.service.dto.ReminderCreateRequest;
+import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
+import java.time.LocalDate;
+import java.util.List;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 public class HistoryApiTest extends AcceptanceTest {
-
-    @Autowired
-    protected DictionaryPlantSupport dictionaryPlantSupport;
 
     @Nested
     class 반려_식물_단건_히스토리_조회_시_ {
 
         @Test
         void 존재하지_않는_사용자라면_404_반환() {
+            String sessionId = "invalidSessionId";
+
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
-
             RestAssured
                     .given()
                     .queryParam("petPlantId", 반려_식물_ID)
                     .log().all()
-                    .header("Authorization", "invalidMember")
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
                     .log().all()
-                    .statusCode(HttpStatus.NOT_FOUND.value())
-                    .assertThat().body("message", containsString("회원을 찾을 수 없습니다."));
+                    .statusCode(HttpStatus.UNAUTHORIZED.value())
+                    .assertThat().body("message", containsString("로그인이 필요합니다"));
         }
 
         @Test
         void 본인의_반려_식물이_아니라면_400_반환() {
-            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
-            Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
-            Member other = memberSupport.builder()
-                    .email("otherMember@gmail.com")
-                    .build();
+            PetPlant petPlant = petPlantSupport.builder().build();
+            String sessionId = 로그인_요청();
 
             RestAssured
                     .given()
-                    .queryParam("petPlantId", 반려_식물_ID)
+                    .queryParam("petPlantId", petPlant.getId())
                     .log().all()
-                    .header("Authorization", other.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -77,11 +69,13 @@ public class HistoryApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_반려_식물이라면_404_반환() {
+            String sessionId = 로그인_요청();
+
             RestAssured
                     .given()
                     .queryParam("petPlantId", 1)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -93,12 +87,13 @@ public class HistoryApiTest extends AcceptanceTest {
         @Test
         void 잘못된_반려_식물_ID_라면_400_반환() {
             long invalidId = -1;
+            String sessionId = 로그인_요청();
 
             RestAssured
                     .given()
                     .queryParam("petPlantId", invalidId)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -111,6 +106,7 @@ public class HistoryApiTest extends AcceptanceTest {
         void 요청_페이지가_1보다_작으면_첫_페이지_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
+            String sessionId = 로그인_요청();
             int invalidPage = -1;
 
             RestAssured
@@ -118,7 +114,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .queryParam("petPlantId", 반려_식물_ID)
                     .queryParam("page", invalidPage)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -135,6 +131,7 @@ public class HistoryApiTest extends AcceptanceTest {
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
                     dictionaryPlant.getId(), lastWaterDate);
 
+            String sessionId = 로그인_요청();
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, baseDate.minusDays(8));
             반려_식물_물주기(반려_식물_ID, baseDate.minusDays(5));
@@ -147,7 +144,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .queryParam("page", 1000)
                     .queryParam("size", 1)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -172,6 +169,7 @@ public class HistoryApiTest extends AcceptanceTest {
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
                     dictionaryPlant.getId(), lastWaterDate);
 
+            String sessionId = 로그인_요청();
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, waterDate);
 
@@ -179,7 +177,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .given()
                     .queryParam("petPlantId", 반려_식물_ID)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -206,6 +204,7 @@ public class HistoryApiTest extends AcceptanceTest {
 
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             반려_식물_물주기(반려_식물_ID, waterDate);
+            String sessionId = 로그인_요청();
 
             int pageRequestParam = 0;
             int sizeRequestParam = 1;
@@ -215,7 +214,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .queryParam("page", pageRequestParam)
                     .queryParam("size", sizeRequestParam)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -241,6 +240,7 @@ public class HistoryApiTest extends AcceptanceTest {
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
                     dictionaryPlant.getId(), registeredDate);
 
+            String sessionId = 로그인_요청();
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
             int pageRequestParam = 0;
             int sizeRequestParam = 10;
@@ -250,7 +250,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .queryParam("page", pageRequestParam)
                     .queryParam("size", sizeRequestParam)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
@@ -286,6 +286,8 @@ public class HistoryApiTest extends AcceptanceTest {
     }
 
     private void 반려_식물_물주기(Long petPlantId, LocalDate waterDate) {
+        String sessionId = 로그인_요청();
+
         ReminderCreateRequest request = ReminderCreateRequest.builder()
                 .waterDate(waterDate)
                 .build();
@@ -295,7 +297,7 @@ public class HistoryApiTest extends AcceptanceTest {
                 .contentType(ContentType.JSON)
                 .body(request)
                 .log().all()
-                .header("Authorization", member.getEmail())
+                .sessionId(sessionId)
                 .when()
                 .post("/reminders/{id}", petPlantId)
                 .then()
@@ -304,12 +306,14 @@ public class HistoryApiTest extends AcceptanceTest {
     }
 
     private Long 반려_식물_등록_요청(PetPlantCreateRequest request) {
+        String sessionId = 로그인_요청();
+
         String petPlantId = RestAssured
                 .given()
                 .contentType(ContentType.JSON)
                 .body(request)
                 .log().all()
-                .header("Authorization", member.getEmail())
+                .sessionId(sessionId)
                 .when()
                 .post("/pet-plants")
                 .then()
@@ -337,15 +341,30 @@ public class HistoryApiTest extends AcceptanceTest {
     }
 
     private ExtractableResponse<Response> 반려_식물_단건_조회(Long petPlantId) {
+        String sessionId = 로그인_요청();
+
         return RestAssured
                 .given()
                 .log().all()
-                .header("Authorization", member.getEmail())
+                .sessionId(sessionId)
                 .when()
                 .get("/pet-plants/{id}", petPlantId)
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.OK.value())
                 .extract();
+    }
+
+    private String 로그인_요청() {
+        return RestAssured.given()
+                .log().all()
+                .queryParam("code", "authorizationCode")
+                .when()
+                .get("/login")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.OK.value())
+                .extract()
+                .sessionId();
     }
 }
