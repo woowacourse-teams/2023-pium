@@ -68,6 +68,11 @@ public class PetPlantService {
         Long dday = petPlant.calculateDday(LocalDate.now());
         Long daySince = petPlant.calculateDaySince(LocalDate.now());
 
+        Page<History> secondLastWaterDatePage = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(petPlant.getId(), HistoryType.LAST_WATER_DATE, PageRequest.of(1, 1, Direction.DESC, "date"));
+        if (!secondLastWaterDatePage.isEmpty()) {
+            LocalDate secondLastWaterDate = secondLastWaterDatePage.getContent().get(0).getDate();
+            return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince, secondLastWaterDate);
+        }
         return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 

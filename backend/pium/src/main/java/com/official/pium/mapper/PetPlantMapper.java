@@ -57,6 +57,31 @@ public class PetPlantMapper {
                 .build();
     }
 
+    public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long dday, Long daySince, LocalDate secondLastWaterDate) {
+        DictionaryPlant dictionaryPlant = petPlant.getDictionaryPlant();
+        return PetPlantResponse.builder()
+                .id(petPlant.getId())
+                .nickname(petPlant.getNickname())
+                .imageUrl(petPlant.getImageUrl())
+                .location(petPlant.getLocation())
+                .flowerpot(petPlant.getFlowerpot())
+                .light(petPlant.getLight())
+                .wind(petPlant.getWind())
+                .birthDate(petPlant.getBirthDate())
+                .lastWaterDate(petPlant.getLastWaterDate())
+                .waterCycle(petPlant.getWaterCycle())
+                .dday(dday)
+                .nextWaterDate(petPlant.getNextWaterDate())
+                .daySince(daySince)
+                .dictionaryPlant(PetPlantResponse.DictionaryPlantResponse.builder()
+                        .id(dictionaryPlant.getId())
+                        .name(dictionaryPlant.getName())
+                        .build()
+                )
+                .secondLastWaterDate(secondLastWaterDate)
+                .build();
+    }
+
     public static SinglePetPlantResponse toSinglePetPlantResponse(PetPlant petPlant, Long daySince) {
         return SinglePetPlantResponse.builder()
                 .id(petPlant.getId())

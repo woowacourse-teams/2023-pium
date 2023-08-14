@@ -31,12 +31,12 @@ public class PetPlantHistory {
 
     public List<HistoryEvent> generateCreateHistoryEvents(Long petPlantId, LocalDate date) {
         List<HistoryEvent> events = new ArrayList<>();
-        events.add(new HistoryEvent(petPlantId, EMPTY, location, HistoryType.LOCATION, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, flowerpot, HistoryType.FLOWERPOT, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, light, HistoryType.LIGHT, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, wind, HistoryType.WIND, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, waterCycle, HistoryType.WATER_CYCLE, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, location, HistoryType.LOCATION, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, flowerpot, HistoryType.FLOWERPOT, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, light, HistoryType.LIGHT, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, wind, HistoryType.WIND, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, waterCycle, HistoryType.WATER_CYCLE, date));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.parse(lastWaterDate)));
         return events;
     }
 
@@ -44,23 +44,23 @@ public class PetPlantHistory {
         List<HistoryEvent> events = new ArrayList<>();
 
         if (!location.equals(other.location)) {
-            events.add(new HistoryEvent(petPlantId, location, other.location, HistoryType.LOCATION, date));
+            events.add(HistoryEvent.of(petPlantId, location, other.location, HistoryType.LOCATION, date));
         }
 
         if (!flowerpot.equals(other.flowerpot)) {
-            events.add(new HistoryEvent(petPlantId, flowerpot, other.flowerpot, HistoryType.FLOWERPOT, date));
+            events.add(HistoryEvent.of(petPlantId, flowerpot, other.flowerpot, HistoryType.FLOWERPOT, date));
         }
 
         if (!light.equals(other.light)) {
-            events.add(new HistoryEvent(petPlantId, light, other.light, HistoryType.LIGHT, date));
+            events.add(HistoryEvent.of(petPlantId, light, other.light, HistoryType.LIGHT, date));
         }
 
         if (!wind.equals(other.wind)) {
-            events.add(new HistoryEvent(petPlantId, wind, other.wind, HistoryType.WIND, date));
+            events.add(HistoryEvent.of(petPlantId, wind, other.wind, HistoryType.WIND, date));
         }
 
         if (!waterCycle.equals(other.waterCycle)) {
-            events.add(new HistoryEvent(petPlantId, waterCycle, other.waterCycle, HistoryType.WATER_CYCLE, date));
+            events.add(HistoryEvent.of(petPlantId, waterCycle, other.waterCycle, HistoryType.WATER_CYCLE, date));
         }
 
         return events;
