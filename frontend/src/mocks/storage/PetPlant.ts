@@ -66,7 +66,7 @@ const giveWater = (petPlantId: PetPlantDetails['id'], lastWaterDate: string) => 
   sessionStorage.setItem(KEY, JSON.stringify(list));
 };
 
-const erase = (petPlantId: PetPlantDetails['id']) => {
+const remove = (petPlantId: PetPlantDetails['id']) => {
   const list = getAll();
   const newList = list.filter(({ id }) => id !== petPlantId);
 
@@ -75,6 +75,6 @@ const erase = (petPlantId: PetPlantDetails['id']) => {
   sessionStorage.setItem(KEY, JSON.stringify(newList));
 };
 
-const PetPlant = { getAll, add, find, mutate, giveWater, erase };
+const PetPlant = { getAll, add, find, mutate, giveWater, remove };
 
 export default PetPlant;

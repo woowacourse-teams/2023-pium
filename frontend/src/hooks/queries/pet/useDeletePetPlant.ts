@@ -11,7 +11,7 @@ const useDeletePetPlant = () => {
 
   return useMutation({
     mutationFn: async (petPlantId: PetPlantDetails['id']) => {
-      const response = await PetAPI.erase(petPlantId);
+      const response = await PetAPI.remove(petPlantId);
       if (response.status !== 204) throw new Error('Edit failed');
     },
 

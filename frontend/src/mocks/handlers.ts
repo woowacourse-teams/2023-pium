@@ -97,7 +97,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
 
       const { petPlantId } = req.params;
-      PetPlant.erase(Number(petPlantId));
+      PetPlant.remove(Number(petPlantId));
 
       return res(ctx.delay(delay), ctx.status(204));
     }),

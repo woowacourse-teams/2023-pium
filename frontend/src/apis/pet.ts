@@ -38,7 +38,7 @@ const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
   });
 };
 
-const erase = (petPlantId: PetPlantDetails['id']) => {
+const remove = (petPlantId: PetPlantDetails['id']) => {
   return fetch(`${PET}/${petPlantId}`, {
     method: 'DELETE',
     headers,
@@ -50,7 +50,7 @@ const PetAPI = {
   register,
   getDetails,
   edit,
-  erase,
+  remove,
 };
 
 export default PetAPI;
