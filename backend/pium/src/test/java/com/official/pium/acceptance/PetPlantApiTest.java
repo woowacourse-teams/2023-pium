@@ -473,6 +473,71 @@ public class PetPlantApiTest extends AcceptanceTest {
         }
 
         @Test
+        void 수정_요청_시_변경된_정보만_반영() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            PetPlantCreateRequest createRequest = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
+            Long 반려_식물_ID = 반려_식물_등록_요청(createRequest);
+
+            PetPlantUpdateRequest request = REQUEST.generatePetPlantUpdateRequest(createRequest.getLastWaterDate().plusDays(2));
+
+            RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", 반려_식물_ID)
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.OK.value());
+
+            ExtractableResponse<Response> petPlantResponse = 반려_식물_단건_조회(반려_식물_ID);
+
+            String lastWaterDate = petPlantResponse.jsonPath().getString("lastWaterDate");
+
+            // lastWaterDate 만 변경되지 않음
+            PetPlantUpdateRequest request2 = PetPlantUpdateRequest.builder()
+                    .nickname("ttttestttt")
+                    .flowerpot("ttttestttt")
+                    .location("ttttestttt")
+                    .waterCycle(44)
+                    .light("ttttestttt")
+                    .wind("ttttestttt")
+                    .birthDate(LocalDate.of(2000, 1, 3))
+                    .lastWaterDate(LocalDate.parse(lastWaterDate))
+                    .build();
+
+            RestAssured
+                    .given()
+                    .contentType(ContentType.JSON)
+                    .body(request)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .patch("/pet-plants/{id}", 반려_식물_ID)
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.OK.value());
+
+
+            ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
+
+            assertSoftly(softly -> {
+                softly.assertThat(response.jsonPath().getString("nickname")).isEqualTo(request.getNickname());
+                softly.assertThat(response.jsonPath().getString("flowerpot")).isEqualTo(request.getFlowerpot());
+                softly.assertThat(response.jsonPath().getString("location")).isEqualTo(request.getLocation());
+                softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
+                softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
+                softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
+                softly.assertThat(response.jsonPath().getString("birthDate"))
+                        .isEqualTo(request.getBirthDate().toString());
+                softly.assertThat(response.jsonPath().getString("lastWaterDate"))
+                        .isEqualTo(request2.getLastWaterDate().toString());
+            });
+        }
+
+        @Test
         void 수정_요청_정보로_업데이트시_마지막_물주기_날짜가_직전_날짜와_같으면_400_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
