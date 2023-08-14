@@ -5,8 +5,6 @@ import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.event.history.HistoryEvent;
 import com.official.pium.mapper.PetPlantMapper;
-import com.official.pium.repository.HistoryCategoryRepository;
-import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.ReminderCreateRequest;
@@ -28,8 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReminderService {
 
     private final PetPlantRepository petPlantRepository;
-    private final HistoryRepository historyRepository;
-    private final HistoryCategoryRepository historyCategoryRepository;
     private final ApplicationEventPublisher publisher;
 
     @Transactional
@@ -40,11 +36,11 @@ public class ReminderService {
 
         checkOwner(petPlant, member);
 
-        String previousWaterDate = petPlant.getLastWaterDate().toString();
+        LocalDate previousWaterDate = petPlant.getLastWaterDate();
         petPlant.water(reminderCreateRequest.getWaterDate());
         LocalDate currentWaterDate = petPlant.getLastWaterDate();
 
-        publisher.publishEvent(new HistoryEvent(petPlantId, previousWaterDate, currentWaterDate.toString(), HistoryType.LAST_WATER_DATE, currentWaterDate));
+        publisher.publishEvent(new HistoryEvent(petPlantId, previousWaterDate.toString(), currentWaterDate.toString(), HistoryType.LAST_WATER_DATE, currentWaterDate));
     }
 
     @Transactional
