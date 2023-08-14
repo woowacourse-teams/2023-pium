@@ -1,3 +1,5 @@
+import { getDateToString } from 'utils/date';
+
 const PET_PLANT_CARD_LIST = [
   {
     id: 2,
@@ -20,7 +22,7 @@ const PET_PLANT_CARD_LIST = [
     nickname: '참새',
     imageUrl: 'https://images.unsplash.com/photo-1555841769-75541ae4fc9f',
     dictionaryPlantName: '참새',
-    birthDate: '1999-12-16',
+    birthDate: getDateToString(),
     daySince: 1,
   },
   {

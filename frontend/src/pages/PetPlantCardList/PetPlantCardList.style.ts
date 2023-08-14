@@ -16,12 +16,13 @@ export const Title = styled.p`
 `;
 
 export const CardList = styled.div`
+  overflow-x: hidden;
   overflow-y: auto;
   display: grid;
   grid-column-gap: 16px;
   grid-row-gap: 32px;
   grid-template-columns: repeat(auto-fill, 160px);
-  grid-template-rows: 224px;
+  grid-template-rows: repeat(auto-fill, 224px);
   justify-content: space-evenly;
 
   width: 100%;

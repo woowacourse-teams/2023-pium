@@ -46,7 +46,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
 
       const { id } = req.params;
-      const data = { ...DICTIONARY_PLANT_DATA, id: Number(id) };
+      const data = { ...DICTIONARY_PLANT_DATA[Number(id) % 2], id: Number(id) };
 
       return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
     }),
