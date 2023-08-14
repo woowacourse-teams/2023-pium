@@ -45,7 +45,10 @@ export const convertHistoryItemListToYearMap = (historyItemList: HistoryItem[]) 
 export const convertYearMapToYearList = (yearMap: YearMap) => {
   const yearList: YearList = convertMapToList(yearMap).map(([year, monthMap]) => [
     year,
-    convertMapToList(monthMap).map(([month, dayMap]) => [month, convertMapToList(dayMap)]),
+    convertMapToList(monthMap).map(([month, dayMap]) => [
+      month,
+      convertMapToList(dayMap).map(([day, historyItemList]) => [day, historyItemList.reverse()]),
+    ]),
   ]);
 
   return yearList;
