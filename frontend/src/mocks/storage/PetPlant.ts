@@ -27,6 +27,7 @@ const add = ({ dictionaryPlantId, ...rest }: NewPetPlantRequest) => {
     id: getAll.length + 1,
     imageUrl: 'https://images.unsplash.com/photo-1516205651411-aef33a44f7c2',
     daySince: 0,
+    secondLastWaterDate: null,
     nextWaterDate: makeNextWaterDate(rest.lastWaterDate, rest.waterCycle),
     dday: -rest.waterCycle,
     dictionaryPlant: {

@@ -166,6 +166,7 @@ export const EditLink = styled(StyledLink)`
   margin-right: auto;
   margin-left: 0;
 
+  font-size: 1.2rem;
   color: ${({ theme }) => theme.color.grayDark};
 
   transition: color 0.2s linear;

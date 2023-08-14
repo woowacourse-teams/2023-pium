@@ -3,6 +3,7 @@ import { styled } from 'styled-components';
 
 export const Wrapper = styled.nav`
   position: fixed;
+  z-index: ${(props) => props.theme.zIndex.fixed};
   bottom: 0;
 
   display: flex;

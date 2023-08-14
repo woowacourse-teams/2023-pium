@@ -1,33 +1,18 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import useToggle from './useToggle';
 
 const useModal = (initialState = false) => {
-  const [isOpen, setIsOpen] = useState(initialState);
+  const { isOn: isOpen, on: open, off: close } = useToggle(initialState);
   const modalRef = useRef<HTMLDialogElement>(null);
   const bodyRef = useRef(document.body);
-
-  const on = useCallback(() => {
-    setIsOpen(true);
-  }, []);
-
-  const off = useCallback(() => {
-    setIsOpen(false);
-  }, []);
-
-  const onTime = useCallback(
-    (ms: number) => {
-      on();
-      setTimeout(off, ms);
-    },
-    [on, off]
-  );
 
   const keyDownHandler = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        off();
+        close();
       }
     },
-    [off]
+    [close]
   );
 
   const closeOnBackdropClick = useCallback(
@@ -41,9 +26,9 @@ const useModal = (initialState = false) => {
         dialog.left <= event.clientX &&
         event.clientX <= dialog.left + dialog.width;
 
-      if (!isClickInsideDialog) off();
+      if (!isClickInsideDialog) close();
     },
-    [off]
+    [close]
   );
 
   useEffect(() => {
@@ -67,9 +52,9 @@ const useModal = (initialState = false) => {
 
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [isOpen, on, off, keyDownHandler, closeOnBackdropClick]);
+  }, [isOpen, open, close, keyDownHandler, closeOnBackdropClick]);
 
-  return { isOpen, on, off, onTime, modalRef };
+  return { isOpen, open, close, modalRef };
 };
 
 export default useModal;
