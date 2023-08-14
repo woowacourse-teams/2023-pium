@@ -1,12 +1,11 @@
 package com.official.pium.event.history;
 
 import com.official.pium.domain.HistoryType;
-import lombok.Builder;
-import lombok.Getter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class PetPlantHistory {
@@ -39,5 +38,38 @@ public class PetPlantHistory {
         events.add(new HistoryEvent(petPlantId, EMPTY, waterCycle, HistoryType.WATER_CYCLE, date));
         events.add(new HistoryEvent(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, date));
         return events;
+    }
+
+    public List<HistoryEvent> generateUpdateHistoryEvents(Long petPlantId, PetPlantHistory other, LocalDate date) {
+        List<HistoryEvent> events = new ArrayList<>();
+
+        if (!location.equals(other.location)) {
+            events.add(new HistoryEvent(petPlantId, location, other.location, HistoryType.LOCATION, date));
+        }
+
+        if (!flowerpot.equals(other.flowerpot)) {
+            events.add(new HistoryEvent(petPlantId, flowerpot, other.flowerpot, HistoryType.FLOWERPOT, date));
+        }
+
+        if (!light.equals(other.light)) {
+            events.add(new HistoryEvent(petPlantId, light, other.light, HistoryType.LIGHT, date));
+        }
+
+        if (!wind.equals(other.wind)) {
+            events.add(new HistoryEvent(petPlantId, wind, other.wind, HistoryType.WIND, date));
+        }
+
+        if (!waterCycle.equals(other.waterCycle)) {
+            events.add(new HistoryEvent(petPlantId, waterCycle, other.waterCycle, HistoryType.WATER_CYCLE, date));
+        }
+
+        return events;
+    }
+
+    public LastWaterDateEvent generateUpdateLastWaterDateHistoryEvent(Long petPlantId, LocalDate otherLastWaterDate) {
+        if (!lastWaterDate.equals(otherLastWaterDate.toString())) {
+            return new LastWaterDateEvent(petPlantId, otherLastWaterDate);
+        }
+        return null;
     }
 }
