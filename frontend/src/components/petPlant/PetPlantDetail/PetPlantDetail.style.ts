@@ -158,7 +158,7 @@ export const EnvironmentTitle = styled.span`
   border-radius: 50%;
 `;
 
-export const EditLink = styled(Link)`
+export const EditLink = styled(StyledLink)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -171,8 +171,21 @@ export const EditLink = styled(Link)`
 
   transition: color 0.2s linear;
 
+  &:focus {
+    color: ${({ theme }) => theme.color.primary};
+  }
+`;
+
+export const DeleteButton = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.6rem;
+  color: ${({ theme }) => theme.color.grayDark};
+
   &:focus,
   &:hover {
-    color: ${({ theme }) => theme.color.primary};
+    color: ${({ theme }) => theme.color.accent};
   }
 `;

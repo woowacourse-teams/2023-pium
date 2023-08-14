@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import Error from 'pages/Error';
+import Confirm from 'components/@common/Confirm';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
 import ToastList from 'components/@common/Toast/ToastList';
 import { GlobalStyle } from 'style/Global.style';
@@ -20,6 +21,7 @@ const App = () => {
           <ErrorBoundary fallback={<Error />}>
             <RecoilRoot>
               <RouterProvider router={router} />
+              <Confirm />
               <ToastList />
             </RecoilRoot>
           </ErrorBoundary>
