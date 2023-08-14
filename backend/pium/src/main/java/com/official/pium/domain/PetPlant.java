@@ -183,6 +183,10 @@ public class PetPlant extends BaseEntity {
         return !Objects.equals(this.member, member);
     }
 
+    public boolean isDifferentLastWaterDate(LocalDate lastWaterDate) {
+        return !this.lastWaterDate.isEqual(lastWaterDate);
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) {
@@ -208,9 +212,5 @@ public class PetPlant extends BaseEntity {
     public final int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer()
                 .getPersistentClass().hashCode() : getClass().hashCode();
-    }
-
-    public boolean isDifferentLastWaterDate(LocalDate lastWaterDate) {
-        return !this.lastWaterDate.isEqual(lastWaterDate);
     }
 }
