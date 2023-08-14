@@ -137,7 +137,7 @@ public class PetPlantService {
         Page<History> currentHistory = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(petPlant.getId(), HistoryType.LAST_WATER_DATE, PageRequest.of(pageNumber, pageSize, Direction.DESC, "date"));
         List<History> content = currentHistory.getContent();
 
-        if (!content.isEmpty()) {
+        if (!content.isEmpty() && !updateRequest.getLastWaterDate().isEqual(petPlant.getLastWaterDate())) {
             History history = content.get(0);
             LocalDate prevDate = history.getDate();
             if (updateRequest.getLastWaterDate().isBefore(prevDate) || updateRequest.getLastWaterDate().isEqual(prevDate)) {
