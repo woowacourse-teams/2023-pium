@@ -1,6 +1,7 @@
 import type { HistoryType } from 'types/history';
 import ArrowRightAlt from 'components/@common/Icons/ArrowRightAlt';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
+import House from 'components/@common/Icons/House';
 import Stopwatch from 'components/@common/Icons/Stopwatch';
 import Sun from 'components/@common/Icons/Sun';
 import Water from 'components/@common/Icons/Water';
@@ -18,7 +19,8 @@ const HISTORY_TYPE_ICON_MAP: Record<Exclude<HistoryType, 'lastWaterDate'>, React
   waterCycle: <Stopwatch />,
   flowerpot: <Flowerpot color={theme.color.primary} />,
   light: <Sun color={theme.color.primary} />,
-  location: <Wind color={theme.color.primary} />,
+  location: <House color={theme.color.primary} />,
+  wind: <Wind color={theme.color.primary} />,
 };
 
 const HISTORY_TYPE_KOREAN_MAP: Record<Exclude<HistoryType, 'lastWaterDate'>, string> = {
@@ -26,6 +28,7 @@ const HISTORY_TYPE_KOREAN_MAP: Record<Exclude<HistoryType, 'lastWaterDate'>, str
   flowerpot: '화분을 ',
   light: '채광을 ',
   location: '위치를 ',
+  wind: '바람 환경을 ',
 };
 
 const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (

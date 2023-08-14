@@ -45,9 +45,11 @@ const PetPlantTimeline = () => {
     window.scrollTo(0, 0);
     toggleSetting();
     if (isCheckedSetting) {
-      setFilter(filter.filter((type) => !['flowerpot', 'light', 'location'].includes(type)));
+      setFilter(
+        filter.filter((type) => !['flowerpot', 'light', 'location', 'wind'].includes(type))
+      );
     } else {
-      setFilter([...filter, 'flowerpot', 'light', 'location']);
+      setFilter(filter.concat(['flowerpot', 'light', 'location', 'wind']));
     }
   };
   return (

@@ -1,6 +1,6 @@
 import type { DataResponse } from './DataResponse';
 import type { DateFormat } from './date';
-import { PetPlantDetails } from './petPlant';
+import type { PetPlantDetails } from './petPlant';
 
 export interface HistoryResponse extends DataResponse<HistoryItem[]> {
   page: number;
@@ -20,5 +20,5 @@ export interface HistoryItem {
 
 export type HistoryType = keyof Pick<
   PetPlantDetails,
-  'lastWaterDate' | 'waterCycle' | 'flowerpot' | 'light' | 'location'
+  'lastWaterDate' | 'waterCycle' | 'flowerpot' | 'light' | 'location' | 'wind'
 >;
