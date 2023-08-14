@@ -27,6 +27,8 @@ export const ERROR = {
   dateFormat: '주어진 값은 DateFormat 타입으로 변환할 수 없습니다.',
   yearFormat: '주어진 연도는 20세기 또는 21세기가 아닙니다.',
   invalidDate: '올바른 날짜 형식이 아닙니다.',
+  simultaneousConfirm:
+    'confirm은 동시에 열 수 없습니다. 연속적인 confirm일 경우 await을 사용했는지 확인해 주세요.',
 } as const;
 
 export const GUIDE = {

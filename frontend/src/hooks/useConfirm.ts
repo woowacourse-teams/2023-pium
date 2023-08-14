@@ -1,5 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import confirmState from 'store/atoms/confirm';
+import { ERROR } from 'constants/index';
 
 interface ConfirmParams {
   message: string;
@@ -28,11 +29,15 @@ const useConfirm = () => {
         setConfirmState((prev) => ({ ...prev, isOpen: false }));
       };
 
-      setConfirmState({
-        title,
-        message,
-        isOpen: true,
-        setAnswer: resolveAndClose,
+      setConfirmState(({ isOpen: prevIsOpen }) => {
+        if (prevIsOpen) throw new Error(ERROR.simultaneousConfirm);
+
+        return {
+          title,
+          message,
+          isOpen: true,
+          setAnswer: resolveAndClose,
+        };
       });
     });
 
