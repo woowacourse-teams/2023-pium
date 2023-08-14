@@ -209,4 +209,8 @@ public class PetPlant extends BaseEntity {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer()
                 .getPersistentClass().hashCode() : getClass().hashCode();
     }
+
+    public boolean isDifferentLastWaterDate(LocalDate lastWaterDate) {
+        return !this.lastWaterDate.isEqual(lastWaterDate);
+    }
 }
