@@ -39,14 +39,12 @@ const useConfirmModal = () => {
     };
 
     dialog.showModal();
-    body.querySelector('#root')?.setAttribute('aria-hidden', 'true');
     body.style.overflowY = 'hidden';
     window.addEventListener('keydown', closeOnEsc);
     window.addEventListener('popstate', close);
 
     return () => {
       dialog.close();
-      body.querySelector('#root')?.setAttribute('aria-hidden', 'false');
       body.style.overflowY = 'auto';
       window.removeEventListener('keydown', closeOnEsc);
       window.removeEventListener('popstate', close);

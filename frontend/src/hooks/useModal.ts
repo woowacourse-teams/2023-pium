@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const useModal = (initialState = false) => {
   const [isOpen, setIsOpen] = useState(initialState);
   const modalRef = useRef<HTMLDialogElement>(null);
+  const bodyRef = useRef(document.body);
 
   const on = useCallback(() => {
     setIsOpen(true);
@@ -45,8 +46,6 @@ const useModal = (initialState = false) => {
     [off]
   );
 
-  const bodyRef = useRef(document.body);
-
   useEffect(() => {
     const dialog = modalRef.current;
     const body = bodyRef.current;
@@ -55,7 +54,6 @@ const useModal = (initialState = false) => {
       dialog?.showModal();
       dialog?.addEventListener('click', closeOnBackdropClick);
 
-      body.querySelector('#root')?.setAttribute('aria-hidden', 'true');
       body.style.overflowY = 'hidden';
 
       window.addEventListener('keydown', keyDownHandler);
@@ -65,7 +63,6 @@ const useModal = (initialState = false) => {
       dialog?.close();
       dialog?.removeEventListener('click', closeOnBackdropClick);
 
-      body.querySelector('#root')?.setAttribute('aria-hidden', 'false');
       body.style.overflowY = 'auto';
 
       window.removeEventListener('keydown', keyDownHandler);
