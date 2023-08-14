@@ -1,5 +1,5 @@
 import Navbar from 'components/@common/Navbar';
-import { Title, TitleBox, Wrapper } from './MyPage.style';
+import { ButtonBox, Logout, Title, TitleBox, Withdraw, Wrapper } from './MyPage.style';
 import useAuth from 'hooks/useAuth';
 
 const MyPage = () => {
@@ -12,14 +12,14 @@ const MyPage = () => {
         <TitleBox>
           <Title>마이페이지</Title>
         </TitleBox>
-        <section>
-          <button type="button" onClick={handleLogout}>
+        <ButtonBox>
+          <Logout type="button" onClick={handleLogout}>
             로그아웃
-          </button>
-          <button type="button" onClick={handleWithdraw}>
+          </Logout>
+          <Withdraw type="button" onClick={handleWithdraw}>
             회원 탈퇴
-          </button>
-        </section>
+          </Withdraw>
+        </ButtonBox>
       </Wrapper>
       <Navbar />
     </>

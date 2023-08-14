@@ -54,6 +54,9 @@ export const LoginBox = styled.section`
   width: 100%;
   min-width: ${(props) => props.theme.width.mobile};
   max-width: ${(props) => props.theme.width.pad};
+  button {
+    cursor: pointer;
+  }
 `;
 
 export const GoToMain = styled.button`
