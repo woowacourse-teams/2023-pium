@@ -1,12 +1,11 @@
 package com.official.pium.event.history;
 
 import com.official.pium.domain.HistoryType;
-import lombok.Builder;
-import lombok.Getter;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class PetPlantHistory {
@@ -37,7 +36,7 @@ public class PetPlantHistory {
         events.add(new HistoryEvent(petPlantId, EMPTY, light, HistoryType.LIGHT, date));
         events.add(new HistoryEvent(petPlantId, EMPTY, wind, HistoryType.WIND, date));
         events.add(new HistoryEvent(petPlantId, EMPTY, waterCycle, HistoryType.WATER_CYCLE, date));
-        events.add(new HistoryEvent(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, date));
+        events.add(new HistoryEvent(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.parse(lastWaterDate)));
         return events;
     }
 }

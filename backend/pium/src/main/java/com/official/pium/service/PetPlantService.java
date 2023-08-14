@@ -16,6 +16,9 @@ import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.SinglePetPlantResponse;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
@@ -23,10 +26,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 @Transactional(readOnly = true)
@@ -68,6 +67,11 @@ public class PetPlantService {
         Long dday = petPlant.calculateDday(LocalDate.now());
         Long daySince = petPlant.calculateDaySince(LocalDate.now());
 
+        Page<History> secondLastWaterDatePage = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(petPlant.getId(), HistoryType.LAST_WATER_DATE, PageRequest.of(1, 1, Direction.DESC, "date"));
+        if (!secondLastWaterDatePage.isEmpty()) {
+            LocalDate secondLastWaterDate = secondLastWaterDatePage.getContent().get(0).getDate();
+            return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince, secondLastWaterDate);
+        }
         return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 

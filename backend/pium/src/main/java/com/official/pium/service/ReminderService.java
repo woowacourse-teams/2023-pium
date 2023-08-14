@@ -42,9 +42,9 @@ public class ReminderService {
 
         String previousWaterDate = petPlant.getLastWaterDate().toString();
         petPlant.water(reminderCreateRequest.getWaterDate());
-        String currentWaterDate = petPlant.getLastWaterDate().toString();
+        LocalDate currentWaterDate = petPlant.getLastWaterDate();
 
-        publisher.publishEvent(new HistoryEvent(petPlantId, previousWaterDate, currentWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.now()));
+        publisher.publishEvent(new HistoryEvent(petPlantId, previousWaterDate, currentWaterDate.toString(), HistoryType.LAST_WATER_DATE, currentWaterDate));
     }
 
     @Transactional
