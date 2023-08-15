@@ -55,16 +55,13 @@ export const LoginBox = styled.section`
   width: 100%;
   min-width: ${(props) => props.theme.width.mobile};
   max-width: ${(props) => props.theme.width.pad};
-  button {
-    cursor: pointer;
-  }
 `;
 
 export const GoToMain = styled(Link)`
-  width: 148px;
-  height: 59px;
+  width: 140px;
+  height: 52.5px;
 
-  font: 700 1.6rem/5.9rem 'GmarketSans';
+  font: 700 1.6rem/5.25rem 'GmarketSans';
   text-align: center;
 
   background: ${({ theme }) => theme.color.grayLight};
@@ -72,6 +69,6 @@ export const GoToMain = styled(Link)`
 `;
 
 export const KakaoLogin = styled(Link)`
-  width: 235px;
-  height: 59px;
+  width: 210px;
+  height: 52.5px;
 `;
