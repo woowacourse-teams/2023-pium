@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
 import NotFound from 'pages/Error/NotFound';
-import UnAuthorize from 'pages/Error/UnAuthorize';
+import Unauthorize from 'pages/Error/Unauthorize';
 import Loading from 'pages/Loading';
 import Login from 'pages/Login';
 import Authorization from 'pages/Login/Authorization';
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petRegisterForm,
         element: (
-          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+          <ErrorBoundary fallback={<Unauthorize />} statusCode={401}>
             <Suspense fallback={<Loading />}>
               <PetRegisterForm />
             </Suspense>
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petList,
         element: (
-          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+          <ErrorBoundary fallback={<Unauthorize />} statusCode={401}>
             <Suspense fallback={<Loading />}>
               <PetPlantCardList />
             </Suspense>
@@ -69,7 +69,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petDetail,
         element: (
-          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+          <ErrorBoundary fallback={<Unauthorize />} statusCode={401}>
             <PetDetails />
           </ErrorBoundary>
         ),
@@ -77,7 +77,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.petEdit,
         element: (
-          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+          <ErrorBoundary fallback={<Unauthorize />} statusCode={401}>
             <Suspense fallback={<Loading />}>
               <PetPlantEdit />
             </Suspense>
@@ -87,7 +87,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.reminder,
         element: (
-          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+          <ErrorBoundary fallback={<Unauthorize />} statusCode={401}>
             <Suspense fallback={<Loading />}>
               <Reminder />
             </Suspense>
@@ -97,7 +97,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.timeline,
         element: (
-          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+          <ErrorBoundary fallback={<Unauthorize />} statusCode={401}>
             <Suspense fallback={<Loading />}>
               <PetPlantTimeline />
             </Suspense>
@@ -123,7 +123,7 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.myPage,
         element: (
-          <ErrorBoundary fallback={<UnAuthorize />} statusCode={401}>
+          <ErrorBoundary fallback={<Unauthorize />} statusCode={401}>
             <MyPage />
           </ErrorBoundary>
         ),
