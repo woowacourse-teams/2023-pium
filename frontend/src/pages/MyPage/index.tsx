@@ -1,11 +1,18 @@
 import Navbar from 'components/@common/Navbar';
 import { ButtonBox, Logout, Title, TitleBox, Withdraw, Wrapper } from './MyPage.style';
-import useAuth from 'hooks/useAuth';
+import useLogout from 'hooks/queries/auth/useLogout';
+import useWithdraw from 'hooks/queries/auth/useWithdraw';
 
 const MyPage = () => {
-  const { userLogout, userWithdraw } = useAuth();
-  const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => userLogout.mutate();
-  const handleWithdraw: React.MouseEventHandler<HTMLButtonElement> = () => userWithdraw.mutate();
+  const { mutate: logoutMutate } = useLogout();
+  const { mutate: withdrawMutate } = useWithdraw();
+
+  const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
+    logoutMutate();
+  };
+  const handleWithdraw: React.MouseEventHandler<HTMLButtonElement> = () => {
+    withdrawMutate();
+  };
   return (
     <>
       <Wrapper>

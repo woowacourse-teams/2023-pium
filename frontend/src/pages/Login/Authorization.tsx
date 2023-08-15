@@ -2,19 +2,18 @@ import { useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userInfo } from 'store/atoms/userInfo';
-import useAuth from 'hooks/useAuth';
+import useLogin from 'hooks/queries/auth/useLogin';
 import { URL_PATH } from 'constants/index';
 
 const Authorization = () => {
-  const { userLogin } = useAuth();
   const setUserInfo = useSetRecoilState(userInfo);
 
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
 
-  const navigate = useNavigate();
+  const { isSuccess } = useLogin(code ?? '');
 
-  const { isSuccess } = userLogin(code ?? '');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (isSuccess) {

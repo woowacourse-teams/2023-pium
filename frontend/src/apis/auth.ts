@@ -38,7 +38,7 @@ const getAuthorization = () => {
   window.location.href = AUTHORIZATION_URL;
 };
 
-const Auth = {
+const AuthAPI = {
   getSessionId,
   getAuthorization,
   logout,
@@ -46,4 +46,4 @@ const Auth = {
   checkSessionId,
 };
 
-export default Auth;
+export default AuthAPI;
