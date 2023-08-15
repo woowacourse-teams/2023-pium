@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -57,9 +56,9 @@ class HistoryServiceTest extends IntegrationTest {
         History history3 = createHistory(petPlant, baseDate.plusDays(2));
         History history4 = createHistory(petPlant, baseDate.plusDays(3));
         HistoryResponse historyResponse1 = historyService.read(petPlant.getId(),
-                PageRequest.of(0, 2, Sort.Direction.DESC, "date"), petPlant.getMember(), List.of("lastWaterDate", "flowerpot"));
+                PageRequest.of(0, 2), petPlant.getMember(), List.of("lastWaterDate", "flowerpot"));
         HistoryResponse historyResponse2 = historyService.read(petPlant.getId(),
-                PageRequest.of(1, 2, Sort.Direction.DESC, "date"), petPlant.getMember(), List.of());
+                PageRequest.of(1, 2), petPlant.getMember(), List.of());
 
         assertSoftly(
                 softly -> {
@@ -84,7 +83,7 @@ class HistoryServiceTest extends IntegrationTest {
         PetPlant petPlant = petPlantSupport.builder().build();
 
         assertThatThrownBy(
-                () -> historyService.read(2L, PageRequest.of(0, 2, Sort.Direction.DESC, "waterDate"),
+                () -> historyService.read(2L, PageRequest.of(0, 2),
                         petPlant.getMember(), List.of())
         ).isInstanceOf(NoSuchElementException.class)
                 .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id :" + 2L);
@@ -96,7 +95,7 @@ class HistoryServiceTest extends IntegrationTest {
         Member member = memberSupport.builder().build();
 
         assertThatThrownBy(
-                () -> historyService.read(petPlant.getId(), PageRequest.of(0, 2, Sort.Direction.DESC, "waterDate"),
+                () -> historyService.read(petPlant.getId(), PageRequest.of(0, 2),
                         member, List.of())
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. id :" + member.getId());
@@ -109,7 +108,7 @@ class HistoryServiceTest extends IntegrationTest {
         historySupport.builder().petPlant(petPlant).build();
 
         HistoryResponse historyResponse = historyService.read(petPlant.getId(),
-                PageRequest.of(0, 2, Sort.Direction.DESC, "date"), petPlant.getMember(), List.of());
+                PageRequest.of(0, 2), petPlant.getMember(), List.of());
 
         assertThat(historyResponse.isHasNext()).isFalse();
     }
@@ -132,7 +131,7 @@ class HistoryServiceTest extends IntegrationTest {
 
         PetPlant petPlant = petPlantRepository.findAllByMemberId(member.getId()).get(0);
         HistoryResponse historyResponse = historyService.read(petPlant.getId(),
-                PageRequest.of(0, 5, Sort.Direction.DESC, "date"),
+                PageRequest.of(0, 5),
                 petPlant.getMember(),
                 List.of("lastWaterDate", "wind", "flowerpot")
         );
