@@ -9,7 +9,6 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.HistoryResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.SingleHistoryResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -119,7 +118,7 @@ class HistoryServiceTest extends IntegrationTest {
     void 필터링한_값에_해당하는_히스토리만_조회() {
         DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
         Member member = memberSupport.builder().build();
-        PetPlantResponse petPlantResponse = petPlantService.create(PetPlantCreateRequest.builder()
+        petPlantService.create(PetPlantCreateRequest.builder()
                 .dictionaryPlantId(dictionaryPlant.getId())
                 .nickname("test")
                 .location("test")
@@ -145,13 +144,10 @@ class HistoryServiceTest extends IntegrationTest {
                     softly.assertThat(historyResponse.getElementSize()).isEqualTo(3L);
                     softly.assertThat(historyResponse.isHasNext()).isFalse();
                     softly.assertThat(historyResponse.getData()
-                            .stream()
-                            .map(SingleHistoryResponse::getType)
-                            .toList()).contains("lastWaterDate", "wind", "flowerpot");
-                    softly.assertThat(historyResponse.getData()
-                            .stream()
-                            .map(SingleHistoryResponse::getType)
-                            .toList()).doesNotContain("waterCycle", "light", "location");
+                                    .stream()
+                                    .map(SingleHistoryResponse::getType)
+                                    .toList()).contains("lastWaterDate", "wind", "flowerpot")
+                            .doesNotContain("waterCycle", "light", "location");
                 }
         );
     }

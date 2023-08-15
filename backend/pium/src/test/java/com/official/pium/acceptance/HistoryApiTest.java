@@ -329,10 +329,9 @@ public class HistoryApiTest extends AcceptanceTest {
             });
 
             List<String> currentResponses = response.jsonPath().getList("data.type");
-            assertSoftly(softly -> {
-                softly.assertThat(currentResponses).contains("lastWaterDate", "wind", "flowerpot");
-                softly.assertThat(currentResponses).doesNotContain("waterCycle", "light", "location");
-            });
+            assertSoftly(softly -> softly.assertThat(currentResponses)
+                    .contains("lastWaterDate", "wind", "flowerpot")
+                    .doesNotContain("waterCycle", "light", "location"));
         }
     }
 

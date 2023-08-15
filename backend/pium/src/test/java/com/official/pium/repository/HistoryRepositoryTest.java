@@ -133,17 +133,12 @@ class HistoryRepositoryTest extends RepositoryTest {
                                     .stream()
                                     .map(history -> history.getHistoryCategory().getHistoryType())
                                     .toList())
-                            .contains(HistoryType.FLOWERPOT, HistoryType.LOCATION);
-                    softly.assertThat(histories.getContent()
-                                    .stream()
-                                    .map(history -> history.getHistoryCategory().getHistoryType())
-                                    .toList())
+                            .contains(HistoryType.FLOWERPOT, HistoryType.LOCATION)
                             .doesNotContain(HistoryType.WIND);
                     softly.assertThat(histories.getTotalElements()).isEqualTo(2L);
                     softly.assertThat(histories.getTotalPages()).isEqualTo(1);
                 }
         );
-
     }
 
     private Member saveMember() {
@@ -151,8 +146,7 @@ class HistoryRepositoryTest extends RepositoryTest {
         memberRepository.save(member);
         return member;
     }
-
-
+    
     private PetPlant savePetPlant(Member member, DictionaryPlant dictionaryPlant) {
         PetPlant petPlant = PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
