@@ -33,7 +33,7 @@ public class HistoryApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_404_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             Long 반려_식물_ID = 반려_식물_등록_요청(generatePetPlantCreateRequest(dictionaryPlant.getId()));
@@ -41,7 +41,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .given()
                     .queryParam("petPlantId", 반려_식물_ID)
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .get("/history")
                     .then()

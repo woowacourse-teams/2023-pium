@@ -35,11 +35,11 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_401_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             RestAssured
                     .given()
-                    .log().all().sessionId(sessionId)
+                    .log().all().sessionId(invalidSessionId)
                     .when()
                     .get("/reminders")
                     .then()
@@ -97,7 +97,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_401_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantCreateRequest(dictionaryPlant.getId());
@@ -109,7 +109,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .post("/reminders/{petPlantId}", 반려_식물_ID)
                     .then()
@@ -306,7 +306,7 @@ public class ReminderApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_401_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest petPlantCreateRequest = generatePetPlantCreateRequest(dictionaryPlant.getId());
             Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
@@ -317,7 +317,7 @@ public class ReminderApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .patch("/reminders/{petPlantId}", 반려_식물_ID)
                     .then()

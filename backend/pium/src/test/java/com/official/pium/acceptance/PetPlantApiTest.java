@@ -36,14 +36,14 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             RestAssured
                     .given()
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .post("/pet-plants")
                     .then()
@@ -164,14 +164,14 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_401_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             PetPlant petPlant = petPlantSupport.builder().build();
 
             RestAssured
                     .given()
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .get("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -326,12 +326,12 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_401_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             RestAssured
                     .given()
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .get("/pet-plants")
                     .then()
@@ -393,7 +393,7 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_401_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
@@ -407,7 +407,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .contentType(ContentType.JSON)
                     .body(request)
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .patch("/pet-plants/{id}", petPlant.getId())
                     .then()
@@ -690,7 +690,7 @@ public class PetPlantApiTest extends AcceptanceTest {
 
         @Test
         void 존재하지_않는_사용자라면_401_반환() {
-            String sessionId = "invalidSessionId";
+            String invalidSessionId = "invalidSessionId";
 
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlant petPlant = petPlantSupport.builder()
@@ -700,7 +700,7 @@ public class PetPlantApiTest extends AcceptanceTest {
             RestAssured
                     .given()
                     .log().all()
-                    .sessionId(sessionId)
+                    .sessionId(invalidSessionId)
                     .when()
                     .delete("/pet-plants/{id}", petPlant.getId())
                     .then()
