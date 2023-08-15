@@ -34,10 +34,6 @@ const checkSessionId = () => {
   });
 };
 
-const getAuthorization = () => {
-  window.location.href = AUTHORIZATION_URL;
-};
-
 const AuthAPI = {
   getSessionId,
   AUTHORIZATION_URL,

@@ -17,8 +17,9 @@ const RootTemplate = () => {
 
   useEffect(() => {
     if (!isLogin) {
-      const unValidPath = loginUrl.find((url) => pathname.includes(url));
-      if (unValidPath) {
+      const invalidPath = loginUrl.find((url) => pathname.includes(url));
+
+      if (invalidPath) {
         addToast('warning', GUIDE.login);
         navigate(login);
       }
