@@ -24,16 +24,16 @@ public class OAuthSupporter {
     public static final String TOKEN_TYPE = "Bearer ";
 
     @Value("${auth.kakao.token-request-uri}")
-    private String TOKEN_REQUEST_URI;
+    private String tokenRequestUri;
 
     @Value("${auth.kakao.member-info-request-uri}")
-    private String MEMBER_INFO_REQUEST_URI;
+    private String memberInfoRequestUri;
 
     @Value("${auth.kakao.client-id}")
-    private String CLIENT_ID;
+    private String clientId;
 
     @Value("${auth.kakao.redirect-uri}")
-    private String REDIRECT_URI;
+    private String redirectUri;
 
     private final RestTemplate restTemplate;
 
@@ -45,7 +45,7 @@ public class OAuthSupporter {
 
             HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-            return restTemplate.postForEntity(MEMBER_INFO_REQUEST_URI, request, KakaoMemberResponse.class)
+            return restTemplate.postForEntity(memberInfoRequestUri, request, KakaoMemberResponse.class)
                     .getBody();
         } catch (HttpClientErrorException e) {
             throw new KaKaoMemberInfoRequestException(e.getMessage());
@@ -61,14 +61,14 @@ public class OAuthSupporter {
 
             MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
             body.add("grant_type", GRANT_TYPE);
-            body.add("client_id", CLIENT_ID);
-            body.add("redirect_uri", REDIRECT_URI);
+            body.add("client_id", clientId);
+            body.add("redirect_uri", redirectUri);
             body.add("code", authorizationCode);
 
             HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(body, httpHeaders);
 
             return restTemplate.postForEntity(
-                    TOKEN_REQUEST_URI, request, KaKaoAccessTokenResponse.class).getBody();
+                    tokenRequestUri, request, KaKaoAccessTokenResponse.class).getBody();
         } catch (HttpClientErrorException e) {
             throw new KakaoTokenRequestException(e.getMessage());
         } catch (HttpServerErrorException e) {

@@ -36,10 +36,10 @@ import org.springframework.web.client.RestTemplate;
 class OAuthSupporterTest {
 
     @Value("${auth.kakao.token-request-uri}")
-    private String TOKEN_REQUEST_URI;
+    private String tokenRequestUri;
 
     @Value("${auth.kakao.member-info-request-uri}")
-    private String MEMBER_INFO_REQUEST_URI;
+    private String memberInfoRequestUri;
 
     @Autowired
     private OAuthSupporter supporter;
@@ -61,7 +61,7 @@ class OAuthSupporterTest {
 
         String response = String.format("{\"id\":\"%d\"}", kakaoId);
 
-        mockServer.expect(requestTo(MEMBER_INFO_REQUEST_URI))
+        mockServer.expect(requestTo(memberInfoRequestUri))
                 .andExpect(content().contentType("application/x-www-form-urlencoded"))
                 .andExpect(method(HttpMethod.POST))
                 .andExpect(header(AUTHORIZATION_HEADER, TOKEN_TYPE + accessToken))
@@ -75,7 +75,7 @@ class OAuthSupporterTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
     void 잘못된_토큰으로_사용자_정보_조회_요청_시_예외_발생(String accessToken) {
-        mockServer.expect(requestTo(MEMBER_INFO_REQUEST_URI))
+        mockServer.expect(requestTo(memberInfoRequestUri))
                 .andExpect(content().contentType("application/x-www-form-urlencoded"))
                 .andExpect(method(HttpMethod.POST))
                 .andExpect(header(AUTHORIZATION_HEADER, TOKEN_TYPE + accessToken))
@@ -88,7 +88,7 @@ class OAuthSupporterTest {
 
     @Test
     void 사용자_정보_조회_요청_중_카카오_서버에_문제_발생_시_예외_발생() {
-        mockServer.expect(requestTo(MEMBER_INFO_REQUEST_URI))
+        mockServer.expect(requestTo(memberInfoRequestUri))
                 .andExpect(content().contentType("application/x-www-form-urlencoded"))
                 .andExpect(method(HttpMethod.POST))
                 .andExpect(header(AUTHORIZATION_HEADER, TOKEN_TYPE + "accessToken"))
@@ -105,7 +105,7 @@ class OAuthSupporterTest {
         String accessToken = "access token";
         String response = String.format("{\"access_token\":\"%s\"}", accessToken);
 
-        mockServer.expect(requestTo(TOKEN_REQUEST_URI))
+        mockServer.expect(requestTo(tokenRequestUri))
                 .andExpect(content().contentType("application/x-www-form-urlencoded;charset=utf-8"))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
@@ -118,7 +118,7 @@ class OAuthSupporterTest {
     @ParameterizedTest
     @ValueSource(strings = {"", " "})
     void 잘못된_인증_코드로_액세스_토큰_요청_시_예외_발생(String authorizationCode) {
-        mockServer.expect(requestTo(TOKEN_REQUEST_URI))
+        mockServer.expect(requestTo(tokenRequestUri))
                 .andExpect(content().contentType("application/x-www-form-urlencoded;charset=utf-8"))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withBadRequest());
@@ -130,7 +130,7 @@ class OAuthSupporterTest {
 
     @Test
     void 액세스_토큰_요청_중_카카오_서버에_문제_발생_시_예외_발생() {
-        mockServer.expect(requestTo(TOKEN_REQUEST_URI))
+        mockServer.expect(requestTo(tokenRequestUri))
                 .andExpect(content().contentType("application/x-www-form-urlencoded;charset=utf-8"))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withServerError());
