@@ -1,7 +1,7 @@
 package com.official.pium.support;
 
 import com.official.pium.service.dto.KaKaoAccessTokenResponse;
-import com.official.pium.service.dto.KaKaoMemberInfoResponse;
+import com.official.pium.service.dto.KakaoMemberResponse;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
@@ -52,7 +52,7 @@ public class FakeController {
             return ResponseEntity.badRequest().build();
         }
 
-        KaKaoMemberInfoResponse response = KaKaoMemberInfoResponse.builder()
+        KakaoMemberResponse response = KakaoMemberResponse.builder()
                 .id(54321L)
                 .build();
 

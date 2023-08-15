@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class KaKaoMemberInfoResponse {
+public class KakaoMemberResponse {
 
     private Long id;
 }

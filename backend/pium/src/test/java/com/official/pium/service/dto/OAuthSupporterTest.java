@@ -67,9 +67,9 @@ class OAuthSupporterTest {
                 .andExpect(header(AUTHORIZATION_HEADER, TOKEN_TYPE + accessToken))
                 .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
 
-        KaKaoMemberInfoResponse memberInfoResponse = supporter.getMemberInfo(accessToken);
+        KakaoMemberResponse kakaoMemberResponse = supporter.getMemberInfo(accessToken);
 
-        assertThat(memberInfoResponse.getId()).isEqualTo(kakaoId);
+        assertThat(kakaoMemberResponse.getId()).isEqualTo(kakaoId);
     }
 
     @ParameterizedTest

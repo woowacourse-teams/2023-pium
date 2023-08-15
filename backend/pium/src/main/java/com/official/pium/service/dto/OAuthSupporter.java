@@ -37,7 +37,7 @@ public class OAuthSupporter {
 
     private final RestTemplate restTemplate;
 
-    public KaKaoMemberInfoResponse getMemberInfo(String accessToken) {
+    public KakaoMemberResponse getMemberInfo(String accessToken) {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set(AUTHORIZATION_HEADER, TOKEN_TYPE + accessToken);
@@ -45,7 +45,7 @@ public class OAuthSupporter {
 
             HttpEntity<Object> request = new HttpEntity<>(httpHeaders);
 
-            return restTemplate.postForEntity(MEMBER_INFO_REQUEST_URI, request, KaKaoMemberInfoResponse.class)
+            return restTemplate.postForEntity(MEMBER_INFO_REQUEST_URI, request, KakaoMemberResponse.class)
                     .getBody();
         } catch (HttpClientErrorException e) {
             throw new KaKaoMemberInfoRequestException(e.getMessage());

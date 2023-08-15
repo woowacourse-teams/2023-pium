@@ -3,7 +3,7 @@ package com.official.pium.controller;
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.AuthService;
-import com.official.pium.service.dto.KaKaoMemberInfoResponse;
+import com.official.pium.service.dto.KakaoMemberResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotBlank;
@@ -27,7 +27,7 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping("/login")
-    public ResponseEntity<KaKaoMemberInfoResponse> login(
+    public ResponseEntity<KakaoMemberResponse> login(
             @RequestParam(name = "code") @NotBlank String authorizationCode,
             HttpServletRequest request) {
         Member loginMember = authService.login(authorizationCode);
