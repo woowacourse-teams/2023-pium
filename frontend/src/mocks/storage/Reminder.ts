@@ -5,13 +5,13 @@ import { getDaysBetween, getParticularDateFromSpecificDay, getDateToString } fro
 const KEY = 'MSW_REMINDER';
 
 const getAll = (): DataResponse<Reminder[]> => {
-  const storageData = sessionStorage.getItem(KEY);
+  const storageData = localStorage.getItem(KEY);
   return storageData ? JSON.parse(storageData) : { data: [] };
 };
 
 const water = (id: number, date: string) => {
   // 물을 준 것임. 물을 줬으니까 다음 날을 반환해 줘야 함.
-  const { data } = JSON.parse(sessionStorage.getItem(KEY) ?? '[]') as DataResponse<Reminder[]>;
+  const { data } = JSON.parse(localStorage.getItem(KEY) ?? '[]') as DataResponse<Reminder[]>;
 
   const updatedData = data.map((data) => {
     const { petPlantId } = data;
@@ -32,7 +32,7 @@ const water = (id: number, date: string) => {
 
 const changeDate = (id: number, date: string) => {
   // 여기는 미루기임. 입력된 날짜에 물을 줄 수 있도록 해야함.
-  const { data } = JSON.parse(sessionStorage.getItem(KEY) ?? '[]') as DataResponse<Reminder[]>;
+  const { data } = JSON.parse(localStorage.getItem(KEY) ?? '[]') as DataResponse<Reminder[]>;
 
   const updatedData = data.map((data) => {
     const { petPlantId } = data;

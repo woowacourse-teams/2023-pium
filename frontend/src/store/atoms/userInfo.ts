@@ -4,7 +4,7 @@ interface UserInfo {
   isLogin: boolean;
 }
 
-const sessionId = sessionStorage.getItem('sessionId');
+const sessionId = localStorage.getItem('sessionId');
 
 const initialUserInfo: UserInfo = {
   isLogin: sessionId === null ? false : true,

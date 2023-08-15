@@ -60,7 +60,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
 
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -79,7 +79,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.get(PET, (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -99,7 +99,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
 
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -124,7 +124,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -141,7 +141,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.get(REMINDER, (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -166,7 +166,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.post(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -187,7 +187,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.patch(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -207,7 +207,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.get(`${HISTORY}`, (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -268,7 +268,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.post('/logout', (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -289,7 +289,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.delete('/withdraw', (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||
@@ -310,7 +310,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.post('/member/me', (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      const sessionId = sessionStorage.getItem('sessionId');
+      const sessionId = localStorage.getItem('sessionId');
 
       if (
         sessionId === null ||

@@ -17,7 +17,7 @@ const useLogin = (code: string) => {
       const [, cookieValue] = cookie.split('=');
       const sessionId = cookieValue.slice(0, 10);
 
-      sessionStorage.setItem('sessionId', JSON.stringify(sessionId));
+      localStorage.setItem('sessionId', JSON.stringify(sessionId));
 
       setUserInfo({ isLogin: true });
       return null;
