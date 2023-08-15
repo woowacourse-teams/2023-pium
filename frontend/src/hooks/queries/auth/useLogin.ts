@@ -14,7 +14,7 @@ const useLogin = (code: string) => {
 
       throwOnInvalidStatus(response);
       const cookie = document.cookie;
-      const [_, cookieValue] = cookie.split('=');
+      const [, cookieValue] = cookie.split('=');
       const sessionId = cookieValue.slice(0, 10);
 
       sessionStorage.setItem('sessionId', JSON.stringify(sessionId));

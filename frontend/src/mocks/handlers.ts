@@ -60,10 +60,11 @@ export const makeHandler = (delay = 0, failRate = 0) => {
 
       const { JSESSION } = req.cookies;
 
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
-
       const newPlant = await req.json();
 
       PetPlant.add(newPlant);
@@ -74,7 +75,9 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.get(PET, (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
@@ -88,7 +91,9 @@ export const makeHandler = (delay = 0, failRate = 0) => {
 
       const { JSESSION } = req.cookies;
 
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
@@ -107,7 +112,9 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
       const { JSESSION } = req.cookies;
 
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
@@ -117,8 +124,10 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
       const { JSESSION } = req.cookies;
-      console.log(JSESSION.slice(0, 10));
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
@@ -137,9 +146,12 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.post(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
+
       const { petPlantId } = req.params;
       const { waterDate } = await req.json();
 
@@ -149,6 +161,14 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
 
     rest.patch(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
       const { petPlantId } = req.params;
       const { nextWaterDate } = await req.json();
       Reminder.changeDate(Number(petPlantId), nextWaterDate);
@@ -159,9 +179,12 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.get(`${HISTORY}`, (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
+
       const pageParam = Number(req.url.searchParams.get('page') ?? 0);
       const waterDateList = [
         `2023-0${12 - pageParam}-30`,
@@ -207,7 +230,9 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.post('/member/me', (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
-      if (JSESSION.slice(0, 10) !== JSON.parse(sessionStorage.getItem('sessionId') ?? '')) {
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (sessionId === null || JSESSION.slice(0, 10) !== JSON.parse(sessionId)) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
