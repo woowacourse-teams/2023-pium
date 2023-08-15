@@ -279,7 +279,32 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
 
       // 로그이웃 실행 시에 지금 당장 만료되는 쿠키 설정
-      return res(ctx.delay(delay), ctx.cookie('JSESSION', '', { expires: new Date() }));
+      return res(
+        ctx.delay(delay),
+        ctx.status(200),
+        ctx.cookie('JSESSION', '', { expires: new Date() })
+      );
+    }),
+
+    rest.delete('/withdraw', (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      const sessionId = sessionStorage.getItem('sessionId');
+
+      if (
+        sessionId === null ||
+        JSESSION === undefined ||
+        JSESSION.slice(0, 10) !== JSON.parse(sessionId)
+      ) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      // 회원 탈퇴 시에 쿠키 바로 만료
+      return res(
+        ctx.delay(delay),
+        ctx.status(204),
+        ctx.cookie('JSESSION', '', { expires: new Date() })
+      );
     }),
 
     rest.post('/member/me', (req, res, ctx) => {

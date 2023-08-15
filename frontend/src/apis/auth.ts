@@ -22,7 +22,7 @@ const logout = () => {
 
 const withdraw = () => {
   return fetch(`${BASE_URL}/withdraw`, {
-    method: 'POST',
+    method: 'DELETE',
     credentials: 'include',
   });
 };
