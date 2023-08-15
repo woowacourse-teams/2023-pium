@@ -122,8 +122,8 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }
-      const { JSESSION } = req.cookies;
 
+      const { JSESSION } = req.cookies;
       const sessionId = localStorage.getItem('sessionId');
 
       if (

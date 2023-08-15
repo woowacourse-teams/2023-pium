@@ -1,5 +1,10 @@
 describe('반려 식물 등록하기', () => {
   beforeEach(() => {
+    const COOKIE = 'piumTetstSessionId';
+    cy.setCookie('JSESSION', COOKIE);
+    cy.window().then((win) => {
+      win.localStorage.setItem('sessionId', JSON.stringify(COOKIE.slice(0, 10)));
+    });
     cy.visit('/pet/1/edit');
   });
 

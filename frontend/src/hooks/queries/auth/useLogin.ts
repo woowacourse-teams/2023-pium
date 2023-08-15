@@ -13,9 +13,14 @@ const useLogin = (code: string) => {
       const response = await AuthAPI.getSessionId(code);
 
       throwOnInvalidStatus(response);
-      const cookie = document.cookie;
-      const [, cookieValue] = cookie.split('=');
-      const sessionId = cookieValue.slice(0, 10);
+      const cookies = document.cookie.split(';');
+
+      const sessionCookie = cookies.find((cookie) => {
+        const [name] = cookie.split('=');
+        return name === 'JSESSION';
+      });
+      console.log(sessionCookie);
+      const sessionId = sessionCookie?.split('=')[1].slice(0, 10);
 
       localStorage.setItem('sessionId', JSON.stringify(sessionId));
 
