@@ -1,11 +1,14 @@
 import type { DataResponse } from 'types/DataResponse';
 import type { PetPlantItem } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
+import useUnauthorize from 'hooks/useUnauthorize';
 import PetAPI, { PET } from 'apis/pet';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
-const usePetPlantCardList = () =>
-  useQuery<DataResponse<PetPlantItem[]>, Error, PetPlantItem[]>({
+const usePetPlantCardList = () => {
+  const checkErrorStatus = useUnauthorize();
+
+  return useQuery<DataResponse<PetPlantItem[]>, Error, PetPlantItem[]>({
     queryKey: [PET, 'list'],
     queryFn: async () => {
       const response = await PetAPI.getList();
@@ -16,7 +19,8 @@ const usePetPlantCardList = () =>
     },
     select: ({ data }) => data,
     suspense: true,
-    throwOnError: true,
+    throwOnError: checkErrorStatus,
   });
+};
 
 export default usePetPlantCardList;

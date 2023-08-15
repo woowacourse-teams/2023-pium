@@ -1,11 +1,14 @@
 import { MutationProps } from 'types/DataResponse';
 import { WaterPlantParams } from 'types/reminder';
 import { useMutation } from '@tanstack/react-query';
+import useUnauthorize from 'hooks/useUnauthorize';
 import ReminderAPI from 'apis/reminder';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
-const useWater = <T>({ successCallback, errorCallback }: MutationProps<T, WaterPlantParams>) =>
-  useMutation({
+const useWater = <T>({ successCallback, errorCallback }: MutationProps<T, WaterPlantParams>) => {
+  const checkErrorStatus = useUnauthorize();
+
+  return useMutation({
     mutationFn: async (params: WaterPlantParams) => {
       const response = await ReminderAPI.waterPlant(params);
 
@@ -18,7 +21,8 @@ const useWater = <T>({ successCallback, errorCallback }: MutationProps<T, WaterP
     onSuccess: (data, variable) => successCallback && successCallback(data, variable),
     // TODO: 에러 처리하기 (toast 띄우기)
     onError: (error, variable) => errorCallback && errorCallback(error, variable),
-    throwOnError: true,
+    throwOnError: checkErrorStatus,
   });
+};
 
 export default useWater;

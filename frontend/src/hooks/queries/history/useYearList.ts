@@ -7,11 +7,14 @@ import {
   convertHistoryResponseListToDateList,
   convertYearMapToYearList,
 } from 'pages/PetPlantTimeline/converter';
+import useUnauthorize from 'hooks/useUnauthorize';
 import HistoryAPI, { HISTORY } from 'apis/history';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
-const useYearList = (petPlantId: PetPlantDetails['id']) =>
-  useInfiniteQuery<
+const useYearList = (petPlantId: PetPlantDetails['id']) => {
+  const checkErrorStatus = useUnauthorize();
+
+  return useInfiniteQuery<
     HistoryResponse,
     Error,
     YearList,
@@ -38,7 +41,8 @@ const useYearList = (petPlantId: PetPlantDetails['id']) =>
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
-    throwOnError: true,
+    throwOnError: checkErrorStatus,
   });
+};
 
 export default useYearList;

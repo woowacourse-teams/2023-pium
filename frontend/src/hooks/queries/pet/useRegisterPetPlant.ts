@@ -2,6 +2,7 @@ import { NewPetPlantRequest } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useToast from 'hooks/useToast';
+import useUnauthorize from 'hooks/useUnauthorize';
 import PetAPI from 'apis/pet';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
@@ -9,6 +10,7 @@ import { URL_PATH } from 'constants/index';
 const useRegisterPetPlant = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
+  const checkErrorStatus = useUnauthorize();
 
   return useMutation<void, Error, NewPetPlantRequest>({
     mutationFn: async (form) => {
@@ -24,7 +26,7 @@ const useRegisterPetPlant = () => {
     onError: () => {
       addToast('error', '반려 식물 정보 등록에 실패했어요.');
     },
-    throwOnError: true,
+    throwOnError: checkErrorStatus,
   });
 };
 
