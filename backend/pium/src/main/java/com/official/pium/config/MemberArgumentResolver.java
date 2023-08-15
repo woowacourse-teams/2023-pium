@@ -6,7 +6,6 @@ import com.official.pium.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
-import java.util.Objects;
 import javax.naming.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -36,7 +35,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
         HttpSession session = request.getSession(false);
 
-        if (Objects.isNull(session)) {
+        if (session == null) {
             throw new AuthenticationException("로그인이 필요합니다");
         }
 
