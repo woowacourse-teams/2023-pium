@@ -11,7 +11,7 @@ const makeNextWaterDate = (date: string, days: number) => {
 };
 
 const getAll = (): PetPlantDetails[] => {
-  const storageData = localStorage.getItem(KEY);
+  const storageData = sessionStorage.getItem(KEY);
 
   if (!storageData) {
     sessionStorage.setItem(KEY, JSON.stringify(PET_PLANTS_DATA));
