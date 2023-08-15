@@ -6,7 +6,7 @@ import PetAPI, { PET } from 'apis/pet';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
 const usePetPlantCardList = () => {
-  const checkErrorStatus = useUnauthorize();
+  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
 
   return useQuery<DataResponse<PetPlantItem[]>, Error, PetPlantItem[]>({
     queryKey: [PET, 'list'],
@@ -19,7 +19,8 @@ const usePetPlantCardList = () => {
     },
     select: ({ data }) => data,
     suspense: true,
-    throwOnError: checkErrorStatus,
+    throwOnError: throwOnErrorCallback,
+    retry: retryCallback,
   });
 };
 

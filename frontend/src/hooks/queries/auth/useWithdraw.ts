@@ -10,7 +10,7 @@ import { URL_PATH } from 'constants/index';
 const useWithdraw = () => {
   const setUserInfo = useSetRecoilState(userInfo);
   const navigate = useNavigate();
-  const checkErrorStatus = useUnauthorize();
+  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
 
   return useMutation({
     mutationFn: async () => {
@@ -24,7 +24,8 @@ const useWithdraw = () => {
         isLogin: false,
       });
     },
-    throwOnError: checkErrorStatus,
+    throwOnError: throwOnErrorCallback,
+    retry: retryCallback,
   });
 };
 

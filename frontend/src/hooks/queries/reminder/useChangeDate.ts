@@ -9,7 +9,7 @@ const useChangeDate = <T>({
   successCallback,
   errorCallback,
 }: MutationProps<T, ChangeDateParams>) => {
-  const checkErrorStatus = useUnauthorize();
+  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
 
   return useMutation({
     mutationFn: async (params: ChangeDateParams) => {
@@ -23,7 +23,8 @@ const useChangeDate = <T>({
     onSuccess: (data, variable) => successCallback && successCallback(data, variable),
     // TODO: 에러 처리하기 (toast 띄우기)
     onError: (error, variable) => errorCallback && errorCallback(error, variable),
-    throwOnError: checkErrorStatus,
+    throwOnError: throwOnErrorCallback,
+    retry: retryCallback,
   });
 };
 

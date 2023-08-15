@@ -10,7 +10,7 @@ import { URL_PATH } from 'constants/index';
 const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
   const navigate = useNavigate();
   const { addToast } = useToast();
-  const checkErrorStatus = useUnauthorize();
+  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
 
   return useMutation<void, Error, EditPetPlantRequest>({
     mutationFn: async (form) => {
@@ -26,7 +26,8 @@ const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
     onError: () => {
       addToast('error', '반려 식물 정보 수정에 실패했어요.');
     },
-    throwOnError: checkErrorStatus,
+    throwOnError: throwOnErrorCallback,
+    retry: retryCallback,
   });
 };
 

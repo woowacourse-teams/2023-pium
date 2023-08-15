@@ -5,7 +5,7 @@ import PetAPI from 'apis/pet';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
 const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
-  const checkErrorStatus = useUnauthorize();
+  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
 
   return useQuery<PetPlantDetails>({
     queryKey: ['petPlantDetails', petPlantId],
@@ -20,7 +20,8 @@ const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
 
     refetchOnWindowFocus: false,
     suspense: true,
-    throwOnError: checkErrorStatus,
+    throwOnError: throwOnErrorCallback,
+    retry: retryCallback,
   });
 };
 

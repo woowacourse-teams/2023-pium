@@ -12,7 +12,7 @@ import HistoryAPI, { HISTORY } from 'apis/history';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
 const useYearList = (petPlantId: PetPlantDetails['id']) => {
-  const checkErrorStatus = useUnauthorize();
+  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
 
   return useInfiniteQuery<
     HistoryResponse,
@@ -41,7 +41,8 @@ const useYearList = (petPlantId: PetPlantDetails['id']) => {
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
-    throwOnError: checkErrorStatus,
+    throwOnError: throwOnErrorCallback,
+    retry: retryCallback,
   });
 };
 

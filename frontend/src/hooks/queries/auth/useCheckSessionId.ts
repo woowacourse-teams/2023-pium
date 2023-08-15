@@ -7,7 +7,7 @@ import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
 
 const useCheckSessionId = () => {
   const setUserInfo = useSetRecoilState(userInfo);
-  const checkErrorStatus = useUnauthorize();
+  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
 
   return useMutation({
     mutationFn: async () => {
@@ -21,8 +21,8 @@ const useCheckSessionId = () => {
         isLogin: true,
       });
     },
-    throwOnError: checkErrorStatus,
-    retry: false,
+    throwOnError: throwOnErrorCallback,
+    retry: retryCallback,
   });
 };
 

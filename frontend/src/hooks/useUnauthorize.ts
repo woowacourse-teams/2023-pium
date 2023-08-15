@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 import { userInfo } from 'store/atoms/userInfo';
@@ -10,20 +11,36 @@ const useUnauthorize = () => {
   const { addToast } = useToast();
   const setUserInfo = useSetRecoilState(userInfo);
 
-  const checkErrorStatus = (error: Error | StatusError) => {
+  const throwOnErrorCallback = useCallback(
+    (error: Error | StatusError) => {
+      if (error instanceof StatusError) {
+        if (error.statusCode === STATUS_CODE.unauthorize) {
+          addToast('warning', GUIDE.login);
+          setUserInfo({ isLogin: false });
+          navigate(URL_PATH.login);
+          return false;
+        }
+      }
+
+      return true;
+    },
+    [navigate, addToast, setUserInfo]
+  );
+
+  const retryCallback = useCallback((failureCount: number, error: StatusError | Error) => {
     if (error instanceof StatusError) {
       if (error.statusCode === STATUS_CODE.unauthorize) {
-        addToast('warning', GUIDE.login);
-        setUserInfo({ isLogin: false });
-        navigate(URL_PATH.login);
         return false;
       }
     }
 
+    if (failureCount === 3) {
+      return false;
+    }
     return true;
-  };
+  }, []);
 
-  return checkErrorStatus;
+  return { throwOnErrorCallback, retryCallback };
 };
 
 export default useUnauthorize;
