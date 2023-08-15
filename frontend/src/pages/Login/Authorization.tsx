@@ -18,7 +18,7 @@ const Authorization = () => {
   useEffect(() => {
     if (isSuccess) {
       setUserInfo({ isLogin: true });
-      navigate(URL_PATH.main);
+      navigate(URL_PATH.reminder);
     }
   }, [isSuccess, navigate]);
 
