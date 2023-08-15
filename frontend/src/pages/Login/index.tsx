@@ -1,8 +1,8 @@
-import { useNavigate } from 'react-router-dom';
 import KakaoLoginLarge from 'components/@common/Icons/KakaoLoginLarge';
 import {
   ContentBox,
   GoToMain,
+  KakaoLogin,
   LoginBox,
   PlantImg,
   PrimaryText,
@@ -13,10 +13,7 @@ import Auth from 'apis/auth';
 import { URL_PATH } from 'constants/index';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const { getAuthorization } = Auth;
-
-  const goToMainHandler = () => navigate(URL_PATH.main);
+  const { AUTHORIZATION_URL } = Auth;
 
   return (
     <Wrapper>
@@ -30,19 +27,12 @@ const Login = () => {
       </ContentBox>
 
       <LoginBox>
-        <div>
-          <GoToMain type="button" onClick={goToMainHandler} aria-label="메인으로 돌아가기">
-            메인으로 돌아가기
-          </GoToMain>
-        </div>
-        <div>
-          <KakaoLoginLarge
-            aria-label="카카오 로그인"
-            width="235px"
-            height="59px"
-            onClick={getAuthorization}
-          />
-        </div>
+        <GoToMain to={URL_PATH.main} aria-label="메인으로 돌아가기">
+          메인으로 돌아가기
+        </GoToMain>
+        <KakaoLogin to={AUTHORIZATION_URL} aria-label="카카오로 로그인하기">
+          <KakaoLoginLarge />
+        </KakaoLogin>
       </LoginBox>
     </Wrapper>
   );

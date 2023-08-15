@@ -40,7 +40,7 @@ const getAuthorization = () => {
 
 const AuthAPI = {
   getSessionId,
-  getAuthorization,
+  AUTHORIZATION_URL,
   logout,
   withdraw,
   checkSessionId,

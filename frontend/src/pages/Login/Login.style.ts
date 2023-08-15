@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Wrapper = styled.main`
@@ -59,9 +60,18 @@ export const LoginBox = styled.section`
   }
 `;
 
-export const GoToMain = styled.button`
+export const GoToMain = styled(Link)`
   width: 148px;
   height: 59px;
+
+  font: 700 1.6rem/5.9rem 'GmarketSans';
+  text-align: center;
+
   background: ${({ theme }) => theme.color.grayLight};
   border-radius: 8px;
+`;
+
+export const KakaoLogin = styled(Link)`
+  width: 235px;
+  height: 59px;
 `;
