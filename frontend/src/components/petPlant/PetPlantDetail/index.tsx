@@ -26,8 +26,11 @@ import {
   TimelineLinkArea,
   TimelineLink,
   EditLink,
+  DeleteButton,
 } from './PetPlantDetail.style';
+import useDeletePetPlant from 'hooks/queries/pet/useDeletePetPlant';
 import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
+import useConfirm from 'hooks/useConfirm';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
@@ -38,6 +41,8 @@ interface PetDetailsProps {
 
 const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
   const { data: petPlantDetails } = usePetPlantDetails(petPlantId);
+  const confirm = useConfirm();
+  const { mutate } = useDeletePetPlant();
 
   if (!petPlantDetails) return null;
 
@@ -56,6 +61,17 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
     light,
     wind,
   } = petPlantDetails;
+
+  const deletePetPlant = async () => {
+    const isConfirmed = await confirm({
+      title: '반려 식물 삭제',
+      message: `정말로 '${nickname}'을(를) 지우실 건가요?`,
+    });
+
+    if (!isConfirmed) return;
+
+    mutate(id);
+  };
 
   const birthDateKorean = convertDateKorYear(birthDate);
   const today = convertDateKorYear(new Date()).slice(5);
@@ -164,9 +180,14 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
             {wind}
           </EnvironmentItem>
         </Environment>
-        <EditLink to={generatePath(URL_PATH.petEdit, { id: petPlantId.toString() })}>
-          정보 수정하기
-        </EditLink>
+        <ExpandedTextBox>
+          <EditLink to={generatePath(URL_PATH.petEdit, { id: petPlantId.toString() })}>
+            정보 수정하기
+          </EditLink>
+          <DeleteButton type="button" onClick={deletePetPlant}>
+            식물 삭제하기
+          </DeleteButton>
+        </ExpandedTextBox>
       </Content>
     </Wrapper>
   );
