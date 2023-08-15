@@ -1,5 +1,9 @@
 package com.official.pium.controller;
 
+import com.official.pium.exception.OAuthException;
+import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
+import com.official.pium.exception.OAuthException.KakaoServerException;
+import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
 import com.official.pium.exception.dto.GlobalExceptionResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -61,20 +65,25 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({KakaoTokenRequestException.class, KaKaoMemberInfoRequestException.class})
     public ResponseEntity<GlobalExceptionResponse> handleOAuthRequestException(OAuthException e) {
-        GlobalExceptionResponse exceptionResponse = createExceptionResponse(e.getMessage());
-
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.info(message);
         return ResponseEntity.badRequest().body(exceptionResponse);
     }
 
     @ExceptionHandler(KakaoServerException.class)
     public ResponseEntity<GlobalExceptionResponse> handleOAuthServerException(OAuthException e) {
+        String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(e.getMessage());
+        log.info(message);
         return ResponseEntity.internalServerError().body(exceptionResponse);
     }
 
     @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<GlobalExceptionResponse> handleAuthenticationException(AuthenticationException e) {
-        GlobalExceptionResponse exceptionResponse = createExceptionResponse(e.getMessage());
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.info(message);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
     }
 
