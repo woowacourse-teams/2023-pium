@@ -25,8 +25,6 @@ public class AcceptanceTest {
     @Autowired
     protected MemberSupport memberSupport;
 
-    protected Member member;
-
     @Autowired
     protected HistoryCategorySupport historyCategorySupport;
 
@@ -36,10 +34,13 @@ public class AcceptanceTest {
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
 
+    protected Member member;
+
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
         member = memberSupport.builder().build();
+
         for (HistoryType type : HistoryType.values()) {
             historyCategorySupport.builder()
                     .historyType(type)
