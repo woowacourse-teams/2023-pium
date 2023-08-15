@@ -46,7 +46,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
 
       const { id } = req.params;
-      const data = { ...DICTIONARY_PLANT_DATA, id: Number(id) };
+      const data = { ...DICTIONARY_PLANT_DATA[Number(id) % 2], id: Number(id) };
 
       return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
     }),
@@ -88,6 +88,17 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
 
       return res(ctx.delay(delay), ctx.status(200));
+    }),
+
+    rest.delete(`${PET}/:petPlantId`, async (req, res, ctx) => {
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(500));
+      }
+
+      const { petPlantId } = req.params;
+      PetPlant.remove(Number(petPlantId));
+
+      return res(ctx.delay(delay), ctx.status(204));
     }),
 
     //리마인더 조회

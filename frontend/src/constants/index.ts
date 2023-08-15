@@ -27,6 +27,8 @@ export const ERROR = {
   dateFormat: '주어진 값은 DateFormat 타입으로 변환할 수 없습니다.',
   yearFormat: '주어진 연도는 20세기 또는 21세기가 아닙니다.',
   invalidDate: '올바른 날짜 형식이 아닙니다.',
+  simultaneousConfirm:
+    'confirm은 동시에 열 수 없습니다. 연속적인 confirm일 경우 await을 사용했는지 확인해 주세요.',
 } as const;
 
 export const GUIDE = {
@@ -58,12 +60,6 @@ export const SEASONS: Record<Season, SeasonKor> = {
   winter: '겨울',
 } as const;
 
-export const MANAGE_LEVEL_COLOR: Record<ManageLevel, TagVariantType> = {
-  초보자: 'default',
-  경험자: 'primary',
-  전문가: 'accent',
-} as const;
-
 export const NUMBER = {
   maxCycleDate: 365,
   minCycleDate: 1,
@@ -73,3 +69,5 @@ export const NUMBER = {
 export const DAYS_OF_THE_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;
 
 export const NO_PREVIOUS_VALUE = 'EMPTY';
+
+export const NO_INFORMATION = '정보없음';
