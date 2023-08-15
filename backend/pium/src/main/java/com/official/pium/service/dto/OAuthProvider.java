@@ -17,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Component
 @RequiredArgsConstructor
-public class OAuthSupporter {
+public class OAuthProvider {
 
     public static final String AUTHORIZATION_HEADER = "Authorization";
     public static final String GRANT_TYPE = "authorization_code";

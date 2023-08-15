@@ -4,7 +4,7 @@ import com.official.pium.domain.Member;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.dto.KaKaoAccessTokenResponse;
 import com.official.pium.service.dto.KakaoMemberResponse;
-import com.official.pium.service.dto.OAuthSupporter;
+import com.official.pium.service.dto.OAuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,14 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class AuthService {
 
     private final MemberRepository memberRepository;
-    private final OAuthSupporter supporter;
+    private final OAuthProvider provider;
 
     @Transactional
     public Member login(String authorizationCode) {
-        KaKaoAccessTokenResponse accessTokenResponse = supporter.getAccessToken(authorizationCode);
+        KaKaoAccessTokenResponse accessTokenResponse = provider.getAccessToken(authorizationCode);
         String accessToken = accessTokenResponse.getAccessToken();
 
-        KakaoMemberResponse kakaoMemberResponse = supporter.getMemberInfo(accessToken);
+        KakaoMemberResponse kakaoMemberResponse = provider.getMemberInfo(accessToken);
         Long kakaoId = kakaoMemberResponse.getId();
 
         return memberRepository.findByKakaoId(kakaoId)

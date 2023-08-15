@@ -1,7 +1,7 @@
 package com.official.pium.service.dto;
 
-import static com.official.pium.service.dto.OAuthSupporter.AUTHORIZATION_HEADER;
-import static com.official.pium.service.dto.OAuthSupporter.TOKEN_TYPE;
+import static com.official.pium.service.dto.OAuthProvider.AUTHORIZATION_HEADER;
+import static com.official.pium.service.dto.OAuthProvider.TOKEN_TYPE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
@@ -33,7 +33,7 @@ import org.springframework.web.client.RestTemplate;
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @SpringBootTest
-class OAuthSupporterTest {
+class OAuthProviderTest {
 
     @Value("${auth.kakao.token-request-uri}")
     private String tokenRequestUri;
@@ -42,7 +42,7 @@ class OAuthSupporterTest {
     private String memberInfoRequestUri;
 
     @Autowired
-    private OAuthSupporter supporter;
+    private OAuthProvider provider;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -67,7 +67,7 @@ class OAuthSupporterTest {
                 .andExpect(header(AUTHORIZATION_HEADER, TOKEN_TYPE + accessToken))
                 .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
 
-        KakaoMemberResponse kakaoMemberResponse = supporter.getMemberInfo(accessToken);
+        KakaoMemberResponse kakaoMemberResponse = provider.getMemberInfo(accessToken);
 
         assertThat(kakaoMemberResponse.getId()).isEqualTo(kakaoId);
     }
@@ -82,7 +82,7 @@ class OAuthSupporterTest {
                 .andRespond(withBadRequest());
 
         assertThatThrownBy(
-                () -> supporter.getMemberInfo(accessToken)
+                () -> provider.getMemberInfo(accessToken)
         ).isInstanceOf(KaKaoMemberInfoRequestException.class);
     }
 
@@ -95,7 +95,7 @@ class OAuthSupporterTest {
                 .andRespond(withServerError());
 
         assertThatThrownBy(
-                () -> supporter.getMemberInfo("accessToken")
+                () -> provider.getMemberInfo("accessToken")
         ).isInstanceOf(KakaoServerException.class);
     }
 
@@ -110,7 +110,7 @@ class OAuthSupporterTest {
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(response, MediaType.APPLICATION_JSON));
 
-        KaKaoAccessTokenResponse tokenResponse = supporter.getAccessToken(authorizationCode);
+        KaKaoAccessTokenResponse tokenResponse = provider.getAccessToken(authorizationCode);
 
         assertThat(tokenResponse.getAccessToken()).isEqualTo(accessToken);
     }
@@ -124,7 +124,7 @@ class OAuthSupporterTest {
                 .andRespond(withBadRequest());
 
         assertThatThrownBy(
-                () -> supporter.getAccessToken(authorizationCode)
+                () -> provider.getAccessToken(authorizationCode)
         ).isInstanceOf(KakaoTokenRequestException.class);
     }
 
@@ -136,7 +136,7 @@ class OAuthSupporterTest {
                 .andRespond(withServerError());
 
         assertThatThrownBy(
-                () -> supporter.getAccessToken("authorizationCode")
+                () -> provider.getAccessToken("authorizationCode")
         ).isInstanceOf(KakaoServerException.class);
     }
 }
