@@ -74,9 +74,9 @@ export const NUMBER = {
 } as const;
 
 export const STATUS_CODE = {
-  unAuthorize: 401,
+  unauthorize: 401,
   notFound: 404,
-  international: 500,
+  internalServerError: 500,
 };
 
 export const DAYS_OF_THE_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;

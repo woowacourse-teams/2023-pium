@@ -2,9 +2,9 @@ import { GUIDE, STATUS_CODE } from 'constants/index';
 import StatusError from './statusError';
 
 export const throwOnInvalidStatus = (response: Response) => {
-  if (response.status === STATUS_CODE.unAuthorize) {
+  if (response.status === STATUS_CODE.unauthorize) {
     throw new StatusError({
-      statusCode: STATUS_CODE.unAuthorize,
+      statusCode: STATUS_CODE.unauthorize,
       message: GUIDE.sessionExpire,
     });
   }
@@ -16,10 +16,10 @@ export const throwOnInvalidStatus = (response: Response) => {
     });
   }
 
-  if (response.status === STATUS_CODE.international) {
+  if (response.status === STATUS_CODE.internalServerError) {
     throw new StatusError({
-      statusCode: STATUS_CODE.international,
-      message: 'International 500',
+      statusCode: STATUS_CODE.internalServerError,
+      message: 'internal Server Error 500',
     });
   }
 };

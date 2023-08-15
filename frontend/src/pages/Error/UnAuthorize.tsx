@@ -3,7 +3,7 @@ import { SadPiumiImage, Section, Wrapper, Text, Title, Button } from './Error.st
 import { GUIDE, URL_PATH } from 'constants/index';
 import sadpiumi from 'assets/sadpiumi.svg';
 
-const UnAuthorize = () => {
+const Unauthorize = () => {
   const navigate = useNavigate();
 
   const goToMain = () => navigate(URL_PATH.main);
@@ -28,4 +28,4 @@ const UnAuthorize = () => {
   );
 };
 
-export default UnAuthorize;
+export default Unauthorize;
