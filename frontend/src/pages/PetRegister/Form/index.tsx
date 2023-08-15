@@ -27,6 +27,8 @@ const STACK_ELEMENT_HEIGHT = '96px';
 
 const PetRegisterForm = () => {
   const { id } = useParams();
+  if (!id) throw new Error('URL에 id가 없습니다.');
+
   const dictionaryPlantId = Number(id);
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
   const { data: dictionaryPlant } = useDictDetail(dictionaryPlantId);
