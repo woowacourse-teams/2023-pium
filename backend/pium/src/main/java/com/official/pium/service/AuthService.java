@@ -5,7 +5,6 @@ import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.dto.KaKaoAccessTokenResponse;
 import com.official.pium.service.dto.KaKaoMemberInfoResponse;
 import com.official.pium.service.dto.OAuthSupporter;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,15 +25,10 @@ public class AuthService {
         KaKaoMemberInfoResponse memberInfoResponse = supporter.getMemberInfo(accessToken);
         Long kakaoId = memberInfoResponse.getId();
 
-        Optional<Member> member = memberRepository.findByKakaoId(kakaoId);
-
-        if (member.isPresent()) {
-            return member.get();
-        }
-
-        return memberRepository.save(Member.builder()
-                .kakaoId(kakaoId)
-                .build());
+        return memberRepository.findByKakaoId(kakaoId)
+                .orElseGet(() -> memberRepository.save(Member.builder()
+                        .kakaoId(kakaoId)
+                        .build()));
     }
 
     @Transactional
