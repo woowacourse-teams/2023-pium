@@ -4,6 +4,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -50,6 +57,13 @@ class AuthControllerTest extends UITest {
             mockMvc.perform(get("/login")
                             .param("code", "authorization code")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("auth/login/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("code").description("카카오 인증 코드")
+                            ))
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -58,7 +72,6 @@ class AuthControllerTest extends UITest {
         @ValueSource(strings = {"", " "})
         void 잘못된_인증_코드로_요청_시_400_반환(String code) throws Exception {
             mockMvc.perform(get("/login")
-                            .param("code", code)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andDo(print());
@@ -73,6 +86,12 @@ class AuthControllerTest extends UITest {
             mockMvc.perform(post("/logout")
                             .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("auth/logout/",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies()
+                            )
+                    )
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -110,6 +129,12 @@ class AuthControllerTest extends UITest {
             mockMvc.perform(delete("/withdraw")
                             .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("auth/withdraw/",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies()
+                            )
+                    )
                     .andExpect(status().isNoContent())
                     .andDo(print());
         }
