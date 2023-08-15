@@ -46,6 +46,21 @@ public class AuthApiTest extends AcceptanceTest {
                 .extract();
     }
 
+    @Test
+    void 회원탈퇴() {
+        String sessionId = 로그인_요청();
+
+        RestAssured.given()
+                .log().all()
+                .sessionId(sessionId)
+                .when()
+                .delete("/withdraw")
+                .then()
+                .log().all()
+                .statusCode(HttpStatus.NO_CONTENT.value())
+                .extract();
+    }
+
     private String 로그인_요청() {
         return RestAssured.given()
                 .log().all()
