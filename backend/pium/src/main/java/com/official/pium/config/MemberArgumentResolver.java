@@ -40,8 +40,8 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             throw new AuthenticationException("로그인이 필요합니다");
         }
 
-        Long kakao_id = (Long) session.getAttribute(SESSION_KEY);
-        return memberRepository.findByKakaoId(kakao_id)
+        Long kakaoId = (Long) session.getAttribute(SESSION_KEY);
+        return memberRepository.findByKakaoId(kakaoId)
                 .orElseThrow(() -> new NoSuchElementException("회원을 찾을 수 없습니다."));
     }
 }

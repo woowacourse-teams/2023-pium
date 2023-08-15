@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private static final String SESSION_KEY = "KAKAO_ID";
+    public static final int EXPIRED_TIME_SIX_HOUR = 21600;
 
     private final AuthService authService;
 
@@ -33,14 +34,14 @@ public class AuthController {
 
         HttpSession session = request.getSession();
         session.setAttribute(SESSION_KEY, loginMember.getKakaoId());
-        session.setMaxInactiveInterval(21600);
+        session.setMaxInactiveInterval(EXPIRED_TIME_SIX_HOUR);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/logout")
-    public ResponseEntity logout(HttpServletRequest request,
-                                 @Auth Member member) {
+    public ResponseEntity<Void> logout(HttpServletRequest request,
+                                       @Auth Member member) {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
@@ -51,8 +52,8 @@ public class AuthController {
     }
 
     @DeleteMapping("/withdraw")
-    public ResponseEntity withdraw(HttpServletRequest request,
-                                   @Auth Member member) {
+    public ResponseEntity<Void> withdraw(HttpServletRequest request,
+                                         @Auth Member member) {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
