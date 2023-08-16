@@ -2,7 +2,12 @@ import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
+import useUnauthorize from 'hooks/useUnauthorize';
+import StatusError from 'models/statusError';
 import ReminderAPI from 'apis/reminder';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import useCheckSessionId from '../auth/useCheckSessionId';
 
 interface ArrangedReminderWithStatus {
   data: Array<[Month, ReminderExtendType[]]>;
@@ -48,15 +53,31 @@ const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminder
   };
 };
 
-const useReminder = () =>
-  useQuery<DataResponse<Reminder[]>, Error, ArrangedReminderWithStatus>({
+const useReminder = () => {
+  const { retryCallback, redirectLoginPage } = useUnauthorize();
+  const { isSuccess, error } = useCheckSessionId();
+
+  useEffect(() => {
+    if (error) {
+      redirectLoginPage(error);
+    }
+  }, [error, redirectLoginPage]);
+
+  return useQuery<DataResponse<Reminder[]>, Error | StatusError, ArrangedReminderWithStatus>({
     queryKey: ['reminder'],
     queryFn: async () => {
       const response = await ReminderAPI.getReminder();
+      throwOnInvalidStatus(response);
+
       const results = await response.json();
       return results;
     },
     select: convertReminderData,
+    throwOnError: true,
+    suspense: true,
+    retry: retryCallback,
+    enabled: isSuccess,
   });
+};
 
 export default useReminder;

@@ -3,6 +3,14 @@ import { convertDateKorYear, getDateToString } from 'utils/date';
 describe('반려 식물 등록하기', () => {
   const todayKorString = convertDateKorYear(getDateToString());
   beforeEach(() => {
+    const COOKIE = 'piumTetstSessionId';
+
+    const currentTime = new Date().getTime();
+
+    const sixHoursLater = currentTime + 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+
+    cy.setCookie('JSESSION', COOKIE, { expiry: sixHoursLater });
+
     cy.visit('/pet/register');
   });
 

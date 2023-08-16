@@ -1,5 +1,6 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const DotEnv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 const Dotenv = require('dotenv-webpack');
@@ -30,6 +31,7 @@ module.exports = (env) => ({
       contexts: resolve(__dirname, 'src', 'contexts'),
       store: resolve(__dirname, 'src', 'store'),
       style: resolve(__dirname, 'src', 'style'),
+      models: resolve(__dirname, 'src', 'models'),
     },
   },
   module: {
@@ -54,6 +56,9 @@ module.exports = (env) => ({
   plugins: [
     new HtmlWebpackPlugin({
       template: resolve(__dirname, 'public', 'index.html'),
+    }),
+    new DotEnv({
+      path: resolve(__dirname, 'env', `${env.environment}.env`),
     }),
     ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
     new Dotenv({

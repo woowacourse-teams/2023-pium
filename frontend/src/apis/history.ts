@@ -17,8 +17,8 @@ const getPetPlant = (
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: 'pium@gmail.com',
     },
+    credentials: 'include',
   });
 };
 
