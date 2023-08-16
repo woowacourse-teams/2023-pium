@@ -28,7 +28,7 @@ const withdraw = () => {
 };
 
 const checkSessionId = () => {
-  return fetch(`${BASE_URL}/member.me`, {
+  return fetch(`${BASE_URL}/members/me`, {
     method: 'POST',
     credentials: 'include',
   });

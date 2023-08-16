@@ -19,7 +19,7 @@ const useLogin = (code: string) => {
         const [name] = cookie.split('=');
         return name === 'JSESSION';
       });
-      console.log(sessionCookie);
+
       const sessionId = sessionCookie?.split('=')[1].slice(0, 10);
 
       localStorage.setItem('sessionId', JSON.stringify(sessionId));
