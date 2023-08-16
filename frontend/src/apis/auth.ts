@@ -21,7 +21,7 @@ const logout = () => {
 };
 
 const withdraw = () => {
-  return fetch(`${BASE_URL}/withdraw`, {
+  return fetch(`${BASE_URL}/members/withdraw`, {
     method: 'DELETE',
     credentials: 'include',
   });

@@ -233,7 +233,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       );
     }),
 
-    rest.delete('/withdraw', (req, res, ctx) => {
+    rest.delete('/members/withdraw', (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
       if (JSESSION === undefined) {
