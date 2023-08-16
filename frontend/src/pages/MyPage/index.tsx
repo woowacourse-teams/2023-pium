@@ -16,7 +16,7 @@ const MyPage = () => {
     if (error) {
       redirectLoginPage(error);
     }
-  }, [error]);
+  }, [error, redirectLoginPage]);
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
     logoutMutate();

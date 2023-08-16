@@ -14,7 +14,8 @@ const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
     if (error) {
       redirectLoginPage(error);
     }
-  }, [error]);
+  }, [error, redirectLoginPage]);
+
   return useQuery<PetPlantDetails>({
     queryKey: ['petPlantDetails', petPlantId],
     queryFn: async () => {

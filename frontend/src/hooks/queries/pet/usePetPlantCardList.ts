@@ -15,7 +15,8 @@ const usePetPlantCardList = () => {
     if (error) {
       redirectLoginPage(error);
     }
-  }, [error]);
+  }, [error, redirectLoginPage]);
+
   return useQuery<DataResponse<PetPlantItem[]>, Error, PetPlantItem[]>({
     queryKey: [PET, 'list'],
     queryFn: async () => {
