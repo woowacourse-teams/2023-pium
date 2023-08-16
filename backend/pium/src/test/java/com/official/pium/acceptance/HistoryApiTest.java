@@ -1,5 +1,11 @@
 package com.official.pium.acceptance;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.PetPlant;
@@ -10,20 +16,13 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -288,6 +287,7 @@ public class HistoryApiTest extends AcceptanceTest {
 
         @Test
         void 필터링된_단건_히스토리_정보_반환() {
+            String sessionId = 로그인_요청();
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             LocalDate registeredDate = LocalDate.of(2022, 1, 13);
 
@@ -307,7 +307,7 @@ public class HistoryApiTest extends AcceptanceTest {
                     .queryParam("size", sizeRequestParam)
                     .queryParam("filter", filter)
                     .log().all()
-                    .header("Authorization", member.getEmail())
+                    .sessionId(sessionId)
                     .when()
                     .get("/history")
                     .then()
