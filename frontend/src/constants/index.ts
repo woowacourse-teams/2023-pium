@@ -14,6 +14,9 @@ export const URL_PATH = {
   petRegisterForm: '/pet/register/:id',
   calendar: '/calendar',
   reminder: '/reminder',
+  login: '/login',
+  authorization: '/authorization',
+  myPage: '/myPage',
 } as const;
 
 export const MESSAGE = {
@@ -33,6 +36,8 @@ export const ERROR = {
 
 export const GUIDE = {
   search: '피움에 등록된 식물을 검색해 보세요!',
+  login: '로그인 후 이용 가능한 서비스입니다.',
+  sessionExpire: '세션이 만료됐습니다. 다시 로그인해주세요.',
 } as const;
 
 export const OPTIONS = {
@@ -65,6 +70,12 @@ export const NUMBER = {
   minCycleDate: 1,
   maxNicknameLength: 30,
 } as const;
+
+export const STATUS_CODE = {
+  unauthorize: 401,
+  notFound: 404,
+  internalServerError: 500,
+};
 
 export const DAYS_OF_THE_WEEK = ['일', '월', '화', '수', '목', '금', '토'] as const;
 

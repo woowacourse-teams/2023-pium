@@ -57,6 +57,11 @@ export const makeHandler = (delay = 0, failRate = 0) => {
         return res(ctx.delay(delay), ctx.status(500));
       }
 
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
       const newPlant = await req.json();
 
       PetPlant.add(newPlant);
@@ -64,13 +69,25 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(201));
     }),
 
-    rest.get(PET, (_, res, ctx) =>
-      res(ctx.delay(delay), ctx.status(200), ctx.json({ data: PET_LIST }))
-    ),
+    rest.get(PET, (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      return res(ctx.delay(delay), ctx.status(200), ctx.json({ data: PET_LIST }));
+    }),
 
     rest.get(`${PET}/:petPlantId`, async (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
+      }
+
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
       const { petPlantId } = req.params;
@@ -85,6 +102,12 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.patch<EditPetPlantRequest>(`${PET}/:petPlantId`, async (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
+      }
+
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
       return res(ctx.delay(delay), ctx.status(200));
@@ -103,6 +126,13 @@ export const makeHandler = (delay = 0, failRate = 0) => {
 
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      validateParams(delay, failRate);
       const { data } = Reminder.getAll();
 
       data.sort((a, b) => {
@@ -115,6 +145,12 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
 
     rest.post(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
       const { petPlantId } = req.params;
       const { waterDate } = await req.json();
 
@@ -124,11 +160,77 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
 
     rest.patch(`${REMINDER}/:petPlantId`, async (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
       const { petPlantId } = req.params;
       const { nextWaterDate } = await req.json();
       Reminder.changeDate(Number(petPlantId), nextWaterDate);
 
       return res(ctx.delay(delay), ctx.status(204));
+    }),
+
+    rest.post('/login', (req, res, ctx) => {
+      const code = req.url.searchParams.get('code') ?? null;
+
+      if (code === null) {
+        return res(
+          ctx.delay(delay),
+          ctx.status(401),
+          ctx.json({ message: '유효하지 않은 code입니다' })
+        );
+      }
+
+      const currentDate = new Date();
+
+      const sixHoursInMilliseconds = 6 * 60 * 60 * 1000;
+      // 현재로부터 6시간 뒤에 만료되는 쿠키
+      const expirationDate = new Date(currentDate.getTime() + sixHoursInMilliseconds);
+
+      return res(ctx.cookie('JSESSION', `${code}`, { expires: expirationDate }), ctx.status(200));
+    }),
+
+    rest.post('/logout', (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      // 로그이웃 실행 시에 지금 당장 만료되는 쿠키 설정
+      return res(
+        ctx.delay(delay),
+        ctx.status(200),
+        ctx.cookie('JSESSION', '', { expires: new Date() })
+      );
+    }),
+
+    rest.delete('/members/withdraw', (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      // 회원 탈퇴 시에 쿠키 바로 만료
+      return res(
+        ctx.delay(delay),
+        ctx.status(204),
+        ctx.cookie('JSESSION', '', { expires: new Date() })
+      );
+    }),
+
+    rest.get('/members/me', (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+      // 쿠키 갱신
+      return res(ctx.delay(delay), ctx.cookie('JSESSION', JSESSION));
     }),
   ];
 };

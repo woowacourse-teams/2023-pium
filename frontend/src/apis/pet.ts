@@ -5,13 +5,13 @@ export const PET = `${BASE_URL}/pet-plants`;
 
 const headers = {
   'Content-Type': 'application/json',
-  Authorization: 'pium@gmail.com',
 };
 
 const getList = () => {
   return fetch(PET, {
     method: 'GET',
     headers,
+    credentials: 'include',
   });
 };
 
@@ -19,6 +19,7 @@ const register = (form: NewPetPlantRequest) => {
   return fetch(PET, {
     method: 'POST',
     headers,
+    credentials: 'include',
     body: JSON.stringify(form),
   });
 };
@@ -27,6 +28,7 @@ const getDetails = (petPlantId: PetPlantDetails['id']) => {
   return fetch(`${PET}/${petPlantId}`, {
     method: 'GET',
     headers,
+    credentials: 'include',
   });
 };
 
@@ -34,6 +36,7 @@ const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
   return fetch(`${PET}/${petPlantId}`, {
     method: 'PATCH',
     headers,
+    credentials: 'include',
     body: JSON.stringify(form),
   });
 };

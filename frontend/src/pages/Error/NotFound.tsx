@@ -4,7 +4,7 @@ import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
 import { URL_PATH } from 'constants/index';
 import sadpiumi from 'assets/sadpiumi.svg';
 
-const Error = () => {
+const NotFound = () => {
   const navigate = useNavigate();
   const resetErrorBoundary = useResetErrorBoundary();
 
@@ -41,4 +41,4 @@ const Error = () => {
   );
 };
 
-export default Error;
+export default NotFound;
