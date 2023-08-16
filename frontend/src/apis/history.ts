@@ -11,7 +11,7 @@ const getPetPlant = (
   filter: HistoryType[] = []
 ) => {
   let url = `${HISTORY}?petPlantId=${petPlantId}&page=${page}&size=${size}`;
-  if (filter.length) url += `&filter="${filter.join(',')}"`;
+  if (filter.length) url += `&filter=${filter.join(',')}`;
 
   return fetch(url, {
     method: 'GET',
