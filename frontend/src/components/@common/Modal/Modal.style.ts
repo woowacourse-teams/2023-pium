@@ -16,12 +16,14 @@ export const ModalBox = styled.dialog`
   top: auto;
   bottom: 0;
 
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 
   width: 100%;
+  max-height: 80vh;
   margin: 0 auto;
 
   background-color: ${({ theme: { color } }) => color.background};
