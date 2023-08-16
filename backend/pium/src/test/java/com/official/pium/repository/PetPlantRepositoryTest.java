@@ -30,7 +30,7 @@ class PetPlantRepositoryTest extends RepositoryTest {
 
     @BeforeEach
     void setUp() {
-        member = Member.builder().email("hello@aaa.com").build();
+        member = Member.builder().build();
         memberRepository.save(member);
 
         dictionaryPlant = DictionaryPlant.builder().build();

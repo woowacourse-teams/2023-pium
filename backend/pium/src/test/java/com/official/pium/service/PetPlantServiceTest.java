@@ -122,7 +122,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_단건_조회시_주인이_아니면_예외_발생() {
-        Member otherMember = memberSupport.builder().build();
+        Member otherMember = memberSupport.builder().kakaoId(54321L).build();
         PetPlant petPlant = petPlantSupport.builder().member(member).build();
 
         assertThatThrownBy(() -> petPlantService.read(petPlant.getId(), otherMember))
@@ -164,7 +164,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_수정시_주인이_아니면_예외_발생() {
-        Member otherMember = memberSupport.builder().build();
+        Member otherMember = memberSupport.builder().kakaoId(54321L).build();
         PetPlant petPlant = petPlantSupport.builder().member(member).build();
         PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
 
@@ -219,7 +219,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물_삭제시_주인이_아니면_예외_발생() {
-        Member otherMember = memberSupport.builder().build();
+        Member otherMember = memberSupport.builder().kakaoId(54321L).build();
         PetPlant petPlant = petPlantSupport.builder().member(member).build();
 
         assertThatThrownBy(() -> petPlantService.delete(petPlant.getId(), otherMember))

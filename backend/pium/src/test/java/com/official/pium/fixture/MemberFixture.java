@@ -6,16 +6,16 @@ import com.official.pium.domain.Member;
 public class MemberFixture {
 
     public static Member 주노 = Member.builder()
-            .email("junho5336@gmail.com")
+            .kakaoId(12345L)
             .build();
 
     public static Member 그레이 = Member.builder()
-            .email("gray@gmail.com")
+            .kakaoId(23456L)
             .build();
 
     public static Member generateMember() {
         return Member.builder()
-                .email("pium@gmail.com")
+                .kakaoId(91232304L)
                 .build();
     }
 }

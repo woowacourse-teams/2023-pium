@@ -23,12 +23,12 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "kakao_id", unique = true)
+    private Long kakaoId;
 
     @Builder
-    private Member(String email) {
-        this.email = email;
+    public Member(Long kakaoId) {
+        this.kakaoId = kakaoId;
     }
 
     @Override

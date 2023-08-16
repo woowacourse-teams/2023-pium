@@ -6,7 +6,6 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.support.DictionaryPlantSupport;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -15,15 +14,11 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class DictionaryPlantApiTest extends AcceptanceTest {
-
-    @Autowired
-    private DictionaryPlantSupport dictionaryPlantSupport;
 
     @Nested
     class 사전_식물_단건_조회 {

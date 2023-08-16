@@ -1,5 +1,6 @@
 package com.official.pium.config;
 
+import com.official.pium.controller.MemberArgumentResolver;
 import com.official.pium.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

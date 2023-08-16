@@ -1,5 +1,7 @@
 package com.official.pium.repository;
 
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
 import com.official.pium.RepositoryTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.History;
@@ -9,6 +11,8 @@ import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.domain.WaterCycle;
+import java.time.LocalDate;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -18,11 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-
-import java.time.LocalDate;
-import java.util.List;
-
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -124,7 +123,8 @@ class HistoryRepositoryTest extends RepositoryTest {
         historyRepository.save(locationHistory);
         historyRepository.save(windHistory);
         PageRequest pageRequest = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
-        Page<History> histories = historyRepository.findAllByPetPlantIdAndHistoryTypes(petPlant.getId(), List.of(HistoryType.FLOWERPOT, HistoryType.LOCATION), pageRequest);
+        Page<History> histories = historyRepository.findAllByPetPlantIdAndHistoryTypes(petPlant.getId(),
+                List.of(HistoryType.FLOWERPOT, HistoryType.LOCATION), pageRequest);
 
         //then
         assertSoftly(
@@ -142,11 +142,11 @@ class HistoryRepositoryTest extends RepositoryTest {
     }
 
     private Member saveMember() {
-        Member member = Member.builder().email("hello@aaa.com").build();
+        Member member = Member.builder().build();
         memberRepository.save(member);
         return member;
     }
-    
+
     private PetPlant savePetPlant(Member member, DictionaryPlant dictionaryPlant) {
         PetPlant petPlant = PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
