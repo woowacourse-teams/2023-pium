@@ -3,9 +3,16 @@ import Image from 'components/@common/Image';
 import Modal from 'components/@common/Modal';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
-import { DictionaryPlantImageArea, DictionaryPlantName, Wrapper } from './Form.style';
+import {
+  BackLink,
+  DictionaryPlantImageArea,
+  DictionaryPlantName,
+  Header,
+  Main,
+} from './Form.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useModal from 'hooks/useModal';
+import { URL_PATH } from 'constants/index';
 
 const PetPlantRegisterFormPage = () => {
   const { id } = useParams();
@@ -20,13 +27,16 @@ const PetPlantRegisterFormPage = () => {
   const { name, image } = dictionaryPlantDetail;
   return (
     <>
-      <Wrapper>
+      <Header>
+        <BackLink to={URL_PATH.petRegisterSearch}>{'<'}</BackLink>
+      </Header>
+      <Main>
         <DictionaryPlantName onClick={open}>{name}</DictionaryPlantName>
         <DictionaryPlantImageArea>
           <Image size="160px" src={image} />
         </DictionaryPlantImageArea>
         <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} />
-      </Wrapper>
+      </Main>
       <Modal ref={modalRef} isOpen={isOpen} closeModal={close}>
         <DictionaryPlantContent {...dictionaryPlantDetail} />
       </Modal>
