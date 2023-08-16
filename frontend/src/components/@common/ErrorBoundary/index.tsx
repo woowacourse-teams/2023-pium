@@ -1,6 +1,6 @@
 import { Component } from 'react';
-import ErrorBoundarySetStateProvider from 'contexts/ErrorBoundarySetStateContext';
-import StatusError from '../../../models/statusError';
+import ResetErrorBoundaryProvider from 'contexts/resetErrorBoundaryContext';
+import StatusError from 'models/statusError';
 
 export interface ErrorBoundaryProps {
   fallback?: React.ReactNode;
@@ -9,7 +9,7 @@ export interface ErrorBoundaryProps {
 
 export interface ErrorBoundaryState {
   error: Error | StatusError | null;
-  statusCode?: StatusError['statusCode'];
+  statusCode: StatusError['statusCode'] | null;
 }
 
 class ErrorBoundary extends Component<
@@ -20,7 +20,9 @@ class ErrorBoundary extends Component<
     super(props);
     this.state = {
       error: null,
+      statusCode: null,
     };
+    this.reset = this.reset.bind(this);
   }
 
   static getDerivedStateFromError(error: Error | StatusError) {
@@ -34,6 +36,13 @@ class ErrorBoundary extends Component<
     return { error };
   }
 
+  reset() {
+    this.setState({
+      error: null,
+      statusCode: null,
+    });
+  }
+
   render() {
     const { children, fallback, statusCode: statusCodeProps } = this.props;
     const { error, statusCode } = this.state;
@@ -42,11 +51,10 @@ class ErrorBoundary extends Component<
       throw error;
     }
 
-    const setStateFunction = this.setState.bind(this);
     return (
-      <ErrorBoundarySetStateProvider setState={setStateFunction}>
+      <ResetErrorBoundaryProvider reset={this.reset}>
         {error === null ? children : fallback}
-      </ErrorBoundarySetStateProvider>
+      </ResetErrorBoundaryProvider>
     );
   }
 }

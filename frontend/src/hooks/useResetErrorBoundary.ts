@@ -1,5 +1,5 @@
-import { useCallback, useContext } from 'react';
-import { ErrorBoundarySetStateContext } from 'contexts/ErrorBoundarySetStateContext';
+import { useContext } from 'react';
+import { ResetErrorBoundaryContext } from 'contexts/resetErrorBoundaryContext';
 import { ERROR } from 'constants/index';
 
 /**
@@ -7,17 +7,13 @@ import { ERROR } from 'constants/index';
  * @returns ErrorBoundary를 초기화하는 콜백 함수
  */
 const useResetErrorBoundary = () => {
-  const context = useContext(ErrorBoundarySetStateContext);
+  const context = useContext(ResetErrorBoundaryContext);
 
   if (context === null) throw new Error(ERROR.errorBoundaryContext);
 
-  const { setState } = context;
+  const { reset } = context;
 
-  const resetErrorBoundary = useCallback(() => {
-    setState({ error: null });
-  }, [setState]);
-
-  return resetErrorBoundary;
+  return reset;
 };
 
 export default useResetErrorBoundary;
