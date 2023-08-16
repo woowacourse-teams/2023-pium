@@ -51,22 +51,17 @@ const PetRegisterForm = () => {
   };
 
   const setBirthDate = (value: string) => {
-    if (value > today) {
-      return false;
-    }
+    if (value > today) return;
+
     dispatch({ type: 'SET', key: 'birthDate', value });
     showNextElement(1);
-
-    return true;
   };
 
   const setLastWaterDate = (value: string) => {
-    if (value > today) {
-      return false;
-    }
+    if (value > today) return;
+
     dispatch({ type: 'SET', key: 'lastWaterDate', value });
     showNextElement(2);
-    return true;
   };
 
   const setWaterCycle = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
