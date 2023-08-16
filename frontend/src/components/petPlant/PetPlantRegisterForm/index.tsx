@@ -25,6 +25,7 @@ const PetPlantRegisterForm = ({ dictionaryPlantId }: PetPlantRegisterFormProps) 
 
   const today = getDateToString();
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
+  const isValidForm = Object.values(form).every((value) => value !== '');
 
   const addToast = useAddToast();
   const { mutate: registerPetPlant } = useRegisterPetPlant();
@@ -86,6 +87,8 @@ const PetPlantRegisterForm = ({ dictionaryPlantId }: PetPlantRegisterFormProps) 
   };
 
   const submit = () => {
+    if (!isValidForm) return;
+
     const { birthDate: formBirthDate, lastWaterDate: formLastWaterDate } = form;
 
     if (!(isDateFormat(formBirthDate) && isDateFormat(formLastWaterDate))) {
@@ -105,8 +108,6 @@ const PetPlantRegisterForm = ({ dictionaryPlantId }: PetPlantRegisterFormProps) 
   };
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
-
-  const isValidForm = Object.values(form).every((value) => value !== '');
 
   return (
     <Wrapper>
