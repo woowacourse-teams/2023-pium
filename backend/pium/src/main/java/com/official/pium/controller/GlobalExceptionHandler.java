@@ -60,7 +60,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
         log.error(message, e);
-        return ResponseEntity.internalServerError().body(exceptionResponse);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({KakaoTokenRequestException.class, KaKaoMemberInfoRequestException.class})

@@ -1,4 +1,4 @@
-package com.official.pium.config;
+package com.official.pium.controller;
 
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
@@ -30,17 +30,19 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
                                   NativeWebRequest webRequest, WebDataBinderFactory binderFactory)
             throws AuthenticationException {
-
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-
         HttpSession session = request.getSession(false);
 
         if (session == null) {
             throw new AuthenticationException("로그인이 필요합니다");
         }
 
-        Long kakaoId = (Long) session.getAttribute(SESSION_KEY);
-        return memberRepository.findByKakaoId(kakaoId)
-                .orElseThrow(() -> new NoSuchElementException("회원을 찾을 수 없습니다."));
+        try {
+            Long kakaoId = (Long) session.getAttribute(SESSION_KEY);
+            return memberRepository.findByKakaoId(kakaoId)
+                    .orElseThrow(() -> new NoSuchElementException("회원을 찾을 수 없습니다."));
+        } catch (ClassCastException e) {
+            throw new AuthenticationException("잘못된 세션 정보로 인해 사용자 인증에 실패하였습니다.");
+        }
     }
 }
