@@ -1,5 +1,6 @@
 import { useParams } from 'react-router-dom';
 import Dictionary from 'components/@common/Icons/Dictionary';
+import LineArrowLeft from 'components/@common/Icons/LineArrowLeft';
 import Image from 'components/@common/Image';
 import Modal from 'components/@common/Modal';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
@@ -29,7 +30,9 @@ const PetPlantRegisterFormPage = () => {
   return (
     <>
       <Header>
-        <BackLink to={URL_PATH.petRegisterSearch}>{'<'}</BackLink>
+        <BackLink to={URL_PATH.petRegisterSearch}>
+          <LineArrowLeft color="" />
+        </BackLink>
       </Header>
       <Main>
         <DictionaryPlantName onClick={open}>

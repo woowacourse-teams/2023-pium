@@ -12,15 +12,16 @@ export const Header = styled.header`
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
   height: 48px;
-  padding: 0 24px;
+  padding: 0 16px;
 
   background-color: ${(props) => props.theme.color.background};
   box-shadow: 0 2px 2px -2px ${(props) => props.theme.color.gray};
 `;
 
 export const BackLink = styled(Link)`
-  font-size: 3rem;
-  color: ${(props) => props.theme.color.sub};
+  display: flex;
+  align-items: center;
+  font-size: 2rem;
 `;
 
 export const Main = styled.main`
