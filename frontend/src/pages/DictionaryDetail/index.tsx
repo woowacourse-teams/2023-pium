@@ -6,10 +6,11 @@ import { Wrapper } from './DictionaryDetail.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 
 const DictionaryDetail = () => {
-  const dictionaryPlantId = useParams();
-  if (!dictionaryPlantId) throw new Error('사전 식물 Id가 없습니다.');
+  const { id } = useParams();
+  if (!id) throw new Error('URL에 id가 없습니다.');
 
-  const { data: dictionaryPlantDetail, isSuccess } = useDictDetail(Number(dictionaryPlantId));
+  const dictionaryPlantId = Number(id);
+  const { data: dictionaryPlantDetail, isSuccess } = useDictDetail(dictionaryPlantId);
   if (!isSuccess) return null;
 
   const { image, name } = dictionaryPlantDetail;
