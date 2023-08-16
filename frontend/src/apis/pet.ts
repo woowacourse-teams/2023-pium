@@ -44,6 +44,7 @@ const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
 const remove = (petPlantId: PetPlantDetails['id']) => {
   return fetch(`${PET}/${petPlantId}`, {
     method: 'DELETE',
+    credentials: 'include',
     headers,
   });
 };
