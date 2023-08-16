@@ -1,11 +1,5 @@
 package com.official.pium.acceptance;
 
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.equalTo;
-
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.PetPlant;
@@ -16,13 +10,20 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import java.time.LocalDate;
-import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.generatePetPlantCreateRequest;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -283,6 +284,55 @@ public class HistoryApiTest extends AcceptanceTest {
                     petPlantResponse.jsonPath().getString("waterCycle"),
                     petPlantResponse.jsonPath().getString("lastWaterDate")
             );
+        }
+
+        @Test
+        void 필터링된_단건_히스토리_정보_반환() {
+            DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+            LocalDate registeredDate = LocalDate.of(2022, 1, 13);
+
+            PetPlantCreateRequest petPlantCreateRequest = generatePetPlantRequestByLastWaterDate(
+                    dictionaryPlant.getId(), registeredDate);
+
+            Long 반려_식물_ID = 반려_식물_등록_요청(petPlantCreateRequest);
+
+            int pageRequestParam = 0;
+            int sizeRequestParam = 10;
+            String filter = "lastWaterDate,wind,flowerpot";
+
+            ExtractableResponse<Response> response = RestAssured
+                    .given()
+                    .queryParam("petPlantId", 반려_식물_ID)
+                    .queryParam("page", pageRequestParam)
+                    .queryParam("size", sizeRequestParam)
+                    .queryParam("filter", filter)
+                    .log().all()
+                    .header("Authorization", member.getEmail())
+                    .when()
+                    .get("/history")
+                    .then()
+                    .log().all()
+                    .statusCode(HttpStatus.OK.value())
+                    .extract();
+
+            assertSoftly(softly -> {
+                softly.assertThat(response.jsonPath().getInt("page")).isEqualTo(pageRequestParam);
+                softly.assertThat(response.jsonPath().getInt("size")).isEqualTo(sizeRequestParam);
+                softly.assertThat(response.jsonPath().getInt("elementSize")).isEqualTo(3);
+                softly.assertThat(response.jsonPath().getList("data"))
+                        .usingRecursiveComparison()
+                        .comparingOnlyFields("date")
+                        .isEqualTo(List.of(registeredDate.toString()));
+                softly.assertThat(response.jsonPath().getList("data.content"))
+                        .usingRecursiveComparison()
+                        .comparingOnlyFields("previous")
+                        .isEqualTo(List.of("EMPTY"));
+            });
+
+            List<String> currentResponses = response.jsonPath().getList("data.type");
+            assertSoftly(softly -> softly.assertThat(currentResponses)
+                    .contains("lastWaterDate", "wind", "flowerpot")
+                    .doesNotContain("waterCycle", "light", "location"));
         }
     }
 
