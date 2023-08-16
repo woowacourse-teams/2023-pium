@@ -2,7 +2,6 @@ package com.official.pium.service;
 
 import com.official.pium.domain.Member;
 import com.official.pium.repository.MemberRepository;
-import com.official.pium.service.dto.KakaoMemberResponse;
 import com.official.pium.service.dto.OAuthProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ public class MemberService {
 
     @Transactional
     public void withdraw(Member member) {
-        KakaoMemberResponse kakaoMemberResponse = provider.withDraw(member.getKakaoId());
-        memberRepository.deleteByKakaoId(kakaoMemberResponse.getId());
+        provider.withDraw(member.getKakaoId());
+        memberRepository.deleteByKakaoId(member.getKakaoId());
     }
 }

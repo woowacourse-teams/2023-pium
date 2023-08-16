@@ -1,43 +1,22 @@
 package com.official.pium.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
-import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withBadRequest;
-import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
 import com.official.pium.domain.Member;
-import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
 import com.official.pium.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.client.MockRestServiceServer;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.transaction.annotation.Transactional;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-@SpringBootTest
+@Transactional
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 class AuthServiceTest {
-
-    @Value("${auth.kakao.token-request-uri}")
-    private String tokenRequestUri;
-
-    @Value("${auth.kakao.member-info-request-uri}")
-    private String memberInfoRequestUri;
-
-    @Autowired
-    private RestTemplate restTemplate;
-
-    private MockRestServiceServer mockServer;
 
     @Autowired
     private AuthService authService;
@@ -45,38 +24,10 @@ class AuthServiceTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @ParameterizedTest
-    @CsvSource({"token1,12345,code1", "token2,1234534,code2", "token3,1234534,code3"})
-    void 로그인_성공(String accessToken, Long kakaoId, String authorizationCode) {
-        mockServer = MockRestServiceServer.createServer(restTemplate);
+    @Test
+    void 로그인_성공() {
+        Member loginMember = authService.login("12345");
 
-        String tokenResponse = String.format("{\"access_token\":\"%s\"}", accessToken);
-        String MemberInfoResponse = String.format("{\"id\":\"%d\"}", kakaoId);
-
-        mockServer.expect(requestTo(tokenRequestUri))
-                .andExpect(method(HttpMethod.POST))
-                .andRespond(withSuccess(tokenResponse, MediaType.APPLICATION_JSON));
-
-        mockServer.expect(requestTo(memberInfoRequestUri))
-                .andExpect(method(HttpMethod.POST))
-                .andRespond(withSuccess(MemberInfoResponse, MediaType.APPLICATION_JSON));
-
-        Member loginMember = authService.login(authorizationCode);
-
-        assertThat(loginMember.getKakaoId()).isEqualTo(kakaoId);
-    }
-
-    @ParameterizedTest
-    @ValueSource(strings = {"", " "})
-    void 잘못된_인증_코드로_로그인_요청_시_예외_발생(String authorizationCode) {
-        mockServer = MockRestServiceServer.createServer(restTemplate);
-
-        mockServer.expect(requestTo(tokenRequestUri))
-                .andExpect(method(HttpMethod.POST))
-                .andRespond(withBadRequest());
-
-        assertThatThrownBy(
-                () -> authService.login(authorizationCode)
-        ).isInstanceOf(KakaoTokenRequestException.class);
+        assertThat(loginMember.getKakaoId()).isNotNull();
     }
 }

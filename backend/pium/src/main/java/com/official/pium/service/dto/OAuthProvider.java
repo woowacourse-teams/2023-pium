@@ -82,7 +82,7 @@ public class OAuthProvider {
         }
     }
 
-    public KakaoMemberResponse withDraw(Long kakaoId) {
+    public void withDraw(Long kakaoId) {
         try {
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.set(AUTHORIZATION_HEADER, "KakaoAK " + adminId);
@@ -94,8 +94,7 @@ public class OAuthProvider {
 
             HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, httpHeaders);
 
-            return restTemplate.postForEntity(
-                    unLinkUri, request, KakaoMemberResponse.class).getBody();
+            restTemplate.postForEntity(unLinkUri, request, KakaoMemberResponse.class);
         } catch (HttpClientErrorException e) {
             throw new KakaoTokenRequestException(e.getMessage());
         } catch (HttpServerErrorException e) {

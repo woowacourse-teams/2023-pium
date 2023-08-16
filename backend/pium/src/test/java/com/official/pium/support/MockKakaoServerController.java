@@ -21,8 +21,21 @@ public class MockKakaoServerController {
     @Value("${auth.kakao.client-id}")
     private String clientId;
 
+    @Value("${auth.kakao.admin-id}")
+    private String adminId;
+
+    @PostMapping(path = "/v1/user/unlink", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<KakaoMemberResponse> withDraw(HttpEntity<String> request) {
+
+        KakaoMemberResponse response = KakaoMemberResponse.builder()
+                .id(12356L)
+                .build();
+
+        return ResponseEntity.ok(response);
+    }
+
     @PostMapping(path = "/oauth/token", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity getAccessToken(HttpEntity<String> request) {
+    public ResponseEntity<KaKaoAccessTokenResponse> getAccessToken(HttpEntity<String> request) {
         Map<String, String> body = parseValues(request.getBody());
 
         if (!Objects.equals(body.get("client_id"), clientId) || Objects.isNull(body.get("code"))) {
@@ -46,9 +59,8 @@ public class MockKakaoServerController {
     }
 
     @PostMapping(path = "/user/me", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ResponseEntity getMemberInfo(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
-        System.out.println("token = " + token);
-        if (Objects.isNull(token)) {
+    public ResponseEntity<KakaoMemberResponse> getMemberInfo(@RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
+        if (token == null) {
             return ResponseEntity.badRequest().build();
         }
 

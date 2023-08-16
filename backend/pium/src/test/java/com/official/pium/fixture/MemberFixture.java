@@ -15,6 +15,7 @@ public class MemberFixture {
 
     public static Member generateMember() {
         return Member.builder()
+                .kakaoId(91232304L)
                 .build();
     }
 }

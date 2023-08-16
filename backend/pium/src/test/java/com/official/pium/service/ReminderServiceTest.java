@@ -30,8 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-class
-ReminderServiceTest extends IntegrationTest {
+class ReminderServiceTest extends IntegrationTest {
 
     private PetPlant petPlant;
     private Member member;
@@ -47,8 +46,8 @@ ReminderServiceTest extends IntegrationTest {
 
     @BeforeEach
     void setUp() {
-        petPlant = petPlantSupport.builder().build();
-        member = petPlant.getMember();
+        member = memberSupport.builder().build();
+        petPlant = petPlantSupport.builder().member(member).build();
         for (HistoryType type : HistoryType.values()) {
             historyCategorySupport.builder()
                     .historyType(type)
@@ -151,7 +150,7 @@ ReminderServiceTest extends IntegrationTest {
 
     @Test
     void 반려_식물의_사용자와_미루기를_요청한_사용자가_다르면_예외_발생() {
-        Member otherMember = memberSupport.builder().kakaoId(54321L).build();
+        Member otherMember = memberSupport.builder().kakaoId(524321L).build();
         ReminderUpdateRequest request = ReminderUpdateRequest.builder()
                 .nextWaterDate(petPlant.getNextWaterDate().plusDays(1))
                 .build();
