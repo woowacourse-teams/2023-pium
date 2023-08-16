@@ -20,7 +20,6 @@ const validateParams = (delay: number, failRate: number) => {
 const DICT = '*/dictionary-plants';
 const PET = '*/pet-plants';
 const REMINDER = '*/reminders';
-const HISTORY = '*/history';
 
 sessionStorage.setItem('MSW_REMINDER', JSON.stringify(REMINDER_DATA));
 
@@ -47,7 +46,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
 
       const { id } = req.params;
-      const data = { ...DICTIONARY_PLANT_DATA, id: Number(id) };
+      const data = { ...DICTIONARY_PLANT_DATA[Number(id) % 2], id: Number(id) };
 
       return res(ctx.delay(delay), ctx.status(200), ctx.json(data));
     }),
@@ -114,6 +113,17 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(200));
     }),
 
+    rest.delete(`${PET}/:petPlantId`, async (req, res, ctx) => {
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(500));
+      }
+
+      const { petPlantId } = req.params;
+      PetPlant.remove(Number(petPlantId));
+
+      return res(ctx.delay(delay), ctx.status(204));
+    }),
+
     //리마인더 조회
     rest.get(REMINDER, (req, res, ctx) => {
       const { JSESSION } = req.cookies;
@@ -161,41 +171,6 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       Reminder.changeDate(Number(petPlantId), nextWaterDate);
 
       return res(ctx.delay(delay), ctx.status(204));
-    }),
-
-    rest.get(`${HISTORY}`, (req, res, ctx) => {
-      const { JSESSION } = req.cookies;
-
-      if (JSESSION === undefined) {
-        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
-      }
-
-      const pageParam = Number(req.url.searchParams.get('page') ?? 0);
-      const waterDateList = [
-        `2023-0${12 - pageParam}-30`,
-        `2023-0${12 - pageParam}-27`,
-        `2023-0${12 - pageParam}-24`,
-        `2023-0${12 - pageParam}-21`,
-        `2023-0${12 - pageParam}-18`,
-        `2023-0${12 - pageParam}-15`,
-        `2023-0${12 - pageParam}-12`,
-        `2023-0${12 - pageParam}-09`,
-        `2023-0${12 - pageParam}-06`,
-        `2023-0${12 - pageParam}-03`,
-        `2023-0${12 - pageParam}-01`,
-      ];
-
-      const hasNext = pageParam < 6;
-
-      const page = {
-        page: pageParam,
-        size: 20,
-        elementSize: 100,
-        hasNext,
-        waterDateList: hasNext ? waterDateList : '1999-12-16',
-      };
-
-      return res(ctx.delay(delay), ctx.status(200), ctx.json(page));
     }),
 
     rest.post('/login', (req, res, ctx) => {

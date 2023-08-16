@@ -1,7 +1,15 @@
 package com.official.pium.repository;
 
 import com.official.pium.RepositoryTest;
-import com.official.pium.domain.*;
+import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.History;
+import com.official.pium.domain.HistoryCategory;
+import com.official.pium.domain.HistoryContent;
+import com.official.pium.domain.HistoryType;
+import com.official.pium.domain.Member;
+import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.WaterCycle;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -12,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
@@ -21,35 +30,54 @@ class HistoryRepositoryTest extends RepositoryTest {
 
     @Autowired
     private HistoryRepository historyRepository;
+
     @Autowired
     private MemberRepository memberRepository;
+
     @Autowired
     private DictionaryPlantRepository dictionaryPlantRepository;
+
     @Autowired
     private PetPlantRepository petPlantRepository;
+
+    @Autowired
+    private HistoryCategoryRepository historyCategoryRepository;
+
+    @BeforeEach
+    void setUp() {
+        for (HistoryType type : HistoryType.values()) {
+            historyCategoryRepository.save(HistoryCategory.builder()
+                    .historyType(type)
+                    .build());
+        }
+    }
 
     @Test
     void 페이지_번호에_따른_다른_결과_조회() {
         //given
-        Member member = Member.builder().email("hello@aaa.com").build();
-        memberRepository.save(member);
+        Member member = saveMember();
         DictionaryPlant dictionaryPlant = saveDictionaryPlant();
         PetPlant petPlant = savePetPlant(member, dictionaryPlant);
         History history1 = History.builder()
                 .petPlant(petPlant)
-                .waterDate(LocalDate.now())
+                .date(LocalDate.of(2022, 1, 1))
+                .historyContent(generateHistoryContent("이전", "현재"))
+                .historyCategory(findHistoryCategory(HistoryType.FLOWERPOT))
                 .build();
+
         History history2 = History.builder()
                 .petPlant(petPlant)
-                .waterDate(LocalDate.now().plusDays(1L))
+                .date(LocalDate.of(2022, 1, 3))
+                .historyContent(generateHistoryContent("이전", "현재"))
+                .historyCategory(findHistoryCategory(HistoryType.FLOWERPOT))
                 .build();
 
         //when
         historyRepository.save(history1);
         historyRepository.save(history2);
-        Pageable pageable1 = PageRequest.of(0, 1, Sort.Direction.DESC, "waterDate");
+        Pageable pageable1 = PageRequest.of(0, 1, Sort.Direction.DESC, "date");
         Page<History> histories1 = historyRepository.findAllByPetPlantId(petPlant.getId(), pageable1);
-        Pageable pageable2 = PageRequest.of(1, 1, Sort.Direction.DESC, "waterDate");
+        Pageable pageable2 = PageRequest.of(1, 1, Sort.Direction.DESC, "date");
         Page<History> histories2 = historyRepository.findAllByPetPlantId(petPlant.getId(), pageable2);
 
         //then
@@ -65,6 +93,60 @@ class HistoryRepositoryTest extends RepositoryTest {
         );
     }
 
+    @Test
+    void 히스토리_타입_리스트에_포함된_히스토리만_조회() {
+        //given
+        Member member = saveMember();
+        DictionaryPlant dictionaryPlant = saveDictionaryPlant();
+        PetPlant petPlant = savePetPlant(member, dictionaryPlant);
+
+        History flowerpotHistory = History.builder()
+                .petPlant(petPlant)
+                .date(LocalDate.of(2022, 1, 1))
+                .historyContent(generateHistoryContent("이전", "현재"))
+                .historyCategory(findHistoryCategory(HistoryType.FLOWERPOT))
+                .build();
+        History locationHistory = History.builder()
+                .petPlant(petPlant)
+                .date(LocalDate.of(2022, 1, 3))
+                .historyContent(generateHistoryContent("이전", "현재"))
+                .historyCategory(findHistoryCategory(HistoryType.LOCATION))
+                .build();
+        History windHistory = History.builder()
+                .petPlant(petPlant)
+                .date(LocalDate.of(2022, 1, 3))
+                .historyContent(generateHistoryContent("이전", "현재"))
+                .historyCategory(findHistoryCategory(HistoryType.WIND))
+                .build();
+
+        //when
+        historyRepository.save(flowerpotHistory);
+        historyRepository.save(locationHistory);
+        historyRepository.save(windHistory);
+        PageRequest pageRequest = PageRequest.of(0, 5, Sort.Direction.DESC, "date");
+        Page<History> histories = historyRepository.findAllByPetPlantIdAndHistoryTypes(petPlant.getId(), List.of(HistoryType.FLOWERPOT, HistoryType.LOCATION), pageRequest);
+
+        //then
+        assertSoftly(
+                softly -> {
+                    softly.assertThat(histories.getContent()
+                                    .stream()
+                                    .map(history -> history.getHistoryCategory().getHistoryType())
+                                    .toList())
+                            .contains(HistoryType.FLOWERPOT, HistoryType.LOCATION)
+                            .doesNotContain(HistoryType.WIND);
+                    softly.assertThat(histories.getTotalElements()).isEqualTo(2L);
+                    softly.assertThat(histories.getTotalPages()).isEqualTo(1);
+                }
+        );
+    }
+
+    private Member saveMember() {
+        Member member = Member.builder().email("hello@aaa.com").build();
+        memberRepository.save(member);
+        return member;
+    }
+    
     private PetPlant savePetPlant(Member member, DictionaryPlant dictionaryPlant) {
         PetPlant petPlant = PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
@@ -75,9 +157,9 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .flowerpot("화분")
                 .light("밝아요")
                 .wind("추워요")
-                .birthDate(LocalDate.now())
-                .nextWaterDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
+                .birthDate(LocalDate.of(2021, 6, 4))
+                .nextWaterDate(LocalDate.of(2021, 6, 4))
+                .lastWaterDate(LocalDate.of(2021, 6, 4))
                 .waterCycle(3)
                 .build();
         petPlantRepository.save(petPlant);
@@ -108,5 +190,16 @@ class HistoryRepositoryTest extends RepositoryTest {
                 ).build();
         dictionaryPlantRepository.save(dictionaryPlant);
         return dictionaryPlant;
+    }
+
+    private HistoryContent generateHistoryContent(String previous, String current) {
+        return HistoryContent.builder()
+                .previous(previous)
+                .current(current)
+                .build();
+    }
+
+    private HistoryCategory findHistoryCategory(HistoryType historyType) {
+        return historyCategoryRepository.findByHistoryType(historyType).get();
     }
 }

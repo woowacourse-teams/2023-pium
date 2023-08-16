@@ -1,7 +1,9 @@
 package com.official.pium;
 
 import com.official.pium.config.DatabaseClearExtension;
+import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
+import com.official.pium.support.HistoryCategorySupport;
 import com.official.pium.support.MemberSupport;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,11 +21,20 @@ public class AcceptanceTest {
 
     @Autowired
     protected MemberSupport memberSupport;
+
     protected Member member;
+    
+    @Autowired
+    protected HistoryCategorySupport historyCategorySupport;
 
     @BeforeEach
     void setUp() {
         RestAssured.port = port;
         member = memberSupport.builder().build();
+        for (HistoryType type : HistoryType.values()) {
+            historyCategorySupport.builder()
+                    .historyType(type)
+                    .build();
+        }
     }
 }

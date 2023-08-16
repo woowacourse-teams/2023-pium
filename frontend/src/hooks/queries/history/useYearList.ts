@@ -1,19 +1,19 @@
-import type { HistoryResponse } from 'types/history';
+import type { HistoryResponse, HistoryType } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import type { YearList } from 'pages/PetPlantTimeline/converter';
 import {
-  convertDateListToYearMap,
-  convertHistoryResponseListToDateList,
+  convertHistoryItemListToYearMap,
+  convertHistoryResponseListToHistoryItemList,
   convertYearMapToYearList,
-} from 'pages/PetPlantTimeline/converter';
+  type YearList,
+} from 'components/petPlant/Timeline/converter';
 import useUnauthorize from 'hooks/useUnauthorize';
 import HistoryAPI, { HISTORY } from 'apis/history';
 import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
-const useYearList = (petPlantId: PetPlantDetails['id']) => {
+const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {
   const { retryCallback, redirectLoginPage } = useUnauthorize();
   const { isSuccess, error } = useCheckSessionId();
 
@@ -22,16 +22,16 @@ const useYearList = (petPlantId: PetPlantDetails['id']) => {
       redirectLoginPage(error);
     }
   }, [error]);
-  return useInfiniteQuery<
+  useInfiniteQuery<
     HistoryResponse,
     Error,
     YearList,
-    [typeof HISTORY, PetPlantDetails['id']],
+    [typeof HISTORY, PetPlantDetails['id'], HistoryType[]],
     number
   >({
-    queryKey: [HISTORY, petPlantId],
+    queryKey: [HISTORY, petPlantId, filter],
     queryFn: async ({ pageParam }) => {
-      const response = await HistoryAPI.getPetPlant(petPlantId, pageParam);
+      const response = await HistoryAPI.getPetPlant(petPlantId, pageParam, 20, filter);
 
       throwOnInvalidStatus(response);
 
@@ -42,15 +42,16 @@ const useYearList = (petPlantId: PetPlantDetails['id']) => {
     getNextPageParam: ({ hasNext }, _allPages, lastPageParam) => {
       return hasNext ? lastPageParam + 1 : undefined;
     },
-    suspense: true,
     select: (data) => {
-      const dateList = convertHistoryResponseListToDateList(data.pages);
-      const yearMap = convertDateListToYearMap(dateList);
+      const historyItemList = convertHistoryResponseListToHistoryItemList(data.pages);
+      const yearMap = convertHistoryItemListToYearMap(historyItemList);
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
     retry: retryCallback,
     enabled: isSuccess,
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData,
   });
 };
 

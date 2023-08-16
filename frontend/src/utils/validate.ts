@@ -1,4 +1,4 @@
-export const inputValidate = {
+export const InputValidate = {
   /**
    * 값이 0~9로만 이루어진 숫자인지 확인합니다.
    * @param value 문자열 형태로 된 숫자
@@ -50,7 +50,7 @@ interface DateInRange {
   endDate?: Date | null;
 }
 
-export const dateValidate = {
+export const DateValidate = {
   isDateInRange: ({ dateToCheck, startDate, endDate }: DateInRange) => {
     const dateToCheckTime = dateToCheck.getTime();
     if (startDate && endDate) {

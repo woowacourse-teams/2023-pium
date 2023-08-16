@@ -9,6 +9,4 @@ export default meta;
 
 type Story = StoryObj<typeof Navbar>;
 
-export const Default: Story = {
-  args: {},
-};
+export const Default: Story = {};

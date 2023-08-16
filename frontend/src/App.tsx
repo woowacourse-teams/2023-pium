@@ -3,9 +3,9 @@ import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import NotFound from 'pages/Error/NotFound';
+import Confirm from 'components/@common/Confirm';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
 import ToastList from 'components/@common/Toast/ToastList';
-import ToastProvider from 'contexts/toastContext';
 import { GlobalStyle } from 'style/Global.style';
 import theme from 'style/theme.style';
 import router from './router';
@@ -16,18 +16,17 @@ const App = () => {
   return (
     <>
       <GlobalStyle />
-      <RecoilRoot>
-        <ThemeProvider theme={theme}>
-          <QueryClientProvider client={queryClient}>
-            <ErrorBoundary fallback={<NotFound />}>
-              <ToastProvider>
-                <RouterProvider router={router} />
-                <ToastList />
-              </ToastProvider>
-            </ErrorBoundary>
-          </QueryClientProvider>
-        </ThemeProvider>
-      </RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <QueryClientProvider client={queryClient}>
+          <ErrorBoundary fallback={<NotFound />}>
+            <RecoilRoot>
+              <RouterProvider router={router} />
+              <Confirm />
+              <ToastList />
+            </RecoilRoot>
+          </ErrorBoundary>
+        </QueryClientProvider>
+      </ThemeProvider>
     </>
   );
 };

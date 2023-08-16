@@ -1,14 +1,14 @@
 package com.official.pium.repository;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
 import com.official.pium.RepositoryTest;
 import com.official.pium.domain.Member;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -25,9 +25,11 @@ class MemberRepositoryTest extends RepositoryTest {
 
         Member save = memberRepository.save(member);
 
-        assertAll(
-                () -> assertThat(save).isNotNull(),
-                () -> assertThat(save.getId()).isEqualTo(member.getId())
+        assertSoftly(
+                softly -> {
+                    softly.assertThat(save).isNotNull();
+                    softly.assertThat(save.getId()).isEqualTo(member.getId());
+                }
         );
     }
 
@@ -35,8 +37,8 @@ class MemberRepositoryTest extends RepositoryTest {
     void 사용자_조회() {
         Member member = Member.builder().email("hello@aaa.com").build();
 
-        Member save = memberRepository.save(member);
+        Member saveMember = memberRepository.save(member);
 
-        assertThat(memberRepository.findById(save.getId())).isPresent();
+        assertThat(memberRepository.findById(saveMember.getId())).isPresent();
     }
 }

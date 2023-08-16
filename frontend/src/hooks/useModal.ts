@@ -1,46 +1,60 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
+import useToggle from './useToggle';
 
 const useModal = (initialState = false) => {
-  const [isOpen, setIsOpen] = useState(initialState);
+  const { isOn: isOpen, on: open, off: close } = useToggle(initialState);
   const modalRef = useRef<HTMLDialogElement>(null);
+  const bodyRef = useRef(document.body);
 
-  const on = () => {
-    setIsOpen(true);
-  };
+  const keyDownHandler = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        close();
+      }
+    },
+    [close]
+  );
 
-  const off = () => {
-    setIsOpen(false);
-  };
+  const closeOnBackdropClick = useCallback(
+    (event: MouseEvent) => {
+      if (!modalRef.current) return;
 
-  const onTime = (ms: number) => {
-    on();
-    setTimeout(off, ms);
-  };
+      const dialog = modalRef.current.getBoundingClientRect();
+      const isClickInsideDialog =
+        dialog.top <= event.clientY &&
+        event.clientY <= dialog.top + dialog.height &&
+        dialog.left <= event.clientX &&
+        event.clientX <= dialog.left + dialog.width;
 
-  const keyDownHandler = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      off();
-    }
-  };
-  const body = useRef(document.body);
+      if (!isClickInsideDialog) close();
+    },
+    [close]
+  );
 
   useEffect(() => {
+    const dialog = modalRef.current;
+    const body = bodyRef.current;
+
     if (isOpen) {
-      modalRef.current?.showModal();
-      body.current.querySelector('#root')?.setAttribute('aria-hidden', 'true');
-      body.current.style.overflowY = 'hidden';
+      dialog?.showModal();
+      dialog?.addEventListener('click', closeOnBackdropClick);
+
+      body.style.overflowY = 'hidden';
+
       window.addEventListener('keydown', keyDownHandler);
     }
 
     return () => {
-      modalRef.current?.close();
-      body.current.querySelector('#root')?.setAttribute('aria-hidden', 'false');
-      body.current.style.overflowY = 'auto';
+      dialog?.close();
+      dialog?.removeEventListener('click', closeOnBackdropClick);
+
+      body.style.overflowY = 'auto';
+
       window.removeEventListener('keydown', keyDownHandler);
     };
-  }, [isOpen]);
+  }, [isOpen, open, close, keyDownHandler, closeOnBackdropClick]);
 
-  return { isOpen, on, off, onTime, modalRef };
+  return { isOpen, open, close, modalRef };
 };
 
 export default useModal;

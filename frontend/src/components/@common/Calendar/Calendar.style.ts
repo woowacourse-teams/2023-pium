@@ -50,3 +50,9 @@ export const AlertSpan = styled.span`
   clip-path: inset(50%);
   border: 0;
 `;
+
+export const Button = styled.button`
+  &:disabled {
+    cursor: default;
+  }
+`;

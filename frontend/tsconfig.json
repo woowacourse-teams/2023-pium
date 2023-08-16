@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES2016",
-    "module": "CommonJS",
+    "moduleResolution": "bundler",
     "jsx": "react-jsx",
 
     "strict": true,
@@ -27,5 +27,14 @@
 
     "types": ["cypress"]
   },
-  "include": ["src/**/*", "cypress/**/*"]
+  "include": ["src/**/*", "cypress/**/*"],
+
+  // "moduleResolution": "bundler" 때문에 cypress 고장나는 오류 해결
+  // https://github.com/cypress-io/cypress/issues/26308#issuecomment-1499724602
+  "ts-node": {
+    "compilerOptions": {
+      "module": "ESNext",
+      "moduleResolution": "Node"
+    }
+  }
 }

@@ -1,60 +1,72 @@
-import { useEffect } from 'react';
+import type { HistoryType } from 'types/history';
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import CheckButton from 'components/@common/CheckButton';
+import Stopwatch from 'components/@common/Icons/Stopwatch';
+import TreePlantPot from 'components/@common/Icons/TreePlantPot';
+import Water from 'components/@common/Icons/Water';
 import Navbar from 'components/@common/Navbar';
-import {
-  Day,
-  Earth,
-  Main,
-  Month,
-  MonthArea,
-  MonthHeader,
-  Plant,
-  PlantImage,
-  Sensor,
-  Spot,
-  TimelineItem,
-  Water,
-} from './PetPlantTimeline.style';
-import useYearList from 'hooks/queries/history/useYearList';
-import useIntersectionRef from 'hooks/useIntersectionRef';
-import Sprout from 'assets/sprout.svg';
+import Timeline from 'components/petPlant/Timeline';
+import { ButtonLabel, Header, Main } from './PetPlantTimeline.style';
+import useToggle from 'hooks/useToggle';
+import theme from 'style/theme.style';
 
 const PetPlantTimeline = () => {
   const { id: petPlantId } = useParams();
-  const { data: yearList, fetchNextPage } = useYearList(Number(petPlantId));
-  if (!yearList) return null;
+  if (!petPlantId) throw new Error('petPlantId가 없습니다.');
 
-  const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
+  const { isOn: isCheckedWater, toggle: toggleWater } = useToggle();
+  const { isOn: isCheckedWaterCycle, toggle: toggleWaterCycle } = useToggle();
+  const { isOn: isCheckedSetting, toggle: toggleSetting } = useToggle();
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  const [filter, setFilter] = useState<HistoryType[]>([]);
 
+  const onClickWater = () => {
+    toggleWater();
+    if (isCheckedWater) {
+      setFilter(filter.filter((type) => type !== 'lastWaterDate'));
+    } else {
+      setFilter([...filter, 'lastWaterDate']);
+    }
+  };
+
+  const onClickWaterCycle = () => {
+    toggleWaterCycle();
+    if (isCheckedWaterCycle) {
+      setFilter(filter.filter((type) => type !== 'waterCycle'));
+    } else {
+      setFilter([...filter, 'waterCycle']);
+    }
+  };
+
+  const onClickSetting = () => {
+    toggleSetting();
+    if (isCheckedSetting) {
+      setFilter(
+        filter.filter((type) => !['flowerpot', 'light', 'location', 'wind'].includes(type))
+      );
+    } else {
+      setFilter(filter.concat(['flowerpot', 'light', 'location', 'wind']));
+    }
+  };
   return (
     <>
+      <Header>
+        <CheckButton checked={isCheckedWater} onClick={onClickWater}>
+          <Water fill={isCheckedWater ? 'white' : theme.color.water} aria-hidden />
+          <ButtonLabel>물 준 날</ButtonLabel>
+        </CheckButton>
+        <CheckButton checked={isCheckedWaterCycle} onClick={onClickWaterCycle}>
+          <Stopwatch stroke={isCheckedWaterCycle ? 'white' : 'black'} aria-hidden />
+          <ButtonLabel>물 주기 설정</ButtonLabel>
+        </CheckButton>
+        <CheckButton checked={isCheckedSetting} onClick={onClickSetting}>
+          <TreePlantPot stroke={isCheckedSetting ? 'white' : theme.color.primary} aria-hidden />
+          <ButtonLabel>환경 설정</ButtonLabel>
+        </CheckButton>
+      </Header>
       <Main>
-        <Plant>
-          <PlantImage src={Sprout} alt="타임라인 꼭대기" />
-        </Plant>
-        {yearList.map(([year, monthList]) =>
-          monthList.map(([month, dayList]) => (
-            <MonthArea key={year + month}>
-              <MonthHeader>
-                <Month>{month}월</Month>
-              </MonthHeader>
-              {dayList.map((day) => (
-                <TimelineItem key={year + month + day}>
-                  <Day>
-                    {day}일 <Spot />
-                  </Day>
-                  <Water>물 주기 완료</Water>
-                </TimelineItem>
-              ))}
-            </MonthArea>
-          ))
-        )}
-        <Earth />
-        <Sensor ref={intersectionRef} />
+        <Timeline petPlantId={Number(petPlantId)} filter={filter} />
       </Main>
       <Navbar />
     </>

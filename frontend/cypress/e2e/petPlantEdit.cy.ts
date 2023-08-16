@@ -40,7 +40,11 @@ describe('반려 식물 등록하기', () => {
   });
 
   it('수정 후에는 토스트를 띄우고 해당 반려 식물 상세 페이지로 이동한다.', () => {
-    cy.get('button[type="submit"]')
+    cy.get('input[inputmode="numeric"]')
+      .type('{selectAll}{backspace}77')
+
+      .get('button[type="submit"]')
+      .should('not.be.disabled')
       .click()
 
       .get('#toast-root')

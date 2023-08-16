@@ -11,6 +11,7 @@ const color = {
   gray: '#C8C8C8',
   grayLight: '#ECECEC',
   grayDark: '#A5A5A5',
+  water: '#75AEDC',
 };
 
 const font = {

@@ -18,9 +18,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import static com.official.pium.fixture.HistoryFixture.RESPONSE.히스토리;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,12 +46,12 @@ public class HistoryControllerTest extends UITest {
     private HistoryService historyService;
 
     @Nested
-    class 히스토리_조회_시 {
+    class 히스토리_단건_조회_ {
 
         @Test
-        void 조회에_성공하면_200을_반환한다() throws Exception {
+        void 정상_요청시_200을_반환한다() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
+            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class), anyList()))
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
@@ -50,7 +59,26 @@ public class HistoryControllerTest extends UITest {
                             .param("petPlantId", "1")
                             .param("page", "1")
                             .param("size", "1")
+                            .param("sort", "date")
+                            .param("direction", "DESC")
+                            .param("filter", "location,flowerpot,waterCycle,light,wind,lastWaterDate")
                             .contentType(MediaType.APPLICATION_JSON)
+                    )
+                    .andDo(document("history/findByPetPlantId/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestHeaders(
+                                    headerWithName("Authorization").description("사용자 인증 정보")
+                            ),
+
+                            queryParameters(
+                                    parameterWithName("petPlantId").description("반려 식물 ID"),
+                                    parameterWithName("page").description("페이지 번호 (0부터 시작)"),
+                                    parameterWithName("size").description("페이지 크기"),
+                                    parameterWithName("sort").description("(선택) 정렬 조건 : id / date(기본값) / historyCategory").optional(),
+                                    parameterWithName("direction").description("(선택) 정렬 방향 : ASC / DESC(기본값)").optional(),
+                                    parameterWithName("filter").description("(선택) 필터 : location,flowerpot,waterCycle,light,wind,lastWaterDate").optional()
+                            ))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());
@@ -59,12 +87,12 @@ public class HistoryControllerTest extends UITest {
         @Test
         void petPlantId_값이_존재하지_않으면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
+            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class), anyList()))
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
                             .header("Authorization", "pium@gmail.com")
-                            .param("petPlantId","")
+                            .param("petPlantId", "")
                             .param("page", "1")
                             .param("size", "1")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -76,7 +104,7 @@ public class HistoryControllerTest extends UITest {
         @Test
         void petPlantId_값이_1이상이_아니면_400_반환() throws Exception {
             HistoryResponse response = 히스토리;
-            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class)))
+            given(historyService.read(anyLong(), any(Pageable.class), any(Member.class), anyList()))
                     .willReturn(response);
 
             mockMvc.perform(get("/history")

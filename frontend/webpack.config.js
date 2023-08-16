@@ -3,6 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const DotEnv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
+const Dotenv = require('dotenv-webpack');
+const CopyPlugin = require('copy-webpack-plugin');
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -59,6 +61,17 @@ module.exports = (env) => ({
       path: resolve(__dirname, 'env', `${env.environment}.env`),
     }),
     ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
+    new Dotenv({
+      path: resolve(__dirname, 'env', `${env.environment}.env`),
+    }),
+    new CopyPlugin({
+      patterns: [
+        {
+          from: resolve(__dirname, 'public', 'assets'),
+          to: resolve(__dirname, 'dist', 'assets'),
+        },
+      ],
+    }),
   ],
   devServer: {
     open: true,

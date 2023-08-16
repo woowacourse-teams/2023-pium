@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 interface DayProps {
-  isToday: boolean | null;
-  isInRange: boolean;
+  $isToday: boolean | null;
+  $isSelected: boolean;
+  $isInRange: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -11,7 +12,7 @@ export const Wrapper = styled.div`
 `;
 
 export const DaySpan = styled.span<DayProps>`
-  cursor: pointer;
+  cursor: ${({ $isInRange }) => ($isInRange ? 'pointer' : 'default')};
 
   display: flex;
   align-items: center;
@@ -20,9 +21,31 @@ export const DaySpan = styled.span<DayProps>`
   width: 40px;
   height: 40px;
 
-  color: ${({ isToday, isInRange, theme: { color } }) =>
-    isToday ? color.background : isInRange ? color.sub : color.grayDark};
+  color: ${({ $isSelected, $isInRange, theme: { color } }) => {
+    if ($isSelected) return color.background;
+    if ($isInRange) return color.sub;
+    return color.grayDark;
+  }};
 
-  background: ${({ isToday, theme: { color } }) => (isToday ? color.accent : color.background)};
+  background: ${({ $isSelected, $isInRange, theme: { color } }) => {
+    if ($isSelected && $isInRange) return color.accent;
+    if ($isSelected) return color.accent + '5F';
+    return color.background;
+  }};
+  border: 2px solid
+    ${({ $isToday, $isInRange, theme: { color } }) => {
+      if ($isToday && $isInRange) return color.accent;
+      if ($isToday) return color.accent + '5F';
+      return 'none';
+    }};
   border-radius: 50%;
+
+  &:hover {
+    color: ${({ $isInRange, theme: { color } }) => {
+      if ($isInRange) return color.background;
+    }};
+    background: ${({ $isInRange, theme: { color } }) => {
+      if ($isInRange) return color.accent;
+    }};
+  }
 `;

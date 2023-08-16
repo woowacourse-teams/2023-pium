@@ -2,9 +2,9 @@ import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
-import StatusError from 'models/statusError';
 import { useEffect } from 'react';
 import useUnauthorize from 'hooks/useUnauthorize';
+import StatusError from 'models/statusError';
 import ReminderAPI from 'apis/reminder';
 import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
@@ -61,7 +61,7 @@ const useReminder = () => {
     if (error) {
       redirectLoginPage(error);
     }
-  }, [error]);
+  }, [error, redirectLoginPage]);
 
   return useQuery<DataResponse<Reminder[]>, Error | StatusError, ArrangedReminderWithStatus>({
     queryKey: ['reminder'],
