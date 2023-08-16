@@ -3,7 +3,7 @@ import type { PetPlantItem } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
 import useUnauthorize from 'hooks/useUnauthorize';
 import PetAPI, { PET } from 'apis/pet';
-import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 
 const usePetPlantCardList = () => {
   const { retryCallback } = useUnauthorize();

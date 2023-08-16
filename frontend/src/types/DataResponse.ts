@@ -1,4 +1,4 @@
-import StatusError from 'apis/statusError';
+import StatusError from 'models/statusError';
 
 export interface DataResponse<T> {
   data: T;

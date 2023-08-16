@@ -1,6 +1,6 @@
+import StatusError from 'models/statusError';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import StatusError from 'apis/statusError';
 import { GUIDE, STATUS_CODE, URL_PATH } from 'constants/index';
 import useToast from './useToast';
 

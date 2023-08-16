@@ -21,7 +21,8 @@
       "assets/*": ["assets/*"],
       "constants/*": ["constants/*"],
       "style/*": ["style/*"],
-      "store/*": ["store/*"]
+      "store/*": ["store/*"],
+      "models/*": ["models/*"]
     },
 
     "types": ["cypress"]

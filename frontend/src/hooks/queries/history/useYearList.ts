@@ -9,7 +9,7 @@ import {
 } from 'pages/PetPlantTimeline/converter';
 import useUnauthorize from 'hooks/useUnauthorize';
 import HistoryAPI, { HISTORY } from 'apis/history';
-import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 
 const useYearList = (petPlantId: PetPlantDetails['id']) => {
   const { retryCallback } = useUnauthorize();

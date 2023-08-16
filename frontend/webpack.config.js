@@ -29,6 +29,7 @@ module.exports = (env) => ({
       contexts: resolve(__dirname, 'src', 'contexts'),
       store: resolve(__dirname, 'src', 'store'),
       style: resolve(__dirname, 'src', 'style'),
+      models: resolve(__dirname, 'src', 'models'),
     },
   },
   module: {

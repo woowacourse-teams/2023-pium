@@ -1,5 +1,5 @@
+import StatusError from 'models/statusError';
 import React from 'react';
-import StatusError from 'apis/statusError';
 
 interface ErrorBoundaryProps {
   fallback?: React.ReactNode;

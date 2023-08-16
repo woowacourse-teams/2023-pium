@@ -2,11 +2,11 @@ import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
+import StatusError from 'models/statusError';
 import { useEffect } from 'react';
 import useUnauthorize from 'hooks/useUnauthorize';
 import ReminderAPI from 'apis/reminder';
-import StatusError from 'apis/statusError';
-import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 interface ArrangedReminderWithStatus {

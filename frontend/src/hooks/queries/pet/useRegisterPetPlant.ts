@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import useToast from 'hooks/useToast';
 import useUnauthorize from 'hooks/useUnauthorize';
 import PetAPI from 'apis/pet';
-import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
 
 const useRegisterPetPlant = () => {

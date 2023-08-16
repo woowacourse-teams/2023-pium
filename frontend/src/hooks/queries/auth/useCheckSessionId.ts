@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import StatusError from 'models/statusError';
 import useUnauthorize from 'hooks/useUnauthorize';
 import AuthAPI from 'apis/auth';
-import StatusError from 'apis/statusError';
-import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 
 const useCheckSessionId = () => {
   const { throwOnErrorCallback, retryCallback } = useUnauthorize();

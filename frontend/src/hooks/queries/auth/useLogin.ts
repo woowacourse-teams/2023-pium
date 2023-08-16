@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import AuthAPI from 'apis/auth';
-import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 
 const useLogin = (code: string) => {
   return useQuery<null, Error, void>({

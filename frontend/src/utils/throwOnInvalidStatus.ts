@@ -1,5 +1,5 @@
+import StatusError from 'models/statusError';
 import { GUIDE, STATUS_CODE } from 'constants/index';
-import StatusError from './statusError';
 
 export const throwOnInvalidStatus = (response: Response) => {
   if (response.status === STATUS_CODE.unauthorize) {
