@@ -34,8 +34,14 @@ export const Main = styled.main`
   padding: 64px 16px;
 `;
 
-export const DictionaryPlantName = styled.p`
+export const DictionaryPlantName = styled.button`
+  display: flex;
+  align-items: center;
   font-size: 3rem;
+
+  & > * + * {
+    margin-left: 8px;
+  }
 `;
 
 export const DictionaryPlantImageArea = styled.div`

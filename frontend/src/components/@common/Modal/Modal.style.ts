@@ -25,6 +25,7 @@ export const ModalBox = styled.dialog`
   width: 100%;
   max-height: 80vh;
   margin: 0 auto;
+  padding: 16px 0;
 
   background-color: ${({ theme: { color } }) => color.background};
   border: none;
