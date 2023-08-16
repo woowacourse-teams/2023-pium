@@ -18,7 +18,7 @@ describe('반려 식물 등록하기', () => {
       .contains('참새')
       .click()
 
-      .get('button')
+      .get('p')
       .contains('투명 피우미')
       .should('be.visible')
       .get('input')

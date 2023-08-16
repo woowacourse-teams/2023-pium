@@ -35,7 +35,7 @@ export const Main = styled.main`
   padding: 64px 16px;
 `;
 
-export const DictionaryPlantName = styled.button`
+export const DictionaryPlantName = styled.p`
   font-size: 3rem;
 `;
 
