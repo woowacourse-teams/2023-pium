@@ -5,7 +5,6 @@ import com.official.pium.domain.Member;
 import com.official.pium.repository.MemberRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import java.util.NoSuchElementException;
 import javax.naming.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
@@ -40,7 +39,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         try {
             Long kakaoId = (Long) session.getAttribute(SESSION_KEY);
             return memberRepository.findByKakaoId(kakaoId)
-                    .orElseThrow(() -> new NoSuchElementException("회원을 찾을 수 없습니다."));
+                    .orElseThrow(() -> new AuthenticationException("회원을 찾을 수 없습니다."));
         } catch (ClassCastException e) {
             throw new AuthenticationException("잘못된 세션 정보로 인해 사용자 인증에 실패하였습니다.");
         }
