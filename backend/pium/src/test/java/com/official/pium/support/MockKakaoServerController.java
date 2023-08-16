@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class FakeController {
+public class MockKakaoServerController {
 
     @Value("${auth.kakao.client-id}")
     private String clientId;

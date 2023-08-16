@@ -9,8 +9,6 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,11 +23,11 @@ public class AuthController {
 
     private final AuthService authService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Void> login(
-            @RequestParam(name = "code") @NotBlank String authorizationCode,
+            @RequestParam(name = "code") @NotBlank String code,
             HttpServletRequest request) {
-        Member loginMember = authService.login(authorizationCode);
+        Member loginMember = authService.login(code);
 
         HttpSession session = request.getSession();
         session.setAttribute(SESSION_KEY, loginMember.getKakaoId());
@@ -47,17 +45,5 @@ public class AuthController {
         }
 
         return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/withdraw")
-    public ResponseEntity<Void> withdraw(HttpServletRequest request, @Auth Member member) {
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-            session.invalidate();
-        }
-        authService.withdraw(member);
-
-        return ResponseEntity.noContent().build();
     }
 }

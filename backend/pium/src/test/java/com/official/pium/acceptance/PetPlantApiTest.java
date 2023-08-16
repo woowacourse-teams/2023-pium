@@ -791,7 +791,7 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .log().all()
                 .queryParam("code", "authorizationCode")
                 .when()
-                .get("/login")
+                .post("/login")
                 .then()
                 .log().all()
                 .statusCode(HttpStatus.OK.value())

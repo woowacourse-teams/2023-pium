@@ -30,9 +30,4 @@ public class AuthService {
                         .kakaoId(kakaoId)
                         .build()));
     }
-
-    @Transactional
-    public void withdraw(Member member) {
-        memberRepository.deleteById(member.getId());
-    }
 }

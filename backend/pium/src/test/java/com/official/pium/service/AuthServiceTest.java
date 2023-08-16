@@ -10,10 +10,8 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import com.official.pium.domain.Member;
 import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
 import com.official.pium.repository.MemberRepository;
-import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,10 +29,10 @@ import org.springframework.web.client.RestTemplate;
 class AuthServiceTest {
 
     @Value("${auth.kakao.token-request-uri}")
-    private String TOKEN_REQUEST_URI;
+    private String tokenRequestUri;
 
     @Value("${auth.kakao.member-info-request-uri}")
-    private String MEMBER_INFO_REQUEST_URI;
+    private String memberInfoRequestUri;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -55,11 +53,11 @@ class AuthServiceTest {
         String tokenResponse = String.format("{\"access_token\":\"%s\"}", accessToken);
         String MemberInfoResponse = String.format("{\"id\":\"%d\"}", kakaoId);
 
-        mockServer.expect(requestTo(TOKEN_REQUEST_URI))
+        mockServer.expect(requestTo(tokenRequestUri))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(tokenResponse, MediaType.APPLICATION_JSON));
 
-        mockServer.expect(requestTo(MEMBER_INFO_REQUEST_URI))
+        mockServer.expect(requestTo(memberInfoRequestUri))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withSuccess(MemberInfoResponse, MediaType.APPLICATION_JSON));
 
@@ -73,23 +71,12 @@ class AuthServiceTest {
     void 잘못된_인증_코드로_로그인_요청_시_예외_발생(String authorizationCode) {
         mockServer = MockRestServiceServer.createServer(restTemplate);
 
-        mockServer.expect(requestTo(TOKEN_REQUEST_URI))
+        mockServer.expect(requestTo(tokenRequestUri))
                 .andExpect(method(HttpMethod.POST))
                 .andRespond(withBadRequest());
 
         assertThatThrownBy(
                 () -> authService.login(authorizationCode)
         ).isInstanceOf(KakaoTokenRequestException.class);
-    }
-
-    @Test
-    void 회원탈퇴_성공() {
-        Member member = Member.builder().kakaoId(1234533333L).build();
-        Member saveMember = memberRepository.save(member);
-
-        authService.withdraw(saveMember);
-        Optional<Member> findMember = memberRepository.findByKakaoId(member.getKakaoId());
-
-        assertThat(findMember.isEmpty()).isTrue();
     }
 }
