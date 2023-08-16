@@ -9,9 +9,9 @@
 | <a href="https://github.com/yeonkkk"><img src="https://avatars.githubusercontent.com/u/88660886?v=4" width=400px alt="조이"/></a> | <a href="https://github.com/kim0914"><img src="https://avatars.githubusercontent.com/u/68818952?v=4" width=400px alt="그레이"/></a> | <a href="github.com/Choi-JJunho"><img src="https://avatars.githubusercontent.com/u/49794401?v=4" width=400px alt="주노"/></a> | <a href="https://github.com/rawfishthelgh"><img src="https://avatars.githubusercontent.com/u/79038908?v=4" width=400px alt="하마드"></a> | <a href="https://github.com/hozzijeong"><img src="https://avatars.githubusercontent.com/u/50974359?v=4" width=400px alt="클린"></a> | <a href="https://github.com/WaiNaat"><img src="https://avatars.githubusercontent.com/u/77872742?v=4" width=400px alt="참새"></a> | <a href="https://github.com/bassyu"><img src="https://avatars.githubusercontent.com/u/54442420?v=4" width=400px alt="쵸파"></a> |
 |                                   [조이](https://github.com/yeonkkk)                                    |                                   [그레이](https://github.com/kim0914)                                    |                                 [주노](https://github.com/Choi-JJunho)                                  |                                                [하마드](https://github.com/rawfishthelgh)                                                |                                 [클린](https://github.com/hozzijeong)                                  |                                   [참새](https://github.com/WaiNaat)                                   |                                   [쵸파](https://github.com/bassyu)                                    |
 
-# 피움 소개글?
+# 피움 서비스 소개
 
-![로고](https://github.com/woowacourse-teams/2023-pium/assets/49794401/b10b5e38-e30c-484c-82a1-c6449ec26527)
+<img src="https://github.com/woowacourse-teams/2023-pium/assets/49794401/b10b5e38-e30c-484c-82a1-c6449ec26527" width="400px">
 
 식물 관리법은 환경에 따라 다르기 때문에 경험을 통해서 터득할 수밖에 없어요.
 
