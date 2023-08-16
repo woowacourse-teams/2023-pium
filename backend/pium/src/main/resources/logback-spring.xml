@@ -17,17 +17,21 @@
     <!--dev-->
     <springProfile name="dev">
         <include resource="file-info-appender.xml"/>
+        <include resource="slack-notification-appender.xml"/>
 
         <root level="INFO">
             <appender-ref ref="FILE-INFO"/>
+            <appender-ref ref="ASYNC_SLACK"/>
         </root>
 
         <logger level="DEBUG" name="org.hibernate.SQL">
             <appender-ref ref="FILE-INFO"/>
+            <appender-ref ref="ASYNC_SLACK"/>
         </logger>
 
         <logger level="TRACE" name="org.hibernate.type.descriptor.sql.BasicBinder">
             <appender-ref ref="FILE-INFO"/>
+            <appender-ref ref="ASYNC_SLACK"/>
         </logger>
     </springProfile>
 
