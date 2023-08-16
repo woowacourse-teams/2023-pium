@@ -29,6 +29,13 @@ dependencies {
 
     implementation 'com.github.maricn:logback-slack-appender:1.6.1'
 
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    implementation 'com.github.maricn:logback-slack-appender:1.6.1'
+
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'com.mysql:mysql-connector-j'
 
@@ -42,6 +49,15 @@ dependencies {
 
     asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+}
+
+def querydslSrcDir = 'src/main/generated'
+clean {
+    delete file(querydslSrcDir)
+}
+
+tasks.withType(JavaCompile) {
+    options.generatedSourceOutputDirectory = file(querydslSrcDir)
 }
 
 ext {
@@ -79,7 +95,7 @@ build {
 
 bootJar {
     dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}") {
+    from("${asciidoctor.outputDir}") {
         into 'static/docs'
     }
     archiveFileName = 'pium.jar'
