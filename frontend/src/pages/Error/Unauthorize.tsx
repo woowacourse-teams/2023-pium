@@ -6,8 +6,12 @@ import sadpiumi from 'assets/sadpiumi.svg';
 const Unauthorize = () => {
   const navigate = useNavigate();
 
-  const goToMain = () => navigate(URL_PATH.main);
-  const goToLogin = () => navigate(URL_PATH.login);
+  const goToMain = () => {
+    navigate(URL_PATH.main, { replace: true });
+  };
+  const goToLogin = () => {
+    navigate(URL_PATH.login, { replace: true });
+  };
 
   return (
     <Wrapper>

@@ -7,7 +7,9 @@ const NotFound = () => {
   const navigate = useNavigate();
 
   const reloadWindow = () => location.reload();
-  const goToMain = () => navigate(URL_PATH.main);
+  const goToMain = () => {
+    navigate(URL_PATH.main, { replace: true });
+  };
 
   return (
     <Wrapper>

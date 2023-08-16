@@ -1,6 +1,6 @@
-import StatusError from 'models/statusError';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import StatusError from 'models/statusError';
 import { GUIDE, STATUS_CODE, URL_PATH } from 'constants/index';
 import useToast from './useToast';
 
@@ -28,7 +28,7 @@ const useUnauthorize = () => {
   const redirectLoginPage = useCallback((error: Error | StatusError) => {
     if (error instanceof StatusError && error.statusCode === STATUS_CODE.unauthorize) {
       addToast('warning', GUIDE.login);
-      navigate(URL_PATH.login);
+      navigate(URL_PATH.login, { replace: true });
     }
   }, []);
 

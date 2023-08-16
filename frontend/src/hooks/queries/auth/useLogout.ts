@@ -17,7 +17,7 @@ const useLogout = () => {
       throwOnInvalidStatus(response);
     },
     onSuccess: () => {
-      navigate(URL_PATH.main);
+      navigate(URL_PATH.main, { replace: true });
     },
     onError: (error: Error | StatusError) => {
       redirectLoginPage(error);

@@ -13,7 +13,7 @@ const Authorization = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate(URL_PATH.reminder);
+      navigate(URL_PATH.reminder, { replace: true });
     }
   }, [isSuccess, navigate]);
 
