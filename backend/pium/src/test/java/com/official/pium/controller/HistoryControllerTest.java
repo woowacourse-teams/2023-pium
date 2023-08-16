@@ -21,8 +21,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -55,7 +54,7 @@ public class HistoryControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .param("petPlantId", "1")
                             .param("page", "1")
                             .param("size", "1")
@@ -67,9 +66,7 @@ public class HistoryControllerTest extends UITest {
                     .andDo(document("history/findByPetPlantId/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ),
+                            requestCookies(),
 
                             queryParameters(
                                     parameterWithName("petPlantId").description("반려 식물 ID"),
@@ -91,7 +88,7 @@ public class HistoryControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .param("petPlantId", "")
                             .param("page", "1")
                             .param("size", "1")
@@ -108,7 +105,7 @@ public class HistoryControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/history")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .param("petPlantId", "0")
                             .param("page", "1")
                             .param("size", "1")

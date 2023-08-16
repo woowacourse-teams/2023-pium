@@ -1,5 +1,9 @@
 package com.official.pium.controller;
 
+import com.official.pium.exception.OAuthException;
+import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
+import com.official.pium.exception.OAuthException.KakaoServerException;
+import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
 import com.official.pium.exception.dto.GlobalExceptionResponse;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
@@ -7,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
+import javax.naming.AuthenticationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -55,7 +60,31 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
         log.error(message, e);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler({KakaoTokenRequestException.class, KaKaoMemberInfoRequestException.class})
+    public ResponseEntity<GlobalExceptionResponse> handleOAuthRequestException(OAuthException e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.info(message);
+        return ResponseEntity.badRequest().body(exceptionResponse);
+    }
+
+    @ExceptionHandler(KakaoServerException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleOAuthServerException(OAuthException e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(e.getMessage());
+        log.info(message);
         return ResponseEntity.internalServerError().body(exceptionResponse);
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleAuthenticationException(AuthenticationException e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.info(message);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
