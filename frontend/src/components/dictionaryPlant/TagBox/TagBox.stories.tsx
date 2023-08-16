@@ -1,8 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import DictInfo from '.';
+import TagBox from '.';
 
-const meta: Meta<typeof DictInfo> = {
-  component: DictInfo,
+const meta: Meta<typeof TagBox> = {
+  component: TagBox,
 
   args: {
     alignment: 'column',
@@ -27,7 +27,7 @@ const meta: Meta<typeof DictInfo> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DictInfo>;
+type Story = StoryObj<typeof TagBox>;
 
 export const Default: Story = {
   argTypes: {
@@ -36,15 +36,15 @@ export const Default: Story = {
   },
 
   render: (args) => (
-    <DictInfo {...args}>
-      <DictInfo.Title>피움</DictInfo.Title>
-      <DictInfo.Content>조이</DictInfo.Content>
-      <DictInfo.Content>그레이</DictInfo.Content>
-      <DictInfo.Content>주노</DictInfo.Content>
-      <DictInfo.Content>하마드</DictInfo.Content>
-      <DictInfo.Content>클린</DictInfo.Content>
-      <DictInfo.Content>참새</DictInfo.Content>
-      <DictInfo.Content>쵸파</DictInfo.Content>
-    </DictInfo>
+    <TagBox {...args}>
+      <TagBox.Title>피움</TagBox.Title>
+      <TagBox.Content>조이</TagBox.Content>
+      <TagBox.Content>그레이</TagBox.Content>
+      <TagBox.Content>주노</TagBox.Content>
+      <TagBox.Content>하마드</TagBox.Content>
+      <TagBox.Content>클린</TagBox.Content>
+      <TagBox.Content>참새</TagBox.Content>
+      <TagBox.Content>쵸파</TagBox.Content>
+    </TagBox>
   ),
 };
