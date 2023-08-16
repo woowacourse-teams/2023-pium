@@ -10,7 +10,7 @@ import { URL_PATH } from 'constants/index';
 const useRegisterPetPlant = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
-  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
+  const { retryCallback } = useUnauthorize();
 
   return useMutation<void, Error, NewPetPlantRequest>({
     mutationFn: async (form) => {
@@ -26,7 +26,7 @@ const useRegisterPetPlant = () => {
     onError: () => {
       addToast('error', '반려 식물 정보 등록에 실패했어요.');
     },
-    throwOnError: throwOnErrorCallback,
+    throwOnError: true,
     retry: retryCallback,
   });
 };

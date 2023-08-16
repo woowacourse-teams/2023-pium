@@ -2,7 +2,6 @@ import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
-import useQueryWrapper from 'hooks/useQueryWrapper';
 import useUnauthorize from 'hooks/useUnauthorize';
 import ReminderAPI from 'apis/reminder';
 import StatusError from 'apis/statusError';
@@ -53,25 +52,22 @@ const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminder
 };
 
 const useReminder = () => {
-  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
+  const { retryCallback } = useUnauthorize();
 
-  const reminderQuery = () =>
-    useQuery<DataResponse<Reminder[]>, Error | StatusError, ArrangedReminderWithStatus>({
-      queryKey: ['reminder'],
-      queryFn: async () => {
-        const response = await ReminderAPI.getReminder();
-        throwOnInvalidStatus(response);
+  return useQuery<DataResponse<Reminder[]>, Error | StatusError, ArrangedReminderWithStatus>({
+    queryKey: ['reminder'],
+    queryFn: async () => {
+      const response = await ReminderAPI.getReminder();
+      throwOnInvalidStatus(response);
 
-        const results = await response.json();
-        return results;
-      },
-      select: convertReminderData,
-      throwOnError: throwOnErrorCallback,
-      suspense: true,
-      retry: retryCallback,
-    });
-
-  return useQueryWrapper(reminderQuery);
+      const results = await response.json();
+      return results;
+    },
+    select: convertReminderData,
+    throwOnError: true,
+    suspense: true,
+    retry: retryCallback,
+  });
 };
 
 export default useReminder;
