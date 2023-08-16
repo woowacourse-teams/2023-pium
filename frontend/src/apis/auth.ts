@@ -9,7 +9,6 @@ const AUTHORIZATION_URL = `${KAKAO_AUTH_URL}/oauth/authorize?client_id=${CLIENT_
 const getSessionId = (code: string) => {
   return fetch(`${BASE_URL}/login?code=${code}`, {
     method: 'POST',
-    credentials: 'include',
   });
 };
 
