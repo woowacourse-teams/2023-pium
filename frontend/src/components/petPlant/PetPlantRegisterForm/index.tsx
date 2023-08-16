@@ -8,20 +8,25 @@ import useStack from 'components/@common/Stack/hooks/useStack';
 import { Button, Center, Wrapper } from './PetPlantRegisterForm.style';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
 import useAddToast from 'hooks/useAddToast';
-import { usePetPlantForm } from 'hooks/usePetPlantForm';
+import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import { getDateToString, isDateFormat } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 
 interface PetPlantRegisterFormProps {
   dictionaryPlantId: number;
+  defaultNickname?: string;
 }
 
 const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';
 
-const PetPlantRegisterForm = ({ dictionaryPlantId }: PetPlantRegisterFormProps) => {
+const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
+  const { dictionaryPlantId, defaultNickname = '' } = props;
+  const { form, dispatch } = usePetPlantForm({
+    ...initialPetPlantForm,
+    nickname: defaultNickname,
+  });
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
-  const { form, dispatch } = usePetPlantForm();
 
   const today = getDateToString();
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);

@@ -43,7 +43,7 @@ const PetPlantRegisterFormPage = () => {
         <DictionaryPlantImageArea>
           <Image size="160px" src={image} />
         </DictionaryPlantImageArea>
-        <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} />
+        <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} defaultNickname={name} />
       </Main>
       <Modal ref={modalRef} isOpen={isOpen} closeModal={close}>
         <DictionaryPlantContent {...dictionaryPlantDetail} />
