@@ -32,7 +32,7 @@ const PetPlantRegisterFormPage = () => {
     <>
       <Header>
         <BackLink to={URL_PATH.petRegisterSearch}>
-          <LineArrowLeft color="" />
+          <LineArrowLeft aria-label="뒤로 가기" />
         </BackLink>
       </Header>
       <Main>
@@ -41,7 +41,7 @@ const PetPlantRegisterFormPage = () => {
           <span>사전 정보</span> <Dictionary />
         </DictionaryPlantButton>
         <DictionaryPlantImageArea>
-          <Image size="160px" src={image} />
+          <Image size="160px" src={image} alt={name} />
         </DictionaryPlantImageArea>
         <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} defaultNickname={name} />
       </Main>
