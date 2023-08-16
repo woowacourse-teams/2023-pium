@@ -32,8 +32,14 @@ public class OAuthProvider {
     @Value("${auth.kakao.client-id}")
     private String clientId;
 
+    @Value("${auth.kakao.admin-id}")
+    private String adminId;
+
     @Value("${auth.kakao.redirect-uri}")
     private String redirectUri;
+
+    @Value("${auth.kakao.unlink-uri}")
+    private String unLinkUri;
 
     private final RestTemplate restTemplate;
 
@@ -69,6 +75,27 @@ public class OAuthProvider {
 
             return restTemplate.postForEntity(
                     tokenRequestUri, request, KaKaoAccessTokenResponse.class).getBody();
+        } catch (HttpClientErrorException e) {
+            throw new KakaoTokenRequestException(e.getMessage());
+        } catch (HttpServerErrorException e) {
+            throw new KakaoServerException(e.getMessage());
+        }
+    }
+
+    public KakaoMemberResponse withDraw(Long kakaoId) {
+        try {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.set(AUTHORIZATION_HEADER, "KakaoAK " + adminId);
+            httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+            MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+            body.add("target_id_type", "user_id");
+            body.add("target_id", kakaoId);
+
+            HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, httpHeaders);
+
+            return restTemplate.postForEntity(
+                    unLinkUri, request, KakaoMemberResponse.class).getBody();
         } catch (HttpClientErrorException e) {
             throw new KakaoTokenRequestException(e.getMessage());
         } catch (HttpServerErrorException e) {
