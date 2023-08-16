@@ -23,7 +23,7 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
     }
   }, [error, redirectLoginPage]);
 
-  useInfiniteQuery<
+  return useInfiniteQuery<
     HistoryResponse,
     Error,
     YearList,
