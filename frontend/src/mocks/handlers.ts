@@ -248,7 +248,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       );
     }),
 
-    rest.post('/members/me', (req, res, ctx) => {
+    rest.get('/members/me', (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
       if (JSESSION === undefined) {

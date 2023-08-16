@@ -2,10 +2,12 @@ import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import useUnauthorize from 'hooks/useUnauthorize';
 import ReminderAPI from 'apis/reminder';
 import StatusError from 'apis/statusError';
 import { throwOnInvalidStatus } from 'apis/throwOnInvalidStatus';
+import useCheckSessionId from '../auth/useCheckSessionId';
 
 interface ArrangedReminderWithStatus {
   data: Array<[Month, ReminderExtendType[]]>;
@@ -52,7 +54,14 @@ const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminder
 };
 
 const useReminder = () => {
-  const { retryCallback } = useUnauthorize();
+  const { retryCallback, redirectLoginPage } = useUnauthorize();
+  const { isSuccess, error } = useCheckSessionId();
+
+  useEffect(() => {
+    if (error) {
+      redirectLoginPage(error);
+    }
+  }, [error]);
 
   return useQuery<DataResponse<Reminder[]>, Error | StatusError, ArrangedReminderWithStatus>({
     queryKey: ['reminder'],
@@ -67,6 +76,7 @@ const useReminder = () => {
     throwOnError: true,
     suspense: true,
     retry: retryCallback,
+    enabled: isSuccess,
   });
 };
 

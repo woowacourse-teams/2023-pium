@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import AccountCircle from 'components/@common/Icons/AccountCircle';
 import Home from 'components/@common/Icons/Home';
@@ -11,11 +11,7 @@ import theme from 'style/theme.style';
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  const { mutate, isSuccess } = useCheckSessionId();
-
-  useEffect(() => {
-    mutate();
-  }, []);
+  const { isSuccess } = useCheckSessionId();
 
   const navItems = useMemo(() => {
     return [

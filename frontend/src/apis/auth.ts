@@ -29,7 +29,7 @@ const withdraw = () => {
 
 const checkSessionId = () => {
   return fetch(`${BASE_URL}/members/me`, {
-    method: 'POST',
+    method: 'GET',
     credentials: 'include',
   });
 };
