@@ -8,20 +8,15 @@ const useUnauthorize = () => {
   const navigate = useNavigate();
   const { addToast } = useToast();
 
-  const throwOnErrorCallback = useCallback((error: Error | StatusError) => {
-    if (error instanceof StatusError) {
-      if (error.statusCode === STATUS_CODE.unauthorize) {
-        return false;
-      }
-    }
-    return true;
-  }, []);
+  const throwOnErrorCallback = useCallback(
+    (error: Error | StatusError) =>
+      !(error instanceof StatusError) || error.statusCode !== STATUS_CODE.unauthorize,
+    []
+  );
 
   const retryCallback = useCallback((failureCount: number, error: StatusError | Error) => {
-    if (error instanceof StatusError) {
-      if (error.statusCode === STATUS_CODE.unauthorize) {
-        return false;
-      }
+    if (error instanceof StatusError && error.statusCode === STATUS_CODE.unauthorize) {
+      return false;
     }
 
     if (failureCount === 3) {
@@ -31,11 +26,9 @@ const useUnauthorize = () => {
   }, []);
 
   const redirectLoginPage = useCallback((error: Error | StatusError) => {
-    if (error instanceof StatusError) {
-      if (error.statusCode === STATUS_CODE.unauthorize) {
-        addToast('warning', GUIDE.login);
-        navigate(URL_PATH.login);
-      }
+    if (error instanceof StatusError && error.statusCode === STATUS_CODE.unauthorize) {
+      addToast('warning', GUIDE.login);
+      navigate(URL_PATH.login);
     }
   }, []);
 
