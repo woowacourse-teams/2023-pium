@@ -38,7 +38,7 @@ const petPlantFormReducer = (petPlantForm: PetPlantForm, action: PetPlantFormAct
     case 'SET': {
       const { maxLength = Infinity } = action;
 
-      return { ...petPlantForm, [action.key]: action.value.slice(0, maxLength) };
+      return { ...petPlantForm, [action.key]: action.value.trim().slice(0, maxLength) };
     }
     case 'SET_NUMBER_INPUT': {
       if (action.value === '') {
