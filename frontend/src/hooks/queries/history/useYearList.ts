@@ -1,6 +1,7 @@
 import type { HistoryResponse } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import type { YearList } from 'pages/PetPlantTimeline/converter';
 import {
   convertDateListToYearMap,
@@ -10,10 +11,17 @@ import {
 import useUnauthorize from 'hooks/useUnauthorize';
 import HistoryAPI, { HISTORY } from 'apis/history';
 import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import useCheckSessionId from '../auth/useCheckSessionId';
 
 const useYearList = (petPlantId: PetPlantDetails['id']) => {
-  const { retryCallback } = useUnauthorize();
+  const { retryCallback, redirectLoginPage } = useUnauthorize();
+  const { isSuccess, error } = useCheckSessionId();
 
+  useEffect(() => {
+    if (error) {
+      redirectLoginPage(error);
+    }
+  }, [error]);
   return useInfiniteQuery<
     HistoryResponse,
     Error,
@@ -42,6 +50,7 @@ const useYearList = (petPlantId: PetPlantDetails['id']) => {
       return yearList;
     },
     retry: retryCallback,
+    enabled: isSuccess,
   });
 };
 
