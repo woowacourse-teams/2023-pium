@@ -1,24 +1,29 @@
 package com.official.pium.service;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-
 import com.official.pium.IntegrationTest;
+import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.HistoryResponse;
-import java.time.LocalDate;
-import java.util.NoSuchElementException;
+import com.official.pium.service.dto.PetPlantCreateRequest;
+import com.official.pium.service.dto.SingleHistoryResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -26,6 +31,12 @@ class HistoryServiceTest extends IntegrationTest {
 
     @Autowired
     private HistoryService historyService;
+
+    @Autowired
+    private PetPlantService petPlantService;
+
+    @Autowired
+    private PetPlantRepository petPlantRepository;
 
     @BeforeEach
     void setUp() {
@@ -45,9 +56,9 @@ class HistoryServiceTest extends IntegrationTest {
         History history3 = createHistory(petPlant, baseDate.plusDays(2));
         History history4 = createHistory(petPlant, baseDate.plusDays(3));
         HistoryResponse historyResponse1 = historyService.read(petPlant.getId(),
-                PageRequest.of(0, 2, Sort.Direction.DESC, "date"), petPlant.getMember());
+                PageRequest.of(0, 2), petPlant.getMember(), List.of("lastWaterDate", "flowerpot"));
         HistoryResponse historyResponse2 = historyService.read(petPlant.getId(),
-                PageRequest.of(1, 2, Sort.Direction.DESC, "date"), petPlant.getMember());
+                PageRequest.of(1, 2), petPlant.getMember(), List.of());
 
         assertSoftly(
                 softly -> {
@@ -72,8 +83,8 @@ class HistoryServiceTest extends IntegrationTest {
         PetPlant petPlant = petPlantSupport.builder().build();
 
         assertThatThrownBy(
-                () -> historyService.read(2L, PageRequest.of(0, 2, Sort.Direction.DESC, "waterDate"),
-                        petPlant.getMember())
+                () -> historyService.read(2L, PageRequest.of(0, 2),
+                        petPlant.getMember(), List.of())
         ).isInstanceOf(NoSuchElementException.class)
                 .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id :" + 2L);
     }
@@ -84,8 +95,8 @@ class HistoryServiceTest extends IntegrationTest {
         Member member = memberSupport.builder().build();
 
         assertThatThrownBy(
-                () -> historyService.read(petPlant.getId(), PageRequest.of(0, 2, Sort.Direction.DESC, "waterDate"),
-                        member)
+                () -> historyService.read(petPlant.getId(), PageRequest.of(0, 2),
+                        member, List.of())
         ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. id :" + member.getId());
     }
@@ -97,9 +108,47 @@ class HistoryServiceTest extends IntegrationTest {
         historySupport.builder().petPlant(petPlant).build();
 
         HistoryResponse historyResponse = historyService.read(petPlant.getId(),
-                PageRequest.of(0, 2, Sort.Direction.DESC, "date"), petPlant.getMember());
+                PageRequest.of(0, 2), petPlant.getMember(), List.of());
 
         assertThat(historyResponse.isHasNext()).isFalse();
+    }
+
+    @Test
+    void 필터링한_값에_해당하는_히스토리만_조회() {
+        DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
+        Member member = memberSupport.builder().build();
+        petPlantService.create(PetPlantCreateRequest.builder()
+                .dictionaryPlantId(dictionaryPlant.getId())
+                .nickname("test")
+                .location("test")
+                .flowerpot("test")
+                .waterCycle(3)
+                .light("test")
+                .wind("test")
+                .birthDate(LocalDate.now())
+                .lastWaterDate(LocalDate.now())
+                .build(), member);
+
+        PetPlant petPlant = petPlantRepository.findAllByMemberId(member.getId()).get(0);
+        HistoryResponse historyResponse = historyService.read(petPlant.getId(),
+                PageRequest.of(0, 5),
+                petPlant.getMember(),
+                List.of("lastWaterDate", "wind", "flowerpot")
+        );
+
+        assertSoftly(
+                softly -> {
+                    softly.assertThat(historyResponse.getPage()).isEqualTo(0);
+                    softly.assertThat(historyResponse.getSize()).isEqualTo(5);
+                    softly.assertThat(historyResponse.getElementSize()).isEqualTo(3L);
+                    softly.assertThat(historyResponse.isHasNext()).isFalse();
+                    softly.assertThat(historyResponse.getData()
+                                    .stream()
+                                    .map(SingleHistoryResponse::getType)
+                                    .toList()).contains("lastWaterDate", "wind", "flowerpot")
+                            .doesNotContain("waterCycle", "light", "location");
+                }
+        );
     }
 
     private History createHistory(PetPlant petPlant, LocalDate date) {
