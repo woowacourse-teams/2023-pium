@@ -10,14 +10,14 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -37,7 +37,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -61,7 +60,7 @@ class ReminderControllerTest extends UITest {
         void 정상_요청시_204를_반환() throws Exception {
             willDoNothing().given(reminderService)
                     .water(any(ReminderCreateRequest.class), anyLong(), any(Member.class));
-            mockMvc.perform(RestDocumentationRequestBuilders.post("/reminders/{id}", 1L)
+            mockMvc.perform(post("/reminders/{id}", 1L)
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청(LocalDate.of(2023, 7, 1))))
                             .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
@@ -99,7 +98,7 @@ class ReminderControllerTest extends UITest {
             willDoNothing().given(reminderService)
                     .updateNextWaterDate(any(ReminderUpdateRequest.class), anyLong(), any(Member.class));
 
-            mockMvc.perform(RestDocumentationRequestBuilders.patch("/reminders/{id}", 1L)
+            mockMvc.perform(patch("/reminders/{id}", 1L)
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청(LocalDate.of(2023, 7, 1))))
                             .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))

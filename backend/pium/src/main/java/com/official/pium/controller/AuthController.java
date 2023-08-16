@@ -3,7 +3,6 @@ package com.official.pium.controller;
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.AuthService;
-import com.official.pium.service.dto.KakaoMemberResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotBlank;
@@ -22,12 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private static final String SESSION_KEY = "KAKAO_ID";
-    public static final int EXPIRED_TIME_SIX_HOUR = 21600;
+    private static final int EXPIRED_TIME_SIX_HOUR = 21600;
 
     private final AuthService authService;
 
     @GetMapping("/login")
-    public ResponseEntity<KakaoMemberResponse> login(
+    public ResponseEntity<Void> login(
             @RequestParam(name = "code") @NotBlank String authorizationCode,
             HttpServletRequest request) {
         Member loginMember = authService.login(authorizationCode);
@@ -40,8 +39,7 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request,
-                                       @Auth Member member) {
+    public ResponseEntity<Void> logout(HttpServletRequest request, @Auth Member member) {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
@@ -52,8 +50,7 @@ public class AuthController {
     }
 
     @DeleteMapping("/withdraw")
-    public ResponseEntity<Void> withdraw(HttpServletRequest request,
-                                         @Auth Member member) {
+    public ResponseEntity<Void> withdraw(HttpServletRequest request, @Auth Member member) {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
