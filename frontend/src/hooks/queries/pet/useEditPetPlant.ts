@@ -2,17 +2,20 @@ import type { EditPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { generatePath, useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/useAddToast';
+import useUnauthorize from 'hooks/useUnauthorize';
 import PetAPI from 'apis/pet';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
 
 const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
   const navigate = useNavigate();
+  const { retryCallback } = useUnauthorize();
   const addToast = useAddToast();
 
   return useMutation<void, Error, EditPetPlantRequest>({
     mutationFn: async (form) => {
       const response = await PetAPI.edit(petPlantId, form);
-      if (response.status !== 200) throw new Error('Edit failed');
+      throwOnInvalidStatus(response);
     },
 
     onSuccess: () => {
@@ -23,6 +26,8 @@ const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
     onError: () => {
       addToast('error', '반려 식물 정보 수정에 실패했어요.');
     },
+    throwOnError: true,
+    retry: retryCallback,
   });
 };
 

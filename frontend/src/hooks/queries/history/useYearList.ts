@@ -1,16 +1,29 @@
 import type { HistoryResponse, HistoryType } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
-import type { YearList } from 'components/petPlant/Timeline/converter';
+import { useEffect } from 'react';
 import {
   convertHistoryItemListToYearMap,
   convertHistoryResponseListToHistoryItemList,
   convertYearMapToYearList,
+  type YearList,
 } from 'components/petPlant/Timeline/converter';
+import useUnauthorize from 'hooks/useUnauthorize';
 import HistoryAPI, { HISTORY } from 'apis/history';
+import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import useCheckSessionId from '../auth/useCheckSessionId';
 
-const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) =>
-  useInfiniteQuery<
+const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {
+  const { retryCallback, redirectLoginPage } = useUnauthorize();
+  const { isSuccess, error } = useCheckSessionId();
+
+  useEffect(() => {
+    if (error) {
+      redirectLoginPage(error);
+    }
+  }, [error, redirectLoginPage]);
+
+  return useInfiniteQuery<
     HistoryResponse,
     Error,
     YearList,
@@ -20,6 +33,9 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
     queryKey: [HISTORY, petPlantId, filter],
     queryFn: async ({ pageParam }) => {
       const response = await HistoryAPI.getPetPlant(petPlantId, pageParam, 20, filter);
+
+      throwOnInvalidStatus(response);
+
       const data = await response.json();
       return data;
     },
@@ -33,8 +49,11 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
+    retry: retryCallback,
+    enabled: isSuccess,
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
   });
+};
 
 export default useYearList;

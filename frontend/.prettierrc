@@ -12,6 +12,7 @@
     "^contexts/(.*)$",
     "^hooks/(.*)$",
 
+    "^models/(.*)$",
     "^apis/(.*)$",
     "^utils/(.*)$",
     "^constants/(.*)$",

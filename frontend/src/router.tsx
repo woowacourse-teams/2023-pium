@@ -1,10 +1,11 @@
-import { Suspense } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DictionaryDetail from 'pages/DictionaryDetail';
 import DictionarySearch from 'pages/DictionarySearch';
-import Error from 'pages/Error';
-import Loading from 'pages/Loading';
+import NotFound from 'pages/Error/NotFound';
+import Login from 'pages/Login';
+import Authorization from 'pages/Login/Authorization';
 import Main from 'pages/Main';
+import MyPage from 'pages/MyPage';
 import PetDetails from 'pages/PetDetails';
 import PetPlantCardList from 'pages/PetPlantCardList';
 import PetPlantEdit from 'pages/PetPlantEdit';
@@ -19,7 +20,7 @@ const router = createBrowserRouter([
   {
     path: URL_PATH.main,
     element: <RootTemplate />,
-    errorElement: <Error />,
+    errorElement: <NotFound />,
     children: [
       {
         path: URL_PATH.main,
@@ -31,11 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.petRegisterForm,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <PetRegisterForm />
-          </Suspense>
-        ),
+        element: <PetRegisterForm />,
       },
       {
         path: URL_PATH.dictSearch,
@@ -43,19 +40,11 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.dictDetail,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <DictionaryDetail />
-          </Suspense>
-        ),
+        element: <DictionaryDetail />,
       },
       {
         path: URL_PATH.petList,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <PetPlantCardList />
-          </Suspense>
-        ),
+        element: <PetPlantCardList />,
       },
       {
         path: URL_PATH.petDetail,
@@ -63,23 +52,27 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.petEdit,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <PetPlantEdit />
-          </Suspense>
-        ),
+        element: <PetPlantEdit />,
       },
       {
         path: URL_PATH.reminder,
-        element: (
-          <Suspense fallback={<Loading />}>
-            <Reminder />
-          </Suspense>
-        ),
+        element: <Reminder />,
       },
       {
         path: URL_PATH.timeline,
         element: <PetPlantTimeline />,
+      },
+      {
+        path: URL_PATH.login,
+        element: <Login />,
+      },
+      {
+        path: URL_PATH.authorization,
+        element: <Authorization />,
+      },
+      {
+        path: URL_PATH.myPage,
+        element: <MyPage />,
       },
     ],
   },

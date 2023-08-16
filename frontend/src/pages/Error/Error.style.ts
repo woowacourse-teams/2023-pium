@@ -16,6 +16,10 @@ export const Section = styled.div`
   flex-direction: column;
   row-gap: 15px;
   align-items: center;
+
+  width: 90%;
+
+  text-align: center;
 `;
 
 export const SadPiumiImage = styled.img`
