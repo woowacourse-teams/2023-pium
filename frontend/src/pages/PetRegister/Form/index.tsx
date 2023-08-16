@@ -7,6 +7,7 @@ import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantCo
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
 import {
   BackLink,
+  DictionaryPlantButton,
   DictionaryPlantImageArea,
   DictionaryPlantName,
   Header,
@@ -35,9 +36,10 @@ const PetPlantRegisterFormPage = () => {
         </BackLink>
       </Header>
       <Main>
-        <DictionaryPlantName onClick={open}>
-          <span>{name}</span> <Dictionary />
-        </DictionaryPlantName>
+        <DictionaryPlantName>{name}</DictionaryPlantName>
+        <DictionaryPlantButton onClick={open}>
+          <span>사전 정보</span> <Dictionary />
+        </DictionaryPlantButton>
         <DictionaryPlantImageArea>
           <Image size="160px" src={image} />
         </DictionaryPlantImageArea>

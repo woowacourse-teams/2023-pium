@@ -36,12 +36,20 @@ export const Main = styled.main`
 `;
 
 export const DictionaryPlantName = styled.button`
+  font-size: 3rem;
+`;
+
+export const DictionaryPlantButton = styled.button`
   display: flex;
   align-items: center;
-  font-size: 3rem;
+
+  margin-top: 12px;
+
+  font-size: 1.6rem;
+  color: ${(props) => props.theme.color.sub};
 
   & > * + * {
-    margin-left: 8px;
+    margin-left: 4px;
   }
 `;
 
