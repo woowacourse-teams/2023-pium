@@ -4,6 +4,7 @@ import static com.official.pium.domain.QHistory.history;
 
 import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
+import com.official.pium.domain.PetPlant;
 import com.querydsl.core.types.Order;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -34,6 +35,13 @@ public class HistoryCustomRepositoryImpl implements HistoryCustomRepository {
                 .fetch();
 
         return new PageImpl<>(histories, pageable, getCount(petPlantId, historyTypes));
+    }
+
+    @Override
+    public void deleteAllByPetPlants(List<PetPlant> petPlants) {
+        jpaQueryFactory.delete(history)
+                .where(history.petPlant.in(petPlants))
+                .execute();
     }
 
     private Long getCount(Long petPlantId, List<HistoryType> historyTypes) {
