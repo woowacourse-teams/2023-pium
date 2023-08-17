@@ -1,4 +1,4 @@
-import { SVGProps } from 'react';
+import type { SVGProps } from 'react';
 
 const LineArrowLeft = (props: SVGProps<SVGSVGElement>) => {
   return (
