@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useCallback } from 'react';
 import ArrowDropDown from 'components/@common/Icons/ArrowDropDown';
 import { Backdrop, IconArea, OptionBox, OptionItem, SelectedValue, Wrapper } from './Select.style';
+import useToggle from 'hooks/useToggle';
 
 interface SelectProps {
   value: string;
@@ -10,15 +11,7 @@ interface SelectProps {
 }
 
 const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggle = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const close = () => {
-    setIsOpen(false);
-  };
+  const { isOn: isOpen, off: close, toggle } = useToggle();
 
   const select = (option: string) => {
     onChange?.(option);
@@ -27,9 +20,9 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
 
   const closeOnEscape = useCallback(
     ({ key }: KeyboardEvent) => {
-      if (key === 'Escape') setIsOpen(false);
+      if (key === 'Escape') close();
     },
-    [setIsOpen]
+    [close]
   );
 
   useEffect(() => {

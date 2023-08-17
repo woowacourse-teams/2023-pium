@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import DictAPI, { DICT } from 'apis/dictionary';
 import { SEASONS } from 'constants/index';
 
-interface DictPlantExtendCycles extends DictionaryPlant {
+export interface DictPlantExtendCycles extends DictionaryPlant {
   waterOptions: Record<SeasonKor, string>;
 }
 

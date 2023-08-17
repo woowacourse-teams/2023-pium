@@ -44,7 +44,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   }, [filter]);
 
   return (
-    <Wrapper>
+    <Wrapper hasNextPage={hasNextPage}>
       <Plant>
         <PlantImage src={Sprout} alt="타임라인 꼭대기" />
       </Plant>

@@ -1,6 +1,6 @@
 import { PropsWithChildren, forwardRef } from 'react';
 import { createPortal } from 'react-dom';
-import { CloseButton, ModalBox } from './Modal.style';
+import { CloseButton, ModalBox, ModalContent } from './Modal.style';
 
 interface ModalProps extends PropsWithChildren {
   isOpen: boolean;
@@ -19,7 +19,7 @@ const Modal = forwardRef<HTMLDialogElement, ModalProps>(function Modal(
         <CloseButton type="button" onClick={closeModal} aria-label="모달 닫기">
           x
         </CloseButton>
-        {children}
+        <ModalContent>{children}</ModalContent>
       </ModalBox>
     ),
     root
