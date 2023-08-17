@@ -48,6 +48,7 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
     enabled: isSuccess,
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
+    gcTime: 0,
   });
 };
 
