@@ -16,14 +16,7 @@ export const ModalBox = styled.dialog`
   top: auto;
   bottom: 0;
 
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
-
   width: 100%;
-  max-height: 80vh;
   margin: 0 auto;
   padding: 16px 0;
 
@@ -46,6 +39,16 @@ export const ModalBox = styled.dialog`
 
     background-color: rgba(0, 0, 0, 0.25);
   }
+`;
+
+export const ModalContent = styled.div`
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+
+  max-height: 80vh;
 `;
 
 export const CloseButton = styled.button`
