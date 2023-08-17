@@ -45,11 +45,7 @@ const Login = () => {
         <Text>
           함께 해요 <PrimaryText>피움</PrimaryText>
         </Text>
-        <PlantImg
-          key={imageSrcIndex}
-          src={IMAGE_SRC_LIST[imageSrcIndex]}
-          alt="대충 식물 이미지 넣음"
-        />
+        <PlantImg key={imageSrcIndex} src={IMAGE_SRC_LIST[imageSrcIndex]} alt="식물" />
       </ContentBox>
 
       <LoginBox>
