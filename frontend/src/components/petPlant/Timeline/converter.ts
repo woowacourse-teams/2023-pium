@@ -42,17 +42,11 @@ export const convertHistoryItemListToYearMap = (historyItemList: HistoryItem[]) 
   return yearMap;
 };
 
-export const convertYearMapToYearList = (yearMap: YearMap) => {
-  const yearList: YearList = convertMapToList(yearMap).map(([year, monthMap]) => [
+export const convertYearMapToYearList = (yearMap: YearMap): YearList =>
+  convertMapToList(yearMap).map(([year, monthMap]) => [
     year,
-    convertMapToList(monthMap).map(([month, dayMap]) => [
-      month,
-      convertMapToList(dayMap).map(([day, historyItemList]) => [day, historyItemList.reverse()]),
-    ]),
+    convertMapToList(monthMap).map(([month, dayMap]) => [month, convertMapToList(dayMap)]),
   ]);
-
-  return yearList;
-};
 
 const convertMapToList = <T>(map: Record<string, T>) =>
   Object.entries(map).sort(([a], [b]) => Number(b) - Number(a));
