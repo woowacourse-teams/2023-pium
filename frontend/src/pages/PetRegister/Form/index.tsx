@@ -18,12 +18,9 @@ import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useModal from 'hooks/useModal';
 import { URL_PATH } from 'constants/index';
 
-const STACK_SIZE = 9;
-const STACK_ELEMENT_HEIGHT = '96px';
-
 const PetPlantRegisterFormPage = () => {
   useCheckSessionId();
-  
+
   const { id } = useParams();
   if (!id) throw new Error('URL에 id가 없습니다.');
 
