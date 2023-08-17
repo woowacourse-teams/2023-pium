@@ -7,7 +7,7 @@ import useWithdraw from 'hooks/queries/auth/useWithdraw';
 import useConfirm from 'hooks/useConfirm';
 
 const MyPage = () => {
-  const { isLoading } = useCheckSessionId();
+  useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
   const confirm = useConfirm();
@@ -24,9 +24,7 @@ const MyPage = () => {
     }
   };
 
-  return isLoading ? (
-    <Loading />
-  ) : (
+  return (
     <>
       <Wrapper>
         <TitleBox>
