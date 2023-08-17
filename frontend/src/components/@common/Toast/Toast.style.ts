@@ -11,7 +11,7 @@ const toastBackgroundColors: Record<ToastItem['type'], string> = {
 
 const show = keyframes`
   0% {
-    transform: translateY(50%);
+    transform: translateY(-50%);
   }
   100% {
     transform: translateY(0%);
@@ -25,7 +25,7 @@ const hide = keyframes`
   }
   100% {
     opacity: 0;
-    transform: translateY(50%);
+    transform: translateY(-50%);
   }
 `;
 
@@ -79,7 +79,7 @@ export const Message = styled.p`
 export const ToastListWrapper = styled.div`
   position: fixed;
   z-index: ${({ theme: { zIndex } }) => zIndex.popover};
-  bottom: 50px;
+  top: 50px;
   left: 50%;
   transform: translate(-50%, 0);
 
