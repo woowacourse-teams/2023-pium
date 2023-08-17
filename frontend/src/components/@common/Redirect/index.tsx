@@ -19,7 +19,7 @@ const Redirect = (props: RedirectProps) => {
   const addToast = useAddToast();
 
   useEffect(() => {
-    resetError();
+    resetError?.();
     if (toastMessage) {
       addToast(toastType, toastMessage);
     }

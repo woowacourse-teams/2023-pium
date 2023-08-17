@@ -14,7 +14,12 @@ const RootTemplate = () => {
         <ErrorBoundary fallback={<NotFound />}>
           <ErrorBoundary
             fallback={
-              <Redirect to={URL_PATH.login} toastType="warning" toastMessage={GUIDE.login} />
+              <Redirect
+                to={URL_PATH.login}
+                replace={true}
+                toastType="warning"
+                toastMessage={GUIDE.login}
+              />
             }
             statusCode={401}
           >

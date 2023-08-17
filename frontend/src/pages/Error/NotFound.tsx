@@ -6,15 +6,15 @@ import sadpiumi from 'assets/sadpiumi.svg';
 
 const NotFound = () => {
   const navigate = useNavigate();
-  const resetErrorBoundary = useResetErrorBoundary();
+  const resetError = useResetErrorBoundary();
 
   const reloadWindow = () => {
-    resetErrorBoundary();
+    resetError?.();
     location.reload();
   };
 
   const goToMain = () => {
-    resetErrorBoundary();
+    resetError?.();
     navigate(URL_PATH.main, { replace: true });
   };
 
