@@ -5,7 +5,7 @@ import { useQuery } from '@tanstack/react-query';
 import StatusError from 'models/statusError';
 import ReminderAPI from 'apis/reminder';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
-import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 interface ArrangedReminderWithStatus {

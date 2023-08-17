@@ -9,7 +9,7 @@ import {
 } from 'components/petPlant/Timeline/converter';
 import HistoryAPI, { HISTORY } from 'apis/history';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
-import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {

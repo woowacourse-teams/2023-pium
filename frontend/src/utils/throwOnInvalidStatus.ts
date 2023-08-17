@@ -1,7 +1,7 @@
 import StatusError from 'models/statusError';
 import { GUIDE, STATUS_CODE } from 'constants/index';
 
-export const throwOnInvalidStatus = (response: Response) => {
+const throwOnInvalidStatus = (response: Response) => {
   if (response.status === STATUS_CODE.unauthorize) {
     throw new StatusError({
       statusCode: STATUS_CODE.unauthorize,
@@ -23,3 +23,5 @@ export const throwOnInvalidStatus = (response: Response) => {
     });
   }
 };
+
+export default throwOnInvalidStatus;

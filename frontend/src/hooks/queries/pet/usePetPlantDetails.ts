@@ -2,7 +2,7 @@ import type { PetPlantDetails } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
 import PetAPI from 'apis/pet';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
-import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {

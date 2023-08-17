@@ -3,7 +3,7 @@ import { WaterPlantParams } from 'types/reminder';
 import { useMutation } from '@tanstack/react-query';
 import ReminderAPI from 'apis/reminder';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
-import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
 const useWater = <T>({ successCallback, errorCallback }: MutationProps<T, WaterPlantParams>) => {
   return useMutation({

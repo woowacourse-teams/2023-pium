@@ -3,7 +3,7 @@ import { ChangeDateParams } from 'types/reminder';
 import { useMutation } from '@tanstack/react-query';
 import ReminderAPI from 'apis/reminder';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
-import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
 const useChangeDate = <T>({
   successCallback,
