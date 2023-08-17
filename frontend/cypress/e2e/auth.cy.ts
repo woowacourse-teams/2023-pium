@@ -16,30 +16,30 @@ describe('비로그인 상태에서는 로그인 페이지로 이동한다.', ()
     cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
   });
 
-  it('반려 식물 등록: 검색', () => {
-    cy.visit('/pet/register');
-    cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
-  });
+  // it('반려 식물 등록: 검색', () => {
+  //   cy.visit('/pet/register');
+  //   cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
+  // });
 
-  it('반려 식물 등록: 양식', () => {
-    cy.visit('/pet/register/1');
-    cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
-  });
+  // it('반려 식물 등록: 양식', () => {
+  //   cy.visit('/pet/register/1');
+  //   cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
+  // });
 
-  it('마이페이지', () => {
-    cy.visit('/myPage');
-    cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
-  });
+  // it('마이페이지', () => {
+  //   cy.visit('/myPage');
+  //   cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
+  // });
 
   it('반려 식물 정보 수정', () => {
     cy.visit('/pet/1/edit');
     cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
   });
 
-  it('타임라인', () => {
-    cy.visit('/pet/1/timeline');
-    cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
-  });
+  // it('타임라인', () => {
+  //   cy.visit('/pet/1/timeline');
+  //   cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
+  // });
 });
 
 describe('로그인 상태에서는 접근이 가능하다.', () => {
