@@ -9,7 +9,7 @@ import { URL_PATH } from 'constants/index';
 const useLogout = () => {
   const navigate = useNavigate();
   const addToast = useAddToast();
-  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
+  const { retryCallback } = useUnauthorize();
 
   return useMutation({
     mutationFn: async () => {
@@ -20,7 +20,7 @@ const useLogout = () => {
       addToast('info', '로그아웃에 성공했어요.');
       navigate(URL_PATH.main, { replace: true });
     },
-    throwOnError: throwOnErrorCallback,
+    throwOnError: true,
     retry: retryCallback,
   });
 };

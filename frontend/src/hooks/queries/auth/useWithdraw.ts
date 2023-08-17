@@ -7,7 +7,7 @@ import { URL_PATH } from 'constants/index';
 
 const useWithdraw = () => {
   const navigate = useNavigate();
-  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
+  const { retryCallback } = useUnauthorize();
 
   return useMutation({
     mutationFn: async () => {
@@ -18,7 +18,7 @@ const useWithdraw = () => {
     onSuccess: () => {
       navigate(URL_PATH.main, { replace: true });
     },
-    throwOnError: throwOnErrorCallback,
+    throwOnError: true,
     retry: retryCallback,
   });
 };
