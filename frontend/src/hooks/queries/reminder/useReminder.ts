@@ -2,10 +2,9 @@ import { DataResponse } from 'types/DataResponse';
 import { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import useUnauthorize from 'hooks/useUnauthorize';
 import StatusError from 'models/statusError';
 import ReminderAPI from 'apis/reminder';
+import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
@@ -54,7 +53,6 @@ const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminder
 };
 
 const useReminder = () => {
-  const { retryCallback } = useUnauthorize();
   const { isSuccess } = useCheckSessionId();
 
   return useQuery<DataResponse<Reminder[]>, Error | StatusError, ArrangedReminderWithStatus>({
@@ -66,9 +64,11 @@ const useReminder = () => {
       const results = await response.json();
       return results;
     },
+
     select: convertReminderData,
+
     suspense: true,
-    retry: retryCallback,
+    retry: noRetryIfUnauthorized,
     enabled: isSuccess,
   });
 };

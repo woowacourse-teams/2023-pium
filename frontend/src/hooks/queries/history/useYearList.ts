@@ -1,20 +1,18 @@
 import type { HistoryResponse, HistoryType } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import {
   convertHistoryItemListToYearMap,
   convertHistoryResponseListToHistoryItemList,
   convertYearMapToYearList,
   type YearList,
 } from 'components/petPlant/Timeline/converter';
-import useUnauthorize from 'hooks/useUnauthorize';
 import HistoryAPI, { HISTORY } from 'apis/history';
+import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {
-  const { retryCallback } = useUnauthorize();
   const { isSuccess } = useCheckSessionId();
 
   return useInfiniteQuery<
@@ -33,17 +31,20 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       const data = await response.json();
       return data;
     },
+
     defaultPageParam: 0,
     getNextPageParam: ({ hasNext }, _allPages, lastPageParam) => {
       return hasNext ? lastPageParam + 1 : undefined;
     },
+
     select: (data) => {
       const historyItemList = convertHistoryResponseListToHistoryItemList(data.pages);
       const yearMap = convertHistoryItemListToYearMap(historyItemList);
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
-    retry: retryCallback,
+
+    retry: noRetryIfUnauthorized,
     enabled: isSuccess,
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
