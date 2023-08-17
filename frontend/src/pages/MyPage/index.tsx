@@ -1,28 +1,27 @@
-import { useEffect } from 'react';
+import Loading from 'pages/Loading';
 import Navbar from 'components/@common/Navbar';
 import { ButtonBox, Logout, Title, TitleBox, Withdraw, Wrapper } from './MyPage.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
-import useUnauthorize from 'hooks/useUnauthorize';
+import useConfirm from 'hooks/useConfirm';
 
 const MyPage = () => {
-  const { redirectLoginPage } = useUnauthorize();
-  const { error } = useCheckSessionId();
+  useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
-
-  useEffect(() => {
-    if (error) {
-      redirectLoginPage(error);
-    }
-  }, [error, redirectLoginPage]);
+  const confirm = useConfirm();
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
     logoutMutate();
   };
-  const handleWithdraw: React.MouseEventHandler<HTMLButtonElement> = () => {
-    withdrawMutate();
+
+  const handleWithdraw: React.MouseEventHandler<HTMLButtonElement> = async () => {
+    if (
+      await confirm({ title: '정말로 탈퇴하시겠어요?', message: '그동안 함께해서 즐거웠어요😁' })
+    ) {
+      withdrawMutate();
+    }
   };
 
   return (

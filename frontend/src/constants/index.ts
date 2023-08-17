@@ -1,5 +1,4 @@
-import { ManageLevel, Season, SeasonKor } from 'types/dictionaryPlant';
-import { TagVariantType } from 'components/@common/Tag';
+import { Season, SeasonKor } from 'types/dictionaryPlant';
 
 export const BASE_URL = process.env.HOST;
 

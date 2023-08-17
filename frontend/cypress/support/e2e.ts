@@ -12,9 +12,18 @@
 // You can read more here:
 // https://on.cypress.io/configuration
 // ***********************************************************
-
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands';
+
+Cypress.on('uncaught:exception', (error, runnable, promise) => {
+  if (promise) {
+    return false;
+  }
+
+  if (error.message.includes('세션이 만료됐습니다')) {
+    return false;
+  }
+});
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')

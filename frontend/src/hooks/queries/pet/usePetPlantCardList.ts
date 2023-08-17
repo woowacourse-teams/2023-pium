@@ -1,21 +1,13 @@
 import type { DataResponse } from 'types/DataResponse';
 import type { PetPlantItem } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import useUnauthorize from 'hooks/useUnauthorize';
 import PetAPI, { PET } from 'apis/pet';
-import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
+import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 const usePetPlantCardList = () => {
-  const { retryCallback, redirectLoginPage } = useUnauthorize();
-  const { isSuccess, error } = useCheckSessionId();
-
-  useEffect(() => {
-    if (error) {
-      redirectLoginPage(error);
-    }
-  }, [error, redirectLoginPage]);
+  const { isSuccess } = useCheckSessionId();
 
   return useQuery<DataResponse<PetPlantItem[]>, Error, PetPlantItem[]>({
     queryKey: [PET, 'list'],
@@ -26,9 +18,11 @@ const usePetPlantCardList = () => {
       const data = await response.json();
       return data;
     },
+
     select: ({ data }) => data,
+
     suspense: true,
-    retry: retryCallback,
+    retry: noRetryIfUnauthorized,
     enabled: isSuccess,
   });
 };
