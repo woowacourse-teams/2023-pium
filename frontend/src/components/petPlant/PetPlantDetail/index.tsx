@@ -55,11 +55,11 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
     daySince,
     waterCycle,
     lastWaterDate,
-    nextWaterDate,
     location,
     flowerpot,
     light,
     wind,
+    dday,
   } = petPlantDetails;
 
   const deletePetPlant = async () => {
@@ -78,7 +78,6 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
   const isBirthday = today === birthDateKorean.slice(5);
 
   const daysBetweenLastWaterDate = getDaysBetween(Date.now(), lastWaterDate);
-  const daysBetweenNextWaterDate = getDaysBetween(Date.now(), nextWaterDate);
 
   return (
     <Wrapper>
@@ -121,7 +120,9 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
           </ExpandedTextBox>
           <ExpandedTextBox>
             <Text>다음 물주기</Text>
-            <Bold>{daysBetweenNextWaterDate ? `${daysBetweenNextWaterDate}일 후` : '오늘!!'}</Bold>
+            <Bold>
+              {dday === 0 ? '오늘!!' : dday < 0 ? `${Math.abs(dday)}일 후` : `${dday}일 전`}
+            </Bold>
           </ExpandedTextBox>
           <TimelineLinkArea>
             <TimelineLink to={generatePath(URL_PATH.timeline, { id: String(id) })}>

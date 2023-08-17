@@ -11,8 +11,13 @@ const alert = keyframes`
 export const ConfirmBox = styled(ModalBox)`
   top: calc(50vh - 50%);
 
+  display: flex;
+  flex-direction: column;
   row-gap: 20px;
+  align-items: center;
+  justify-content: center;
 
+  width: 90%;
   max-width: ${({ theme: { width } }) => width.pad};
   margin: auto;
   padding: 30px 0;
