@@ -43,7 +43,7 @@ const Navbar = () => {
     <Wrapper>
       {navItems.map(({ path, label, Icon }, index) => {
         const active = pathname === path;
-        const color = active ? theme.color.primary : '#888888';
+        const color = active ? theme.color.fontPrimaryForBackground : theme.color.sub;
         return (
           <NavLink key={index} to={path}>
             <NavItemArea $active={active}>

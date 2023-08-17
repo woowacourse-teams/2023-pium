@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Wrapper = styled.main`
   position: relative;
@@ -27,11 +27,23 @@ export const ContentBox = styled.section`
   max-height: 400px;
 `;
 
+const fadeIn = keyframes`
+  0%  {
+    opacity: 0;
+  }
+  100%  {
+    opacity: 1;
+  }
+`;
+
 export const PlantImg = styled.img`
   width: 300px;
   height: 300px;
-  background: ${({ theme: { color } }) => color.grayLight};
+
+  background: transparent;
   border-radius: 8px;
+
+  animation: ${fadeIn} 1s ease-in;
 `;
 
 export const Text = styled.p`
