@@ -57,7 +57,8 @@ public class PetPlantMapper {
                 .build();
     }
 
-    public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long dday, Long daySince, LocalDate secondLastWaterDate) {
+    public static PetPlantResponse toPetPlantResponse(PetPlant petPlant, Long dday, Long daySince,
+                                                      LocalDate secondLastWaterDate) {
         DictionaryPlant dictionaryPlant = petPlant.getDictionaryPlant();
         return PetPlantResponse.builder()
                 .id(petPlant.getId())

@@ -20,7 +20,8 @@ public class PetPlantHistory {
     private final String lastWaterDate;
 
     @Builder
-    private PetPlantHistory(String location, String flowerpot, String light, String wind, String waterCycle, String lastWaterDate) {
+    private PetPlantHistory(String location, String flowerpot, String light, String wind, String waterCycle,
+                            String lastWaterDate) {
         this.location = location;
         this.flowerpot = flowerpot;
         this.light = light;
@@ -36,7 +37,8 @@ public class PetPlantHistory {
         events.add(HistoryEvent.of(petPlantId, EMPTY, light, HistoryType.LIGHT, date));
         events.add(HistoryEvent.of(petPlantId, EMPTY, wind, HistoryType.WIND, date));
         events.add(HistoryEvent.of(petPlantId, EMPTY, waterCycle, HistoryType.WATER_CYCLE, date));
-        events.add(HistoryEvent.of(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE, LocalDate.parse(lastWaterDate)));
+        events.add(HistoryEvent.of(petPlantId, EMPTY, lastWaterDate, HistoryType.LAST_WATER_DATE,
+                LocalDate.parse(lastWaterDate)));
         return events;
     }
 

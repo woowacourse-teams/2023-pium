@@ -1,5 +1,8 @@
 package com.official.pium.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import java.time.LocalDate;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -22,14 +25,35 @@ class HistoryTest {
             softly.assertThatThrownBy(() -> history.updateHistoryContent(HistoryContent.builder().build()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("히스토리 상세 정보는 null이 될 수 없습니다.");
-            softly.assertThatThrownBy(() -> history.updateHistoryContent(HistoryContent.builder().current("value").build()))
+            softly.assertThatThrownBy(
+                            () -> history.updateHistoryContent(HistoryContent.builder().current("value").build()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("히스토리 상세 정보는 null이 될 수 없습니다.");
-            softly.assertThatThrownBy(() -> history.updateHistoryContent(HistoryContent.builder().previous("value").build()))
+            softly.assertThatThrownBy(
+                            () -> history.updateHistoryContent(HistoryContent.builder().previous("value").build()))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("히스토리 상세 정보는 null이 될 수 없습니다.");
         });
+    }
 
+    @Test
+    void 히스토리_날짜_업데이트() {
+        History history = generateHistory(LocalDate.of(2022, 3, 5));
+        LocalDate newDate = LocalDate.of(2022, 6, 14);
+
+        history.updateDate(newDate);
+
+        assertThat(history.getDate()).isEqualTo(newDate);
+    }
+
+    @Test
+    void 히스토리_날짜는_오늘_이후_이면_예외_발생() {
+        History history = generateHistory(LocalDate.of(2022, 3, 5));
+        LocalDate newDate = LocalDate.now().plusDays(1);
+
+        assertThatThrownBy(() -> history.updateDate(newDate))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("히스토리 날짜는 오늘 이후일 수 없습니다. newDate: " + newDate);
     }
 
     private History generateHistory(LocalDate lastWaterDate) {

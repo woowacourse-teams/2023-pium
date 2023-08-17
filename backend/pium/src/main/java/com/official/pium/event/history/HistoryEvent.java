@@ -29,7 +29,8 @@ public class HistoryEvent {
     @NotNull
     private final LocalDate date;
 
-    public static HistoryEvent of(Long petPlantId, String previous, String current, HistoryType historyType, LocalDate date) {
+    public static HistoryEvent of(Long petPlantId, String previous, String current, HistoryType historyType,
+                                  LocalDate date) {
         return new HistoryEvent(
                 petPlantId,
                 previous,
@@ -39,7 +40,8 @@ public class HistoryEvent {
         );
     }
 
-    public static HistoryEvent of(Long petPlantId, LocalDate previous, LocalDate current, HistoryType historyType, LocalDate date) {
+    public static HistoryEvent of(Long petPlantId, LocalDate previous, LocalDate current, HistoryType historyType,
+                                  LocalDate date) {
         return new HistoryEvent(
                 petPlantId,
                 previous.toString(),
