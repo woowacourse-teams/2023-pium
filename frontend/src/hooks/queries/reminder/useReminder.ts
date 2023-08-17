@@ -54,14 +54,8 @@ const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminder
 };
 
 const useReminder = () => {
-  const { retryCallback, redirectLoginPage } = useUnauthorize();
-  const { isSuccess, error } = useCheckSessionId();
-
-  useEffect(() => {
-    if (error) {
-      redirectLoginPage(error);
-    }
-  }, [error, redirectLoginPage]);
+  const { retryCallback } = useUnauthorize();
+  const { isSuccess } = useCheckSessionId();
 
   return useQuery<DataResponse<Reminder[]>, Error | StatusError, ArrangedReminderWithStatus>({
     queryKey: ['reminder'],
@@ -73,7 +67,6 @@ const useReminder = () => {
       return results;
     },
     select: convertReminderData,
-    throwOnError: true,
     suspense: true,
     retry: retryCallback,
     enabled: isSuccess,

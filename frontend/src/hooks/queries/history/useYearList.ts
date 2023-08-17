@@ -14,14 +14,8 @@ import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {
-  const { retryCallback, redirectLoginPage } = useUnauthorize();
-  const { isSuccess, error } = useCheckSessionId();
-
-  useEffect(() => {
-    if (error) {
-      redirectLoginPage(error);
-    }
-  }, [error, redirectLoginPage]);
+  const { retryCallback } = useUnauthorize();
+  const { isSuccess } = useCheckSessionId();
 
   return useInfiniteQuery<
     HistoryResponse,

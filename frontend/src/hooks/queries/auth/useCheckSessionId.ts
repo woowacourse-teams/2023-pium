@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import StatusError from 'models/statusError';
 import useUnauthorize from 'hooks/useUnauthorize';
+import StatusError from 'models/statusError';
 import AuthAPI from 'apis/auth';
 import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
 
-const useCheckSessionId = () => {
-  const { throwOnErrorCallback, retryCallback } = useUnauthorize();
+const useCheckSessionId = (throwOnError = true) => {
+  const { retryCallback } = useUnauthorize();
 
   return useQuery<null, Error | StatusError>({
     queryKey: ['checkSessionId'],
@@ -14,8 +14,8 @@ const useCheckSessionId = () => {
       throwOnInvalidStatus(response);
       return null;
     },
-    throwOnError: throwOnErrorCallback,
     retry: retryCallback,
+    throwOnError,
   });
 };
 

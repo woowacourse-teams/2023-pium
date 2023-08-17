@@ -1,22 +1,14 @@
-import { useEffect } from 'react';
+import Loading from 'pages/Loading';
 import Navbar from 'components/@common/Navbar';
 import { ButtonBox, Logout, Title, TitleBox, Withdraw, Wrapper } from './MyPage.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
-import useUnauthorize from 'hooks/useUnauthorize';
 
 const MyPage = () => {
-  const { redirectLoginPage } = useUnauthorize();
-  const { error } = useCheckSessionId();
+  const { isLoading } = useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
-
-  useEffect(() => {
-    if (error) {
-      redirectLoginPage(error);
-    }
-  }, [error, redirectLoginPage]);
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
     logoutMutate();
@@ -25,7 +17,9 @@ const MyPage = () => {
     withdrawMutate();
   };
 
-  return (
+  return isLoading ? (
+    <Loading />
+  ) : (
     <>
       <Wrapper>
         <TitleBox>

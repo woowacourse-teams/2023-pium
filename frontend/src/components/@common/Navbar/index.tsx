@@ -11,7 +11,7 @@ import theme from 'style/theme.style';
 
 const Navbar = () => {
   const { pathname } = useLocation();
-  const { isSuccess } = useCheckSessionId();
+  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
 
   const navItems = useMemo(() => {
     return [
@@ -32,12 +32,12 @@ const Navbar = () => {
         Icon: Plant,
       },
       {
-        path: isSuccess ? URL_PATH.myPage : URL_PATH.login,
-        label: isSuccess ? '마이페이지' : '로그인',
+        path: isLoggedIn ? URL_PATH.myPage : URL_PATH.login,
+        label: isLoggedIn ? '마이페이지' : '로그인',
         Icon: AccountCircle,
       },
     ];
-  }, [isSuccess]);
+  }, [isLoggedIn]);
 
   return (
     <Wrapper>
