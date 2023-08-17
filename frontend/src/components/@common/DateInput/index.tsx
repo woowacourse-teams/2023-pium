@@ -8,6 +8,7 @@ interface DateInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   value: string;
   changeCallback?: (value: string) => void;
   validator?: (value: string) => boolean;
+  $fontSize?: string;
 }
 
 const DateInput = (props: DateInputProps) => {
@@ -18,6 +19,7 @@ const DateInput = (props: DateInputProps) => {
     min,
     max,
     validator,
+    $fontSize = '',
   } = props;
   const { isOpen, open, close, modalRef } = useModal();
 
@@ -34,6 +36,7 @@ const DateInput = (props: DateInputProps) => {
         type="button"
         aria-label={props['aria-label']}
         $placeholder={value === ''}
+        $fontSize={$fontSize}
         onClick={open}
       >
         {value ? convertDateKorYear(value) : placeholder}
