@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
 
   width: 100%;
   height: 100%;
+
+  font: 500 1.8rem/2.2rem 'GmarketSans';
 `;
 
 export const Center = styled.div`

@@ -29,6 +29,7 @@ export const SelectedValue = styled.button<SelectedValueProps>`
   width: 100%;
   height: 32px;
 
+  font: inherit;
   color: ${({ $placeholder, theme }) => ($placeholder ? theme.color.gray : 'black')};
 
   &:hover {
