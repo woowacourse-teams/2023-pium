@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import KakaoLoginLarge from 'components/@common/Icons/KakaoLoginLarge';
 import {
   ContentBox,
@@ -12,8 +13,29 @@ import {
 import Auth from 'apis/auth';
 import { URL_PATH } from 'constants/index';
 
+const IMAGE_SRC_LIST = [
+  'https://static.pium.life/thumbnail/main1.png',
+  'https://static.pium.life/thumbnail/main2.png',
+  'https://static.pium.life/thumbnail/main3.png',
+  'https://static.pium.life/thumbnail/main4.png',
+  'https://static.pium.life/thumbnail/main5.png',
+  'https://static.pium.life/thumbnail/main6.png',
+];
+
 const Login = () => {
   const { AUTHORIZATION_URL } = Auth;
+
+  const [imageSrcIndex, setImageSrcIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setImageSrcIndex((prev) => (prev + 1) % IMAGE_SRC_LIST.length);
+    }, 3000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   return (
     <Wrapper>
@@ -23,7 +45,11 @@ const Login = () => {
         <Text>
           함께 해요 <PrimaryText>피움</PrimaryText>
         </Text>
-        <PlantImg src="" alt="대충 식물 이미지 넣음" />
+        <PlantImg
+          key={imageSrcIndex}
+          src={IMAGE_SRC_LIST[imageSrcIndex]}
+          alt="대충 식물 이미지 넣음"
+        />
       </ContentBox>
 
       <LoginBox>
