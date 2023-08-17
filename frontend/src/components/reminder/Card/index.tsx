@@ -122,6 +122,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
           min={lastWaterDate}
           max={today}
           aria-label="물 준 날짜 선택"
+          $fontSize="1.2rem"
         />
         <DateInput
           value=""
@@ -130,6 +131,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
           placeholder={status === 'future' ? '날짜 선택' : '미루기'}
           min={today}
           aria-label="알림을 줄 날짜 선택"
+          $fontSize="1.2rem"
         />
       </ActionBox>
     </Wrapper>

@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import InlineRadio from 'components/@common/InlineRadio';
 import { TagVariantType } from 'components/@common/Tag';
-import DictInfo from 'components/dictionaryPlant/DictInfo';
+import TagBox from 'components/dictionaryPlant/TagBox';
 
-interface DictInfoSwitchProps {
+interface TagSwitchProps {
   title: string;
   optionMap: Record<string, string | string[]>;
   defaultSelected?: string;
   variant?: TagVariantType;
 }
 
-const DictInfoSwitch = (props: DictInfoSwitchProps) => {
+const TagSwitch = (props: TagSwitchProps) => {
   const { optionMap, title, defaultSelected, variant = 'default' } = props;
   const options = Object.keys(optionMap);
 
@@ -19,27 +19,25 @@ const DictInfoSwitch = (props: DictInfoSwitchProps) => {
   const selectedOptions = optionMap[selected] ?? [];
 
   return (
-    <DictInfo alignment="column" contentDirection="row" width="100%">
-      <DictInfo.Title>
+    <TagBox alignment="column" contentDirection="row" width="100%">
+      <TagBox.Title>
         {title}
         <InlineRadio name={title} value={selected} setValue={setSelected}>
           {options.map((optionName) => (
             <InlineRadio.Option key={optionName} value={optionName} />
           ))}
         </InlineRadio>
-      </DictInfo.Title>
+      </TagBox.Title>
 
       {typeof selectedOptions === 'string' ? (
-        <DictInfo.Content fullWidth={true} variant={variant}>
+        <TagBox.Content fullWidth={true} variant={variant}>
           {selectedOptions}
-        </DictInfo.Content>
+        </TagBox.Content>
       ) : (
-        selectedOptions.map((content) => (
-          <DictInfo.Content key={content}>{content}</DictInfo.Content>
-        ))
+        selectedOptions.map((content) => <TagBox.Content key={content}>{content}</TagBox.Content>)
       )}
-    </DictInfo>
+    </TagBox>
   );
 };
 
-export default DictInfoSwitch;
+export default TagSwitch;

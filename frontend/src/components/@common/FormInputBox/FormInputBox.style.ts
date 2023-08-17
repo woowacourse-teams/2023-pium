@@ -32,7 +32,7 @@ export const RequireFlag = styled.span`
 `;
 
 export const Title = styled.p`
-  margin-bottom: 8px;
+  margin-bottom: 16px;
   font: 500 1.4rem/1.7rem 'GmarketSans';
 `;
 

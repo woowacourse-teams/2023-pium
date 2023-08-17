@@ -8,7 +8,7 @@ const historyHandlers = [
     const pageParam = Number(req.url.searchParams.get('page') ?? 0);
     const filterParam = req.url.searchParams.get('filter');
     const filter = filterParam
-      ? filterParam.slice(1, -1).split(',')
+      ? filterParam.split(',')
       : ['lastWaterDate', 'waterCycle', 'location', 'wind', 'flowerpot', 'light'];
 
     const hasNext = pageParam < 6;
