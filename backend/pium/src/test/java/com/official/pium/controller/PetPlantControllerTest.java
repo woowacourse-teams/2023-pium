@@ -132,8 +132,7 @@ class PetPlantControllerTest extends UITest {
                     .willReturn(RESPONSE.식물_전체조회_응답);
 
             mockMvc.perform(get("/pet-plants")
-                            .session(session)
-                            .header("Authorization", "pium@gmail.com"))
+                            .session(session))
                     .andDo(document("petPlant/findAll/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
@@ -421,6 +420,15 @@ class PetPlantControllerTest extends UITest {
             mockMvc.perform(delete("/pet-plants/{id}", 1L)
                             .session(session))
                     .andExpect(status().isNoContent())
+                    .andDo(
+                            document("petPlant/delete/",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies(),
+                                    pathParameters(
+                                            parameterWithName("id").description("반려 식물 ID")
+                                    ))
+                    )
                     .andDo(print());
         }
 

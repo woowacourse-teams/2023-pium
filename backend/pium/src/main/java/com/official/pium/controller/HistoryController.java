@@ -1,10 +1,13 @@
 package com.official.pium.controller;
 
+import static org.springframework.data.domain.Sort.Direction.DESC;
+
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.HistoryService;
 import com.official.pium.service.dto.HistoryResponse;
 import jakarta.validation.constraints.Positive;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -14,10 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
-
-import static org.springframework.data.domain.Sort.Direction.DESC;
 
 @Validated
 @RequiredArgsConstructor
