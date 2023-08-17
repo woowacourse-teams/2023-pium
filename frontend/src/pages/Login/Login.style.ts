@@ -14,7 +14,7 @@ export const Wrapper = styled.main`
 
 export const ContentBox = styled.section`
   position: absolute;
-  top: 50%;
+  top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
 
@@ -39,6 +39,7 @@ const fadeIn = keyframes`
 export const PlantImg = styled.img`
   width: 300px;
   height: 300px;
+  margin-top: 24px;
 
   background: transparent;
   border-radius: 8px;
