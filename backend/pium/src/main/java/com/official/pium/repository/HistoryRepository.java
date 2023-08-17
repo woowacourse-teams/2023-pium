@@ -14,6 +14,4 @@ public interface HistoryRepository extends JpaRepository<History, Long>, History
                                                                    Pageable pageable);
 
     void deleteAllByPetPlantId(Long petPlantId);
-
-
 }
