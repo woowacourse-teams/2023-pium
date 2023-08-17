@@ -106,6 +106,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
       dictionaryPlantId,
       birthDate,
       lastWaterDate,
+      nickname: form.nickname.trim(),
       waterCycle: Number(form.waterCycle),
     };
 
