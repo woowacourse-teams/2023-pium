@@ -128,7 +128,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
           value=""
           changeCallback={changeDateHandler}
           validator={changeDateValidator}
-          placeholder={status === 'future' ? '날짜 선택' : '미루기'}
+          placeholder={status === 'future' ? '날짜 변경' : '미루기'}
           min={today}
           aria-label="알림을 줄 날짜 선택"
           $fontSize="1.2rem"

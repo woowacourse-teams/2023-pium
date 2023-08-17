@@ -14,7 +14,7 @@ const useReminderHooks = () => {
       const {
         body: { waterDate },
       } = variable;
-      addToast('success', `${convertDateKorYear(waterDate)}에 물주기를 기록했습니다.`);
+      addToast('success', `${convertDateKorYear(waterDate).slice(5)}에 물주기 완료`);
     },
     errorCallback: (error) => {
       addToast('error', error.message);
@@ -27,7 +27,7 @@ const useReminderHooks = () => {
       const {
         body: { nextWaterDate },
       } = variable;
-      addToast('success', `${convertDateKorYear(nextWaterDate)}로 물주기 날짜를 변경했습니다.`);
+      addToast('success', `${convertDateKorYear(nextWaterDate).slice(5)}로 물주기 날짜 변경`);
     },
     errorCallback: (error) => {
       addToast('error', error.message);
