@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import Image from 'components/@common/Image';
 import Navbar from 'components/@common/Navbar';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
-import { Wrapper } from './DictionaryDetail.style';
+import { Main } from './DictionaryDetail.style';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 
 const DictionaryDetail = () => {
@@ -17,10 +17,10 @@ const DictionaryDetail = () => {
 
   return (
     <>
-      <Wrapper>
+      <Main>
         <Image type="wide" src={image} alt={name} size="300px" />
         <DictionaryPlantContent {...dictionaryPlantDetail} />
-      </Wrapper>
+      </Main>
       <Navbar />
     </>
   );

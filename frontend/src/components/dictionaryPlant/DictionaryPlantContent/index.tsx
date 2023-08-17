@@ -16,7 +16,6 @@ import {
   Name,
   PropBox,
   PropsBox,
-  Wrapper,
 } from './DictionaryPlantContent.style';
 import type { DictPlantExtendCycles } from 'hooks/queries/dictionary/useDictDetail';
 import parseTemperature from 'utils/parseTemperature';
@@ -46,7 +45,7 @@ const DictionaryPlantContent = (props: DictPlantExtendCycles) => {
   const { type: tempType, temperature: minTemp } = parseTemperature(minimumTemp);
 
   return (
-    <Wrapper>
+    <>
       <HeaderBox>
         <div>
           <Name>{name}</Name>
@@ -179,7 +178,7 @@ const DictionaryPlantContent = (props: DictPlantExtendCycles) => {
           </span>
         </ManageInfoBox>
       </ContentBox>
-    </Wrapper>
+    </>
   );
 };
 

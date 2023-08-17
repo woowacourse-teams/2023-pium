@@ -1,12 +1,5 @@
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.section`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-  margin: 0 auto 100px auto;
-`;
-
 export const HeaderBox = styled.section`
   display: flex;
   align-items: center;
