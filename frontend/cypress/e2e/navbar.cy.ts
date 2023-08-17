@@ -1,13 +1,8 @@
+import login from '../utils/login';
+
 describe('내비게이션 바를 이용한 페이지 이동', () => {
   beforeEach(() => {
-    const COOKIE = 'piumTetstSessionId';
-
-    const currentTime = new Date().getTime();
-
-    const sixHoursLater = currentTime + 6 * 60 * 60 * 1000; // 6 hours in milliseconds
-
-    cy.setCookie('JSESSION', COOKIE, { expiry: sixHoursLater });
-
+    login();
     cy.visit('/');
   });
 

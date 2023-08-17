@@ -166,7 +166,7 @@ export const EditLink = styled(StyledLink)`
   margin-right: auto;
   margin-left: 0;
 
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   color: ${({ theme }) => theme.color.grayDark};
 
   transition: color 0.2s linear;
@@ -181,7 +181,7 @@ export const DeleteButton = styled.button`
   align-items: center;
   justify-content: center;
 
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   color: ${({ theme }) => theme.color.grayDark};
 
   &:focus,

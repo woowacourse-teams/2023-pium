@@ -1,20 +1,12 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import useUnauthorize from 'hooks/useUnauthorize';
 import PetAPI from 'apis/pet';
-import { throwOnInvalidStatus } from 'utils/throwOnInvalidStatus';
+import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
+import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
-  const { retryCallback, redirectLoginPage } = useUnauthorize();
-  const { isSuccess, error } = useCheckSessionId();
-
-  useEffect(() => {
-    if (error) {
-      redirectLoginPage(error);
-    }
-  }, [error, redirectLoginPage]);
+  const { isSuccess } = useCheckSessionId();
 
   return useQuery<PetPlantDetails>({
     queryKey: ['petPlantDetails', petPlantId],
@@ -29,7 +21,7 @@ const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
 
     refetchOnWindowFocus: false,
     suspense: true,
-    retry: retryCallback,
+    retry: noRetryIfUnauthorized,
     enabled: isSuccess,
   });
 };
