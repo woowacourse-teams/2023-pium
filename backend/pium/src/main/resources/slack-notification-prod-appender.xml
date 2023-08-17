@@ -5,15 +5,12 @@
         <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>${FILE_LOG_PATTERN}</pattern>
         </layout>
-        <username>피움-서버-에러-로그</username>
+        <username>피움-운영-서버-로그</username>
         <iconEmoji>:시든피우미:</iconEmoji>
         <colorCoding>true</colorCoding>
     </appender>
 
     <appender name="ASYNC_SLACK" class="ch.qos.logback.classic.AsyncAppender">
         <appender-ref ref="SLACK"/>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
-            <level>ERROR</level>
-        </filter>
     </appender>
 </included>

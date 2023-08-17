@@ -8,10 +8,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -19,6 +17,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -62,15 +61,13 @@ class ReminderControllerTest extends UITest {
             willDoNothing().given(reminderService)
                     .water(any(ReminderCreateRequest.class), anyLong(), any(Member.class));
             mockMvc.perform(post("/reminders/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청(LocalDate.of(2023, 7, 1))))
+                            .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/water/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ),
+                            requestCookies(),
                             pathParameters(
                                     parameterWithName("id").description("리마인더 ID")
                             ))
@@ -84,8 +81,8 @@ class ReminderControllerTest extends UITest {
             Long wrongId = -1L;
 
             mockMvc.perform(post("/reminders/{id}", wrongId)
-                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_물주기_요청(LocalDate.of(2023, 7, 1))))
+                            .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))
@@ -102,15 +99,13 @@ class ReminderControllerTest extends UITest {
                     .updateNextWaterDate(any(ReminderUpdateRequest.class), anyLong(), any(Member.class));
 
             mockMvc.perform(patch("/reminders/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청(LocalDate.of(2023, 7, 1))))
+                            .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/delay/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ),
+                            requestCookies(),
                             pathParameters(
                                     parameterWithName("id").description("리마인더 ID")
                             ))
@@ -124,8 +119,8 @@ class ReminderControllerTest extends UITest {
             Long wrongId = 0L;
 
             mockMvc.perform(patch("/reminders/{id}", wrongId)
-                            .header("Authorization", "pium@gmail.com")
                             .content(objectMapper.writeValueAsString(리마인더_미루기_요청(LocalDate.of(2023, 7, 1))))
+                            .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value("반려 식물 ID는 1이상의 값이어야 합니다. Value: " + wrongId))
@@ -142,14 +137,13 @@ class ReminderControllerTest extends UITest {
                     .willReturn(리마인더_조회_응답);
 
             mockMvc.perform(get("/reminders")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("reminder/findAll/",
-                            preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ))
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies()
+                            )
                     )
                     .andExpect(status().isOk())
                     .andDo(print());

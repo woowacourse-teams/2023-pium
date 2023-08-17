@@ -19,9 +19,7 @@ class MemberRepositoryTest extends RepositoryTest {
 
     @Test
     void 사용자_저장() {
-        Member member = Member.builder()
-                .email("hello@aaa.com")
-                .build();
+        Member member = Member.builder().build();
 
         Member save = memberRepository.save(member);
 
@@ -35,10 +33,19 @@ class MemberRepositoryTest extends RepositoryTest {
 
     @Test
     void 사용자_조회() {
-        Member member = Member.builder().email("hello@aaa.com").build();
+        Member member = Member.builder().build();
 
         Member saveMember = memberRepository.save(member);
 
         assertThat(memberRepository.findById(saveMember.getId())).isPresent();
+    }
+
+    @Test
+    void 카카오_회원_ID로_사용자_조회() {
+        Member member = Member.builder().kakaoId(12345L).build();
+
+        Member saveMember = memberRepository.save(member);
+
+        assertThat(memberRepository.findByKakaoId(saveMember.getKakaoId())).isPresent();
     }
 }

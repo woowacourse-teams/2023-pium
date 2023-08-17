@@ -11,7 +11,7 @@
 
 # 피움 서비스 소개
 
-<img src="https://github.com/woowacourse-teams/2023-pium/assets/49794401/b10b5e38-e30c-484c-82a1-c6449ec26527" width="400px">
+<img src="https://github.com/woowacourse-teams/2023-pium/assets/68818952/987ff41e-08fb-43dd-a4cf-07e7cc4a1dab" width="400px">
 
 식물 관리법은 환경에 따라 다르기 때문에 경험을 통해서 터득할 수밖에 없어요.
 
@@ -77,26 +77,26 @@ vim src/main/resources/application.properties
 
 아래 내용을 참고하여 properties 파일을 작성한다.
 ```properties
-spring.datasource.url=jdbc:h2:mem:test;MODE=MYSQL
-spring.datasource.username=sa
-
-spring.sql.init.mode=never
-spring.sql.init.schema-locations=classpath:sql/schema.sql
-spring.sql.init.data-locations=classpath:sql/data.sql
-
-server.servlet.session.cookie.same-site=none
-server.servlet.session.cookie.secure=true
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://{서버_HOST}/{DATABASE}?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+spring.datasource.username={DB_ACCOUNT}
+spring.datasource.password={DB_PASSWORD}
 
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
-spring.jpa.hibernate.ddl-auto=create
+spring.jpa.hibernate.ddl-auto=create-drop
 
 logging.level.org.hibernate.orm.jdbc.bind=trace
 
-auth.kakao.token-request-uri={카카오에 액세스 토큰을 요청하는 URI}
-auth.kakao.member-info-request-uri={카카오에 사용자 정보를 요청하는 URI}
-auth.kakao.client-id={카카오에서 발급받은 client id}
-auth.kakao.redirect-uri={카카오에서 설정한 redirect uri}
+auth.kakao.token-request-uri=https://kauth.kakao.com/oauth/token
+auth.kakao.member-info-request-uri=https://kapi.kakao.com/v2/user/me
+auth.kakao.redirect-uri={REDIRECT_URI}
+auth.kakao.unlink-uri=https://kapi.kakao.com/v1/user/unlink
+auth.kakao.client-id={REST_API_KEY}
+auth.kakao.admin-id={ADMIN_KEY}
+
+server.servlet.session.cookie.same-site=none
+server.servlet.session.cookie.secure=true
 ```
 
 

@@ -8,8 +8,7 @@ import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.anyLong;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -71,16 +70,14 @@ class PetPlantControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(post("/pet-plants")
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(피우미_등록_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("petPlant/create/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ))
-                    )
+                            requestCookies()
+                    ))
                     .andExpect(status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
                     .andDo(print());
@@ -97,15 +94,13 @@ class PetPlantControllerTest extends UITest {
                     .willReturn(response);
 
             mockMvc.perform(get("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andDo(document("petPlant/findById/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ),
+                            requestCookies(),
                             pathParameters(
                                     parameterWithName("id").description("반려 식물 ID")
                             ))
@@ -119,7 +114,7 @@ class PetPlantControllerTest extends UITest {
             Long wrongId = -1L;
 
             mockMvc.perform(get("/pet-plants/{id}", wrongId)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
@@ -137,14 +132,12 @@ class PetPlantControllerTest extends UITest {
                     .willReturn(RESPONSE.식물_전체조회_응답);
 
             mockMvc.perform(get("/pet-plants")
-                            .header("Authorization", "pium@gmail.com"))
+                            .session(session))
                     .andDo(document("petPlant/findAll/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ))
-                    )
+                            requestCookies()
+                    ))
                     .andExpect(status().isOk())
                     .andDo(print());
         }
@@ -169,15 +162,13 @@ class PetPlantControllerTest extends UITest {
                     .update(anyLong(), any(PetPlantUpdateRequest.class), any(Member.class));
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andDo(document("petPlant/update/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestHeaders(
-                                    headerWithName("Authorization").description("사용자 인증 정보")
-                            ),
+                            requestCookies(),
                             pathParameters(
                                     parameterWithName("id").description("반려 식물 ID")
                             ))
@@ -191,7 +182,7 @@ class PetPlantControllerTest extends UITest {
             Long wrongId = -1L;
 
             mockMvc.perform(patch("/pet-plants/{id}", wrongId)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(피우미_수정_요청))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -216,7 +207,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -241,7 +232,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -266,7 +257,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -289,7 +280,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -312,7 +303,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -337,7 +328,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -362,7 +353,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -385,7 +376,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -408,7 +399,7 @@ class PetPlantControllerTest extends UITest {
                     .build();
 
             mockMvc.perform(patch("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(updateRequest))
                             .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
@@ -427,8 +418,17 @@ class PetPlantControllerTest extends UITest {
                     .delete(anyLong(), any(Member.class));
 
             mockMvc.perform(delete("/pet-plants/{id}", 1L)
-                            .header("Authorization", "pium@gmail.com"))
+                            .session(session))
                     .andExpect(status().isNoContent())
+                    .andDo(
+                            document("petPlant/delete/",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies(),
+                                    pathParameters(
+                                            parameterWithName("id").description("반려 식물 ID")
+                                    ))
+                    )
                     .andDo(print());
         }
 
@@ -437,7 +437,7 @@ class PetPlantControllerTest extends UITest {
             Long wrongId = -1L;
 
             mockMvc.perform(delete("/pet-plants/{id}", wrongId)
-                            .header("Authorization", "pium@gmail.com"))
+                            .session(session))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
                     .andDo(print());

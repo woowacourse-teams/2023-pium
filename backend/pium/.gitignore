@@ -40,3 +40,4 @@ out/
 
 ### RestDocs ###
 **/src/main/resources/static/docs/
+*.properties

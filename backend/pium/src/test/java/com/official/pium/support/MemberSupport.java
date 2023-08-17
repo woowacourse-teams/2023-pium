@@ -18,17 +18,17 @@ public class MemberSupport {
 
     public final class MemberBuilder {
 
-        private String email;
+        private Long kakaoId;
 
-        public MemberBuilder email(String email) {
-            this.email = email;
+        public MemberBuilder kakaoId(Long kakaoId) {
+            this.kakaoId = kakaoId;
             return this;
         }
 
         public Member build() {
             return memberRepository.save(
                     Member.builder()
-                            .email(email == null ? "test@test.com" : email)
+                            .kakaoId(kakaoId == null ? 12345L : kakaoId)
                             .build()
             );
         }

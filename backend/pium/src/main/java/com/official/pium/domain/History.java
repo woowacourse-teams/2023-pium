@@ -62,6 +62,13 @@ public class History extends BaseEntity {
         this.historyContent = historyContent;
     }
 
+    public void updateDate(LocalDate newDate) {
+        if (newDate.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("히스토리 날짜는 오늘 이후일 수 없습니다. newDate: " + newDate);
+        }
+        this.date = newDate;
+    }
+
     private void validateHistoryContent(HistoryContent historyContent) {
         if (historyContent == null) {
             throw new IllegalArgumentException("히스토리 상세 정보는 null이 될 수 없습니다. historyContent: null");

@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PetPlantRepository extends JpaRepository<PetPlant, Long> {
+public interface PetPlantRepository extends JpaRepository<PetPlant, Long>, PetPlantCustomRepository {
 
     List<PetPlant> findAllByMemberId(Long memberId);
 

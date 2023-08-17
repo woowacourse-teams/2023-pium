@@ -30,10 +30,12 @@ public class HistoryEventListener {
     public void savePetPlantHistory(HistoryEvent historyEvent) {
 
         PetPlant petPlant = petPlantRepository.findById(historyEvent.getPetPlantId())
-                .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + historyEvent.getPetPlantId()));
+                .orElseThrow(
+                        () -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + historyEvent.getPetPlantId()));
 
         HistoryCategory historyCategory = historyCategoryRepository.findByHistoryType(historyEvent.getHistoryType())
-                .orElseThrow(() -> new NoSuchElementException("존재하지 않는 히스토리 타입입니다. type: " + historyEvent.getHistoryType()));
+                .orElseThrow(
+                        () -> new NoSuchElementException("존재하지 않는 히스토리 타입입니다. type: " + historyEvent.getHistoryType()));
 
         History history = History.builder()
                 .petPlant(petPlant)
@@ -53,11 +55,13 @@ public class HistoryEventListener {
     public void updateLastWaterDateHistory(LastWaterDateEvent lastWaterDateEvent) {
         final PageRequest TOP_ORDER_BY_DATE_DESC = PageRequest.of(0, 1, Sort.Direction.DESC, "date");
 
-        Page<History> historyAboutLastWaterDate = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(lastWaterDateEvent.getPetPlantId(), HistoryType.LAST_WATER_DATE, TOP_ORDER_BY_DATE_DESC);
+        Page<History> historyAboutLastWaterDate = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(
+                lastWaterDateEvent.getPetPlantId(), HistoryType.LAST_WATER_DATE, TOP_ORDER_BY_DATE_DESC);
 
         validateContentSize(historyAboutLastWaterDate);
 
         for (History history : historyAboutLastWaterDate.getContent()) {
+            history.updateDate(lastWaterDateEvent.getCurrentWaterDate());
             history.updateHistoryContent(
                     HistoryContent.builder()
                             .previous(history.getHistoryContent().getPrevious())
