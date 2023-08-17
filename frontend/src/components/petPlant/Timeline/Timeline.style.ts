@@ -1,8 +1,8 @@
 import { keyframes, styled } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ hasNextPage?: boolean }>`
   position: relative;
-  min-height: calc(100vh + 64px);
+  min-height: ${(props) => (props.hasNextPage ? 'calc(100vh + 64px)' : '100%')};
 `;
 
 export const Plant = styled.div`
