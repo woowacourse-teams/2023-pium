@@ -15,6 +15,7 @@ import {
   FormArea,
   Wrapper,
 } from './Form.style';
+import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
 import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
 import useAddToast from 'hooks/useAddToast';
@@ -26,6 +27,8 @@ const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';
 
 const PetRegisterForm = () => {
+  useCheckSessionId();
+
   const { id } = useParams();
   const dictionaryPlantId = Number(id);
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
