@@ -62,7 +62,7 @@ const PetPlantTimeline = () => {
         </CheckButton>
         <CheckButton checked={isCheckedSetting} onClick={onClickSetting}>
           <TreePlantPot stroke={isCheckedSetting ? 'white' : theme.color.primary} aria-hidden />
-          <ButtonLabel>환경 설정</ButtonLabel>
+          <ButtonLabel>환경 변화</ButtonLabel>
         </CheckButton>
       </Header>
       <Main>
