@@ -1,15 +1,14 @@
-import { useEffect, useRef } from 'react';
+import { useCallback, useMemo } from 'react';
 import createObserver from 'utils/createObserver';
 
-const useIntersectionRef = <T extends Element>(onIntersecting: () => void) => {
-  const elementRef = useRef<T>(null);
-  const observerRef = useRef(createObserver(onIntersecting));
+const useIntersectionRef = (onIntersecting: () => void) => {
+  const observer = useMemo(() => createObserver(onIntersecting), []);
 
-  useEffect(() => {
-    if (elementRef.current) observerRef.current.observe(elementRef.current);
+  const intersectionRef = useCallback(<T extends Element>(instance: T | null) => {
+    if (instance) observer.observe(instance);
   }, []);
 
-  return elementRef;
+  return intersectionRef;
 };
 
 export default useIntersectionRef;
