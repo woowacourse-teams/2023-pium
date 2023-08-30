@@ -1,5 +1,3 @@
-import { DefaultTheme } from 'styled-components';
-
 const color = {
   background: '#FFFFFF',
   primary: '#1BCC66',
@@ -12,7 +10,7 @@ const color = {
   grayLight: '#ECECEC',
   grayDark: '#A5A5A5',
   water: '#75AEDC',
-};
+} as const;
 
 const font = {
   emphasize: '',
@@ -22,12 +20,12 @@ const font = {
   dictTitle: 'normal 600 1.8rem/2.2rem "GmarketSans"',
   dictContent: 'normal 400 1.4rem/1.8rem "GmarketSans"',
   reminderCardContent: '500 1rem/1.5rem "GmarketSans"',
-};
+} as const;
 
 const width = {
   mobile: '360px',
   pad: '768px',
-};
+} as const;
 
 const zIndex = {
   dropdown: 1000,
@@ -38,13 +36,11 @@ const zIndex = {
   modal: 1060,
   popover: 1070,
   tooltip: 1080,
-};
+} as const;
 
-const theme: DefaultTheme = {
+export default {
   color,
   font,
   width,
   zIndex,
-};
-
-export default theme;
+} as const;
