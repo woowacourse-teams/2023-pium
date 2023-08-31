@@ -2,7 +2,7 @@ import { useSearchParams } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
 import SearchResults from 'components/search/SearchResults';
-import { Title, Wrapper } from './DictionarySearch.style';
+import { Title, Wrapper } from './DictionaryPlantSearch.style';
 import useDictionaryNavigate from 'hooks/useDictrionaryNavigate';
 
 const DictionarySearch = () => {
