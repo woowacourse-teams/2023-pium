@@ -38,9 +38,11 @@ const zIndex = {
   tooltip: 1080,
 } as const;
 
-export default {
+const theme = {
   color,
   font,
   width,
   zIndex,
 } as const;
+
+export default theme;
