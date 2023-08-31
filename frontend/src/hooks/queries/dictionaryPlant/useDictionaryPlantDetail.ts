@@ -1,6 +1,6 @@
 import type { DictionaryPlant, Season, SeasonKor } from 'types/dictionaryPlant';
 import { useQuery } from '@tanstack/react-query';
-import DictAPI, { DICT } from 'apis/dictionaryPlant';
+import DictAPI, { DICTIONARY_PLANT_URL } from 'apis/dictionaryPlant';
 import { SEASONS } from 'constants/index';
 
 export interface DictionaryPlantExtendCycles extends DictionaryPlant {
@@ -14,9 +14,10 @@ const initialWaterOptions: DictionaryPlantExtendCycles['waterOptions'] = {
   겨울: '',
 };
 
-const useDictDetail = (id: number) =>
+const useDictionaryPlantDetail = (id: number) =>
   useQuery<DictionaryPlant, Error, DictionaryPlantExtendCycles>({
-    queryKey: [DICT, 'detail', id],
+    queryKey: [DICTIONARY_PLANT_URL, 'detail', id],
+
     queryFn: async () => {
       const response = await DictAPI.getDetail(id);
 
@@ -24,6 +25,7 @@ const useDictDetail = (id: number) =>
       const data = await response.json();
       return data;
     },
+
     staleTime: Infinity,
     suspense: true,
     throwOnError: true,
@@ -40,4 +42,4 @@ const useDictDetail = (id: number) =>
     },
   });
 
-export default useDictDetail;
+export default useDictionaryPlantDetail;

@@ -1,13 +1,13 @@
 import { BASE_URL } from 'constants/index';
 
-export const DICT = `${BASE_URL}/dictionary-plants`;
+export const DICTIONARY_PLANT_URL = `${BASE_URL}/dictionary-plants`;
 
 const getDetail = (id: number) => {
-  return fetch(`${DICT}/${id}`, { method: 'GET' });
+  return fetch(`${DICTIONARY_PLANT_URL}/${id}`, { method: 'GET' });
 };
 
 const getSearch = (name: string) => {
-  return fetch(`${DICT}?name=${name}`, { method: 'GET' });
+  return fetch(`${DICTIONARY_PLANT_URL}?name=${name}`, { method: 'GET' });
 };
 
 const DictionaryPlantAPI = {

@@ -9,15 +9,15 @@ const DictionarySearch = () => {
   const [params] = useSearchParams();
   const search = params.get('search') ?? '';
 
-  const { goToProperDictPage, goToDictDetailPage } = useDictionaryNavigate();
+  const { goToProperDictionaryPlantPage, goToDictionaryPlantDetailPage } = useDictionaryNavigate();
 
   return (
     <>
       <Wrapper>
         <SearchBox
-          onEnter={goToProperDictPage}
-          onNextClick={goToProperDictPage}
-          onResultClick={goToDictDetailPage}
+          onEnter={goToProperDictionaryPlantPage}
+          onNextClick={goToProperDictionaryPlantPage}
+          onResultClick={goToDictionaryPlantDetailPage}
         />
         <Title>&quot;{search}&quot; 검색 결과</Title>
         <SearchResults plantName={search} />

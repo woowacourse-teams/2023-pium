@@ -1,20 +1,20 @@
-import type { DictNameSearchResult } from 'types/dictionaryPlant';
+import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useCallback } from 'react';
 import { useNavigate, generatePath } from 'react-router-dom';
 import { URL_PATH } from 'constants/index';
 
-const useDictionaryNavigate = () => {
+const useDictionaryPlantNavigate = () => {
   const navigate = useNavigate();
 
-  const goToDictDetailPage = useCallback(
+  const goToDictionaryPlantDetailPage = useCallback(
     (plantId: number) => {
       navigate(generatePath(URL_PATH.dictDetail, { id: plantId.toString() }));
     },
     [navigate]
   );
 
-  const goToProperDictPage = useCallback(
-    (searchName: string, searchResults?: DictNameSearchResult[]) => {
+  const goToProperDictionaryPlantPage = useCallback(
+    (searchName: string, searchResults?: DictionaryPlantNameSearchResult[]) => {
       if (!searchName || !searchResults) return;
 
       const samePlant = searchResults.find(({ name }) => name === searchName);
@@ -24,12 +24,12 @@ const useDictionaryNavigate = () => {
         return;
       }
 
-      goToDictDetailPage(samePlant.id);
+      goToDictionaryPlantDetailPage(samePlant.id);
     },
-    [navigate, goToDictDetailPage]
+    [navigate, goToDictionaryPlantDetailPage]
   );
 
-  return { goToDictDetailPage, goToProperDictPage };
+  return { goToDictionaryPlantDetailPage, goToProperDictionaryPlantPage };
 };
 
-export default useDictionaryNavigate;
+export default useDictionaryPlantNavigate;
