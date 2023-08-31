@@ -2,7 +2,7 @@ import { PetPlantDetails } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/useAddToast';
-import PetAPI from 'apis/petPlant';
+import PetPlantAPI from 'apis/petPlant';
 import { URL_PATH } from 'constants/index';
 
 const useDeletePetPlant = () => {
@@ -11,7 +11,7 @@ const useDeletePetPlant = () => {
 
   return useMutation({
     mutationFn: async (petPlantId: PetPlantDetails['id']) => {
-      const response = await PetAPI.remove(petPlantId);
+      const response = await PetPlantAPI.remove(petPlantId);
       if (response.status !== 204) throw new Error('Edit failed');
     },
 
