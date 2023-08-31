@@ -13,11 +13,14 @@ import {
   Header,
   Main,
 } from './Form.style';
+import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useModal from 'hooks/useModal';
 import { URL_PATH } from 'constants/index';
 
 const PetPlantRegisterFormPage = () => {
+  useCheckSessionId();
+
   const { id } = useParams();
   if (!id) throw new Error('URL에 id가 없습니다.');
 
