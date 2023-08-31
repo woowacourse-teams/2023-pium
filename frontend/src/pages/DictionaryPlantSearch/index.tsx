@@ -3,7 +3,7 @@ import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
 import SearchResults from 'components/search/SearchResults';
 import { Title, Wrapper } from './DictionaryPlantSearch.style';
-import useDictionaryNavigate from 'hooks/useDictrionaryNavigate';
+import useDictionaryNavigate from 'hooks/useDictionaryNavigate';
 
 const DictionarySearch = () => {
   const [params] = useSearchParams();

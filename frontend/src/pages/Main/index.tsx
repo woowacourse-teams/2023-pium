@@ -9,7 +9,7 @@ import {
   StyledLink,
   Wrapper,
 } from './Main.style';
-import useDictionaryNavigate from 'hooks/useDictrionaryNavigate';
+import useDictionaryNavigate from 'hooks/useDictionaryNavigate';
 import { URL_PATH } from 'constants/index';
 import logo from 'assets/logo.svg';
 
