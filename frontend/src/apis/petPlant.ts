@@ -49,7 +49,7 @@ const remove = (petPlantId: PetPlantDetails['id']) => {
   });
 };
 
-const PetAPI = {
+const PetPlantAPI = {
   getList,
   register,
   getDetails,
@@ -57,4 +57,4 @@ const PetAPI = {
   remove,
 };
 
-export default PetAPI;
+export default PetPlantAPI;

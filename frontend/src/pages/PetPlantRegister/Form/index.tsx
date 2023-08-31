@@ -13,7 +13,7 @@ import {
   Header,
   Main,
 } from './Form.style';
-import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
+import useDictDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useModal from 'hooks/useModal';
 import { URL_PATH } from 'constants/index';
 

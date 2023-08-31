@@ -1,6 +1,6 @@
 import SearchResultItem from 'components/search/SearchResultItem';
 import { Title, ResultList, Wrapper } from './SearchResults.style';
-import useDictSearch from 'hooks/queries/dictionary/useDictSearch';
+import useDictSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 
 interface SearchResultsProps {
   plantName: string;

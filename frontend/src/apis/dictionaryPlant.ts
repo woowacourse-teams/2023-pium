@@ -10,9 +10,9 @@ const getSearch = (name: string) => {
   return fetch(`${DICT}?name=${name}`, { method: 'GET' });
 };
 
-const DictAPI = {
+const DictionaryPlantAPI = {
   getDetail,
   getSearch,
 };
 
-export default DictAPI;
+export default DictionaryPlantAPI;

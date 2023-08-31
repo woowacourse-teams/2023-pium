@@ -1,30 +1,29 @@
-import type { DataResponse } from 'types/DataResponse';
-import type { PetPlantItem } from 'types/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
-import PetAPI, { PET } from 'apis/pet';
+import PetAPI from 'apis/petPlant';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
-const usePetPlantCardList = () => {
+const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
   const { isSuccess } = useCheckSessionId();
 
-  return useQuery<DataResponse<PetPlantItem[]>, Error, PetPlantItem[]>({
-    queryKey: [PET, 'list'],
+  return useQuery<PetPlantDetails>({
+    queryKey: ['petPlantDetails', petPlantId],
     queryFn: async () => {
-      const response = await PetAPI.getList();
+      const response = await PetAPI.getDetails(petPlantId);
+
       throwOnInvalidStatus(response);
 
       const data = await response.json();
       return data;
     },
 
-    select: ({ data }) => data,
-
+    refetchOnWindowFocus: false,
     suspense: true,
     retry: noRetryIfUnauthorized,
     enabled: isSuccess,
   });
 };
 
-export default usePetPlantCardList;
+export default usePetPlantDetails;

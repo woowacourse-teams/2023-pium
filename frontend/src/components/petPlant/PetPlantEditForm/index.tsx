@@ -30,7 +30,7 @@ import {
   SecondaryButton,
   ButtonArea,
 } from './PetPlantEditForm.style';
-import useEditPetPlant from 'hooks/queries/pet/useEditPetPlant';
+import useEditPetPlant from 'hooks/queries/petPlant/useEditPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import {

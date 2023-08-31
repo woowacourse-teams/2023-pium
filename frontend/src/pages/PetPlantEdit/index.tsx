@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import PetPlantEditForm from 'components/petPlant/PetPlantEditForm';
-import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
+import usePetPlantDetails from 'hooks/queries/petPlant/usePetPlantDetails';
 import useAddToast from 'hooks/useAddToast';
 import { URL_PATH } from 'constants/index';
 

@@ -2,7 +2,7 @@ import { PetPlantDetails } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/useAddToast';
-import PetAPI from 'apis/pet';
+import PetAPI from 'apis/petPlant';
 import { URL_PATH } from 'constants/index';
 
 const useDeletePetPlant = () => {

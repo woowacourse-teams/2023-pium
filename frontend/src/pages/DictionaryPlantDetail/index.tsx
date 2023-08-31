@@ -3,7 +3,7 @@ import Image from 'components/@common/Image';
 import Navbar from 'components/@common/Navbar';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import { Main } from './DictionaryPlantDetail.style';
-import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
+import useDictDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 
 const DictionaryPlantDetail = () => {
   const { id } = useParams();

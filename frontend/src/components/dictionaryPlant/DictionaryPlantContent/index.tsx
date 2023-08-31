@@ -17,11 +17,11 @@ import {
   PropBox,
   PropsBox,
 } from './DictionaryPlantContent.style';
-import type { DictPlantExtendCycles } from 'hooks/queries/dictionary/useDictDetail';
+import type { DictionaryPlantExtendCycles } from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import parseTemperature from 'utils/parseTemperature';
 import { NO_INFORMATION } from 'constants/index';
 
-const DictionaryPlantContent = (props: DictPlantExtendCycles) => {
+const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
   const {
     postingPlace,
     familyName,

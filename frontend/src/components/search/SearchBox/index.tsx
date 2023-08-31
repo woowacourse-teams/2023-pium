@@ -1,4 +1,4 @@
-import type { DictNameSearchResult } from 'types/dictionaryPlant';
+import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useState } from 'react';
 import ArrowRight from 'components/@common/Icons/ArrowRightAlt';
 import Search from 'components/@common/Icons/Search';
@@ -13,14 +13,14 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
-import useDictSearch from 'hooks/queries/dictionary/useDictSearch';
+import useDictSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 import useDebounce from 'hooks/useDebounce';
 import { MESSAGE } from 'constants/index';
 
 interface SearchBoxProps {
   onResultClick?: (id: number) => void;
-  onEnter?: (name: string, searchResults?: DictNameSearchResult[]) => void;
-  onNextClick?: (name: string, searchResults?: DictNameSearchResult[]) => void;
+  onEnter?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
+  onNextClick?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
 }
 
 const SearchBox = (props: SearchBoxProps) => {

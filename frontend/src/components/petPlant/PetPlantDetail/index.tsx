@@ -28,8 +28,8 @@ import {
   EditLink,
   DeleteButton,
 } from './PetPlantDetail.style';
-import useDeletePetPlant from 'hooks/queries/pet/useDeletePetPlant';
-import usePetPlantDetails from 'hooks/queries/pet/usePetPlantDetails';
+import useDeletePetPlant from 'hooks/queries/petPlant/useDeletePetPlant';
+import usePetPlantDetails from 'hooks/queries/petPlant/usePetPlantDetails';
 import useConfirm from 'hooks/useConfirm';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
