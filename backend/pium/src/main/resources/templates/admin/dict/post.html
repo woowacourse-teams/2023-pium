@@ -1,94 +1,66 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>피움 어드민 - 식물 등록</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{admin/common/layout}"
+      lang="ko">
+<th:block layout:fragment="content">
+    <div class="container mt-5">
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" th:href="@{/admin}">
-            <img src="https://static.pium.life/test.png" alt="피움 어드민 로고" class="nav-image">
-            <span class="logo-text">피움 어드민</span>
-        </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/admin}">홈</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/admin/dict}">사전 식물 목록</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/admin/dict/requests}">요청 확인</a>
-                </li>
-            </ul>
-        </div>
+        <h1 class="text-center text-success mb-4">식물 등록</h1>
+
+        <form th:action="@{/dictionary-plants}" method="post" class="form-container" content="application/json">
+
+            <label for="name">이름:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="image">이미지 URL:</label>
+            <input type="text" id="image" name="image" required><br>
+
+            <label for="familyName">과명:</label>
+            <input type="text" id="familyName" name="familyName" required><br>
+
+            <label for="smell">향:</label>
+            <input type="text" id="smell" name="smell"><br>
+
+            <label for="poison">독성:</label>
+            <input type="text" id="poison" name="poison"><br>
+
+            <label for="manageLevel">관리 난이도:</label>
+            <input type="text" id="manageLevel" name="manageLevel"><br>
+
+            <label for="growSpeed">성장 속도:</label>
+            <input type="text" id="growSpeed" name="growSpeed"><br>
+
+            <label for="requireTemp">요구 온도:</label>
+            <input type="text" id="requireTemp" name="requireTemp"><br>
+
+            <label for="minimumTemp">최소 온도:</label>
+            <input type="text" id="minimumTemp" name="minimumTemp"><br>
+
+            <label for="requireHumidity">요구 습도:</label>
+            <input type="text" id="requireHumidity" name="requireHumidity"><br>
+
+            <label for="postingPlace">배치 장소:</label>
+            <input type="text" id="postingPlace" name="postingPlace"><br>
+
+            <label for="specialManageInfo">특별 관리 정보:</label>
+            <input type="text" id="specialManageInfo" name="specialManageInfo"><br>
+
+            <label for="spring">물 주기(봄):</label>
+            <input type="text" id="spring" name="spring"><br>
+
+            <label for="summer">물 주기(여름):</label>
+            <input type="text" id="summer" name="summer"><br>
+
+            <label for="autumn">물 주기(가을):</label>
+            <input type="text" id="autumn" name="autumn"><br>
+
+            <label for="winter">물 주기(겨울):</label>
+            <input type="text" id="winter" name="winter"><br>
+
+            <button type="submit" class="btn btn-success">등록</button>
+        </form>
     </div>
-</nav>
-
-<div class="container mt-5">
-
-    <h1 class="text-center text-success mb-4">식물 등록</h1>
-
-    <form th:action="@{/dictionary-plants}" method="post" class="form-container" content="application/json">
-
-        <label for="name">이름:</label>
-        <input type="text" id="name" name="name" required><br>
-
-        <label for="image">이미지 URL:</label>
-        <input type="text" id="image" name="image" required><br>
-
-        <label for="familyName">과명:</label>
-        <input type="text" id="familyName" name="familyName" required><br>
-
-        <label for="smell">향:</label>
-        <input type="text" id="smell" name="smell"><br>
-
-        <label for="poison">독성:</label>
-        <input type="text" id="poison" name="poison"><br>
-
-        <label for="manageLevel">관리 난이도:</label>
-        <input type="text" id="manageLevel" name="manageLevel"><br>
-
-        <label for="growSpeed">성장 속도:</label>
-        <input type="text" id="growSpeed" name="growSpeed"><br>
-
-        <label for="requireTemp">요구 온도:</label>
-        <input type="text" id="requireTemp" name="requireTemp"><br>
-
-        <label for="minimumTemp">최소 온도:</label>
-        <input type="text" id="minimumTemp" name="minimumTemp"><br>
-
-        <label for="requireHumidity">요구 습도:</label>
-        <input type="text" id="requireHumidity" name="requireHumidity"><br>
-
-        <label for="postingPlace">배치 장소:</label>
-        <input type="text" id="postingPlace" name="postingPlace"><br>
-
-        <label for="specialManageInfo">특별 관리 정보:</label>
-        <input type="text" id="specialManageInfo" name="specialManageInfo"><br>
-
-        <label for="spring">물 주기(봄):</label>
-        <input type="text" id="spring" name="spring"><br>
-
-        <label for="summer">물 주기(여름):</label>
-        <input type="text" id="summer" name="summer"><br>
-
-        <label for="autumn">물 주기(가을):</label>
-        <input type="text" id="autumn" name="autumn"><br>
-
-        <label for="winter">물 주기(겨울):</label>
-        <input type="text" id="winter" name="winter"><br>
-
-        <button type="submit" class="btn btn-success">등록</button>
-    </form>
-</div>
-</body>
+</th:block>
 </html>

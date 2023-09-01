@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>피움 어드민</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<th:block th:replace="admin/fragments/nav::navFragment"></th:block>
+<th:block layout:fragment="content"></th:block>
+</body>
+</html>

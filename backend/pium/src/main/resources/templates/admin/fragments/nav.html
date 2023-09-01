@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block th:fragment="navFragment">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark pt-0 pb-0">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/admin}">
+                <img src="https://static.pium.life/test.png" alt="피움 어드민 로고" class="nav-image">
+                <span class="logo-text">피움 어드민</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin}">홈</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/dict}">사전 식물 목록</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/dict/requests}">요청 확인</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</th:block>
+</html>
