@@ -1,4 +1,4 @@
-import { PetPlantDetails } from 'types/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/useAddToast';
