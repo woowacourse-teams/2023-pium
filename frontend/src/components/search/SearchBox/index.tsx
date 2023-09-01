@@ -13,7 +13,7 @@ import {
   Input,
   ResultMessage,
 } from './SearchBox.style';
-import useDictSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
+import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 import useDebounce from 'hooks/useDebounce';
 import { MESSAGE } from 'constants/index';
 
@@ -29,7 +29,7 @@ const SearchBox = (props: SearchBoxProps) => {
   const [searchName, setSearchName] = useState('');
   const queryName = useDebounce<string>(searchName, 200);
 
-  const { data: searchResults } = useDictSearch(queryName);
+  const { data: searchResults } = useDictionaryPlantSearch(queryName);
 
   const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
