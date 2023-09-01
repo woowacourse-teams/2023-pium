@@ -9,11 +9,11 @@ import com.official.pium.service.dto.DictionaryPlantCreateRequest;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
 import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
-import javax.naming.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -56,7 +56,7 @@ public class DictionaryPlantController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> update(@AdminAuth Admin admin, @PathVariable Long id, @RequestBody DictionaryPlantUpdateRequest request) {
+    public ResponseEntity<Void> update(@AdminAuth Admin admin, @PathVariable Long id, @RequestBody @Valid DictionaryPlantUpdateRequest request) {
         dictionaryPlantService.update(admin, id, request);
         return ResponseEntity.ok().build();
     }

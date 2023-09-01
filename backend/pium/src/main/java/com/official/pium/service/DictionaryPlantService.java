@@ -12,7 +12,6 @@ import com.official.pium.service.dto.DictionaryPlantSearchResponse;
 import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +49,7 @@ public class DictionaryPlantService {
         dictionaryPlantRepository.save(dictionaryPlant);
     }
 
+    @Transactional
     public void update(Admin admin, Long id, DictionaryPlantUpdateRequest request) {
         validateAdmin(admin);
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
@@ -80,7 +80,6 @@ public class DictionaryPlantService {
         validateAdmin(admin);
         dictionaryPlantRepository.deleteById(id);
     }
-
 
     private void validateAdmin(Admin admin) {
         if (admin == null) {

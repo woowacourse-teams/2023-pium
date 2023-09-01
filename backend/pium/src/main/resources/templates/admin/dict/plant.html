@@ -102,8 +102,8 @@
                  th:field="${plant.waterCycle.winter}"></div>
         </div>
 
-        <a th:src="@{/admin/dict/update}" class="btn btn-info">수정하기</a>
-        <a th:src="@{/admin/dict/delete}" class="btn btn-danger" th:onclick="|confirmDelete(${plant.id})|">삭제하기</a>
+        <a th:href="@{|/admin/dict/${plant.id}/update|}" class="btn btn-info">수정하기</a>
+        <a class="btn btn-danger" th:onclick="|confirmDelete(${plant.id})|">삭제하기</a>
     </div>
 </th:block>
 
@@ -112,7 +112,7 @@
         function confirmDelete(id) {
             var result = confirm('삭제하시겠습니까?');
             if (result) {
-                fetch('/dictionary-plants/' + id, {
+                fetch(`/dictionary-plants/${id}`, {
                     method: 'DELETE'
                 })
                     .then(function (response) {

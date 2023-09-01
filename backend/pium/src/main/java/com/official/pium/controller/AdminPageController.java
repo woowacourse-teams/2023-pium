@@ -5,11 +5,9 @@ import com.official.pium.domain.Admin;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.service.AdminService;
-import com.official.pium.service.DictionaryPlantService;
 import jakarta.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -74,14 +72,18 @@ public class AdminPageController {
         return "/admin/dict/post";
     }
 
-    @GetMapping("/admin/dict/update")
-    public String dictionaryPlantUpdateForm(@AdminAuth Admin admin, Model model) {
+    @GetMapping("/admin/dict/{id}/update")
+    public String dictionaryPlantUpdateForm(@PathVariable Long id,@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
         }
 
+        DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("일치하는 사전 식물이 존재하지 않습니다. id:" + id));
+
         model.addAttribute("admin", admin);
-        return "/admin/dict/post";
+        model.addAttribute("plant", dictionaryPlant);
+        return "/admin/dict/update";
     }
 
     @GetMapping("/admin/dict/requests")

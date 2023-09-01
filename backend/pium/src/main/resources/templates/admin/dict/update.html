@@ -6,94 +6,137 @@
       lang="ko">
 <th:block layout:fragment="content">
     <div class="container mt-5">
-        <h1 class="text-center text-success mb-4">사전 식물 목록</h1>
+        <h1 class="text-center text-success mb-4">사전 식물 수정</h1>
 
-        <h2 class="text-success" th:text="${plant.name}"></h2>
+        <h2 class="text-success" th:text="|${plant.name} 정보 수정|"></h2>
 
-        <form method="post" action="/submit"> <!-- 필요에 따라 action 속성을 수정하세요 -->
+
+        <form id="plantUpdateForm" th:action="@{|/dictionary-plants/${plant.id}}" th:method="PATCH">
+
             <div class="form-group">
                 <label for="name">이름:</label>
-                <input type="text" id="name" class="form-control" th:value="${plant.name}" th:field="${plant.name}">
+                <input type="text" id="name" class="form-control" name="name" th:value="${plant.name}"
+                       th:field="${plant.name}">
             </div>
 
             <div class="form-group">
                 <img class="plant-image" th:src="${plant.imageUrl}" th:alt="${plant.name}"><br>
                 <label for="image">이미지 URL:</label>
-                <input type="text" id="image" class="form-control" th:value="${plant.imageUrl}" th:field="${plant.imageUrl}">
+                <input type="text" id="image" class="form-control" name="imageUrl" th:value="${plant.imageUrl}"
+                       th:field="${plant.imageUrl}">
             </div>
 
             <div class="form-group">
                 <label for="familyName">과명:</label>
-                <input type="text" id="familyName" class="form-control" th:value="${plant.familyName}" th:field="${plant.familyName}">
+                <input type="text" id="familyName" class="form-control" name="familyName" th:value="${plant.familyName}"
+                       th:field="${plant.familyName}">
             </div>
 
             <div class="form-group">
                 <label for="smell">향:</label>
-                <input type="text" id="smell" class="form-control" th:value="${plant.smell}" th:field="${plant.smell}">
+                <input type="text" id="smell" class="form-control" name="smell" th:value="${plant.smell}"
+                       th:field="${plant.smell}">
             </div>
 
             <div class="form-group">
                 <label for="poison">독성:</label>
-                <input type="text" id="poison" class="form-control" th:value="${plant.poison}" th:field="${plant.poison}">
+                <input type="text" id="poison" class="form-control" name="poison" th:value="${plant.poison}"
+                       th:field="${plant.poison}">
             </div>
 
             <div class="form-group">
                 <label for="manageLevel">관리 난이도:</label>
-                <input type="text" id="manageLevel" class="form-control" th:value="${plant.manageLevel}" th:field="${plant.manageLevel}">
+                <input type="text" id="manageLevel" class="form-control" name="manageLevel"
+                       th:value="${plant.manageLevel}" th:field="${plant.manageLevel}">
             </div>
 
             <div class="form-group">
                 <label for="growSpeed">성장 속도:</label>
-                <input type="text" id="growSpeed" class="form-control" th:value="${plant.growSpeed}" th:field="${plant.growSpeed}">
+                <input type="text" id="growSpeed" class="form-control" name="growSpeed" th:value="${plant.growSpeed}"
+                       th:field="${plant.growSpeed}">
             </div>
 
             <div class="form-group">
                 <label for="requireTemp">요구 온도:</label>
-                <input type="text" id="requireTemp" class="form-control" th:value="${plant.requireTemp}" th:field="${plant.requireTemp}">
+                <input type="text" id="requireTemp" class="form-control" name="requireTemp"
+                       th:value="${plant.requireTemp}" th:field="${plant.requireTemp}">
             </div>
 
             <div class="form-group">
                 <label for="minimumTemp">최소 온도:</label>
-                <input type="text" id="minimumTemp" class="form-control" th:value="${plant.minimumTemp}" th:field="${plant.minimumTemp}">
+                <input type="text" id="minimumTemp" class="form-control" name="minimumTemp"
+                       th:value="${plant.minimumTemp}" th:field="${plant.minimumTemp}">
             </div>
 
             <div class="form-group">
                 <label for="requireHumidity">요구 습도:</label>
-                <input type="text" id="requireHumidity" class="form-control" th:value="${plant.requireHumidity}" th:field="${plant.requireHumidity}">
+                <input type="text" id="requireHumidity" class="form-control" name="requireHumidity"
+                       th:value="${plant.requireHumidity}" th:field="${plant.requireHumidity}">
             </div>
 
             <div class="form-group">
                 <label for="postingPlace">배치 장소:</label>
-                <input type="text" id="postingPlace" class="form-control" th:value="${plant.postingPlace}" th:field="${plant.postingPlace}">
+                <input type="text" id="postingPlace" class="form-control" name="postingPlace"
+                       th:value="${plant.postingPlace}" th:field="${plant.postingPlace}">
             </div>
 
             <div class="form-group">
                 <label for="specialManageInfo">특별 관리 정보:</label>
-                <input type="text" id="specialManageInfo" class="form-control" th:value="${plant.specialManageInfo}" th:field="${plant.specialManageInfo}">
+                <input type="text" id="specialManageInfo" class="form-control" name="specialManageInfo"
+                       th:value="${plant.specialManageInfo}" th:field="${plant.specialManageInfo}">
             </div>
 
             <div class="form-group">
                 <label for="spring">물 주기(봄):</label>
-                <input type="text" id="spring" class="form-control" th:value="${plant.waterCycle.spring}" th:field="${plant.waterCycle.spring}">
+                <input type="text" id="spring" class="form-control" name="spring" th:value="${plant.waterCycle.spring}">
             </div>
 
             <div class="form-group">
                 <label for="summer">물 주기(여름):</label>
-                <input type="text" id="summer" class="form-control" th:value="${plant.waterCycle.summer}" th:field="${plant.waterCycle.summer}">
+                <input type="text" id="summer" class="form-control" name="summer" th:value="${plant.waterCycle.summer}">
             </div>
 
             <div class="form-group">
                 <label for="autumn">물 주기(가을):</label>
-                <input type="text" id="autumn" class="form-control" th:value="${plant.waterCycle.autumn}" th:field="${plant.waterCycle.autumn}">
+                <input type="text" id="autumn" class="form-control" name="autumn" th:value="${plant.waterCycle.autumn}">
             </div>
 
             <div class="form-group">
                 <label for="winter">물 주기(겨울):</label>
-                <input type="text" id="winter" class="form-control" th:value="${plant.waterCycle.winter}" th:field="${plant.waterCycle.winter}">
+                <input type="text" id="winter" class="form-control" name="winter" th:value="${plant.waterCycle.winter}">
             </div>
 
-            <button type="submit" class="btn btn-primary">저장</button>
+            <button type="button" class="btn btn-primary" th:onclick="|submitForm(${plant.id})|" th:text="저장"></button>
         </form>
     </div>
+</th:block>
+<th:block layout:fragment="script">
+    <script>
+        function submitForm(plantId) {
+            const formElement = document.getElementById("plantUpdateForm");
+            const formData = new FormData(formElement);
+
+            fetch(`/dictionary-plants/${plantId}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.replace(`/admin/dict/${plantId}`)
+                    } else {
+                        throw new Error('서버 응답 오류');
+                    }
+                })
+                .then(data => {
+                    console.log('서버 응답:', data);
+                })
+                .catch(error => {
+                    console.error('오류 발생:', error);
+                });
+        }
+    </script>
 </th:block>
 </html>

@@ -9,7 +9,7 @@
 
         <h1 class="text-center text-success mb-4">식물 등록</h1>
 
-        <form th:action="@{/dictionary-plants}" method="post" class="form-container" content="application/json">
+        <form class="form-container">
 
             <label for="name">이름:</label>
             <input type="text" id="name" name="name" required><br>
@@ -59,8 +59,38 @@
             <label for="winter">물 주기(겨울):</label>
             <input type="text" id="winter" name="winter"><br>
 
-            <button type="submit" class="btn btn-success">등록</button>
+            <button type="button" class="btn btn-primary" th:onclick="|submitForm()|" th:text="등록"></button>
         </form>
     </div>
+</th:block>
+<th:block layout:fragment="script">
+    <script>
+        function submitForm() {
+            const formElement = document.getElementById("plantPostForm");
+            const formData = new FormData(formElement);
+
+            fetch(`/dictionary-plants`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            })
+                .then(response => {
+                    if (response.ok) {
+                        let location = response.headers.get("location");
+                        window.location.replace(`/admin/dict/${location}`)
+                    } else {
+                        throw new Error('서버 응답 오류');
+                    }
+                })
+                .then(data => {
+                    console.log('서버 응답:', data);
+                })
+                .catch(error => {
+                    console.error('오류 발생:', error);
+                });
+        }
+    </script>
 </th:block>
 </html>

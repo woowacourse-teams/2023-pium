@@ -8,7 +8,7 @@
 
 <th:block layout:fragment="content">
     <div class="container mt-5">
-        <h1 th:text="|Welcome! ${admin.account}|" class="text-center text-success mb-4"></h1>
+        <h1 th:text="|사용자: ${admin.account}|" class="text-center text-success mb-4"></h1>
         <ul class="list-group">
             <li class="list-group-item">
                 <a th:href="@{/admin/dict}" class="text-decoration-none">
