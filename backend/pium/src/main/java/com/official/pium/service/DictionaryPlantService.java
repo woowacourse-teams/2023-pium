@@ -4,8 +4,10 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.service.dto.DataResponse;
+import com.official.pium.service.dto.DictionaryPlantCreateRequest;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
+import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +28,6 @@ public class DictionaryPlantService {
         return DictionaryPlantMapper.toDictionaryPlantResponse(dictionaryPlant);
     }
 
-    @Transactional
-    public void delete(Long id) {
-        // TODO: ADMIN
-        dictionaryPlantRepository.deleteById(id);
-    }
-
     public DataResponse<List<DictionaryPlantSearchResponse>> search(String name) {
         List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByNameContains(name);
 
@@ -42,5 +38,20 @@ public class DictionaryPlantService {
         return DataResponse.<List<DictionaryPlantSearchResponse>>builder()
                 .data(dictionaryPlantSearchResponses)
                 .build();
+    }
+
+    @Transactional
+    public void create(DictionaryPlantCreateRequest request) {
+        DictionaryPlant dictionaryPlant = DictionaryPlantMapper.toDictionaryPlant(request);
+        dictionaryPlantRepository.save(dictionaryPlant);
+    }
+
+    public void delete(Long id) {
+        // TODO: ADMIN
+        dictionaryPlantRepository.deleteById(id);
+    }
+
+    public void update(DictionaryPlantUpdateRequest request) {
+
     }
 }

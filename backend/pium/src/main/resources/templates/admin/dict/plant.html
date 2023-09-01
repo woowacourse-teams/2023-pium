@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>피움 어드민 - 사전 식물</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center text-success mb-4">사전 식물 목록</h1>
+
+    <h2 class="text-success" th:text="${plant.name}"></h2>
+
+    <div class="form-group">
+        <label for="name">이름:</label>
+        <div id="name" class="form-control" th:text="${plant.name}" th:field="${plant.name}"></div>
+    </div>
+
+    <div class="form-group">
+        <img class="plant-image" th:src="${plant.imageUrl}" th:alt="${plant.name}"><br>
+        <label for="image">이미지 URL:</label>
+        <div id="image" class="form-control" th:text="${plant.imageUrl}" th:field="${plant.imageUrl}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="familyName">과명:</label>
+        <div id="familyName" class="form-control" th:text="${plant.familyName}" th:field="${plant.familyName}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="smell">향:</label>
+        <div id="smell" class="form-control" th:text="${plant.smell}" th:field="${plant.smell}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="poison">독성:</label>
+        <div id="poison" class="form-control" th:text="${plant.poison}" th:field="${plant.poison}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="manageLevel">관리 난이도:</label>
+        <div id="manageLevel" class="form-control" th:text="${plant.manageLevel}" th:field="${plant.manageLevel}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="growSpeed">성장 속도:</label>
+        <div id="growSpeed" class="form-control" th:text="${plant.growSpeed}" th:field="${plant.growSpeed}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="requireTemp">요구 온도:</label>
+        <div id="requireTemp" class="form-control" th:text="${plant.requireTemp}" th:field="${plant.requireTemp}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="minimumTemp">최소 온도:</label>
+        <div id="minimumTemp" class="form-control" th:text="${plant.minimumTemp}" th:field="${plant.minimumTemp}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="requireHumidity">요구 습도:</label>
+        <div id="requireHumidity" class="form-control" th:text="${plant.requireHumidity}"
+             th:field="${plant.requireHumidity}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="postingPlace">배치 장소:</label>
+        <div id="postingPlace" class="form-control" th:text="${plant.postingPlace}"
+             th:field="${plant.postingPlace}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="specialManageInfo">특별 관리 정보:</label>
+        <div id="specialManageInfo" class="form-control" th:text="${plant.specialManageInfo}"
+             th:field="${plant.specialManageInfo}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="spring">물 주기(봄):</label>
+        <div id="spring" class="form-control" th:text="${plant.waterCycle.spring}"
+             th:field="${plant.waterCycle.spring}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="summer">물 주기(여름):</label>
+        <div id="summer" class="form-control" th:text="${plant.waterCycle.summer}"
+             th:field="${plant.waterCycle.summer}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="autumn">물 주기(가을):</label>
+        <div id="autumn" class="form-control" th:text="${plant.waterCycle.autumn}"
+             th:field="${plant.waterCycle.autumn}"></div>
+    </div>
+
+    <div class="form-group">
+        <label for="winter">물 주기(겨울):</label>
+        <div id="winter" class="form-control" th:text="${plant.waterCycle.winter}"
+             th:field="${plant.waterCycle.winter}"></div>
+    </div>
+</div>
+</body>
+</html>

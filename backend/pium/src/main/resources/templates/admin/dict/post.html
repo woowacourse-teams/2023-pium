@@ -8,14 +8,10 @@
 </head>
 <body>
 <div class="container mt-5">
-    <div th:text="${admin.account}">
 
-    </div>
     <h1 class="text-center text-success mb-4">식물 등록</h1>
 
-    <form action="#" method="post" class="form-container">
-        <label for="id">ID:</label>
-        <input type="text" id="id" name="id" required><br>
+    <form th:action="@{/dictionary-plants}" method="post" class="form-container" content="application/json">
 
         <label for="name">이름:</label>
         <input type="text" id="name" name="name" required><br>
@@ -53,8 +49,17 @@
         <label for="specialManageInfo">특별 관리 정보:</label>
         <input type="text" id="specialManageInfo" name="specialManageInfo"><br>
 
-        <label for="waterCycle">물 주기:</label>
-        <input type="text" id="waterCycle" name="waterCycle"><br>
+        <label for="spring">물 주기(봄):</label>
+        <input type="text" id="spring" name="spring"><br>
+
+        <label for="summer">물 주기(여름):</label>
+        <input type="text" id="summer" name="summer"><br>
+
+        <label for="autumn">물 주기(가을):</label>
+        <input type="text" id="autumn" name="autumn"><br>
+
+        <label for="winter">물 주기(겨울):</label>
+        <input type="text" id="winter" name="winter"><br>
 
         <button type="submit" class="btn btn-success">등록</button>
     </form>

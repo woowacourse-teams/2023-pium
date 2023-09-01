@@ -2,21 +2,53 @@
 <html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>피움 어드민 - 식물 등록</title>
+    <title>피움 어드민 - 등록 요청 목록</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
 </head>
 <body>
 <div class="container mt-5">
-    <div th:text="${admin.account}">
+    <h1 class="text-center text-success mb-4">사전 식물 등d록 요청</h1>
 
-    </div>
-    <h1 class="text-center text-success mb-4">식물 등록</h1>
-
-    <h2 class="text-success">등록된 식물 목록</h2>
+    <h2 class="text-success">사전 식물 등록 요청 목록</h2>
     <ul class="plant-list">
-        <li th:each="plant : ${plants}" th:text="${plant.name}"></li>
+        <li th:each="plant : ${plants}">
+            <div th:text="${plant.id}"></div>
+            <a th:href="@{|/admin/dict/${plant.id}|}">
+                <div th:text="${plant.name}"></div>
+                <img class="plant-image" th:src="${plant.imageUrl}" th:alt="${plant.name}"/>
+            </a>
+            <div th:text="${plant.createdAt}"></div>
+            <div th:text="${plant.updatedAt}"></div>
+        </li>
     </ul>
+
+    <div class="text-center">
+        <ul class="pagination">
+            <li th:classappend="${page.number == 0} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:if="${page.number != 0}" th:href="@{|/admin/dict?page=0|}">처음으로</a>
+            </li>
+
+            <li th:classappend="${page.hasPrevious()} ? 'page-item' : 'page-item disabled'">
+                <a class="page-link" th:if="${page.hasPrevious()}" th:href="@{|/admin/dict?page=${page.number - 1}|}" tabindex="-1">이전</a>
+            </li>
+
+            <th:block th:with="startPage=${(page.number - 5 < 0 ? 0 : page.number - 5)}, endPage=${(page.number + 4 >= page.totalPages ? page.totalPages - 1 : page.number + 4)}">
+                <li th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}" th:classappend="${pageNumber == page.number} ? 'page-item active' : 'page-item'">
+                    <a class="page-link" th:href="@{|/admin/dict?page=${pageNumber}|}" th:text="${pageNumber + 1}"></a>
+                </li>
+            </th:block>
+
+            <li th:classappend="${page.hasNext()} ? 'page-item' : 'page-item disabled'">
+                <a class="page-link" th:if="${page.hasNext()}" th:href="@{|/admin/dict?page=${page.number + 1}|}">다음</a>
+            </li>
+
+            <li th:classappend="${page.number == page.totalPages - 1} ? 'page-item disabled' : 'page-item'">
+                <a class="page-link" th:if="${page.number != page.totalPages - 1}" th:href="@{|/admin/dict?page=${page.totalPages - 1}|}">끝으로</a>
+            </li>
+        </ul>
+    </div>
+
 </div>
 </body>
 </html>
