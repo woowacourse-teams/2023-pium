@@ -101,6 +101,35 @@
             <div id="winter" class="form-control" th:text="${plant.waterCycle.winter}"
                  th:field="${plant.waterCycle.winter}"></div>
         </div>
+
+        <a th:src="@{/admin/dict/update}" class="btn btn-info">수정하기</a>
+        <a th:src="@{/admin/dict/delete}" class="btn btn-danger" th:onclick="|confirmDelete(${plant.id})|">삭제하기</a>
     </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function confirmDelete(id) {
+            var result = confirm('삭제하시겠습니까?');
+            if (result) {
+                fetch('/dictionary-plants/' + id, {
+                    method: 'DELETE'
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            alert('삭제되었습니다.');
+                            window.location.replace("/admin/dict");
+                        } else {
+                            alert('오류가 발생했습니다.');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Fetch 오류:', error);
+                        alert('오류가 발생했습니다.');
+                    });
+            } else {
+            }
+        }
+    </script>
 </th:block>
 </html>

@@ -27,7 +27,7 @@ public class AdminPageController {
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final AdminService adminService;
 
-    @GetMapping("/admin")
+    @GetMapping("/admin/**")
     public String adminPage(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
@@ -50,7 +50,6 @@ public class AdminPageController {
         return "/admin/dict/list";
     }
 
-
     @GetMapping("/admin/dict/{id}")
     public String dictionaryPlantList(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
@@ -66,7 +65,17 @@ public class AdminPageController {
     }
 
     @GetMapping("/admin/dict/post")
-    public String dictionaryPlantForm(@AdminAuth Admin admin, Model model) {
+    public String dictionaryPlantCreateForm(@AdminAuth Admin admin, Model model) {
+        if (admin == null) {
+            return "redirect:/admin/login";
+        }
+
+        model.addAttribute("admin", admin);
+        return "/admin/dict/post";
+    }
+
+    @GetMapping("/admin/dict/update")
+    public String dictionaryPlantUpdateForm(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
         }

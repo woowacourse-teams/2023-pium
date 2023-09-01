@@ -51,19 +51,19 @@ public class DictionaryPlantController {
 
     @PostMapping
     public ResponseEntity<Void> write(@AdminAuth Admin admin, @RequestBody DictionaryPlantCreateRequest request) {
-        dictionaryPlantService.create(request);
+        dictionaryPlantService.create(admin, request);
         return ResponseEntity.created(URI.create("")).build();
     }
 
-    @PatchMapping
-    public ResponseEntity<Void> update(@AdminAuth Admin admin, @RequestBody DictionaryPlantUpdateRequest request) {
-        dictionaryPlantService.update(request);
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> update(@AdminAuth Admin admin, @PathVariable Long id, @RequestBody DictionaryPlantUpdateRequest request) {
+        dictionaryPlantService.update(admin, id, request);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@AdminAuth Admin admin, @PathVariable Long id) {
-        dictionaryPlantService.delete(id);
+        dictionaryPlantService.delete(admin, id);
         return ResponseEntity.noContent().build();
     }
 }
