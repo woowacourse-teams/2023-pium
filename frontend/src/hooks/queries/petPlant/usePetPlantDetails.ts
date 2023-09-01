@@ -1,6 +1,6 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { useQuery } from '@tanstack/react-query';
-import PetAPI from 'apis/petPlant';
+import PetPlantAPI from 'apis/petPlant';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
@@ -11,7 +11,7 @@ const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
   return useQuery<PetPlantDetails>({
     queryKey: ['petPlantDetails', petPlantId],
     queryFn: async () => {
-      const response = await PetAPI.getDetails(petPlantId);
+      const response = await PetPlantAPI.getDetails(petPlantId);
 
       throwOnInvalidStatus(response);
 

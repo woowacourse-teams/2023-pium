@@ -2,7 +2,7 @@ import { NewPetPlantRequest } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/useAddToast';
-import PetAPI from 'apis/petPlant';
+import PetPlantAPI from 'apis/petPlant';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
@@ -13,7 +13,7 @@ const useRegisterPetPlant = () => {
 
   return useMutation<void, Error, NewPetPlantRequest>({
     mutationFn: async (form) => {
-      const response = await PetAPI.register(form);
+      const response = await PetPlantAPI.register(form);
       throwOnInvalidStatus(response);
     },
 

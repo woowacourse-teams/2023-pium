@@ -1,6 +1,6 @@
 import type { DictionaryPlant, Season, SeasonKor } from 'types/dictionaryPlant';
 import { useQuery } from '@tanstack/react-query';
-import DictAPI, { DICTIONARY_PLANT_URL } from 'apis/dictionaryPlant';
+import DictionaryPlantAPI, { DICTIONARY_PLANT_URL } from 'apis/dictionaryPlant';
 import { SEASONS } from 'constants/index';
 
 export interface DictionaryPlantExtendCycles extends DictionaryPlant {
@@ -19,7 +19,7 @@ const useDictionaryPlantDetail = (id: number) =>
     queryKey: [DICTIONARY_PLANT_URL, 'detail', id],
 
     queryFn: async () => {
-      const response = await DictAPI.getDetail(id);
+      const response = await DictionaryPlantAPI.getDetail(id);
 
       if (!response.ok) throw Error('뭔가가 잘못되어 벌임;;');
       const data = await response.json();
