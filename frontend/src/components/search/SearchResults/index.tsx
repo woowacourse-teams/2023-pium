@@ -1,6 +1,6 @@
 import SearchResultItem from 'components/search/SearchResultItem';
 import { Title, ResultList, Wrapper } from './SearchResults.style';
-import useDictSearch from 'hooks/queries/dictionary/useDictSearch';
+import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 
 interface SearchResultsProps {
   plantName: string;
@@ -8,7 +8,7 @@ interface SearchResultsProps {
 
 const SearchResults = (props: SearchResultsProps) => {
   const { plantName } = props;
-  const { data: searchResults } = useDictSearch(plantName);
+  const { data: searchResults } = useDictionaryPlantSearch(plantName);
 
   const samePlant = searchResults?.find(({ name }) => name === plantName);
   const similarPlants = searchResults?.filter(({ name }) => name !== plantName);

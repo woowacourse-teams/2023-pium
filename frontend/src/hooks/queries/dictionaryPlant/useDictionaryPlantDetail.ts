@@ -1,29 +1,31 @@
 import type { DictionaryPlant, Season, SeasonKor } from 'types/dictionaryPlant';
 import { useQuery } from '@tanstack/react-query';
-import DictAPI, { DICT } from 'apis/dictionary';
+import DictionaryPlantAPI, { DICTIONARY_PLANT_URL } from 'apis/dictionaryPlant';
 import { SEASONS } from 'constants/index';
 
-export interface DictPlantExtendCycles extends DictionaryPlant {
+export interface DictionaryPlantExtendCycles extends DictionaryPlant {
   waterOptions: Record<SeasonKor, string>;
 }
 
-const initialWaterOptions: DictPlantExtendCycles['waterOptions'] = {
+const initialWaterOptions: DictionaryPlantExtendCycles['waterOptions'] = {
   봄: '',
   여름: '',
   가을: '',
   겨울: '',
 };
 
-const useDictDetail = (id: number) =>
-  useQuery<DictionaryPlant, Error, DictPlantExtendCycles>({
-    queryKey: [DICT, 'detail', id],
+const useDictionaryPlantDetail = (id: number) =>
+  useQuery<DictionaryPlant, Error, DictionaryPlantExtendCycles>({
+    queryKey: [DICTIONARY_PLANT_URL, 'detail', id],
+
     queryFn: async () => {
-      const response = await DictAPI.getDetail(id);
+      const response = await DictionaryPlantAPI.getDetail(id);
 
       if (!response.ok) throw Error('뭔가가 잘못되어 벌임;;');
       const data = await response.json();
       return data;
     },
+
     staleTime: Infinity,
     suspense: true,
     throwOnError: true,
@@ -40,4 +42,4 @@ const useDictDetail = (id: number) =>
     },
   });
 
-export default useDictDetail;
+export default useDictionaryPlantDetail;

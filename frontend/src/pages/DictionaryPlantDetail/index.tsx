@@ -2,10 +2,10 @@ import { useParams } from 'react-router-dom';
 import Image from 'components/@common/Image';
 import Navbar from 'components/@common/Navbar';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
-import { Main } from './DictionaryDetail.style';
-import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
+import { Main } from './DictionaryPlantDetail.style';
+import useDictDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 
-const DictionaryDetail = () => {
+const DictionaryPlantDetail = () => {
   const { id } = useParams();
   if (!id) throw new Error('URL에 id가 없습니다.');
 
@@ -26,4 +26,4 @@ const DictionaryDetail = () => {
   );
 };
 
-export default DictionaryDetail;
+export default DictionaryPlantDetail;

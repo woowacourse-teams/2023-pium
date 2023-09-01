@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { keyframes, styled } from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -28,34 +27,6 @@ export const Logo = styled.img`
 export const SearchBoxArea = styled.div`
   width: 100%;
   margin-top: 32px;
-`;
-
-export const StyledLink = styled(Link)`
-  display: flex;
-  justify-content: end;
-  width: 100%;
-  padding-top: 16px;
-`;
-
-export const LinkContent = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 108px;
-  height: 40px;
-
-  font-size: 2rem;
-  color: ${({ theme }) => theme.color.sub};
-
-  background: ${({ theme }) => theme.color.primary + '19'};
-  border-radius: 8px;
-
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: ${({ theme }) => theme.color.primary + '1A'};
-  }
 `;
 
 export const bounce = keyframes`

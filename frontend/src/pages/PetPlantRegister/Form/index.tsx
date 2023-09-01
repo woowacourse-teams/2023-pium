@@ -14,7 +14,7 @@ import {
   Main,
 } from './Form.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
-import useDictDetail from 'hooks/queries/dictionary/useDictDetail';
+import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useModal from 'hooks/useModal';
 import { URL_PATH } from 'constants/index';
 
@@ -25,7 +25,7 @@ const PetPlantRegisterFormPage = () => {
   if (!id) throw new Error('URL에 id가 없습니다.');
 
   const dictionaryPlantId = Number(id);
-  const { data: dictionaryPlantDetail, isSuccess } = useDictDetail(dictionaryPlantId);
+  const { data: dictionaryPlantDetail, isSuccess } = useDictionaryPlantDetail(dictionaryPlantId);
 
   const { isOpen, open, close, modalRef } = useModal();
 
