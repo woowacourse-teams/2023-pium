@@ -2,19 +2,19 @@ import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import Loading from 'pages/Loading';
 import Navbar from 'components/@common/Navbar';
-import PetDetailsContent from 'components/petPlant/PetPlantDetail';
+import PetPlantDetailContent from 'components/petPlant/PetPlantDetail';
 
-const PetDetails = () => {
+const PetPlantDetails = () => {
   const { id } = useParams();
 
   return (
     <>
       <Suspense fallback={<Loading />}>
-        <PetDetailsContent petPlantId={Number(id)} />
+        <PetPlantDetailContent petPlantId={Number(id)} />
       </Suspense>
       <Navbar />
     </>
   );
 };
 
-export default PetDetails;
+export default PetPlantDetails;

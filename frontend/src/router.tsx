@@ -1,17 +1,17 @@
 import { createBrowserRouter } from 'react-router-dom';
-import DictionaryDetail from 'pages/DictionaryDetail';
-import DictionarySearch from 'pages/DictionarySearch';
+import DictionaryPlantDetail from 'pages/DictionaryPlantDetail';
+import DictionaryPlantSearch from 'pages/DictionaryPlantSearch';
 import NotFound from 'pages/Error/NotFound';
 import Login from 'pages/Login';
 import Authorization from 'pages/Login/Authorization';
 import Main from 'pages/Main';
 import MyPage from 'pages/MyPage';
-import PetDetails from 'pages/PetDetails';
 import PetPlantCardList from 'pages/PetPlantCardList';
+import PetPlantDetails from 'pages/PetPlantDetails';
 import PetPlantEdit from 'pages/PetPlantEdit';
+import PetPlantRegisterForm from 'pages/PetPlantRegister/Form';
+import PetPlantRegisterSearch from 'pages/PetPlantRegister/Search';
 import PetPlantTimeline from 'pages/PetPlantTimeline';
-import PetRegisterForm from 'pages/PetRegister/Form';
-import PetRegisterSearch from 'pages/PetRegister/Search';
 import Reminder from 'pages/Reminder';
 import RootTemplate from 'pages/RootTemplate';
 import { URL_PATH } from './constants';
@@ -23,24 +23,24 @@ const router = createBrowserRouter([
     errorElement: <NotFound />,
     children: [
       {
-        path: URL_PATH.main,
+        index: true,
         element: <Main />,
       },
       {
         path: URL_PATH.petRegisterSearch,
-        element: <PetRegisterSearch />,
+        element: <PetPlantRegisterSearch />,
       },
       {
         path: URL_PATH.petRegisterForm,
-        element: <PetRegisterForm />,
+        element: <PetPlantRegisterForm />,
       },
       {
         path: URL_PATH.dictSearch,
-        element: <DictionarySearch />,
+        element: <DictionaryPlantSearch />,
       },
       {
         path: URL_PATH.dictDetail,
-        element: <DictionaryDetail />,
+        element: <DictionaryPlantDetail />,
       },
       {
         path: URL_PATH.petList,
@@ -48,7 +48,7 @@ const router = createBrowserRouter([
       },
       {
         path: URL_PATH.petDetail,
-        element: <PetDetails />,
+        element: <PetPlantDetails />,
       },
       {
         path: URL_PATH.petEdit,

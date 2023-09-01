@@ -1,14 +1,14 @@
 import type { EditPetPlantRequest, NewPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { BASE_URL } from 'constants/index';
 
-export const PET = `${BASE_URL}/pet-plants`;
+export const PET_PLANT_URL = `${BASE_URL}/pet-plants`;
 
 const headers = {
   'Content-Type': 'application/json',
 };
 
 const getList = () => {
-  return fetch(PET, {
+  return fetch(PET_PLANT_URL, {
     method: 'GET',
     headers,
     credentials: 'include',
@@ -16,7 +16,7 @@ const getList = () => {
 };
 
 const register = (form: NewPetPlantRequest) => {
-  return fetch(PET, {
+  return fetch(PET_PLANT_URL, {
     method: 'POST',
     headers,
     credentials: 'include',
@@ -25,7 +25,7 @@ const register = (form: NewPetPlantRequest) => {
 };
 
 const getDetails = (petPlantId: PetPlantDetails['id']) => {
-  return fetch(`${PET}/${petPlantId}`, {
+  return fetch(`${PET_PLANT_URL}/${petPlantId}`, {
     method: 'GET',
     headers,
     credentials: 'include',
@@ -33,7 +33,7 @@ const getDetails = (petPlantId: PetPlantDetails['id']) => {
 };
 
 const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
-  return fetch(`${PET}/${petPlantId}`, {
+  return fetch(`${PET_PLANT_URL}/${petPlantId}`, {
     method: 'PATCH',
     headers,
     credentials: 'include',
@@ -42,14 +42,14 @@ const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
 };
 
 const remove = (petPlantId: PetPlantDetails['id']) => {
-  return fetch(`${PET}/${petPlantId}`, {
+  return fetch(`${PET_PLANT_URL}/${petPlantId}`, {
     method: 'DELETE',
     credentials: 'include',
     headers,
   });
 };
 
-const PetAPI = {
+const PetPlantAPI = {
   getList,
   register,
   getDetails,
@@ -57,4 +57,4 @@ const PetAPI = {
   remove,
 };
 
-export default PetAPI;
+export default PetPlantAPI;

@@ -5,7 +5,7 @@ import { Wrapper, Message, SearchBoxArea } from './Search.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
 
-const PetRegisterSearch = () => {
+const PetPlantRegisterSearch = () => {
   const navigate = useNavigate();
   useCheckSessionId();
 
@@ -26,4 +26,4 @@ const PetRegisterSearch = () => {
   );
 };
 
-export default PetRegisterSearch;
+export default PetPlantRegisterSearch;
