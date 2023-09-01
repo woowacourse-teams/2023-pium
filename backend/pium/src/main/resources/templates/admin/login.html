@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center mb-4">로그인</h2>
+
+        <form th:action="@{/admin/login}" method="post" class="form-container">
+            <div class="form-group">
+                <label for="account">아이디:</label>
+                <input type="text" class="form-control" id="account" name="account" th:field="${admin.account}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">비밀번호:</label>
+                <input type="password" class="form-control" id="password" name="password" th:field="${admin.password}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="second-password">2차 비밀번호:</label>
+                <input type="password" class="form-control" id="second-password" name="secondPassword" th:field="${admin.secondPassword}" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">로그인</button>
+        </form>
+    </div>
+</body>
+</html>

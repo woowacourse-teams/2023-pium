@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>피움 어드민 - 식물 등록</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container mt-5">
+    <div th:text="${admin.account}">
+
+    </div>
+    <h1 class="text-center text-success mb-4">식물 등록</h1>
+
+    <h2 class="text-success">등록된 식물 목록</h2>
+    <ul class="plant-list">
+        <li th:each="plant : ${plants}" th:text="${plant.name}"></li>
+    </ul>
+</div>
+</body>
+</html>

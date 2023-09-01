@@ -26,6 +26,12 @@ public class DictionaryPlantService {
         return DictionaryPlantMapper.toDictionaryPlantResponse(dictionaryPlant);
     }
 
+    @Transactional
+    public void delete(Long id) {
+        // TODO: ADMIN
+        dictionaryPlantRepository.deleteById(id);
+    }
+
     public DataResponse<List<DictionaryPlantSearchResponse>> search(String name) {
         List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByNameContains(name);
 

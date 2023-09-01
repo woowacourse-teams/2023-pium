@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>피움 어드민 - 식물 등록</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<div class="container mt-5">
+    <div th:text="${admin.account}">
+
+    </div>
+    <h1 class="text-center text-success mb-4">식물 등록</h1>
+
+    <form action="#" method="post" class="form-container">
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required><br>
+
+        <label for="name">이름:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="image">이미지 URL:</label>
+        <input type="text" id="image" name="image" required><br>
+
+        <label for="familyName">과명:</label>
+        <input type="text" id="familyName" name="familyName" required><br>
+
+        <label for="smell">향:</label>
+        <input type="text" id="smell" name="smell"><br>
+
+        <label for="poison">독성:</label>
+        <input type="text" id="poison" name="poison"><br>
+
+        <label for="manageLevel">관리 난이도:</label>
+        <input type="text" id="manageLevel" name="manageLevel"><br>
+
+        <label for="growSpeed">성장 속도:</label>
+        <input type="text" id="growSpeed" name="growSpeed"><br>
+
+        <label for="requireTemp">요구 온도:</label>
+        <input type="text" id="requireTemp" name="requireTemp"><br>
+
+        <label for="minimumTemp">최소 온도:</label>
+        <input type="text" id="minimumTemp" name="minimumTemp"><br>
+
+        <label for="requireHumidity">요구 습도:</label>
+        <input type="text" id="requireHumidity" name="requireHumidity"><br>
+
+        <label for="postingPlace">배치 장소:</label>
+        <input type="text" id="postingPlace" name="postingPlace"><br>
+
+        <label for="specialManageInfo">특별 관리 정보:</label>
+        <input type="text" id="specialManageInfo" name="specialManageInfo"><br>
+
+        <label for="waterCycle">물 주기:</label>
+        <input type="text" id="waterCycle" name="waterCycle"><br>
+
+        <button type="submit" class="btn btn-success">등록</button>
+    </form>
+</div>
+</body>
+</html>
