@@ -1,5 +1,5 @@
-import { DataResponse } from 'types/DataResponse';
-import { Month } from 'types/date';
+import type { DataResponse } from 'types/DataResponse';
+import type { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useQuery } from '@tanstack/react-query';
 import StatusError from 'models/statusError';

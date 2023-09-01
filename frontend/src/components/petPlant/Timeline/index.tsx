@@ -37,7 +37,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
     isFetchingNextPage,
     fetchNextPage,
   } = useYearList(Number(petPlantId), filter);
-  const intersectionRef = useIntersectionRef<HTMLDivElement>(fetchNextPage);
+  const intersectionRef = useIntersectionRef(fetchNextPage);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -89,7 +89,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
         </>
       )}
       {!hasNextPage && <Earth />}
-      <Sensor ref={intersectionRef} />
+      {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
     </Wrapper>
   );
 };

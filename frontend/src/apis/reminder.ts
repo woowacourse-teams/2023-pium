@@ -1,14 +1,14 @@
 import { ChangeDateParams, WaterPlantParams } from 'types/reminder';
 import { BASE_URL } from 'constants/index';
 
-export const REMINDER = `${BASE_URL}/reminders`;
+export const REMINDER_URL = `${BASE_URL}/reminders`;
 
 const headers = {
   'Content-Type': 'application/json',
 };
 
 const getReminder = () => {
-  return fetch(REMINDER, {
+  return fetch(REMINDER_URL, {
     method: 'GET',
     credentials: 'include',
     headers,
@@ -16,7 +16,7 @@ const getReminder = () => {
 };
 
 const waterPlant = ({ id, body }: WaterPlantParams) => {
-  return fetch(`${REMINDER}/${id}`, {
+  return fetch(`${REMINDER_URL}/${id}`, {
     method: 'POST',
     credentials: 'include',
     headers,
@@ -25,7 +25,7 @@ const waterPlant = ({ id, body }: WaterPlantParams) => {
 };
 
 const changeDate = ({ id, body }: ChangeDateParams) => {
-  return fetch(`${REMINDER}/${id}`, {
+  return fetch(`${REMINDER_URL}/${id}`, {
     method: 'PATCH',
     credentials: 'include',
     headers,
