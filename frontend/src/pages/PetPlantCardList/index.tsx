@@ -15,7 +15,7 @@ const PetPlantCardList = () => {
           <Link to={URL_PATH.petRegisterSearch} aria-label="식물 추가로 이동">
             <RegisterButton type="button">+</RegisterButton>
           </Link>
-          {petPlantCardList?.map((petPlantCard) => (
+          {petPlantCardList.map((petPlantCard) => (
             <Link
               key={petPlantCard.id}
               to={generatePath(URL_PATH.petDetail, { id: String(petPlantCard.id) })}

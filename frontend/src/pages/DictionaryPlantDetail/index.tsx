@@ -10,15 +10,17 @@ const DictionaryPlantDetail = () => {
   if (!id) throw new Error('URL에 id가 없습니다.');
 
   const dictionaryPlantId = Number(id);
-  const { data: dictionaryPlantDetail, isSuccess } = useDictionaryPlantDetail(dictionaryPlantId);
-  if (!isSuccess) return null;
-
-  const { image, name } = dictionaryPlantDetail;
+  const { data: dictionaryPlantDetail } = useDictionaryPlantDetail(dictionaryPlantId);
 
   return (
     <>
       <Main>
-        <Image type="wide" src={image} alt={name} size="300px" />
+        <Image
+          type="wide"
+          src={dictionaryPlantDetail.image}
+          alt={dictionaryPlantDetail.name}
+          size="300px"
+        />
         <DictionaryPlantContent {...dictionaryPlantDetail} />
       </Main>
       <Navbar />

@@ -13,7 +13,7 @@ import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
 
 const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {
-  const { isSuccess } = useCheckSessionId();
+  useCheckSessionId();
 
   return useInfiniteQuery<
     HistoryResponse,
@@ -45,7 +45,6 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
     },
 
     retry: noRetryIfUnauthorized,
-    enabled: isSuccess,
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
     gcTime: 0,
