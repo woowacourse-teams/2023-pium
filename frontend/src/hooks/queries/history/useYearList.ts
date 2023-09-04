@@ -32,7 +32,7 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       return data;
     },
 
-    defaultPageParam: 0,
+    initialPageParam: 0,
     getNextPageParam: ({ hasNext }, _allPages, lastPageParam) => {
       return hasNext ? lastPageParam + 1 : undefined;
     },

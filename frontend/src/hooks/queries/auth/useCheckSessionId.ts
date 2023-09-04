@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import StatusError from 'models/statusError';
 import AuthAPI from 'apis/auth';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
-const useCheckSessionId = (suspense = true) => {
-  return useQuery<null, Error | StatusError>({
+const useCheckSessionId = () =>
+  useSuspenseQuery<null, Error | StatusError>({
     queryKey: ['checkSessionId'],
     queryFn: async () => {
       const response = await AuthAPI.checkSessionId();
@@ -14,8 +14,6 @@ const useCheckSessionId = (suspense = true) => {
     },
 
     retry: noRetryIfUnauthorized,
-    suspense,
   });
-};
 
 export default useCheckSessionId;
