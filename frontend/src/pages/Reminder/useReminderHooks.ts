@@ -1,9 +1,9 @@
 import type { ChangeDateParams, WaterPlantParams } from 'types/reminder';
 import { convertDateKorYear } from 'utils/date';
-import useChangeDate from './queries/reminder/useChangeDate';
-import useReminder from './queries/reminder/useReminder';
-import useWater from './queries/reminder/useWater';
-import useAddToast from './useAddToast';
+import useChangeDate from '../../hooks/queries/reminder/useChangeDate';
+import useReminder from '../../hooks/queries/reminder/useReminder';
+import useWater from '../../hooks/queries/reminder/useWater';
+import useAddToast from '../../hooks/useAddToast';
 
 const useReminderHooks = () => {
   const { data: reminderData, refetch } = useReminder();

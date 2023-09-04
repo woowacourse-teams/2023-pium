@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { AlertSpan, Button, CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
-import useCalendar from 'hooks/useCalendar';
 import { convertDateKorYear, getDateToString, getDayInfo, getDaysBetween } from 'utils/date';
 import { DateValidate } from 'utils/validate';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
 import ArrowLeft from '../Icons/ArrowLeft';
 import ArrowRight from '../Icons/ArrowRight';
 import DaySmallBox from './DaySmallBox';
+import useCalendar from './useCalendar';
 
 interface CalendarProps {
   selectedDate: Date | null;
