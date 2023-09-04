@@ -1,4 +1,3 @@
-import Loading from 'pages/Loading';
 import Navbar from 'components/@common/Navbar';
 import { ButtonBox, Logout, Title, TitleBox, Withdraw, Wrapper } from './MyPage.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
