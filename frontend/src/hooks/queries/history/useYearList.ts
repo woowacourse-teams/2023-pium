@@ -10,12 +10,9 @@ import {
 import HistoryAPI, { HISTORY_URL } from 'apis/history';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
-import useCheckSessionId from '../auth/useCheckSessionId';
 
-const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {
-  useCheckSessionId();
-
-  return useInfiniteQuery<
+const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) =>
+  useInfiniteQuery<
     HistoryResponse,
     Error,
     YearList,
@@ -49,6 +46,5 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
     placeholderData: keepPreviousData,
     gcTime: 0,
   });
-};
 
 export default useYearList;

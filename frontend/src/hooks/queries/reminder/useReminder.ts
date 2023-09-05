@@ -6,7 +6,6 @@ import StatusError from 'models/statusError';
 import ReminderAPI from 'apis/reminder';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
-import useCheckSessionId from '../auth/useCheckSessionId';
 
 interface ArrangedReminderWithStatus {
   data: Array<[Month, ReminderExtendType[]]>;
@@ -53,8 +52,6 @@ const convertReminderData = (result: DataResponse<Reminder[]>): ArrangedReminder
 };
 
 const useReminder = () => {
-  useCheckSessionId();
-
   return useSuspenseQuery<
     DataResponse<Reminder[]>,
     Error | StatusError,
