@@ -11,16 +11,12 @@ const DictionaryPlantDetail = () => {
 
   const dictionaryPlantId = Number(id);
   const { data: dictionaryPlantDetail } = useDictionaryPlantDetail(dictionaryPlantId);
+  const { image, name } = dictionaryPlantDetail;
 
   return (
     <>
       <Main>
-        <Image
-          type="wide"
-          src={dictionaryPlantDetail.image}
-          alt={dictionaryPlantDetail.name}
-          size="300px"
-        />
+        <Image type="wide" src={image} alt={name} size="300px" />
         <DictionaryPlantContent {...dictionaryPlantDetail} />
       </Main>
       <Navbar />
