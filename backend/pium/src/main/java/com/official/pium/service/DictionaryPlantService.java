@@ -5,6 +5,7 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.exception.NeedAdminException;
 import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
+import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantCreateRequest;
 import com.official.pium.service.dto.DictionaryPlantResponse;
@@ -22,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class DictionaryPlantService {
 
     private final DictionaryPlantRepository dictionaryPlantRepository;
+    private final PetPlantRepository petPlantRepository;
 
     public DictionaryPlantResponse read(Long id) {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
@@ -78,7 +80,14 @@ public class DictionaryPlantService {
     @Transactional
     public void delete(Admin admin, Long id) {
         validateAdmin(admin);
+        validatePetPlant(id);
         dictionaryPlantRepository.deleteById(id);
+    }
+
+    private void validatePetPlant(Long id) {
+        if (petPlantRepository.existsByDictionaryPlantId(id)) {
+            throw new IllegalArgumentException("해당 개체를 참조하는 반려 식물이 존재합니다 id: " + id);
+        }
     }
 
     private void validateAdmin(Admin admin) {
