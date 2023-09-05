@@ -6,6 +6,7 @@ import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse.WaterCycleResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
+import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
 import java.util.List;
 
 @SuppressWarnings("NonAsciiCharacters")
@@ -33,6 +34,29 @@ public class DictionaryPlantFixture {
                                     .winter("겉흙이 마르면 촉촉하게")
                                     .build()
                     ).build();
+
+    public static class REQUEST {
+
+        public static DictionaryPlantUpdateRequest 사전_식물_수정_요청 =
+                DictionaryPlantUpdateRequest.builder()
+                        .name("Fixed")
+                        .imageUrl("https://fixedimage.com")
+                        .familyName("Fixed")
+                        .smell("Fixed")
+                        .poison("Fixed")
+                        .manageLevel("Fixed")
+                        .growSpeed("Fixed")
+                        .requireTemp("Fixed")
+                        .minimumTemp("Fixed")
+                        .requireHumidity("Fixed")
+                        .postingPlace("Fixed")
+                        .specialManageInfo("Fixed")
+                        .spring("Fixed")
+                        .summer("Fixed")
+                        .autumn("Fixed")
+                        .winter("Fixed")
+                        .build();
+    }
 
     public static class RESPONSE {
 

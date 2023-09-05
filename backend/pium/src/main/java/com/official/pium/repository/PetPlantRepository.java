@@ -10,4 +10,6 @@ public interface PetPlantRepository extends JpaRepository<PetPlant, Long>, PetPl
     List<PetPlant> findAllByMemberId(Long memberId);
 
     List<PetPlant> findAllByMemberId(Long memberId, Sort sort);
+
+    boolean existsByDictionaryPlantId(Long dictionaryPlantId);
 }
