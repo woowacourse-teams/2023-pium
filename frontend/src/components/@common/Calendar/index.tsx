@@ -6,7 +6,7 @@ import { DAYS_OF_THE_WEEK } from 'constants/index';
 import ArrowLeft from '../Icons/ArrowLeft';
 import ArrowRight from '../Icons/ArrowRight';
 import DaySmallBox from './DaySmallBox';
-import useCalendar from './useCalendar';
+import useCalendar from './hooks/useCalendar';
 
 interface CalendarProps {
   selectedDate: Date | null;
