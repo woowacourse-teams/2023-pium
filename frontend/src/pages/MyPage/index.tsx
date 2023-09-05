@@ -1,6 +1,6 @@
-import Loading from 'pages/Loading';
+import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
-import { ButtonBox, Logout, Title, TitleBox, Withdraw, Wrapper } from './MyPage.style';
+import { Button, ButtonBox, VerticalDivider, Wrapper } from './MyPage.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
@@ -26,17 +26,16 @@ const MyPage = () => {
 
   return (
     <>
+      <ContentHeader title="마이페이지" />
       <Wrapper>
-        <TitleBox>
-          <Title>마이페이지</Title>
-        </TitleBox>
         <ButtonBox>
-          <Logout type="button" onClick={handleLogout}>
+          <Button type="button" onClick={handleLogout}>
             로그아웃
-          </Logout>
-          <Withdraw type="button" onClick={handleWithdraw}>
+          </Button>
+          <VerticalDivider height={`${12}px`} />
+          <Button type="button" onClick={handleWithdraw}>
             회원 탈퇴
-          </Withdraw>
+          </Button>
         </ButtonBox>
       </Wrapper>
       <Navbar />
