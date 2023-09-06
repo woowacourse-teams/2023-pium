@@ -51,7 +51,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict/{id}")
-    public String dictionaryPlantList(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
+    public String dictionaryPlant(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
         }
@@ -64,14 +64,14 @@ public class AdminPageController {
         return "/admin/dict/plant";
     }
 
-    @GetMapping("/dict/post")
+    @GetMapping("/dict/create")
     public String dictionaryPlantCreateForm(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
         }
 
         model.addAttribute("admin", admin);
-        return "/admin/dict/post";
+        return "/admin/dict/create";
     }
 
     @GetMapping("/dict/{id}/update")
