@@ -1,4 +1,6 @@
+import type { GardenPostItem as GardenPostItemProps } from 'types/garden';
 import type { Meta, StoryObj } from '@storybook/react';
+import { ComponentProps } from 'react';
 import GardenPostItem from '.';
 
 const meta: Meta<typeof GardenPostItem> = {
@@ -9,9 +11,8 @@ export default meta;
 
 type Story = StoryObj<typeof GardenPostItem>;
 
-const defaultArgs = {
+const defaultArgs: ComponentProps<typeof GardenPostItem> = {
   createdAt: '1999-12-16',
-  updatedAt: '1999-12-16',
   content: '한달차인데 저는 이거 이렇게 키우고있어요',
   manageLevel: '초보자',
   petPlant: {
@@ -24,7 +25,7 @@ const defaultArgs = {
     daySince: 32,
     waterCycle: 7,
   },
-} as const;
+};
 
 export const Default: Story = {
   args: defaultArgs,
