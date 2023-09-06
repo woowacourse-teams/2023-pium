@@ -11,12 +11,12 @@ export default meta;
 type Story = StoryObj<typeof ImageButton>;
 
 const DefaultImageButton = () => {
-  const { file, fileUploadHandler, uploadedImageUrl } = useFileUpload({});
-  console.log(file, '22');
+  const { fileUploadHandler, uploadedImageUrl, imgRef } = useFileUpload({});
+
   return (
     <div>
       <img src={uploadedImageUrl} alt="file" />
-      <ImageButton changeCallback={fileUploadHandler} />
+      <ImageButton ref={imgRef} changeCallback={fileUploadHandler} />
     </div>
   );
 };

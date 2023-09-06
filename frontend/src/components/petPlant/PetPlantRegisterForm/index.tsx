@@ -15,6 +15,7 @@ import { NUMBER, OPTIONS } from 'constants/index';
 interface PetPlantRegisterFormProps {
   dictionaryPlantId: number;
   defaultNickname?: string;
+  customFileUrl?: string;
 }
 
 const STACK_SIZE = 9;

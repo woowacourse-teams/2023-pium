@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import type { CSSProp } from 'styled-components';
+
+export const Wrapper = styled.div<{ customCss?: CSSProp }>`
+  ${({ customCss }) => customCss && customCss}
+`;
 
 export const ImageLabel = styled.label`
   width: 60px;

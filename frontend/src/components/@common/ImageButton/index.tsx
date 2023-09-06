@@ -1,20 +1,32 @@
-import { FileInput } from './ImageButton.style';
+import { forwardRef } from 'react';
+import type { CSSProp } from 'styled-components';
+import { FileInput, Wrapper } from './ImageButton.style';
 import theme from 'style/theme.style';
 import CirclePlus from '../Icons/CirclePuls';
 
 interface ImageButtonProps {
   changeCallback: React.ChangeEventHandler<HTMLInputElement>;
+  customCss?: CSSProp;
 }
 
-const ImageButton = ({ changeCallback }: ImageButtonProps) => {
+const ImageButton = forwardRef<HTMLInputElement, ImageButtonProps>(function ImageButton(
+  { changeCallback, customCss },
+  ref
+) {
   return (
-    <div>
+    <Wrapper customCss={customCss}>
       <label htmlFor="customImage">
-        <CirclePlus width="60px" height="60px" color={theme.color.primary} />
+        <CirclePlus color={theme.color.primary} />
       </label>
-      <FileInput type="file" id="customImage" onChange={changeCallback} accept="image/*" />
-    </div>
+      <FileInput
+        ref={ref}
+        type="file"
+        id="customImage"
+        onChange={changeCallback}
+        accept="image/*"
+      />
+    </Wrapper>
   );
-};
+});
 
 export default ImageButton;

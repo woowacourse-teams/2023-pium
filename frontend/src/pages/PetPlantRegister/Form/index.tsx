@@ -1,8 +1,9 @@
-import { useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Dictionary from 'components/@common/Icons/Dictionary';
 import LineArrowLeft from 'components/@common/Icons/LineArrowLeft';
 import Image from 'components/@common/Image';
+import ImageButton from 'components/@common/ImageButton';
+import useFileUpload from 'components/@common/ImageButton/hooks/useFileUpload';
 import Modal from 'components/@common/Modal';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
@@ -13,6 +14,7 @@ import {
   DictionaryPlantName,
   Header,
   Main,
+  AddImageButton,
 } from './Form.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
@@ -27,16 +29,11 @@ const PetPlantRegisterFormPage = () => {
 
   const dictionaryPlantId = Number(id);
   const { data: dictionaryPlantDetail, isSuccess } = useDictionaryPlantDetail(dictionaryPlantId);
-
+  const { uploadedImageUrl, fileUploadHandler, imgRef } = useFileUpload({}); // 현재 image가 undefiend 여서 사용이 불가능..
   const { isOpen, open, close, modalRef } = useModal();
-  const customImage = useRef<HTMLInputElement>(null);
-
-  const customImageHandler: React.ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
-    console.log(customImage.current, event.currentTarget.files, event.currentTarget.value);
-  }, []);
 
   if (!isSuccess) return null;
-  const { name, image } = dictionaryPlantDetail;
+  const { name } = dictionaryPlantDetail;
 
   return (
     <>
@@ -51,17 +48,14 @@ const PetPlantRegisterFormPage = () => {
           <span>사전 정보</span> <Dictionary />
         </DictionaryPlantButton>
         <DictionaryPlantImageArea>
-          <Image size="160px" src={image} alt={name} />
-          <label htmlFor="customImage">+</label>
-          <input
-            id="customImage"
-            ref={customImage}
-            type="file"
-            onChange={customImageHandler}
-            accept="image/png, image/jpeg"
-          />
+          <Image size="160px" src={uploadedImageUrl} alt={name} />
+          <ImageButton ref={imgRef} customCss={AddImageButton} changeCallback={fileUploadHandler} />
         </DictionaryPlantImageArea>
-        <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} defaultNickname={name} />
+        <PetPlantRegisterForm
+          dictionaryPlantId={dictionaryPlantId}
+          defaultNickname={name}
+          customFileUrl=""
+        />
       </Main>
       <Modal ref={modalRef} isOpen={isOpen} closeModal={close}>
         <DictionaryPlantContent {...dictionaryPlantDetail} />

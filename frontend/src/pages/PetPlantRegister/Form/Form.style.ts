@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 export const Header = styled.header`
   position: fixed;
@@ -54,7 +54,18 @@ export const DictionaryPlantButton = styled.button`
 `;
 
 export const DictionaryPlantImageArea = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   margin: 32px 0;
+`;
+
+export const AddImageButton = css`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 35px;
+    height: 35px;
+  }
 `;
