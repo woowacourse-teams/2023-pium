@@ -3,7 +3,7 @@ import type { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import StatusError from 'models/statusError';
-import ReminderAPI from 'apis/reminder';
+import ReminderAPI, { REMINDER_URL } from 'apis/reminder';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
@@ -57,7 +57,7 @@ const useReminder = () => {
     Error | StatusError,
     ArrangedReminderWithStatus
   >({
-    queryKey: ['reminder'],
+    queryKey: [REMINDER_URL],
     queryFn: async () => {
       const response = await ReminderAPI.getReminder();
       throwOnInvalidStatus(response);
