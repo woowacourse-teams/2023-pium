@@ -51,8 +51,8 @@ public class DictionaryPlantController {
 
     @PostMapping
     public ResponseEntity<Void> write(@AdminAuth Admin admin, @RequestBody DictionaryPlantCreateRequest request) {
-        dictionaryPlantService.create(admin, request);
-        return ResponseEntity.created(URI.create("")).build();
+        Long dictionaryPlantId = dictionaryPlantService.create(admin, request);
+        return ResponseEntity.created(URI.create("/dictionary-plants/" + dictionaryPlantId)).build();
     }
 
     @PatchMapping("/{id}")

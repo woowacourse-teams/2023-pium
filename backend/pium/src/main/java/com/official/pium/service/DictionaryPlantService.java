@@ -45,10 +45,11 @@ public class DictionaryPlantService {
     }
 
     @Transactional
-    public void create(Admin admin, DictionaryPlantCreateRequest request) {
+    public Long create(Admin admin, DictionaryPlantCreateRequest request) {
         validateAdmin(admin);
         DictionaryPlant dictionaryPlant = DictionaryPlantMapper.toDictionaryPlant(request);
         dictionaryPlantRepository.save(dictionaryPlant);
+        return dictionaryPlant.getId();
     }
 
     @Transactional
