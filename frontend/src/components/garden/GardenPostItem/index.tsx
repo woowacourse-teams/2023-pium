@@ -30,7 +30,7 @@ const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPos
   return (
     <Wrapper>
       <Header>
-        <PetPlantImage src={petPlant.imageUrl} />
+        <PetPlantImage src={petPlant.imageUrl} alt="반려식물" />
         <HeaderContent>
           <PetPlantNickname>{petPlant.nickname}</PetPlantNickname>
           <DaySince>
