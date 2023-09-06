@@ -124,7 +124,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         Long dictionaryPlantId = dictionaryPlant.getId();
         petPlantSupport.builder().dictionaryPlant(dictionaryPlant).build();
 
-        Assertions.assertThatThrownBy(() ->
+        assertThatThrownBy(() ->
                         dictionaryPlantService.delete(new Admin(), dictionaryPlantId)
                 ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 개체를 참조하는 반려 식물이 존재합니다 id: " + dictionaryPlantId);
