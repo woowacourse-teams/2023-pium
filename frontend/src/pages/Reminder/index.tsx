@@ -5,7 +5,7 @@ import ReminderProvider from 'contexts/reminderContext';
 import useReminderHooks from './hooks/useReminderHooks';
 
 const Reminder = () => {
-  const { reminderData, waterMutate, changeDateMutate } = useReminderHooks();
+  const { reminderData, water, changeDate } = useReminderHooks();
 
   const reminderBox = reminderData.data.map(([month, reminders]) => {
     return <MonthBox key={JSON.stringify(reminders[0])} month={month} reminderDates={reminders} />;
@@ -13,7 +13,7 @@ const Reminder = () => {
 
   return (
     <>
-      <ReminderProvider waterCallback={waterMutate} changeDateCallback={changeDateMutate}>
+      <ReminderProvider waterCallback={water} changeDateCallback={changeDate}>
         <Wrapper status={reminderData.status}>
           <HeaderBox>
             <Title>리마인더</Title>
