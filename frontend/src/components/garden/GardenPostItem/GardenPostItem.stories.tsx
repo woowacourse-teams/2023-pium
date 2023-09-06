@@ -1,10 +1,20 @@
-import type { GardenPostItem as GardenPostItemProps } from 'types/garden';
 import type { Meta, StoryObj } from '@storybook/react';
 import { ComponentProps } from 'react';
 import GardenPostItem from '.';
 
 const meta: Meta<typeof GardenPostItem> = {
   component: GardenPostItem,
+  argTypes: {
+    createdAt: {
+      table: {
+        type: {
+          summary: 'DateFormat',
+          detail: 'YYYY-MM-DD 형식의 문자열',
+        },
+      },
+      control: 'text',
+    },
+  },
 };
 
 export default meta;
