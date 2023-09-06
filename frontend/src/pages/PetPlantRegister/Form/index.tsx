@@ -1,3 +1,4 @@
+import { useCallback, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import Dictionary from 'components/@common/Icons/Dictionary';
 import LineArrowLeft from 'components/@common/Icons/LineArrowLeft';
@@ -28,9 +29,15 @@ const PetPlantRegisterFormPage = () => {
   const { data: dictionaryPlantDetail, isSuccess } = useDictionaryPlantDetail(dictionaryPlantId);
 
   const { isOpen, open, close, modalRef } = useModal();
+  const customImage = useRef<HTMLInputElement>(null);
+
+  const customImageHandler: React.ChangeEventHandler<HTMLInputElement> = useCallback((event) => {
+    console.log(customImage.current, event.currentTarget.files, event.currentTarget.value);
+  }, []);
 
   if (!isSuccess) return null;
   const { name, image } = dictionaryPlantDetail;
+
   return (
     <>
       <Header>
@@ -45,6 +52,14 @@ const PetPlantRegisterFormPage = () => {
         </DictionaryPlantButton>
         <DictionaryPlantImageArea>
           <Image size="160px" src={image} alt={name} />
+          <label htmlFor="customImage">+</label>
+          <input
+            id="customImage"
+            ref={customImage}
+            type="file"
+            onChange={customImageHandler}
+            accept="image/png, image/jpeg"
+          />
         </DictionaryPlantImageArea>
         <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} defaultNickname={name} />
       </Main>
