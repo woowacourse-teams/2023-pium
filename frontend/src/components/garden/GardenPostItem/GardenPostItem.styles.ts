@@ -29,26 +29,31 @@ export const HeaderContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
+  width: 192px;
   height: 100%;
   margin-right: auto;
   margin-left: 16px;
+`;
+
+export const PetPlantNickname = styled.p`
+  overflow: hidden;
+
+  font-size: 1.8rem;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const DaySince = styled.p`
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: ${(props) => props.theme.color.sub};
 `;
 
 export const PostingDate = styled.p`
   width: max-content;
   margin-top: 4px;
   font-size: 1.2rem;
-  color: ${(props) => props.theme.color.sub};
-`;
-
-export const PetPlantNickname = styled.p`
-  font-size: 1.8rem;
-  font-weight: 500;
-`;
-
-export const DaySince = styled.p`
-  font-size: 1.4rem;
-  font-weight: 500;
   color: ${(props) => props.theme.color.sub};
 `;
 

@@ -39,5 +39,9 @@ export const LargeContent: Story = {
       그래서 집에 가는길에 그 맥주6개 달린거 있잖아요 맥주6개 그걸 사가지고 집으로 갔어요 
       그전에는 술먹으면 야구 못하는줄 알았어요 그냥 한국으로
     `,
+    petPlant: {
+      ...defaultArgs.petPlant,
+      nickname: '박찬호의 길고길고길고길고길고길고길고긴 식물이름',
+    },
   },
 };
