@@ -17,7 +17,7 @@ const useFileUpload = ({ imageUrl = `${basicImage}` }: FileUploadParams) => {
     if (files && files.length > 0) {
       const firstFile = files[0];
 
-      if (firstFile.size > 100000) {
+      if (firstFile.size > 10000000) {
         addToast('warning', '10MB 이하로 입력해주세요');
         if (imgRef.current) {
           imgRef.current.value = '';
