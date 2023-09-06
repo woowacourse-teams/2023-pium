@@ -17,15 +17,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
+@RequestMapping("/admin")
 public class AdminPageController {
 
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final AdminService adminService;
 
-    @GetMapping("/admin/**")
+    @GetMapping("/**")
     public String adminPage(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
@@ -35,7 +37,7 @@ public class AdminPageController {
         return "/admin/index";
     }
 
-    @GetMapping("/admin/dict")
+    @GetMapping("/dict")
     public String dictionaryPlantList(@PageableDefault Pageable pageable, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
@@ -48,7 +50,7 @@ public class AdminPageController {
         return "/admin/dict/list";
     }
 
-    @GetMapping("/admin/dict/{id}")
+    @GetMapping("/dict/{id}")
     public String dictionaryPlantList(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
@@ -62,7 +64,7 @@ public class AdminPageController {
         return "/admin/dict/plant";
     }
 
-    @GetMapping("/admin/dict/post")
+    @GetMapping("/dict/post")
     public String dictionaryPlantCreateForm(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
@@ -72,7 +74,7 @@ public class AdminPageController {
         return "/admin/dict/post";
     }
 
-    @GetMapping("/admin/dict/{id}/update")
+    @GetMapping("/dict/{id}/update")
     public String dictionaryPlantUpdateForm(@PathVariable Long id,@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
@@ -86,7 +88,7 @@ public class AdminPageController {
         return "/admin/dict/update";
     }
 
-    @GetMapping("/admin/dict/requests")
+    @GetMapping("/dict/requests")
     public String dictionaryPlantRequests(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return "redirect:/admin/login";
@@ -96,13 +98,13 @@ public class AdminPageController {
         return "/admin/dict/requests";
     }
 
-    @GetMapping("/admin/login")
+    @GetMapping("/login")
     public String loginPage(Model model) {
         model.addAttribute("admin", new Admin());
         return "/admin/login";
     }
 
-    @PostMapping("/admin/login")
+    @PostMapping("/login")
     public String login(@ModelAttribute("admin") Admin admin, HttpSession httpSession) {
         adminService.login(admin, httpSession);
         return "redirect:/admin";
