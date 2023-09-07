@@ -1,6 +1,7 @@
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
-import { Button, ButtonBox, VerticalDivider, Wrapper } from './MyPage.style';
+import VerticalDivider from 'components/@common/VerticalDivider/VerticalDivider.style';
+import { Button, ButtonBox, Wrapper } from './MyPage.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
@@ -32,7 +33,7 @@ const MyPage = () => {
           <Button type="button" onClick={handleLogout}>
             로그아웃
           </Button>
-          <VerticalDivider height={`${12}px`} />
+          <VerticalDivider height={'12px'} />
           <Button type="button" onClick={handleWithdraw}>
             회원 탈퇴
           </Button>
