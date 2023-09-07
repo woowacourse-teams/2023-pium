@@ -10,6 +10,7 @@ const useFileUpload = ({ imageUrl = `${basicImage}` }: FileUploadParams) => {
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(imageUrl);
   const imgRef = useRef<HTMLInputElement>(null);
   const addToast = useAddToast();
+  const allowedExtensions = ['image/jpg', 'image/jpeg', 'image/png', 'image/heic'];
 
   const fileUploadHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     const files = event.currentTarget.files;
@@ -19,6 +20,18 @@ const useFileUpload = ({ imageUrl = `${basicImage}` }: FileUploadParams) => {
 
       if (firstFile.size > 10000000) {
         addToast('warning', '10MB 이하로 입력해주세요');
+        if (imgRef.current) {
+          imgRef.current.value = '';
+        }
+
+        return;
+      }
+
+      if (!allowedExtensions.includes(firstFile.type)) {
+        addToast(
+          'warning',
+          '지원하지 않는 확장자 입니다!jpg, jpeg, png, heic 확장자를 사용해주세요'
+        );
         if (imgRef.current) {
           imgRef.current.value = '';
         }

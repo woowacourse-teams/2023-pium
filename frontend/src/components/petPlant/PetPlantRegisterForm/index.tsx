@@ -40,7 +40,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
   const { uploadedImageUrl, fileUploadHandler, imgRef } = useFileUpload({
     imageUrl: dictionaryImageUrl,
-  }); // 현재 image가 undefiend 여서 사용이 불가능..
+  });
 
   const today = getDateToString();
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
@@ -130,7 +130,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
 
   return (
-    <Wrapper>
+    <Wrapper method="POST" encType="multipart/form-data">
       <DictionaryPlantImageArea>
         <Image size="160px" src={uploadedImageUrl} alt={defaultNickname} />
         <ImageButton ref={imgRef} customCss={AddImageButton} changeCallback={fileUploadHandler} />
