@@ -1,4 +1,4 @@
-import { MonthInfo } from 'types/date';
+import type { MonthInfo } from 'types/date';
 import { useState } from 'react';
 import { getMonthInfo } from 'utils/date';
 

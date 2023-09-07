@@ -7,7 +7,7 @@ import {
   convertYearMapToYearList,
   type YearList,
 } from 'components/petPlant/Timeline/converter';
-import HistoryAPI, { HISTORY } from 'apis/history';
+import HistoryAPI, { HISTORY_URL } from 'apis/history';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import useCheckSessionId from '../auth/useCheckSessionId';
@@ -19,10 +19,10 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
     HistoryResponse,
     Error,
     YearList,
-    [typeof HISTORY, PetPlantDetails['id'], HistoryType[]],
+    [typeof HISTORY_URL, PetPlantDetails['id'], HistoryType[]],
     number
   >({
-    queryKey: [HISTORY, petPlantId, filter],
+    queryKey: [HISTORY_URL, petPlantId, filter],
     queryFn: async ({ pageParam }) => {
       const response = await HistoryAPI.getPetPlant(petPlantId, pageParam, 20, filter);
 

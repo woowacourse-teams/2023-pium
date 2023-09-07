@@ -1,5 +1,5 @@
-import { MutationProps } from 'types/DataResponse';
-import { ChangeDateParams } from 'types/reminder';
+import type { MutationProps } from 'types/DataResponse';
+import type { ChangeDateParams } from 'types/reminder';
 import { useMutation } from '@tanstack/react-query';
 import ReminderAPI from 'apis/reminder';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';

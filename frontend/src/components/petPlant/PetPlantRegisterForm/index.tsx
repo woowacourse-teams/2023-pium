@@ -6,7 +6,7 @@ import Select from 'components/@common/Select';
 import Stack from 'components/@common/Stack';
 import useStack from 'components/@common/Stack/hooks/useStack';
 import { Button, Center, Wrapper } from './PetPlantRegisterForm.style';
-import useRegisterPetPlant from 'hooks/queries/pet/useRegisterPetPlant';
+import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import { getDateToString, isDateFormat } from 'utils/date';
