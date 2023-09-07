@@ -54,27 +54,61 @@ create TABLE IF NOT EXISTS pet_plant
 
 create TABLE IF NOT EXISTS history
 (
-    id           BIGINT AUTO_INCREMENT NOT NULL,
-    pet_plant_id BIGINT                NOT NULL,
-    history_category_id BIGINT         NOT NULL,
-    event_date   DATE                  NOT NULL,
-    prev         VARCHAR(255)          NOT NULL,
-    curr         VARCHAR(255)          NOT NULL,
-    created_at   DATETIME              NOT NULL,
-    updated_at   DATETIME              NOT NULL,
+    id                  BIGINT AUTO_INCREMENT NOT NULL,
+    pet_plant_id        BIGINT                NOT NULL,
+    history_category_id BIGINT                NOT NULL,
+    event_date          DATE                  NOT NULL,
+    prev                VARCHAR(255)          NOT NULL,
+    curr                VARCHAR(255)          NOT NULL,
+    created_at          DATETIME              NOT NULL,
+    updated_at          DATETIME              NOT NULL,
     CONSTRAINT pk_history PRIMARY KEY (id)
 );
 
 create TABLE IF NOT EXISTS history_category
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
-    history_type VARCHAR(255)         NOT NULL,
+    history_type VARCHAR(255)          NOT NULL,
     created_at   DATETIME              NOT NULL,
     updated_at   DATETIME              NOT NULL,
     CONSTRAINT pk_history_category PRIMARY KEY (id)
 );
 
+CREATE TABLE garden
+(
+    id                  BIGINT AUTO_INCREMENT NOT NULL,
+    dictionary_plant_id BIGINT                NULL,
+    member_id           BIGINT                NULL,
+    content             VARCHAR(500)          NOT NULL,
+    nickname            VARCHAR(255)          NOT NULL,
+    image_url           VARCHAR(255)          NOT NULL,
+    location            VARCHAR(255)          NOT NULL,
+    flowerpot           VARCHAR(255)          NOT NULL,
+    light               VARCHAR(255)          NOT NULL,
+    wind                VARCHAR(255)          NOT NULL,
+    day_since           INT                   NOT NULL,
+    water_cycle         INT                   NOT NULL,
+    manage_level        VARCHAR(255)          NOT NULL,
+    created_at          DATETIME              NOT NULL,
+    updated_at          DATETIME              NOT NULL,
+    CONSTRAINT pk_garden PRIMARY KEY (id)
+);
 
+CREATE TABLE registration
+(
+    id         BIGINT AUTO_INCREMENT NOT NULL,
+    plant_name VARCHAR(255)          NULL,
+    image_url  VARCHAR(255)          NULL,
+    created_at DATETIME              NOT NULL,
+    updated_at DATETIME              NOT NULL,
+    CONSTRAINT pk_registration PRIMARY KEY (id)
+);
+
+ALTER TABLE garden
+    ADD CONSTRAINT FK_GARDEN_ON_DICTIONARY_PLANT FOREIGN KEY (dictionary_plant_id) REFERENCES dictionary_plant (id);
+
+ALTER TABLE garden
+    ADD CONSTRAINT FK_GARDEN_ON_MEMBER FOREIGN KEY (member_id) REFERENCES member (id);
 
 alter table pet_plant
     add CONSTRAINT FK_PET_PLANT_ON_DICTIONARY_PLANT FOREIGN KEY (dictionary_plant_id) REFERENCES dictionary_plant (id);
@@ -88,4 +122,5 @@ alter table history
 alter table history
     add CONSTRAINT FK_HISTORY_ON_HISTORY_CATEGORY FOREIGN KEY (history_category_id) REFERENCES history_category (id);
 
-ALTER TABLE member ADD UNIQUE (kakao_id);
+ALTER TABLE member
+    ADD UNIQUE (kakao_id);
