@@ -41,6 +41,7 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       return yearList;
     },
 
+    throwOnError: true,
     retry: noRetryIfUnauthorized,
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
