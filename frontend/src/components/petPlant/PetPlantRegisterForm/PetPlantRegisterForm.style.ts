@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.form`
   overflow-x: none;
   overflow-y: auto;
   display: flex;
@@ -11,6 +11,12 @@ export const Wrapper = styled.div`
   height: 100%;
 
   font: 500 1.8rem/2.2rem 'GmarketSans';
+`;
+
+export const DictionaryPlantImageArea = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 32px 0;
 `;
 
 export const Center = styled.div`

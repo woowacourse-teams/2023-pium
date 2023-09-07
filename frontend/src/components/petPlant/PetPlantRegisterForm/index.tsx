@@ -1,11 +1,12 @@
 import DateInput from 'components/@common/DateInput';
 import FormInput from 'components/@common/FormInput';
 import FormInputBox from 'components/@common/FormInputBox';
+import Image from 'components/@common/Image';
 import ProgressBar from 'components/@common/ProgressBar';
 import Select from 'components/@common/Select';
 import Stack from 'components/@common/Stack';
 import useStack from 'components/@common/Stack/hooks/useStack';
-import { Button, Center, Wrapper } from './PetPlantRegisterForm.style';
+import { Button, Center, DictionaryPlantImageArea, Wrapper } from './PetPlantRegisterForm.style';
 import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
@@ -14,6 +15,7 @@ import { NUMBER, OPTIONS } from 'constants/index';
 
 interface PetPlantRegisterFormProps {
   dictionaryPlantId: number;
+  dictionaryImageUrl: string;
   defaultNickname?: string;
 }
 
@@ -21,7 +23,7 @@ const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';
 
 const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
-  const { dictionaryPlantId, defaultNickname = '' } = props;
+  const { dictionaryPlantId, defaultNickname = '', dictionaryImageUrl } = props;
   const { form, dispatch } = usePetPlantForm({
     ...initialPetPlantForm,
     nickname: defaultNickname,
@@ -117,6 +119,9 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
 
   return (
     <Wrapper>
+      <DictionaryPlantImageArea>
+        <Image size="160px" src={dictionaryImageUrl} alt={defaultNickname} />
+      </DictionaryPlantImageArea>
       <Center>
         <ProgressBar percentage={formProgressPercentage} width="90%" height="12px" />
       </Center>

@@ -1,18 +1,10 @@
 import { useParams } from 'react-router-dom';
 import Dictionary from 'components/@common/Icons/Dictionary';
 import LineArrowLeft from 'components/@common/Icons/LineArrowLeft';
-import Image from 'components/@common/Image';
 import Modal from 'components/@common/Modal';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
-import {
-  BackLink,
-  DictionaryPlantButton,
-  DictionaryPlantImageArea,
-  DictionaryPlantName,
-  Header,
-  Main,
-} from './Form.style';
+import { BackLink, DictionaryPlantButton, DictionaryPlantName, Header, Main } from './Form.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useModal from 'hooks/useModal';
@@ -43,10 +35,11 @@ const PetPlantRegisterFormPage = () => {
         <DictionaryPlantButton onClick={open}>
           <span>사전 정보</span> <Dictionary />
         </DictionaryPlantButton>
-        <DictionaryPlantImageArea>
-          <Image size="160px" src={image} alt={name} />
-        </DictionaryPlantImageArea>
-        <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} defaultNickname={name} />
+        <PetPlantRegisterForm
+          dictionaryImageUrl={image}
+          dictionaryPlantId={dictionaryPlantId}
+          defaultNickname={name}
+        />
       </Main>
       <Modal ref={modalRef} isOpen={isOpen} closeModal={close}>
         <DictionaryPlantContent {...dictionaryPlantDetail} />
