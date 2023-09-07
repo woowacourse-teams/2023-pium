@@ -1,12 +1,15 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
+import { css } from 'styled-components';
 import DateInput from 'components/@common/DateInput';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
 import House from 'components/@common/Icons/House';
 import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
+import ImageButton from 'components/@common/ImageButton';
+import useFileUpload from 'components/@common/ImageButton/hooks/useFileUpload';
 import Select from 'components/@common/Select';
 import {
   InfoArea,
@@ -70,6 +73,8 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     wind,
     waterCycle: waterCycle.toString(),
   });
+
+  const { imgRef, uploadedImageUrl, fileUploadHandler } = useFileUpload({ imageUrl });
 
   const { mutate } = useEditPetPlant(petPlantId);
   const addToast = useAddToast();
@@ -176,7 +181,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   return (
     <Wrapper>
-      <Image type="wide" src={imageUrl} alt={`${nickname}(${dictName})`} size="300px" />
+      <Image type="wide" src={uploadedImageUrl} alt={`${nickname}(${dictName})`} size="300px" />
       <Content>
         <TitleArea>
           <Title>
@@ -191,6 +196,20 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
             </InputWrapper>
           </Title>
           <SubTitle>{dictName}</SubTitle>
+          <ExpandedTextBox>
+            <Text>이미지 변경하기</Text>
+            <div>
+              <HiddenLabel>이미지 변경하기</HiddenLabel>
+              <ImageButton
+                ref={imgRef}
+                changeCallback={fileUploadHandler}
+                customCss={css`
+                  width: 16px;
+                  height: 16px;
+                `}
+              />
+            </div>
+          </ExpandedTextBox>
         </TitleArea>
 
         <Divider aria-hidden="true" />

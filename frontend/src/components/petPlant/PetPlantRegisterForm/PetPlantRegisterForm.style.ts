@@ -1,4 +1,4 @@
-import { styled } from 'styled-components';
+import { css, styled } from 'styled-components';
 
 export const Wrapper = styled.form`
   overflow-x: none;
@@ -14,9 +14,20 @@ export const Wrapper = styled.form`
 `;
 
 export const DictionaryPlantImageArea = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
   margin: 32px 0;
+`;
+
+export const AddImageButton = css`
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 35px;
+    height: 35px;
+  }
 `;
 
 export const Center = styled.div`

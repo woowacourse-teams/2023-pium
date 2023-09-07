@@ -2,11 +2,19 @@ import DateInput from 'components/@common/DateInput';
 import FormInput from 'components/@common/FormInput';
 import FormInputBox from 'components/@common/FormInputBox';
 import Image from 'components/@common/Image';
+import ImageButton from 'components/@common/ImageButton';
+import useFileUpload from 'components/@common/ImageButton/hooks/useFileUpload';
 import ProgressBar from 'components/@common/ProgressBar';
 import Select from 'components/@common/Select';
 import Stack from 'components/@common/Stack';
 import useStack from 'components/@common/Stack/hooks/useStack';
-import { Button, Center, DictionaryPlantImageArea, Wrapper } from './PetPlantRegisterForm.style';
+import {
+  AddImageButton,
+  Button,
+  Center,
+  DictionaryPlantImageArea,
+  Wrapper,
+} from './PetPlantRegisterForm.style';
 import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
@@ -17,6 +25,7 @@ interface PetPlantRegisterFormProps {
   dictionaryPlantId: number;
   dictionaryImageUrl: string;
   defaultNickname?: string;
+  customFileUrl?: string;
 }
 
 const STACK_SIZE = 9;
@@ -29,6 +38,9 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     nickname: defaultNickname,
   });
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
+  const { uploadedImageUrl, fileUploadHandler, imgRef } = useFileUpload({
+    imageUrl: dictionaryImageUrl,
+  }); // 현재 image가 undefiend 여서 사용이 불가능..
 
   const today = getDateToString();
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
@@ -120,8 +132,10 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
   return (
     <Wrapper>
       <DictionaryPlantImageArea>
-        <Image size="160px" src={dictionaryImageUrl} alt={defaultNickname} />
+        <Image size="160px" src={uploadedImageUrl} alt={defaultNickname} />
+        <ImageButton ref={imgRef} customCss={AddImageButton} changeCallback={fileUploadHandler} />
       </DictionaryPlantImageArea>
+
       <Center>
         <ProgressBar percentage={formProgressPercentage} width="90%" height="12px" />
       </Center>

@@ -18,11 +18,11 @@ const PetPlantRegisterFormPage = () => {
 
   const dictionaryPlantId = Number(id);
   const { data: dictionaryPlantDetail, isSuccess } = useDictionaryPlantDetail(dictionaryPlantId);
-
   const { isOpen, open, close, modalRef } = useModal();
 
   if (!isSuccess) return null;
   const { name, image } = dictionaryPlantDetail;
+
   return (
     <>
       <Header>
@@ -36,9 +36,9 @@ const PetPlantRegisterFormPage = () => {
           <span>사전 정보</span> <Dictionary />
         </DictionaryPlantButton>
         <PetPlantRegisterForm
-          dictionaryImageUrl={image}
           dictionaryPlantId={dictionaryPlantId}
           defaultNickname={name}
+          dictionaryImageUrl={image}
         />
       </Main>
       <Modal ref={modalRef} isOpen={isOpen} closeModal={close}>
