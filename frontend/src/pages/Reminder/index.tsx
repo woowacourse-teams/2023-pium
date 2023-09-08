@@ -1,6 +1,7 @@
+import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import MonthBox from 'components/reminder/MonthBox';
-import { ContentBox, HeaderBox, Title, Wrapper } from './Reminder.style';
+import { ContentBox, Wrapper } from './Reminder.style';
 import ReminderProvider from 'contexts/reminderContext';
 import useReminderHooks from './hooks/useReminderHooks';
 
@@ -15,9 +16,7 @@ const Reminder = () => {
     <>
       <ReminderProvider waterCallback={water} changeDateCallback={changeDate}>
         <Wrapper status={reminderData.status}>
-          <HeaderBox>
-            <Title>리마인더</Title>
-          </HeaderBox>
+          <ContentHeader title="리마인더" />
           <ContentBox>{reminderBox}</ContentBox>
         </Wrapper>
       </ReminderProvider>
