@@ -74,7 +74,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     waterCycle: waterCycle.toString(),
   });
 
-  const { imgRef, uploadedImageUrl, fileUploadHandler } = useFileUpload({ imageUrl });
+  const { imgRef, uploadedImageUrl, fileUploadHandler, file } = useFileUpload({ imageUrl });
 
   const { mutate } = useEditPetPlant(petPlantId);
   const addToast = useAddToast();
@@ -85,6 +85,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   const isValidForm = (newForm: PetPlantForm) => {
     if (
+      uploadedImageUrl === imageUrl &&
       newForm.birthDate === birthDate &&
       newForm.flowerpot === flowerpot &&
       newForm.lastWaterDate === lastWaterDate &&
@@ -113,6 +114,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       return;
     }
 
+    const formData = new FormData();
+
+    if (file) {
+      formData.append('file', file);
+    }
+
     const requestForm = {
       ...form,
       nickname: form.nickname.trim(),
@@ -121,7 +128,9 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    mutate(requestForm);
+    formData.append('data', JSON.stringify(requestForm));
+
+    mutate(formData);
   };
 
   const handleSubmitClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {

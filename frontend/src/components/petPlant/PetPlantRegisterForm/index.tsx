@@ -38,7 +38,12 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     nickname: defaultNickname,
   });
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
-  const { uploadedImageUrl, fileUploadHandler, imgRef } = useFileUpload({
+  const {
+    uploadedImageUrl,
+    fileUploadHandler,
+    imgRef,
+    file: imageBlob,
+  } = useFileUpload({
     imageUrl: dictionaryImageUrl,
   });
 
@@ -105,7 +110,8 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     showNextElement(7);
   };
 
-  const submit = () => {
+  const submit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
     if (!isValidForm) return;
 
     const { birthDate, lastWaterDate } = form;
@@ -113,6 +119,12 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     if (!(isDateFormat(birthDate) && isDateFormat(lastWaterDate))) {
       addToast('error', '잘못된 날짜 형식입니다.');
       return;
+    }
+
+    const formData = new FormData();
+
+    if (imageBlob) {
+      formData.append('file', imageBlob);
     }
 
     const requestForm = {
@@ -124,13 +136,15 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    registerPetPlant(requestForm);
+    formData.append('data', JSON.stringify(requestForm));
+
+    registerPetPlant(formData);
   };
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
 
   return (
-    <Wrapper method="POST" encType="multipart/form-data">
+    <Wrapper method="POST" encType="multipart/form-data" onSubmit={submit}>
       <DictionaryPlantImageArea>
         <Image size="160px" src={uploadedImageUrl} alt={defaultNickname} />
         <ImageButton ref={imgRef} customCss={AddImageButton} changeCallback={fileUploadHandler} />
@@ -220,7 +234,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
         </Stack.Element>
         <Stack.Element height={STACK_ELEMENT_HEIGHT}>
           <Center>
-            <Button type="submit" onClick={submit} disabled={!isValidForm}>
+            <Button type="submit" disabled={!isValidForm}>
               등록하기
             </Button>
           </Center>

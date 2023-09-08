@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import useAddToast from 'hooks/useAddToast';
+import useOptimizeImage from 'hooks/useOptimizeImage';
 import basicImage from 'assets/piumi-emotionless.svg';
 
 interface FileUploadParams {
@@ -7,8 +8,13 @@ interface FileUploadParams {
 }
 
 const useFileUpload = ({ imageUrl = `${basicImage}` }: FileUploadParams) => {
+  const [file, setFile] = useState<Blob>();
   const [uploadedImageUrl, setUploadedImageUrl] = useState<string>(imageUrl);
+
   const imgRef = useRef<HTMLInputElement>(null);
+
+  const { executeOptimize, optimizedImage } = useOptimizeImage({ pw: 100, ph: 100 });
+
   const addToast = useAddToast();
   const allowedExtensions = ['image/jpg', 'image/jpeg', 'image/png', 'image/heic'];
 
@@ -39,12 +45,15 @@ const useFileUpload = ({ imageUrl = `${basicImage}` }: FileUploadParams) => {
         return;
       }
 
+      executeOptimize(firstFile);
+
       const fileUrl = URL.createObjectURL(firstFile);
       setUploadedImageUrl(fileUrl);
+      setFile(firstFile);
     }
   };
 
-  return { fileUploadHandler, uploadedImageUrl, imgRef };
+  return { fileUploadHandler, uploadedImageUrl, imgRef, file, optimizedImage };
 };
 
 export default useFileUpload;

@@ -1,4 +1,3 @@
-import type { NewPetPlantRequest } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/useAddToast';
@@ -11,7 +10,7 @@ const useRegisterPetPlant = () => {
   const navigate = useNavigate();
   const addToast = useAddToast();
 
-  return useMutation<void, Error, NewPetPlantRequest>({
+  return useMutation<void, Error, FormData>({
     mutationFn: async (form) => {
       const response = await PetPlantAPI.register(form);
       throwOnInvalidStatus(response);

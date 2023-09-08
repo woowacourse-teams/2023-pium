@@ -1,4 +1,4 @@
-import type { EditPetPlantRequest, NewPetPlantRequest, PetPlantDetails } from 'types/petPlant';
+import type { PetPlantDetails } from 'types/petPlant';
 import { BASE_URL } from 'constants/index';
 
 export const PET_PLANT_URL = `${BASE_URL}/pet-plants`;
@@ -15,12 +15,14 @@ const getList = () => {
   });
 };
 
-const register = (form: NewPetPlantRequest) => {
+const register = (form: FormData) => {
   return fetch(PET_PLANT_URL, {
     method: 'POST',
-    headers,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
     credentials: 'include',
-    body: JSON.stringify(form),
+    body: form,
   });
 };
 
@@ -32,12 +34,14 @@ const getDetails = (petPlantId: PetPlantDetails['id']) => {
   });
 };
 
-const edit = (petPlantId: PetPlantDetails['id'], form: EditPetPlantRequest) => {
+const edit = (petPlantId: PetPlantDetails['id'], form: FormData) => {
   return fetch(`${PET_PLANT_URL}/${petPlantId}`, {
     method: 'PATCH',
-    headers,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
     credentials: 'include',
-    body: JSON.stringify(form),
+    body: form,
   });
 };
 
