@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Suspense } from 'react';
-import LoadingSpinner from 'components/@common/Spinner';
+import Loading from 'pages/Loading';
 import DictionaryDetail from '.';
 
 const meta: Meta<typeof DictionaryDetail> = {
@@ -14,7 +14,7 @@ const meta: Meta<typeof DictionaryDetail> = {
   decorators: [
     (Story) => {
       return (
-        <Suspense fallback={<LoadingSpinner />}>
+        <Suspense fallback={<Loading />}>
           <Story />
         </Suspense>
       );

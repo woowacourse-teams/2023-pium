@@ -10,12 +10,9 @@ import {
 import HistoryAPI, { HISTORY_URL } from 'apis/history';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
-import useCheckSessionId from '../auth/useCheckSessionId';
 
-const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) => {
-  const { isSuccess } = useCheckSessionId();
-
-  return useInfiniteQuery<
+const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) =>
+  useInfiniteQuery<
     HistoryResponse,
     Error,
     YearList,
@@ -32,7 +29,7 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       return data;
     },
 
-    defaultPageParam: 0,
+    initialPageParam: 0,
     getNextPageParam: ({ hasNext }, _allPages, lastPageParam) => {
       return hasNext ? lastPageParam + 1 : undefined;
     },
@@ -44,12 +41,11 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       return yearList;
     },
 
+    throwOnError: true,
     retry: noRetryIfUnauthorized,
-    enabled: isSuccess,
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
     gcTime: 0,
   });
-};
 
 export default useYearList;

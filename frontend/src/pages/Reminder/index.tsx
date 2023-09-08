@@ -3,12 +3,10 @@ import Navbar from 'components/@common/Navbar';
 import MonthBox from 'components/reminder/MonthBox';
 import { ContentBox, Wrapper } from './Reminder.style';
 import ReminderProvider from 'contexts/reminderContext';
-import useReminderHooks from 'hooks/useReminderHooks';
+import useReminderHooks from './hooks/useReminderHooks';
 
 const Reminder = () => {
-  const { reminderData, waterMutate, changeDateMutate } = useReminderHooks();
-
-  if (!reminderData) return null;
+  const { reminderData, water, changeDate } = useReminderHooks();
 
   const reminderBox = reminderData.data.map(([month, reminders]) => {
     return <MonthBox key={JSON.stringify(reminders[0])} month={month} reminderDates={reminders} />;
@@ -16,7 +14,7 @@ const Reminder = () => {
 
   return (
     <>
-      <ReminderProvider waterCallback={waterMutate} changeDateCallback={changeDateMutate}>
+      <ReminderProvider waterCallback={water} changeDateCallback={changeDate}>
         <Wrapper status={reminderData.status}>
           <ContentHeader title="리마인더" />
           <ContentBox>{reminderBox}</ContentBox>
