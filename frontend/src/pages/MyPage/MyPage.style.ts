@@ -1,45 +1,30 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.main`
+  position: relative;
   display: flex;
   flex-direction: column;
-`;
-
-export const TitleBox = styled.div`
-  width: 100%;
-  height: 68px;
-  text-align: center;
-`;
-
-export const Title = styled.p`
-  font: 900 4rem/6.8rem 'GmarketSans';
+  height: calc(100% - 68px);
 `;
 
 export const ButtonBox = styled.section`
+  position: absolute;
+  bottom: 68px;
+
   display: flex;
-  flex-direction: column;
   gap: 16px;
   align-items: center;
+  justify-content: center;
 
   width: 100%;
-  margin: 300px auto;
 
   button {
     cursor: pointer;
   }
 `;
 
-const Button = styled.button`
-  width: 270px;
+export const Button = styled.button`
   height: 45px;
-  background: #333333;
+  color: ${({ theme: { color } }) => color.gray};
   border-radius: 8px;
-`;
-
-export const Logout = styled(Button)`
-  background: ${({ theme: { color } }) => color.grayLight};
-`;
-
-export const Withdraw = styled(Button)`
-  background: ${({ theme: { color } }) => color.gray};
 `;
