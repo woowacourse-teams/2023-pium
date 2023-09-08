@@ -25,12 +25,10 @@ const PetPlantRegisterFormPage = () => {
   if (!id) throw new Error('URL에 id가 없습니다.');
 
   const dictionaryPlantId = Number(id);
-  const { data: dictionaryPlantDetail, isSuccess } = useDictionaryPlantDetail(dictionaryPlantId);
-
+  const { data: dictionaryPlantDetail } = useDictionaryPlantDetail(dictionaryPlantId);
+  const { name, image } = dictionaryPlantDetail;
   const { isOpen, open, close, modalRef } = useModal();
 
-  if (!isSuccess) return null;
-  const { name, image } = dictionaryPlantDetail;
   return (
     <>
       <Header>
