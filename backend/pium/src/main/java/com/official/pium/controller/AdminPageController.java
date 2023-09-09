@@ -24,13 +24,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminPageController {
 
+    private static final String REDIRECT_ADMIN_LOGIN = "redirect:/admin/login";
+
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final AdminService adminService;
 
     @GetMapping("/**")
     public String adminPage(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
-            return "redirect:/admin/login";
+
+            return REDIRECT_ADMIN_LOGIN;
         }
 
         model.addAttribute("admin", admin);
@@ -38,9 +41,9 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict")
-    public String dictionaryPlantList(@PageableDefault Pageable pageable, @AdminAuth Admin admin, Model model) {
+    public String dictionaryPlants(@PageableDefault Pageable pageable, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
-            return "redirect:/admin/login";
+            return REDIRECT_ADMIN_LOGIN;
         }
         Page<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findAll(pageable);
 
@@ -53,7 +56,7 @@ public class AdminPageController {
     @GetMapping("/dict/{id}")
     public String dictionaryPlant(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
-            return "redirect:/admin/login";
+            return REDIRECT_ADMIN_LOGIN;
         }
 
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
@@ -67,7 +70,7 @@ public class AdminPageController {
     @GetMapping("/dict/create")
     public String dictionaryPlantCreateForm(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
-            return "redirect:/admin/login";
+            return REDIRECT_ADMIN_LOGIN;
         }
 
         model.addAttribute("admin", admin);
@@ -75,9 +78,9 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict/{id}/update")
-    public String dictionaryPlantUpdateForm(@PathVariable Long id,@AdminAuth Admin admin, Model model) {
+    public String dictionaryPlantUpdateForm(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
-            return "redirect:/admin/login";
+            return REDIRECT_ADMIN_LOGIN;
         }
 
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
@@ -91,7 +94,7 @@ public class AdminPageController {
     @GetMapping("/dict/requests")
     public String dictionaryPlantRequests(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
-            return "redirect:/admin/login";
+            return REDIRECT_ADMIN_LOGIN;
         }
 
         model.addAttribute("admin", admin);
