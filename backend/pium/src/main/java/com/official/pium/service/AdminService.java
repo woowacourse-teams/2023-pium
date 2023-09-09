@@ -23,7 +23,7 @@ public class AdminService {
     private String ADMIN_SECOND_PASSWORD;
 
     public void login(Admin admin, HttpSession session) {
-        if (admin.isValidate(ADMIN_ACCOUNT, ADMIN_PASSWORD, ADMIN_SECOND_PASSWORD)) {
+        if (admin != null && admin.isValidate(ADMIN_ACCOUNT, ADMIN_PASSWORD, ADMIN_SECOND_PASSWORD)) {
             session.setAttribute(SESSION_KEY, admin.getAccount());
             session.setMaxInactiveInterval(EXPIRED_TIME_ONE_HOUR);
         }

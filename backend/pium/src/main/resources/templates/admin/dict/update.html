@@ -10,9 +10,7 @@
 
         <h2 class="text-success" th:text="|${plant.name} 정보 수정|"></h2>
 
-
-        <form id="plantUpdateForm" th:action="@{|/dictionary-plants/${plant.id}}" th:method="PATCH">
-
+        <form id="plantUpdateForm">
             <div class="form-group">
                 <label for="name">이름:</label>
                 <input type="text" id="name" class="form-control" name="name" th:value="${plant.name}"
