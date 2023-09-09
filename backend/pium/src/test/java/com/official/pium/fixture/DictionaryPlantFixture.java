@@ -3,6 +3,7 @@ package com.official.pium.fixture;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.WaterCycle;
 import com.official.pium.service.dto.DataResponse;
+import com.official.pium.service.dto.DictionaryPlantCreateRequest;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse.WaterCycleResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
@@ -55,6 +56,26 @@ public class DictionaryPlantFixture {
                         .summer("Fixed")
                         .autumn("Fixed")
                         .winter("Fixed")
+                        .build();
+
+        public static DictionaryPlantCreateRequest 사전_식물_생성_요청 =
+                DictionaryPlantCreateRequest.builder()
+                        .name("Created")
+                        .imageUrl("https://createdimage.com")
+                        .familyName("Created")
+                        .smell("Created")
+                        .poison("Created")
+                        .manageLevel("Created")
+                        .growSpeed("Created")
+                        .requireTemp("Created")
+                        .minimumTemp("Created")
+                        .requireHumidity("Created")
+                        .postingPlace("Created")
+                        .specialManageInfo("Created")
+                        .spring("Created")
+                        .summer("Created")
+                        .autumn("Created")
+                        .winter("Created")
                         .build();
     }
 
