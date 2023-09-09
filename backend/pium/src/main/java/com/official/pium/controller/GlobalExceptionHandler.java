@@ -114,7 +114,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(NeedAdminException.class)
-    public ResponseEntity<GlobalExceptionResponse> handleNeedAdminException(ConstraintViolationException e) {
+    public ResponseEntity<GlobalExceptionResponse> handleNeedAdminException(NeedAdminException e) {
         String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
         log.warn(message);
