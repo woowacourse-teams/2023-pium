@@ -1,6 +1,6 @@
 package com.official.pium.controller;
 
-import com.official.pium.exception.NeedAdminException;
+import com.official.pium.exception.AuthorizationException;
 import com.official.pium.exception.OAuthException;
 import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
 import com.official.pium.exception.OAuthException.KakaoServerException;
@@ -113,8 +113,8 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(exceptionResponse);
     }
 
-    @ExceptionHandler(NeedAdminException.class)
-    public ResponseEntity<GlobalExceptionResponse> handleNeedAdminException(NeedAdminException e) {
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleNeedAdminException(AuthorizationException e) {
         String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
         log.warn(message);

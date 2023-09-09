@@ -1,8 +1,9 @@
 package com.official.pium.service;
 
+import static com.official.pium.exception.AuthorizationException.NeedAdminException;
+
 import com.official.pium.domain.Admin;
 import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.exception.NeedAdminException;
 import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.PetPlantRepository;
