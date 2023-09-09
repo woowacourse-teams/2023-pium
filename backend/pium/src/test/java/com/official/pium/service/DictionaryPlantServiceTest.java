@@ -29,9 +29,6 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     private DictionaryPlantService dictionaryPlantService;
 
     @Autowired
-    private PetPlantRepository petPlantRepository;
-
-    @Autowired
     private DictionaryPlantRepository dictionaryPlantRepository;
 
     @Test
