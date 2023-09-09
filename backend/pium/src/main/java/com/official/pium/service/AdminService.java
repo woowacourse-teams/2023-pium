@@ -1,6 +1,8 @@
 package com.official.pium.service;
 
 import com.official.pium.domain.Admin;
+import com.official.pium.mapper.AdminMapper;
+import com.official.pium.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,9 +24,10 @@ public class AdminService {
     @Value("${admin.secondPassword}")
     private String ADMIN_SECOND_PASSWORD;
 
-    public void login(Admin admin, HttpSession session) {
-        if (admin != null && admin.isValidate(ADMIN_ACCOUNT, ADMIN_PASSWORD, ADMIN_SECOND_PASSWORD)) {
-            session.setAttribute(SESSION_KEY, admin.getAccount());
+    public void login(AdminLoginRequest request, HttpSession session) {
+        Admin admin = AdminMapper.toAdmin(request);
+        if (admin.isValidate(ADMIN_ACCOUNT, ADMIN_PASSWORD, ADMIN_SECOND_PASSWORD)) {
+            session.setAttribute(SESSION_KEY, admin);
             session.setMaxInactiveInterval(EXPIRED_TIME_ONE_HOUR);
         }
     }

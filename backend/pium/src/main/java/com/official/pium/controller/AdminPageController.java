@@ -5,6 +5,7 @@ import com.official.pium.domain.Admin;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.service.AdminService;
+import com.official.pium.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
@@ -13,12 +14,14 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Validated
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
@@ -103,12 +106,11 @@ public class AdminPageController {
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        model.addAttribute("admin", new Admin());
         return "/admin/login";
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody Admin admin, HttpSession httpSession) {
+    public String login(@RequestBody AdminLoginRequest admin, HttpSession httpSession) {
         adminService.login(admin, httpSession);
         return "redirect:/admin";
     }

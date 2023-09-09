@@ -1,11 +1,11 @@
 package com.official.pium.service;
 
+import static com.official.pium.fixture.AdminFixture.GUEST;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.IntegrationTest;
-import com.official.pium.domain.Admin;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.mapper.DictionaryPlantMapper;
@@ -17,7 +17,6 @@ import com.official.pium.service.dto.DictionaryPlantSearchResponse;
 import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
 import java.util.List;
 import java.util.NoSuchElementException;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -87,7 +86,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         Long dictionaryPlantId = dictionaryPlant.getId();
         DictionaryPlantUpdateRequest updateRequest = REQUEST.사전_식물_수정_요청;
 
-        dictionaryPlantService.update(new Admin(), dictionaryPlantId, updateRequest);
+        dictionaryPlantService.update(GUEST(), dictionaryPlantId, updateRequest);
 
         assertSoftly(softly -> {
             softly.assertThat(dictionaryPlant.getName()).isEqualTo(updateRequest.getName());
@@ -113,7 +112,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     void 사전_식물_삭제() {
         DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
         Long dictionaryPlantId = dictionaryPlant.getId();
-        dictionaryPlantService.delete(new Admin(), dictionaryPlantId);
+        dictionaryPlantService.delete(GUEST(), dictionaryPlantId);
 
         assertThat(dictionaryPlantRepository.findById(dictionaryPlantId)).isEmpty();
     }
@@ -125,7 +124,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         petPlantSupport.builder().dictionaryPlant(dictionaryPlant).build();
 
         assertThatThrownBy(() ->
-                        dictionaryPlantService.delete(new Admin(), dictionaryPlantId)
+                        dictionaryPlantService.delete(GUEST(), dictionaryPlantId)
                 ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 개체를 참조하는 반려 식물이 존재합니다 id: " + dictionaryPlantId);
     }

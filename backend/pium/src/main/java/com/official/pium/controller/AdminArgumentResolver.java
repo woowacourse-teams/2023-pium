@@ -30,12 +30,7 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
         }
 
         try {
-            String adminAccount = (String) session.getAttribute(SESSION_KEY);
-            if (adminAccount == null) {
-                return null;
-            }
-
-            return new Admin(adminAccount);
+            return session.getAttribute(SESSION_KEY);
         } catch (ClassCastException e) {
             return null;
         }
