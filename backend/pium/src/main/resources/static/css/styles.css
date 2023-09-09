@@ -67,9 +67,9 @@ body {
 }
 
 .plant-image {
-    max-width: 100px;
-    max-height: 100px;
-    margin-top: 10px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
 
 .plant-info {

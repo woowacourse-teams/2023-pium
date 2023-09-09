@@ -13,51 +13,51 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class DictionaryPlantCreateRequest {
 
-    @NotNull
+    @NotNull(message = "name은 비어있을 수 없습니다 name: ${validatedValue}")
     private String name;
 
-    @NotNull
+    @NotNull(message = "imageUrl은 비어있을 수 없습니다 imageUrl: ${validatedValue}")
     private String imageUrl;
 
-    @NotNull
+    @NotNull(message = "familyName은 비어있을 수 없습니다 familyName: ${validatedValue}")
     private String familyName;
 
-    @NotNull
+    @NotNull(message = "smell은 비어있을 수 없습니다 smell: ${validatedValue}")
     private String smell;
 
-    @NotNull
+    @NotNull(message = "poison은 비어있을 수 없습니다 poison: ${validatedValue}")
     private String poison;
 
-    @NotNull
+    @NotNull(message = "manageLevel은 비어있을 수 없습니다 manageLevel: ${validatedValue}")
     private String manageLevel;
 
-    @NotNull
+    @NotNull(message = "growSpeed은 비어있을 수 없습니다 growSpeed: ${validatedValue}")
     private String growSpeed;
 
-    @NotNull
+    @NotNull(message = "requireTemp은 비어있을 수 없습니다 requireTemp: ${validatedValue}")
     private String requireTemp;
 
-    @NotNull
+    @NotNull(message = "minimumTemp은 비어있을 수 없습니다 minimumTemp: ${validatedValue}")
     private String minimumTemp;
 
-    @NotNull
+    @NotNull(message = "requireHumidity은 비어있을 수 없습니다 requireHumidity: ${validatedValue}")
     private String requireHumidity;
 
-    @NotNull
+    @NotNull(message = "postingPlace은 비어있을 수 없습니다 postingPlace: ${validatedValue}")
     private String postingPlace;
 
-    @NotNull
+    @NotNull(message = "specialManageInfo은 비어있을 수 없습니다 specialManageInfo: ${validatedValue}")
     private String specialManageInfo;
 
-    @NotNull
+    @NotNull(message = "spring은 비어있을 수 없습니다 spring: ${validatedValue}")
     private String spring;
 
-    @NotNull
+    @NotNull(message = "summer은 비어있을 수 없습니다 summer: ${validatedValue}")
     private String summer;
 
-    @NotNull
+    @NotNull(message = "autumn은 비어있을 수 없습니다 autumn: ${validatedValue}")
     private String autumn;
 
-    @NotNull
+    @NotNull(message = "winter은 비어있을 수 없습니다 winter: ${validatedValue}")
     private String winter;
 }
