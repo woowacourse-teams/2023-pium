@@ -8,6 +8,7 @@ import com.official.pium.service.AdminService;
 import com.official.pium.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -111,7 +112,7 @@ public class AdminPageController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody AdminLoginRequest admin, HttpSession httpSession) {
+    public String login(@RequestBody @Valid AdminLoginRequest admin, HttpSession httpSession) {
         adminService.login(admin, httpSession);
         return "redirect:/admin";
     }
