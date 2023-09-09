@@ -110,7 +110,7 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
         function confirmDelete(id) {
-            var result = confirm('삭제하시겠습니까?');
+            let result = confirm('삭제하시겠습니까?');
             if (result) {
                 fetch(`/dictionary-plants/${id}`, {
                     method: 'DELETE'

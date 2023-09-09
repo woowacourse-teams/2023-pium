@@ -1,6 +1,5 @@
 package com.official.pium.service;
 
-import static com.official.pium.fixture.AdminFixture.GUEST;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -86,7 +85,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         Long dictionaryPlantId = dictionaryPlant.getId();
         DictionaryPlantUpdateRequest updateRequest = REQUEST.사전_식물_수정_요청;
 
-        dictionaryPlantService.update(GUEST(), dictionaryPlantId, updateRequest);
+        dictionaryPlantService.update(dictionaryPlantId, updateRequest);
 
         assertSoftly(softly -> {
             softly.assertThat(dictionaryPlant.getName()).isEqualTo(updateRequest.getName());
@@ -112,7 +111,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
     void 사전_식물_삭제() {
         DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
         Long dictionaryPlantId = dictionaryPlant.getId();
-        dictionaryPlantService.delete(GUEST(), dictionaryPlantId);
+        dictionaryPlantService.delete(dictionaryPlantId);
 
         assertThat(dictionaryPlantRepository.findById(dictionaryPlantId)).isEmpty();
     }
@@ -124,7 +123,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         petPlantSupport.builder().dictionaryPlant(dictionaryPlant).build();
 
         assertThatThrownBy(() ->
-                        dictionaryPlantService.delete(GUEST(), dictionaryPlantId)
+                        dictionaryPlantService.delete(dictionaryPlantId)
                 ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 개체를 참조하는 반려 식물이 존재합니다 id: " + dictionaryPlantId);
     }

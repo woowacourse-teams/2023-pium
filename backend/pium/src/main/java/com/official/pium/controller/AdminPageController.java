@@ -6,12 +6,14 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.service.AdminService;
 import com.official.pium.service.dto.AdminLoginRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +37,6 @@ public class AdminPageController {
     @GetMapping("/**")
     public String adminPage(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
-
             return REDIRECT_ADMIN_LOGIN;
         }
 
@@ -48,8 +49,8 @@ public class AdminPageController {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
-        Page<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findAll(pageable);
 
+        Page<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findAll(pageable);
         model.addAttribute("admin", admin);
         model.addAttribute("page", dictionaryPlants);
         model.addAttribute("plants", dictionaryPlants.getContent());
@@ -113,5 +114,16 @@ public class AdminPageController {
     public String login(@RequestBody AdminLoginRequest admin, HttpSession httpSession) {
         adminService.login(admin, httpSession);
         return "redirect:/admin";
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return ResponseEntity.ok().build();
     }
 }

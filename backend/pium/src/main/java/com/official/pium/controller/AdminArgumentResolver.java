@@ -2,6 +2,7 @@ package com.official.pium.controller;
 
 import com.official.pium.annotation.AdminAuth;
 import com.official.pium.domain.Admin;
+import com.official.pium.exception.AuthorizationException.NeedAdminException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.core.MethodParameter;
@@ -30,7 +31,11 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
         }
 
         try {
-            return session.getAttribute(SESSION_KEY);
+            Admin admin = (Admin) session.getAttribute(SESSION_KEY);
+            if (admin == null) {
+                throw new NeedAdminException("관리자 권한이 필요합니다.");
+            }
+            return admin;
         } catch (ClassCastException e) {
             return null;
         }

@@ -1,8 +1,5 @@
 package com.official.pium.service;
 
-import static com.official.pium.exception.AuthorizationException.NeedAdminException;
-
-import com.official.pium.domain.Admin;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
@@ -46,18 +43,16 @@ public class DictionaryPlantService {
     }
 
     @Transactional
-    public Long create(Admin admin, DictionaryPlantCreateRequest request) {
-        validateAdmin(admin);
+    public Long create(DictionaryPlantCreateRequest request) {
         DictionaryPlant dictionaryPlant = DictionaryPlantMapper.toDictionaryPlant(request);
         dictionaryPlantRepository.save(dictionaryPlant);
         return dictionaryPlant.getId();
     }
 
     @Transactional
-    public void update(Admin admin, Long id, DictionaryPlantUpdateRequest request) {
-        validateAdmin(admin);
+    public void update(Long id, DictionaryPlantUpdateRequest request) {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
-                .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: "+ id));
+                .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + id));
 
         dictionaryPlant.updateDictionaryPlant(
                 request.getName(),
@@ -80,8 +75,7 @@ public class DictionaryPlantService {
     }
 
     @Transactional
-    public void delete(Admin admin, Long id) {
-        validateAdmin(admin);
+    public void delete(Long id) {
         validatePetPlant(id);
         dictionaryPlantRepository.deleteById(id);
     }
@@ -89,12 +83,6 @@ public class DictionaryPlantService {
     private void validatePetPlant(Long id) {
         if (petPlantRepository.existsByDictionaryPlantId(id)) {
             throw new IllegalArgumentException("해당 개체를 참조하는 반려 식물이 존재합니다 id: " + id);
-        }
-    }
-
-    private void validateAdmin(Admin admin) {
-        if (admin == null) {
-            throw new NeedAdminException("관리자 권한이 필요한 작업입니다.");
         }
     }
 }

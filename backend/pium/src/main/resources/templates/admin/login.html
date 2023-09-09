@@ -47,6 +47,8 @@
             .then(response => {
                 if (response.ok) {
                     window.location.replace(`/admin`)
+                } else if (response.status === 403) {
+                    alert('잘못된 인증정보입니다.')
                 } else {
                     throw new Error('서버 응답 오류');
                 }
