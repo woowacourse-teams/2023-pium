@@ -6,6 +6,7 @@ import Login from 'pages/Login';
 import Authorization from 'pages/Login/Authorization';
 import Main from 'pages/Main';
 import MyPage from 'pages/MyPage';
+import NewDictionaryRequest from 'pages/NewDictionaryRequest';
 import PetPlantCardList from 'pages/PetPlantCardList';
 import PetPlantDetails from 'pages/PetPlantDetails';
 import PetPlantEdit from 'pages/PetPlantEdit';
@@ -73,6 +74,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.myPage,
         element: <MyPage />,
+      },
+      {
+        path: URL_PATH.newDictionaryRequest,
+        element: <NewDictionaryRequest />,
       },
     ],
   },

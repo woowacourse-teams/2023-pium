@@ -17,6 +17,7 @@ export const URL_PATH = {
   login: '/login',
   authorization: '/authorization',
   myPage: '/myPage',
+  newDictionaryRequest: '/add-this-to-dictionary',
 } as const;
 
 export const MESSAGE = {
