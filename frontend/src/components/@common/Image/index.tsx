@@ -12,7 +12,9 @@ const Image = (props: ImageProps) => {
     currentTarget.src = sadpiumi;
   };
 
-  return <StyledImage type={type} size={size} onError={setErrorImage} {...imageProps} />;
+  return (
+    <StyledImage type={type} size={size} onError={setErrorImage} loading="lazy" {...imageProps} />
+  );
 };
 
 export default Image;
