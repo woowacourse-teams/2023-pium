@@ -12,7 +12,6 @@ export const URL_PATH = {
   petEdit: '/pet/:id/edit',
   petRegisterSearch: '/pet/register',
   petRegisterForm: '/pet/register/:id',
-  calendar: '/calendar',
   reminder: '/reminder',
   login: '/login',
   authorization: '/authorization',
