@@ -25,7 +25,7 @@ public class FileFixture {
 
     public static MultipartFile generateMultiPartFile() {
         return new MockMultipartFile(
-                "images",
+                "image",
                 "pium.jpg",
                 MediaType.IMAGE_JPEG_VALUE,
                 IMAGE
