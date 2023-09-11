@@ -11,8 +11,8 @@ const NewDictionaryRequest = () => {
 
   return (
     <>
+      <ContentHeader title="새로운 식물 추가 요청하기" />
       <Main>
-        <ContentHeader title="새로운 식물 추가 요청하기" />
         <Description>요청하신 식물은 저희가 검토 후 추가할게요!</Description>
         <RequestDictionaryPlantForm initialName={initialName} />
       </Main>
