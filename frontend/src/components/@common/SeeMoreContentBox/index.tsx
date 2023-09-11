@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { ContentBox, SeeMoreButton, SeeMoreButtonArea, Wrapper } from './SeeMoreContentBox.styles';
 import useShowState from './hooks/useShowState';
 
@@ -15,11 +16,11 @@ const SeeMoreContentBox = ({ children: content, maxHeight = '64px' }: SeeMoreCon
       <ContentBox maxHeight={maxHeight} hiddenOver={showState === 'HIDDEN_OVER'}>
         {paragraphList.shift()}
         {paragraphList.map((paragraph) => (
-          <>
+          <Fragment key={paragraph}>
             <br />
             <br />
             {paragraph}
-          </>
+          </Fragment>
         ))}
       </ContentBox>
       {showState === 'HIDDEN_OVER' && (
