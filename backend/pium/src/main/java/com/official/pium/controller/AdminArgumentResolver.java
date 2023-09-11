@@ -27,7 +27,7 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
         HttpSession session = request.getSession(false);
 
         if (session == null) {
-            throw new NeedAdminException("관리자 권한이 필요합니다.");
+            return null;
         }
 
         try {
