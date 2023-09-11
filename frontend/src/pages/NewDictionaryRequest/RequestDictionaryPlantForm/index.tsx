@@ -10,8 +10,9 @@ import {
   Thumbnail,
   UploadButton,
 } from './RequestDictionaryPlantForm.style';
-
-const MAX_IMAGE_BYTE_SIZE = 5_000_000;
+import useDictionaryRegistrationRequest from 'hooks/queries/dictionaryRegistration/useDictionaryRegistrationRequest';
+import useAddToast from 'hooks/useAddToast';
+import { getFirstImage, getImageUrl } from 'utils/image';
 
 interface RequestDictionaryPlantFormProps {
   initialName?: string;
@@ -23,6 +24,8 @@ const RequestDictionaryPlantForm = (props: RequestDictionaryPlantFormProps) => {
   const [image, setImage] = useState<File | null>(null);
   const [plantName, setPlantName] = useState(initialName ?? '');
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const addToast = useAddToast();
+  const { mutate } = useDictionaryRegistrationRequest();
 
   const accessFileInput = () => {
     fileInputRef.current?.click();
@@ -35,24 +38,19 @@ const RequestDictionaryPlantForm = (props: RequestDictionaryPlantFormProps) => {
 
     if (!isFormValid) return;
 
-    // todo: api 통신 로직
-    alert('제출 성공?');
-  };
-
-  const getFirstImage = (fileList: FileList, maxSize: File['size'] = MAX_IMAGE_BYTE_SIZE) => {
-    const firstImage = Array.from(fileList).find(
-      (file) => /^image/.test(file.type) && file.size <= maxSize
-    );
-    return firstImage || null;
-  };
-
-  const getImageUrl = (file: File) => {
-    if (!/^image/.test(file.type)) throw new Error('file type is not image');
-    return URL.createObjectURL(file);
+    const form = image ? { image, name: plantName } : { name: plantName };
+    mutate(form);
   };
 
   const setImageIfValid: React.ChangeEventHandler<HTMLInputElement> = ({ target: { files } }) => {
-    setImage(files ? getFirstImage(files) : null);
+    if (!files) {
+      setImage(null);
+      return;
+    }
+
+    const firstImage = getFirstImage(files);
+    if (!firstImage) addToast('warning', '5MB 이하의 사진을 올려주세요!');
+    setImage(firstImage);
   };
 
   return (

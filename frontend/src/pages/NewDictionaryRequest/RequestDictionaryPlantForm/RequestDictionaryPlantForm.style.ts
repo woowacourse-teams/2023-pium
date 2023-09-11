@@ -49,6 +49,8 @@ export const Form = styled.form`
   flex-direction: column;
   row-gap: 80px;
   align-items: center;
+
+  margin-bottom: 100px;
 `;
 
 export const ImageName = styled.p`
