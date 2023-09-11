@@ -114,7 +114,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(AuthorizationException.class)
-    public ResponseEntity<GlobalExceptionResponse> handleNeedAdminException(AuthorizationException e) {
+    public ResponseEntity<GlobalExceptionResponse> handleAuthorizationException(AuthorizationException e) {
         String message = e.getMessage();
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
         log.warn(message);
