@@ -1,35 +1,17 @@
-import { useState } from 'react';
 import { ContentBox, SeeMoreButton, SeeMoreButtonArea, Wrapper } from './SeeMoreContentBox.styles';
+import useShowState from './hooks/useShowState';
 
 interface SeeMoreContentBoxProps {
   children: string;
   maxHeight?: `${number}px`;
 }
 
-type ShowState = 'NOT_OVER' | 'HIDDEN_OVER' | 'SHOW_OVER';
-
 const SeeMoreContentBox = ({ children: content, maxHeight = '64px' }: SeeMoreContentBoxProps) => {
-  const [showState, setShowState] = useState<ShowState>('NOT_OVER');
-
+  const { showState, wrapperRef, showOver } = useShowState(maxHeight);
   const paragraphList = content.trim().split(/(?:\r?\n)+/);
 
-  const setInitialShow = (instance: HTMLDivElement | null) => {
-    if (!instance) return;
-
-    const maxHeightNumber = Number(maxHeight.slice(0, -2));
-    console.log(instance.offsetHeight, maxHeightNumber);
-
-    if (showState === 'NOT_OVER' && instance.offsetHeight > maxHeightNumber) {
-      setShowState('HIDDEN_OVER');
-    }
-  };
-
-  const showOver = () => {
-    setShowState('SHOW_OVER');
-  };
-
   return (
-    <Wrapper ref={setInitialShow} maxHeight={maxHeight} hiddenOver={showState === 'HIDDEN_OVER'}>
+    <Wrapper ref={wrapperRef} maxHeight={maxHeight} hiddenOver={showState === 'HIDDEN_OVER'}>
       <ContentBox maxHeight={maxHeight} hiddenOver={showState === 'HIDDEN_OVER'}>
         {paragraphList.shift()}
         {paragraphList.map((paragraph) => (
