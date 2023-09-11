@@ -1,6 +1,5 @@
 package com.official.pium.controller;
 
-import com.official.pium.annotation.AdminAuth;
 import com.official.pium.domain.Admin;
 import com.official.pium.exception.AuthorizationException.NeedAdminException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.hasParameterAnnotation(AdminAuth.class) && parameter.getParameterType().equals(Admin.class);
+        return parameter.getParameterType().equals(Admin.class);
     }
 
     @Override
