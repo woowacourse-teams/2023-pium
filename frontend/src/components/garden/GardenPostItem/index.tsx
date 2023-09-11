@@ -3,10 +3,11 @@ import Flowerpot from 'components/@common/Icons/Flowerpot';
 import House from 'components/@common/Icons/House';
 import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
+import SeeMoreContentBox from 'components/@common/SeeMoreContentBox';
 import { convertDateKorYear } from 'utils/date';
 import theme from 'style/theme.style';
 import {
-  Content,
+  ContentArea,
   DaySince,
   Environment,
   EnvironmentItem,
@@ -25,7 +26,7 @@ import {
 type GardenPostItemProps = Omit<GardenPostItemType, 'id' | 'updatedAt'>;
 
 const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPostItemProps) => {
-  const postingDate = convertDateKorYear(createdAt).slice(5);
+  const postingDate = convertDateKorYear(createdAt);
 
   return (
     <Wrapper>
@@ -93,22 +94,9 @@ const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPos
         <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
         <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
       </TagArea>
-      <Content>
-        {content
-          .trim()
-          .split(/(?:\r?\n)+/)
-          .map((paragraph, index) =>
-            index ? (
-              <>
-                <br />
-                <br />
-                {paragraph}
-              </>
-            ) : (
-              paragraph
-            )
-          )}
-      </Content>
+      <ContentArea>
+        <SeeMoreContentBox>{content}</SeeMoreContentBox>
+      </ContentArea>
     </Wrapper>
   );
 };

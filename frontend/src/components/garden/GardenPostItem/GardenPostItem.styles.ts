@@ -125,7 +125,7 @@ export const ManageLevelTag = styled(Tag)`
   border-color: ${({ theme }) => theme.color.primary};
 `;
 
-export const Content = styled.div`
+export const ContentArea = styled.div`
   width: 100%;
   margin-top: 24px;
   font-size: 1.6rem;
