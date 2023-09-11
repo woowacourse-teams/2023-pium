@@ -1,14 +1,15 @@
 import { styled } from 'styled-components';
 
-export const Wrapper = styled.div<{ hiddenOver: boolean; maxHeight: string }>`
+export const Wrapper = styled.div<{ $hiddenOver: boolean; $maxHeight: string }>`
   position: relative;
   width: 100%;
-  height: ${({ hiddenOver, maxHeight }) => (hiddenOver ? maxHeight : 'max-content')};
+  height: ${({ $hiddenOver, $maxHeight }) => ($hiddenOver ? $maxHeight : 'max-content')};
 `;
 
-export const ContentBox = styled.div<{ hiddenOver: boolean; maxHeight: string }>`
+export const ContentBox = styled.div<{ $hiddenOver: boolean; $maxHeight: string }>`
   overflow: hidden;
-  max-height: ${({ hiddenOver, maxHeight }) => (hiddenOver ? `calc(${maxHeight} - 1.4rem)` : '')};
+  max-height: ${({ $hiddenOver, $maxHeight }) =>
+    $hiddenOver ? `calc(${$maxHeight} - 1.4rem)` : ''};
 `;
 
 export const SeeMoreButtonArea = styled.div`
