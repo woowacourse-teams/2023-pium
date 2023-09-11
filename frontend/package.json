@@ -11,7 +11,9 @@
     "build-prod": "cross-env NODE_ENV=production webpack --env environment=production",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o ./dist/storybook",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "preanalyze": "npm run build-prod",
+    "analyze": "webpack-bundle-analyzer bundle/output/path/stats.json --default-sizes gzip"
   },
   "license": "MIT",
   "dependencies": {
@@ -72,6 +74,7 @@
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.1.6",
     "webpack": "^5.88.1",
+    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
