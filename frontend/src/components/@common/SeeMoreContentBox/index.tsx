@@ -1,5 +1,5 @@
 import useToggle from 'hooks/useToggle';
-import { SeeMoreButton, SeeMoreButtonArea, Wrapper } from './SeeMoreContentBox.styles';
+import { ContentArea, SeeMoreButton, SeeMoreButtonArea, Wrapper } from './SeeMoreContentBox.styles';
 
 interface SeeMoreContentBoxProps {
   children: string;
@@ -21,14 +21,16 @@ const SeeMoreContentBox = ({ children: content, maxHeight = '64px' }: SeeMoreCon
 
   return (
     <Wrapper ref={setInitialShow} maxHeight={maxHeight} isSeeMore={isSeeMore}>
-      {paragraphList.shift()}
-      {paragraphList.map((paragraph) => (
-        <>
-          <br />
-          <br />
-          {paragraph}
-        </>
-      ))}
+      <ContentArea isSeeMore={isSeeMore}>
+        {paragraphList.shift()}
+        {paragraphList.map((paragraph) => (
+          <>
+            <br />
+            <br />
+            {paragraph}
+          </>
+        ))}
+      </ContentArea>
       {!isSeeMore && (
         <SeeMoreButtonArea>
           <SeeMoreButton onClick={seeMore}>더보기</SeeMoreButton>
