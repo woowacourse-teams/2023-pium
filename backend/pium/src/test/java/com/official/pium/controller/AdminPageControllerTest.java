@@ -154,11 +154,6 @@ class AdminPageControllerTest extends UITest {
                         .session(session)
                         .content(objectMapper.writeValueAsString(request))
                         .contentType(MediaType.APPLICATION_JSON_VALUE))
-                .andDo(document("admin/login/",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        requestCookies()
-                ))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/admin"))
                 .andDo(print());
@@ -168,11 +163,6 @@ class AdminPageControllerTest extends UITest {
     void 로그아웃_정상_수행_시_200_반환() throws Exception {
         mockMvc.perform(post("/admin/logout")
                         .session(session))
-                .andDo(document("admin/logout/",
-                        preprocessRequest(prettyPrint()),
-                        preprocessResponse(prettyPrint()),
-                        requestCookies()
-                ))
                 .andExpect(status().isOk())
                 .andDo(print());
 
