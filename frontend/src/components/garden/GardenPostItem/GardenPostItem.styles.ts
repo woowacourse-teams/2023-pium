@@ -29,7 +29,7 @@ export const HeaderContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  width: 192px;
+  width: 176px;
   height: 100%;
   margin-right: auto;
   margin-left: 16px;
@@ -53,7 +53,7 @@ export const DaySince = styled.p`
 export const PostingDate = styled.p`
   width: max-content;
   margin-top: 4px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: ${(props) => props.theme.color.sub};
 `;
 
