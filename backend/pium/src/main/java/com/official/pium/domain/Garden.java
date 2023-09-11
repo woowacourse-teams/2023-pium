@@ -65,7 +65,7 @@ public class Garden extends BaseEntity {
 
     @NotNull
     @Column(name = "day_since", nullable = false)
-    private Integer daySince;
+    private Long daySince;
 
     @Min(MIN_WATER_CYCLE)
     @Max(MAX_WATER_CYCLE)
