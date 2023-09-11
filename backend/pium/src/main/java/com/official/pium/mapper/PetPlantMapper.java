@@ -16,12 +16,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PetPlantMapper {
 
-    public static PetPlant toPetPlant(PetPlantCreateRequest request, DictionaryPlant dictionaryPlant, Member member) {
+    public static PetPlant toPetPlant(
+            PetPlantCreateRequest request,
+            DictionaryPlant dictionaryPlant,
+            String imagePath,
+            Member member
+    ) {
         return PetPlant.builder()
                 .dictionaryPlant(dictionaryPlant)
                 .member(member)
                 .nickname(request.getNickname())
-                .imageUrl(dictionaryPlant.getImageUrl())
+                .imageUrl(imagePath == null ? dictionaryPlant.getImageUrl() : imagePath)
                 .location(request.getLocation())
                 .flowerpot(request.getFlowerpot())
                 .light(request.getLight())

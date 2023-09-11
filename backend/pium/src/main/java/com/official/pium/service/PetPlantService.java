@@ -27,37 +27,52 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PetPlantService {
 
+    private static final String PET_PLANT = "petPlant";
+
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
+    private final PhotoManger photoManger;
     private final ApplicationEventPublisher publisher;
 
     @Transactional
-    public PetPlantResponse create(PetPlantCreateRequest request, Member member) {
+    public PetPlantResponse create(PetPlantCreateRequest request, MultipartFile image, Member member) {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(request.getDictionaryPlantId())
                 .orElseThrow(
                         () -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + request.getDictionaryPlantId()));
 
-        PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, member);
+        String imagePath = saveImageIfExists(image);
+        PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, imagePath, member);
         petPlantRepository.save(petPlant);
 
-        long daySince = petPlant.calculateDaySince(LocalDate.now());
-        long dday = petPlant.calculateDday(LocalDate.now());
+        createHistory(petPlant);
 
+        long dday = petPlant.calculateDday(LocalDate.now());
+        long daySince = petPlant.calculateDaySince(LocalDate.now());
+        return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
+    }
+
+    private String saveImageIfExists(MultipartFile image) {
+        if (image == null || image.isEmpty()) {
+            return null;
+        }
+        return photoManger.upload(image, PET_PLANT);
+    }
+
+    private void createHistory(PetPlant petPlant) {
         PetPlantHistory petPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         List<HistoryEvent> historyEvents = petPlantHistory.generateCreateHistoryEvents(petPlant.getId(),
                 LocalDate.now());
         for (HistoryEvent historyEvent : historyEvents) {
             publisher.publishEvent(historyEvent);
         }
-
-        return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 
     public PetPlantResponse read(Long id, Member member) {
