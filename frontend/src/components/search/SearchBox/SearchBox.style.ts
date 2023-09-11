@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -69,4 +70,10 @@ export const EnterButton = styled.button`
   align-items: center;
   background: transparent;
   border: none;
+`;
+
+export const StyledLink = styled(Link)`
+  font-weight: normal;
+  color: ${({ theme: { color } }) => color.primary};
+  text-decoration: underline;
 `;

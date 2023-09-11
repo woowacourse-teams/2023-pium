@@ -12,10 +12,11 @@ import {
   EnterButton,
   Input,
   ResultMessage,
+  StyledLink,
 } from './SearchBox.style';
 import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 import useDebounce from 'hooks/useDebounce';
-import { MESSAGE } from 'constants/index';
+import { MESSAGE, URL_PATH } from 'constants/index';
 
 interface SearchBoxProps {
   onResultClick?: (id: number) => void;
@@ -79,7 +80,12 @@ const SearchBox = (props: SearchBoxProps) => {
             ))}
           </ResultList>
         ) : (
-          <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
+          <ResultMessage>
+            {MESSAGE.noSearchResult} &nbsp;&nbsp;&nbsp;
+            <StyledLink to={URL_PATH.newDictionaryRequest} state={searchName}>
+              등록 신청하기
+            </StyledLink>
+          </ResultMessage>
         ))}
     </Wrapper>
   );
