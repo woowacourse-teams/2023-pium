@@ -1,5 +1,9 @@
 package com.official.pium.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.History;
@@ -10,20 +14,15 @@ import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.HistoryResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.SingleHistoryResponse;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -118,16 +117,19 @@ class HistoryServiceTest extends IntegrationTest {
         DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
         Member member = memberSupport.builder().build();
         petPlantService.create(PetPlantCreateRequest.builder()
-                .dictionaryPlantId(dictionaryPlant.getId())
-                .nickname("test")
-                .location("test")
-                .flowerpot("test")
-                .waterCycle(3)
-                .light("test")
-                .wind("test")
-                .birthDate(LocalDate.now())
-                .lastWaterDate(LocalDate.now())
-                .build(), member);
+                        .dictionaryPlantId(dictionaryPlant.getId())
+                        .nickname("test")
+                        .location("test")
+                        .flowerpot("test")
+                        .waterCycle(3)
+                        .light("test")
+                        .wind("test")
+                        .birthDate(LocalDate.now())
+                        .lastWaterDate(LocalDate.now())
+                        .build(),
+                null,
+                member
+        );
 
         PetPlant petPlant = petPlantRepository.findAllByMemberId(member.getId()).get(0);
         HistoryResponse historyResponse = historyService.read(petPlant.getId(),
