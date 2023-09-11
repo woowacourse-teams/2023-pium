@@ -11,8 +11,6 @@ import {
   Plant,
   PlantImage,
   Sensor,
-  SkeletonItem,
-  SkeletonItemContent,
   Spot,
   TimelineArea,
   Wrapper,
@@ -23,6 +21,7 @@ import useYearList from 'hooks/queries/history/useYearList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
 import Sprout from 'assets/sprout.svg';
 import TimelineItemList from '../TimelineItemList';
+import Skeleton from './Skeleton';
 
 interface TimelineProps {
   petPlantId: PetPlantDetails['id'];
@@ -32,8 +31,8 @@ interface TimelineProps {
 const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   const {
     data: yearList,
+    isSuccess,
     hasNextPage,
-    isLoading,
     isFetchingNextPage,
     fetchNextPage,
   } = useYearList(Number(petPlantId), filter);
@@ -48,7 +47,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
       <Plant>
         <PlantImage src={Sprout} alt="타임라인 꼭대기" />
       </Plant>
-      {yearList &&
+      {isSuccess ? (
         yearList.map(([year, monthList]) => (
           <YearArea key={year}>
             <YearHeader>{year}년</YearHeader>
@@ -70,26 +69,12 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
               </MonthArea>
             ))}
           </YearArea>
-        ))}
-      {(isLoading || isFetchingNextPage) && (
-        <>
-          {isLoading && <YearHeader />}
-          {Array(10)
-            .fill(null)
-            .map((_, index) => (
-              <DayArea key={index}>
-                <DayHeader />
-                <TimelineArea>
-                  <SkeletonItem>
-                    <SkeletonItemContent />
-                  </SkeletonItem>
-                </TimelineArea>
-              </DayArea>
-            ))}
-        </>
+        ))
+      ) : (
+        <Skeleton hasYearHeader />
       )}
+      {isFetchingNextPage ? <Skeleton /> : <Sensor ref={intersectionRef} />}
       {!hasNextPage && <Earth />}
-      {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
     </Wrapper>
   );
 };

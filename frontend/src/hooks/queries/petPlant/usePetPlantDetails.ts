@@ -1,14 +1,11 @@
 import type { PetPlantDetails } from 'types/petPlant';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import PetPlantAPI from 'apis/petPlant';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
-import useCheckSessionId from '../auth/useCheckSessionId';
 
 const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
-  const { isSuccess } = useCheckSessionId();
-
-  return useQuery<PetPlantDetails>({
+  return useSuspenseQuery<PetPlantDetails>({
     queryKey: ['petPlantDetails', petPlantId],
     queryFn: async () => {
       const response = await PetPlantAPI.getDetails(petPlantId);
@@ -20,9 +17,7 @@ const usePetPlantDetails = (petPlantId: PetPlantDetails['id']) => {
     },
 
     refetchOnWindowFocus: false,
-    suspense: true,
     retry: noRetryIfUnauthorized,
-    enabled: isSuccess,
   });
 };
 
