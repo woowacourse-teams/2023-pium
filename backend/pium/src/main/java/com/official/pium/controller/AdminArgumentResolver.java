@@ -1,6 +1,7 @@
 package com.official.pium.controller;
 
 import com.official.pium.domain.Admin;
+import com.official.pium.exception.AuthorizationException;
 import com.official.pium.exception.AuthorizationException.NeedAdminException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,7 +27,7 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
         HttpSession session = request.getSession(false);
 
         if (session == null) {
-            return null;
+            throw new NeedAdminException("관리자 권한이 필요합니다.");
         }
 
         try {
@@ -35,8 +36,8 @@ public class AdminArgumentResolver implements HandlerMethodArgumentResolver {
                 throw new NeedAdminException("관리자 권한이 필요합니다.");
             }
             return admin;
-        } catch (ClassCastException e) {
-            return null;
+        } catch (Exception e) {
+            throw new AuthorizationException("잘못된 세션정보입니다.");
         }
     }
 }

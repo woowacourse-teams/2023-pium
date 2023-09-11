@@ -134,6 +134,7 @@ class DictionaryPlantControllerTest extends UITest {
                     .willReturn(1L);
 
             mockMvc.perform(post("/dictionary-plants")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(request))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andDo(document("dictionaryPlant/create/",
@@ -151,6 +152,7 @@ class DictionaryPlantControllerTest extends UITest {
             DictionaryPlantCreateRequest request = DictionaryPlantCreateRequest.builder().build();
 
             mockMvc.perform(post("/dictionary-plants")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(request))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
@@ -167,6 +169,7 @@ class DictionaryPlantControllerTest extends UITest {
             DictionaryPlantUpdateRequest request = REQUEST.사전_식물_수정_요청;
 
             mockMvc.perform(patch("/dictionary-plants/1")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(request))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andDo(document("dictionaryPlant/update/",
@@ -183,6 +186,7 @@ class DictionaryPlantControllerTest extends UITest {
             DictionaryPlantUpdateRequest request = DictionaryPlantUpdateRequest.builder().build();
 
             mockMvc.perform(patch("/dictionary-plants/1")
+                            .session(session)
                             .content(objectMapper.writeValueAsString(request))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
@@ -197,7 +201,8 @@ class DictionaryPlantControllerTest extends UITest {
         void 정상_요청시_204를_반환() throws Exception {
             willDoNothing().given(dictionaryPlantService);
 
-            mockMvc.perform(delete("/dictionary-plants/{id}", 1L))
+            mockMvc.perform(delete("/dictionary-plants/{id}", 1L)
+                            .session(session))
                     .andDo(document("dictionaryPlant/delete/",
                                     preprocessRequest(prettyPrint()),
                                     preprocessResponse(prettyPrint())
