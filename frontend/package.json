@@ -12,8 +12,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o ./dist/storybook",
     "cypress": "cypress open",
-    "preanalyze": "npm run build-prod",
-    "analyze": "webpack-bundle-analyzer bundle/output/path/stats.json --default-sizes gzip"
+    "analyze": "webpack-bundle-analyzer ./dist/bundle-report.json --default-sizes gzip"
   },
   "license": "MIT",
   "dependencies": {
@@ -80,5 +79,6 @@
   },
   "msw": {
     "workerDirectory": "public/"
-  }
+  },
+  "sideEffects": false
 }

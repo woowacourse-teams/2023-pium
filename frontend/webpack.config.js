@@ -12,7 +12,8 @@ module.exports = (env) => ({
   entry: resolve(__dirname, 'src', 'index.tsx'),
   output: {
     path: resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].bundle.js',
+    chunkFilename: '[name].[chunkhash].chunk.bundle.js',
     assetModuleFilename: 'assets/[name][ext]',
     clean: true,
     publicPath: '/',
@@ -76,6 +77,17 @@ module.exports = (env) => ({
       statsFilename: 'bundle-report.json',
     }),
   ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        react: {
+          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
+          name: 'react',
+          chunks: 'all',
+        },
+      },
+    },
+  },
   devServer: {
     open: true,
     port: 8282,
