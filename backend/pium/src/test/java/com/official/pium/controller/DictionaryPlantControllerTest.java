@@ -168,13 +168,16 @@ class DictionaryPlantControllerTest extends UITest {
             willDoNothing().given(dictionaryPlantService);
             DictionaryPlantUpdateRequest request = REQUEST.사전_식물_수정_요청;
 
-            mockMvc.perform(patch("/dictionary-plants/1")
+            mockMvc.perform(patch("/dictionary-plants/{id}", 1)
                             .session(session)
                             .content(objectMapper.writeValueAsString(request))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andDo(document("dictionaryPlant/update/",
                                     preprocessRequest(prettyPrint()),
-                                    preprocessResponse(prettyPrint())
+                                    preprocessResponse(prettyPrint()),
+                                    pathParameters(
+                                            parameterWithName("id").description("사전 식물 ID")
+                                    )
                             )
                     )
                     .andExpect(status().isOk())
@@ -205,7 +208,10 @@ class DictionaryPlantControllerTest extends UITest {
                             .session(session))
                     .andDo(document("dictionaryPlant/delete/",
                                     preprocessRequest(prettyPrint()),
-                                    preprocessResponse(prettyPrint())
+                                    preprocessResponse(prettyPrint()),
+                                    pathParameters(
+                                            parameterWithName("id").description("사전 식물 ID")
+                                    )
                             )
                     )
                     .andExpect(status().isNoContent())
