@@ -1,5 +1,5 @@
 import type { DictionaryPlant, Season, SeasonKor } from 'types/dictionaryPlant';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import DictionaryPlantAPI, { DICTIONARY_PLANT_URL } from 'apis/dictionaryPlant';
 import { SEASONS } from 'constants/index';
 
@@ -15,7 +15,7 @@ const initialWaterOptions: DictionaryPlantExtendCycles['waterOptions'] = {
 };
 
 const useDictionaryPlantDetail = (id: number) =>
-  useQuery<DictionaryPlant, Error, DictionaryPlantExtendCycles>({
+  useSuspenseQuery<DictionaryPlant, Error, DictionaryPlantExtendCycles>({
     queryKey: [DICTIONARY_PLANT_URL, 'detail', id],
 
     queryFn: async () => {
@@ -27,8 +27,6 @@ const useDictionaryPlantDetail = (id: number) =>
     },
 
     staleTime: Infinity,
-    suspense: true,
-    throwOnError: true,
     select: (data) => {
       const { waterCycle } = data;
 
