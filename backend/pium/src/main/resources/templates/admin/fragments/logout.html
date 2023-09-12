@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<th:block th:fragment="logoutFragment">
+    <script>
+        function logout() {
+            let result = confirm('로그아웃 하시겠습니까?');
+            if (result) {
+                fetch(`/admin/logout`, {
+                    method: 'POST'
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            window.location.replace("/admin/login");
+                        } else {
+                            alert('오류가 발생했습니다.');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Fetch 오류:', error);
+                        alert('오류가 발생했습니다.');
+                    });
+            } else {
+            }
+        }
+    </script>
+</th:block>
+</html>

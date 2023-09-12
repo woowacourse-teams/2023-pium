@@ -53,7 +53,7 @@ class AuthControllerTest extends UITest {
             mockMvc.perform(post("/login")
                             .queryParam("code", "authorization code")
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andDo(document("auth/login/",
+                    .andDo(document("auth/login.html/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             queryParameters(
