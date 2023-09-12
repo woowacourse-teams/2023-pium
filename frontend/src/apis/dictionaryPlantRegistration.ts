@@ -1,9 +1,9 @@
-import type { DictionaryRegistrationForm } from 'types/dictionaryRegistration';
+import type { DictionaryPlantRegistrationForm } from 'types/dictionaryPlantRegistration';
 import { BASE_URL } from 'constants/index';
 
 const DICTIONARY_PLANT_REGISTRATION_URL = `${BASE_URL}/dictionary-registrations`;
 
-const register = (form: DictionaryRegistrationForm) => {
+const register = (form: DictionaryPlantRegistrationForm) => {
   const { name, image } = form;
   const formData = new FormData();
 
@@ -16,8 +16,8 @@ const register = (form: DictionaryRegistrationForm) => {
   });
 };
 
-const DictionaryRegistrationAPI = {
+const DictionaryPlantRegistrationAPI = {
   register,
 };
 
-export default DictionaryRegistrationAPI;
+export default DictionaryPlantRegistrationAPI;

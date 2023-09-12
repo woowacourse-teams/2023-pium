@@ -22,7 +22,7 @@ const SearchResults = (props: SearchResultsProps) => {
         <Title>검색 결과가 없어요 😭</Title>
         <Title>
           이 식물을 추가할까요?&nbsp;&nbsp;&nbsp;
-          <StyledLink to={URL_PATH.newDictionaryRequest} state={plantName}>
+          <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={plantName}>
             등록 신청하기
           </StyledLink>
         </Title>
@@ -60,7 +60,7 @@ const SearchResults = (props: SearchResultsProps) => {
       )}
       <Title>
         찾는 식물이 없으신가요?&nbsp;&nbsp;&nbsp;
-        <StyledLink to={URL_PATH.newDictionaryRequest}>등록 신청하기</StyledLink>
+        <StyledLink to={URL_PATH.newDictionaryPlantRequest}>등록 신청하기</StyledLink>
       </Title>
     </Wrapper>
   );

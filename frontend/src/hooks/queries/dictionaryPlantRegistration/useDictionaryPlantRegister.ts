@@ -1,18 +1,18 @@
-import type { DictionaryRegistrationForm } from 'types/dictionaryRegistration';
+import type { DictionaryPlantRegistrationForm } from 'types/dictionaryPlantRegistration';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/useAddToast';
-import DictionaryRegistrationAPI from 'apis/dictionaryRegistration';
+import DictionaryPlantRegistrationAPI from 'apis/dictionaryPlantRegistration';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';
 
-const useDictionaryRegistrationRequest = () => {
+const useDictionaryPlantRegister = () => {
   const addToast = useAddToast();
   const navigate = useNavigate();
 
-  return useMutation<void, Error, DictionaryRegistrationForm>({
+  return useMutation<void, Error, DictionaryPlantRegistrationForm>({
     mutationFn: async (form) => {
-      const response = await DictionaryRegistrationAPI.register(form);
+      const response = await DictionaryPlantRegistrationAPI.register(form);
       throwOnInvalidStatus(response);
     },
 
@@ -32,4 +32,4 @@ const useDictionaryRegistrationRequest = () => {
   });
 };
 
-export default useDictionaryRegistrationRequest;
+export default useDictionaryPlantRegister;

@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import React from 'react';
 import { withRouter } from 'storybook-addon-react-router-v6';
-import dictionaryRegistrationHandlers from '../src/mocks/handlers/dictionaryRegistration';
+import dictionaryPlantRegistrationHandlers from '../src/mocks/handlers/dictionaryPlantRegistration';
 import { storybookHandlers } from '../src/mocks/storybookHandlers';
 import { decorateGlobalStyle } from './decorators';
 
@@ -51,7 +51,7 @@ const preview: Preview = {
       },
     },
 
-    msw: { handlers: [...storybookHandlers, ...dictionaryRegistrationHandlers] },
+    msw: { handlers: [...storybookHandlers, ...dictionaryPlantRegistrationHandlers] },
   },
 
   loaders: [mswLoader],

@@ -2,30 +2,30 @@ import { useState, useRef } from 'react';
 import FormInput from 'components/@common/FormInput';
 import FormInputBox from 'components/@common/FormInputBox';
 import {
-  Form,
+  Form as StyledForm,
   HiddenInput,
   ImageContent,
   ImageName,
   SubmitButton,
   Thumbnail,
   UploadButton,
-} from './RequestDictionaryPlantForm.style';
-import useDictionaryRegistrationRequest from 'hooks/queries/dictionaryRegistration/useDictionaryRegistrationRequest';
+} from './Form.style';
+import useDictionaryPlantRegister from 'hooks/queries/dictionaryPlantRegistration/useDictionaryPlantRegister';
 import useAddToast from 'hooks/useAddToast';
 import { getFirstImage, getImageUrl } from 'utils/image';
 
-interface RequestDictionaryPlantFormProps {
+interface FormProps {
   initialName?: string;
 }
 
-const RequestDictionaryPlantForm = (props: RequestDictionaryPlantFormProps) => {
+const Form = (props: FormProps) => {
   const { initialName } = props;
 
   const [image, setImage] = useState<File | null>(null);
   const [plantName, setPlantName] = useState(initialName ?? '');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addToast = useAddToast();
-  const { mutate } = useDictionaryRegistrationRequest();
+  const { mutate } = useDictionaryPlantRegister();
 
   const accessFileInput = () => {
     fileInputRef.current?.click();
@@ -54,7 +54,7 @@ const RequestDictionaryPlantForm = (props: RequestDictionaryPlantFormProps) => {
   };
 
   return (
-    <Form>
+    <StyledForm>
       <FormInputBox title="(선택) 식물 이름을 입력해주세요.">
         <FormInput
           type="text"
@@ -77,8 +77,8 @@ const RequestDictionaryPlantForm = (props: RequestDictionaryPlantFormProps) => {
       <SubmitButton type="submit" onClick={submitIfValid} disabled={!isFormValid()}>
         제출하기
       </SubmitButton>
-    </Form>
+    </StyledForm>
   );
 };
 
-export default RequestDictionaryPlantForm;
+export default Form;

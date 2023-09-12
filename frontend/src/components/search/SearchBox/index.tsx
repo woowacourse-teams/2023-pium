@@ -82,7 +82,7 @@ const SearchBox = (props: SearchBoxProps) => {
         ) : (
           <ResultMessage>
             {MESSAGE.noSearchResult} &nbsp;&nbsp;&nbsp;
-            <StyledLink to={URL_PATH.newDictionaryRequest} state={searchName}>
+            <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
               등록 신청하기
             </StyledLink>
           </ResultMessage>

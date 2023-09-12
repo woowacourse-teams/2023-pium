@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ToastList from 'components/@common/Toast/ToastList';
-import RequestDictionaryPlantForm from '.';
+import Form from '.';
 
-const meta: Meta<typeof RequestDictionaryPlantForm> = {
-  component: RequestDictionaryPlantForm,
+const meta: Meta<typeof Form> = {
+  component: Form,
   decorators: [
     (Story) => {
       return (
@@ -18,6 +18,6 @@ const meta: Meta<typeof RequestDictionaryPlantForm> = {
 
 export default meta;
 
-type Story = StoryObj<typeof RequestDictionaryPlantForm>;
+type Story = StoryObj<typeof Form>;
 
 export const Default: Story = {};
