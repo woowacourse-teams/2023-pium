@@ -27,9 +27,10 @@ export const PetPlantImage = styled.img`
 export const HeaderContent = styled.div`
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   justify-content: space-between;
 
-  width: 176px;
+  width: 40%;
   height: 100%;
   margin-right: auto;
   margin-left: 16px;
@@ -51,7 +52,7 @@ export const DaySince = styled.p`
 `;
 
 export const PostingDate = styled.p`
-  width: max-content;
+  width: 72px;
   margin-top: 4px;
   font-size: 1rem;
   color: ${(props) => props.theme.color.sub};
@@ -60,12 +61,12 @@ export const PostingDate = styled.p`
 export const Environment = styled.section`
   display: flex;
   flex-direction: column;
-  row-gap: 8px;
+  row-gap: 4px;
   align-items: center;
 
   width: 100%;
   margin-top: 16px;
-  padding: 16px;
+  padding: 12px;
 
   background-color: ${({ theme }) => theme.color.primary}13;
   border-radius: 8px;
@@ -78,7 +79,7 @@ export const EnvironmentItem = styled.p`
 
   width: 100%;
 
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 `;
 
 export const EnvironmentTitle = styled.span`
@@ -97,19 +98,19 @@ export const EnvironmentTitle = styled.span`
 
 export const TagArea = styled.div`
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 8px;
+
   width: 100%;
   margin-top: 24px;
-
-  & > div + div {
-    margin-left: 8px;
-  }
 `;
 
 export const Tag = styled.div`
   width: max-content;
+  margin-right: 8px;
   padding: 8px 12px;
 
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: ${(props) => props.theme.color.sub};
 
@@ -117,12 +118,16 @@ export const Tag = styled.div`
   border-radius: 16px;
 `;
 
+export const DictionaryPlantTag = styled(Tag)`
+  border-color: ${({ theme }) => theme.color.primary};
+`;
+
 export const WaterCycleTag = styled(Tag)`
   border-color: ${({ theme }) => theme.color.water};
 `;
 
 export const ManageLevelTag = styled(Tag)`
-  border-color: ${({ theme }) => theme.color.primary};
+  border-color: ${({ theme }) => theme.color.grayDark};
 `;
 
 export const ContentArea = styled.div`

@@ -23,6 +23,7 @@ type Story = StoryObj<typeof GardenPostItem>;
 
 const defaultArgs: ComponentProps<typeof GardenPostItem> = {
   createdAt: '1999-12-16',
+  dictionaryPlantName: '연봉',
   content: '한달차인데 저는 이거 이렇게 키우고있어요',
   manageLevel: '초보자',
   petPlant: {
@@ -44,6 +45,7 @@ export const Default: Story = {
 export const LargeContent: Story = {
   args: {
     ...defaultArgs,
+    dictionaryPlantName: '아스파라거스 풀루모수스',
     content: `
       제가 LA에 있을때는 말이죠 정말 제가 꿈에 무대인 메이저리그로 진출해서 가는 식당마다 싸인해달라 기자들은 항상 붙어다니며 취재하고 제가 그 머~ 어~ 대통령이 된 기분이였어요 
       그런데 17일만에 17일만에 마이너리그로 떨어졌어요 못던져서 그만두고 그냥 확 한국으로 가버리고 싶었어요 

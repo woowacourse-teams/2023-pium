@@ -9,6 +9,7 @@ import theme from 'style/theme.style';
 import {
   ContentArea,
   DaySince,
+  DictionaryPlantTag,
   Environment,
   EnvironmentItem,
   EnvironmentTitle,
@@ -25,7 +26,15 @@ import {
 
 type GardenPostItemProps = Omit<GardenPostItemType, 'id' | 'updatedAt'>;
 
-const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPostItemProps) => {
+const ENVIRONMENT_ICON_SIZE = '16px';
+
+const GardenPostItem = ({
+  content,
+  createdAt,
+  manageLevel,
+  dictionaryPlantName,
+  petPlant,
+}: GardenPostItemProps) => {
   const postingDate = convertDateKorYear(createdAt);
 
   return (
@@ -40,6 +49,11 @@ const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPos
         </HeaderContent>
         <PostingDate>{postingDate}</PostingDate>
       </Header>
+      <TagArea>
+        <DictionaryPlantTag>{dictionaryPlantName}</DictionaryPlantTag>
+        <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
+        <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
+      </TagArea>
       <Environment>
         <EnvironmentItem>
           <EnvironmentTitle>
@@ -47,8 +61,8 @@ const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPos
               color={theme.color.primary}
               aria-label="장소"
               aria-describedby="반려 식물이 놓인 공간"
-              width="20px"
-              height="20px"
+              width={ENVIRONMENT_ICON_SIZE}
+              height={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.location}
@@ -59,8 +73,8 @@ const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPos
               color={theme.color.primary}
               aria-label="화분"
               aria-describedby="반려 식물이 담긴 화분의 재질"
-              width="20px"
-              height="20px"
+              width={ENVIRONMENT_ICON_SIZE}
+              height={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.flowerpot}
@@ -71,8 +85,8 @@ const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPos
               color={theme.color.primary}
               aria-label="채광"
               aria-describedby="반려 식물이 빛을 얼마나 받고 있는지"
-              width="20px"
-              height="20px"
+              width={ENVIRONMENT_ICON_SIZE}
+              height={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.light}
@@ -83,17 +97,13 @@ const GardenPostItem = ({ content, createdAt, manageLevel, petPlant }: GardenPos
               color={theme.color.primary}
               aria-label="바람"
               aria-describedby="반려 식물이 통풍이 잘 되는 위치인지"
-              width="20px"
-              height="20px"
+              width={ENVIRONMENT_ICON_SIZE}
+              height={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.wind}
         </EnvironmentItem>
       </Environment>
-      <TagArea>
-        <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
-        <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
-      </TagArea>
       <ContentArea>
         <SeeMoreContentBox>{content}</SeeMoreContentBox>
       </ContentArea>
