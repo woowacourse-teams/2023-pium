@@ -13,6 +13,7 @@ import {
 import useDictionaryPlantRegister from 'hooks/queries/dictionaryPlantRegistration/useDictionaryPlantRegister';
 import useAddToast from 'hooks/useAddToast';
 import { getFirstImage, getImageUrl } from 'utils/image';
+import { NUMBER } from 'constants/index';
 
 interface FormProps {
   initialName?: string;
@@ -60,7 +61,7 @@ const Form = (props: FormProps) => {
           type="text"
           value={plantName}
           onChange={({ target: { value } }) => {
-            setPlantName(value.slice(0, 30));
+            setPlantName(value.slice(0, NUMBER.maxNicknameLength));
           }}
         />
       </FormInputBox>

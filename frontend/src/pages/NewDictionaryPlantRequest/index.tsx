@@ -2,12 +2,13 @@ import { useLocation } from 'react-router-dom';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import { Description, Main } from './NewDictionaryPlantRequest.style';
+import { NUMBER } from 'constants/index';
 import Form from './Form';
 
 const NewDictionaryPlantRequest = () => {
   const { state } = useLocation();
 
-  const initialName = typeof state === 'string' ? state.slice(0, 30) : '';
+  const initialName = typeof state === 'string' ? state.slice(0, NUMBER.maxNicknameLength) : '';
 
   return (
     <>
