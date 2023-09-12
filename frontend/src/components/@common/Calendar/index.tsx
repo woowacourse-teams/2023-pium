@@ -1,10 +1,10 @@
 import { useState } from 'react';
+import SvgIcons from 'components/@common/SvgIcons';
 import { AlertSpan, Button, CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
 import { convertDateKorYear, getDateToString, getDayInfo, getDaysBetween } from 'utils/date';
 import { DateValidate } from 'utils/validate';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
-import ArrowLeft from '../Icons/ArrowLeft';
-import ArrowRight from '../Icons/ArrowRight';
+import theme from 'style/theme.style';
 import DaySmallBox from './DaySmallBox';
 import useCalendar from './hooks/useCalendar';
 
@@ -75,7 +75,12 @@ const Calendar = (props: CalendarProps) => {
           aria-label="이전 달 보기"
           disabled={isPrevMonthOutOfRange}
         >
-          <ArrowLeft width={32} height={32} opacity={isPrevMonthOutOfRange ? '10%' : '100%'} />
+          <SvgIcons
+            icon="arrow-left"
+            size={32}
+            color={theme.color.sub}
+            opacity={isPrevMonthOutOfRange ? '10%' : '100%'}
+          />
         </Button>
         <p role="alert">{yearMonth}</p>
         <Button
@@ -84,7 +89,12 @@ const Calendar = (props: CalendarProps) => {
           aria-label="다음 달 보기"
           disabled={isNextMonthOutOfRange}
         >
-          <ArrowRight width={32} height={32} opacity={isNextMonthOutOfRange ? '10%' : '100%'} />
+          <SvgIcons
+            icon="arrow-right"
+            size={32}
+            color={theme.color.sub}
+            opacity={isNextMonthOutOfRange ? '10%' : '100%'}
+          />
         </Button>
       </HeaderBox>
       <DaysBox aria-hidden="true">{daysOfWeeks}</DaysBox>

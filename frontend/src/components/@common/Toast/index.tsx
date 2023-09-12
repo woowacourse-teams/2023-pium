@@ -1,16 +1,14 @@
 import type { ToastItem } from 'types/toast';
 import { memo, useEffect, useState, useCallback } from 'react';
+import SvgIcons from 'components/@common/SvgIcons';
 import { IconArea, Message, MessageArea, Title, Wrapper } from './Toast.style';
-import CheckCircle from '../Icons/CheckCircle';
-import CloseCircle from '../Icons/CloseCircle';
-import InfoCircle from '../Icons/InfoCircle';
-import Warning from '../Icons/Warning';
+import theme from 'style/theme.style';
 
 const icons: Record<ToastItem['type'], JSX.Element> = {
-  info: <InfoCircle aria-label="정보 알림" />,
-  success: <CheckCircle aria-label="성공 알림" />,
-  warning: <Warning aria-label="경고 알림" />,
-  error: <CloseCircle aria-label="실패 알림" />,
+  info: <SvgIcons color={theme.color.background} icon="info-circle" aria-label="정보 알림" />,
+  success: <SvgIcons color={theme.color.background} icon="check-circle" aria-label="성공 알림" />,
+  warning: <SvgIcons color={theme.color.background} icon="warning" aria-label="경고 알림" />,
+  error: <SvgIcons color={theme.color.background} icon="close-circle" aria-label="실패 알림" />,
 };
 
 const Toast = ({ type, title, message }: ToastItem) => {

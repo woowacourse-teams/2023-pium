@@ -15,7 +15,7 @@ const Unauthorize = () => {
 
   return (
     <Wrapper>
-      <SadPiumiImage aria-label="슬픈 표정을 하는 피우미" />
+      <SadPiumiImage viewBox="0 0 720 457" aria-label="슬픈 표정을 하는 피우미" />
       <Section>
         <Text>웁스!</Text>
         <Title>{GUIDE.sessionExpire}</Title>

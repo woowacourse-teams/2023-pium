@@ -39,16 +39,17 @@ export const NavItemArea = styled.div<{ $active?: boolean }>`
 export const NavItem = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 4px;
   align-items: center;
   justify-content: space-between;
 
   width: 100%;
-  height: 44px;
+  height: 52px;
 `;
 
 export const NavLabel = styled.p<{ $active?: boolean }>`
   font-size: 1rem;
   font-weight: 700;
   color: ${({ $active, theme: { color } }) =>
-    $active ? color.fontPrimaryForBackground : color.sub};
+    $active ? color.fontPrimaryForBackground : color.grayDark};
 `;

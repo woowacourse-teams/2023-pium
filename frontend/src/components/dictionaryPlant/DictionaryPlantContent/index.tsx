@@ -1,4 +1,3 @@
-import ManageLevel from 'components/@common/Icons/ManageLevel';
 import SvgIcons from 'components/@common/SvgIcons';
 import TagBox from 'components/dictionaryPlant/TagBox';
 import TagSwitch from 'components/dictionaryPlant/TagSwitch';
@@ -61,7 +60,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
 
         <PropsBox>
           <PropBox>
-            <ManageLevel level={manageLevel} color="#1BCC66" />
+            <SvgIcons icon={`manage-level-${manageLevel}`} fill={primaryColor} />
             <span>
               {manageLevel !== NO_INFORMATION ? (
                 <>

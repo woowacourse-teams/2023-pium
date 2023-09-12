@@ -20,7 +20,7 @@ const NotFound = () => {
 
   return (
     <Wrapper>
-      <SadPiumiImage aria-label="슬픈 표정을 하는 피우미" />
+      <SadPiumiImage viewBox="0 0 720 457" aria-label="슬픈 표정을 하는 피우미" />
       <Section>
         <Text>이런!</Text>
         <Title>페이지를 찾지 못했어요</Title>

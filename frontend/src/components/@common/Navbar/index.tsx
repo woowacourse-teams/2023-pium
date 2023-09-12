@@ -1,40 +1,50 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import AccountCircle from 'components/@common/Icons/AccountCircle';
-import Home from 'components/@common/Icons/Home';
-import Plant from 'components/@common/Icons/Plant';
-import Reminder from 'components/@common/Icons/Reminder';
+import SvgIcons from 'components/@common/SvgIcons';
 import { NavItem, NavItemArea, NavLabel, NavLink, Wrapper } from './Navbar.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
+interface IconParams {
+  color: string;
+  size?: number;
+}
+
 const Navbar = () => {
   const { pathname } = useLocation();
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
-
+  const { color: fillColor } = theme;
   const navItems = useMemo(() => {
     return [
       {
         path: URL_PATH.main,
         label: '메인',
-        Icon: Home,
+        Icon: ({ color, size = 24 }: IconParams) => (
+          <SvgIcons color={color} size={size} icon="home" />
+        ),
       },
 
       {
         path: URL_PATH.reminder,
         label: '리마인더',
-        Icon: Reminder,
+        Icon: ({ color, size = 24 }: IconParams) => (
+          <SvgIcons color={color} size={size} icon="reminder" />
+        ),
       },
       {
         path: URL_PATH.petList,
         label: '내 식물',
-        Icon: Plant,
+        Icon: ({ color, size = 24 }: IconParams) => (
+          <SvgIcons color={color} size={size} icon="leaf" />
+        ),
       },
       {
         path: isLoggedIn ? URL_PATH.myPage : URL_PATH.login,
         label: isLoggedIn ? '마이페이지' : '로그인',
-        Icon: AccountCircle,
+        Icon: ({ color, size = 24 }: IconParams) => (
+          <SvgIcons color={color} size={size} icon="account-circle" />
+        ),
       },
     ];
   }, [isLoggedIn]);
@@ -43,12 +53,14 @@ const Navbar = () => {
     <Wrapper>
       {navItems.map(({ path, label, Icon }, index) => {
         const active = pathname === path;
-        const color = active ? theme.color.fontPrimaryForBackground : theme.color.sub;
+        const color = active ? fillColor.fontPrimaryForBackground : theme.color.grayDark;
+        const navIcon = Icon({ color, size: 36 });
+
         return (
           <NavLink key={index} to={path}>
             <NavItemArea $active={active}>
               <NavItem>
-                <Icon aria-hidden stroke={color} fill={color} />
+                {navIcon}
                 <NavLabel $active={active}>{label}</NavLabel>
               </NavItem>
             </NavItemArea>

@@ -15,6 +15,13 @@ export const Plant = styled.div`
   height: calc(100% + 64px);
 
   background: ${(props) => props.theme.color.primary};
+
+  svg {
+    position: absolute;
+    top: -12px;
+    left: 40%;
+    transform: translate(-52%);
+  }
 `;
 
 export const PlantImage = styled.img`

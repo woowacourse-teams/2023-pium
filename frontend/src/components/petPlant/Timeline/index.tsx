@@ -35,6 +35,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
     isFetchingNextPage,
     fetchNextPage,
   } = useYearList(Number(petPlantId), filter);
+
   const intersectionRef = useIntersectionRef(fetchNextPage);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   return (
     <Wrapper hasNextPage={hasNextPage}>
       <Plant>
-        <Sprout aria-label="타임라인 꼭대기" />
+        <Sprout width={24} height={14} aria-label="타임라인 꼭대기" />
       </Plant>
       {isSuccess ? (
         yearList.map(([year, monthList]) => (

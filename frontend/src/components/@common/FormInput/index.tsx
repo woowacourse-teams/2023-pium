@@ -1,6 +1,7 @@
 import { InputHTMLAttributes } from 'react';
-import ArrowRight from 'components/@common/Icons/ArrowRightAlt';
+import SvgIcons from 'components/@common/SvgIcons';
 import { Button, Input, Wrapper } from './FormInput.style';
+import theme from 'style/theme.style';
 
 export interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   nextCallback?: () => void;
@@ -14,7 +15,7 @@ const FormInput = (props: FormInputProps) => {
       <Input type="text" {...inputProps} />
       {nextCallback && (
         <Button type="button" aria-label="입력 완료" onClick={nextCallback}>
-          <ArrowRight width={20} height={20} />
+          <SvgIcons icon="arrow-right-alt" size={20} color={theme.color.sub} />
         </Button>
       )}
     </Wrapper>

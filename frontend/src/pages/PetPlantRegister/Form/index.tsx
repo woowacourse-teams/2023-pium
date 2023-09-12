@@ -1,8 +1,7 @@
 import { useParams } from 'react-router-dom';
-import Dictionary from 'components/@common/Icons/Dictionary';
-import LineArrowLeft from 'components/@common/Icons/LineArrowLeft';
 import Image from 'components/@common/Image';
 import Modal from 'components/@common/Modal';
+import SvgIcons from 'components/@common/SvgIcons';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
 import {
@@ -17,6 +16,7 @@ import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useModal from 'hooks/useModal';
 import { URL_PATH } from 'constants/index';
+import theme from 'style/theme.style';
 
 const PetPlantRegisterFormPage = () => {
   useCheckSessionId();
@@ -33,13 +33,13 @@ const PetPlantRegisterFormPage = () => {
     <>
       <Header>
         <BackLink to={URL_PATH.petRegisterSearch}>
-          <LineArrowLeft aria-label="뒤로 가기" />
+          <SvgIcons icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
         </BackLink>
       </Header>
       <Main>
         <DictionaryPlantName>{name}</DictionaryPlantName>
         <DictionaryPlantButton onClick={open}>
-          <span>사전 정보</span> <Dictionary />
+          <span>사전 정보</span> <SvgIcons icon="dictionary" />
         </DictionaryPlantButton>
         <DictionaryPlantImageArea>
           <Image size="160px" src={image} alt={name} />

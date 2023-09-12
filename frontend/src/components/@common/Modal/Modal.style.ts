@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 const showModal = keyframes`
   0% {
-    transform: translateY(-100%);
+    transform: translateY(100%);
   }
   100% {
     transform: translateY(0%);
