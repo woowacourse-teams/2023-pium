@@ -16,17 +16,18 @@ public class AdminService {
     private static final String SESSION_KEY = "PIUM_ADMIN_SESSION_ID";
 
     @Value("${admin.account}")
-    private String ADMIN_ACCOUNT;
+    private String adminAccount;
 
     @Value("${admin.password}")
-    private String ADMIN_PASSWORD;
+    private String adminPassword;
 
     @Value("${admin.secondPassword}")
-    private String ADMIN_SECOND_PASSWORD;
+    private String adminSecondPassword;
 
+    @Transactional
     public void login(AdminLoginRequest request, HttpSession session) {
         Admin admin = AdminMapper.toAdmin(request);
-        if (admin.isValidate(ADMIN_ACCOUNT, ADMIN_PASSWORD, ADMIN_SECOND_PASSWORD)) {
+        if (admin.isValidate(adminAccount, adminPassword, adminSecondPassword)) {
             session.setAttribute(SESSION_KEY, admin);
             session.setMaxInactiveInterval(EXPIRED_TIME_ONE_HOUR);
         }

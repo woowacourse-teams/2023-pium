@@ -2,6 +2,7 @@ package com.official.pium.controller;
 
 
 import com.official.pium.domain.Admin;
+import com.official.pium.domain.AdminAuth;
 import com.official.pium.service.DictionaryPlantService;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantCreateRequest;
@@ -49,19 +50,19 @@ public class DictionaryPlantController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> create(Admin admin, @RequestBody @Valid DictionaryPlantCreateRequest request) {
+    public ResponseEntity<Void> create(@AdminAuth Admin admin, @RequestBody @Valid DictionaryPlantCreateRequest request) {
         Long dictionaryPlantId = dictionaryPlantService.create(request);
         return ResponseEntity.created(URI.create("/dictionary-plants/" + dictionaryPlantId)).build();
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Void> update(Admin admin, @PathVariable Long id, @RequestBody @Valid DictionaryPlantUpdateRequest request) {
+    public ResponseEntity<Void> update(@AdminAuth Admin admin, @PathVariable Long id, @RequestBody @Valid DictionaryPlantUpdateRequest request) {
         dictionaryPlantService.update(id, request);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(Admin admin, @PathVariable Long id) {
+    public ResponseEntity<Void> delete(@AdminAuth Admin admin, @PathVariable Long id) {
         dictionaryPlantService.delete(id);
         return ResponseEntity.noContent().build();
     }

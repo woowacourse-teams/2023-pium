@@ -1,6 +1,7 @@
 package com.official.pium.controller;
 
 import com.official.pium.domain.Admin;
+import com.official.pium.domain.AdminAuth;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.service.AdminService;
@@ -35,7 +36,7 @@ public class AdminPageController {
     private final AdminService adminService;
 
     @GetMapping("/**")
-    public String adminPage(Admin admin, Model model) {
+    public String adminPage(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
@@ -45,7 +46,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict")
-    public String dictionaryPlants(@PageableDefault Pageable pageable, Admin admin, Model model) {
+    public String dictionaryPlants(@PageableDefault Pageable pageable, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
@@ -58,7 +59,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict/{id}")
-    public String dictionaryPlant(@PathVariable Long id, Admin admin, Model model) {
+    public String dictionaryPlant(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
@@ -72,7 +73,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict/create")
-    public String dictionaryPlantCreateForm(Admin admin, Model model) {
+    public String dictionaryPlantCreateForm(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
@@ -82,7 +83,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict/{id}/update")
-    public String dictionaryPlantUpdateForm(@PathVariable Long id, Admin admin, Model model) {
+    public String dictionaryPlantUpdateForm(@PathVariable Long id, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
@@ -96,7 +97,7 @@ public class AdminPageController {
     }
 
     @GetMapping("/dict/requests")
-    public String dictionaryPlantRequests(Admin admin, Model model) {
+    public String dictionaryPlantRequests(@AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
