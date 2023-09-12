@@ -19,6 +19,8 @@ interface FormProps {
   initialName?: string;
 }
 
+const INVALID_FORM_MESSAGE = '이름과 사진 중 적어도 하나는 넣어 주세요.';
+
 const Form = (props: FormProps) => {
   const { initialName } = props;
 
@@ -54,9 +56,15 @@ const Form = (props: FormProps) => {
     setImage(firstImage);
   };
 
+  const isValidForm = isFormValid();
+
   return (
     <StyledForm>
-      <FormInputBox title="(선택) 식물 이름을 입력해주세요.">
+      <FormInputBox
+        title="(선택) 식물 이름을 입력해주세요."
+        status={isValidForm ? 'default' : 'error'}
+        error={INVALID_FORM_MESSAGE}
+      >
         <FormInput
           type="text"
           value={plantName}
@@ -65,7 +73,11 @@ const Form = (props: FormProps) => {
           }}
         />
       </FormInputBox>
-      <FormInputBox title="(선택) 식물 사진을 올려주세요(최대 5MB).">
+      <FormInputBox
+        title="(선택) 식물 사진을 올려주세요(최대 5MB)."
+        status={isValidForm ? 'default' : 'error'}
+        error={INVALID_FORM_MESSAGE}
+      >
         <HiddenInput ref={fileInputRef} type="file" accept="image/*" onChange={setImageIfValid} />
         <ImageContent>
           <UploadButton type="button" aria-label="사진 등록하기" onClick={accessFileInput}>
@@ -75,7 +87,7 @@ const Form = (props: FormProps) => {
         </ImageContent>
       </FormInputBox>
 
-      <SubmitButton type="submit" onClick={submitIfValid} disabled={!isFormValid()}>
+      <SubmitButton type="submit" onClick={submitIfValid} disabled={!isValidForm}>
         제출하기
       </SubmitButton>
     </StyledForm>
