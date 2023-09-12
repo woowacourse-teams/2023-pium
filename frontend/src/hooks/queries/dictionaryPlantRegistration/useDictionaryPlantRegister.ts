@@ -16,12 +16,9 @@ const useDictionaryPlantRegister = () => {
       throwOnInvalidStatus(response);
     },
 
-    onSuccess: (_, { name }) => {
+    onSuccess: () => {
       addToast('success', '식물 등록 신청에 성공했어요.');
-
-      navigate(name ? `${URL_PATH.dictSearch}?search=${name ?? ''}` : URL_PATH.main, {
-        replace: true,
-      });
+      navigate(URL_PATH.main, { replace: true });
     },
 
     onError: () => {
