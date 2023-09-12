@@ -81,7 +81,7 @@ export const GoToMain = styled(Link)`
   border-radius: 8px;
 `;
 
-export const KakaoLogin = styled(Link)`
+export const KakaoLogin = styled.img`
   width: 210px;
   height: 52.5px;
 `;
