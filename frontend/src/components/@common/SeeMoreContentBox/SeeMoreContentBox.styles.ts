@@ -9,7 +9,7 @@ export const Wrapper = styled.div<{ $hiddenOver: boolean; $maxHeight: string }>`
 export const ContentBox = styled.div<{ $hiddenOver: boolean; $maxHeight: string }>`
   overflow: hidden;
   max-height: ${({ $hiddenOver, $maxHeight }) =>
-    $hiddenOver ? `calc(${$maxHeight} - 1.4rem)` : ''};
+    $hiddenOver ? `calc(${$maxHeight} - 1.6rem)` : ''};
 `;
 
 export const SeeMoreButtonArea = styled.div`
