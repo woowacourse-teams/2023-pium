@@ -83,6 +83,30 @@ public class DictionaryPlant extends BaseEntity {
         this.waterCycle = waterCycle;
     }
 
+    public void updateDictionaryPlant(String name, String imageUrl, String familyName, String smell, String poison,
+                                      String manageLevel, String growSpeed, String requireTemp, String minimumTemp,
+                                      String requireHumidity, String postingPlace, String specialManageInfo,
+                                      String spring, String summer, String autumn, String winter) {
+        this.name = name;
+        this.imageUrl = imageUrl;
+        this.familyName = familyName;
+        this.smell = smell;
+        this.poison = poison;
+        this.manageLevel = manageLevel;
+        this.growSpeed = growSpeed;
+        this.requireTemp = requireTemp;
+        this.minimumTemp = minimumTemp;
+        this.requireHumidity = requireHumidity;
+        this.postingPlace = postingPlace;
+        this.specialManageInfo = specialManageInfo;
+        this.waterCycle = WaterCycle.builder()
+                .spring(spring)
+                .summer(summer)
+                .autumn(autumn)
+                .winter(winter)
+                .build();
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) {

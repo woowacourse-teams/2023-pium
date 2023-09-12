@@ -82,10 +82,10 @@ class HistoryServiceTest extends IntegrationTest {
         PetPlant petPlant = petPlantSupport.builder().build();
 
         assertThatThrownBy(
-                () -> historyService.read(2L, PageRequest.of(0, 2),
+                () -> historyService.read(10000L, PageRequest.of(0, 2),
                         petPlant.getMember(), List.of())
         ).isInstanceOf(NoSuchElementException.class)
-                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id :" + 2L);
+                .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id :" + 10000L);
     }
 
     @Test

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{admin/common/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <div class="container mt-5">
+
+        <h1 class="text-center mb-5">식물 등록</h1>
+
+        <form class="form-container" id="plantPostForm">
+            
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="name" name="name" required type="text">
+                <label for="name">이름:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="imageUrl" name="imageUrl" required type="text">
+                <label for="imageUrl">이미지 URL:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="familyName" name="familyName" required type="text">
+                <label for="familyName">과명:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="smell" name="smell" required type="text">
+                <label for="smell">향:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="poison" name="poison" required type="text">
+                <label for="poison">독성:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="manageLevel" name="manageLevel" required type="text">
+                <label for="manageLevel">관리 난이도:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="growSpeed" name="growSpeed" required type="text">
+                <label for="growSpeed">성장 속도:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="requireTemp" name="requireTemp" required type="text">
+                <label for="requireTemp">요구 온도:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="minimumTemp" name="minimumTemp" required type="text">
+                <label for="minimumTemp">최소 온도:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="requireHumidity" name="requireHumidity" required type="text">
+                <label for="requireHumidity">요구 습도:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="postingPlace" name="postingPlace" required type="text">
+                <label for="postingPlace">배치 장소:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="specialManageInfo" name="specialManageInfo" required type="text">
+                <label for="specialManageInfo">특별 관리 정보:</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="spring" name="spring" required type="text">
+                <label for="spring">물 주기(봄):</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="summer" name="summer" required type="text">
+                <label for="summer">물 주기(여름):</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="autumn" name="autumn" required type="text">
+                <label for="autumn">물 주기(가을):</label>
+            </div>
+            <div class="form-floating mt-4">
+                <input class="required form-control" id="winter" name="winter" required type="text">
+                <label for="winter">물 주기(겨울):</label>
+            </div>
+
+            <button class="btn btn-primary w-100 py-2" type="submit">등록</button>
+        </form>
+
+        <button class="btn btn-primary" th:onclick="|submitForm()|" th:text="등록" type="button"></button>
+    </div>
+</th:block>
+<th:block layout:fragment="script">
+    <script>
+        const formElement = document.getElementById("plantPostForm");
+        formElement.addEventListener("submit", submitForm);
+
+        function submitForm(e) {
+            e.preventDefault()
+            const formData = new FormData(formElement);
+
+            fetch(`/dictionary-plants`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object.fromEntries(formData))
+            })
+                // .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    console.log(response?.headers?.get("location"))
+                    if(response?.headers?.get("location")) {
+                        let location = response.headers.get("location");
+                        window.location.replace(`/admin/dict/${location.split('/')[2]}`)
+                    }
+                    else throw new Error(response.message);
+                })
+                .catch(error => {
+                    alert(error.message)
+                });
+        }
+    </script>
+</th:block>
+</html>
