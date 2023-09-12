@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import InlineRadio from 'components/@common/InlineRadio';
 import { TagVariantType } from 'components/@common/Tag';
 import TagBox from 'components/dictionaryPlant/TagBox';
@@ -23,8 +23,11 @@ const TagSwitch = (props: TagSwitchProps) => {
       <TagBox.Title>
         {title}
         <InlineRadio name={title} value={selected} setValue={setSelected}>
-          {options.map((optionName) => (
-            <InlineRadio.Option key={optionName} value={optionName} />
+          {options.map((optionName, index) => (
+            <Fragment key={optionName}>
+              {index > 0 && <span>|</span>}
+              <InlineRadio.Option value={optionName} />
+            </Fragment>
           ))}
         </InlineRadio>
       </TagBox.Title>

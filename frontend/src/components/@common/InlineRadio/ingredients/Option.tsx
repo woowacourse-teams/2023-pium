@@ -6,8 +6,8 @@ interface OptionProps {
   value: string;
 }
 
-const Option = (props: OptionProps) => {
-  const { value } = props;
+const Option = (props: React.PropsWithChildren<OptionProps>) => {
+  const { value, children } = props;
   const { value: contextValue, setValue, name } = useRadioContext();
   const id = useId();
 
@@ -21,7 +21,7 @@ const Option = (props: OptionProps) => {
         checked={value === contextValue}
         onChange={() => setValue(value)}
       />
-      <span>{value}</span>
+      {children ? children : value}
     </Label>
   );
 };
