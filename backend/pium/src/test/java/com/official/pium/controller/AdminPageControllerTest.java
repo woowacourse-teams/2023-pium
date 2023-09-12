@@ -67,7 +67,7 @@ class AdminPageControllerTest extends UITest {
             mockMvc.perform(get("/admin")
                             .session(session))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("/admin/index"))
+                    .andExpect(view().name("admin/index"))
                     .andDo(print());
         }
 
@@ -76,7 +76,7 @@ class AdminPageControllerTest extends UITest {
             mockMvc.perform(get("/admin/login")
                             .session(session))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("/admin/login"))
+                    .andExpect(view().name("admin/login"))
                     .andDo(print());
         }
 
@@ -88,7 +88,7 @@ class AdminPageControllerTest extends UITest {
             mockMvc.perform(get("/admin/dict")
                             .session(session))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("/admin/dict/list"))
+                    .andExpect(view().name("admin/dict/list"))
                     .andDo(print());
         }
 
@@ -100,7 +100,7 @@ class AdminPageControllerTest extends UITest {
             mockMvc.perform(get("/admin/dict/1")
                             .session(session))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("/admin/dict/plant"))
+                    .andExpect(view().name("admin/dict/plant"))
                     .andDo(print());
         }
 
@@ -109,7 +109,7 @@ class AdminPageControllerTest extends UITest {
             mockMvc.perform(get("/admin/dict/create")
                             .session(session))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("/admin/dict/create"))
+                    .andExpect(view().name("admin/dict/create"))
                     .andDo(print());
         }
 
@@ -125,7 +125,7 @@ class AdminPageControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(request))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
-                    .andExpect(view().name("/admin/dict/update"))
+                    .andExpect(view().name("admin/dict/update"))
                     .andDo(print());
         }
 
@@ -135,7 +135,7 @@ class AdminPageControllerTest extends UITest {
                             .session(session)
                     )
                     .andExpect(status().isOk())
-                    .andExpect(view().name("/admin/dict/requests"))
+                    .andExpect(view().name("admin/dict/requests"))
                     .andDo(print());
         }
     }
