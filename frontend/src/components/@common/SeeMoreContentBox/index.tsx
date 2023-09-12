@@ -14,11 +14,9 @@ const SeeMoreContentBox = ({ children: content, maxHeight = '64px' }: SeeMoreCon
   return (
     <Wrapper ref={wrapperRef} $maxHeight={maxHeight} $hiddenOver={showState === 'HIDDEN_OVER'}>
       <ContentBox $maxHeight={maxHeight} $hiddenOver={showState === 'HIDDEN_OVER'}>
-        <p>{paragraphList.shift()}</p>
-        {paragraphList.map((paragraph) => (
+        {paragraphList.map((paragraph, index) => (
           <Fragment key={paragraph}>
-            <br />
-            <br />
+            {index !== 0 && <br />}
             <p>{paragraph}</p>
           </Fragment>
         ))}
