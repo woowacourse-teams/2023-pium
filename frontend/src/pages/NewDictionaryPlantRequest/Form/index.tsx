@@ -46,14 +46,14 @@ const Form = (props: FormProps) => {
   };
 
   const setImageIfValid: React.ChangeEventHandler<HTMLInputElement> = ({ target: { files } }) => {
-    if (!files) {
+    if (!files || files.length === 0) {
       setImage(null);
       return;
     }
 
     const firstImage = getFirstImage(files);
     if (!firstImage) addToast('warning', '5MB 이하의 사진을 올려주세요!');
-    setImage(firstImage);
+    setImage(firstImage ? firstImage : image);
   };
 
   const isValidForm = isFormValid();
