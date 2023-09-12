@@ -9,7 +9,6 @@ import {
   MonthArea,
   MonthHeader,
   Plant,
-  PlantImage,
   Sensor,
   Spot,
   TimelineArea,
@@ -45,7 +44,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   return (
     <Wrapper hasNextPage={hasNextPage}>
       <Plant>
-        <PlantImage src={Sprout} alt="타임라인 꼭대기" />
+        <Sprout aria-label="타임라인 꼭대기" />
       </Plant>
       {isSuccess ? (
         yearList.map(([year, monthList]) => (

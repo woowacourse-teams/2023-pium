@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, SadPiumiImage, Section, Text, Title, Wrapper } from './Error.style';
+import { Button, Section, Text, Title, Wrapper } from './Error.style';
 import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
 import { URL_PATH } from 'constants/index';
-import sadpiumi from 'assets/sadpiumi.svg';
+import SadPiumiImage from 'assets/sadpiumi.svg';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const NotFound = () => {
 
   return (
     <Wrapper>
-      <SadPiumiImage src={sadpiumi} alt="슬픈 표정을 하는 피우미" />
+      <SadPiumiImage aria-label="슬픈 표정을 하는 피우미" />
       <Section>
         <Text>이런!</Text>
         <Title>페이지를 찾지 못했어요</Title>
