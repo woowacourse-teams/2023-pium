@@ -58,7 +58,7 @@ export const PostingDate = styled.p`
   color: ${(props) => props.theme.color.sub};
 `;
 
-export const Environment = styled.section`
+export const GreenBox = styled.section`
   display: flex;
   flex-direction: column;
   row-gap: 4px;
@@ -96,6 +96,15 @@ export const EnvironmentTitle = styled.span`
   border-radius: 50%;
 `;
 
+export const ContentArea = styled.div`
+  width: 100%;
+  margin-top: 32px;
+  padding: 4px;
+
+  font-size: 1.6rem;
+  color: ${(props) => props.theme.color.sub};
+`;
+
 export const TagArea = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -110,8 +119,8 @@ export const Tag = styled.div`
   margin-right: 8px;
   padding: 8px 12px;
 
-  font-size: 1.6rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 600;
   color: ${(props) => props.theme.color.sub};
 
   border: solid 1.6px;
@@ -128,11 +137,4 @@ export const WaterCycleTag = styled(Tag)`
 
 export const ManageLevelTag = styled(Tag)`
   border-color: ${({ theme }) => theme.color.grayDark};
-`;
-
-export const ContentArea = styled.div`
-  width: 100%;
-  margin-top: 24px;
-  font-size: 1.6rem;
-  color: ${(props) => props.theme.color.sub};
 `;

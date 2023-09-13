@@ -10,7 +10,7 @@ import {
   ContentArea,
   DaySince,
   DictionaryPlantTag,
-  Environment,
+  GreenBox,
   EnvironmentItem,
   EnvironmentTitle,
   Header,
@@ -49,12 +49,15 @@ const GardenPostItem = ({
         </HeaderContent>
         <PostingDate>{postingDate}</PostingDate>
       </Header>
+      <ContentArea>
+        <SeeMoreContentBox maxHeight="64px">{content}</SeeMoreContentBox>
+      </ContentArea>
       <TagArea>
         <DictionaryPlantTag>{dictionaryPlantName}</DictionaryPlantTag>
         <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
         <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
       </TagArea>
-      <Environment>
+      <GreenBox>
         <EnvironmentItem>
           <EnvironmentTitle>
             <House
@@ -103,10 +106,7 @@ const GardenPostItem = ({
           </EnvironmentTitle>
           {petPlant.wind}
         </EnvironmentItem>
-      </Environment>
-      <ContentArea>
-        <SeeMoreContentBox>{content}</SeeMoreContentBox>
-      </ContentArea>
+      </GreenBox>
     </Wrapper>
   );
 };
