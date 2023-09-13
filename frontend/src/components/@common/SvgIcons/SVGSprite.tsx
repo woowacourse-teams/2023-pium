@@ -161,6 +161,9 @@ export const SVGSprite = () => {
         <path d="M13 30a5.006 5.006 0 0 1-5-5h2a3 3 0 1 0 3-3H4v-2h9a5 5 0 0 1 0 10Z"></path>
         <path d="M25 25a5.006 5.006 0 0 1-5-5h2a3 3 0 1 0 3-3H2v-2h23a5 5 0 0 1 0 10zm-4-13H6v-2h15a3 3 0 1 0-3-3h-2a5 5 0 1 1 5 5z"></path>
       </symbol>
+      <symbol viewBox="0 0 24 24" id="bulletin-board">
+        <path d="M16 15H9v-2h7m3-2H9V9h10m0-2H9V5h10m2-4H7c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14c1.11 0 2-.89 2-2V3a2 2 0 0 0-2-2M3 5v16h16v2H3a2 2 0 0 1-2-2V5h2Z"></path>
+      </symbol>
     </svg>
   );
 };

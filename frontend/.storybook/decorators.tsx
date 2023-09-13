@@ -56,8 +56,8 @@ const SvgIcons = () => (
         <path
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           d="M12.73 4.5H10.4a2 2 0 0 0-2 2v35a2 2 0 0 0 2 2h2.33m0-39v39H37.6a2 2 0 0 0 2-2v-35a2 2 0 0 0-2-2Z"
         />
         <circle
@@ -66,14 +66,14 @@ const SvgIcons = () => (
           r="6.329"
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
         <path
           fill="none"
           stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           d="m23.723 27.142l-6.052 6.052"
         />
       </symbol>
@@ -112,15 +112,15 @@ const SvgIcons = () => (
       </symbol>
       <symbol id="leaf" viewBox="0 0 512 512">
         <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="32"
           d="M321.89 171.42C233 114 141 155.22 56 65.22c-19.8-21-8.3 235.5 98.1 332.7c77.79 71 197.9 63.08 238.4-5.92s18.28-163.17-70.61-220.58Z"
         />
         <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="32"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="32"
           d="M173 253c86 81 175 129 292 147"
         />
       </symbol>
@@ -167,6 +167,9 @@ const SvgIcons = () => (
       <symbol id="wind" viewBox="0 0 32 32">
         <path d="M13 30a5.006 5.006 0 0 1-5-5h2a3 3 0 1 0 3-3H4v-2h9a5 5 0 0 1 0 10Z"></path>
         <path d="M25 25a5.006 5.006 0 0 1-5-5h2a3 3 0 1 0 3-3H2v-2h23a5 5 0 0 1 0 10zm-4-13H6v-2h15a3 3 0 1 0-3-3h-2a5 5 0 1 1 5 5z"></path>
+      </symbol>
+      <symbol viewBox="0 0 24 24" id="bulletin-board">
+        <path d="M16 15H9v-2h7m3-2H9V9h10m0-2H9V5h10m2-4H7c-1.11 0-2 .89-2 2v14a2 2 0 0 0 2 2h14c1.11 0 2-.89 2-2V3a2 2 0 0 0-2-2M3 5v16h16v2H3a2 2 0 0 1-2-2V5h2Z"></path>
       </symbol>
     </svg>
   </div>
