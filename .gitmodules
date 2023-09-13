@@ -1,6 +1,6 @@
 [submodule "backend/pium/src/main/resources/config"]
 	path = backend/pium/src/main/resources/config
-	url = https://github.com/pium-official/config
+	url = https://github.com/pium-official/config.git
 [submodule "frontend/env"]
 	path = frontend/env
 	url = https://github.com/pium-official/env.git
