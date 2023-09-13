@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const ResultList = styled.ul`
@@ -18,4 +19,10 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
+`;
+
+export const StyledLink = styled(Link)`
+  font-weight: normal;
+  color: ${({ theme: { color } }) => color.primary};
+  text-decoration: underline;
 `;

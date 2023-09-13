@@ -33,7 +33,7 @@ const FormInputBox = ({
         </Title>
         <InputBox>{children}</InputBox>
       </ContentBox>
-      {status === 'error' && <ErrorMessage>{error}</ErrorMessage>}
+      <ErrorMessage>{status === 'error' && error}&nbsp;</ErrorMessage>
     </Wrapper>
   );
 };

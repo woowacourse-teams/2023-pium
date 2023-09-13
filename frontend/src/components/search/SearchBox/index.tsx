@@ -12,10 +12,11 @@ import {
   EnterButton,
   Input,
   ResultMessage,
+  StyledLink,
 } from './SearchBox.style';
 import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 import useDebounce from 'hooks/useDebounce';
-import { MESSAGE } from 'constants/index';
+import { MESSAGE, URL_PATH } from 'constants/index';
 
 interface SearchBoxProps {
   onResultClick?: (id: number) => void;
@@ -70,16 +71,29 @@ const SearchBox = (props: SearchBoxProps) => {
       </InputArea>
       {hasSearchResult &&
         (searchResults.length ? (
-          <ResultList>
-            {searchResults.map(({ id, name, image }) => (
-              <ResultItem key={id} onClick={handleResultClick(id)}>
-                <Image alt={name} src={image} type="circle" size="40px" />
-                <Name>{name}</Name>
-              </ResultItem>
-            ))}
-          </ResultList>
+          <>
+            <ResultList>
+              {searchResults.map(({ id, name, image }) => (
+                <ResultItem key={id} onClick={handleResultClick(id)}>
+                  <Image alt={name} src={image} type="circle" size="40px" />
+                  <Name>{name}</Name>
+                </ResultItem>
+              ))}
+            </ResultList>
+            <ResultMessage>
+              찾는 식물이 없으신가요? &nbsp;&nbsp;&nbsp;
+              <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
+                등록 신청하기
+              </StyledLink>
+            </ResultMessage>
+          </>
         ) : (
-          <ResultMessage>{MESSAGE.noSearchResult}</ResultMessage>
+          <ResultMessage>
+            {MESSAGE.noSearchResult} &nbsp;&nbsp;&nbsp;
+            <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
+              등록 신청하기
+            </StyledLink>
+          </ResultMessage>
         ))}
     </Wrapper>
   );
