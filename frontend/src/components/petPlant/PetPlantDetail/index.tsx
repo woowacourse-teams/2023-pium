@@ -1,7 +1,8 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { generatePath } from 'react-router-dom';
 import Image from 'components/@common/Image';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
+import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import {
   InfoArea,
   Bold,
@@ -83,12 +84,12 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
         <TitleArea>
           <Title>
             {nickname}
-            {isBirthday && <SvgIcons icon="crown" aria-hidden="true" />}
+            {isBirthday && <SvgFill icon="crown" aria-hidden="true" />}
           </Title>
           <StyledLink to={generatePath(URL_PATH.dictDetail, { id: dictId.toString() })}>
             <SubTitle>
               {dictName}
-              <SvgIcons icon="dictionary" aria-hidden="true" />
+              <SvgStroke icon="dictionary" aria-hidden="true" color={theme.color.grayDark} />
             </SubTitle>
           </StyledLink>
         </TitleArea>
@@ -131,7 +132,7 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
         <Environment>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <SvgIcons
+              <SvgFill
                 icon="house"
                 size={20}
                 color={primaryColor}
@@ -143,7 +144,7 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <SvgIcons
+              <SvgFill
                 icon="flowerpot"
                 color={primaryColor}
                 aria-label="화분"
@@ -155,7 +156,7 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <SvgIcons
+              <SvgFill
                 icon="sun"
                 color={primaryColor}
                 aria-label="채광"
@@ -167,7 +168,7 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <SvgIcons
+              <SvgFill
                 icon="wind"
                 color={primaryColor}
                 aria-label="바람"

@@ -1,5 +1,5 @@
 import type { HistoryType } from 'types/history';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import type { TimelineItem } from 'components/petPlant/Timeline/converter';
 import { IconArea, Item, ItemContent, ItemHead, Wrapper } from './TimelineItemList.style';
 import { getDaysBetween } from 'utils/date';

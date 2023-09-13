@@ -1,5 +1,5 @@
 import { InputHTMLAttributes } from 'react';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { Button, Input, Wrapper } from './FormInput.style';
 import theme from 'style/theme.style';
 

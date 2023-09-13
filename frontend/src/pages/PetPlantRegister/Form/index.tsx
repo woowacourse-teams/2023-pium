@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom';
 import Image from 'components/@common/Image';
 import Modal from 'components/@common/Modal';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
+import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
 import {
@@ -33,13 +34,13 @@ const PetPlantRegisterFormPage = () => {
     <>
       <Header>
         <BackLink to={URL_PATH.petRegisterSearch}>
-          <SvgIcons icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
+          <SvgFill icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
         </BackLink>
       </Header>
       <Main>
         <DictionaryPlantName>{name}</DictionaryPlantName>
         <DictionaryPlantButton onClick={open}>
-          <span>사전 정보</span> <SvgIcons icon="dictionary" />
+          <span>사전 정보</span> <SvgStroke icon="dictionary" color={theme.color.grayDark} />
         </DictionaryPlantButton>
         <DictionaryPlantImageArea>
           <Image size="160px" src={image} alt={name} />

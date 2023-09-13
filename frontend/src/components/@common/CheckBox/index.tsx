@@ -1,5 +1,5 @@
 import { useId, useState } from 'react';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { Input, Label } from './CheckBox.style';
 import theme from 'style/theme.style';
 

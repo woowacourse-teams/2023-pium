@@ -1,4 +1,4 @@
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import TagBox from 'components/dictionaryPlant/TagBox';
 import TagSwitch from 'components/dictionaryPlant/TagSwitch';
 import {

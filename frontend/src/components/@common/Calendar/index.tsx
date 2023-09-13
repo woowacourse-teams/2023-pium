@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { AlertSpan, Button, CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
 import { convertDateKorYear, getDateToString, getDayInfo, getDaysBetween } from 'utils/date';
 import { DateValidate } from 'utils/validate';

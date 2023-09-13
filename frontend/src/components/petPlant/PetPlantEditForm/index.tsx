@@ -4,7 +4,7 @@ import { generatePath, useNavigate } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
 import Image from 'components/@common/Image';
 import Select from 'components/@common/Select';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
   InfoArea,
   Bold,

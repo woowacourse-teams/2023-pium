@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { Backdrop, IconArea, OptionBox, OptionItem, SelectedValue, Wrapper } from './Select.style';
 import useToggle from 'hooks/useToggle';
 import theme from 'style/theme.style';

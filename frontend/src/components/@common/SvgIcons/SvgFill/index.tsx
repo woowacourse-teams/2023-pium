@@ -13,10 +13,8 @@ export const ICONS = [
   'check-circle',
   'close-circle',
   'crown',
-  'dictionary',
   'flowerpot',
   'fragrance',
-  'home',
   'house',
   'humidity',
   'info-circle',
@@ -25,9 +23,7 @@ export const ICONS = [
   'manage-level-초보자',
   'manage-level-경험자',
   'manage-level-전문가',
-  'leaf',
   'potted-plant',
-  'reminder',
   'search',
   'stopwatch',
   'sun',
@@ -37,7 +33,6 @@ export const ICONS = [
   'warning',
   'water',
   'wind',
-  'bulletin-board',
 ] as const;
 
 type IconIds = (typeof ICONS)[number];
@@ -48,7 +43,7 @@ interface SvgIconsProps extends Omit<ComponentPropsWithoutRef<'svg'>, 'width' | 
   color?: string;
 }
 
-const SvgIcons = ({ icon, size = 24, color = theme.color.gray, ...rest }: SvgIconsProps) => {
+const SvgFill = ({ icon, size = 24, color = theme.color.gray, ...rest }: SvgIconsProps) => {
   return (
     <svg fill={color} width={size} height={size} {...rest}>
       <use href={`#${icon}`} />
@@ -56,4 +51,4 @@ const SvgIcons = ({ icon, size = 24, color = theme.color.gray, ...rest }: SvgIco
   );
 };
 
-export default SvgIcons;
+export default SvgFill;

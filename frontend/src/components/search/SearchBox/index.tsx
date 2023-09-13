@@ -1,7 +1,7 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useState } from 'react';
 import Image from 'components/@common/Image';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
   InputArea,
   ResultItem,

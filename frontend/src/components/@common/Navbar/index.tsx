@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
+import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import { NavItem, NavItemArea, NavLabel, NavLink, Wrapper } from './Navbar.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
@@ -20,32 +21,34 @@ const Navbar = () => {
       {
         path: URL_PATH.main,
         label: '메인',
-        Icon: ({ color, size }: IconParams) => <SvgIcons color={color} size={size} icon="home" />,
+        Icon: ({ color, size }: IconParams) => (
+          <SvgStroke color={color} size={size} icon="home-line" />
+        ),
       },
       {
         path: URL_PATH.garden,
         label: '모두의 정원',
         Icon: ({ color, size }: IconParams) => (
-          <SvgIcons color={color} size={size} icon="bulletin-board" />
+          <SvgStroke color={color} size={size} icon="bulletin-board-line" />
         ),
       },
       {
         path: URL_PATH.reminder,
         label: '리마인더',
         Icon: ({ color, size }: IconParams) => (
-          <SvgIcons color={color} size={size} icon="reminder" />
+          <SvgStroke color={color} size={size} icon="reminder" />
         ),
       },
       {
         path: URL_PATH.petList,
         label: '내 식물',
-        Icon: ({ color, size }: IconParams) => <SvgIcons color={color} size={size} icon="leaf" />,
+        Icon: ({ color, size }: IconParams) => <SvgStroke color={color} size={size} icon="leaf" />,
       },
       {
         path: isLoggedIn ? URL_PATH.myPage : URL_PATH.login,
         label: isLoggedIn ? '마이페이지' : '로그인',
         Icon: ({ color, size }: IconParams) => (
-          <SvgIcons color={color} size={size} icon="account-circle" />
+          <SvgStroke color={color} size={size} icon="account-circle-line" />
         ),
       },
     ];

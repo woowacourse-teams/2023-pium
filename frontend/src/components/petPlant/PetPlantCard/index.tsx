@@ -1,6 +1,6 @@
 import type { PetPlantItem } from 'types/petPlant';
 import Image from 'components/@common/Image';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
   ContentArea,
   ContentRow,

@@ -1,6 +1,6 @@
 import type { ToastItem } from 'types/toast';
 import { memo, useEffect, useState, useCallback } from 'react';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { IconArea, Message, MessageArea, Title, Wrapper } from './Toast.style';
 import theme from 'style/theme.style';
 

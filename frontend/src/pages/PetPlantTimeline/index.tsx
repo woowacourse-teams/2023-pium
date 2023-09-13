@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CheckButton from 'components/@common/CheckButton';
 import Navbar from 'components/@common/Navbar';
-import SvgIcons from 'components/@common/SvgIcons';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import Timeline from 'components/petPlant/Timeline';
 import { ButtonLabel, Header, Main } from './PetPlantTimeline.style';
 import useToggle from 'hooks/useToggle';
