@@ -49,14 +49,14 @@ export const PetPlantNickname = styled.p`
 export const DaySince = styled.p`
   font-size: 1.4rem;
   font-weight: 500;
-  color: ${(props) => props.theme.color.sub};
+  color: ${(props) => props.theme.color.grayDark};
 `;
 
 export const PostingDate = styled.p`
   width: max-content;
   margin-top: 4px;
   font-size: 1rem;
-  color: ${(props) => props.theme.color.sub};
+  color: ${(props) => props.theme.color.grayDark};
 `;
 
 export const GreenBox = styled.section`
