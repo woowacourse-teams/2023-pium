@@ -18,9 +18,6 @@ const getList = () => {
 const register = (form: FormData) => {
   return fetch(PET_PLANT_URL, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
     credentials: 'include',
     body: form,
   });
@@ -37,9 +34,6 @@ const getDetails = (petPlantId: PetPlantDetails['id']) => {
 const edit = (petPlantId: PetPlantDetails['id'], form: FormData) => {
   return fetch(`${PET_PLANT_URL}/${petPlantId}`, {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'multipart/form-data',
-    },
     credentials: 'include',
     body: form,
   });

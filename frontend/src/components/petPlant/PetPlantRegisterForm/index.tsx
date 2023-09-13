@@ -124,7 +124,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     const formData = new FormData();
 
     if (imageBlob) {
-      formData.append('file', imageBlob);
+      formData.append('image', imageBlob);
     }
 
     const requestForm = {
@@ -136,7 +136,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    formData.append('data', JSON.stringify(requestForm));
+    formData.append('request', JSON.stringify(requestForm));
 
     registerPetPlant(formData);
   };

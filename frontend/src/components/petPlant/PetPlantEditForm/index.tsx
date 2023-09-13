@@ -117,7 +117,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     const formData = new FormData();
 
     if (file) {
-      formData.append('file', file);
+      formData.append('image', file);
     }
 
     const requestForm = {
@@ -128,7 +128,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    formData.append('data', JSON.stringify(requestForm));
+    formData.append('request', JSON.stringify(requestForm));
 
     mutate(formData);
   };
