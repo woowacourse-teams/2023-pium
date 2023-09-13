@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{admin/common/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">사전 식물 목록</h1>
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            <th:block th:each="plant : ${plants}">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img class="img-thumbnail plant-image" th:alt="${plant.name}" th:src="${plant.imageUrl}">
+                        <div class="card-body">
+                            <p class="card-text" th:text="|이름: ${plant.name}|"></p>
+                            <p class="card-text" th:text="|ID: ${plant.id}|"></p>
+                            <p class="card-text" th:text="|생성일: ${plant.createdAt}|"></p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-secondary" th:href="@{|/admin/dict/${plant.id}|}"
+                                       th:text="보기"></a>
+                                    <a class="btn btn-outline-primary"
+                                       th:href="@{|/admin/dict/${plant.id}/update|}">수정</a>
+                                </div>
+                                <a class="btn btn-outline-danger" th:onclick="|confirmDelete(${plant.id})|">삭제</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+        <nav aria-label="Page Navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item" th:classappend="${page.number == 0} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{|/admin/dict?page=0|}" th:if="${page.number != 0}">처음으로</a>
+                </li>
+
+                <li class="page-item" th:classappend="${page.hasPrevious()} ? '' : 'disabled'">
+                    <a class="page-link" tabindex="-1"
+                       th:href="@{|/admin/dict?page=${page.number - 1}|}"
+                       th:if="${page.hasPrevious()}">이전</a>
+                </li>
+
+                <th:block
+                        th:with="startPage=${(page.number - 5 < 0 ? 0 : page.number - 5)}, endPage=${(page.number + 4 >= page.totalPages ? page.totalPages - 1 : page.number + 4)}">
+                    <li class="page-item" th:classappend="${pageNumber == page.number} ? 'active' : ''"
+                        th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                        <a class="page-link" th:href="@{|/admin/dict?page=${pageNumber}|}"
+                           th:text="${pageNumber + 1}"></a>
+                    </li>
+                </th:block>
+
+                <li class="page-item" th:classappend="${page.hasNext()} ? '' : 'disabled'">
+                    <a class="page-link" th:href="@{|/admin/dict?page=${page.number + 1}|}"
+                       th:if="${page.hasNext()}">다음</a>
+                </li>
+
+                <li class="page-item" th:classappend="${page.number == page.totalPages - 1} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{|/admin/dict?page=${page.totalPages - 1}|}"
+                       th:if="${page.number != page.totalPages - 1}">끝으로</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function confirmDelete(id) {
+            let result = confirm('삭제하시겠습니까?');
+            if (result) {
+                fetch(`/dictionary-plants/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            alert('삭제되었습니다.');
+                            window.location.replace("/admin/dict");
+                        } else {
+                            alert('오류가 발생했습니다.');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Fetch 오류:', error);
+                        alert('오류가 발생했습니다.');
+                    });
+            } else {
+            }
+        }
+    </script>
+</th:block>
+</html>

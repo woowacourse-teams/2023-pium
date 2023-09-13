@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>피움 어드민</title>
+    <link rel="icon" th:href="${@environment.getProperty('view.image.favicion')}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+<th:block th:replace="~{admin/fragments/nav::navFragment}"></th:block>
+<th:block layout:fragment="content"></th:block>
+</body>
+<th:block layout:fragment="script"></th:block>
+<th:block th:replace="~{admin/fragments/logout::logoutFragment}"></th:block>
+</html>
