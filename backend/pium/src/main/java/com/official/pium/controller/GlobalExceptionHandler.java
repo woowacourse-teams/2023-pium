@@ -1,5 +1,6 @@
 package com.official.pium.controller;
 
+import com.official.pium.exception.AuthorizationException;
 import com.official.pium.exception.OAuthException;
 import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
 import com.official.pium.exception.OAuthException.KakaoServerException;
@@ -112,6 +113,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return ResponseEntity.badRequest().body(exceptionResponse);
     }
 
+    @ExceptionHandler(AuthorizationException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleAuthorizationException(AuthorizationException e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
+        log.warn(message);
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+    }
+
     private StringBuilder getExceptionMessages(ConstraintViolationException e) {
         Iterator<ConstraintViolation<?>> iterator =
                 e.getConstraintViolations().iterator();
@@ -131,4 +140,5 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                 .message(message)
                 .build();
     }
+
 }
