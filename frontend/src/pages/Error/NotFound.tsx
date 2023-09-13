@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Section, Text, Title, Wrapper } from './Error.style';
 import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
 import { URL_PATH } from 'constants/index';
-import SadPiumiImage from 'assets/sadpiumi.svg';
+import SadPiumiImageSvg from 'assets/sadpiumi.svg';
+import SadPiumiImageWebp from 'assets/sadpiumi.webp';
 
 const NotFound = () => {
   const navigate = useNavigate();
@@ -20,7 +21,10 @@ const NotFound = () => {
 
   return (
     <Wrapper>
-      <SadPiumiImage viewBox="0 0 720 457" aria-label="슬픈 표정을 하는 피우미" />
+      <picture>
+        <source srcSet={SadPiumiImageWebp} width={250} height={250} type="image/wepb" />
+        <SadPiumiImageSvg viewBox="0 0 720 457" aria-label="슬픈 표정을 하는 피우미" />
+      </picture>
       <Section>
         <Text>이런!</Text>
         <Title>페이지를 찾지 못했어요</Title>

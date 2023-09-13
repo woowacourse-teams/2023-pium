@@ -18,7 +18,7 @@ import {
 } from './Timeline.style';
 import useYearList from 'hooks/queries/history/useYearList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
-import Sprout from 'assets/sprout.svg';
+import Sprout from 'assets/sprout.webp';
 import TimelineItemList from '../TimelineItemList';
 import Skeleton from './Skeleton';
 

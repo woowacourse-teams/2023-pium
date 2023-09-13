@@ -12,7 +12,8 @@ import {
 } from './Login.style';
 import Auth from 'apis/auth';
 import { URL_PATH } from 'constants/index';
-import KakaoLoginLarge from 'assets/kakao_login_large_narrow.png';
+import KakaoLoginLargePng from 'assets/kakao_login_large_narrow.png';
+import KakaoLoginLargeWebp from 'assets/kakao_login_large_narrow.webp';
 
 const IMAGE_SRC_LIST = [
   'https://static.pium.life/thumbnail/main1.png',
@@ -59,7 +60,10 @@ const Login = () => {
           메인으로 돌아가기
         </GoToMain>
         <Link to={AUTHORIZATION_URL} aria-label="카카오로 로그인하기">
-          <KakaoLogin src={KakaoLoginLarge} alt="카카오 로그인" />
+          <picture>
+            <source srcSet={KakaoLoginLargeWebp} type="image/webp" />
+            <KakaoLogin src={KakaoLoginLargePng} alt="카카오 로그인" />
+          </picture>
         </Link>
       </LoginBox>
     </Wrapper>

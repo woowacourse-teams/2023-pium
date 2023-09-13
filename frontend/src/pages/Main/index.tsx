@@ -2,7 +2,8 @@ import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Wrapper } from './Main.style';
 import useDictionaryNavigate from 'hooks/useDictionaryNavigate';
-import Logo from 'assets/logo.svg';
+import LogoSvg from 'assets/logo.svg';
+import LogoWebp from 'assets/logo.webp';
 
 const Main = () => {
   const { goToProperDictionaryPlantPage, goToDictionaryPlantDetailPage } = useDictionaryNavigate();
@@ -11,7 +12,10 @@ const Main = () => {
     <>
       <Wrapper>
         <LogoMessage>식물을 쉽게</LogoMessage>
-        <Logo aria-label="피움 로고. 녹색으로 '피움'이라는 글자가 적혀 있다." />
+        <picture>
+          <source srcSet={LogoWebp} type="image/webp" />
+          <LogoSvg aria-label="피움 로고. 녹색으로 '피움'이라는 글자가 적혀 있다." />
+        </picture>
         <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
         <SearchBoxArea>
           <SearchBox
