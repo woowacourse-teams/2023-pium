@@ -26,7 +26,7 @@ public class PetPlantMapper {
                 .dictionaryPlant(dictionaryPlant)
                 .member(member)
                 .nickname(request.getNickname())
-                .imageUrl(imagePath == null ? dictionaryPlant.getImageUrl() : imagePath)
+                .imageUrl(imagePath)
                 .location(request.getLocation())
                 .flowerpot(request.getFlowerpot())
                 .light(request.getLight())

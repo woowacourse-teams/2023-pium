@@ -76,7 +76,7 @@ class PetPlantServiceTest extends IntegrationTest {
     class 반려_식물_등록_시 {
 
         @Test
-        void 사진_없이_반려_식물_등록() {
+        void 사진이_없으면_사전_식물_이미지를_사용하며_등록() {
             PetPlantCreateRequest request = PetPlantCreateRequest.builder()
                     .dictionaryPlantId(dictionaryPlant.getId())
                     .nickname("피우미")
@@ -91,7 +91,10 @@ class PetPlantServiceTest extends IntegrationTest {
 
             PetPlantResponse petPlantResponse = petPlantService.create(request, null, member);
 
-            assertThat(petPlantRepository.findById(petPlantResponse.getId())).isNotEmpty();
+            assertSoftly(softly -> {
+                assertThat(petPlantRepository.findById(petPlantResponse.getId())).isNotEmpty();
+                assertThat(petPlantResponse.getImageUrl()).isEqualTo(dictionaryPlant.getImageUrl());
+            });
         }
 
         @Test

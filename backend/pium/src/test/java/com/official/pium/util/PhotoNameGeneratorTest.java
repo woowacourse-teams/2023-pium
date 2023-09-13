@@ -33,7 +33,7 @@ class PhotoNameGeneratorTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"pium", "gray", "hamad", "joy"})
+    @ValueSource(strings = {"pium", "gray", "hamad", "joy", "juno"})
     void 파일_확장자가_없으면_예외가_발생한다(String filename) {
         assertThatThrownBy(() -> PhotoNameGenerator.of(filename))
                 .isInstanceOf(IllegalArgumentException.class)

@@ -48,7 +48,7 @@ public class PetPlantService {
                 .orElseThrow(
                         () -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + request.getDictionaryPlantId()));
 
-        String imagePath = saveImageIfExists(image);
+        String imagePath = saveImageIfExists(image, dictionaryPlant.getImageUrl());
         PetPlant petPlant = PetPlantMapper.toPetPlant(request, dictionaryPlant, imagePath, member);
         petPlantRepository.save(petPlant);
 
@@ -59,9 +59,9 @@ public class PetPlantService {
         return PetPlantMapper.toPetPlantResponse(petPlant, dday, daySince);
     }
 
-    private String saveImageIfExists(MultipartFile image) {
+    private String saveImageIfExists(MultipartFile image, String imageDefaultUrl) {
         if (image == null || image.isEmpty()) {
-            return null;
+            return imageDefaultUrl;
         }
         return photoManger.upload(image, PET_PLANT);
     }
