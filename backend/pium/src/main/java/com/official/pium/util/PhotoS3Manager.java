@@ -1,8 +1,8 @@
-package com.official.pium.service;
+package com.official.pium.util;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.official.pium.util.PhotoNameGenerator;
+import com.official.pium.service.PhotoManger;
 import java.io.File;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;

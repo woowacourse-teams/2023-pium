@@ -1,4 +1,4 @@
-package com.official.pium.service;
+package com.official.pium.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.any;
