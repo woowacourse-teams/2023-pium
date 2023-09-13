@@ -18,7 +18,8 @@ import {
 } from './Timeline.style';
 import useYearList from 'hooks/queries/history/useYearList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
-import Sprout from 'assets/sprout.webp';
+import SproutSvg from 'assets/sprout.svg';
+import SproutWebp from 'assets/sprout.webp';
 import TimelineItemList from '../TimelineItemList';
 import Skeleton from './Skeleton';
 
@@ -45,7 +46,10 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   return (
     <Wrapper hasNextPage={hasNextPage}>
       <Plant>
-        <Sprout width={24} height={14} aria-label="타임라인 꼭대기" />
+        <picture>
+          <source srcSet={SproutWebp} type="image/webp" />
+          <SproutSvg width={24} height={14} aria-label="타임라인 꼭대기" />
+        </picture>
       </Plant>
       {isSuccess ? (
         yearList.map(([year, monthList]) => (
