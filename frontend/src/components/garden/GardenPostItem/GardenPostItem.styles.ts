@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import Image from 'components/@common/Image';
 
 export const Wrapper = styled.li`
   display: flex;
@@ -18,7 +19,7 @@ export const Header = styled.div`
   height: 40px;
 `;
 
-export const PetPlantImage = styled.img`
+export const PetPlantImage = styled(Image)`
   width: 40px;
   height: 40px;
   border-radius: 8px;
