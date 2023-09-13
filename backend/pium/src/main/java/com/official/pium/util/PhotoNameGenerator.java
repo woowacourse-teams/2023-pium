@@ -12,6 +12,8 @@ public class PhotoNameGenerator {
     private static final Set<String> IMAGE_EXTENSIONS = Set.of("jpeg", "jpg", "png", "webp", "heic", "heif");
     private static final String UNDER_BAR = "_";
     private static final String DOT = ".";
+    private static final int UUID_BEGIN_INDEX = 0;
+    private static final int UUID_END_INDEX = 8;
 
     public static String of(String originalFilename) {
         validateFileName(originalFilename);
@@ -25,7 +27,7 @@ public class PhotoNameGenerator {
         if (extension == null) {
             throw new IllegalArgumentException("파일 확장자는 반드시 포함되어야 합니다. filename: " + originalFilename);
         }
-        String fileBaseName = UUID.randomUUID().toString().substring(0, 8);
+        String fileBaseName = UUID.randomUUID().toString().substring(UUID_BEGIN_INDEX, UUID_END_INDEX);
         validateFileName(fileBaseName);
         validateExtension(extension);
 
