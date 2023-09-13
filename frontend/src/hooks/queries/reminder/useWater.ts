@@ -1,4 +1,4 @@
-import type { MutationProps } from 'types/DataResponse';
+import type { MutationProps } from 'types/api';
 import type { WaterPlantParams } from 'types/reminder';
 import { useMutation } from '@tanstack/react-query';
 import ReminderAPI from 'apis/reminder';

@@ -1,4 +1,4 @@
-import type { DataResponse } from 'types/DataResponse';
+import type { DataResponse } from 'types/api';
 import type { Month } from 'types/date';
 import type { Reminder, ReminderExtendType, TodayStatus } from 'types/reminder';
 import { useSuspenseQuery } from '@tanstack/react-query';

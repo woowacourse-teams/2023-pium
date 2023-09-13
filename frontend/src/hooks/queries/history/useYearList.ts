@@ -1,4 +1,5 @@
-import type { HistoryResponse, HistoryType } from 'types/history';
+import type { PageDataResponse } from 'types/api';
+import type { HistoryType, HistoryItem } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import {
@@ -13,7 +14,7 @@ import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
 const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) =>
   useInfiniteQuery<
-    HistoryResponse,
+    PageDataResponse<HistoryItem[]>,
     Error,
     YearList,
     [typeof HISTORY_URL, PetPlantDetails['id'], HistoryType[]],
