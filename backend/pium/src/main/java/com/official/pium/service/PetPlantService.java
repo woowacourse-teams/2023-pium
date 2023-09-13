@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class PetPlantService {
 
-    private static final String PET_PLANT = "petPlant";
+    @Value("${petPlant.image.directory}")
+    private String workingDirectory;
 
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
@@ -63,7 +65,7 @@ public class PetPlantService {
         if (image == null || image.isEmpty()) {
             return imageDefaultUrl;
         }
-        return photoManger.upload(image, PET_PLANT);
+        return photoManger.upload(image, workingDirectory);
     }
 
     private void createHistory(PetPlant petPlant) {

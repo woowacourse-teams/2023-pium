@@ -1,6 +1,5 @@
 package com.official.pium.service;
 
-import static com.official.pium.domain.PhotoDirectory.PET_PLANT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
@@ -35,7 +34,7 @@ class PhotoS3ManagerTest {
         given(s3Client.putObject(any(PutObjectRequest.class)))
                 .willReturn(new PutObjectResult());
 
-        String imageUrl = photoS3Manager.upload(multipartFile, PET_PLANT);
+        String imageUrl = photoS3Manager.upload(multipartFile, "test");
 
         assertThat(imageUrl).isNotBlank();
     }
