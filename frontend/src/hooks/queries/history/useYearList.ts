@@ -17,7 +17,7 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
     PageDataResponse<HistoryItem[]>,
     Error,
     YearList,
-    [typeof HISTORY_URL, PetPlantDetails['id'], HistoryType[]],
+    [typeof HISTORY_URL, typeof petPlantId, typeof filter],
     number
   >({
     queryKey: [HISTORY_URL, petPlantId, filter],
