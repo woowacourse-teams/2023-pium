@@ -49,7 +49,7 @@ module.exports = (env) => ({
         },
       },
       {
-        test: /\.(png|jpg|jpeg)$/i,
+        test: /\.(png|jpg|jpeg|webp)$/i,
         type: 'asset/resource',
       },
       {
