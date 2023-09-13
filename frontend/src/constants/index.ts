@@ -17,7 +17,7 @@ export const URL_PATH = {
   login: '/login',
   authorization: '/authorization',
   myPage: '/myPage',
-  newDictionaryPlantRequest: '/add-this-to-dictionary',
+  newDictionaryPlantRequest: '/dict/new-plant-request',
 } as const;
 
 export const MESSAGE = {
