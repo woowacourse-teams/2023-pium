@@ -21,3 +21,9 @@ export interface GardenPostItem {
     | 'waterCycle'
   >;
 }
+
+export interface GardenRegisterForm {
+  petPlantId: PetPlantDetails['id'];
+  content: GardenPostItem['content'];
+  manageLevel: ManageLevel;
+}
