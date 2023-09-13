@@ -17,7 +17,7 @@ export const storybookHandlers = [
     return res(ctx.status(200), ctx.json(DICTIONARY_PLANT_DATA));
   }),
 
-  rest.post<NewPetPlantRequest>('*/pet-plants', async (req, res, ctx) => res(ctx.status(201))),
+  rest.post<NewPetPlantRequest>('*/pet-plants', (req, res, ctx) => res(ctx.status(201))),
 
   rest.get('*/pet-plants/:id', async (req, res, ctx) => {
     const { id } = req.params;
@@ -26,7 +26,7 @@ export const storybookHandlers = [
     return res(ctx.status(200), ctx.json(data));
   }),
 
-  rest.patch<EditPetPlantRequest>(`*/pet-plants/:id`, async (req, res, ctx) =>
-    res(ctx.status(200))
-  ),
+  rest.patch<EditPetPlantRequest>(`*/pet-plants/:id`, (req, res, ctx) => res(ctx.status(200))),
+
+  rest.post(`*/garden/register/:id`, (req, res, ctx) => res(ctx.delay(200), ctx.status(201))),
 ];
