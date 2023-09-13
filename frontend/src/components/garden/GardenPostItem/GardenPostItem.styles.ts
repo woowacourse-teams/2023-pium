@@ -52,7 +52,7 @@ export const DaySince = styled.p`
 `;
 
 export const PostingDate = styled.p`
-  width: 72px;
+  width: max-content;
   margin-top: 4px;
   font-size: 1rem;
   color: ${(props) => props.theme.color.sub};
