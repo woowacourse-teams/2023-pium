@@ -17,6 +17,7 @@ export const URL_PATH = {
   login: '/login',
   authorization: '/authorization',
   myPage: '/myPage',
+  garden: '/garden',
 } as const;
 
 export const MESSAGE = {

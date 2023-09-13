@@ -8,7 +8,7 @@ import theme from 'style/theme.style';
 
 interface IconParams {
   color: string;
-  size?: number;
+  size: number;
 }
 
 const Navbar = () => {
@@ -20,29 +20,31 @@ const Navbar = () => {
       {
         path: URL_PATH.main,
         label: '메인',
-        Icon: ({ color, size = 24 }: IconParams) => (
-          <SvgIcons color={color} size={size} icon="home" />
+        Icon: ({ color, size }: IconParams) => <SvgIcons color={color} size={size} icon="home" />,
+      },
+      {
+        path: URL_PATH.garden,
+        label: '모두의 정원',
+        Icon: ({ color, size }: IconParams) => (
+          <SvgIcons color={color} size={size} icon="bulletin-board" />
         ),
       },
-
       {
         path: URL_PATH.reminder,
         label: '리마인더',
-        Icon: ({ color, size = 24 }: IconParams) => (
+        Icon: ({ color, size }: IconParams) => (
           <SvgIcons color={color} size={size} icon="reminder" />
         ),
       },
       {
         path: URL_PATH.petList,
         label: '내 식물',
-        Icon: ({ color, size = 24 }: IconParams) => (
-          <SvgIcons color={color} size={size} icon="leaf" />
-        ),
+        Icon: ({ color, size }: IconParams) => <SvgIcons color={color} size={size} icon="leaf" />,
       },
       {
         path: isLoggedIn ? URL_PATH.myPage : URL_PATH.login,
         label: isLoggedIn ? '마이페이지' : '로그인',
-        Icon: ({ color, size = 24 }: IconParams) => (
+        Icon: ({ color, size }: IconParams) => (
           <SvgIcons color={color} size={size} icon="account-circle" />
         ),
       },
@@ -54,7 +56,7 @@ const Navbar = () => {
       {navItems.map(({ path, label, Icon }, index) => {
         const active = pathname === path;
         const color = active ? fillColor.fontPrimaryForBackground : theme.color.grayDark;
-        const navIcon = Icon({ color, size: 36 });
+        const navIcon = Icon({ color, size: 24 });
 
         return (
           <NavLink key={index} to={path}>
