@@ -2,6 +2,7 @@ import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import type { Preview } from '@storybook/react';
 import { initialize, mswLoader } from 'msw-storybook-addon';
 import { withRouter } from 'storybook-addon-react-router-v6';
+import dictionaryPlantRegistrationHandlers from '../src/mocks/handlers/dictionaryPlantRegistration';
 import { storybookHandlers } from '../src/mocks/storybookHandlers';
 import { decorateGlobalStyle, decorateQueryClient } from './decorators';
 
@@ -38,7 +39,7 @@ const preview: Preview = {
       },
     },
 
-    msw: { handlers: [...storybookHandlers] },
+    msw: { handlers: [...storybookHandlers, ...dictionaryPlantRegistrationHandlers] },
   },
 
   loaders: [mswLoader],

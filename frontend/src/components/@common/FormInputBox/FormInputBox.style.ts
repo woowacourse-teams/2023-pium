@@ -41,7 +41,7 @@ export const InputBox = styled.div`
   align-items: center;
 `;
 
-export const ErrorMessage = styled.span`
+export const ErrorMessage = styled.p`
   font: 400 1.2rem/1.7rem 'GmarketSans';
   color: ${(props) => props.theme.color.accent};
 `;
