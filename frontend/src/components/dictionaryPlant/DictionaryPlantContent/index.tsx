@@ -5,6 +5,7 @@ import PottedPlant from 'components/@common/Icons/PottedPlant';
 import ThermometerSnow from 'components/@common/Icons/ThermometerSnow';
 import ThermometerSun from 'components/@common/Icons/ThermometerSun';
 import Warning from 'components/@common/Icons/Warning';
+import SeeMoreContentBox from 'components/@common/SeeMoreContentBox';
 import TagBox from 'components/dictionaryPlant/TagBox';
 import TagSwitch from 'components/dictionaryPlant/TagSwitch';
 import {
@@ -159,22 +160,9 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
         <ManageInfoBox>
           <p>특별 관리 정보</p>
           <span>
-            {specialManageInfo !== NO_INFORMATION
-              ? specialManageInfo
-                  .trim()
-                  .split(/(?:\r?\n)+/)
-                  .map((paragraph, index) =>
-                    index ? (
-                      <>
-                        <br />
-                        <br />
-                        {paragraph}
-                      </>
-                    ) : (
-                      paragraph
-                    )
-                  )
-              : '관련 정보가 없어요😇'}
+            <SeeMoreContentBox>
+              {specialManageInfo !== NO_INFORMATION ? specialManageInfo : '관련 정보가 없어요😇'}
+            </SeeMoreContentBox>
           </span>
         </ManageInfoBox>
       </ContentBox>

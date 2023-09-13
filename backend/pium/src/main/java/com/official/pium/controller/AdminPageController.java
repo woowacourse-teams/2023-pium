@@ -42,7 +42,7 @@ public class AdminPageController {
         }
 
         model.addAttribute("admin", admin);
-        return "/admin/index";
+        return "admin/index";
     }
 
     @GetMapping("/dict")
@@ -55,7 +55,7 @@ public class AdminPageController {
         model.addAttribute("admin", admin);
         model.addAttribute("page", dictionaryPlants);
         model.addAttribute("plants", dictionaryPlants.getContent());
-        return "/admin/dict/list";
+        return "admin/dict/list";
     }
 
     @GetMapping("/dict/{id}")
@@ -69,7 +69,7 @@ public class AdminPageController {
 
         model.addAttribute("admin", admin);
         model.addAttribute("plant", dictionaryPlant);
-        return "/admin/dict/plant";
+        return "admin/dict/plant";
     }
 
     @GetMapping("/dict/create")
@@ -79,7 +79,7 @@ public class AdminPageController {
         }
 
         model.addAttribute("admin", admin);
-        return "/admin/dict/create";
+        return "admin/dict/create";
     }
 
     @GetMapping("/dict/{id}/update")
@@ -93,7 +93,7 @@ public class AdminPageController {
 
         model.addAttribute("admin", admin);
         model.addAttribute("plant", dictionaryPlant);
-        return "/admin/dict/update";
+        return "admin/dict/update";
     }
 
     @GetMapping("/dict/requests")
@@ -103,12 +103,12 @@ public class AdminPageController {
         }
 
         model.addAttribute("admin", admin);
-        return "/admin/dict/requests";
+        return "admin/dict/requests";
     }
 
     @GetMapping("/login")
     public String loginPage(Model model) {
-        return "/admin/login";
+        return "admin/login";
     }
 
     @PostMapping("/login")
