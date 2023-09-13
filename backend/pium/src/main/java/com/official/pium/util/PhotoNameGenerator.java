@@ -1,4 +1,4 @@
-package com.official.pium.domain.vo;
+package com.official.pium.util;
 
 import java.util.Set;
 import java.util.UUID;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.util.StringUtils;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class PhotoName {
+public class PhotoNameGenerator {
 
     private static final Set<String> IMAGE_EXTENSIONS = Set.of("jpeg", "jpg", "png", "webp", "heic", "heif");
     private static final String UNDER_BAR = "_";

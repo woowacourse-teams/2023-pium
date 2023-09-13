@@ -2,7 +2,7 @@ package com.official.pium.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.official.pium.domain.vo.PhotoName;
+import com.official.pium.util.PhotoNameGenerator;
 import java.io.File;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -40,7 +40,7 @@ public class PhotoS3Manager implements PhotoManger {
 
     private String uploadPhoto(MultipartFile multipartFile, String workingDirectory) {
         try {
-            String fileName = PhotoName.of(multipartFile.getOriginalFilename());
+            String fileName = PhotoNameGenerator.of(multipartFile.getOriginalFilename());
             File file = convertMultiPartFileToFile(multipartFile, fileName);
 
             s3Client.putObject(new PutObjectRequest(bucket + folder + directory + workingDirectory, fileName, file));
