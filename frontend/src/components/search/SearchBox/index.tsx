@@ -19,7 +19,7 @@ import useDebounce from 'hooks/useDebounce';
 import { MESSAGE, URL_PATH } from 'constants/index';
 
 interface SearchBoxProps {
-  onResultClick?: (id: number) => void;
+  onResultClick?: (searchResult: DictionaryPlantNameSearchResult) => void;
   onEnter?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
   onNextClick?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
 }
@@ -43,8 +43,8 @@ const SearchBox = (props: SearchBoxProps) => {
     onEnter?.(searchName, searchResults);
   };
 
-  const handleResultClick = (plantId: number) => () => {
-    onResultClick?.(plantId);
+  const handleResultClick = (searchResult: DictionaryPlantNameSearchResult) => () => {
+    onResultClick?.(searchResult);
   };
 
   const handleNextButtonClick = () => {
@@ -73,12 +73,15 @@ const SearchBox = (props: SearchBoxProps) => {
         (searchResults.length ? (
           <>
             <ResultList>
-              {searchResults.map(({ id, name, image }) => (
-                <ResultItem key={id} onClick={handleResultClick(id)}>
-                  <Image alt={name} src={image} type="circle" size="40px" />
-                  <Name>{name}</Name>
-                </ResultItem>
-              ))}
+              {searchResults.map((searchResult) => {
+                const { id, name, image } = searchResult;
+                return (
+                  <ResultItem key={id} onClick={handleResultClick(searchResult)}>
+                    <Image alt={name} src={image} type="circle" size="40px" />
+                    <Name>{name}</Name>
+                  </ResultItem>
+                );
+              })}
             </ResultList>
             <ResultMessage>
               찾는 식물이 없으신가요? &nbsp;&nbsp;&nbsp;
