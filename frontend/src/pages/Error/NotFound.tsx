@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button, SadPiumiImage, Section, Text, Title, Wrapper } from './Error.style';
 import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
 import { URL_PATH } from 'constants/index';
-import SadPiumiImageSvg from 'assets/sadpiumi.svg';
+import SadPiumiImagePng from 'assets/sadpiumi.png';
 import SadPiumiImageWebp from 'assets/sadpiumi.webp';
 
 const NotFound = () => {
@@ -23,7 +23,7 @@ const NotFound = () => {
     <Wrapper>
       <picture>
         <source srcSet={SadPiumiImageWebp} type="image/webp" />
-        <SadPiumiImage src={SadPiumiImageSvg} alt="슬픈 표정을 하는 피우미" />
+        <SadPiumiImage src={SadPiumiImagePng} alt="슬픈 표정을 하는 피우미" />
       </picture>
       <Section>
         <Text>이런!</Text>
