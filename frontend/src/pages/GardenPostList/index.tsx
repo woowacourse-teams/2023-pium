@@ -17,7 +17,7 @@ import {
 import useGardenPostList from 'hooks/queries/garden/useGardenPostList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
 
-const SKELETON_LENGTH = 5;
+const SKELETON_LENGTH = 20;
 
 const GardenPostList = () => {
   const [selectedDictionaryPlant, setSelectedDictionaryPlant] =
@@ -25,6 +25,7 @@ const GardenPostList = () => {
 
   const {
     data: gardenPostList,
+    isLoading,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
@@ -64,10 +65,12 @@ const GardenPostList = () => {
       </Header>
       <Main>
         <List>
-          {gardenPostList.map((gardenPost) => (
-            <GardenPostItem key={gardenPost.id} {...gardenPost} />
-          ))}
-          {isFetchingNextPage && Array(SKELETON_LENGTH).fill(null).map(GardenPostItemSkeleton)}
+          {gardenPostList &&
+            gardenPostList.map((gardenPost) => (
+              <GardenPostItem key={gardenPost.id} {...gardenPost} />
+            ))}
+          {(isLoading || isFetchingNextPage) &&
+            Array(SKELETON_LENGTH).fill(null).map(GardenPostItemSkeleton)}
         </List>
         {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
         {!hasNextPage && <Message>마지막이에요 😄</Message>}

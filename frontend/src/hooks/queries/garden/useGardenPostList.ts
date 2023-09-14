@@ -1,11 +1,11 @@
 import type { PageDataResponse } from 'types/api';
 import type { GardenPostItem } from 'types/garden';
-import { useSuspenseInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 import GardenAPI, { GARDEN_URL } from 'apis/garden';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
 const useGardenPostList = (dictionaryPlantId: number | null) =>
-  useSuspenseInfiniteQuery<
+  useInfiniteQuery<
     PageDataResponse<GardenPostItem[]>,
     Error,
     GardenPostItem[],
@@ -22,6 +22,7 @@ const useGardenPostList = (dictionaryPlantId: number | null) =>
     initialPageParam: 0,
     getNextPageParam: ({ hasNext }, _, lastPageParam) => (hasNext ? lastPageParam + 1 : null),
 
+    throwOnError: true,
     select: ({ pages }) => pages.reduce<GardenPostItem[]>((acc, { data }) => acc.concat(data), []),
   });
 
