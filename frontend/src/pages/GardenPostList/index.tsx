@@ -1,8 +1,6 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useEffect, useState } from 'react';
 import Navbar from 'components/@common/Navbar';
-import GardenPostItem from 'components/garden/GardenPostItem';
-import GardenPostItemSkeleton from 'components/garden/GardenPostItem/GardenPostItemSkeleton';
 import SearchBox from 'components/search/SearchBox';
 import {
   DeleteFilterButton,
@@ -14,8 +12,10 @@ import {
   SelectedDictionaryPlantArea,
   Sensor,
 } from './GardenPostList.style';
-import useGardenPostList from 'hooks/queries/garden/useGardenPostList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
+import GardenPostItem from './components/GardenPostItem';
+import GardenPostItemSkeleton from './components/GardenPostItem/GardenPostItemSkeleton';
+import useGardenPostList from './hooks/useGardenPostList';
 
 const SKELETON_LENGTH = 20;
 
