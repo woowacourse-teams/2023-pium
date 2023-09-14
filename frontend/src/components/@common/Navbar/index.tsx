@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import { NavItem, NavItemArea, NavLabel, NavLink, Wrapper } from './Navbar.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
