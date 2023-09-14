@@ -2,20 +2,22 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
-
   width: 100%;
-  height: min-content;
-
-  border: solid 2px ${(p) => p.theme.color.primary};
-  border-radius: 29px;
 `;
 
-export const InputArea = styled.div`
+export const InputBox = styled.div<{ openBottom: boolean }>`
   display: flex;
   align-items: center;
+
   padding: 0 12px;
+
+  border: solid 2px ${(props) => props.theme.color.primary};
+  border-radius: 29px;
+
+  ${(props) => (props.openBottom ? 'border-radius: 29px 29px 0 0;' : '')}
 `;
 
 export const Input = styled.input`
@@ -45,11 +47,35 @@ export const ResultMessage = styled.p`
   border-top: solid 2px ${(p) => p.theme.color.primary + '40'};
 `;
 
-export const ResultList = styled.ul`
+export const Backdrop = styled.div`
+  position: fixed;
+  z-index: ${({ theme: { zIndex } }) => zIndex.dropdown};
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+`;
+
+export const ResultModal = styled.div`
+  position: absolute;
+  z-index: ${(props) => props.theme.zIndex.modal};
+  bottom: 2px;
+  transform: translateY(100%);
+
+  width: 100%;
+
+  background-color: ${(props) => props.theme.color.background};
+  border: solid 2px ${(props) => props.theme.color.primary};
+  border-top: 0px;
+  border-radius: 0 0 29px 29px;
+`;
+
+export const ResultList = styled.ul<{ showRow: number }>`
   overflow-x: none;
   overflow-y: auto;
   width: 100%;
-  max-height: 336px;
+  max-height: ${(props) => props.showRow * 56}px;
 `;
 
 export const ResultItem = styled.li`
