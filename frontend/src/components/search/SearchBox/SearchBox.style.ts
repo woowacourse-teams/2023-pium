@@ -32,6 +32,8 @@ export const Input = styled.input`
 
 export const ResultMessage = styled.p`
   display: flex;
+  flex-direction: column;
+  row-gap: 5px;
   align-items: center;
   justify-content: center;
 
