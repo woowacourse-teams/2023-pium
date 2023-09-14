@@ -9,15 +9,15 @@ export const Wrapper = styled.div`
 `;
 
 export const InputBox = styled.div<{ openBottom: boolean }>`
+  z-index: ${(props) => (props.openBottom ? props.theme.zIndex.dropdown + 1 : 'none')};
+
   display: flex;
   align-items: center;
 
   padding: 0 12px;
 
   border: solid 2px ${(props) => props.theme.color.primary};
-  border-radius: 29px;
-
-  ${(props) => (props.openBottom ? 'border-radius: 29px 29px 0 0;' : '')}
+  border-radius: ${(props) => (props.openBottom ? '29px 29px 0 0' : '29px')};
 `;
 
 export const Input = styled.input`
