@@ -9,7 +9,6 @@ import Sun from 'components/@common/Icons/Sun';
 import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
 import ImageButton from 'components/@common/ImageButton';
-import useFileUpload from 'components/@common/ImageButton/hooks/useFileUpload';
 import Select from 'components/@common/Select';
 import {
   InfoArea,
@@ -33,6 +32,7 @@ import {
   SecondaryButton,
   ButtonArea,
 } from './PetPlantEditForm.style';
+import useFileUpload from 'hooks/image/useFileUpload';
 import useEditPetPlant from 'hooks/queries/petPlant/useEditPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';

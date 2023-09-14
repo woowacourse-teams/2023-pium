@@ -3,7 +3,6 @@ import FormInput from 'components/@common/FormInput';
 import FormInputBox from 'components/@common/FormInputBox';
 import Image from 'components/@common/Image';
 import ImageButton from 'components/@common/ImageButton';
-import useFileUpload from 'components/@common/ImageButton/hooks/useFileUpload';
 import ProgressBar from 'components/@common/ProgressBar';
 import Select from 'components/@common/Select';
 import Stack from 'components/@common/Stack';
@@ -15,6 +14,7 @@ import {
   DictionaryPlantImageArea,
   Wrapper,
 } from './PetPlantRegisterForm.style';
+import useFileUpload from 'hooks/image/useFileUpload';
 import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
