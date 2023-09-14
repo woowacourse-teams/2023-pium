@@ -1,5 +1,6 @@
 package com.official.pium;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.config.DatabaseClearExtension;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
@@ -33,6 +34,9 @@ public class AcceptanceTest {
 
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
 
     protected Member member;
 
