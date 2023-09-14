@@ -1,5 +1,23 @@
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 import Image from 'components/@common/Image';
+
+const skeletonBackground = keyframes`
+  0%    { background-color: rgba(176, 176, 176, 0.1) }
+  50%   { background-color: rgba(176, 176, 176, 0.3) }
+  100%  { background-color: rgba(176, 176, 176, 0.1) }
+`;
+
+interface SkeletonItemProps {
+  width: string;
+  height: string;
+}
+
+export const SkeletonItem = styled.div<SkeletonItemProps>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  border-radius: 4px;
+  animation: ${skeletonBackground} 1s infinite;
+`;
 
 export const Wrapper = styled.li`
   display: flex;
@@ -79,6 +97,7 @@ export const EnvironmentItem = styled.p`
   align-items: center;
 
   width: 100%;
+  height: 24px;
 
   font-size: 1.2rem;
 `;
@@ -124,8 +143,15 @@ export const Tag = styled.div`
   font-weight: 600;
   color: ${(props) => props.theme.color.sub};
 
-  border: solid 1.6px;
+  border: solid 1.5px;
   border-radius: 16px;
+`;
+
+export const TagSkeleton = styled(Tag)`
+  width: 80px;
+  height: 33px;
+  border: solid 1.5px transparent;
+  animation: ${skeletonBackground} 1s infinite;
 `;
 
 export const DictionaryPlantTag = styled(Tag)`
