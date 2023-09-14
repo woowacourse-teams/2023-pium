@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useId } from 'react';
 import type { CSSProp } from 'styled-components';
 import { FileInput, Wrapper } from './ImageButton.style';
 import theme from 'style/theme.style';
@@ -13,15 +13,16 @@ const ImageButton = forwardRef<HTMLInputElement, ImageButtonProps>(function Imag
   { changeCallback, customCss },
   ref
 ) {
+  const customImage = useId();
   return (
     <Wrapper customCss={customCss}>
-      <label htmlFor="customImage">
+      <label htmlFor={customImage}>
         <CirclePlus color={theme.color.primary} />
       </label>
       <FileInput
         ref={ref}
         type="file"
-        id="customImage"
+        id={customImage}
         onChange={changeCallback}
         accept="image/*"
       />
