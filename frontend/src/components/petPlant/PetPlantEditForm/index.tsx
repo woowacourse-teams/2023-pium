@@ -29,9 +29,12 @@ import {
   PrimaryButton,
   SecondaryButton,
   ButtonArea,
+  TertiaryButton,
 } from './PetPlantEditForm.style';
+import useDeletePetPlant from 'hooks/queries/petPlant/useDeletePetPlant';
 import useEditPetPlant from 'hooks/queries/petPlant/useEditPetPlant';
 import useAddToast from 'hooks/useAddToast';
+import useConfirm from 'hooks/useConfirm';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import {
   convertDateKorYear,
@@ -71,7 +74,9 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     waterCycle: waterCycle.toString(),
   });
 
-  const { mutate } = useEditPetPlant(petPlantId);
+  const { mutate: editMutate } = useEditPetPlant(petPlantId);
+  const { mutate: deleteMutate } = useDeletePetPlant();
+  const confirm = useConfirm();
   const addToast = useAddToast();
 
   const navigate = useNavigate();
@@ -116,7 +121,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    mutate(requestForm);
+    editMutate(requestForm);
   };
 
   const handleSubmitClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -126,6 +131,17 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   const goToPetDetailsPage = () => {
     navigate(generatePath(URL_PATH.petDetail, { id: petPlantId.toString() }), { replace: true });
+  };
+
+  const deletePetPlant = async () => {
+    const isConfirmed = await confirm({
+      title: '반려 식물 삭제',
+      message: `정말로 '${form.nickname}'을(를) 지우실 건가요?`,
+    });
+
+    if (!isConfirmed) return;
+
+    deleteMutate(petPlantId);
   };
 
   const setNickname: React.ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -338,6 +354,9 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           <SecondaryButton type="button" role="link" onClick={goToPetDetailsPage}>
             취소하기
           </SecondaryButton>
+          <TertiaryButton type="button" onClick={deletePetPlant}>
+            삭제하기
+          </TertiaryButton>
         </ButtonArea>
       </Content>
     </Wrapper>

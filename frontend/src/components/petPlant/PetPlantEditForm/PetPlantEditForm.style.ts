@@ -180,10 +180,10 @@ const Button = styled.button`
   justify-content: center;
 
   width: 100%;
-  height: 48px;
+  height: 36px;
 
-  font-size: 2rem;
-  font-weight: 700;
+  font-size: 1.5rem;
+  font-weight: 500;
   letter-spacing: 1px;
 
   border-radius: 8px;
@@ -208,4 +208,15 @@ export const SecondaryButton = styled(Button)`
   color: ${({ theme }) => theme.color.sub};
   background: ${(props) => props.theme.color.background};
   border: 1px solid ${({ theme }) => theme.color.primary};
+`;
+
+export const TertiaryButton = styled(Button)`
+  width: 70%;
+  color: ${({ theme }) => theme.color.grayDark};
+  text-decoration: underline;
+
+  &:focus,
+  &:hover {
+    color: ${({ theme }) => theme.color.accent};
+  }
 `;
