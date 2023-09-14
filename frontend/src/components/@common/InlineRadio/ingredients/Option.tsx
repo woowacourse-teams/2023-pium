@@ -21,7 +21,7 @@ const Option = (props: React.PropsWithChildren<OptionProps>) => {
         checked={value === contextValue}
         onChange={() => setValue(value)}
       />
-      {children ? children : value}
+      <span>{children ? children : value}</span>
     </Label>
   );
 };
