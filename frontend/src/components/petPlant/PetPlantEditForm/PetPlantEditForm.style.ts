@@ -186,7 +186,7 @@ const Button = styled.button`
   font-weight: 500;
   letter-spacing: 1px;
 
-  border-radius: 8px;
+  border-radius: 4px;
 
   &:disabled {
     cursor: not-allowed;

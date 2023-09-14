@@ -25,12 +25,11 @@ import {
   EnvironmentItem,
   TimelineLinkArea,
   TimelineLink,
-  EditLink,
-  DeleteButton,
+  PrimaryLink,
+  SecondaryLink,
+  ButtonArea,
 } from './PetPlantDetail.style';
-import useDeletePetPlant from 'hooks/queries/petPlant/useDeletePetPlant';
 import usePetPlantDetails from 'hooks/queries/petPlant/usePetPlantDetails';
-import useConfirm from 'hooks/useConfirm';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
@@ -41,16 +40,13 @@ interface PetDetailsProps {
 
 const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
   const { data: petPlantDetails } = usePetPlantDetails(petPlantId);
-  const confirm = useConfirm();
-  const { mutate } = useDeletePetPlant();
-
   if (!petPlantDetails) return null;
 
   const {
     id,
     imageUrl,
     nickname,
-    dictionaryPlant: { id: dictId, name: dictName },
+    dictionaryPlant: { id: dictionaryPlantId, name: dictionaryPlantName },
     birthDate,
     daySince,
     waterCycle,
@@ -62,17 +58,6 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
     dday,
   } = petPlantDetails;
 
-  const deletePetPlant = async () => {
-    const isConfirmed = await confirm({
-      title: '반려 식물 삭제',
-      message: `정말로 '${nickname}'을(를) 지우실 건가요?`,
-    });
-
-    if (!isConfirmed) return;
-
-    mutate(id);
-  };
-
   const birthDateKorean = convertDateKorYear(birthDate);
   const today = convertDateKorYear(new Date()).slice(5);
   const isBirthday = today === birthDateKorean.slice(5);
@@ -81,16 +66,16 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
 
   return (
     <Wrapper>
-      <Image type="wide" src={imageUrl} alt={`${nickname}(${dictName})`} size="300px" />
+      <Image type="wide" src={imageUrl} alt={`${nickname}(${dictionaryPlantName})`} size="300px" />
       <Content>
         <TitleArea>
           <Title>
             {nickname}
             {isBirthday && <Crown aria-hidden="true" />}
           </Title>
-          <StyledLink to={generatePath(URL_PATH.dictDetail, { id: dictId.toString() })}>
+          <StyledLink to={generatePath(URL_PATH.dictDetail, { id: dictionaryPlantId.toString() })}>
             <SubTitle>
-              {dictName}
+              {dictionaryPlantName}
               <Dictionary aria-hidden="true" />
             </SubTitle>
           </StyledLink>
@@ -181,14 +166,17 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
             {wind}
           </EnvironmentItem>
         </Environment>
-        <ExpandedTextBox>
-          <EditLink to={generatePath(URL_PATH.petEdit, { id: petPlantId.toString() })}>
-            정보 수정하기
-          </EditLink>
-          <DeleteButton type="button" onClick={deletePetPlant}>
-            식물 삭제하기
-          </DeleteButton>
-        </ExpandedTextBox>
+        <ButtonArea>
+          <PrimaryLink
+            to={generatePath(URL_PATH.gardenRegisterForm, { id: petPlantId.toString() })}
+            state={{ nickname, dictionaryPlantName, imageUrl }}
+          >
+            모두의 정원에 등록하기
+          </PrimaryLink>
+          <SecondaryLink to={generatePath(URL_PATH.petEdit, { id: petPlantId.toString() })}>
+            정보 수정
+          </SecondaryLink>
+        </ButtonArea>
       </Content>
     </Wrapper>
   );
