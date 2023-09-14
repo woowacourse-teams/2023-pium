@@ -18,7 +18,7 @@ export const SelectedDictionaryPlantArea = styled.div`
 
   margin-top: 8px;
 
-  font-size: 2rem;
+  font-size: 2.2rem;
 `;
 
 export const GardenName = styled.p`
@@ -40,7 +40,7 @@ export const DeleteFilterButton = styled.button`
 export const Main = styled.main`
   position: relative;
   width: 100%;
-  height: calc(100% - 32px);
+  height: 100%;
   padding: 8px;
 `;
 
@@ -55,7 +55,8 @@ export const List = styled.ul`
 export const Sensor = styled.div`
   position: absolute;
   bottom: 0;
-  height: 64px;
+  height: 8px;
+  margin-bottom: 16px;
 `;
 
 export const Message = styled.p`
