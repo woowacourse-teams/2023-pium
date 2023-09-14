@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, Section, Text, Title, Wrapper } from './Error.style';
+import { Button, SadPiumiImage, Section, Text, Title, Wrapper } from './Error.style';
 import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
 import { URL_PATH } from 'constants/index';
 import SadPiumiImageSvg from 'assets/sadpiumi.svg';
@@ -22,8 +22,8 @@ const NotFound = () => {
   return (
     <Wrapper>
       <picture>
-        <source srcSet={SadPiumiImageWebp} width={250} height={250} type="image/webp" />
-        <img src={SadPiumiImageSvg} alt="슬픈 표정을 하는 피우미" />
+        <source srcSet={SadPiumiImageWebp} type="image/webp" />
+        <SadPiumiImage src={SadPiumiImageSvg} alt="슬픈 표정을 하는 피우미" />
       </picture>
       <Section>
         <Text>이런!</Text>
