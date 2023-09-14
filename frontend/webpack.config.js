@@ -56,7 +56,7 @@ module.exports = (env) => ({
         test: /\.svg$/,
         include: [resolve(__dirname, 'src'), resolve(__dirname, 'src', 'types', 'module.d.ts')],
         issuer: /\.[jt]sx?$/,
-        use: ['@svgr/webpack'],
+        use: ['@svgr/webpack', 'url-loader'],
       },
     ],
   },
