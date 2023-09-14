@@ -85,7 +85,11 @@ const Form = (props: FormProps) => {
         <HiddenInput ref={fileInputRef} type="file" accept="image/*" onChange={setImageIfValid} />
         <ImageContent>
           <UploadButton type="button" aria-label="사진 등록하기" onClick={accessFileInput}>
-            {image ? <Thumbnail src={getImageUrl(image)} alt={image.name} /> : '사진 등록하기'}
+            {image ? (
+              <Thumbnail src={getImageUrl(image)} alt={image.name} />
+            ) : (
+              '사진 등록하기 (jpg, jpeg, png, heic)'
+            )}
           </UploadButton>
           <ImageName>{image ? image.name : '아직 사진을 올리지 않았어요.'}</ImageName>
         </ImageContent>
