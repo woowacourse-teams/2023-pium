@@ -1,9 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ImageButton from '.';
-import useFileUpload from './hooks/useFileUpload';
+import useFileUpload from '../../../hooks/image/useFileUpload';
+import ToastList from '../Toast/ToastList';
 
 const meta: Meta<typeof ImageButton> = {
   component: ImageButton,
+  decorators: [
+    (Story) => {
+      return (
+        <>
+          <Story />
+          <ToastList />
+        </>
+      );
+    },
+  ],
 };
 
 export default meta;
