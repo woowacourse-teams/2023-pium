@@ -48,7 +48,7 @@ export const RedTag = styled(Tag)`
   border-color: hsl(7, 77%, 50%);
 `;
 
-export const Form = styled.form`
+export const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
   row-gap: 50px;
@@ -70,8 +70,12 @@ export const QuestionLabel = styled.label`
 
 export const TextArea = styled.textarea`
   resize: vertical;
+
   display: block;
+
   width: 100%;
+  padding: 0.5rem;
+
   border-radius: 4px;
 `;
 
