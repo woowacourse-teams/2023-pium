@@ -1,20 +1,11 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useEffect, useState } from 'react';
 import Navbar from 'components/@common/Navbar';
-import SearchBox from 'components/search/SearchBox';
-import {
-  DeleteFilterButton,
-  GardenName,
-  Header,
-  List,
-  Main,
-  Message,
-  SelectedDictionaryPlantArea,
-  Sensor,
-} from './GardenPostList.style';
+import { List, Main, Message, Sensor } from './GardenPostList.style';
 import useIntersectionRef from 'hooks/useIntersectionRef';
 import GardenPostItem from './components/GardenPostItem';
 import GardenPostItemSkeleton from './components/GardenPostItem/GardenPostItemSkeleton';
+import GardenPostListHeader from './components/GardenPostListHeader';
 import useGardenPostList from './hooks/useGardenPostList';
 
 const SKELETON_LENGTH = 20;
@@ -47,22 +38,11 @@ const GardenPostList = () => {
 
   return (
     <>
-      <Header>
-        <SearchBox onResultClick={select} />
-        <SelectedDictionaryPlantArea>
-          <GardenName>
-            {selectedDictionaryPlant ? (
-              <>
-                {selectedDictionaryPlant.name}
-                <DeleteFilterButton onClick={clear}>✕</DeleteFilterButton>
-              </>
-            ) : (
-              '모두의'
-            )}
-          </GardenName>
-          정원
-        </SelectedDictionaryPlantArea>
-      </Header>
+      <GardenPostListHeader
+        selectedDictionaryPlant={selectedDictionaryPlant}
+        select={select}
+        clear={clear}
+      />
       <Main>
         <List>
           {gardenPostList &&
