@@ -1,7 +1,6 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
-import { css } from 'styled-components';
 import DateInput from 'components/@common/DateInput';
 import Flowerpot from 'components/@common/Icons/Flowerpot';
 import House from 'components/@common/Icons/House';
@@ -207,10 +206,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           <SubTitle>{dictName}</SubTitle>
           <ExpandedTextBox>
             <Text>이미지 변경하기</Text>
-            <div>
-              <HiddenLabel>이미지 변경하기</HiddenLabel>
-              <ImageButton ref={imgRef} changeCallback={fileUploadHandler} size={16} />
-            </div>
+            <ImageButton ref={imgRef} changeCallback={fileUploadHandler} size={16} />
           </ExpandedTextBox>
         </TitleArea>
 
