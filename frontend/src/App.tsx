@@ -3,7 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import Confirm from 'components/@common/Confirm';
-import { SVGSprite } from 'components/@common/SvgIcons/SVGSprite';
+import SvgIcons from 'components/@common/SvgIcons/SvgIcons';
 import ToastList from 'components/@common/Toast/ToastList';
 import { GlobalStyle } from 'style/Global.style';
 import theme from 'style/theme.style';
@@ -18,7 +18,7 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <QueryClientProvider client={queryClient}>
           <RecoilRoot>
-            <SVGSprite />
+            <SvgIcons />
             <RouterProvider router={router} />
             <Confirm />
             <ToastList />
