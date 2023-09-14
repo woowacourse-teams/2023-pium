@@ -52,6 +52,9 @@ export const Form = styled.form`
   display: flex;
   flex-direction: column;
   row-gap: 50px;
+
+  width: 90%;
+  margin: 80px auto auto auto;
 `;
 
 export const Question = styled.p`

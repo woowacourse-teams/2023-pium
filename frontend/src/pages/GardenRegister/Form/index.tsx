@@ -1,5 +1,6 @@
 import React, { useState, useId } from 'react';
 import { useParams } from 'react-router-dom';
+import ContentHeader from 'components/@common/ContentHeader';
 import InlineRadio from 'components/@common/InlineRadio';
 import {
   BlueTag,
@@ -16,8 +17,8 @@ import {
 import { NUMBER } from 'constants/index';
 
 const GardenRegisterForm = () => {
-  const { id } = useParams();
-  if (!id) throw new Error('URL에 id가 없습니다.');
+  const { id: petPlantId } = useParams();
+  if (!petPlantId) throw new Error('URL에 id가 없습니다.');
 
   const [manageLevel, setManageLevel] = useState('정보없음');
   const [content, setContent] = useState('');
@@ -36,41 +37,44 @@ const GardenRegisterForm = () => {
   };
 
   return (
-    <Form>
-      <div>
-        <Question>이 식물은 어떤 분에게 추천하시나요?</Question>
-        <InlineRadio name="manage-level" value={manageLevel} setValue={setManageLevel}>
-          <InlineRadio.Option value="정보없음">
-            <DarkTag selected={manageLevel === '정보없음'}>선택안함</DarkTag>
-          </InlineRadio.Option>
-          <InlineRadio.Option value="초보자">
-            <GreenTag selected={manageLevel === '초보자'}>초보자</GreenTag>
-          </InlineRadio.Option>
-          <InlineRadio.Option value="경험자">
-            <BlueTag selected={manageLevel === '경험자'}>경험자</BlueTag>
-          </InlineRadio.Option>
-          <InlineRadio.Option value="전문가">
-            <RedTag selected={manageLevel === '전문가'}>전문가</RedTag>
-          </InlineRadio.Option>
-        </InlineRadio>
-      </div>
-      <div>
-        <QuestionLabel htmlFor={contentId}>(선택) 내용을 입력해 주세요.</QuestionLabel>
-        <TextArea
-          id={contentId}
-          rows={5}
-          value={content}
-          onChange={setGardenContent}
-          maxLength={NUMBER.maxGardenContentLength}
-        />
-        <TextLengthNotice>
-          {content.length} / {NUMBER.maxGardenContentLength}자
-        </TextLengthNotice>
-      </div>
-      <Button type="submit" onClick={submit}>
-        등록하기
-      </Button>
-    </Form>
+    <>
+      <ContentHeader title="모두의 정원에 글쓰기" />
+      <Form>
+        <div>
+          <Question>이 식물은 어떤 분에게 추천하시나요?</Question>
+          <InlineRadio name="manage-level" value={manageLevel} setValue={setManageLevel}>
+            <InlineRadio.Option value="정보없음">
+              <DarkTag selected={manageLevel === '정보없음'}>선택안함</DarkTag>
+            </InlineRadio.Option>
+            <InlineRadio.Option value="초보자">
+              <GreenTag selected={manageLevel === '초보자'}>초보자</GreenTag>
+            </InlineRadio.Option>
+            <InlineRadio.Option value="경험자">
+              <BlueTag selected={manageLevel === '경험자'}>경험자</BlueTag>
+            </InlineRadio.Option>
+            <InlineRadio.Option value="전문가">
+              <RedTag selected={manageLevel === '전문가'}>전문가</RedTag>
+            </InlineRadio.Option>
+          </InlineRadio>
+        </div>
+        <div>
+          <QuestionLabel htmlFor={contentId}>(선택) 내용을 입력해 주세요.</QuestionLabel>
+          <TextArea
+            id={contentId}
+            rows={5}
+            value={content}
+            onChange={setGardenContent}
+            maxLength={NUMBER.maxGardenContentLength}
+          />
+          <TextLengthNotice>
+            {content.length} / {NUMBER.maxGardenContentLength}자
+          </TextLengthNotice>
+        </div>
+        <Button type="submit" onClick={submit}>
+          등록하기
+        </Button>
+      </Form>
+    </>
   );
 };
 
