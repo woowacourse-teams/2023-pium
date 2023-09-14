@@ -57,7 +57,7 @@ const Navbar = () => {
     <Wrapper>
       {navItems.map(({ path, label, Icon }, index) => {
         const active = pathname === path;
-        const color = active ? fillColor.fontPrimaryForBackground : theme.color.grayDark;
+        const color = active ? fillColor.fontPrimaryForBackground : theme.color.subLight;
         const navIcon = Icon({ color, size: 24 });
 
         return (

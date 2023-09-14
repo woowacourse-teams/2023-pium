@@ -16,7 +16,7 @@ export const Wrapper = styled.nav`
   padding: 0 8px;
 
   background: white;
-  box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.grayDark};
+  box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
 `;
 
 export const NavLink = styled(Link)`
@@ -50,5 +50,5 @@ export const NavLabel = styled.p<{ $active?: boolean }>`
   font-size: 1rem;
   font-weight: 700;
   color: ${({ $active, theme: { color } }) =>
-    $active ? color.fontPrimaryForBackground : color.grayDark};
+    $active ? color.fontPrimaryForBackground : color.subLight};
 `;
