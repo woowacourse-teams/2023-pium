@@ -9,6 +9,7 @@ import {
   MonthArea,
   MonthHeader,
   Plant,
+  PlantImage,
   Sensor,
   Spot,
   TimelineArea,
@@ -48,7 +49,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
       <Plant>
         <picture>
           <source srcSet={SproutWebp} type="image/webp" />
-          <img src={SproutSvg} alt="타임라인 꼭대기" />
+          <PlantImage src={SproutSvg} alt="타임라인 꼭대기" />
         </picture>
       </Plant>
       {isSuccess ? (
