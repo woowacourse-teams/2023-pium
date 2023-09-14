@@ -2,6 +2,7 @@ import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useEffect, useState } from 'react';
 import Navbar from 'components/@common/Navbar';
 import GardenPostItem from 'components/garden/GardenPostItem';
+import GardenPostItemSkeleton from 'components/garden/GardenPostItem/GardenPostItemSkeleton';
 import SearchBox from 'components/search/SearchBox';
 import {
   DeleteFilterButton,
@@ -9,11 +10,14 @@ import {
   Header,
   List,
   Main,
+  Message,
   SelectedDictionaryPlantArea,
   Sensor,
 } from './GardenPostList.style';
 import useGardenPostList from 'hooks/queries/garden/useGardenPostList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
+
+const SKELETON_LENGTH = 5;
 
 const GardenPostList = () => {
   const [selectedDictionaryPlant, setSelectedDictionaryPlant] =
@@ -22,8 +26,9 @@ const GardenPostList = () => {
   const {
     data: gardenPostList,
     isFetchingNextPage,
+    hasNextPage,
     fetchNextPage,
-  } = useGardenPostList(selectedDictionaryPlant ? selectedDictionaryPlant.id : null);
+  } = useGardenPostList(selectedDictionaryPlant && selectedDictionaryPlant.id);
 
   const intersectionRef = useIntersectionRef(fetchNextPage);
 
@@ -60,10 +65,12 @@ const GardenPostList = () => {
       <Main>
         <List>
           {gardenPostList.map((gardenPost) => (
-            <GardenPostItem key={gardenPost.id} {...gardenPost}></GardenPostItem>
+            <GardenPostItem key={gardenPost.id} {...gardenPost} />
           ))}
+          {isFetchingNextPage && Array(SKELETON_LENGTH).fill(null).map(GardenPostItemSkeleton)}
         </List>
         {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
+        {!hasNextPage && <Message>마지막이에요 😄</Message>}
       </Main>
       <Navbar />
     </>

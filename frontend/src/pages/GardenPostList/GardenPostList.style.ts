@@ -40,7 +40,7 @@ export const DeleteFilterButton = styled.button`
 export const Main = styled.main`
   position: relative;
   width: 100%;
-  min-height: 100%;
+  height: calc(100% - 32px);
   padding: 8px;
 `;
 
@@ -56,4 +56,14 @@ export const Sensor = styled.div`
   position: absolute;
   bottom: 0;
   height: 64px;
+`;
+
+export const Message = styled.p`
+  display: flex;
+  justify-content: center;
+
+  margin-top: 32px;
+
+  font-size: 1.4rem;
+  color: ${(props) => props.theme.color.subLight};
 `;
