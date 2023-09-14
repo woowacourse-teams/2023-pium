@@ -55,6 +55,5 @@ export const List = styled.ul`
 export const Sensor = styled.div`
   position: absolute;
   bottom: 0;
-  width: 100%;
   height: 64px;
 `;
