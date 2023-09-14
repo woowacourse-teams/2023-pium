@@ -1,3 +1,4 @@
+import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { generatePath, useNavigate } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
@@ -9,7 +10,7 @@ const PetPlantRegisterSearch = () => {
   const navigate = useNavigate();
   useCheckSessionId();
 
-  const navigateForm = (id: number) => {
+  const navigateForm = ({ id }: DictionaryPlantNameSearchResult) => {
     navigate(generatePath(URL_PATH.petRegisterForm, { id: String(id) }));
   };
 
