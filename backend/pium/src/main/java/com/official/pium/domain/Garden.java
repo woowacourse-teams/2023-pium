@@ -1,20 +1,9 @@
 package com.official.pium.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -81,4 +70,24 @@ public class Garden extends BaseEntity {
     @NotBlank
     @Column(name = "manage_level", nullable = false)
     private String manageLevel;
+
+    @Builder
+    public Garden(final DictionaryPlant dictionaryPlant, final Member member, final String nickname,
+                  final String imageUrl, final String location,
+                  final String flowerpot, final String light, final String wind, final Long daySince,
+                  final Integer waterCycle, final String content,
+                  final String manageLevel) {
+        this.dictionaryPlant = dictionaryPlant;
+        this.member = member;
+        this.nickname = nickname;
+        this.imageUrl = imageUrl;
+        this.location = location;
+        this.flowerpot = flowerpot;
+        this.light = light;
+        this.wind = wind;
+        this.daySince = daySince;
+        this.waterCycle = waterCycle;
+        this.content = content;
+        this.manageLevel = manageLevel;
+    }
 }
