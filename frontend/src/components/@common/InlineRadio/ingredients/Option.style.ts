@@ -13,9 +13,12 @@ export const HiddenRadio = styled.input`
 export const Label = styled.label`
   cursor: pointer;
   display: inline-block;
-  width: max-content;
 
   &:hover {
     font-weight: bold;
   }
+`;
+
+export const Content = styled.span`
+  display: inline-block;
 `;

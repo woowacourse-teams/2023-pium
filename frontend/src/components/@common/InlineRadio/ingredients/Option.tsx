@@ -1,5 +1,5 @@
 import { useId } from 'react';
-import { HiddenRadio, Label } from './Option.style';
+import { HiddenRadio, Label, Content } from './Option.style';
 import { useRadioContext } from 'hooks/useRadioContext';
 
 interface OptionProps {
@@ -21,7 +21,7 @@ const Option = (props: React.PropsWithChildren<OptionProps>) => {
         checked={value === contextValue}
         onChange={() => setValue(value)}
       />
-      <span>{children ? children : value}</span>
+      <Content>{children ? children : value}</Content>
     </Label>
   );
 };
