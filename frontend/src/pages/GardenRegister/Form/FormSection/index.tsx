@@ -1,3 +1,4 @@
+import { ManageLevel } from 'types/dictionaryPlant';
 import { PetPlantDetails } from 'types/petPlant';
 import React, { useState, useId } from 'react';
 import InlineRadio from 'components/@common/InlineRadio';
@@ -13,6 +14,7 @@ import {
   TextArea,
   TextLengthNotice,
 } from './FormSection.style';
+import useGardenRegister from 'hooks/queries/garden/useGardenRegister';
 import { NUMBER } from 'constants/index';
 
 interface FormSectionProps {
@@ -20,9 +22,12 @@ interface FormSectionProps {
 }
 
 const FormSection = (props: FormSectionProps) => {
-  const [manageLevel, setManageLevel] = useState('정보없음');
+  const { petPlantId } = props;
+
+  const [manageLevel, setManageLevel] = useState<ManageLevel>('정보없음');
   const [content, setContent] = useState('');
   const contentId = useId();
+  const { mutate, isPending } = useGardenRegister();
 
   const setGardenContent: React.ChangeEventHandler<HTMLTextAreaElement> = ({
     target: { value },
@@ -32,15 +37,18 @@ const FormSection = (props: FormSectionProps) => {
 
   const submit: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
-
-    alert('제출 성공?');
+    mutate({ petPlantId, manageLevel, content });
   };
 
   return (
     <StyledForm>
       <div>
         <Question>이 식물은 어떤 분에게 추천하시나요?</Question>
-        <InlineRadio name="manage-level" value={manageLevel} setValue={setManageLevel}>
+        <InlineRadio
+          name="manage-level"
+          value={manageLevel}
+          setValue={setManageLevel as React.Dispatch<React.SetStateAction<string>>}
+        >
           <InlineRadio.Option value="정보없음">
             <DarkTag selected={manageLevel === '정보없음'}>선택안함</DarkTag>
           </InlineRadio.Option>
@@ -68,7 +76,7 @@ const FormSection = (props: FormSectionProps) => {
           {content.length} / {NUMBER.maxGardenContentLength}자
         </TextLengthNotice>
       </div>
-      <Button type="submit" onClick={submit}>
+      <Button type="submit" onClick={submit} disabled={isPending}>
         등록하기
       </Button>
     </StyledForm>

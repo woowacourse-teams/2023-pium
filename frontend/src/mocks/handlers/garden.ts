@@ -4,7 +4,7 @@ import { rest } from 'msw';
 const GARDEN = '*/garden';
 
 const gardenHandlers = [
-  rest.post<GardenRegisterForm>(`${GARDEN}/register/:id`, (req, res, ctx) => {
+  rest.post<GardenRegisterForm>(GARDEN, (req, res, ctx) => {
     const { JSESSION } = req.cookies;
 
     if (JSESSION === undefined) {

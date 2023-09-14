@@ -99,6 +99,7 @@ export const Button = styled.button`
   border-radius: 8px;
 
   &:disabled {
+    cursor: progress;
     color: ${(props) => props.theme.color.sub + '40'};
     background: ${(props) => props.theme.color.primary + '40'};
   }

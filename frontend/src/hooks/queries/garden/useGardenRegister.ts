@@ -27,7 +27,6 @@ const useRegisterPetPlant = () => {
       addToast('error', '게시글 등록에 실패했어요.');
     },
 
-    throwOnError: true,
     retry: noRetryIfUnauthorized,
   });
 };
