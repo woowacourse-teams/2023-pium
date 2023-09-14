@@ -20,7 +20,7 @@ export const Wrapper = styled.main`
   height: calc(100vh - 68px);
   margin: auto;
 
-  svg {
+  img {
     margin-top: 50px;
     animation: ${flip} 1.2s ease-in-out infinite;
   }

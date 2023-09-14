@@ -48,7 +48,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
       <Plant>
         <picture>
           <source srcSet={SproutWebp} type="image/webp" />
-          <SproutSvg width={24} height={14} aria-label="타임라인 꼭대기" />
+          <img src={SproutSvg} alt="타임라인 꼭대기" />
         </picture>
       </Plant>
       {isSuccess ? (

@@ -7,7 +7,7 @@ const Loading = () => {
     <Wrapper>
       <picture>
         <source srcSet={PiumiWebp} type="image/webp" />
-        <PiumiSvg role="status" aria-label="로딩중입니다." viewBox="0 0 720 487" />
+        <img src={PiumiSvg} role="status" aria-label="로딩중입니다." />
       </picture>
     </Wrapper>
   );

@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { Section, Wrapper, Text, Title, Button } from './Error.style';
 import { GUIDE, URL_PATH } from 'constants/index';
 import SadPiumiImageSvg from 'assets/sadpiumi.svg';
-import SadPiumiImageWepb from 'assets/sadpiumi.webp';
+import SadPiumiImageWebp from 'assets/sadpiumi.webp';
 
 const Unauthorize = () => {
   const navigate = useNavigate();
@@ -17,8 +17,8 @@ const Unauthorize = () => {
   return (
     <Wrapper>
       <picture>
-        <source srcSet={SadPiumiImageWepb} type="image/wepb" width={250} height={250} />
-        <SadPiumiImageSvg viewBox="0 0 720 457" aria-label="슬픈 표정을 하는 피우미" />
+        <source srcSet={SadPiumiImageWebp} type="image/webp" width={250} height={250} />
+        <img src={SadPiumiImageSvg} alt="슬픈 표정을 하는 피우미" />
       </picture>
       <Section>
         <Text>웁스!</Text>

@@ -14,7 +14,7 @@ const Main = () => {
         <LogoMessage>식물을 쉽게</LogoMessage>
         <picture>
           <source srcSet={LogoWebp} type="image/webp" />
-          <LogoSvg aria-label="피움 로고. 녹색으로 '피움'이라는 글자가 적혀 있다." />
+          <img src={LogoSvg} alt="피움 로고. 녹색으로 '피움'이라는 글자가 적혀 있다." />
         </picture>
         <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
         <SearchBoxArea>
