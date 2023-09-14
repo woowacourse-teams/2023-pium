@@ -3,6 +3,7 @@ import DictionaryPlantDetail from 'pages/DictionaryPlantDetail';
 import DictionaryPlantSearch from 'pages/DictionaryPlantSearch';
 import NotFound from 'pages/Error/NotFound';
 import GardenRegisterForm from 'pages/GardenRegister/Form';
+import GardenRegisterPick from 'pages/GardenRegister/Pick';
 import Login from 'pages/Login';
 import Authorization from 'pages/Login/Authorization';
 import Main from 'pages/Main';
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.myPage,
         element: <MyPage />,
+      },
+      {
+        path: URL_PATH.gardenRegisterPick,
+        element: <GardenRegisterPick />,
       },
       {
         path: URL_PATH.gardenRegisterForm,
