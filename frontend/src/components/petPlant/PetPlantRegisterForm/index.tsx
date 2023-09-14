@@ -147,7 +147,12 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     <Wrapper method="POST" encType="multipart/form-data" onSubmit={submit}>
       <DictionaryPlantImageArea>
         <Image size="160px" src={uploadedImageUrl} alt={defaultNickname} />
-        <ImageButton ref={imgRef} customCss={AddImageButton} changeCallback={fileUploadHandler} />
+        <ImageButton
+          ref={imgRef}
+          size={35}
+          customCss={AddImageButton}
+          changeCallback={fileUploadHandler}
+        />
       </DictionaryPlantImageArea>
 
       <Center>

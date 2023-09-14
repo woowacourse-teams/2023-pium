@@ -24,10 +24,6 @@ export const AddImageButton = css`
   position: absolute;
   right: 0;
   bottom: 0;
-  svg {
-    width: 35px;
-    height: 35px;
-  }
 `;
 
 export const Center = styled.div`

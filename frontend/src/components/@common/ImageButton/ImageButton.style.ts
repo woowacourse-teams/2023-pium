@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import type { CSSProp } from 'styled-components';
 
-export const Wrapper = styled.div<{ customCss?: CSSProp }>`
+export const Wrapper = styled.div<{
+  size: number;
+  customCss?: CSSProp;
+}>`
+  width: ${(props) => props.size}px;
+  height: ${(props) => props.size}px;
+  background: ${({ theme }) => theme.color.background};
+  border-radius: 50%;
   ${({ customCss }) => customCss && customCss}
 `;
 

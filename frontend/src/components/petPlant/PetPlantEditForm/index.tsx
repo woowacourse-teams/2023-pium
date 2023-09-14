@@ -209,14 +209,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
             <Text>이미지 변경하기</Text>
             <div>
               <HiddenLabel>이미지 변경하기</HiddenLabel>
-              <ImageButton
-                ref={imgRef}
-                changeCallback={fileUploadHandler}
-                customCss={css`
-                  width: 16px;
-                  height: 16px;
-                `}
-              />
+              <ImageButton ref={imgRef} changeCallback={fileUploadHandler} size={16} />
             </div>
           </ExpandedTextBox>
         </TitleArea>

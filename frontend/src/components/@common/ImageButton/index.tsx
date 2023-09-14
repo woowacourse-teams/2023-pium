@@ -7,17 +7,18 @@ import CirclePlus from '../Icons/CirclePuls';
 interface ImageButtonProps {
   changeCallback: React.ChangeEventHandler<HTMLInputElement>;
   customCss?: CSSProp;
+  size?: number;
 }
 
 const ImageButton = forwardRef<HTMLInputElement, ImageButtonProps>(function ImageButton(
-  { changeCallback, customCss },
+  { changeCallback, size = 24, customCss },
   ref
 ) {
   const customImage = useId();
   return (
-    <Wrapper customCss={customCss}>
+    <Wrapper size={size} customCss={customCss}>
       <label htmlFor={customImage}>
-        <CirclePlus color={theme.color.primary} />
+        <CirclePlus color={theme.color.primary} width={size} height={size} />
       </label>
       <FileInput
         ref={ref}
