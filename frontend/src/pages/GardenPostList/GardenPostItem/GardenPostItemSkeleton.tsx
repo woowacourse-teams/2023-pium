@@ -6,6 +6,7 @@ import {
   HeaderContent,
   SkeletonItem,
   TagArea,
+  TagRow,
   TagSkeleton,
   Wrapper,
 } from './GardenPostItem.styles';
@@ -24,9 +25,11 @@ const GardenPostItemSkeleton = () => {
         <SkeletonItem width="100%" height="1.6rem" />
       </ContentArea>
       <TagArea>
-        <TagSkeleton />
-        <TagSkeleton />
-        <TagSkeleton />
+        <TagRow>
+          <TagSkeleton />
+          <TagSkeleton />
+          <TagSkeleton />
+        </TagRow>
       </TagArea>
       <GreenBox>
         <EnvironmentItem>

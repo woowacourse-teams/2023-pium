@@ -19,6 +19,7 @@ import {
   TagArea,
   WaterCycleTag,
   Wrapper,
+  TagRow,
 } from './GardenPostItem.styles';
 
 type GardenPostItemProps = Omit<GardenPostItemType, 'id' | 'updatedAt'>;
@@ -51,9 +52,11 @@ const GardenPostItem = ({
         <SeeMoreContentBox maxHeight="64px">{content}</SeeMoreContentBox>
       </ContentArea>
       <TagArea>
-        <DictionaryPlantTag>{dictionaryPlantName}</DictionaryPlantTag>
-        <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
-        <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
+        <TagRow>
+          <DictionaryPlantTag>{dictionaryPlantName}</DictionaryPlantTag>
+          <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
+          <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
+        </TagRow>
       </TagArea>
       <GreenBox>
         <EnvironmentItem>

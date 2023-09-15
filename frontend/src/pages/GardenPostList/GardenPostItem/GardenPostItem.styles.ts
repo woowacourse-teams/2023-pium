@@ -126,17 +126,28 @@ export const ContentArea = styled.div`
 `;
 
 export const TagArea = styled.div`
+  overflow: scroll;
   display: flex;
-  flex-wrap: wrap;
-  row-gap: 8px;
+  align-items: center;
 
   width: 100%;
-  margin-top: 24px;
+  height: 40px;
+  margin-top: 16px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export const TagRow = styled.div`
+  display: flex;
+  column-gap: 16px;
+  height: 32px;
 `;
 
 export const Tag = styled.div`
   width: max-content;
-  margin-right: 8px;
+  height: 32px;
   padding: 8px 12px;
 
   font-size: 1.4rem;

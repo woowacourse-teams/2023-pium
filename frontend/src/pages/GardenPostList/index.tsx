@@ -45,10 +45,9 @@ const GardenPostList = () => {
       />
       <Main>
         <List>
-          {gardenPostList &&
-            gardenPostList.map((gardenPost) => (
-              <GardenPostItem key={gardenPost.id} {...gardenPost} />
-            ))}
+          {gardenPostList?.map((gardenPost) => (
+            <GardenPostItem key={gardenPost.id} {...gardenPost} />
+          ))}
           {(isLoading || isFetchingNextPage) &&
             Array(SKELETON_LENGTH)
               .fill(null)
