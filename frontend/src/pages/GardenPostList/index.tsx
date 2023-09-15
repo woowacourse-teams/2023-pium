@@ -50,7 +50,9 @@ const GardenPostList = () => {
               <GardenPostItem key={gardenPost.id} {...gardenPost} />
             ))}
           {(isLoading || isFetchingNextPage) &&
-            Array(SKELETON_LENGTH).fill(null).map(GardenPostItemSkeleton)}
+            Array(SKELETON_LENGTH)
+              .fill(null)
+              .map((_, index) => <GardenPostItemSkeleton key={index} />)}
         </List>
         {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
         {!hasNextPage && <Message>마지막이에요 😄</Message>}
