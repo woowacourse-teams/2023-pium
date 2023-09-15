@@ -2,10 +2,8 @@ import type { HistoryType } from 'types/history';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CheckButton from 'components/@common/CheckButton';
-import Stopwatch from 'components/@common/Icons/Stopwatch';
-import TreePlantPot from 'components/@common/Icons/TreePlantPot';
-import Water from 'components/@common/Icons/Water';
 import Navbar from 'components/@common/Navbar';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import Timeline from 'components/petPlant/Timeline';
 import { ButtonLabel, Header, Main } from './PetPlantTimeline.style';
 import useToggle from 'hooks/useToggle';
@@ -49,19 +47,37 @@ const PetPlantTimeline = () => {
       setFilter(filter.concat(['flowerpot', 'light', 'location', 'wind']));
     }
   };
+
+  const { water, background, primary, sub } = theme.color;
+
   return (
     <>
       <Header>
         <CheckButton checked={isCheckedWater} onClick={onClickWater}>
-          <Water fill={isCheckedWater ? 'white' : theme.color.water} aria-hidden />
+          <SvgIcons
+            size={14}
+            icon="water"
+            color={isCheckedWater ? background : water}
+            aria-hidden
+          />
           <ButtonLabel>물 준 날</ButtonLabel>
         </CheckButton>
         <CheckButton checked={isCheckedWaterCycle} onClick={onClickWaterCycle}>
-          <Stopwatch stroke={isCheckedWaterCycle ? 'white' : 'black'} aria-hidden />
+          <SvgIcons
+            size={14}
+            icon="stopwatch"
+            color={isCheckedWaterCycle ? background : sub}
+            aria-hidden
+          />
           <ButtonLabel>물 주기 설정</ButtonLabel>
         </CheckButton>
         <CheckButton checked={isCheckedSetting} onClick={onClickSetting}>
-          <TreePlantPot stroke={isCheckedSetting ? 'white' : theme.color.primary} aria-hidden />
+          <SvgIcons
+            size={14}
+            icon="tree-plant-pot"
+            color={isCheckedSetting ? background : primary}
+            aria-hidden
+          />
           <ButtonLabel>환경 변화</ButtonLabel>
         </CheckButton>
       </Header>

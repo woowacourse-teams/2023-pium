@@ -1,10 +1,14 @@
-import { LoadingImage, Wrapper } from './Loading.style';
-import piumi from 'assets/piumi-emotionless.svg';
+import { Wrapper } from './Loading.style';
+import PiumiPng from 'assets/piumi-emotionless.png';
+import PiumiWebp from 'assets/piumi-emotionless.webp';
 
 const Loading = () => {
   return (
     <Wrapper>
-      <LoadingImage src={piumi} alt="로딩중입니다" role="status" />
+      <picture>
+        <source srcSet={PiumiWebp} type="image/webp" />
+        <img src={PiumiPng} role="status" aria-label="로딩중입니다." />
+      </picture>
     </Wrapper>
   );
 };

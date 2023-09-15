@@ -30,17 +30,14 @@ export const SearchBoxArea = styled.div`
 `;
 
 export const bounce = keyframes`
-  0% { 
-    margin-top: 80px;
-    margin-bottom: 0px;
+  0% {
+    transform: translateY(0);
   }
-  5% { 
-    margin-top: 64px;
-    margin-bottom: 16px;
+  5% {
+    transform: translateY(-16px);
   }
-  10% { 
-    margin-top: 80px;
-    margin-bottom: 0px;
+  10% {
+    transform: translateY(0);
   }
 `;
 
