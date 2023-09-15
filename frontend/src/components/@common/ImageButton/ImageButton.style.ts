@@ -9,6 +9,7 @@ export const Wrapper = styled.div<{
   height: ${(props) => props.size}px;
   background: ${({ theme }) => theme.color.background};
   border-radius: 50%;
+  cursor: pointer;
   ${({ customCss }) => customCss && customCss}
 `;
 

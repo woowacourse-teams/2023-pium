@@ -8,16 +8,17 @@ interface ImageButtonProps {
   changeCallback: React.ChangeEventHandler<HTMLInputElement>;
   customCss?: CSSProp;
   size?: number;
+  customId?: string;
 }
 
 const ImageButton = forwardRef<HTMLInputElement, ImageButtonProps>(function ImageButton(
-  { changeCallback, size = 24, customCss },
+  { changeCallback, size = 24, customId, customCss },
   ref
 ) {
   const customImage = useId();
   return (
     <Wrapper size={size} customCss={customCss} aria-label="이미지 등록 컨테이너">
-      <label htmlFor={customImage}>
+      <label htmlFor={customId ?? customImage}>
         <CirclePlus
           color={theme.color.primary}
           width={size}
@@ -28,7 +29,7 @@ const ImageButton = forwardRef<HTMLInputElement, ImageButtonProps>(function Imag
       <FileInput
         ref={ref}
         type="file"
-        id={customImage}
+        id={customId ?? customImage}
         onChange={changeCallback}
         accept="image/*"
       />

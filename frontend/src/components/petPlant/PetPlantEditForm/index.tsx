@@ -30,6 +30,7 @@ import {
   PrimaryButton,
   SecondaryButton,
   ButtonArea,
+  Label,
 } from './PetPlantEditForm.style';
 import useFileUpload from 'hooks/image/useFileUpload';
 import useEditPetPlant from 'hooks/queries/petPlant/useEditPetPlant';
@@ -86,6 +87,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const navigate = useNavigate();
   const nicknameInputId = useId();
   const waterCycleInputId = useId();
+  const imageButtonId = useId();
 
   const isValidForm = (newForm: PetPlantForm) => {
     if (
@@ -202,8 +204,15 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           </Title>
           <SubTitle>{dictName}</SubTitle>
           <ExpandedTextBox>
-            <Text>이미지 변경하기</Text>
-            <ImageButton ref={imgRef} changeCallback={fileUploadHandler} size={16} />
+            <Label htmlFor={imageButtonId}>
+              <Text>이미지 변경하기</Text>
+            </Label>
+            <ImageButton
+              ref={imgRef}
+              customId={imageButtonId}
+              changeCallback={fileUploadHandler}
+              size={16}
+            />
           </ExpandedTextBox>
         </TitleArea>
 
