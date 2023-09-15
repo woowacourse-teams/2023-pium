@@ -97,7 +97,7 @@ const SearchBox = (props: SearchBoxProps) => {
             <ResultList showRow={4}>
               {searchResults?.map(({ id, name, image }) => (
                 <ResultItem key={id} onClick={handleResultClick({ id, name, image })}>
-                  <Image alt={name} src={image} type="circle" size="40px" />
+                  <Image alt={name} src={image} type="circle" size="40px" loading="lazy" />
                   <Name>{name}</Name>
                 </ResultItem>
               ))}
