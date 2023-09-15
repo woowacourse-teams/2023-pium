@@ -23,7 +23,7 @@ import {
   TimelineLink,
   PrimaryLink,
   SecondaryLink,
-  ButtonArea
+  ButtonArea,
 } from './PetPlantDetail.style';
 import usePetPlantDetails from 'hooks/queries/petPlant/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
@@ -51,7 +51,7 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
     flowerpot,
     light,
     wind,
-    dday
+    dday,
   } = petPlantDetails;
 
   const birthDateKorean = convertDateKorYear(birthDate);

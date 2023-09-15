@@ -1,20 +1,108 @@
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const Section = styled.section`
   display: flex;
   flex-direction: column;
-  row-gap: 15px;
-  align-items: center;
+  row-gap: 20px;
 
-  margin-top: 40px;
+  max-width: 90%;
+  margin: 40px auto auto auto;
+  padding: 20px 30px;
+
+  border: 1px solid ${({ theme: { color } }) => color.grayLight};
+  border-radius: 4px;
+`;
+
+export const Title = styled.div`
+  display: flex;
+`;
+
+export const NameArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+
+  width: calc(100% - 130px);
+  margin-left: 20px;
 `;
 
 export const Nickname = styled.p`
-  font-size: 2.4rem;
-  text-align: center;
+  overflow: hidden;
+
+  width: 100%;
+
+  font: ${({ theme }) => theme.font.dictTitle};
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const DictionaryPlantName = styled.p`
-  font-size: 1.8rem;
-  text-align: center;
+  overflow: hidden;
+
+  width: 100%;
+
+  font: ${({ theme }) => theme.font.dictContent};
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
+
+export const Text = styled.p`
+  font: ${({ theme }) => theme.font.dictContent};
+  font-size: 1.6rem;
+`;
+
+export const PrimaryText = styled.strong`
+  font: ${({ theme }) => theme.font.dictContent};
+  font-size: 2.4rem;
+  font-weight: bold;
+  color: ${({ theme }) => theme.color.primary};
+`;
+
+export const Environment = styled.section`
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  align-items: center;
+
+  width: 100%;
+  padding: 12px;
+
+  background-color: ${({ theme }) => theme.color.primary}13;
+  border-radius: 8px;
+`;
+
+export const EnvironmentItem = styled.p`
+  display: flex;
+  column-gap: 8px;
+  align-items: center;
+
+  width: 100%;
+
+  font-size: 1.2rem;
+`;
+
+export const EnvironmentTitle = styled.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 24px;
+  height: 24px;
+
+  color: ${({ theme }) => theme.color.primary};
+
+  background: ${({ theme }) => theme.color.background};
+  border-radius: 50%;
+`;
+
+export const StyledLink = styled(Link)`
+  display: block;
+
+  margin-top: 10px;
+  margin-right: 5%;
+
+  text-align: end;
+  text-decoration: underline;
 `;

@@ -54,7 +54,7 @@ export const StyledForm = styled.form`
   row-gap: 50px;
 
   width: 90%;
-  margin: 80px auto auto auto;
+  margin: 40px auto auto auto;
 `;
 
 export const Question = styled.p`

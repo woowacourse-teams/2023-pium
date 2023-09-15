@@ -19,19 +19,15 @@ const PetPlantPicker = () => {
       <Wrapper>
         a
         <CardList>
-          {petPlantCardList.map((petPlantItem) => {
-            const { id, nickname, imageUrl, dictionaryPlantName } = petPlantItem;
-            return (
-              <Link
-                key={id}
-                to={generatePath(URL_PATH.gardenRegisterForm, { id: String(id) })}
-                aria-label={`${nickname} 게시글 작성하기`}
-                state={{ nickname, imageUrl, dictionaryPlantName }}
-              >
-                <PetPlantCard {...petPlantItem} />
-              </Link>
-            );
-          })}
+          {petPlantCardList.map((petPlantItem) => (
+            <Link
+              key={petPlantItem.id}
+              to={generatePath(URL_PATH.gardenRegisterForm, { id: String(petPlantItem.id) })}
+              aria-label={`${petPlantItem.nickname} 게시글 작성하기`}
+            >
+              <PetPlantCard {...petPlantItem} />
+            </Link>
+          ))}
         </CardList>
       </Wrapper>
       <Navbar />
