@@ -1,11 +1,5 @@
 import type { HistoryType } from 'types/history';
-import ArrowRightAlt from 'components/@common/Icons/ArrowRightAlt';
-import Flowerpot from 'components/@common/Icons/Flowerpot';
-import House from 'components/@common/Icons/House';
-import Stopwatch from 'components/@common/Icons/Stopwatch';
-import Sun from 'components/@common/Icons/Sun';
-import Water from 'components/@common/Icons/Water';
-import Wind from 'components/@common/Icons/Wind';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import type { TimelineItem } from 'components/petPlant/Timeline/converter';
 import { IconArea, Item, ItemContent, ItemHead, Wrapper } from './TimelineItemList.style';
 import { getDaysBetween } from 'utils/date';
@@ -19,10 +13,10 @@ interface TimelineItemListProps {
 type SettingType = Exclude<HistoryType, 'lastWaterDate' | 'waterCycle'>;
 
 const SETTING_ICON_MAP: Record<SettingType, React.ReactElement> = {
-  flowerpot: <Flowerpot color={theme.color.primary} />,
-  light: <Sun color={theme.color.primary} />,
-  location: <House color={theme.color.primary} />,
-  wind: <Wind color={theme.color.primary} />,
+  flowerpot: <SvgIcons icon="flowerpot" color={theme.color.primary} />,
+  light: <SvgIcons icon="sun" color={theme.color.primary} />,
+  location: <SvgIcons icon="house" color={theme.color.primary} />,
+  wind: <SvgIcons icon="wind" color={theme.color.primary} />,
 };
 
 const SETTING_KOREAN_MAP: Record<SettingType, string> = {
@@ -42,7 +36,7 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
           return (
             <Item key={'water' + index}>
               <IconArea>
-                <Water />
+                <SvgIcons icon="water" color="#75AEDC" />
               </IconArea>
               <ItemHead>
                 {hasPrevious ? `${getDaysBetween(previous, current)}일 만에` : '처음'} 물을 줬어요
@@ -53,14 +47,14 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
           return (
             <Item key={'waterCycle' + index}>
               <IconArea>
-                <Stopwatch />
+                <SvgIcons icon="stopwatch" color={theme.color.sub} />
               </IconArea>
               <div>
                 <ItemHead>물 주기를 {hasPrevious ? '변경' : '설정'}했어요</ItemHead>
                 <ItemContent>
                   {hasPrevious && (
                     <>
-                      {previous}일 <ArrowRightAlt />
+                      {previous}일 <SvgIcons icon="arrow-right-alt" color={theme.color.sub} />
                     </>
                   )}
                   {current}일

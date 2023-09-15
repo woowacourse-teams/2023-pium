@@ -1,11 +1,5 @@
-import Fragrance from 'components/@common/Icons/Fragrance';
-import Humidity from 'components/@common/Icons/Humidity';
-import ManageLevel from 'components/@common/Icons/ManageLevel';
-import PottedPlant from 'components/@common/Icons/PottedPlant';
-import ThermometerSnow from 'components/@common/Icons/ThermometerSnow';
-import ThermometerSun from 'components/@common/Icons/ThermometerSun';
-import Warning from 'components/@common/Icons/Warning';
 import SeeMoreContentBox from 'components/@common/SeeMoreContentBox';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import TagBox from 'components/dictionaryPlant/TagBox';
 import TagSwitch from 'components/dictionaryPlant/TagSwitch';
 import {
@@ -21,6 +15,7 @@ import {
 import type { DictionaryPlantExtendCycles } from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import parseTemperature from 'utils/parseTemperature';
 import { NO_INFORMATION } from 'constants/index';
+import theme from 'style/theme.style';
 
 const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
   const {
@@ -44,7 +39,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
   });
 
   const { type: tempType, temperature: minTemp } = parseTemperature(minimumTemp);
-
+  const { primary: primaryColor, accent: accentColor } = theme.color;
   return (
     <>
       <HeaderBox>
@@ -66,7 +61,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
 
         <PropsBox>
           <PropBox>
-            <ManageLevel level={manageLevel} color="#1BCC66" />
+            <SvgIcons icon={`manage-level-${manageLevel}`} fill={primaryColor} />
             <span>
               {manageLevel !== NO_INFORMATION ? (
                 <>
@@ -79,7 +74,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
           </PropBox>
 
           <PropBox>
-            <PottedPlant color="#1BCC66" />
+            <SvgIcons icon="potted-plant" color={primaryColor} />
             <span>
               {growSpeed !== NO_INFORMATION ? (
                 <>
@@ -92,7 +87,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
           </PropBox>
 
           <PropBox>
-            <Humidity color="#1BCC66" />
+            <SvgIcons icon="humidity" color={primaryColor} />
             <span>
               {requireHumidity !== NO_INFORMATION ? (
                 <>
@@ -105,7 +100,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
           </PropBox>
 
           <PropBox>
-            <ThermometerSun color="#1BCC66" />
+            <SvgIcons icon="thermometer-sun" color={primaryColor} />
             <span>
               {requireTemp !== NO_INFORMATION ? (
                 <>
@@ -118,7 +113,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
           </PropBox>
 
           <PropBox>
-            <ThermometerSnow color="#1BCC66" />
+            <SvgIcons icon="thermometer-snow" color={primaryColor} />
             <span>
               {minimumTemp !== NO_INFORMATION ? (
                 <>
@@ -131,7 +126,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
           </PropBox>
 
           <PropBox>
-            <Fragrance color="#1BCC66" />
+            <SvgIcons icon="fragrance" color={primaryColor} />
             <span>
               {smell !== NO_INFORMATION ? (
                 <>
@@ -144,7 +139,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
           </PropBox>
 
           <PropBox>
-            <Warning color="#EB4D3D" />
+            <SvgIcons icon="warning" color={accentColor} />
             <span>
               {poison !== NO_INFORMATION ? (
                 <>
