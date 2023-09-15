@@ -38,16 +38,19 @@ const SearchBox = (props: SearchBoxProps) => {
 
   const { isOn: isOpen, on: open, off: close } = useToggle();
 
-  const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
-    target: { value },
-  }) => {
-    setSearchName(value);
-
-    if (value === '') {
+  const validOpen = (searchName: string) => {
+    if (searchName === '') {
       close();
     } else {
       open();
     }
+  };
+
+  const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
+    target: { value },
+  }) => {
+    setSearchName(value);
+    validOpen(value);
   };
 
   const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
@@ -66,6 +69,10 @@ const SearchBox = (props: SearchBoxProps) => {
     close();
   };
 
+  const handleFocus = () => {
+    validOpen(searchName);
+  };
+
   return (
     <Wrapper>
       <InputBox $openBottom={isOpen}>
@@ -75,7 +82,7 @@ const SearchBox = (props: SearchBoxProps) => {
           value={searchName}
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
-          onFocus={open}
+          onFocus={handleFocus}
         />
         {onNextClick && (
           <EnterButton type="button" aria-label="이동하기" onClick={handleNextButtonClick}>
