@@ -15,6 +15,7 @@ import {
   TextLengthNotice,
 } from './FormSection.style';
 import useGardenRegister from 'hooks/queries/garden/useGardenRegister';
+import { isValidManageLevel } from 'utils/validate';
 import { NUMBER } from 'constants/index';
 
 interface FormSectionProps {
@@ -35,8 +36,14 @@ const FormSection = (props: FormSectionProps) => {
     setContent(value.slice(0, NUMBER.maxGardenContentLength));
   };
 
+  const isFormValid = () =>
+    isValidManageLevel(manageLevel) &&
+    content.trim().length > 0 &&
+    content.trim().length <= NUMBER.maxGardenContentLength;
+
   const submit: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
+    if (!isFormValid()) return;
     mutate({ petPlantId, manageLevel, content });
   };
 
@@ -64,7 +71,7 @@ const FormSection = (props: FormSectionProps) => {
         </InlineRadio>
       </div>
       <div>
-        <QuestionLabel htmlFor={contentId}>(선택) 내용을 입력해 주세요.</QuestionLabel>
+        <QuestionLabel htmlFor={contentId}>내용을 입력해 주세요.</QuestionLabel>
         <TextArea
           id={contentId}
           rows={5}
@@ -76,7 +83,7 @@ const FormSection = (props: FormSectionProps) => {
           {content.length} / {NUMBER.maxGardenContentLength}자
         </TextLengthNotice>
       </div>
-      <Button type="submit" onClick={submit} disabled={isPending}>
+      <Button type="submit" onClick={submit} disabled={isPending || !isFormValid()}>
         등록하기
       </Button>
     </StyledForm>
