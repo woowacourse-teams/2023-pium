@@ -18,7 +18,7 @@ const GardenRegisterForm = () => {
 
   return (
     <>
-      <ContentHeader title="모두의 정원에 글쓰기" />
+      <ContentHeader title="모두의 정원에 기록하기" />
       <Main>
         <Profile
           nickname={nickname}

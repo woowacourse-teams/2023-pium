@@ -3,20 +3,21 @@ import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import PetPlantCard from 'components/petPlant/PetPlantCard';
 import { CardList, Wrapper } from '../../PetPlantCardList/PetPlantCardList.style';
-import { SubTitle } from './Pick.style';
+import { SubTitle } from './PetPlantPicker.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import usePetPlantCardList from 'hooks/queries/petPlant/usePetPlantCardList';
 import { URL_PATH } from 'constants/index';
 
-const PetPlantCardList = () => {
+const PetPlantPicker = () => {
   useCheckSessionId();
   const { data: petPlantCardList } = usePetPlantCardList();
 
   return (
     <>
-      <ContentHeader title="모두의 정원에 글쓰기" />
+      <ContentHeader title="모두의 정원에 기록하기" />
       <SubTitle>반려 식물을 골라주세요.</SubTitle>
       <Wrapper>
+        a
         <CardList>
           {petPlantCardList.map((petPlantItem) => {
             const { id, nickname, imageUrl, dictionaryPlantName } = petPlantItem;
@@ -38,4 +39,4 @@ const PetPlantCardList = () => {
   );
 };
 
-export default PetPlantCardList;
+export default PetPlantPicker;
