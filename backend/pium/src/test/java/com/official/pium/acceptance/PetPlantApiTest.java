@@ -14,9 +14,12 @@ import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import io.restassured.RestAssured;
+import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import io.restassured.specification.MultiPartSpecification;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -24,6 +27,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -36,12 +40,13 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
+            MultiPartSpecification data = getMultiPartSpecification(request);
             String invalidSessionId = "invalidSessionId";
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(data)
                     .log().all()
                     .sessionId(invalidSessionId)
                     .when()
@@ -55,12 +60,13 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 존재하지_않는_사전_식물을_참조하면_404_반환() {
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(3L);
+            MultiPartSpecification data = getMultiPartSpecification(request);
             String sessionId = 로그인_요청();
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(data)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -112,11 +118,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .birthDate(LocalDate.of(2020, 1, 3))
                     .lastWaterDate(LocalDate.now().plusDays(2))
                     .build();
+            MultiPartSpecification data = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(data)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -143,11 +150,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .birthDate(LocalDate.now().plusDays(2))
                     .lastWaterDate(LocalDate.of(2022, 2, 3))
                     .build();
+            MultiPartSpecification data = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(data)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -747,13 +755,15 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .extract();
     }
 
-    private Long 반려_식물_등록_요청(PetPlantCreateRequest request) {
+    private Long 반려_식물_등록_요청(PetPlantCreateRequest petPlantCreateRequest) {
         String sessionId = 로그인_요청();
+
+        MultiPartSpecification data = getMultiPartSpecification(petPlantCreateRequest);
 
         String petPlantId = RestAssured
                 .given()
-                .contentType(ContentType.JSON)
-                .body(request)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                .multiPart(data)
                 .log().all()
                 .sessionId(sessionId)
                 .when()
@@ -797,5 +807,13 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .statusCode(HttpStatus.OK.value())
                 .extract()
                 .sessionId();
+    }
+
+    private MultiPartSpecification getMultiPartSpecification(PetPlantCreateRequest petPlantCreateRequest) {
+        return new MultiPartSpecBuilder(petPlantCreateRequest, ObjectMapperType.JACKSON_2)
+                .controlName("request")
+                .mimeType(MediaType.APPLICATION_JSON_VALUE)
+                .charset("UTF-8")
+                .build();
     }
 }

@@ -21,3 +21,25 @@ include::{snippets}/dictionaryPlant/findByName/query-parameters.adoc[]
 ==== Response
 
 include::{snippets}/dictionaryPlant/findByName/http-response.adoc[]
+
+=== 사전 식물 정보 수정
+
+==== Request
+
+include::{snippets}/dictionaryPlant/update/http-request.adoc[]
+include::{snippets}/dictionaryPlant/update/path-parameters.adoc[]
+
+==== Response
+
+include::{snippets}/dictionaryPlant/findByName/http-response.adoc[]
+
+
+=== 사전 식물 삭제
+
+==== Request
+
+include::{snippets}/dictionaryPlant/delete/http-request.adoc[]
+include::{snippets}/dictionaryPlant/delete/path-parameters.adoc[]
+==== Response
+
+include::{snippets}/dictionaryPlant/delete/http-response.adoc[]

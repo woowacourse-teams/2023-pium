@@ -4,6 +4,7 @@ import DictionaryPlantDetail from 'pages/DictionaryPlantDetail';
 import DictionaryPlantSearch from 'pages/DictionaryPlantSearch';
 import NotFound from 'pages/Error/NotFound';
 import Main from 'pages/Main';
+import NewDictionaryPlantRequest from 'pages/NewDictionaryPlantRequest';
 import PetPlantCardList from 'pages/PetPlantCardList';
 import PetPlantDetails from 'pages/PetPlantDetails';
 import PetPlantEdit from 'pages/PetPlantEdit';
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.myPage,
         element: <MyPage />,
+      },
+      {
+        path: URL_PATH.newDictionaryPlantRequest,
+        element: <NewDictionaryPlantRequest />,
       },
     ],
   },
