@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 import Navbar from 'components/@common/Navbar';
 import { List, Main, Message, Sensor } from './GardenPostList.style';
 import useIntersectionRef from 'hooks/useIntersectionRef';
-import GardenPostItem from './components/GardenPostItem';
-import GardenPostItemSkeleton from './components/GardenPostItem/GardenPostItemSkeleton';
-import GardenPostListHeader from './components/GardenPostListHeader';
+import GardenPostItem from './GardenPostItem';
+import GardenPostItemSkeleton from './GardenPostItem/GardenPostItemSkeleton';
+import GardenPostListHeader from './GardenPostListHeader';
 import useGardenPostList from './hooks/useGardenPostList';
 
 const SKELETON_LENGTH = 20;
