@@ -1,13 +1,12 @@
+import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import DictionaryPlantDetail from 'pages/DictionaryPlantDetail';
 import DictionaryPlantSearch from 'pages/DictionaryPlantSearch';
 import NotFound from 'pages/Error/NotFound';
 import GardenRegisterForm from 'pages/GardenRegister/Form';
 import GardenRegisterPick from 'pages/GardenRegister/Pick';
-import Login from 'pages/Login';
-import Authorization from 'pages/Login/Authorization';
 import Main from 'pages/Main';
-import MyPage from 'pages/MyPage';
+import NewDictionaryPlantRequest from 'pages/NewDictionaryPlantRequest';
 import PetPlantCardList from 'pages/PetPlantCardList';
 import PetPlantDetails from 'pages/PetPlantDetails';
 import PetPlantEdit from 'pages/PetPlantEdit';
@@ -17,6 +16,12 @@ import PetPlantTimeline from 'pages/PetPlantTimeline';
 import Reminder from 'pages/Reminder';
 import RootTemplate from 'pages/RootTemplate';
 import { URL_PATH } from './constants';
+
+const Login = lazy(() => import(/* webpackChunkName: "Login" */ 'pages/Login'));
+const Authorization = lazy(
+  () => import(/* webpackChunkName: "Authorization" */ 'pages/Login/Authorization')
+);
+const MyPage = lazy(() => import(/* webpackChunkName: "MyPage" */ 'pages/MyPage'));
 
 const router = createBrowserRouter([
   {
@@ -83,6 +88,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.gardenRegisterForm,
         element: <GardenRegisterForm />,
+      },
+      {
+        path: URL_PATH.newDictionaryPlantRequest,
+        element: <NewDictionaryPlantRequest />,
       },
     ],
   },

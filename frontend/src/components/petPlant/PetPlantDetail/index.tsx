@@ -1,12 +1,8 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { generatePath } from 'react-router-dom';
-import Crown from 'components/@common/Icons/Crown';
-import Dictionary from 'components/@common/Icons/Dictionary';
-import Flowerpot from 'components/@common/Icons/Flowerpot';
-import House from 'components/@common/Icons/House';
-import Sun from 'components/@common/Icons/Sun';
-import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
+import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import {
   InfoArea,
   Bold,
@@ -27,7 +23,7 @@ import {
   TimelineLink,
   PrimaryLink,
   SecondaryLink,
-  ButtonArea,
+  ButtonArea
 } from './PetPlantDetail.style';
 import usePetPlantDetails from 'hooks/queries/petPlant/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
@@ -55,7 +51,7 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
     flowerpot,
     light,
     wind,
-    dday,
+    dday
   } = petPlantDetails;
 
   const birthDateKorean = convertDateKorYear(birthDate);
@@ -64,6 +60,8 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
 
   const daysBetweenLastWaterDate = getDaysBetween(Date.now(), lastWaterDate);
 
+  const { primary: primaryColor } = theme.color;
+
   return (
     <Wrapper>
       <Image type="wide" src={imageUrl} alt={`${nickname}(${dictionaryPlantName})`} size="300px" />
@@ -71,12 +69,12 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
         <TitleArea>
           <Title>
             {nickname}
-            {isBirthday && <Crown aria-hidden="true" />}
+            {isBirthday && <SvgFill icon="crown" aria-hidden="true" />}
           </Title>
           <StyledLink to={generatePath(URL_PATH.dictDetail, { id: dictionaryPlantId.toString() })}>
             <SubTitle>
               {dictionaryPlantName}
-              <Dictionary aria-hidden="true" />
+              <SvgStroke icon="dictionary" aria-hidden="true" color={theme.color.grayDark} />
             </SubTitle>
           </StyledLink>
         </TitleArea>
@@ -119,48 +117,48 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
         <Environment>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <House
-                color={theme.color.primary}
+              <SvgFill
+                icon="house"
+                size={20}
+                color={primaryColor}
                 aria-label="장소"
                 aria-describedby="반려 식물이 놓인 공간"
-                width="20px"
-                height="20px"
               />
             </EnvironmentTitle>
             {location}
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Flowerpot
-                color={theme.color.primary}
+              <SvgFill
+                icon="flowerpot"
+                color={primaryColor}
                 aria-label="화분"
                 aria-describedby="반려 식물이 담긴 화분의 재질"
-                width="20px"
-                height="20px"
+                size={20}
               />
             </EnvironmentTitle>
             {flowerpot}
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Sun
-                color={theme.color.primary}
+              <SvgFill
+                icon="sun"
+                color={primaryColor}
                 aria-label="채광"
                 aria-describedby="반려 식물이 빛을 얼마나 받고 있는지"
-                width="20px"
-                height="20px"
+                size={20}
               />
             </EnvironmentTitle>
             {light}
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Wind
-                color={theme.color.primary}
+              <SvgFill
+                icon="wind"
+                color={primaryColor}
                 aria-label="바람"
                 aria-describedby="반려 식물이 통풍이 잘 되는 위치인지"
-                width="20px"
-                height="20px"
+                size={20}
               />
             </EnvironmentTitle>
             {wind}

@@ -18,6 +18,8 @@ export const URL_PATH = {
   login: '/login',
   authorization: '/authorization',
   myPage: '/myPage',
+  garden: '/garden',
+  newDictionaryPlantRequest: '/dict/new-plant-request',
 } as const;
 
 export const MESSAGE = {

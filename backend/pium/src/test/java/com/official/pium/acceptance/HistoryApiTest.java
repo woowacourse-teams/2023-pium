@@ -13,9 +13,12 @@ import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import io.restassured.RestAssured;
+import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import io.restassured.specification.MultiPartSpecification;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -23,6 +26,7 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -433,13 +437,15 @@ public class HistoryApiTest extends AcceptanceTest {
                 .statusCode(HttpStatus.NO_CONTENT.value());
     }
 
-    private Long 반려_식물_등록_요청(PetPlantCreateRequest request) {
+    private Long 반려_식물_등록_요청(PetPlantCreateRequest petPlantCreateRequest) {
         String sessionId = 로그인_요청();
+
+        MultiPartSpecification data = getMultiPartSpecification(petPlantCreateRequest);
 
         String petPlantId = RestAssured
                 .given()
-                .contentType(ContentType.JSON)
-                .body(request)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                .multiPart(data)
                 .log().all()
                 .sessionId(sessionId)
                 .when()
@@ -451,6 +457,14 @@ public class HistoryApiTest extends AcceptanceTest {
                 .replaceAll("/pet-plants/", "");
 
         return Long.parseLong(petPlantId);
+    }
+
+    private MultiPartSpecification getMultiPartSpecification(PetPlantCreateRequest petPlantCreateRequest) {
+        return new MultiPartSpecBuilder(petPlantCreateRequest, ObjectMapperType.JACKSON_2)
+                .controlName("request")
+                .mimeType(MediaType.APPLICATION_JSON_VALUE)
+                .charset("UTF-8")
+                .build();
     }
 
     private PetPlantCreateRequest generatePetPlantRequestByLastWaterDate(long dictionaryPlantId,

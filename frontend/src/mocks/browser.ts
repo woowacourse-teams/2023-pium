@@ -1,6 +1,12 @@
 import { setupWorker } from 'msw';
 import { makeHandler } from './handlers';
+import dictionaryPlantRegistrationHandlers from './handlers/dictionaryPlantRegistration';
 import gardenHandlers from './handlers/garden';
 import historyHandlers from './handlers/historyHandlers';
 
-export const worker = setupWorker(...makeHandler(0, 0), ...historyHandlers, ...gardenHandlers);
+export const worker = setupWorker(
+  ...makeHandler(0, 0),
+  ...historyHandlers,
+  ...dictionaryPlantRegistrationHandlers,
+  ...gardenHandlers
+);

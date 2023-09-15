@@ -13,12 +13,12 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
@@ -27,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
+import com.official.pium.fixture.FileFixture;
 import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
@@ -43,7 +44,9 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -64,15 +67,51 @@ class PetPlantControllerTest extends UITest {
     class 반려_식물_등록_ {
 
         @Test
-        void 정상_요청시_201을_반환() throws Exception {
+        void 사진_없이_정상_요청시_201을_반환() throws Exception {
             PetPlantResponse response = RESPONSE.피우미_응답;
-            given(petPlantService.create(any(PetPlantCreateRequest.class), any(Member.class)))
+            given(petPlantService.create(any(PetPlantCreateRequest.class), any(), any(Member.class)))
                     .willReturn(response);
+            MockMultipartFile request = new MockMultipartFile(
+                    "request",
+                    "",
+                    "application/json",
+                    objectMapper.writeValueAsBytes(피우미_등록_요청)
+            );
 
-            mockMvc.perform(post("/pet-plants")
+            mockMvc.perform(multipart(HttpMethod.POST, "/pet-plants")
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(피우미_등록_요청))
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
+                            .characterEncoding(StandardCharsets.UTF_8))
+                    .andDo(document("petPlant/create/",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            requestCookies()
+                    ))
+                    .andExpect(status().isCreated())
+                    .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
+                    .andDo(print());
+        }
+
+        @Test
+        void 사진과_함께_정상_요청시_201을_반환() throws Exception {
+            PetPlantResponse response = RESPONSE.피우미_응답;
+            given(petPlantService.create(any(PetPlantCreateRequest.class), any(), any(Member.class)))
+                    .willReturn(response);
+            MockMultipartFile request = new MockMultipartFile(
+                    "request",
+                    "",
+                    "application/json",
+                    objectMapper.writeValueAsBytes(피우미_등록_요청)
+            );
+            MockMultipartFile multipartFile = (MockMultipartFile) FileFixture.generateMultiPartFile();
+
+            mockMvc.perform(multipart(HttpMethod.POST, "/pet-plants")
+                            .file(request)
+                            .file(multipartFile)
+                            .session(session)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
+                            .characterEncoding(StandardCharsets.UTF_8))
                     .andDo(document("petPlant/create/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),

@@ -4,6 +4,7 @@ const DotEnv = require('dotenv-webpack');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ReactRefreshTypeScript = require('react-refresh-typescript');
 const CopyPlugin = require('copy-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -11,7 +12,8 @@ module.exports = (env) => ({
   entry: resolve(__dirname, 'src', 'index.tsx'),
   output: {
     path: resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[name].[contenthash].bundle.js',
+    chunkFilename: '[name].[chunkhash].chunk.bundle.js',
     assetModuleFilename: 'assets/[name][ext]',
     clean: true,
     publicPath: '/',
@@ -47,8 +49,14 @@ module.exports = (env) => ({
         },
       },
       {
-        test: /\.(png|jpg|jpeg|svg)$/i,
+        test: /\.(png|jpg|jpeg|webp)$/i,
         type: 'asset/resource',
+      },
+      {
+        test: /\.svg$/,
+        include: [resolve(__dirname, 'src'), resolve(__dirname, 'src', 'types', 'module.d.ts')],
+        issuer: /\.[jt]sx?$/,
+        use: ['@svgr/webpack', 'url-loader'],
       },
     ],
   },
@@ -68,7 +76,18 @@ module.exports = (env) => ({
         },
       ],
     }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false,
+      generateStatsFile: true,
+      statsFilename: 'bundle-report.json',
+    }),
   ],
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
   devServer: {
     open: true,
     port: 8282,

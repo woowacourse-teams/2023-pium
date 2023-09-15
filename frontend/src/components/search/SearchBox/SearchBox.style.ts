@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
@@ -30,12 +31,18 @@ export const Input = styled.input`
 `;
 
 export const ResultMessage = styled.p`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: 100%;
-  height: 40px;
+  height: 56px;
 
   font-size: 1.8rem;
   color: ${(p) => p.theme.color.sub};
   text-align: center;
+
+  border-top: solid 2px ${(p) => p.theme.color.primary + '40'};
 `;
 
 export const ResultList = styled.ul`
@@ -69,4 +76,10 @@ export const EnterButton = styled.button`
   align-items: center;
   background: transparent;
   border: none;
+`;
+
+export const StyledLink = styled(Link)`
+  font-weight: normal;
+  color: ${({ theme: { color } }) => color.primary};
+  text-decoration: underline;
 `;
