@@ -8,8 +8,8 @@ export const Wrapper = styled.div`
   width: 100%;
 `;
 
-export const InputBox = styled.div<{ openBottom: boolean }>`
-  z-index: ${(props) => (props.openBottom ? props.theme.zIndex.dropdown : 'none')};
+export const InputBox = styled.div<{ $openBottom: boolean }>`
+  z-index: ${(props) => (props.$openBottom ? props.theme.zIndex.dropdown : 'none')};
 
   display: flex;
   align-items: center;
@@ -17,7 +17,7 @@ export const InputBox = styled.div<{ openBottom: boolean }>`
   padding: 0 12px;
 
   border: solid 2px ${(props) => props.theme.color.primary};
-  border-radius: ${(props) => (props.openBottom ? '29px 29px 0 0' : '29px')};
+  border-radius: ${(props) => (props.$openBottom ? '29px 29px 0 0' : '29px')};
 `;
 
 export const Input = styled.input`

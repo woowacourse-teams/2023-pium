@@ -66,7 +66,7 @@ const SearchBox = (props: SearchBoxProps) => {
 
   return (
     <Wrapper>
-      <InputBox openBottom={isOpen}>
+      <InputBox $openBottom={isOpen}>
         <Search width={40} height={40} color={theme.color.primary} />
         <Input
           type="text"
