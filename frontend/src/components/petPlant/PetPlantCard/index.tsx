@@ -1,6 +1,6 @@
 import type { PetPlantItem } from 'types/petPlant';
-import Crown from 'components/@common/Icons/Crown';
 import Image from 'components/@common/Image';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
   ContentArea,
   ContentRow,
@@ -27,7 +27,7 @@ const PetPlantCard = ({
 
   return (
     <Wrapper>
-      <CrownArea>{isBirthday && <Crown />}</CrownArea>
+      <CrownArea>{isBirthday && <SvgIcons icon="crown" size={64} aria-hidden />}</CrownArea>
       <ImageArea>
         <Image src={imageUrl} type="square" size="100%" alt="반려 식물 이미지" />
       </ImageArea>
