@@ -124,6 +124,5 @@ export const generateGardenPageData = (
         },
       ];
 
-  // if (dictionaryPlantId) page.filter(({ id }) => id === dictionaryPlantId);
   return page;
 };
