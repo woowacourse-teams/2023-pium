@@ -11,7 +11,8 @@
     "build-prod": "cross-env NODE_ENV=production webpack --env environment=production",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build -o ./dist/storybook",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "analyze": "webpack-bundle-analyzer ./dist/bundle-report.json --default-sizes gzip"
   },
   "license": "MIT",
   "dependencies": {
@@ -36,6 +37,7 @@
     "@storybook/react": "^7.0.25",
     "@storybook/react-webpack5": "^7.0.25",
     "@storybook/testing-library": "^0.0.14-next.2",
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^5.0.0-alpha.84",
     "@trivago/prettier-plugin-sort-imports": "^4.1.1",
     "@types/react": "^18.2.14",
@@ -71,11 +73,14 @@
     "ts-loader": "^9.4.4",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "typescript": "^5.1.6",
+    "url-loader": "^4.1.1",
     "webpack": "^5.88.1",
+    "webpack-bundle-analyzer": "^4.9.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
   },
   "msw": {
     "workerDirectory": "public/"
-  }
+  },
+  "sideEffects": false
 }

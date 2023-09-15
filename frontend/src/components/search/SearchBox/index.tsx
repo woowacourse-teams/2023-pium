@@ -1,8 +1,7 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useState } from 'react';
-import ArrowRight from 'components/@common/Icons/ArrowRightAlt';
-import Search from 'components/@common/Icons/Search';
 import Image from 'components/@common/Image';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
   InputBox,
   ResultItem,
@@ -76,7 +75,7 @@ const SearchBox = (props: SearchBoxProps) => {
   return (
     <Wrapper>
       <InputBox $openBottom={isOpen}>
-        <Search width={40} height={40} color={theme.color.primary} />
+        <SvgIcons icon="search" size={40} color={theme.color.primary} />
         <Input
           type="text"
           value={searchName}
@@ -86,7 +85,7 @@ const SearchBox = (props: SearchBoxProps) => {
         />
         {onNextClick && (
           <EnterButton type="button" aria-label="이동하기" onClick={handleNextButtonClick}>
-            <ArrowRight width={32} height={32} color="#333333" />
+            <SvgIcons icon="arrow-right-alt" size={32} color={theme.color.sub} />
           </EnterButton>
         )}
       </InputBox>

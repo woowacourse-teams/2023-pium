@@ -1,9 +1,6 @@
 import type { GardenPostItem as GardenPostItemType } from 'types/garden';
-import Flowerpot from 'components/@common/Icons/Flowerpot';
-import House from 'components/@common/Icons/House';
-import Sun from 'components/@common/Icons/Sun';
-import Wind from 'components/@common/Icons/Wind';
 import SeeMoreContentBox from 'components/@common/SeeMoreContentBox';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import { convertDateKorYear } from 'utils/date';
 import theme from 'style/theme.style';
 import {
@@ -26,7 +23,7 @@ import {
 
 type GardenPostItemProps = Omit<GardenPostItemType, 'id' | 'updatedAt'>;
 
-const ENVIRONMENT_ICON_SIZE = '16px';
+const ENVIRONMENT_ICON_SIZE = 16;
 
 const GardenPostItem = ({
   content,
@@ -37,6 +34,7 @@ const GardenPostItem = ({
 }: GardenPostItemProps) => {
   const postingDate = convertDateKorYear(createdAt);
 
+  const { primary: primaryColor } = theme.color;
   return (
     <Wrapper>
       <Header>
@@ -60,48 +58,48 @@ const GardenPostItem = ({
       <GreenBox>
         <EnvironmentItem>
           <EnvironmentTitle>
-            <House
-              color={theme.color.primary}
+            <SvgFill
+              icon="house"
+              size={ENVIRONMENT_ICON_SIZE}
+              color={primaryColor}
               aria-label="장소"
               aria-describedby="반려 식물이 놓인 공간"
-              width={ENVIRONMENT_ICON_SIZE}
-              height={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.location}
         </EnvironmentItem>
         <EnvironmentItem>
           <EnvironmentTitle>
-            <Flowerpot
-              color={theme.color.primary}
+            <SvgFill
+              icon="flowerpot"
+              size={ENVIRONMENT_ICON_SIZE}
+              color={primaryColor}
               aria-label="화분"
               aria-describedby="반려 식물이 담긴 화분의 재질"
-              width={ENVIRONMENT_ICON_SIZE}
-              height={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.flowerpot}
         </EnvironmentItem>
         <EnvironmentItem>
           <EnvironmentTitle>
-            <Sun
-              color={theme.color.primary}
+            <SvgFill
+              icon="sun"
+              color={primaryColor}
               aria-label="채광"
               aria-describedby="반려 식물이 빛을 얼마나 받고 있는지"
-              width={ENVIRONMENT_ICON_SIZE}
-              height={ENVIRONMENT_ICON_SIZE}
+              size={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.light}
         </EnvironmentItem>
         <EnvironmentItem>
           <EnvironmentTitle>
-            <Wind
+            <SvgFill
+              icon="wind"
               color={theme.color.primary}
               aria-label="바람"
               aria-describedby="반려 식물이 통풍이 잘 되는 위치인지"
-              width={ENVIRONMENT_ICON_SIZE}
-              height={ENVIRONMENT_ICON_SIZE}
+              size={ENVIRONMENT_ICON_SIZE}
             />
           </EnvironmentTitle>
           {petPlant.wind}

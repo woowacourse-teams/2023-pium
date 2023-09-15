@@ -32,6 +32,7 @@ dependencies {
     implementation 'com.github.maricn:logback-slack-appender:1.6.1'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
     implementation 'org.flywaydb:flyway-mysql'
+    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.13'
 
     annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"

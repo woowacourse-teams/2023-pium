@@ -12,11 +12,11 @@ export const Wrapper = styled.nav`
 
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
-  height: 68px;
+  height: 60px;
   padding: 0 8px;
 
   background: white;
-  box-shadow: 0 -4px 2px -2px ${(props) => props.theme.color.grayLight};
+  box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
 `;
 
 export const NavLink = styled(Link)`
@@ -32,7 +32,7 @@ export const NavItemArea = styled.div<{ $active?: boolean }>`
   height: 100%;
 
   border-top: solid 2px
-    ${({ $active, theme: { color } }) => ($active ? color.primary : 'transparent')};
+    ${({ $active, theme: { color } }) => ($active ? color.fontPrimaryForBackground : 'transparent')};
   border-bottom: solid 2px transparent;
 `;
 
@@ -40,15 +40,15 @@ export const NavItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
 
   width: 100%;
-  height: 44px;
+  height: 48px;
 `;
 
 export const NavLabel = styled.p<{ $active?: boolean }>`
   font-size: 1rem;
   font-weight: 700;
   color: ${({ $active, theme: { color } }) =>
-    $active ? color.fontPrimaryForBackground : color.sub};
+    $active ? color.fontPrimaryForBackground : color.subLight};
 `;
