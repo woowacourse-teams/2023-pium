@@ -53,6 +53,7 @@ const SearchBox = (props: SearchBoxProps) => {
   const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
     if (key !== 'Enter') return;
     onEnter?.(searchName, searchResults);
+    close();
   };
 
   const handleResultClick = (searchResult: DictionaryPlantNameSearchResult) => () => {
@@ -62,6 +63,7 @@ const SearchBox = (props: SearchBoxProps) => {
 
   const handleNextButtonClick = () => {
     onNextClick?.(searchName, searchResults);
+    close();
   };
 
   return (
