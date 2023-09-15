@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import theme from 'style/theme.style';
 
 const singleLineText = css`
   overflow: hidden;
@@ -160,6 +161,7 @@ export const EnvironmentTitle = styled.span`
 
 export const ButtonArea = styled.div`
   display: flex;
+  justify-content: space-between;
   column-gap: 10px;
 `;
 
@@ -184,8 +186,30 @@ export const PrimaryLink = styled(ButtonLink)`
 `;
 
 export const SecondaryLink = styled(ButtonLink)`
-  width: 40%;
   color: ${({ theme }) => theme.color.sub};
   background: ${(props) => props.theme.color.background};
   border: 1px solid ${({ theme }) => theme.color.primary};
+`;
+
+const tertiary = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.5rem;
+  color: ${theme.color.grayDark};
+  text-decoration: underline;
+
+  &:focus,
+  &:hover {
+    color: ${theme.color.accent};
+  }
+`;
+
+export const TertiaryButton = styled.button`
+  ${tertiary}
+`;
+
+export const TertiaryLink = styled(Link)`
+  ${tertiary}
 `;

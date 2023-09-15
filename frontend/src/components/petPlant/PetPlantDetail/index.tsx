@@ -22,10 +22,13 @@ import {
   TimelineLinkArea,
   TimelineLink,
   PrimaryLink,
-  SecondaryLink,
   ButtonArea,
+  TertiaryButton,
+  TertiaryLink,
 } from './PetPlantDetail.style';
+import useDeletePetPlant from 'hooks/queries/petPlant/useDeletePetPlant';
 import usePetPlantDetails from 'hooks/queries/petPlant/usePetPlantDetails';
+import useConfirm from 'hooks/useConfirm';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';
 import { URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
@@ -36,6 +39,9 @@ interface PetDetailsProps {
 
 const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
   const { data: petPlantDetails } = usePetPlantDetails(petPlantId);
+  const { mutate: deleteMutate } = useDeletePetPlant();
+  const confirm = useConfirm();
+
   if (!petPlantDetails) return null;
 
   const {
@@ -53,6 +59,17 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
     wind,
     dday,
   } = petPlantDetails;
+
+  const deletePetPlant = async () => {
+    const isConfirmed = await confirm({
+      title: '반려 식물 삭제',
+      message: `정말로 '${nickname}'을(를) 지우실 건가요?`,
+    });
+
+    if (!isConfirmed) return;
+
+    deleteMutate(petPlantId);
+  };
 
   const birthDateKorean = convertDateKorYear(birthDate);
   const today = convertDateKorYear(new Date()).slice(5);
@@ -165,16 +182,19 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
           </EnvironmentItem>
         </Environment>
         <ButtonArea>
-          <PrimaryLink
-            to={generatePath(URL_PATH.gardenRegisterForm, { id: petPlantId.toString() })}
-            state={{ nickname, dictionaryPlantName, imageUrl }}
-          >
-            모두의 정원에 등록하기
-          </PrimaryLink>
-          <SecondaryLink to={generatePath(URL_PATH.petEdit, { id: petPlantId.toString() })}>
-            정보 수정
-          </SecondaryLink>
+          <TertiaryLink to={generatePath(URL_PATH.petEdit, { id: petPlantId.toString() })}>
+            정보 수정하기
+          </TertiaryLink>
+          <TertiaryButton type="button" onClick={deletePetPlant}>
+            삭제하기
+          </TertiaryButton>
         </ButtonArea>
+        <PrimaryLink
+          to={generatePath(URL_PATH.gardenRegisterForm, { id: petPlantId.toString() })}
+          state={{ nickname, dictionaryPlantName, imageUrl }}
+        >
+          모두의 정원에 등록하기
+        </PrimaryLink>
       </Content>
     </Wrapper>
   );
