@@ -1,7 +1,7 @@
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Wrapper } from './Main.style';
-import useDictionaryNavigate from 'hooks/useDictionaryNavigate';
+import useDictionaryNavigate from 'hooks/useDictionaryPlantNavigate';
 import LogoSvg from 'assets/logo.svg';
 import LogoWebp from 'assets/logo.webp';
 
