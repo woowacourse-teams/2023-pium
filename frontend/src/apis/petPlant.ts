@@ -1,4 +1,5 @@
-import type { PetPlantDetails } from 'types/petPlant';
+import type { ImageFormData } from 'types/image';
+import type { NewPetPlantRequest, PetPlantDetails, EditPetPlantRequest } from 'types/petPlant';
 import { BASE_URL } from 'constants/index';
 
 export const PET_PLANT_URL = `${BASE_URL}/pet-plants`;
@@ -15,11 +16,19 @@ const getList = () => {
   });
 };
 
-const register = (form: FormData) => {
+const register = ({ imageData, requestForm }: ImageFormData<NewPetPlantRequest>) => {
+  const formData = new FormData();
+
+  if (imageData) {
+    formData.append('image', imageData);
+  }
+
+  formData.append('request', JSON.stringify(requestForm));
+
   return fetch(PET_PLANT_URL, {
     method: 'POST',
     credentials: 'include',
-    body: form,
+    body: formData,
   });
 };
 
@@ -31,11 +40,22 @@ const getDetails = (petPlantId: PetPlantDetails['id']) => {
   });
 };
 
-const edit = (petPlantId: PetPlantDetails['id'], form: FormData) => {
+const edit = (
+  petPlantId: PetPlantDetails['id'],
+  { imageData, requestForm }: ImageFormData<EditPetPlantRequest>
+) => {
+  const formData = new FormData();
+
+  if (imageData) {
+    formData.append('image', imageData);
+  }
+
+  formData.append('request', JSON.stringify(requestForm));
+
   return fetch(`${PET_PLANT_URL}/${petPlantId}`, {
     method: 'PATCH',
     credentials: 'include',
-    body: form,
+    body: formData,
   });
 };
 

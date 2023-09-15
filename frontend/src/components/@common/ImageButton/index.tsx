@@ -16,9 +16,14 @@ const ImageButton = forwardRef<HTMLInputElement, ImageButtonProps>(function Imag
 ) {
   const customImage = useId();
   return (
-    <Wrapper size={size} customCss={customCss}>
+    <Wrapper size={size} customCss={customCss} aria-label="이미지 등록 컨테이너">
       <label htmlFor={customImage}>
-        <CirclePlus color={theme.color.primary} width={size} height={size} />
+        <CirclePlus
+          color={theme.color.primary}
+          width={size}
+          height={size}
+          aria-label="플러스 아이콘"
+        />
       </label>
       <FileInput
         ref={ref}

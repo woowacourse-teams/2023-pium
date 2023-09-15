@@ -121,12 +121,6 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
       return;
     }
 
-    const formData = new FormData();
-
-    if (imageBlob) {
-      formData.append('image', imageBlob);
-    }
-
     const requestForm = {
       ...form,
       dictionaryPlantId,
@@ -136,9 +130,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    formData.append('request', JSON.stringify(requestForm));
-
-    registerPetPlant(formData);
+    registerPetPlant({ imageData: imageBlob, requestForm });
   };
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
@@ -162,6 +154,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
         <Stack.Element height={STACK_ELEMENT_HEIGHT}>
           <FormInputBox title="별명이 뭔가요?" status={getStatus(0)}>
             <FormInput
+              aria-label="별명 입력"
               value={form.nickname}
               onChange={setNickname}
               nextCallback={validateNickname}

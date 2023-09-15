@@ -73,7 +73,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     waterCycle: waterCycle.toString(),
   });
 
-  const { imgRef, uploadedImageUrl, fileUploadHandler, file } = useFileUpload({ imageUrl });
+  const {
+    imgRef,
+    uploadedImageUrl,
+    fileUploadHandler,
+    file: imageBlob,
+  } = useFileUpload({ imageUrl });
 
   const { mutate } = useEditPetPlant(petPlantId);
   const addToast = useAddToast();
@@ -113,12 +118,6 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       return;
     }
 
-    const formData = new FormData();
-
-    if (file) {
-      formData.append('image', file);
-    }
-
     const requestForm = {
       ...form,
       nickname: form.nickname.trim(),
@@ -127,9 +126,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    formData.append('request', JSON.stringify(requestForm));
-
-    mutate(formData);
+    mutate({ imageData: imageBlob, requestForm });
   };
 
   const handleSubmitClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
