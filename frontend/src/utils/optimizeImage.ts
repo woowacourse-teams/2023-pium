@@ -1,11 +1,11 @@
 interface OptimizeImageParams {
   targetFile: File | Blob;
-  resolveCallback: (blob: Blob) => void;
+  compressCallback: (blob: Blob) => void;
   width: number;
   height: number;
 }
 
-function calculateSize(img: HTMLImageElement, maxWidth: number, maxHeight: number) {
+const calculateSize = (img: HTMLImageElement, maxWidth: number, maxHeight: number) => {
   let width = img.width;
   let height = img.height;
 
@@ -21,21 +21,20 @@ function calculateSize(img: HTMLImageElement, maxWidth: number, maxHeight: numbe
       height = maxHeight;
     }
   }
-  return [width, height];
-}
+  return [width, height] as const;
+};
 
 /**
  *
- * @param {
- *  targetFile, 압축하고자 하는 파일
- *  resolveCallback, 압축이 완료되고 난 다음에 실행될 callback. 주로 파일 압축 후 해당 blob을 반환받는 형식이다.
- *  width, 압축을 적용할  최대 width
- *  height 압축을 적용할 최대 height
- * }
+ * @param {OptimizeImageParams} params - 압축에 필요한 값들
+ * @param {File | Blob} params.targetFile -압축하고자 하는 파일
+ * @param {(blob: Blob) => void} params.compressCallback - 압축이 완료되고 난 다음에 실행될 callback. 주로 파일 압축 후 해당 blob을 반환받는 형식이다.
+ * @param {number} params.width 압축을 적용할 최대 width
+ * @param {number} params.height 압축을 적용할 최대 height
  *
  */
 
-const optimizeImage = ({ targetFile, resolveCallback, width, height }: OptimizeImageParams) => {
+const optimizeImage = ({ targetFile, compressCallback, width, height }: OptimizeImageParams) => {
   const canvasRef = document.createElement('canvas');
   const blobUrl = URL.createObjectURL(targetFile);
 
@@ -58,13 +57,11 @@ const optimizeImage = ({ targetFile, resolveCallback, width, height }: OptimizeI
     const ctx = canvasRef.getContext('2d');
     ctx?.drawImage(imageForDrawing, 0, 0, newWidth, newHeight);
 
-    return new Promise((resolve) => {
-      canvasRef.toBlob((blob) => {
-        if (blob) {
-          resolve(resolveCallback(blob));
-        }
-      }, targetFile.type);
-    });
+    canvasRef.toBlob((blob) => {
+      if (blob) {
+        compressCallback(blob);
+      }
+    }, targetFile.type);
   };
 };
 
