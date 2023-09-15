@@ -14,7 +14,7 @@ import {
   ResultMessage,
   StyledLink,
   Backdrop,
-  ResultModal,
+  ResultDropdown,
 } from './SearchBox.style';
 import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 import useDebounce from 'hooks/useDebounce';
@@ -84,7 +84,7 @@ const SearchBox = (props: SearchBoxProps) => {
       {isOpen && (
         <>
           <Backdrop onClick={close} />
-          <ResultModal>
+          <ResultDropdown>
             <ResultList showRow={4}>
               {searchResults?.map(({ id, name, image }) => (
                 <ResultItem key={id} onClick={handleResultClick({ id, name, image })}>
@@ -100,7 +100,7 @@ const SearchBox = (props: SearchBoxProps) => {
                 등록 신청하기
               </StyledLink>
             </ResultMessage>
-          </ResultModal>
+          </ResultDropdown>
         </>
       )}
     </Wrapper>

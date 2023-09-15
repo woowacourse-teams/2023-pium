@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
 `;
 
 export const InputBox = styled.div<{ openBottom: boolean }>`
-  z-index: ${(props) => (props.openBottom ? props.theme.zIndex.dropdown + 1 : 'none')};
+  z-index: ${(props) => (props.openBottom ? props.theme.zIndex.dropdown : 'none')};
 
   display: flex;
   align-items: center;
@@ -49,7 +49,7 @@ export const ResultMessage = styled.p`
 
 export const Backdrop = styled.div`
   position: fixed;
-  z-index: ${({ theme: { zIndex } }) => zIndex.dropdown};
+  z-index: ${({ theme: { zIndex } }) => zIndex.dropdownBackdrop};
   top: 0;
   left: 0;
 
@@ -57,9 +57,9 @@ export const Backdrop = styled.div`
   height: 100%;
 `;
 
-export const ResultModal = styled.div`
+export const ResultDropdown = styled.div`
   position: absolute;
-  z-index: ${(props) => props.theme.zIndex.modal};
+  z-index: ${(props) => props.theme.zIndex.dropdown};
   bottom: 2px;
   transform: translateY(100%);
 
