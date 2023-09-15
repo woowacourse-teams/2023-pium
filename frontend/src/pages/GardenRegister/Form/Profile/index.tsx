@@ -13,7 +13,7 @@ const Profile = (props: ProfileProps) => {
 
   return (
     <Section>
-      <Image type="circle" size="200px" src={imageUrl} alt={`사랑스러운 ${nickname}의 사진`} />
+      <Image type="circle" size="200px" src={imageUrl} alt={`사랑스러운 ${nickname}`} />
       <Nickname>{nickname}</Nickname>
       <DictionaryPlantName>{dictionaryPlantName}</DictionaryPlantName>
     </Section>
