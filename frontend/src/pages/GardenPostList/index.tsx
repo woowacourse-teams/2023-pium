@@ -20,7 +20,7 @@ const GardenPostList = () => {
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
-  } = useGardenPostList(selectedDictionaryPlant && selectedDictionaryPlant.id);
+  } = useGardenPostList(selectedDictionaryPlant ? selectedDictionaryPlant.id : null);
 
   const intersectionRef = useIntersectionRef(fetchNextPage);
 
