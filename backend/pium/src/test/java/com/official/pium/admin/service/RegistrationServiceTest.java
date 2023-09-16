@@ -29,22 +29,24 @@ class RegistrationServiceTest extends IntegrationTest {
 
     @Autowired
     private RegistrationService registrationService;
+
     @Autowired
     private RegistrationRepository registrationRepository;
+
     @MockBean
     private AmazonS3 amazonS3;
 
     @Test
-    void 식물_요청의_이름과_이미지가_모두_들어오면_함께_저장한다() {
+    void 식물_요청의_이름과_이미지가_모두_들어오면_함께_저장() {
         RegistrationRequest request = RegistrationRequest.builder()
                 .name("장미")
                 .build();
         MultipartFile multipartFile = FileFixture.generateMultiPartFile();
 
         registrationService.save(request, multipartFile);
+
         List<Registration> registrations = registrationRepository.findAll();
         Registration registration = registrations.get(0);
-
         assertSoftly(
                 softly -> {
                     assertThat(registration.getPlantName()).isEqualTo("장미");
@@ -54,15 +56,15 @@ class RegistrationServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 식물_요청의_이름만_들어오면_이미지가_null로_저장된다() {
+    void 식물_요청의_이름만_들어오면_이미지가_null로_저장() {
         RegistrationRequest request = RegistrationRequest.builder()
                 .name("장미")
                 .build();
 
         registrationService.save(request, null);
+
         List<Registration> registrations = registrationRepository.findAll();
         Registration registration = registrations.get(0);
-
         assertSoftly(
                 softly -> {
                     assertThat(registration.getPlantName()).isEqualTo("장미");
@@ -72,13 +74,13 @@ class RegistrationServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 식물_요청의_이미지만_들어오면_이름이_null로_저장된다() {
+    void 식물_요청의_이미지만_들어오면_이름이_null로_저장() {
         MultipartFile multipartFile = FileFixture.generateMultiPartFile();
 
         registrationService.save(null, multipartFile);
+
         List<Registration> registrations = registrationRepository.findAll();
         Registration registration = registrations.get(0);
-
         assertSoftly(
                 softly -> {
                     assertThat(registration.getPlantName()).isNull();
@@ -88,14 +90,15 @@ class RegistrationServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 식물_요청의_이름과_이미지가_모두_들어오지_않으면_예외가_발생한다() {
+    void 식물_요청의_이름과_이미지가_모두_들어오지_않으면_예외가_발생() {
         assertThatThrownBy(
                 () -> registrationService.save(null, null)
-        ).isInstanceOf(IllegalArgumentException.class).hasMessage("이름과 이미지 중 하나는 존재해야 합니다");
+        ).isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("이름과 이미지 중 하나는 존재해야 합니다");
     }
 
     @Test
-    void 존재하는_모든_요청을_조회한다() {
+    void 존재하는_모든_요청을_조회() {
         RegistrationRequest request1 = RegistrationRequest.builder()
                 .name("장미")
                 .build();
@@ -103,7 +106,6 @@ class RegistrationServiceTest extends IntegrationTest {
                 .name("백합")
                 .build();
         Admin admin = new Admin("admin", "password", "secondPassword");
-
         registrationService.save(request1, null);
         registrationService.save(request2, null);
 
@@ -113,14 +115,15 @@ class RegistrationServiceTest extends IntegrationTest {
     }
 
     @Test
-    void 관리자_계정정보가_존재하지_않으면_조회시_예외가_발생한다() {
+    void 관리자_계정정보가_존재하지_않으면_조회시_예외가_발생() {
         assertThatThrownBy(
                 () -> registrationService.read(null)
-        ).isInstanceOf(AuthorizationException.class);
+        ).isInstanceOf(AuthorizationException.class)
+                .hasMessage("허가되지 않은 동작입니다");
     }
 
     @Test
-    void 존재하는_요청을_삭제한다() {
+    void 존재하는_요청을_삭제() {
         Admin admin = new Admin("admin", "password", "secondPassword");
         Registration registration = registrationRepository.save(Registration.builder()
                 .plantName("장미")
@@ -129,14 +132,14 @@ class RegistrationServiceTest extends IntegrationTest {
         registrationService.delete(admin, registration.getId());
 
         Optional<Registration> deleted = registrationRepository.findById(registration.getId());
-
         assertThat(deleted).isEmpty();
     }
 
     @Test
-    void 관리자_계정정보가_존재하지_않으면_삭제시_예외가_발생한다() {
+    void 관리자_계정정보가_존재하지_않으면_삭제시_예외가_발생() {
         assertThatThrownBy(
                 () -> registrationService.delete(null, 1L)
-        ).isInstanceOf(AuthorizationException.class);
+        ).isInstanceOf(AuthorizationException.class)
+                .hasMessage("허가되지 않은 동작입니다");
     }
 }

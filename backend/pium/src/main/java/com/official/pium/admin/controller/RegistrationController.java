@@ -48,7 +48,7 @@ public class RegistrationController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @Auth Admin admin,
-            @PathVariable @Positive(message = "등록 요청 ID는 1이상의 값이어야 합니다.") Long id) {
+            @PathVariable @Positive(message = "삭제 요청 ID는 1이상의 값이어야 합니다.") Long id) {
         registrationService.delete(admin, id);
         return ResponseEntity.noContent().build();
     }

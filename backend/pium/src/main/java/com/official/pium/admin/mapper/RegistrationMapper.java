@@ -1,6 +1,7 @@
 package com.official.pium.admin.mapper;
 
 import com.official.pium.admin.domain.Registration;
+import com.official.pium.admin.dto.RegistrationResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -14,4 +15,10 @@ public class RegistrationMapper {
                 .build();
     }
 
+    public static RegistrationResponse toResponse(Registration registration) {
+        return RegistrationResponse.builder()
+                .name(registration.getPlantName())
+                .imageUrl(registration.getImageUrl())
+                .build();
+    }
 }

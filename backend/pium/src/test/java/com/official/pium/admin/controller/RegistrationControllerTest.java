@@ -21,7 +21,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.containsString;
@@ -49,7 +48,7 @@ class RegistrationControllerTest extends UITest {
     private ObjectMapper objectMapper;
 
     @Nested
-    class 등록_요청_ {
+    class 등록_ {
 
         @Test
         void 정상_등록_시_201_반환() throws Exception {
@@ -70,6 +69,7 @@ class RegistrationControllerTest extends UITest {
                             .file(multipartFile)
                             .session(session)
                             .contentType(MediaType.MULTIPART_FORM_DATA)
+                            .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isCreated())
                     .andDo(print());
@@ -92,6 +92,7 @@ class RegistrationControllerTest extends UITest {
                             .file(request)
                             .session(session)
                             .contentType(MediaType.MULTIPART_FORM_DATA)
+                            .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isCreated())
                     .andDo(print());
@@ -99,13 +100,13 @@ class RegistrationControllerTest extends UITest {
 
         @Test
         void 이름_없이_사진만_정상_등록_시_201_반환() throws Exception {
-
             MockMultipartFile multipartFile = (MockMultipartFile) FileFixture.generateMultiPartFile();
 
             mockMvc.perform(multipart(HttpMethod.POST, "/dictionary-registrations")
                             .file(multipartFile)
                             .session(session)
                             .contentType(MediaType.MULTIPART_FORM_DATA)
+                            .contentType(MediaType.APPLICATION_JSON)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isCreated())
                     .andDo(print());
@@ -113,7 +114,7 @@ class RegistrationControllerTest extends UITest {
     }
 
     @Nested
-    class 등록_조회_ {
+    class 조회_ {
 
         @Test
         void 정상_조회_시_200_반환() throws Exception {
@@ -121,8 +122,7 @@ class RegistrationControllerTest extends UITest {
                     .name("장미")
                     .imageUrl("이미지")
                     .build();
-            List<RegistrationResponse> responses = new ArrayList<>();
-            responses.add(registration);
+            List<RegistrationResponse> responses = List.of(registration);
             DataResponse<List<RegistrationResponse>> dataResponse = DataResponse.<List<RegistrationResponse>>builder()
                     .data(responses)
                     .build();
@@ -152,7 +152,8 @@ class RegistrationControllerTest extends UITest {
             mockMvc.perform(delete("/dictionary-registrations/{id}", wrongId)
                             .session(session))
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message").value(containsString("등록 요청 ID는 1이상의 값이어야 합니다.")));
+                    .andExpect(jsonPath("$.message")
+                            .value(containsString("삭제 요청 ID는 1이상의 값이어야 합니다.")));
         }
     }
 

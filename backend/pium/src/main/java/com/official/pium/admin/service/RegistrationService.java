@@ -32,10 +32,11 @@ public class RegistrationService {
     @Transactional
     public void save(RegistrationRequest request, MultipartFile multipartFile) {
         if (request == null && multipartFile == null) {
-            throw new IllegalArgumentException("이름과 이미지 중 하나는 존재해야 합니다");
+            throw new IllegalArgumentException("요청 식물의 이름과 이미지 중 하나는 존재해야 합니다");
         }
 
         if (multipartFile == null) {
+            validateName(request);
             Registration registration = RegistrationMapper.toRegistration(request.getName(), null);
             registrationRepository.save(registration);
             return;
@@ -53,29 +54,33 @@ public class RegistrationService {
         registrationRepository.save(registration);
     }
 
-    public DataResponse<List<RegistrationResponse>> read(Admin admin) {
-        if (admin == null) {
-            throw new AuthorizationException();
+    private void validateName(RegistrationRequest request) {
+        if (request.getName().isBlank()) {
+            throw new IllegalArgumentException("요청 식물의 이름과 이미지 중 하나는 존재해야 합니다");
         }
+    }
+
+    public DataResponse<List<RegistrationResponse>> read(Admin admin) {
+        checkAdmin(admin);
         List<Registration> registrations = registrationRepository.findAll();
 
         List<RegistrationResponse> registrationResponses = registrations.stream()
-                .map(registration -> RegistrationResponse.builder()
-                        .name(registration.getPlantName())
-                        .imageUrl(registration.getImageUrl())
-                        .build())
+                .map(RegistrationMapper::toResponse)
                 .collect(Collectors.toList());
-        DataResponse<List<RegistrationResponse>> dataResponse = DataResponse.<List<RegistrationResponse>>builder()
+        return DataResponse.<List<RegistrationResponse>>builder()
                 .data(registrationResponses)
                 .build();
-        return dataResponse;
     }
 
     @Transactional
     public void delete(Admin admin, Long id) {
-        if (admin == null) {
-            throw new AuthorizationException();
-        }
+        checkAdmin(admin);
         registrationRepository.deleteById(id);
+    }
+
+    private void checkAdmin(Admin admin) {
+        if (admin == null) {
+            throw new AuthorizationException("허가되지 않은 동작입니다");
+        }
     }
 }
