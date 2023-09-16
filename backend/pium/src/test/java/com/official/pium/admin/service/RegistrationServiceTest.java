@@ -94,7 +94,7 @@ class RegistrationServiceTest extends IntegrationTest {
         assertThatThrownBy(
                 () -> registrationService.save(null, null)
         ).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이름과 이미지 중 하나는 존재해야 합니다");
+                .hasMessage("요청 식물의 이름과 이미지 중 하나는 존재해야 합니다");
     }
 
     @Test
