@@ -19,7 +19,8 @@ import {
 } from './Timeline.style';
 import useYearList from 'hooks/queries/history/useYearList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
-import Sprout from 'assets/sprout.svg';
+import SproutSvg from 'assets/sprout.svg';
+import SproutWebp from 'assets/sprout.webp';
 import TimelineItemList from '../TimelineItemList';
 import Skeleton from './Skeleton';
 
@@ -36,6 +37,7 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
     isFetchingNextPage,
     fetchNextPage,
   } = useYearList(Number(petPlantId), filter);
+
   const intersectionRef = useIntersectionRef(fetchNextPage);
 
   useEffect(() => {
@@ -45,7 +47,10 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   return (
     <Wrapper hasNextPage={hasNextPage}>
       <Plant>
-        <PlantImage src={Sprout} alt="타임라인 꼭대기" />
+        <picture>
+          <source srcSet={SproutWebp} type="image/webp" />
+          <PlantImage src={SproutSvg} alt="타임라인 꼭대기" />
+        </picture>
       </Plant>
       {isSuccess ? (
         yearList.map(([year, monthList]) => (

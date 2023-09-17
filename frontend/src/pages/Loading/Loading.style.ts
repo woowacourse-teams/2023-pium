@@ -19,11 +19,9 @@ export const Wrapper = styled.main`
   max-width: ${({ theme }) => theme.width.pad};
   height: calc(100vh - 68px);
   margin: auto;
-`;
 
-export const LoadingImage = styled.img`
-  width: 250px;
-  height: 250px;
-  margin-top: 50px;
-  animation: ${flip} 1.2s ease-in-out infinite;
+  img {
+    margin-top: 50px;
+    animation: ${flip} 1.2s ease-in-out infinite;
+  }
 `;

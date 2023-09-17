@@ -2,12 +2,9 @@ import type { PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
-import Flowerpot from 'components/@common/Icons/Flowerpot';
-import House from 'components/@common/Icons/House';
-import Sun from 'components/@common/Icons/Sun';
-import Wind from 'components/@common/Icons/Wind';
 import Image from 'components/@common/Image';
 import Select from 'components/@common/Select';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
   InfoArea,
   Bold,
@@ -174,6 +171,8 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   const daySince = getDaysBetween(new Date(), form.birthDate) + 1;
 
+  const { primary: primaryColor } = theme.color;
+
   return (
     <Wrapper>
       <Image type="wide" src={imageUrl} alt={`${nickname}(${dictName})`} size="300px" />
@@ -256,12 +255,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
         <Environment>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <House
-                color={theme.color.primary}
+              <SvgIcons
+                icon="house"
+                color={primaryColor}
                 aria-label="장소"
                 aria-describedby="반려 식물이 놓인 공간"
-                width="20px"
-                height="20px"
+                size={20}
               />
             </EnvironmentTitle>
             <InputWrapper $width="100%">
@@ -275,12 +274,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Flowerpot
-                color={theme.color.primary}
+              <SvgIcons
+                icon="flowerpot"
+                color={primaryColor}
                 aria-label="화분"
                 aria-describedby="반려 식물이 담긴 화분의 재질"
-                width="20px"
-                height="20px"
+                size={20}
               />
             </EnvironmentTitle>
             <InputWrapper $width="100%">
@@ -294,12 +293,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Sun
-                color={theme.color.primary}
+              <SvgIcons
+                icon="sun"
+                color={primaryColor}
                 aria-label="채광"
                 aria-describedby="반려 식물이 빛을 얼마나 받고 있는지"
-                width="20px"
-                height="20px"
+                size={20}
               />
             </EnvironmentTitle>
             <InputWrapper $width="100%">
@@ -313,12 +312,12 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           </EnvironmentItem>
           <EnvironmentItem>
             <EnvironmentTitle>
-              <Wind
-                color={theme.color.primary}
+              <SvgIcons
+                icon="wind"
+                color={primaryColor}
                 aria-label="바람"
                 aria-describedby="반려 식물이 통풍이 잘 되는 위치인지"
-                width="20px"
-                height="20px"
+                size={20}
               />
             </EnvironmentTitle>
             <InputWrapper $width="100%">
