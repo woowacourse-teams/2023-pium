@@ -18,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.admin.controller.AdminPageController;
+import com.official.pium.admin.repository.RegistrationRepository;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.admin.service.AdminService;
@@ -50,6 +51,9 @@ class AdminPageControllerTest extends UITest {
 
     @MockBean
     private DictionaryPlantRepository dictionaryPlantRepository;
+
+    @MockBean
+    private RegistrationRepository registrationRepository;
 
     @MockBean
     private AdminService adminService;
@@ -129,6 +133,9 @@ class AdminPageControllerTest extends UITest {
 
         @Test
         void 사전식물_요청_목록_페이지() throws Exception {
+            given(registrationRepository.findAll(any(Pageable.class)))
+                    .willReturn(Page.empty());
+
             mockMvc.perform(get("/admin/dict/requests")
                             .session(session)
                     )
