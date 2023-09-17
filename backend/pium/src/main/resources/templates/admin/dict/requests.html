@@ -1,16 +1,107 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="ko"
       layout:decorate="~{admin/common/layout}"
-      lang="ko">
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+
 <th:block layout:fragment="content">
     <div class="container mt-5">
         <h1 class="text-center mb-4">사전 식물 등록 요청</h1>
 
-        <h2 class="">사전 식물 등록 요청 목록</h2>
+        <div class="row mb-2">
+            <th:block th:each="request : ${registrations}">
+                <div class="col-md-12">
+                    <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                        <div class="col p-4 d-flex flex-column position-static">
+                            <strong class="d-inline-block mb-2 text-primary-emphasis"
+                                    th:text="|요청 ID: ${request.id}|"></strong>
+                            <h3 class="mb-0">식물 등록 요청</h3>
+                            <div class="mb-1 text-body-secondary"
+                                 th:text="${#temporals.format(createDate, 'yyyy-MM-dd HH:mm:ss')}"
+                                 th:with="createDate = ${request.createdAt}">
+                            </div>
+                            <p class="card-text mb-auto"
+                               th:text="|요청 내용: ${request.plantName == null ? '내용 없음' : request.plantName}|"></p>
 
-        <!-- TODO: 사전 식물 등록 요청 목록 정보 출력 -->
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a class="btn btn-outline-danger" th:onclick="|confirmDelete(${request.id})|">삭제</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto d-none d-lg-block border-start">
+                            <img src="https://static.pium.life/prod/home.png" alt="">
+                            <!--<th:block th:if="${request.imageUrl != null}">
+                                <img alt="식물요청이미지" class="img-thumbnail plant-image" th:src="${request.imageUrl}">
+                            </th:block>
+                            <th:block th:if="${request.imageUrl == null}">
+                                <div>이미지 정보가 없습니다.</div>
+                            </th:block>-->
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
     </div>
+    <nav aria-label="Page Navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${page.number == 0} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{|/admin/dict/requests?page=0|}" th:if="${page.number != 0}">처음으로</a>
+            </li>
+
+            <li class="page-item" th:classappend="${page.hasPrevious()} ? '' : 'disabled'">
+                <a class="page-link" tabindex="-1"
+                   th:href="@{|/admin/dict/requests?page=${page.number - 1}|}"
+                   th:if="${page.hasPrevious()}">이전</a>
+            </li>
+
+            <th:block
+                    th:with="startPage=${(page.number - 5 < 0 ? 0 : page.number - 5)}, endPage=${(page.number + 4 >= page.totalPages ? page.totalPages - 1 : page.number + 4)}">
+                <li class="page-item" th:classappend="${pageNumber == page.number} ? 'active' : ''"
+                    th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}" th:if="${pageNumber >= 0}">
+                    <a class="page-link" th:href="@{|/admin/dict/requests?page=${pageNumber}|}"
+                       th:text="${pageNumber + 1}"></a>
+                </li>
+            </th:block>
+
+            <li class="page-item" th:classappend="${page.hasNext()} ? '' : 'disabled'">
+                <a class="page-link" th:href="@{|/admin/dict/requests?page=${page.number + 1}|}"
+                   th:if="${page.hasNext()}">다음</a>
+            </li>
+
+            <li class="page-item" th:classappend="${page.number == page.totalPages - 1} ? 'disabled' : ''">
+                <a class="page-link" th:href="@{|/admin/dict/requests?page=${page.totalPages - 1}|}"
+                   th:if="${page.number != page.totalPages - 1 && page.totalPages > 0}">끝으로</a>
+            </li>
+        </ul>
+    </nav>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        function confirmDelete(id) {
+            let result = confirm('삭제하시겠습니까?');
+            if (result) {
+                fetch(`/dictionary-registrations/${id}`, {
+                    method: 'DELETE'
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            alert('삭제되었습니다.');
+                            window.location.replace("/admin/dict/requests");
+                        } else {
+                            alert('오류가 발생했습니다.');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Fetch 오류:', error);
+                        alert('오류가 발생했습니다.');
+                    });
+            } else {
+            }
+        }
+    </script>
 </th:block>
 </html>
