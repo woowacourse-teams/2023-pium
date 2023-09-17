@@ -74,6 +74,8 @@ export const ResultList = styled.ul<{ $maxHeight: string }>`
 
 export const ResultMessage = styled.p<{ $height: string }>`
   display: flex;
+  flex-direction: column;
+  row-gap: 5px;
   align-items: center;
   justify-content: center;
 
