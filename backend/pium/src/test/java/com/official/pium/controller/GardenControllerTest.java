@@ -3,9 +3,11 @@ package com.official.pium.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
+import com.official.pium.fixture.GardenFixture;
 import com.official.pium.fixture.GardenFixture.REQUEST;
 import com.official.pium.service.GardenService;
 import com.official.pium.service.dto.GardenCreateRequest;
+import com.official.pium.service.dto.GardenResponse;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -15,13 +17,19 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -113,6 +121,40 @@ public class GardenControllerTest extends UITest {
                             .content(objectMapper.writeValueAsString(request))
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest())
+                    .andDo(print());
+        }
+    }
+
+    @Nested
+    class 정원_식물_조회 {
+
+        @Test
+        void 정상_요청시_200_반환() throws Exception {
+            GardenResponse response = GardenFixture.RESPONSE.정원_게시글_전체_조회;
+            given(gardenService.readAll(any(Pageable.class), anyList())).willReturn(response);
+
+            mockMvc.perform(get("/garden")
+                            .param("page", "1")
+                            .param("size", "5")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andDo(print());
+        }
+
+        @Test
+        void 특정_사전_식물_ID로_요청시_필터링된_게시글_반환() throws Exception {
+            GardenResponse response = GardenFixture.RESPONSE.정원_게시글_필터링_조회;
+            given(gardenService.readAll(any(Pageable.class), anyList())).willReturn(response);
+
+            mockMvc.perform(get("/garden")
+                            .param("page", "1")
+                            .param("size", "5")
+                            .param("filter", "1")
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.elementSize", equalTo(2)))
+                    .andExpect(jsonPath("$.data[0].dictionaryPlantName", equalTo("스투키")))
+                    .andExpect(jsonPath("$.data[1].dictionaryPlantName", equalTo("스투키")))
                     .andDo(print());
         }
     }
