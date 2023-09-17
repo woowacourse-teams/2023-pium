@@ -26,7 +26,6 @@ create TABLE IF NOT EXISTS member
 (
     id         BIGINT AUTO_INCREMENT NOT NULL,
     kakao_id   BIGINT                NOT NULL,
-    email      VARCHAR(255)          NOT NULL,
     created_at DATETIME              NOT NULL,
     updated_at DATETIME              NOT NULL,
     CONSTRAINT pk_member PRIMARY KEY (id)
