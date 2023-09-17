@@ -1,4 +1,4 @@
-package com.official.pium.admin;
+package com.official.pium.admin.domain;
 
 import com.official.pium.domain.BaseEntity;
 import jakarta.persistence.Column;
@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Table(name = "registration")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-class Registration extends BaseEntity {
+public class Registration extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,4 +27,10 @@ class Registration extends BaseEntity {
 
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Builder
+    public Registration(String plantName, String imageUrl) {
+        this.plantName = plantName;
+        this.imageUrl = imageUrl;
+    }
 }
