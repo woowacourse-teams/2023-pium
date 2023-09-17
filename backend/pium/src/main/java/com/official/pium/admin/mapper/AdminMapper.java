@@ -1,4 +1,4 @@
-package com.official.pium.mapper;
+package com.official.pium.admin.mapper;
 
 import com.official.pium.domain.Admin;
 import com.official.pium.service.dto.AdminLoginRequest;

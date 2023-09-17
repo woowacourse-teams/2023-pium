@@ -41,7 +41,7 @@ public class PetPlantService {
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
-    private final PhotoManger photoManger;
+    private final PhotoManager photoManager;
     private final ApplicationEventPublisher publisher;
 
     @Transactional
@@ -65,7 +65,7 @@ public class PetPlantService {
         if (image == null || image.isEmpty()) {
             return imageDefaultUrl;
         }
-        return photoManger.upload(image, workingDirectory);
+        return photoManager.upload(image, workingDirectory);
     }
 
     private void createHistory(PetPlant petPlant) {

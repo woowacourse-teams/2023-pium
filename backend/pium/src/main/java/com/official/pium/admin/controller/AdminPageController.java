@@ -1,10 +1,10 @@
-package com.official.pium.controller;
+package com.official.pium.admin.controller;
 
 import com.official.pium.domain.Admin;
 import com.official.pium.domain.AdminAuth;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.service.AdminService;
+import com.official.pium.admin.service.AdminService;
 import com.official.pium.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

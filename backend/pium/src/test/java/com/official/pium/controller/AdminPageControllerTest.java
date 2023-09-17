@@ -10,9 +10,6 @@ import static org.springframework.restdocs.cookies.CookieDocumentation.requestCo
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -20,9 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
+import com.official.pium.admin.controller.AdminPageController;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.service.AdminService;
+import com.official.pium.admin.service.AdminService;
 import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.AdminLoginRequest;
 import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
