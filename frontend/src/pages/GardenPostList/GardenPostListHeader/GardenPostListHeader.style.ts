@@ -5,34 +5,28 @@ export const Wrapper = styled.header`
   z-index: ${(props) => props.theme.zIndex.fixed};
   top: 0;
 
+  display: flex;
+  flex-direction: column;
+
   padding: 8px;
-  padding-bottom: 0;
 
   background-color: ${(props) => props.theme.color.background};
+  border-bottom: solid 1px ${(props) => props.theme.color.gray};
 `;
 
-export const SelectedDictionaryPlantArea = styled.div`
+export const FilterArea = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: end;
 
+  height: 20px;
   margin-top: 8px;
-
-  font-size: 2.2rem;
+  padding-left: 16px;
 `;
 
-export const GardenName = styled.p`
-  display: flex;
-  column-gap: 4px;
-  align-items: center;
-
-  padding: 8px;
-
-  border-top: solid 2px transparent;
-  border-bottom: solid 2px ${(props) => props.theme.color.primary + 'AA'};
+export const Name = styled.p`
+  font-size: 1.4rem;
 `;
 
 export const DeleteFilterButton = styled.button`
-  padding: 4px;
   font-size: 1.2rem;
 `;

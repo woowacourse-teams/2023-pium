@@ -1,15 +1,19 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<{ $fontSize: string }>`
   position: relative;
+
   display: flex;
   flex-direction: column;
+
   width: 100%;
+
+  font-size: ${(props) => props.$fontSize};
 `;
 
-export const InputBox = styled.div<{ $openBottom: boolean }>`
-  z-index: ${(props) => (props.$openBottom ? props.theme.zIndex.dropdown : 'none')};
+export const InputBox = styled.div<{ $openBottom: boolean; $height: string }>`
+  z-index: ${(props) => (props.$openBottom ? props.theme.zIndex.dropdown : 'auto')};
 
   display: flex;
   align-items: center;
@@ -17,34 +21,24 @@ export const InputBox = styled.div<{ $openBottom: boolean }>`
   padding: 0 12px;
 
   border: solid 2px ${(props) => props.theme.color.primary};
-  border-radius: ${(props) => (props.$openBottom ? '29px 29px 0 0' : '29px')};
+  border-radius: ${({ $height, $openBottom }) => {
+    const half = `calc(${$height} / 2)`;
+    return $openBottom ? `${half} ${half} 0 0` : half;
+  }};
 `;
 
-export const Input = styled.input`
-  width: 100%;
-  height: 32px;
-  margin: 12px 0;
-  margin-left: 8px;
+export const Input = styled.input<{ $height: string }>`
+  display: flex;
+  align-items: center;
 
-  font-size: 2rem;
+  width: calc(100% - 72px);
+  height: ${(props) => props.$height};
+  margin: 0 8px;
+
+  font-size: inherit;
 
   border: none;
   outline: none;
-`;
-
-export const ResultMessage = styled.p`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 100%;
-  height: 56px;
-
-  font-size: 1.8rem;
-  color: ${(p) => p.theme.color.sub};
-  text-align: center;
-
-  border-top: solid 2px ${(p) => p.theme.color.primary + '40'};
 `;
 
 export const Backdrop = styled.div`
@@ -57,7 +51,7 @@ export const Backdrop = styled.div`
   height: 100%;
 `;
 
-export const ResultDropdown = styled.div`
+export const ResultDropdown = styled.div<{ $height: string }>`
   position: absolute;
   z-index: ${(props) => props.theme.zIndex.dropdown};
   bottom: 2px;
@@ -68,33 +62,46 @@ export const ResultDropdown = styled.div`
   background-color: ${(props) => props.theme.color.background};
   border: solid 2px ${(props) => props.theme.color.primary};
   border-top: 0px;
-  border-radius: 0 0 29px 29px;
+  border-radius: ${({ $height }) => `0 0 calc(${$height} / 2) calc(${$height} / 2)`};
 `;
 
-export const ResultList = styled.ul<{ showRow: number }>`
+export const ResultList = styled.ul<{ $maxHeight: string }>`
   overflow-x: none;
   overflow-y: auto;
   width: 100%;
-  max-height: ${(props) => props.showRow * 56}px;
+  max-height: ${(props) => props.$maxHeight};
 `;
 
-export const ResultItem = styled.li`
+export const ResultMessage = styled.p<{ $height: string }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: ${(props) => props.$height};
+
+  color: ${(props) => props.theme.color.sub};
+  text-align: center;
+
+  border-top: solid 2px ${(props) => props.theme.color.primary + '40'};
+`;
+
+export const ResultItem = styled.li<{ $height: string }>`
   cursor: pointer;
 
   display: flex;
   align-items: center;
 
   width: 100%;
-  height: 56px;
+  height: ${(props) => props.$height};
   padding-left: 12px;
 
-  border-top: solid 2px ${(p) => p.theme.color.primary + '40'};
+  border-top: solid 2px ${(props) => props.theme.color.primary + '40'};
 `;
 
 export const Name = styled.p`
   margin-left: 12px;
-  font-size: 1.8rem;
-  color: ${(p) => p.theme.color.sub};
+  color: ${(props) => props.theme.color.sub};
 `;
 
 export const EnterButton = styled.button`

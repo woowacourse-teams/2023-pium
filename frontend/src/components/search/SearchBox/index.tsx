@@ -22,13 +22,24 @@ import { MESSAGE, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
 interface SearchBoxProps {
+  height?: `${number}px`;
+  fontSize?: string;
+  showResultSize?: number;
   onResultClick?: (searchResult: DictionaryPlantNameSearchResult) => void;
   onEnter?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
   onNextClick?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
 }
 
 const SearchBox = (props: SearchBoxProps) => {
-  const { onResultClick, onEnter, onNextClick } = props;
+  const {
+    height = '56px',
+    fontSize = '2rem',
+    showResultSize = 4,
+    onResultClick,
+    onEnter,
+    onNextClick,
+  } = props;
+  const numberHeight = Number(height.slice(0, -2));
 
   const [searchName, setSearchName] = useState('');
   const queryName = useDebounce<string>(searchName, 200);
@@ -73,37 +84,47 @@ const SearchBox = (props: SearchBoxProps) => {
   };
 
   return (
-    <Wrapper>
-      <InputBox $openBottom={isOpen}>
-        <SvgIcons icon="search" size={40} color={theme.color.primary} />
+    <Wrapper $fontSize={fontSize}>
+      <InputBox $openBottom={isOpen} $height={height}>
+        <SvgIcons icon="search" size={numberHeight / 1.6} color={theme.color.primary} />
         <Input
           type="text"
           value={searchName}
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
           onFocus={handleFocus}
+          $height={height}
         />
         {onNextClick && (
           <EnterButton type="button" aria-label="이동하기" onClick={handleNextButtonClick}>
-            <SvgIcons icon="arrow-right-alt" size={32} color={theme.color.sub} />
+            <SvgIcons icon="arrow-right-alt" size={numberHeight / 2} color={theme.color.sub} />
           </EnterButton>
         )}
       </InputBox>
       {isOpen && (
         <>
           <Backdrop onClick={close} />
-          <ResultDropdown>
-            <ResultList showRow={4}>
+          <ResultDropdown $height={height}>
+            <ResultList $maxHeight={`calc(${height} * ${showResultSize})`}>
               {searchResults?.map(({ id, name, image }) => (
-                <ResultItem key={id} onClick={handleResultClick({ id, name, image })}>
-                  <Image alt={name} src={image} type="circle" size="40px" loading="lazy" />
+                <ResultItem
+                  key={id}
+                  onClick={handleResultClick({ id, name, image })}
+                  $height={height}
+                >
+                  <Image
+                    alt={name}
+                    src={image}
+                    type="circle"
+                    size={`calc(${height} * 2/3)`}
+                    loading="lazy"
+                  />
                   <Name>{name}</Name>
                 </ResultItem>
               ))}
             </ResultList>
-            <ResultMessage>
+            <ResultMessage $height={height}>
               {searchResults?.length ? '찾는 식물이 없으신가요?' : MESSAGE.noSearchResult}
-              &nbsp;&nbsp;&nbsp;
               <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
                 등록 신청하기
               </StyledLink>
