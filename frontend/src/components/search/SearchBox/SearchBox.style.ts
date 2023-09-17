@@ -72,7 +72,7 @@ export const ResultList = styled.ul<{ $maxHeight: string }>`
   max-height: ${(props) => props.$maxHeight};
 `;
 
-export const ResultMessage = styled.p<{ $height: string }>`
+export const ResultMessage = styled.p`
   display: flex;
   flex-direction: column;
   row-gap: 5px;
@@ -80,7 +80,7 @@ export const ResultMessage = styled.p<{ $height: string }>`
   justify-content: center;
 
   width: 100%;
-  height: ${(props) => props.$height};
+  padding: 8px 0;
 
   color: ${(props) => props.theme.color.sub};
   text-align: center;

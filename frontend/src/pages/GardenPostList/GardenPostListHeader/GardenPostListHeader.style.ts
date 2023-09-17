@@ -23,7 +23,10 @@ export const FilterArea = styled.div`
   padding-left: 16px;
 `;
 
-export const Name = styled.p`
+export const FilterTag = styled.p`
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
   font-size: 1.4rem;
 `;
 

@@ -123,7 +123,7 @@ const SearchBox = (props: SearchBoxProps) => {
                 </ResultItem>
               ))}
             </ResultList>
-            <ResultMessage $height={height}>
+            <ResultMessage>
               {searchResults?.length ? '찾는 식물이 없으신가요?' : MESSAGE.noSearchResult}
               <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
                 등록 신청하기

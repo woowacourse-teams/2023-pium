@@ -1,6 +1,6 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import SearchBox from 'components/search/SearchBox';
-import { DeleteFilterButton, Name, Wrapper, FilterArea } from './GardenPostListHeader.style';
+import { DeleteFilterButton, FilterTag, Wrapper, FilterArea } from './GardenPostListHeader.style';
 
 interface GardenPostListHeaderProps {
   selectedDictionaryPlant: DictionaryPlantNameSearchResult | null;
@@ -18,10 +18,10 @@ const GardenPostListHeader = ({
       <SearchBox onResultClick={select} height="36px" fontSize="1.6rem" />
       <FilterArea>
         {selectedDictionaryPlant && (
-          <Name>
+          <FilterTag>
             {selectedDictionaryPlant.name}
             <DeleteFilterButton onClick={clear}>✕</DeleteFilterButton>
-          </Name>
+          </FilterTag>
         )}
       </FilterArea>
     </Wrapper>
