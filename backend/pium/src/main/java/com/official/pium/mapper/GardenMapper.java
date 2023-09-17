@@ -3,9 +3,14 @@ package com.official.pium.mapper;
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.service.dto.GardenCreateRequest;
-import java.time.LocalDate;
+import com.official.pium.service.dto.GardenResponse;
+import com.official.pium.service.dto.SingleGardenResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
+
+import java.time.LocalDate;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GardenMapper {
@@ -24,6 +29,43 @@ public class GardenMapper {
                 .waterCycle(petPlant.getWaterCycle())
                 .content(request.getContent())
                 .manageLevel(request.getManageLevel())
+                .build();
+    }
+
+    public static GardenResponse toGardenResponse(Page<Garden> gardens) {
+        return GardenResponse.builder()
+                .page(gardens.getPageable().getPageNumber())
+                .size(gardens.getSize())
+                .elementSize(gardens.getTotalElements())
+                .hasNext(gardens.hasNext())
+                .data(gardens.getContent().stream()
+                        .map(GardenMapper::toSingleGardenResponse)
+                        .collect(Collectors.toList())
+                ).build();
+    }
+
+    private static SingleGardenResponse toSingleGardenResponse(Garden garden) {
+        return SingleGardenResponse.builder()
+                .id(garden.getId())
+                .createdAt(garden.getCreatedAt())
+                .updatedAt(garden.getUpdatedAt())
+                .dictionaryPlantName(garden.getDictionaryPlant().getName())
+                .content(garden.getContent())
+                .manageLevel(garden.getManageLevel())
+                .petPlant(toPetPlantInfo(garden))
+                .build();
+    }
+
+    private static SingleGardenResponse.PetPlantInfo toPetPlantInfo(Garden garden) {
+        return SingleGardenResponse.PetPlantInfo.builder()
+                .imageUrl(garden.getImageUrl())
+                .nickname(garden.getNickname())
+                .location(garden.getLocation())
+                .flowerpot(garden.getFlowerpot())
+                .light(garden.getLight())
+                .wind(garden.getWind())
+                .daySince(garden.getDaySince())
+                .waterCycle(garden.getWaterCycle())
                 .build();
     }
 }

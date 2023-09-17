@@ -7,10 +7,14 @@ import com.official.pium.mapper.GardenMapper;
 import com.official.pium.repository.GardenRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.GardenCreateRequest;
+import com.official.pium.service.dto.GardenResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @Service
@@ -35,5 +39,10 @@ public class GardenService {
         if (petPlant.isNotOwnerOf(member)) {
             throw new IllegalArgumentException("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + member.getId());
         }
+    }
+
+    public GardenResponse readAll(Pageable pageable, List<Long> filters) {
+        Page<Garden> gardens = gardenRepository.findAllByDictionaryPlantIds(pageable, filters);
+        return GardenMapper.toGardenResponse(gardens);
     }
 }
