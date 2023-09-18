@@ -1,6 +1,8 @@
 package com.official.pium.repository;
 
+import static com.official.pium.domain.QDictionaryPlant.dictionaryPlant;
 import static com.official.pium.domain.QGarden.garden;
+import static com.official.pium.domain.QMember.member;
 
 import com.official.pium.domain.Garden;
 import com.querydsl.core.types.Order;
@@ -26,6 +28,10 @@ public class GardenCustomRepositoryImpl implements GardenCustomRepository {
         List<Garden> gardens = jpaQueryFactory.selectFrom(garden)
                 .where(validateDictionaryPlantIds(dictionaryPlantIds))
                 .orderBy(new OrderSpecifier<>(Order.DESC, garden.createdAt))
+                .leftJoin(garden.dictionaryPlant, dictionaryPlant)
+                .fetchJoin()
+                .leftJoin(garden.member, member)
+                .fetchJoin()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
