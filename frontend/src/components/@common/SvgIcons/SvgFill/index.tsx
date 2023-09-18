@@ -33,6 +33,7 @@ export const ICONS = [
   'warning',
   'water',
   'wind',
+  'add-circle',
 ] as const;
 
 type IconIds = (typeof ICONS)[number];

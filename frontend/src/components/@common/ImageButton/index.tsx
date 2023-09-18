@@ -1,8 +1,8 @@
 import { forwardRef, useId } from 'react';
 import type { CSSProp } from 'styled-components';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import { FileInput, Wrapper } from './ImageButton.style';
 import theme from 'style/theme.style';
-import CirclePlus from '../Icons/CirclePuls';
 
 interface ImageButtonProps {
   changeCallback: React.ChangeEventHandler<HTMLInputElement>;
@@ -19,10 +19,10 @@ const ImageButton = forwardRef<HTMLInputElement, ImageButtonProps>(function Imag
   return (
     <Wrapper size={size} customCss={customCss} aria-label="이미지 등록 컨테이너">
       <label htmlFor={customId ?? customImage}>
-        <CirclePlus
+        <SvgFill
+          icon="add-circle"
           color={theme.color.primary}
-          width={size}
-          height={size}
+          size={size}
           aria-label="플러스 아이콘"
         />
       </label>
