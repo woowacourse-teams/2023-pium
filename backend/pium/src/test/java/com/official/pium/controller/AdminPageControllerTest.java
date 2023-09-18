@@ -56,9 +56,6 @@ class AdminPageControllerTest extends UITest {
     @MockBean
     private AdminService adminService;
 
-    @MockBean
-    private PetPlantService petPlantService;
-
     @Nested
     class 페이지_정상_호출_ {
 
