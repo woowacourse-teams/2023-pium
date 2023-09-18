@@ -26,11 +26,12 @@ public class MemberSupport {
         }
 
         public Member build() {
-            return memberRepository.save(
-                    Member.builder()
-                            .kakaoId(kakaoId == null ? 12345L : kakaoId)
-                            .build()
-            );
+            return memberRepository.findByKakaoId(kakaoId)
+                    .orElseGet(
+                            () -> memberRepository.save(Member.builder()
+                                    .kakaoId(kakaoId == null ? 12345L : kakaoId)
+                                    .build()
+                            ));
         }
     }
 }
