@@ -42,7 +42,6 @@ include::{snippets}/petPlant/update/path-parameters.adoc[]
 
 include::{snippets}/petPlant/update/http-response.adoc[]
 
-
 === 반려 식물 삭제
 
 ==== Request

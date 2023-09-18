@@ -15,6 +15,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -65,7 +66,7 @@ public class Garden extends BaseEntity {
 
     @NotNull
     @Column(name = "day_since", nullable = false)
-    private Integer daySince;
+    private Long daySince;
 
     @Min(MIN_WATER_CYCLE)
     @Max(MAX_WATER_CYCLE)
@@ -81,4 +82,24 @@ public class Garden extends BaseEntity {
     @NotBlank
     @Column(name = "manage_level", nullable = false)
     private String manageLevel;
+
+    @Builder
+    public Garden(final DictionaryPlant dictionaryPlant, final Member member, final String nickname,
+                  final String imageUrl, final String location,
+                  final String flowerpot, final String light, final String wind, final Long daySince,
+                  final Integer waterCycle, final String content,
+                  final String manageLevel) {
+        this.dictionaryPlant = dictionaryPlant;
+        this.member = member;
+        this.nickname = nickname;
+        this.imageUrl = imageUrl;
+        this.location = location;
+        this.flowerpot = flowerpot;
+        this.light = light;
+        this.wind = wind;
+        this.daySince = daySince;
+        this.waterCycle = waterCycle;
+        this.content = content;
+        this.manageLevel = manageLevel;
+    }
 }

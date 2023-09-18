@@ -81,7 +81,7 @@ const SearchBox = (props: SearchBoxProps) => {
               ))}
             </ResultList>
             <ResultMessage>
-              찾는 식물이 없으신가요? &nbsp;&nbsp;&nbsp;
+              찾는 식물이 없으신가요?
               <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
                 등록 신청하기
               </StyledLink>
@@ -89,7 +89,7 @@ const SearchBox = (props: SearchBoxProps) => {
           </>
         ) : (
           <ResultMessage>
-            {MESSAGE.noSearchResult} &nbsp;&nbsp;&nbsp;
+            {MESSAGE.noSearchResult}
             <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
               등록 신청하기
             </StyledLink>

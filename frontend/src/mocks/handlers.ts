@@ -1,4 +1,4 @@
-import type { EditPetPlantRequest, NewPetPlantRequest } from 'types/petPlant';
+import type { EditPetPlantRequest } from 'types/petPlant';
 import { rest } from 'msw';
 import DICTIONARY_PLANT_DATA from './data/dictionaryPlant';
 import PET_LIST from './data/petPlantCardList';
@@ -52,7 +52,12 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
 
     // 반려 식물 등록
-    rest.post<NewPetPlantRequest>(PET, async (req, res, ctx) => {
+    /**
+     * TODO::
+     * msw에서 formData를 지원하지 않아서 전송한 image데이터 확인을 하지 못합니다.
+     * post로 던지는 formData에 기존 form의 데이터가 존재하는데, formData를 확인하지 못하기 때문에 받을 수 없습니다.
+     */
+    rest.post<FormData>(PET, async (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(500));
       }
@@ -62,9 +67,12 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       if (JSESSION === undefined) {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
-      const newPlant = await req.json();
 
-      PetPlant.add(newPlant);
+      // const formData = await req.text(); // 이거는 포기입니다...
+
+      // const newPlant = await req.json();
+
+      // PetPlant.add(newPlant);
       // todo: 등록된 식물의 내 식물 목록 id도 돌려주기
       return res(ctx.delay(delay), ctx.status(201));
     }),
