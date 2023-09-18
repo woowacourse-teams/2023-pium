@@ -84,7 +84,7 @@ const FormSection = (props: FormSectionProps) => {
         </TextLengthNotice>
       </div>
       <Button type="submit" onClick={submit} disabled={isPending || !isFormValid()}>
-        등록하기
+        기록하기
       </Button>
     </StyledForm>
   );

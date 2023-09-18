@@ -193,7 +193,7 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
           to={generatePath(URL_PATH.gardenRegisterForm, { id: petPlantId.toString() })}
           state={{ nickname, dictionaryPlantName, imageUrl }}
         >
-          모두의 정원에 등록하기
+          모두의 정원에 기록하기
         </PrimaryLink>
       </Content>
     </Wrapper>
