@@ -127,7 +127,7 @@ class AdminPageControllerTest extends UITest {
         }
 
         @Test
-        void 사전식물_요청_목록_페이지() throws Exception {
+        void 사전_식물_요청_목록_페이지() throws Exception {
             given(registrationRepository.findAll(any(Pageable.class)))
                     .willReturn(Page.empty());
 
