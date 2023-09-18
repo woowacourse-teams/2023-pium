@@ -1,3 +1,4 @@
+import { ImageFormData } from 'types/image';
 import type { EditPetPlantRequest, PetPlantDetails } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { generatePath, useNavigate } from 'react-router-dom';
@@ -11,7 +12,7 @@ const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
   const navigate = useNavigate();
   const addToast = useAddToast();
 
-  return useMutation<void, Error, EditPetPlantRequest>({
+  return useMutation<void, Error, ImageFormData<EditPetPlantRequest>>({
     mutationFn: async (form) => {
       const response = await PetPlantAPI.edit(petPlantId, form);
       throwOnInvalidStatus(response);

@@ -1,18 +1,10 @@
 import { useParams } from 'react-router-dom';
-import Image from 'components/@common/Image';
 import Modal from 'components/@common/Modal';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
-import {
-  BackLink,
-  DictionaryPlantButton,
-  DictionaryPlantImageArea,
-  DictionaryPlantName,
-  Header,
-  Main,
-} from './Form.style';
+import { BackLink, DictionaryPlantButton, DictionaryPlantName, Header, Main } from './Form.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useModal from 'hooks/useModal';
@@ -42,10 +34,11 @@ const PetPlantRegisterFormPage = () => {
         <DictionaryPlantButton onClick={open}>
           <span>사전 정보</span> <SvgStroke icon="dictionary" color={theme.color.grayDark} />
         </DictionaryPlantButton>
-        <DictionaryPlantImageArea>
-          <Image size="160px" src={image} alt={name} />
-        </DictionaryPlantImageArea>
-        <PetPlantRegisterForm dictionaryPlantId={dictionaryPlantId} defaultNickname={name} />
+        <PetPlantRegisterForm
+          dictionaryPlantId={dictionaryPlantId}
+          defaultNickname={name}
+          dictionaryImageUrl={image}
+        />
       </Main>
       <Modal ref={modalRef} isOpen={isOpen} closeModal={close}>
         <DictionaryPlantContent {...dictionaryPlantDetail} />
