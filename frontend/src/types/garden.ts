@@ -8,7 +8,7 @@ export interface GardenPostItem {
   createdAt: DateFormat;
   updatedAt: DateFormat;
   dictionaryPlantName: DictionaryPlant['name'];
-  manageLevel: Exclude<ManageLevel, '정보없음'>;
+  manageLevel: ManageLevel;
   petPlant: Pick<
     PetPlantDetails,
     | 'imageUrl'
@@ -20,4 +20,10 @@ export interface GardenPostItem {
     | 'daySince'
     | 'waterCycle'
   >;
+}
+
+export interface GardenRegisterForm {
+  petPlantId: PetPlantDetails['id'];
+  content: GardenPostItem['content'];
+  manageLevel: ManageLevel;
 }

@@ -50,7 +50,7 @@ const GardenPostItem = ({
       <TagArea>
         <DictionaryPlantTag>{dictionaryPlantName}</DictionaryPlantTag>
         <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
-        <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
+        {manageLevel !== '정보없음' && <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>}
       </TagArea>
       <Environment>
         <EnvironmentItem>
