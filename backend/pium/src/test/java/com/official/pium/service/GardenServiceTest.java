@@ -1,5 +1,7 @@
 package com.official.pium.service;
 
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Garden;
@@ -8,6 +10,10 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.GardenRepository;
 import com.official.pium.service.dto.GardenCreateRequest;
 import com.official.pium.service.dto.GardenResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.stream.LongStream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -16,13 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.stream.LongStream;
-
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
