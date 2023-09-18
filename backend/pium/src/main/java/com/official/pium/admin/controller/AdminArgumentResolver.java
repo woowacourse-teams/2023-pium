@@ -1,4 +1,4 @@
-package com.official.pium.controller;
+package com.official.pium.admin.controller;
 
 import com.official.pium.domain.Admin;
 import com.official.pium.domain.AdminAuth;

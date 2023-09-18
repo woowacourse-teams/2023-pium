@@ -1,10 +1,12 @@
-package com.official.pium.controller;
+package com.official.pium.admin.controller;
 
+import com.official.pium.admin.domain.Registration;
+import com.official.pium.admin.repository.RegistrationRepository;
+import com.official.pium.admin.service.AdminService;
 import com.official.pium.domain.Admin;
 import com.official.pium.domain.AdminAuth;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.service.AdminService;
 import com.official.pium.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -30,8 +32,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminPageController {
 
+    private static final String ADMIN_FIELD = "admin";
     private static final String REDIRECT_ADMIN_LOGIN = "redirect:/admin/login";
 
+    private final RegistrationRepository registrationRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final AdminService adminService;
 
@@ -41,7 +45,7 @@ public class AdminPageController {
             return REDIRECT_ADMIN_LOGIN;
         }
 
-        model.addAttribute("admin", admin);
+        model.addAttribute(ADMIN_FIELD, admin);
         return "admin/index";
     }
 
@@ -52,7 +56,7 @@ public class AdminPageController {
         }
 
         Page<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findAll(pageable);
-        model.addAttribute("admin", admin);
+        model.addAttribute(ADMIN_FIELD, admin);
         model.addAttribute("page", dictionaryPlants);
         model.addAttribute("plants", dictionaryPlants.getContent());
         return "admin/dict/list";
@@ -67,7 +71,7 @@ public class AdminPageController {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 사전 식물이 존재하지 않습니다. id:" + id));
 
-        model.addAttribute("admin", admin);
+        model.addAttribute(ADMIN_FIELD, admin);
         model.addAttribute("plant", dictionaryPlant);
         return "admin/dict/plant";
     }
@@ -78,7 +82,7 @@ public class AdminPageController {
             return REDIRECT_ADMIN_LOGIN;
         }
 
-        model.addAttribute("admin", admin);
+        model.addAttribute(ADMIN_FIELD, admin);
         return "admin/dict/create";
     }
 
@@ -91,18 +95,21 @@ public class AdminPageController {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 사전 식물이 존재하지 않습니다. id:" + id));
 
-        model.addAttribute("admin", admin);
+        model.addAttribute(ADMIN_FIELD, admin);
         model.addAttribute("plant", dictionaryPlant);
         return "admin/dict/update";
     }
 
     @GetMapping("/dict/requests")
-    public String dictionaryPlantRequests(@AdminAuth Admin admin, Model model) {
+    public String dictionaryPlantRequests(@PageableDefault Pageable pageable, @AdminAuth Admin admin, Model model) {
         if (admin == null) {
             return REDIRECT_ADMIN_LOGIN;
         }
 
-        model.addAttribute("admin", admin);
+        Page<Registration> registrations = registrationRepository.findAll(pageable);
+        model.addAttribute(ADMIN_FIELD, admin);
+        model.addAttribute("page", registrations);
+        model.addAttribute("registrations", registrations.getContent());
         return "admin/dict/requests";
     }
 

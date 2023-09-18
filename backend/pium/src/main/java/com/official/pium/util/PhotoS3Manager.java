@@ -2,7 +2,7 @@ package com.official.pium.util;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.official.pium.service.PhotoManger;
+import com.official.pium.service.PhotoManager;
 import java.io.File;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-public class PhotoS3Manager implements PhotoManger {
+public class PhotoS3Manager implements PhotoManager {
 
     private static final String SLASH = "/";
 
