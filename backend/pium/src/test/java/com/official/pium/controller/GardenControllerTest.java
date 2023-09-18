@@ -19,6 +19,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.operation.preprocess.Preprocessors;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -26,8 +28,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -58,6 +67,17 @@ public class GardenControllerTest extends UITest {
                             .session(session)
                             .content(objectMapper.writeValueAsString(REQUEST.정원_게시글_등록_요청))
                             .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(document(
+                            "garden/create",
+                            Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
+                            Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
+                            requestCookies(),
+                            requestFields(
+                                    fieldWithPath("petPlantId").type(JsonFieldType.NUMBER).description("반려 식물 ID"),
+                                    fieldWithPath("content").type(JsonFieldType.STRING).description("내용"),
+                                    fieldWithPath("manageLevel").type(JsonFieldType.STRING).description("관리 레벨")
+                            )
+                    ))
                     .andExpect(status().isCreated())
                     .andDo(print());
         }
@@ -147,10 +167,40 @@ public class GardenControllerTest extends UITest {
             given(gardenService.readAll(any(Pageable.class), anyList())).willReturn(response);
 
             mockMvc.perform(get("/garden")
-                            .param("page", "1")
+                            .param("page", "0")
                             .param("size", "5")
                             .param("filter", "1")
                             .contentType(MediaType.APPLICATION_JSON))
+                    .andDo(document(
+                            "garden/findAll",
+                            Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
+                            Preprocessors.preprocessResponse(Preprocessors.prettyPrint()),
+                            queryParameters(
+                                    parameterWithName("page").description("페이지 번호"),
+                                    parameterWithName("size").description("페이지 크기"),
+                                    parameterWithName("filter").description("(선택) 사전 식물 ID").optional()
+                            ),
+                            responseFields(
+                                    fieldWithPath("page").description("페이지 번호"),
+                                    fieldWithPath("size").description("요청 페이지 크기"),
+                                    fieldWithPath("elementSize").description("실제 페이지 크기"),
+                                    fieldWithPath("hasNext").description("다음 페이지 존재 여부"),
+                                    fieldWithPath("data[].id").description("모두의 정원 게시글 ID"),
+                                    fieldWithPath("data[].createdAt").description("모두의 정원 게시글 생성일"),
+                                    fieldWithPath("data[].updatedAt").description("모두의 정원 게시글 수정일"),
+                                    fieldWithPath("data[].dictionaryPlantName").description("사전 식물 이름"),
+                                    fieldWithPath("data[].content").description("사용자가 작성한 내용"),
+                                    fieldWithPath("data[].manageLevel").description("사용자가 작성한 관리 레벨"),
+                                    fieldWithPath("data[].petPlant.imageUrl").description("반려 식물 이미지"),
+                                    fieldWithPath("data[].petPlant.nickname").description("반려 식물 별명"),
+                                    fieldWithPath("data[].petPlant.location").description("반려 식물 환경 정보 - 위치"),
+                                    fieldWithPath("data[].petPlant.flowerpot").description("반려 식물 환경 정보 - 화분"),
+                                    fieldWithPath("data[].petPlant.light").description("반려 식물 환경 정보 - 빛"),
+                                    fieldWithPath("data[].petPlant.wind").description("반려 식물 환경 정보 - 바람"),
+                                    fieldWithPath("data[].petPlant.daySince").description("반려 식물 환경 정보 - 함께한 일 수"),
+                                    fieldWithPath("data[].petPlant.waterCycle").description("반려 식물 환경 정보 - 물주기 주기")
+                            )
+                    ))
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.elementSize", equalTo(2)))
                     .andExpect(jsonPath("$.data[0].dictionaryPlantName", equalTo("스투키")))

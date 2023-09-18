@@ -1,0 +1,26 @@
+== 모두의 정원(Garden)
+
+=== 정원 게시글 등록
+
+==== Request
+
+include::{snippets}/garden/create/http-request.adoc[]
+include::{snippets}/garden/create/request-fields.adoc[]
+
+==== Response
+
+include::{snippets}/garden/create/http-response.adoc[]
+
+
+
+=== 정원 게시글 조회
+
+==== Request
+
+include::{snippets}/garden/findAll/http-request.adoc[]
+include::{snippets}/garden/findAll/query-parameters.adoc[]
+
+==== Response
+
+include::{snippets}/garden/findAll/http-response.adoc[]
+include::{snippets}/garden/findAll/response-fields.adoc[]
