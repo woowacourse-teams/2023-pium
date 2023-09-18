@@ -3,6 +3,7 @@ import { useId } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
 import Image from 'components/@common/Image';
+import ImageButton from 'components/@common/ImageButton';
 import Select from 'components/@common/Select';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
@@ -26,7 +27,9 @@ import {
   PrimaryButton,
   SecondaryButton,
   ButtonArea,
+  Label,
 } from './PetPlantEditForm.style';
+import useFileUpload from 'hooks/image/useFileUpload';
 import useEditPetPlant from 'hooks/queries/petPlant/useEditPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
@@ -68,15 +71,24 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
     waterCycle: waterCycle.toString(),
   });
 
+  const {
+    imgRef,
+    uploadedImageUrl,
+    fileUploadHandler,
+    file: imageBlob,
+  } = useFileUpload({ imageUrl });
+
   const { mutate } = useEditPetPlant(petPlantId);
   const addToast = useAddToast();
 
   const navigate = useNavigate();
   const nicknameInputId = useId();
   const waterCycleInputId = useId();
+  const imageButtonId = useId();
 
   const isValidForm = (newForm: PetPlantForm) => {
     if (
+      uploadedImageUrl === imageUrl &&
       newForm.birthDate === birthDate &&
       newForm.flowerpot === flowerpot &&
       newForm.lastWaterDate === lastWaterDate &&
@@ -113,7 +125,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    mutate(requestForm);
+    mutate({ imageData: imageBlob, requestForm });
   };
 
   const handleSubmitClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
@@ -175,7 +187,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   return (
     <Wrapper>
-      <Image type="wide" src={imageUrl} alt={`${nickname}(${dictName})`} size="300px" />
+      <Image type="wide" src={uploadedImageUrl} alt={`${nickname}(${dictName})`} size="300px" />
       <Content>
         <TitleArea>
           <Title>
@@ -190,6 +202,17 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
             </InputWrapper>
           </Title>
           <SubTitle>{dictName}</SubTitle>
+          <ExpandedTextBox>
+            <Label htmlFor={imageButtonId}>
+              <Text>이미지 변경하기</Text>
+            </Label>
+            <ImageButton
+              ref={imgRef}
+              customId={imageButtonId}
+              changeCallback={fileUploadHandler}
+              size={16}
+            />
+          </ExpandedTextBox>
         </TitleArea>
 
         <Divider aria-hidden="true" />

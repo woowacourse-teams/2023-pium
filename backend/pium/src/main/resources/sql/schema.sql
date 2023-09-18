@@ -85,7 +85,7 @@ CREATE TABLE garden
     flowerpot           VARCHAR(255)          NOT NULL,
     light               VARCHAR(255)          NOT NULL,
     wind                VARCHAR(255)          NOT NULL,
-    day_since           INT                   NOT NULL,
+    day_since           BIGINT                NOT NULL,
     water_cycle         INT                   NOT NULL,
     manage_level        VARCHAR(255)          NOT NULL,
     created_at          DATETIME              NOT NULL,
