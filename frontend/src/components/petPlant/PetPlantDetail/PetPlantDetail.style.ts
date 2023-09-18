@@ -199,6 +199,10 @@ const tertiary = css`
   font-size: 1.5rem;
   color: ${theme.color.grayDark};
   text-decoration: underline;
+`;
+
+export const TertiaryButton = styled.button`
+  ${tertiary}
 
   &:focus,
   &:hover {
@@ -206,10 +210,11 @@ const tertiary = css`
   }
 `;
 
-export const TertiaryButton = styled.button`
-  ${tertiary}
-`;
-
 export const TertiaryLink = styled(Link)`
   ${tertiary}
+
+  &:focus,
+  &:hover {
+    color: ${theme.color.primary};
+  }
 `;
