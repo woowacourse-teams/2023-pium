@@ -23,7 +23,12 @@ const register = ({ imageData, requestForm }: ImageFormData<NewPetPlantRequest>)
     formData.append('image', imageData);
   }
 
-  formData.append('request', JSON.stringify(requestForm));
+  formData.append(
+    'request',
+    new Blob([JSON.stringify(requestForm)], {
+      type: 'application/json',
+    })
+  );
 
   return fetch(PET_PLANT_URL, {
     method: 'POST',
@@ -50,7 +55,12 @@ const edit = (
     formData.append('image', imageData);
   }
 
-  formData.append('request', JSON.stringify(requestForm));
+  formData.append(
+    'request',
+    new Blob([JSON.stringify(requestForm)], {
+      type: 'application/json',
+    })
+  );
 
   return fetch(`${PET_PLANT_URL}/${petPlantId}`, {
     method: 'PATCH',
