@@ -188,7 +188,6 @@ public class GardenApiTest extends AcceptanceTest {
                                 .isSortedAccordingTo(Comparator.reverseOrder());
                     }
             );
-
         }
 
         private void generateGardens(int count) {
