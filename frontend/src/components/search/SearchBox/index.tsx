@@ -62,6 +62,7 @@ const SearchBox = (props: SearchBoxProps) => {
           value={searchName}
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
+          aria-label="사전 식물 검색"
         />
         {onNextClick && (
           <EnterButton type="button" aria-label="이동하기" onClick={handleNextButtonClick}>
