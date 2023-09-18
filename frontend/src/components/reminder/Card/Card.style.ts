@@ -1,4 +1,5 @@
 import { TodayStatus } from 'types/reminder';
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { BackgroundProps } from 'pages/Reminder/Reminder.style';
 import theme from 'style/theme.style';
@@ -22,6 +23,15 @@ export const Wrapper = styled.div`
   background: ${({ theme }) => theme.color.background};
   border: solid 0.5px ${({ theme }) => theme.color.grayLight};
   border-radius: 8px 0 0 8px;
+`;
+
+export const LinkContainer = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 220px;
+  height: 100%;
 `;
 
 export const StatusBar = styled.div<BackgroundProps>`
