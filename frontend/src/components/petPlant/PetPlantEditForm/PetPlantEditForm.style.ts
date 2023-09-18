@@ -70,6 +70,17 @@ export const TitleArea = styled.div`
   justify-content: center;
 `;
 
+export const Label = styled.label`
+  font: ${({ theme }) => theme.font.dictContent};
+  font-size: 1.6rem;
+
+  :hover {
+    cursor: pointer;
+    color: ${({ theme }) => theme.color.primary};
+    border-bottom: 0.5px solid ${({ theme }) => theme.color.primary};
+  }
+`;
+
 export const Text = styled.span`
   font: ${({ theme }) => theme.font.dictContent};
   font-size: 1.6rem;

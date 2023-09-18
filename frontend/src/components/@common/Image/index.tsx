@@ -1,3 +1,4 @@
+import { forwardRef } from 'react';
 import type { StyledImageProps } from './Image.style';
 import { StyledImage } from './Image.style';
 import sadpiumiPng from 'assets/sadpiumi-imageFail.png';
@@ -6,7 +7,7 @@ import sadpiumiWebp from 'assets/sadpiumi-imageFail.webp';
 type ImageProps = Omit<React.ImgHTMLAttributes<HTMLImageElement>, 'onError'> &
   Partial<StyledImageProps>;
 
-const Image = (props: ImageProps) => {
+const Image = forwardRef<HTMLImageElement, ImageProps>(function Image(props, ref) {
   const { type = 'circle', size = '77px', ...imageProps } = props;
 
   const setErrorImage: React.ReactEventHandler<HTMLImageElement> = ({ currentTarget }) => {
@@ -14,8 +15,15 @@ const Image = (props: ImageProps) => {
   };
 
   return (
-    <StyledImage type={type} size={size} onError={setErrorImage} loading="lazy" {...imageProps} />
+    <StyledImage
+      ref={ref}
+      type={type}
+      size={size}
+      onError={setErrorImage}
+      loading="lazy"
+      {...imageProps}
+    />
   );
-};
+});
 
 export default Image;
