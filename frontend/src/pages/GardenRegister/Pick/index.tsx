@@ -17,7 +17,6 @@ const PetPlantPicker = () => {
       <ContentHeader title="모두의 정원에 기록하기" />
       <SubTitle>반려 식물을 골라주세요.</SubTitle>
       <Wrapper>
-        a
         <CardList>
           {petPlantCardList.map((petPlantItem) => (
             <Link
