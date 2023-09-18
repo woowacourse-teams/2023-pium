@@ -1,7 +1,7 @@
 import { Link, generatePath } from 'react-router-dom';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
-import PetCard from 'components/petPlant/PetPlantCard';
+import PetPlantCard from 'components/petPlant/PetPlantCard';
 import { CardList, RegisterButton, Wrapper } from './PetPlantCardList.style';
 import usePetPlantCardList from 'hooks/queries/petPlant/usePetPlantCardList';
 import { URL_PATH } from 'constants/index';
@@ -22,7 +22,7 @@ const PetPlantCardList = () => {
               to={generatePath(URL_PATH.petDetail, { id: String(petPlantCard.id) })}
               aria-label={`${petPlantCard.nickname} 상세로 이동`}
             >
-              <PetCard {...petPlantCard} />
+              <PetPlantCard {...petPlantCard} />
             </Link>
           ))}
         </CardList>

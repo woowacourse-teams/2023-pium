@@ -33,12 +33,13 @@ export const ContentBox = styled.section`
 
   width: 320px;
   margin: 0 auto;
-  div {
-    font: ${(props) => props.theme.font.dictContent};
+`;
 
-    p {
-      font: ${(props) => props.theme.font.dictTitle};
-    }
+export const InformationTagBox = styled.div`
+  font: ${(props) => props.theme.font.dictContent};
+
+  p {
+    font: ${(props) => props.theme.font.dictTitle};
   }
 `;
 
@@ -82,14 +83,12 @@ export const ManageInfoBox = styled.div`
   width: 100%;
   padding: 16px;
 
+  font: ${(props) => props.theme.font.dictContent};
+
   background: #ececec;
   border-radius: 8px;
 
-  p {
+  & > p {
     font: ${(props) => props.theme.font.dictTitle};
-  }
-
-  span {
-    font: ${(props) => props.theme.font.dictContent};
   }
 `;
