@@ -1,6 +1,7 @@
 import SearchResultItem from 'components/search/SearchResultItem';
-import { Title, ResultList, Wrapper } from './SearchResults.style';
+import { Title, ResultList, Wrapper, StyledLink } from './SearchResults.style';
 import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
+import { URL_PATH } from 'constants/index';
 
 interface SearchResultsProps {
   plantName: string;
@@ -19,6 +20,12 @@ const SearchResults = (props: SearchResultsProps) => {
     return (
       <Wrapper>
         <Title>검색 결과가 없어요 😭</Title>
+        <Title>
+          이 식물을 추가할까요?&nbsp;&nbsp;&nbsp;
+          <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={plantName}>
+            등록 신청하기
+          </StyledLink>
+        </Title>
       </Wrapper>
     );
   }
@@ -51,6 +58,10 @@ const SearchResults = (props: SearchResultsProps) => {
           </ResultList>
         </>
       )}
+      <Title>
+        찾는 식물이 없으신가요?&nbsp;&nbsp;&nbsp;
+        <StyledLink to={URL_PATH.newDictionaryPlantRequest}>등록 신청하기</StyledLink>
+      </Title>
     </Wrapper>
   );
 };

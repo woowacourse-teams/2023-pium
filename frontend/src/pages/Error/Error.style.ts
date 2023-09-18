@@ -24,7 +24,6 @@ export const Section = styled.div`
 
 export const SadPiumiImage = styled.img`
   width: 250px;
-  height: 250px;
 `;
 
 export const Title = styled.h1`

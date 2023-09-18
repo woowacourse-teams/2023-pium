@@ -17,6 +17,8 @@ export const URL_PATH = {
   login: '/login',
   authorization: '/authorization',
   myPage: '/myPage',
+  garden: '/garden',
+  newDictionaryPlantRequest: '/dict/new-plant-request',
 } as const;
 
 export const MESSAGE = {
@@ -81,3 +83,5 @@ export const DAYS_OF_THE_WEEK = ['일', '월', '화', '수', '목', '금', '토'
 export const NO_PREVIOUS_VALUE = 'EMPTY';
 
 export const NO_INFORMATION = '정보없음';
+
+export const ALLOWED_IMAGE_EXTENSIONS = ['image/jpg', 'image/jpeg', 'image/png', 'image/heic'];

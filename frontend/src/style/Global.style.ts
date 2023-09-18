@@ -17,6 +17,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     scrollbar-width: none;
     font-size: 62.5%;
+    font-display: swap;
   }
 
   body::-webkit-scrollbar {

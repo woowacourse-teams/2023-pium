@@ -11,8 +11,6 @@ import {
   Plant,
   PlantImage,
   Sensor,
-  SkeletonItem,
-  SkeletonItemContent,
   Spot,
   TimelineArea,
   Wrapper,
@@ -21,8 +19,10 @@ import {
 } from './Timeline.style';
 import useYearList from 'hooks/queries/history/useYearList';
 import useIntersectionRef from 'hooks/useIntersectionRef';
-import Sprout from 'assets/sprout.svg';
+import SproutSvg from 'assets/sprout.svg';
+import SproutWebp from 'assets/sprout.webp';
 import TimelineItemList from '../TimelineItemList';
+import Skeleton from './Skeleton';
 
 interface TimelineProps {
   petPlantId: PetPlantDetails['id'];
@@ -32,11 +32,12 @@ interface TimelineProps {
 const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   const {
     data: yearList,
+    isSuccess,
     hasNextPage,
-    isLoading,
     isFetchingNextPage,
     fetchNextPage,
   } = useYearList(Number(petPlantId), filter);
+
   const intersectionRef = useIntersectionRef(fetchNextPage);
 
   useEffect(() => {
@@ -46,9 +47,12 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
   return (
     <Wrapper hasNextPage={hasNextPage}>
       <Plant>
-        <PlantImage src={Sprout} alt="타임라인 꼭대기" />
+        <picture>
+          <source srcSet={SproutWebp} type="image/webp" />
+          <PlantImage src={SproutSvg} alt="타임라인 꼭대기" />
+        </picture>
       </Plant>
-      {yearList &&
+      {isSuccess ? (
         yearList.map(([year, monthList]) => (
           <YearArea key={year}>
             <YearHeader>{year}년</YearHeader>
@@ -70,26 +74,12 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
               </MonthArea>
             ))}
           </YearArea>
-        ))}
-      {(isLoading || isFetchingNextPage) && (
-        <>
-          {isLoading && <YearHeader />}
-          {Array(10)
-            .fill(null)
-            .map((_, index) => (
-              <DayArea key={index}>
-                <DayHeader />
-                <TimelineArea>
-                  <SkeletonItem>
-                    <SkeletonItemContent />
-                  </SkeletonItem>
-                </TimelineArea>
-              </DayArea>
-            ))}
-        </>
+        ))
+      ) : (
+        <Skeleton hasYearHeader />
       )}
+      {isFetchingNextPage ? <Skeleton /> : <Sensor ref={intersectionRef} />}
       {!hasNextPage && <Earth />}
-      {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
     </Wrapper>
   );
 };

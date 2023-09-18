@@ -1,7 +1,8 @@
 import { useEffect, useCallback } from 'react';
-import ArrowDropDown from 'components/@common/Icons/ArrowDropDown';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { Backdrop, IconArea, OptionBox, OptionItem, SelectedValue, Wrapper } from './Select.style';
 import useToggle from 'hooks/useToggle';
+import theme from 'style/theme.style';
 
 interface SelectProps {
   value: string;
@@ -46,7 +47,7 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
         {value || placeholder}
       </SelectedValue>
       <IconArea $rotate={isOpen} aria-hidden>
-        <ArrowDropDown width={24} height={24} />
+        <SvgIcons icon="arrow-drop-down" color={theme.color.sub} />
       </IconArea>
       {isOpen && (
         <>

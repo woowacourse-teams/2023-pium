@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import Dictionary from 'components/@common/Icons/Dictionary';
-import LineArrowLeft from 'components/@common/Icons/LineArrowLeft';
 import Modal from 'components/@common/Modal';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
+import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
 import { BackLink, DictionaryPlantButton, DictionaryPlantName, Header, Main } from './Form.style';
@@ -9,6 +9,7 @@ import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useModal from 'hooks/useModal';
 import { URL_PATH } from 'constants/index';
+import theme from 'style/theme.style';
 
 const PetPlantRegisterFormPage = () => {
   useCheckSessionId();
@@ -17,23 +18,21 @@ const PetPlantRegisterFormPage = () => {
   if (!id) throw new Error('URL에 id가 없습니다.');
 
   const dictionaryPlantId = Number(id);
-  const { data: dictionaryPlantDetail, isSuccess } = useDictionaryPlantDetail(dictionaryPlantId);
-  const { isOpen, open, close, modalRef } = useModal();
-
-  if (!isSuccess) return null;
+  const { data: dictionaryPlantDetail } = useDictionaryPlantDetail(dictionaryPlantId);
   const { name, image } = dictionaryPlantDetail;
+  const { isOpen, open, close, modalRef } = useModal();
 
   return (
     <>
       <Header>
         <BackLink to={URL_PATH.petRegisterSearch}>
-          <LineArrowLeft aria-label="뒤로 가기" />
+          <SvgFill icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
         </BackLink>
       </Header>
       <Main>
         <DictionaryPlantName>{name}</DictionaryPlantName>
         <DictionaryPlantButton onClick={open}>
-          <span>사전 정보</span> <Dictionary />
+          <span>사전 정보</span> <SvgStroke icon="dictionary" color={theme.color.grayDark} />
         </DictionaryPlantButton>
         <PetPlantRegisterForm
           dictionaryPlantId={dictionaryPlantId}

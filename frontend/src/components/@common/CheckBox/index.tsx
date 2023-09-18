@@ -1,17 +1,15 @@
 import { useId, useState } from 'react';
-import { CSSProp } from 'styled-components';
+import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { Input, Label } from './CheckBox.style';
-import CheckBoxEmpty from '../Icons/CheckBoxEmpty';
-import CheckboxFill from '../Icons/CheckBoxFill';
+import theme from 'style/theme.style';
 
 interface CheckBoxProps {
   isChecked?: boolean;
-  fillStyle?: CSSProp;
-  emptyStyle?: CSSProp;
+
   checkedCallback?: () => void;
 }
 
-const CheckBox = ({ isChecked = false, fillStyle, emptyStyle, checkedCallback }: CheckBoxProps) => {
+const CheckBox = ({ isChecked = false, checkedCallback }: CheckBoxProps) => {
   const [checked, setChecked] = useState(isChecked);
   const id = useId();
 
@@ -27,9 +25,19 @@ const CheckBox = ({ isChecked = false, fillStyle, emptyStyle, checkedCallback }:
     <Label htmlFor={id}>
       <Input type="checkbox" id={id} />
       {checked ? (
-        <CheckboxFill onClick={checkHandler} customCSS={fillStyle} />
+        <SvgIcons
+          icon="checkbox-fill"
+          onClick={checkHandler}
+          size={24}
+          color={theme.color.primary}
+        />
       ) : (
-        <CheckBoxEmpty onClick={checkHandler} customCSS={emptyStyle} />
+        <SvgIcons
+          icon="checkbox-empty"
+          onClick={checkHandler}
+          size={24}
+          color={theme.color.grayLight}
+        />
       )}
     </Label>
   );

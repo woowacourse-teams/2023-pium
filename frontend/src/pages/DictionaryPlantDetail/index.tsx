@@ -3,16 +3,14 @@ import Image from 'components/@common/Image';
 import Navbar from 'components/@common/Navbar';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import { Main } from './DictionaryPlantDetail.style';
-import useDictDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
+import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 
 const DictionaryPlantDetail = () => {
   const { id } = useParams();
   if (!id) throw new Error('URL에 id가 없습니다.');
 
   const dictionaryPlantId = Number(id);
-  const { data: dictionaryPlantDetail, isSuccess } = useDictDetail(dictionaryPlantId);
-  if (!isSuccess) return null;
-
+  const { data: dictionaryPlantDetail } = useDictionaryPlantDetail(dictionaryPlantId);
   const { image, name } = dictionaryPlantDetail;
 
   return (
