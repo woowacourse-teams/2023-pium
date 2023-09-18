@@ -1,5 +1,11 @@
+import type { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
+
+interface SkeletonItemProps {
+  width: CSSProperties['width'];
+  height: CSSProperties['height'];
+}
 
 export const Section = styled.section`
   display: flex;
@@ -105,4 +111,17 @@ export const StyledLink = styled(Link)`
 
   text-align: end;
   text-decoration: underline;
+`;
+
+const skeletonBackground = keyframes`
+  0%    { background-color: rgba(176, 176, 176, 0.1) }
+  50%   { background-color: rgba(176, 176, 176, 0.3) }
+  100%  { background-color: rgba(176, 176, 176, 0.1) }
+`;
+
+export const SkeletonItem = styled.div<SkeletonItemProps>`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  border-radius: 4px;
+  animation: ${skeletonBackground} 1s infinite;
 `;
