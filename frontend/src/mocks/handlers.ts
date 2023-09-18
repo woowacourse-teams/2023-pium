@@ -209,6 +209,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       }
 
       // 로그이웃 실행 시에 지금 당장 만료되는 쿠키 설정
+      localStorage.removeItem('MSW_COOKIE_STORE');
       return res(
         ctx.delay(delay),
         ctx.status(200),
