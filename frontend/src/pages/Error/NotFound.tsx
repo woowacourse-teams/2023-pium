@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { Button, SadPiumiImage, Section, Text, Title, Wrapper } from './Error.style';
+import { Button, ButtonSection, SadPiumiImage, Section, Text, Title, Wrapper } from './Error.style';
 import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
 import { URL_PATH } from 'constants/index';
 import SadPiumiImagePng from 'assets/sadpiumi.png';
@@ -23,7 +23,12 @@ const NotFound = () => {
     <Wrapper>
       <picture>
         <source srcSet={SadPiumiImageWebp} type="image/webp" />
-        <SadPiumiImage src={SadPiumiImagePng} alt="슬픈 표정을 하는 피우미" />
+        <SadPiumiImage
+          width={250}
+          height={160}
+          src={SadPiumiImagePng}
+          alt="슬픈 표정을 하는 피우미"
+        />
       </picture>
       <Section>
         <Text>이런!</Text>
@@ -33,14 +38,14 @@ const NotFound = () => {
         <Text>주소가 올바른지 확인해 보세요</Text>
         <Text>잠시 후에 다시 시도해 주세요</Text>
       </Section>
-      <Section>
-        <Button type="button" onClick={goToMain}>
+      <ButtonSection>
+        <Button type="button" onClick={goToMain} aria-label="메인으로 이동">
           메인 화면으로
         </Button>
-        <Button type="button" onClick={reloadWindow}>
+        <Button type="button" onClick={reloadWindow} aria-label="새로고침">
           새로고침
         </Button>
-      </Section>
+      </ButtonSection>
     </Wrapper>
   );
 };
