@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import useAddToast from 'hooks/useAddToast';
-import basicImage from 'assets/piumi-emotionless.svg';
+import basicImage from 'assets/piumi-emotionless.png';
 
 interface FileUploadParams {
   imageUrl?: string;
