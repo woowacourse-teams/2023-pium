@@ -46,8 +46,9 @@ public class PhotoS3Manager implements PhotoManager {
             s3Client.putObject(new PutObjectRequest(bucket + folder + directory + workingDirectory, fileName, file));
 
             file.delete();
-            return rootPath + SLASH + directory + SLASH + workingDirectory + SLASH + fileName;
+            return rootPath + SLASH + directory + workingDirectory + SLASH + fileName;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalStateException("파일 업로드를 실패했습니다.");
         }
     }
