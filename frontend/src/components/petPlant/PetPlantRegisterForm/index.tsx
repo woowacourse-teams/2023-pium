@@ -1,11 +1,20 @@
 import DateInput from 'components/@common/DateInput';
 import FormInput from 'components/@common/FormInput';
 import FormInputBox from 'components/@common/FormInputBox';
+import Image from 'components/@common/Image';
+import ImageButton from 'components/@common/ImageButton';
 import ProgressBar from 'components/@common/ProgressBar';
 import Select from 'components/@common/Select';
 import Stack from 'components/@common/Stack';
 import useStack from 'components/@common/Stack/hooks/useStack';
-import { Button, Center, Wrapper } from './PetPlantRegisterForm.style';
+import {
+  AddImageButton,
+  Button,
+  Center,
+  DictionaryPlantImageArea,
+  Wrapper,
+} from './PetPlantRegisterForm.style';
+import useFileUpload from 'hooks/image/useFileUpload';
 import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
 import useAddToast from 'hooks/useAddToast';
 import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
@@ -14,19 +23,29 @@ import { NUMBER, OPTIONS } from 'constants/index';
 
 interface PetPlantRegisterFormProps {
   dictionaryPlantId: number;
+  dictionaryImageUrl: string;
   defaultNickname?: string;
+  customFileUrl?: string;
 }
 
 const STACK_SIZE = 9;
 const STACK_ELEMENT_HEIGHT = '96px';
 
 const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
-  const { dictionaryPlantId, defaultNickname = '' } = props;
+  const { dictionaryPlantId, defaultNickname = '', dictionaryImageUrl } = props;
   const { form, dispatch } = usePetPlantForm({
     ...initialPetPlantForm,
     nickname: defaultNickname,
   });
   const { topIndex, showNextElement } = useStack(STACK_SIZE);
+  const {
+    uploadedImageUrl,
+    fileUploadHandler,
+    imgRef,
+    file: imageBlob,
+  } = useFileUpload({
+    imageUrl: dictionaryImageUrl,
+  });
 
   const today = getDateToString();
   const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
@@ -91,7 +110,8 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     showNextElement(7);
   };
 
-  const submit = () => {
+  const submit: React.FormEventHandler<HTMLFormElement> = (event) => {
+    event.preventDefault();
     if (!isValidForm) return;
 
     const { birthDate, lastWaterDate } = form;
@@ -110,13 +130,23 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
       waterCycle: Number(form.waterCycle),
     };
 
-    registerPetPlant(requestForm);
+    registerPetPlant({ imageData: imageBlob, requestForm });
   };
 
   const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
 
   return (
-    <Wrapper>
+    <Wrapper method="POST" encType="multipart/form-data" onSubmit={submit}>
+      <DictionaryPlantImageArea>
+        <Image size="160px" src={uploadedImageUrl} alt={defaultNickname} />
+        <ImageButton
+          ref={imgRef}
+          size={35}
+          customCss={AddImageButton}
+          changeCallback={fileUploadHandler}
+        />
+      </DictionaryPlantImageArea>
+
       <Center>
         <ProgressBar percentage={formProgressPercentage} width="90%" height="12px" />
       </Center>
@@ -124,6 +154,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
         <Stack.Element height={STACK_ELEMENT_HEIGHT}>
           <FormInputBox title="별명이 뭔가요?" status={getStatus(0)}>
             <FormInput
+              aria-label="별명 입력"
               value={form.nickname}
               onChange={setNickname}
               nextCallback={validateNickname}
@@ -201,7 +232,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
         </Stack.Element>
         <Stack.Element height={STACK_ELEMENT_HEIGHT}>
           <Center>
-            <Button type="submit" onClick={submit} disabled={!isValidForm}>
+            <Button type="submit" disabled={!isValidForm}>
               등록하기
             </Button>
           </Center>

@@ -21,10 +21,40 @@ describe('반려 식물 등록하기', () => {
       .contains('참새')
       .click()
 
+      .get('input[type=file]')
+      .should('not.be.visible')
+      .selectFile('cypress/fixtures/example.json', { force: true })
+      .wait(100)
+
+      .get('#toast-root')
+      .contains('지원하지 않는 확장자 입니다!')
+
+      .get('div[aria-label="이미지 등록 컨테이너"]')
+      .find('input')
+      .then(($input) => {
+        const file = $input[0].files;
+        expect(file?.length).to.equal(0);
+      })
+
+      .get('input[type=file]')
+      .should('not.be.visible')
+      .selectFile('cypress/fixtures/success_image.png', { force: true })
+
+      .get('div[aria-label="이미지 등록 컨테이너"]')
+      .find('input')
+      .then(($input) => {
+        const file = $input[0].files;
+
+        if (file) {
+          expect(file.length).to.equal(1);
+          expect(file[0].name).to.contain('success_image');
+        }
+      })
+
       .get('p')
       .contains('투명 피우미')
       .should('be.visible')
-      .get('input')
+      .get('input[aria-label="별명 입력"]')
       .type('{selectAll}{backspace}피우미')
       .get('button[aria-label="입력 완료"]')
       .click()
