@@ -9,7 +9,6 @@ import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.ReminderResponse;
 import com.official.pium.service.dto.SinglePetPlantResponse;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -34,7 +33,7 @@ public class PetPlantMapper {
                 .birthDate(request.getBirthDate())
                 .lastWaterDate(request.getLastWaterDate())
                 .waterCycle(request.getWaterCycle())
-                .nextWaterDate(LocalDate.now().plus(request.getWaterCycle(), ChronoUnit.DAYS))
+                .nextWaterDate(LocalDate.now().plusDays(request.getWaterCycle()))
                 .build();
     }
 

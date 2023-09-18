@@ -9,7 +9,6 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
 import com.official.pium.service.dto.DictionaryPlantSearchResponse;
@@ -120,8 +119,8 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         petPlantSupport.builder().dictionaryPlant(dictionaryPlant).build();
 
         assertThatThrownBy(() ->
-                        dictionaryPlantService.delete(dictionaryPlantId)
-                ).isInstanceOf(IllegalArgumentException.class)
+                dictionaryPlantService.delete(dictionaryPlantId)
+        ).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 개체를 참조하는 반려 식물이 존재합니다 id: " + dictionaryPlantId);
     }
 }

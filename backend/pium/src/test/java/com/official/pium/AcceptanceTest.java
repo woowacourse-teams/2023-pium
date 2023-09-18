@@ -5,6 +5,7 @@ import com.official.pium.config.DatabaseClearExtension;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.support.DictionaryPlantSupport;
+import com.official.pium.support.GardenSupport;
 import com.official.pium.support.HistoryCategorySupport;
 import com.official.pium.support.MemberSupport;
 import com.official.pium.support.PetPlantSupport;
@@ -34,6 +35,9 @@ public class AcceptanceTest {
 
     @Autowired
     protected DictionaryPlantSupport dictionaryPlantSupport;
+
+    @Autowired
+    protected GardenSupport gardenSupport;
 
     @Autowired
     protected ObjectMapper objectMapper;
