@@ -1,6 +1,8 @@
 package com.official.pium.repository;
 
 import static com.official.pium.domain.QHistory.history;
+import static com.official.pium.domain.QHistoryCategory.historyCategory;
+import static com.official.pium.domain.QPetPlant.petPlant;
 
 import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
@@ -30,6 +32,8 @@ public class HistoryCustomRepositoryImpl implements HistoryCustomRepository {
                 .where(history.petPlant.id.eq(petPlantId), inHistoryType(historyTypes))
                 .orderBy(new OrderSpecifier<>(Order.DESC, history.createdAt),
                         new OrderSpecifier<>(Order.DESC, history.date))
+                .leftJoin(history.historyCategory, historyCategory)
+                .fetchJoin()
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
