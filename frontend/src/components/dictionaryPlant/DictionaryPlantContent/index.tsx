@@ -7,6 +7,7 @@ import {
   ContentBox,
   FamilyName,
   HeaderBox,
+  InformationTagBox,
   ManageInfoBox,
   Name,
   PropBox,
@@ -49,15 +50,15 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
         </div>
       </HeaderBox>
       <ContentBox>
-        <div>
+        <InformationTagBox>
           <TagSwitch title="물 주기" optionMap={waterOptions} />
-        </div>
-        <div>
+        </InformationTagBox>
+        <InformationTagBox>
           <TagBox>
             <TagBox.Title>추천 장소</TagBox.Title>
             {place}
           </TagBox>
-        </div>
+        </InformationTagBox>
 
         <PropsBox>
           <PropBox>
@@ -154,11 +155,9 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
 
         <ManageInfoBox>
           <p>특별 관리 정보</p>
-          <span>
-            <SeeMoreContentBox>
-              {specialManageInfo !== NO_INFORMATION ? specialManageInfo : '관련 정보가 없어요😇'}
-            </SeeMoreContentBox>
-          </span>
+          <SeeMoreContentBox>
+            {specialManageInfo !== NO_INFORMATION ? specialManageInfo : '관련 정보가 없어요😇'}
+          </SeeMoreContentBox>
         </ManageInfoBox>
       </ContentBox>
     </>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import theme from 'style/theme.style';
 
 const singleLineText = css`
   overflow: hidden;
@@ -158,34 +159,62 @@ export const EnvironmentTitle = styled.span`
   border-radius: 50%;
 `;
 
-export const EditLink = styled(StyledLink)`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  margin-right: auto;
-  margin-left: 0;
-
-  font-size: 1.4rem;
-  color: ${({ theme }) => theme.color.grayDark};
-
-  transition: color 0.2s linear;
-
-  &:focus {
-    color: ${({ theme }) => theme.color.primary};
-  }
+export const ButtonArea = styled.div`
+  display: flex;
+  justify-content: space-between;
+  column-gap: 10px;
 `;
 
-export const DeleteButton = styled.button`
+const ButtonLink = styled(Link)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  font-size: 1.4rem;
-  color: ${({ theme }) => theme.color.grayDark};
+  width: 100%;
+  height: 36px;
+
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+
+  border-radius: 4px;
+`;
+
+export const PrimaryLink = styled(ButtonLink)`
+  color: ${({ theme }) => theme.color.background};
+  background: ${(props) => props.theme.color.primary};
+`;
+
+export const SecondaryLink = styled(ButtonLink)`
+  color: ${({ theme }) => theme.color.sub};
+  background: ${(props) => props.theme.color.background};
+  border: 1px solid ${({ theme }) => theme.color.primary};
+`;
+
+const tertiary = css`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 1.5rem;
+  color: ${theme.color.grayDark};
+  text-decoration: underline;
+`;
+
+export const TertiaryButton = styled.button`
+  ${tertiary}
 
   &:focus,
   &:hover {
-    color: ${({ theme }) => theme.color.accent};
+    color: ${theme.color.accent};
+  }
+`;
+
+export const TertiaryLink = styled(Link)`
+  ${tertiary}
+
+  &:focus,
+  &:hover {
+    color: ${theme.color.primary};
   }
 `;

@@ -1,3 +1,6 @@
+import type { ManageLevel } from 'types/dictionaryPlant';
+import { NO_INFORMATION } from 'constants/index';
+
 export const InputValidate = {
   /**
    * 값이 0~9로만 이루어진 숫자인지 확인합니다.
@@ -67,4 +70,20 @@ export const DateValidate = {
 
     return true;
   },
+};
+
+/**
+ * 주어진 문자열이 올바른 ManageLevel 타입인지 반환합니다.
+ * @param target 검사할 문자열
+ * @param allowNoInformation '정보없음'을 허용할지 여부를 나타내는 boolean. `default: true`
+ * @returns 입력이 '초보자', '경험자', '전문가', '정보없음' 중 하나인지 여부
+ */
+export const isValidManageLevel = (
+  target: string,
+  allowNoInformation = true
+): target is ManageLevel => {
+  const manageLevels = ['초보자', '경험자', '전문가'];
+  if (allowNoInformation) manageLevels.push(NO_INFORMATION);
+
+  return manageLevels.includes(target);
 };

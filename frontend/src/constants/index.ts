@@ -71,6 +71,7 @@ export const NUMBER = {
   maxCycleDate: 365,
   minCycleDate: 1,
   maxNicknameLength: 30,
+  maxGardenContentLength: 1000,
 } as const;
 
 export const STATUS_CODE = {

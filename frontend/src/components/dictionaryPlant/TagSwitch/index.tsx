@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import InlineRadio from 'components/@common/InlineRadio';
 import { TagVariantType } from 'components/@common/Tag';
 import TagBox from 'components/dictionaryPlant/TagBox';
+import { Padding } from './TagSwitch.style';
 
 interface TagSwitchProps {
   title: string;
@@ -23,8 +24,13 @@ const TagSwitch = (props: TagSwitchProps) => {
       <TagBox.Title>
         {title}
         <InlineRadio name={title} value={selected} setValue={setSelected}>
-          {options.map((optionName) => (
-            <InlineRadio.Option key={optionName} value={optionName} />
+          {options.map((optionName, index) => (
+            <>
+              {index > 0 && <span>|</span>}
+              <Padding key={optionName}>
+                <InlineRadio.Option value={optionName} />
+              </Padding>
+            </>
           ))}
         </InlineRadio>
       </TagBox.Title>

@@ -22,8 +22,11 @@ const Wrapper = () => {
   return (
     <InlineRadio name="seasons" value={value} setValue={setValue}>
       <InlineRadio.Option value="봄" />
+      <span>|</span>
       <InlineRadio.Option value="여름" />
+      <span>|</span>
       <InlineRadio.Option value="가을" />
+      <span>|</span>
       <InlineRadio.Option value="겨울" />
     </InlineRadio>
   );

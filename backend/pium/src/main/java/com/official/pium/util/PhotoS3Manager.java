@@ -2,7 +2,7 @@ package com.official.pium.util;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.official.pium.service.PhotoManger;
+import com.official.pium.service.PhotoManager;
 import java.io.File;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-public class PhotoS3Manager implements PhotoManger {
+public class PhotoS3Manager implements PhotoManager {
 
     private static final String SLASH = "/";
 
@@ -46,8 +46,9 @@ public class PhotoS3Manager implements PhotoManger {
             s3Client.putObject(new PutObjectRequest(bucket + folder + directory + workingDirectory, fileName, file));
 
             file.delete();
-            return rootPath + SLASH + directory + SLASH + workingDirectory + SLASH + fileName;
+            return rootPath + SLASH + directory + workingDirectory + SLASH + fileName;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalStateException("파일 업로드를 실패했습니다.");
         }
     }

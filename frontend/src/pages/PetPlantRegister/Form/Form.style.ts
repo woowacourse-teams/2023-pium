@@ -52,9 +52,3 @@ export const DictionaryPlantButton = styled.button`
     margin-left: 4px;
   }
 `;
-
-export const DictionaryPlantImageArea = styled.div`
-  display: flex;
-  align-items: center;
-  margin: 32px 0;
-`;

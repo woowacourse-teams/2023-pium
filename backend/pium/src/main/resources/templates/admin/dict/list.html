@@ -8,7 +8,7 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">사전 식물 목록</h1>
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mb-3">
             <th:block th:each="plant : ${plants}">
                 <div class="col">
                     <div class="card shadow-sm">
@@ -16,7 +16,7 @@
                         <div class="card-body">
                             <p class="card-text" th:text="|이름: ${plant.name}|"></p>
                             <p class="card-text" th:text="|ID: ${plant.id}|"></p>
-                            <p class="card-text" th:text="|생성일: ${plant.createdAt}|"></p>
+                            <p class="card-text" th:text="|생성일: ${#temporals.format(plant.createdAt, 'yyyy-MM-dd HH:mm:ss')}|"></p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a class="btn btn-outline-secondary" th:href="@{|/admin/dict/${plant.id}|}"
@@ -46,7 +46,7 @@
                 <th:block
                         th:with="startPage=${(page.number - 5 < 0 ? 0 : page.number - 5)}, endPage=${(page.number + 4 >= page.totalPages ? page.totalPages - 1 : page.number + 4)}">
                     <li class="page-item" th:classappend="${pageNumber == page.number} ? 'active' : ''"
-                        th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}">
+                        th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}" th:if="${pageNumber >= 0}">
                         <a class="page-link" th:href="@{|/admin/dict?page=${pageNumber}|}"
                            th:text="${pageNumber + 1}"></a>
                     </li>
@@ -59,7 +59,7 @@
 
                 <li class="page-item" th:classappend="${page.number == page.totalPages - 1} ? 'disabled' : ''">
                     <a class="page-link" th:href="@{|/admin/dict?page=${page.totalPages - 1}|}"
-                       th:if="${page.number != page.totalPages - 1}">끝으로</a>
+                       th:if="${page.number != page.totalPages - 1 && page.totalPages > 0}">끝으로</a>
                 </li>
             </ul>
         </nav>
