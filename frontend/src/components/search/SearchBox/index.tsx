@@ -42,15 +42,12 @@ const SearchBox = (props: SearchBoxProps) => {
     onEnter,
     onNextClick,
   } = props;
-  const numberHeight = Number(height.slice(0, -2));
-
   const queryName = useDebounce<string>(value, 200);
-
   const { data: searchResults } = useDictionaryPlantSearch(queryName);
-
   const { isOn, on: open, off: close } = useToggle();
 
   const isOpen = value !== '' && isOn;
+  const numberHeight = Number(height.slice(0, -2));
 
   const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
