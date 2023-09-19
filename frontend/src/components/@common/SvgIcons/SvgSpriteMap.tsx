@@ -102,14 +102,12 @@ const SvgIcons = () => (
       <symbol id="manage-level-전문가" viewBox="0 0 36 36">
         <path d="M30 30h-8V4h8zm-10 0h-8V12h8zm-10 0H2V18h8z"></path>
       </symbol>
-
       <symbol viewBox="0 0 14 14" id="leaf">
         <g fill="none" strokeLinecap="round" strokeLinejoin="round">
           <path d="M11.51 5.38c2 2.82.47 6.05-.27 7.31a1.42 1.42 0 0 1-1 .66c-1.45.25-5.06.53-7-2.29C1.33 8.4 1.41 3.72 1.58 1.49A1.05 1.05 0 0 1 3 .55c2.15.62 6.63 2.17 8.51 4.83Z"></path>
           <path d="M4.77 4.45a52.26 52.26 0 0 1 6 8.73"></path>
         </g>
       </symbol>
-
       <symbol id="potted-plant" viewBox="0 0 24 24">
         <path d="M8.55 22q-.7 0-1.225-.425t-.7-1.1L5.5 16h13l-1.125 4.475q-.175.675-.7 1.1T15.45 22h-6.9ZM12 8q0-2.5 1.75-4.25T18 2q0 2.25-1.425 3.9T13 7.9V10h8v3q0 .825-.588 1.413T19 15H5q-.825 0-1.413-.588T3 13v-3h8V7.9q-2.15-.35-3.575-2T6 2q2.5 0 4.25 1.75T12 8Z" />{' '}
       </symbol>
@@ -184,6 +182,15 @@ const SvgIcons = () => (
       </symbol>
       <symbol viewBox="0 0 24 24" id="add-circle">
         <path d="M11 13v3q0 .425.288.713T12 17q.425 0 .713-.288T13 16v-3h3q.425 0 .713-.288T17 12q0-.425-.288-.713T16 11h-3V8q0-.425-.288-.713T12 7q-.425 0-.713.288T11 8v3H8q-.425 0-.713.288T7 12q0 .425.288.713T8 13h3Zm1 9q-2.075 0-3.9-.788t-3.175-2.137q-1.35-1.35-2.137-3.175T2 12q0-2.075.788-3.9t2.137-3.175q1.35-1.35 3.175-2.137T12 2q2.075 0 3.9.788t3.175 2.137q1.35 1.35 2.138 3.175T22 12q0 2.075-.788 3.9t-2.137 3.175q-1.35 1.35-3.175 2.138T12 22Z"></path>
+      </symbol>
+      <symbol viewBox="0 0 24 24" id="plus">
+        <path
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M5 12h7m7 0h-7m0 0V5m0 7v7"
+        ></path>
       </symbol>
     </defs>
   </Svg>

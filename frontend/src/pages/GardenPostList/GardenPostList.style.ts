@@ -15,6 +15,29 @@ export const List = styled.ul`
   }
 `;
 
+export const FixedButtonArea = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  max-width: ${(props) => props.theme.width.pad};
+`;
+
+export const FixedButton = styled.button`
+  position: absolute;
+  right: 24px;
+  bottom: 76px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+
+  background-color: ${(props) => props.theme.color.primary};
+  border-radius: 28px;
+`;
+
 export const Sensor = styled.div`
   position: absolute;
   bottom: 0;

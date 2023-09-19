@@ -1,10 +1,13 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
 import Navbar from 'components/@common/Navbar';
-import { List, Main, Message, Sensor } from './GardenPostList.style';
+import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
+import { FixedButtonArea, FixedButton, List, Main, Message, Sensor } from './GardenPostList.style';
 import selectedDictionaryPlantAtom from 'store/atoms/garden';
 import useIntersectionRef from 'hooks/useIntersectionRef';
+import { URL_PATH } from 'constants/index';
 import useGardenPostList from '../../hooks/queries/garden/useGardenPostList';
 import GardenPostItem from './GardenPostItem';
 import GardenPostItemSkeleton from './GardenPostItem/GardenPostItemSkeleton';
@@ -13,6 +16,7 @@ import GardenPostListHeader from './GardenPostListHeader';
 const SKELETON_LENGTH = 20;
 
 const GardenPostList = () => {
+  const navigate = useNavigate();
   const [selectedDictionaryPlant, setSelectedDictionaryPlant] = useRecoilState(
     selectedDictionaryPlantAtom
   );
@@ -33,6 +37,10 @@ const GardenPostList = () => {
 
   const clear = () => {
     setSelectedDictionaryPlant(null);
+  };
+
+  const goGardenRegisterPick = () => {
+    navigate(URL_PATH.gardenRegisterPick);
   };
 
   useEffect(() => {
@@ -60,6 +68,11 @@ const GardenPostList = () => {
         {!hasNextPage && <Message>마지막이에요 😊</Message>}
       </Main>
       <Navbar />
+      <FixedButtonArea>
+        <FixedButton onClick={goGardenRegisterPick}>
+          <SvgStroke color="white" size={32} icon="plus" />
+        </FixedButton>
+      </FixedButtonArea>
     </>
   );
 };
