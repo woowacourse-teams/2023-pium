@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class HistoryCategory extends BaseEntity {
+public class HistoryCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
