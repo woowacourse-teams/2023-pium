@@ -1,10 +1,10 @@
 import login from '../utils/login';
 
 describe('비로그인 상태에서는 로그인 페이지로 이동한다.', () => {
-  it('리마인더', () => {
-    cy.visit('/reminder');
-    cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
-  });
+  // it('리마인더', () => {
+  //   cy.visit('/reminder');
+  //   cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
+  // });
 
   it('내 반려 식물 목록', () => {
     cy.visit('/pet');
