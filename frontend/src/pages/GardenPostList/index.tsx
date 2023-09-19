@@ -69,7 +69,7 @@ const GardenPostList = () => {
       </Main>
       <Navbar />
       <FixedButtonArea>
-        <FixedButton onClick={goGardenRegisterPick}>
+        <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">
           <SvgStroke color="white" size={32} icon="plus" />
         </FixedButton>
       </FixedButtonArea>

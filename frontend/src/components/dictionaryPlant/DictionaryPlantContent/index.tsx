@@ -67,7 +67,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
         <div>
           <Name>{name}</Name>
           <FamilyName>{familyName}</FamilyName>
-          <GardenButton type="button" onClick={goFilteredGarden}>
+          <GardenButton type="button" onClick={goFilteredGarden} aria-label="모두의 정원">
             <SvgStroke
               color={theme.color.fontPrimaryForBackground}
               size={16}
