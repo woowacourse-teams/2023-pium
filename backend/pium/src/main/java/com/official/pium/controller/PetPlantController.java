@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,12 +58,13 @@ public class PetPlantController {
         return ResponseEntity.ok(response);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping(path = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> update(
             @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
-            @RequestBody @Valid PetPlantUpdateRequest petPlantUpdateRequest,
+            @RequestPart(name = "request") @Valid PetPlantUpdateRequest petPlantUpdateRequest,
+            @RequestPart(name = "image", required = false) MultipartFile multipartFile,
             @Auth Member member) {
-        petPlantService.update(id, petPlantUpdateRequest, member);
+        petPlantService.update(id, petPlantUpdateRequest, multipartFile, member);
         return ResponseEntity.ok().build();
     }
 

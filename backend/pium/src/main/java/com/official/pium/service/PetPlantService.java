@@ -107,7 +107,7 @@ public class PetPlantService {
     }
 
     @Transactional
-    public void update(Long id, PetPlantUpdateRequest updateRequest, Member member) {
+    public void update(Long id, PetPlantUpdateRequest updateRequest, MultipartFile image, Member member) {
         PetPlant petPlant = petPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
 
@@ -115,12 +115,14 @@ public class PetPlantService {
 
         validateLastWaterDate(updateRequest, petPlant);
 
+        String imageUrl = saveImageIfExists(image, petPlant.getImageUrl());
         PetPlantHistory previousPetPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         petPlant.updatePetPlant(
                 updateRequest.getNickname(), updateRequest.getLocation(),
                 updateRequest.getFlowerpot(), updateRequest.getLight(),
                 updateRequest.getWind(), updateRequest.getWaterCycle(),
-                updateRequest.getBirthDate(), updateRequest.getLastWaterDate()
+                updateRequest.getBirthDate(), updateRequest.getLastWaterDate(),
+                imageUrl
         );
         PetPlantHistory currentPetPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         publishPetPlantHistories(petPlant, previousPetPlantHistory, currentPetPlantHistory);

@@ -119,7 +119,7 @@ public class PetPlant extends BaseEntity {
 
     public void updatePetPlant(
             String nickname, String location, String flowerpot, String light,
-            String wind, Integer waterCycle, LocalDate birthDate, LocalDate lastWaterDate
+            String wind, Integer waterCycle, LocalDate birthDate, LocalDate lastWaterDate, String imageUrl
     ) {
         validateEmptyValue(nickname);
         validateEmptyValue(location);
@@ -129,6 +129,7 @@ public class PetPlant extends BaseEntity {
         validateWaterCycle(waterCycle);
         validateLocalDate(birthDate);
         validateLocalDate(lastWaterDate);
+        validateImageUrl(imageUrl);
         if (!Objects.equals(waterCycle, this.waterCycle)) {
             this.nextWaterDate = lastWaterDate.plusDays(waterCycle);
         }
@@ -140,6 +141,7 @@ public class PetPlant extends BaseEntity {
         this.waterCycle = waterCycle;
         this.birthDate = birthDate;
         this.lastWaterDate = lastWaterDate;
+        this.imageUrl = imageUrl;
     }
 
     private void validateEmptyValue(String value) {
@@ -157,6 +159,12 @@ public class PetPlant extends BaseEntity {
     private void validateLocalDate(LocalDate localDate) {
         if (localDate == null) {
             throw new IllegalArgumentException("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
+        }
+    }
+
+    private void validateImageUrl(String imageUrl) {
+        if (imageUrl == null) {
+            throw new IllegalArgumentException("반려 식물 이미지 URL은 빈 값이 될 수 없습니다. date: null");
         }
     }
 

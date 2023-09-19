@@ -403,11 +403,12 @@ public class HistoryApiTest extends AcceptanceTest {
 
     private void 반려_식물_수정_요청(Long petPlantId, PetPlantUpdateRequest petPlantUpdateRequest) {
         String sessionId = 로그인_요청();
+        MultiPartSpecification data = getMultiPartSpecification(petPlantUpdateRequest);
 
         RestAssured
                 .given()
-                .contentType(ContentType.JSON)
-                .body(petPlantUpdateRequest)
+                .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                .multiPart(data)
                 .log().all()
                 .sessionId(sessionId)
                 .when()
@@ -459,8 +460,8 @@ public class HistoryApiTest extends AcceptanceTest {
         return Long.parseLong(petPlantId);
     }
 
-    private MultiPartSpecification getMultiPartSpecification(PetPlantCreateRequest petPlantCreateRequest) {
-        return new MultiPartSpecBuilder(petPlantCreateRequest, ObjectMapperType.JACKSON_2)
+    private MultiPartSpecification getMultiPartSpecification(Object request) {
+        return new MultiPartSpecBuilder(request, ObjectMapperType.JACKSON_2)
                 .controlName("request")
                 .mimeType(MediaType.APPLICATION_JSON_VALUE)
                 .charset("UTF-8")
