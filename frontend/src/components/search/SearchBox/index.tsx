@@ -57,8 +57,8 @@ const SearchBox = (props: SearchBoxProps) => {
   };
 
   const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
-    if (key !== 'Enter') return;
-    onEnter?.(value, searchResults);
+    if (key !== 'Enter' || !onEnter) return;
+    onEnter(value, searchResults);
     close();
   };
 
