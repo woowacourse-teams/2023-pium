@@ -1,5 +1,13 @@
 import { OPTIONS } from 'constants/index';
 
+const DICTIONARY_PLANT_MAP: Record<number, string> = {
+  1: '아',
+  2: '아카',
+  3: '아카시',
+  4: '아카시아',
+  5: '참새',
+};
+
 export const generateGardenPageData = (
   dictionaryPlantId: number | null,
   pageParam: number,
@@ -8,10 +16,10 @@ export const generateGardenPageData = (
   const page = hasNext
     ? [
         {
-          id: 1,
+          id: pageParam * 100 + 1,
           createdAt: '1999-12-18',
           updatedAt: '1999-12-18',
-          dictionaryPlantName: '스킨답서스',
+          dictionaryPlantName: '아',
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
@@ -26,10 +34,10 @@ export const generateGardenPageData = (
           },
         },
         {
-          id: 2,
+          id: pageParam * 100 + 2,
           createdAt: '1999-12-17',
           updatedAt: '1999-12-17',
-          dictionaryPlantName: '순록',
+          dictionaryPlantName: '아카',
           content: '이거 이렇게 키워보아요',
           manageLevel: '전문가',
           petPlant: {
@@ -44,10 +52,10 @@ export const generateGardenPageData = (
           },
         },
         {
-          id: 1,
+          id: pageParam * 100 + 3,
           createdAt: '1999-12-16',
           updatedAt: '1999-12-16',
-          dictionaryPlantName: '토마토',
+          dictionaryPlantName: '아카시',
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
@@ -62,10 +70,10 @@ export const generateGardenPageData = (
           },
         },
         {
-          id: 1,
+          id: pageParam * 100 + 4,
           createdAt: '1999-12-15',
           updatedAt: '1999-12-15',
-          dictionaryPlantName: '뉴기니아봉선화',
+          dictionaryPlantName: '아카시아',
           content: `
             제가 LA에 있을때는 말이죠 정말 제가 꿈에 무대인 메이저리그로 진출해서 가는 식당마다 싸인해달라 기자들은 항상 붙어다니며 취재하고 제가 그 머~ 어~ 대통령이 된 기분이였어요 
             그런데 17일만에 17일만에 마이너리그로 떨어졌어요 못던져서 그만두고 그냥 확 한국으로 가버리고 싶었어요 
@@ -85,10 +93,10 @@ export const generateGardenPageData = (
           },
         },
         {
-          id: 1,
+          id: pageParam * 100 + 5,
           createdAt: '1999-12-14',
           updatedAt: '1999-12-14',
-          dictionaryPlantName: '사람',
+          dictionaryPlantName: '참새',
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
@@ -105,10 +113,10 @@ export const generateGardenPageData = (
       ]
     : [
         {
-          id: 1,
-          createdAt: '1999-12-16',
-          updatedAt: '1999-12-16',
-          dictionaryPlantName: '해골',
+          id: 100,
+          createdAt: '1999-12-11',
+          updatedAt: '1999-12-11',
+          dictionaryPlantName: '아카시아',
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
@@ -123,6 +131,12 @@ export const generateGardenPageData = (
           },
         },
       ];
+
+  if (dictionaryPlantId) {
+    return page.filter(
+      ({ dictionaryPlantName }) => DICTIONARY_PLANT_MAP[dictionaryPlantId] === dictionaryPlantName
+    );
+  }
 
   return page;
 };
