@@ -31,6 +31,6 @@ public class MemberService {
 
         petPlantRepository.deleteAllByMember(member);
 
-        memberRepository.deleteByKakaoId(member.getKakaoId());
+        memberRepository.deleteById(member.getId());
     }
 }
