@@ -18,11 +18,13 @@ export const Footer = styled.footer`
   bottom: 0;
 
   display: flex;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: center;
 
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
-  padding: 16px 32px;
+  height: 60px;
+  padding: 0 32px;
 
   background-color: ${(props) => props.theme.color.background};
   box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};

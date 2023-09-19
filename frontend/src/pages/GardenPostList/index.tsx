@@ -1,18 +1,21 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { useRecoilState } from 'recoil';
 import Navbar from 'components/@common/Navbar';
 import { List, Main, Message, Sensor } from './GardenPostList.style';
+import selectedDictionaryPlantAtom from 'store/atoms/garden';
 import useIntersectionRef from 'hooks/useIntersectionRef';
+import useGardenPostList from '../../hooks/queries/garden/useGardenPostList';
 import GardenPostItem from './GardenPostItem';
 import GardenPostItemSkeleton from './GardenPostItem/GardenPostItemSkeleton';
 import GardenPostListHeader from './GardenPostListHeader';
-import useGardenPostList from './hooks/useGardenPostList';
 
 const SKELETON_LENGTH = 20;
 
 const GardenPostList = () => {
-  const [selectedDictionaryPlant, setSelectedDictionaryPlant] =
-    useState<DictionaryPlantNameSearchResult | null>(null);
+  const [selectedDictionaryPlant, setSelectedDictionaryPlant] = useRecoilState(
+    selectedDictionaryPlantAtom
+  );
 
   const {
     data: gardenPostList,
