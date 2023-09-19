@@ -6,6 +6,7 @@ import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.event.history.HistoryEvent;
+import com.official.pium.event.history.HistoryEvents;
 import com.official.pium.event.history.LastWaterDateEvent;
 import com.official.pium.event.history.PetPlantHistory;
 import com.official.pium.mapper.PetPlantMapper;
@@ -72,9 +73,8 @@ public class PetPlantService {
         PetPlantHistory petPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         List<HistoryEvent> historyEvents = petPlantHistory.generateCreateHistoryEvents(petPlant.getId(),
                 LocalDate.now());
-        for (HistoryEvent historyEvent : historyEvents) {
-            publisher.publishEvent(historyEvent);
-        }
+
+        publisher.publishEvent(HistoryEvents.from(historyEvents));
     }
 
     public PetPlantResponse read(Long id, Member member) {

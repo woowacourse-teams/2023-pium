@@ -8,6 +8,7 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryCategoryRepository;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
+import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -27,8 +28,36 @@ public class HistoryEventListener {
 
     @EventListener
     @Transactional
-    public void savePetPlantHistory(HistoryEvent historyEvent) {
+    public void savePetPlantHistories(HistoryEvents historyEvents) {
+        List<HistoryCategory> categories = historyCategoryRepository.findAll();
 
+        for (HistoryEvent historyEvent : historyEvents.getHistoryEvents()) {
+            PetPlant petPlant = petPlantRepository.findById(historyEvent.getPetPlantId())
+                    .orElseThrow(
+                            () -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + historyEvent.getPetPlantId()));
+
+            HistoryCategory historyCategory = categories.stream()
+                    .filter(it -> it.getHistoryType() == historyEvent.getHistoryType())
+                    .findAny()
+                    .orElseThrow(() -> new NoSuchElementException("존재하지 않는 히스토리 타입입니다. type: " + historyEvent.getHistoryType()));
+
+            History history = History.builder()
+                    .petPlant(petPlant)
+                    .date(historyEvent.getDate())
+                    .historyCategory(historyCategory)
+                    .historyContent(HistoryContent.builder()
+                            .previous(historyEvent.getPrevious())
+                            .current(historyEvent.getCurrent())
+                            .build())
+                    .build();
+
+            historyRepository.save(history);
+        }
+    }
+
+    @EventListener
+    @Transactional
+    public void savePetPlantHistory(HistoryEvent historyEvent) {
         PetPlant petPlant = petPlantRepository.findById(historyEvent.getPetPlantId())
                 .orElseThrow(
                         () -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + historyEvent.getPetPlantId()));
