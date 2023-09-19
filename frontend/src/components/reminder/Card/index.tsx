@@ -102,7 +102,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
     status === 'today' ? convertSubFix(status) : `${Math.abs(dday)}${convertSubFix(status)}`;
 
   return (
-    <Wrapper>
+    <Wrapper aria-label={`${nickName}의 정보`}>
       <LinkContainer
         to={generatePath(URL_PATH.petDetail, { id: String(petPlantId) })}
         aria-label={`${nickName} 상세로 이동`}
