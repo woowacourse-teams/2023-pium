@@ -1,3 +1,4 @@
+import type { GardenRegisterForm } from 'types/garden';
 import { rest } from 'msw';
 import { generateGardenPageData } from '../data/garden';
 
@@ -22,6 +23,16 @@ const gardenHandlers = [
     };
 
     return res(ctx.delay(0), ctx.status(200), ctx.json(response));
+  }),
+
+  rest.post<GardenRegisterForm>(GARDEN_PATH, (req, res, ctx) => {
+    const { JSESSION } = req.cookies;
+
+    if (JSESSION === undefined) {
+      return res(ctx.delay(200), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+    }
+
+    return res(ctx.delay(200), ctx.status(201));
   }),
 ];
 
