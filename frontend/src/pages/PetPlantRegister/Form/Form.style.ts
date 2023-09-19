@@ -14,7 +14,8 @@ export const Header = styled.header`
   height: 48px;
   padding: 0 16px;
 
-  background-color: ${(props) => props.theme.color.background};
+  background-color: ${(props) => props.theme.color.background + '44'};
+  backdrop-filter: blur(4px);
   box-shadow: 0 2px 2px -2px ${(props) => props.theme.color.gray};
 `;
 
