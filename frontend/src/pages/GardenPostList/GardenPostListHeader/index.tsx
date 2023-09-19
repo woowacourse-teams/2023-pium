@@ -34,7 +34,9 @@ const GardenPostListHeader = ({
         {selectedDictionaryPlant && (
           <FilterTag>
             {selectedDictionaryPlant.name}
-            <DeleteFilterButton onClick={onClickDelete}>✕</DeleteFilterButton>
+            <DeleteFilterButton type="button" onClick={onClickDelete} aria-label="필터 지우기">
+              ✕
+            </DeleteFilterButton>
           </FilterTag>
         )}
       </FilterArea>
