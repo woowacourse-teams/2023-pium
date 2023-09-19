@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class PhotoS3Manager implements PhotoManager {
 
     private static final String SLASH = "/";
+    private static final String SYSTEM_PATH = System.getProperty("user.dir");
 
     private final AmazonS3 s3Client;
 
@@ -41,7 +42,9 @@ public class PhotoS3Manager implements PhotoManager {
     private String uploadPhoto(MultipartFile multipartFile, String workingDirectory) {
         try {
             String fileName = PhotoNameGenerator.of(multipartFile.getOriginalFilename());
-            File file = convertMultiPartFileToFile(multipartFile, fileName);
+            File uploadDirectory = loadDirectory(getLocalDirectoryPath(workingDirectory));
+            File uploadPath = new File(uploadDirectory, fileName);
+            File file = uploadFileInLocal(multipartFile, uploadPath);
 
             s3Client.putObject(new PutObjectRequest(bucket + folder + directory + workingDirectory, fileName, file));
 
@@ -53,13 +56,25 @@ public class PhotoS3Manager implements PhotoManager {
         }
     }
 
-    private File convertMultiPartFileToFile(MultipartFile multipartFile, String path) {
-        File convertedFile = new File(path);
+    private String getLocalDirectoryPath(String workingDirectory) {
+        return SYSTEM_PATH + SLASH + directory + workingDirectory;
+    }
+
+    private File loadDirectory(String directoryLocation) {
+        File directory = new File(directoryLocation);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        return directory;
+    }
+
+    private File uploadFileInLocal(MultipartFile multipartFile, File uploadPath) {
         try {
-            multipartFile.transferTo(convertedFile);
+            multipartFile.transferTo(uploadPath);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new IllegalStateException("파일 변환이 실패했습니다.");
         }
-        return convertedFile;
+        return uploadPath;
     }
 }
