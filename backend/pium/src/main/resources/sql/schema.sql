@@ -68,8 +68,6 @@ create TABLE IF NOT EXISTS history_category
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
     history_type VARCHAR(255)          NOT NULL,
-    created_at   DATETIME              NOT NULL,
-    updated_at   DATETIME              NOT NULL,
     CONSTRAINT pk_history_category PRIMARY KEY (id)
 );
 
@@ -123,3 +121,6 @@ alter table history
 
 ALTER TABLE member
     ADD UNIQUE (kakao_id);
+
+ALTER TABLE history_category
+    ADD UNIQUE (history_type);
