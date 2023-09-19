@@ -87,6 +87,9 @@ const SvgIcons = () => (
       <symbol id="line-arrow-left" viewBox="0 0 24 24">
         <path d="M17.51 3.87L15.73 2.1L5.84 12l9.9 9.9l1.77-1.77L9.38 12l8.13-8.13z" />
       </symbol>
+      <symbol id="line-arrow-right" viewBox="0 0 24 24">
+        <path d="M8.025 22L6.25 20.225L14.475 12L6.25 3.775L8.025 2l10 10l-10 10Z"></path>
+      </symbol>
       <symbol id="manage-level-정보없음" viewBox="0 0 36 36">
         <path d="M30 30h-8V4h8zm-6-2h4V6h-4zm-4 2h-8V12h8zm-6-2h4V14h-4zm-4 2H2V18h8zm-6-2h4v-8H4z"></path>
       </symbol>
