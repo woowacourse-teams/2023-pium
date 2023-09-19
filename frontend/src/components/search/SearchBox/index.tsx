@@ -1,5 +1,4 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
-import { useState } from 'react';
 import Image from 'components/@common/Image';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
@@ -22,9 +21,11 @@ import { MESSAGE, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
 interface SearchBoxProps {
+  value: string;
   height?: `${number}px`;
   fontSize?: string;
   showResultSize?: number;
+  onChangeValue: (value: string) => void;
   onResultClick?: (searchResult: DictionaryPlantNameSearchResult) => void;
   onEnter?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
   onNextClick?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
@@ -32,45 +33,46 @@ interface SearchBoxProps {
 
 const SearchBox = (props: SearchBoxProps) => {
   const {
+    value,
     height = '56px',
     fontSize = '2rem',
     showResultSize = 4,
+    onChangeValue,
     onResultClick,
     onEnter,
     onNextClick,
   } = props;
   const numberHeight = Number(height.slice(0, -2));
 
-  const [searchName, setSearchName] = useState('');
-  const queryName = useDebounce<string>(searchName, 200);
+  const queryName = useDebounce<string>(value, 200);
 
   const { data: searchResults } = useDictionaryPlantSearch(queryName);
 
   const { isOn, on: open, off: close } = useToggle();
 
-  const isOpen = searchName !== '' && isOn;
+  const isOpen = value !== '' && isOn;
 
   const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }) => {
-    setSearchName(value);
+    onChangeValue(value);
     open();
   };
 
   const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
     if (key !== 'Enter') return;
-    onEnter?.(searchName, searchResults);
+    onEnter?.(value, searchResults);
     close();
   };
 
   const handleResultClick = (searchResult: DictionaryPlantNameSearchResult) => () => {
     onResultClick?.(searchResult);
-    setSearchName(searchResult.name);
+    onChangeValue(searchResult.name);
     close();
   };
 
   const handleNextButtonClick = () => {
-    onNextClick?.(searchName, searchResults);
+    onNextClick?.(value, searchResults);
     close();
   };
 
@@ -84,7 +86,7 @@ const SearchBox = (props: SearchBoxProps) => {
         <SvgIcons icon="search" size={numberHeight / 1.6} color={theme.color.primary} />
         <Input
           type="text"
-          value={searchName}
+          value={value}
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
           onFocus={handleFocus}
@@ -120,7 +122,7 @@ const SearchBox = (props: SearchBoxProps) => {
             </ResultList>
             <ResultMessage>
               {searchResults?.length ? '찾는 식물이 없으신가요?' : MESSAGE.noSearchResult}
-              <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
+              <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={value}>
                 등록 신청하기
               </StyledLink>
             </ResultMessage>

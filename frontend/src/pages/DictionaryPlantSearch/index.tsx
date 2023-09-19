@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
@@ -10,11 +11,14 @@ const DictionarySearch = () => {
   const search = params.get('search') ?? '';
 
   const { goToProperDictionaryPlantPage, goToDictionaryPlantDetailPage } = useDictionaryNavigate();
+  const [searchValue, setSearchValue] = useState('');
 
   return (
     <>
       <Wrapper>
         <SearchBox
+          value={searchValue}
+          onChangeValue={setSearchValue}
           onEnter={goToProperDictionaryPlantPage}
           onNextClick={goToProperDictionaryPlantPage}
           onResultClick={goToDictionaryPlantDetailPage}

@@ -1,4 +1,5 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
+import { useState } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
@@ -10,6 +11,8 @@ const PetPlantRegisterSearch = () => {
   const navigate = useNavigate();
   useCheckSessionId();
 
+  const [searchValue, setSearchValue] = useState('');
+
   const navigateForm = ({ id }: DictionaryPlantNameSearchResult) => {
     navigate(generatePath(URL_PATH.petRegisterForm, { id: String(id) }));
   };
@@ -19,7 +22,11 @@ const PetPlantRegisterSearch = () => {
       <Wrapper>
         <Message>어떤 식물을 키우시나요?</Message>
         <SearchBoxArea>
-          <SearchBox onResultClick={navigateForm} />
+          <SearchBox
+            value={searchValue}
+            onChangeValue={setSearchValue}
+            onResultClick={navigateForm}
+          />
         </SearchBoxArea>
       </Wrapper>
       <Navbar />

@@ -1,4 +1,5 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
+import { useState } from 'react';
 import SearchBox from 'components/search/SearchBox';
 import { DeleteFilterButton, FilterTag, Wrapper, FilterArea } from './GardenPostListHeader.style';
 
@@ -13,14 +14,27 @@ const GardenPostListHeader = ({
   select,
   clear,
 }: GardenPostListHeaderProps) => {
+  const [searchValue, setSearchValue] = useState('');
+
+  const onClickDelete = () => {
+    setSearchValue('');
+    clear();
+  };
+
   return (
     <Wrapper>
-      <SearchBox onResultClick={select} height="36px" fontSize="1.6rem" />
+      <SearchBox
+        value={searchValue}
+        onChangeValue={setSearchValue}
+        onResultClick={select}
+        height="36px"
+        fontSize="1.6rem"
+      />
       <FilterArea>
         {selectedDictionaryPlant && (
           <FilterTag>
             {selectedDictionaryPlant.name}
-            <DeleteFilterButton onClick={clear}>✕</DeleteFilterButton>
+            <DeleteFilterButton onClick={onClickDelete}>✕</DeleteFilterButton>
           </FilterTag>
         )}
       </FilterArea>

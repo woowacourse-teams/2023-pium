@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Wrapper } from './Main.style';
@@ -7,6 +8,7 @@ import LogoWebp from 'assets/logo.webp';
 
 const Main = () => {
   const { goToProperDictionaryPlantPage, goToDictionaryPlantDetailPage } = useDictionaryNavigate();
+  const [searchValue, setSearchValue] = useState('');
 
   return (
     <>
@@ -19,6 +21,8 @@ const Main = () => {
         <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
         <SearchBoxArea>
           <SearchBox
+            value={searchValue}
+            onChangeValue={setSearchValue}
             onEnter={goToProperDictionaryPlantPage}
             onNextClick={goToProperDictionaryPlantPage}
             onResultClick={goToDictionaryPlantDetailPage}
