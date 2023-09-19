@@ -54,7 +54,7 @@ const GardenPostList = () => {
               .map((_, index) => <GardenPostItemSkeleton key={index} />)}
         </List>
         {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
-        {!hasNextPage && <Message>마지막이에요 😄</Message>}
+        {!hasNextPage && <Message>마지막이에요 😊</Message>}
       </Main>
       <Navbar />
     </>
