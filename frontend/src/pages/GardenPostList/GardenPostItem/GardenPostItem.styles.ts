@@ -141,7 +141,7 @@ export const TagArea = styled.div`
 
 export const TagRow = styled.div`
   display: flex;
-  column-gap: 16px;
+  column-gap: 10px;
   height: 32px;
 `;
 
