@@ -12,5 +12,5 @@ export const MonthReminderBox = styled.section`
 
 export const MonthTitle = styled.p`
   width: 100%;
-  font: 900 2.8rem/4rem 'GmarketSans';
+  font: 900 2.8rem/4rem 'NanumSquareRound';
 `;

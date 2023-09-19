@@ -1,0 +1,7 @@
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('/fonts/NanumSquareRoundR2.woff2') format('woff2');
+}
