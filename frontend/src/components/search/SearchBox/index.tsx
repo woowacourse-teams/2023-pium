@@ -46,21 +46,15 @@ const SearchBox = (props: SearchBoxProps) => {
 
   const { data: searchResults } = useDictionaryPlantSearch(queryName);
 
-  const { isOn: isOpen, on: open, off: close } = useToggle();
+  const { isOn, on: open, off: close } = useToggle();
 
-  const validOpen = (searchName: string) => {
-    if (searchName === '') {
-      close();
-    } else {
-      open();
-    }
-  };
+  const isOpen = searchName !== '' && isOn;
 
   const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }) => {
     setSearchName(value);
-    validOpen(value);
+    open();
   };
 
   const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
@@ -71,6 +65,7 @@ const SearchBox = (props: SearchBoxProps) => {
 
   const handleResultClick = (searchResult: DictionaryPlantNameSearchResult) => () => {
     onResultClick?.(searchResult);
+    setSearchName(searchResult.name);
     close();
   };
 
@@ -80,7 +75,7 @@ const SearchBox = (props: SearchBoxProps) => {
   };
 
   const handleFocus = () => {
-    validOpen(searchName);
+    open();
   };
 
   return (
