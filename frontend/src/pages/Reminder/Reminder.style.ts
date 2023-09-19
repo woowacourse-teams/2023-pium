@@ -1,4 +1,5 @@
 import { TodayStatus } from 'types/reminder';
+import { Link } from 'react-router-dom';
 import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {
@@ -75,4 +76,25 @@ export const EmptyStyle = css`
   width: 24px;
   height: 24px;
   color: ${({ theme }) => theme.color.gray};
+`;
+
+export const NoDataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 80%;
+`;
+
+export const Title = styled.p`
+  margin-bottom: 16px;
+  font: 700 2.4rem/4rem GmarketSans;
+`;
+
+export const Register = styled(Link)`
+  width: 200px;
+  font: 600 2rem/2.4rem GmarketSans;
+  text-align: center;
 `;
