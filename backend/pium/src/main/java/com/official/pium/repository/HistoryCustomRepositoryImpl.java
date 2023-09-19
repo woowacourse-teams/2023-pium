@@ -1,9 +1,5 @@
 package com.official.pium.repository;
 
-import static com.official.pium.domain.QHistory.history;
-import static com.official.pium.domain.QHistoryCategory.historyCategory;
-import static com.official.pium.domain.QPetPlant.petPlant;
-
 import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.PetPlant;
@@ -17,6 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import static com.official.pium.domain.QHistory.history;
+import static com.official.pium.domain.QHistoryCategory.historyCategory;
 
 @Repository
 @RequiredArgsConstructor
@@ -45,6 +44,13 @@ public class HistoryCustomRepositoryImpl implements HistoryCustomRepository {
     public void deleteAllByPetPlants(List<PetPlant> petPlants) {
         jpaQueryFactory.delete(history)
                 .where(history.petPlant.in(petPlants))
+                .execute();
+    }
+
+    @Override
+    public void deleteAllByPetPlantId(Long petPlantId) {
+        jpaQueryFactory.delete(history)
+                .where(history.petPlant.id.eq(petPlantId))
                 .execute();
     }
 

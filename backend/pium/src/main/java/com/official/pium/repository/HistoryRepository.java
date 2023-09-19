@@ -13,6 +13,4 @@ public interface HistoryRepository extends JpaRepository<History, Long>, History
 
     Slice<History> findAllByPetPlantIdAndHistoryCategoryHistoryType(Long petPlantId, HistoryType historyType,
                                                                     Pageable pageable);
-
-    void deleteAllByPetPlantId(Long petPlantId);
 }
