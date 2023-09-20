@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import DictionaryPlantDetail from 'pages/DictionaryPlantDetail';
 import DictionaryPlantSearch from 'pages/DictionaryPlantSearch';
 import NotFound from 'pages/Error/NotFound';
+import GardenPostList from 'pages/GardenPostList';
 import GardenRegisterForm from 'pages/GardenRegister/Form';
 import GardenRegisterPick from 'pages/GardenRegister/Pick';
 import Main from 'pages/Main';
@@ -68,6 +69,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.timeline,
         element: <PetPlantTimeline />,
+      },
+      {
+        path: URL_PATH.garden,
+        element: <GardenPostList />,
       },
       {
         path: URL_PATH.login,

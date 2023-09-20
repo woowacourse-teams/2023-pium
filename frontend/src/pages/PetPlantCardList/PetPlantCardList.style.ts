@@ -6,7 +6,6 @@ export const Wrapper = styled.main`
   align-items: center;
 
   width: 100%;
-  height: 100%;
   padding-bottom: 68px;
 `;
 
@@ -21,7 +20,6 @@ export const CardList = styled.div`
   justify-content: space-evenly;
 
   width: 100%;
-  height: 100%;
   padding: 24px 0;
 `;
 

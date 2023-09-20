@@ -22,7 +22,7 @@ import useIntersectionRef from 'hooks/useIntersectionRef';
 import SproutSvg from 'assets/sprout.svg';
 import SproutWebp from 'assets/sprout.webp';
 import TimelineItemList from '../TimelineItemList';
-import Skeleton from './Skeleton';
+import TimelineSkeleton from './TimelineSkeleton';
 
 interface TimelineProps {
   petPlantId: PetPlantDetails['id'];
@@ -76,9 +76,9 @@ const Timeline = ({ petPlantId, filter }: TimelineProps) => {
           </YearArea>
         ))
       ) : (
-        <Skeleton hasYearHeader />
+        <TimelineSkeleton length={10} hasYearHeader />
       )}
-      {isFetchingNextPage ? <Skeleton /> : <Sensor ref={intersectionRef} />}
+      {isFetchingNextPage ? <TimelineSkeleton length={10} /> : <Sensor ref={intersectionRef} />}
       {!hasNextPage && <Earth />}
     </Wrapper>
   );
