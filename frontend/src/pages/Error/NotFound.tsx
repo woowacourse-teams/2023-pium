@@ -39,10 +39,10 @@ const NotFound = () => {
         <Text>잠시 후에 다시 시도해 주세요</Text>
       </Section>
       <ButtonSection>
-        <Button type="button" onClick={goToMain} aria-label="메인으로 이동">
+        <Button type="button" onClick={goToMain}>
           메인 화면으로
         </Button>
-        <Button type="button" onClick={reloadWindow} aria-label="새로고침">
+        <Button type="button" onClick={reloadWindow}>
           새로고침
         </Button>
       </ButtonSection>

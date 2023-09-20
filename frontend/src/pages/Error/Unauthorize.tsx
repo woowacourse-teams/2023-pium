@@ -30,10 +30,10 @@ const Unauthorize = () => {
         <Title>{GUIDE.sessionExpire}</Title>
       </Section>
       <ButtonSection>
-        <Button type="button" onClick={goToMain} aria-label="메인으로 이동">
+        <Button type="button" onClick={goToMain}>
           메인 화면으로
         </Button>
-        <Button type="button" onClick={goToLogin} aria-label="로그인 화면으로 이동">
+        <Button type="button" onClick={goToLogin}>
           로그인 하러가기
         </Button>
       </ButtonSection>
