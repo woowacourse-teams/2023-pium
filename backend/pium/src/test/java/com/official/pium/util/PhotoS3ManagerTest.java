@@ -1,13 +1,16 @@
 package com.official.pium.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.official.pium.fixture.FileFixture;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -37,5 +40,11 @@ class PhotoS3ManagerTest {
         String imageUrl = photoS3Manager.upload(multipartFile, "test");
 
         assertThat(imageUrl).isNotBlank();
+    }
+
+    @Test
+    void 이미지를_삭제한다() {
+        willDoNothing().given(s3Client).deleteObject(any(), anyString());
+        Assertions.assertDoesNotThrow(() -> photoS3Manager.delete("/image.jpg"));
     }
 }
