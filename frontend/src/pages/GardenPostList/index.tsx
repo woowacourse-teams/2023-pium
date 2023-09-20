@@ -6,6 +6,7 @@ import Navbar from 'components/@common/Navbar';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import { FixedButtonArea, FixedButton, List, Main, Message, Sensor } from './GardenPostList.style';
 import selectedDictionaryPlantAtom from 'store/atoms/garden';
+import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useIntersectionRef from 'hooks/useIntersectionRef';
 import { URL_PATH } from 'constants/index';
 import useGardenPostList from '../../hooks/queries/garden/useGardenPostList';
@@ -21,6 +22,7 @@ const GardenPostList = () => {
     selectedDictionaryPlantAtom
   );
 
+  const { isSuccess: isLoggedin } = useCheckSessionId(false);
   const {
     data: gardenPostList,
     isLoading,
@@ -68,11 +70,13 @@ const GardenPostList = () => {
         {!hasNextPage && <Message>마지막이에요 😊</Message>}
       </Main>
       <Navbar />
-      <FixedButtonArea>
-        <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">
-          <SvgStroke color="white" size={32} icon="plus" />
-        </FixedButton>
-      </FixedButtonArea>
+      {isLoggedin && (
+        <FixedButtonArea>
+          <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">
+            <SvgStroke color="white" size={32} icon="plus" />
+          </FixedButton>
+        </FixedButtonArea>
+      )}
     </>
   );
 };
