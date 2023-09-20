@@ -7,6 +7,7 @@
     "test": "echo test is not prepared",
     "local": "cross-env webpack-dev-server --mode=development --env environment=local",
     "dev": "cross-env webpack-dev-server --mode=production --env environment=development",
+    "prebuild-prod": "node generateSiteMap.js",
     "build-dev": "cross-env NODE_ENV=production webpack --env environment=development",
     "build-prod": "cross-env NODE_ENV=production webpack --env environment=production",
     "storybook": "storybook dev -p 6006",

@@ -54,5 +54,5 @@ export const CloseButton = styled.button`
   position: absolute;
   top: 10px;
   right: 28px;
-  font: 800 2rem/2.4rem 'GmarketSans';
+  font: 800 2rem/2.4rem 'NanumSquareRound';
 `;

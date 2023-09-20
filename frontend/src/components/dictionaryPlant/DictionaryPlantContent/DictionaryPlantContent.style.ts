@@ -20,7 +20,7 @@ export const Name = styled.p`
 
 export const FamilyName = styled.p`
   margin-bottom: 4px;
-  font: 500 1.2rem/1.6rem 'GmarketSans';
+  font: 500 1.2rem/1.6rem 'NanumSquareRound';
   color: ${(props) => props.theme.color.sub};
   text-align: left;
 `;

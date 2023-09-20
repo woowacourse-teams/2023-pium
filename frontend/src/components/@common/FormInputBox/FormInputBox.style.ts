@@ -33,7 +33,7 @@ export const RequireFlag = styled.span`
 
 export const Title = styled.p`
   margin-bottom: 16px;
-  font: 500 1.4rem/1.7rem 'GmarketSans';
+  font: 500 1.4rem/1.7rem 'NanumSquareRound';
 `;
 
 export const InputBox = styled.div`
@@ -42,6 +42,6 @@ export const InputBox = styled.div`
 `;
 
 export const ErrorMessage = styled.p`
-  font: 400 1.2rem/1.7rem 'GmarketSans';
+  font: 400 1.2rem/1.7rem 'NanumSquareRound';
   color: ${(props) => props.theme.color.accent};
 `;

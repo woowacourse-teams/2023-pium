@@ -16,6 +16,6 @@ export const HeaderBox = styled.header`
 
 export const Title = styled.p`
   width: 100%;
-  font: normal 2.4rem /3.2rem 'GmarketSans';
+  font: normal 2.4rem /3.2rem 'NanumSquareRound';
   text-align: center;
 `;

@@ -4,8 +4,9 @@ import { reset } from './reset.style';
 export const GlobalStyle = createGlobalStyle`
   ${reset}
 
+
   * {
-    font-family: "GmarketSans", "Noto Sans KR", sans-serif;
+    font-family: "NanumSquareRound", "Noto Sans KR", sans-serif;
   }
 
   html, body, #root {
@@ -17,7 +18,6 @@ export const GlobalStyle = createGlobalStyle`
   body {
     scrollbar-width: none;
     font-size: 62.5%;
-    font-display: swap;
   }
 
   body::-webkit-scrollbar {
