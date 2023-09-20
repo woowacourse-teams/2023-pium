@@ -13,20 +13,20 @@ export const Wrapper = styled.div`
 `;
 
 export const LogoMessage = styled.p`
-  margin-top: 10%;
-  font-size: 3rem;
-  font-weight: 700;
+  margin-top: 15vh;
+  font-size: 2.4rem;
+  font-weight: 500;
   color: ${(props) => props.theme.color.primary};
 `;
 
 export const Logo = styled.img`
-  width: 192px;
-  margin-top: 32px;
+  width: 112px;
+  margin-top: 16px;
 `;
 
 export const SearchBoxArea = styled.div`
   width: 100%;
-  margin-top: 32px;
+  margin-top: 40px;
 `;
 
 export const bounce = keyframes`
@@ -42,8 +42,8 @@ export const bounce = keyframes`
 `;
 
 export const SearchMessage = styled.p`
-  margin-top: 80px;
-  font-size: 2rem;
+  margin-top: 40px;
+  font-size: 1.6rem;
   color: #333333;
   animation: ${bounce} 6s infinite;
 `;

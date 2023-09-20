@@ -34,8 +34,8 @@ interface SearchBoxProps {
 const SearchBox = (props: SearchBoxProps) => {
   const {
     value,
-    height = '56px',
-    fontSize = '2rem',
+    height = '48px',
+    fontSize = '1.6rem',
     showResultSize = 4,
     onChangeValue,
     onResultClick,
