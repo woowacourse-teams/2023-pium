@@ -19,14 +19,9 @@ export const LogoMessage = styled.p`
   color: ${(props) => props.theme.color.primary};
 `;
 
-export const Logo = styled.img`
-  width: 112px;
-  margin-top: 16px;
-`;
-
 export const SearchBoxArea = styled.div`
   width: 100%;
-  margin-top: 40px;
+  margin-top: 36px;
 `;
 
 export const bounce = keyframes`
@@ -49,6 +44,10 @@ export const SearchMessage = styled.p`
 `;
 
 export const Image = styled.img`
-  width: 192px;
-  margin-top: 32px;
+  width: 112px;
+`;
+
+export const ImageArea = styled.div`
+  height: 128px;
+  margin-top: 16px;
 `;
