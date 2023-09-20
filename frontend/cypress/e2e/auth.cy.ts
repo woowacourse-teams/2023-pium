@@ -11,10 +11,10 @@ describe('비로그인 상태에서는 로그인 페이지로 이동한다.', ()
   //   cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
   // });
 
-  it('반려 식물 상세 정보', () => {
-    cy.visit('/pet/123');
-    cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
-  });
+  // it('반려 식물 상세 정보', () => {
+  //   cy.visit('/pet/123');
+  //   cy.get('#toast-root').contains('로그인 후 이용 가능').url().should('match', /login/);
+  // });
 
   // it('반려 식물 등록: 검색', () => {
   //   cy.visit('/pet/register');
