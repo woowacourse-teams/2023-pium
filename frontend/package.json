@@ -1,6 +1,6 @@
 {
   "name": "pium-frontend",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "피움 프론트엔드",
   "main": "src/index.tsx",
   "scripts": {
