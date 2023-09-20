@@ -47,3 +47,8 @@ export const SearchMessage = styled.p`
   color: #333333;
   animation: ${bounce} 6s infinite;
 `;
+
+export const Image = styled.img`
+  width: 192px;
+  margin-top: 32px;
+`;

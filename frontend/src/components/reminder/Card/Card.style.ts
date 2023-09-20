@@ -1,4 +1,5 @@
 import { TodayStatus } from 'types/reminder';
+import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 import { BackgroundProps } from 'pages/Reminder/Reminder.style';
 import theme from 'style/theme.style';
@@ -24,6 +25,15 @@ export const Wrapper = styled.div`
   border-radius: 8px 0 0 8px;
 `;
 
+export const LinkContainer = styled(Link)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 220px;
+  height: 100%;
+`;
+
 export const StatusBar = styled.div<BackgroundProps>`
   width: 6px;
   height: 100%;
@@ -46,7 +56,7 @@ export const ContentBox = styled.ul`
 `;
 
 export const NickName = styled.li`
-  font: 600 1.4rem/2.1rem 'GmarketSans';
+  font: 600 1.4rem/2.1rem 'NanumSquareRound';
   color: ${({ theme }) => theme.color.sub};
   text-overflow: ellipsis;
   white-space: nowrap;

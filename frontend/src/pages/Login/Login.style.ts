@@ -49,7 +49,7 @@ export const PlantImg = styled.img`
 
 export const Text = styled.p`
   width: 300px;
-  font: 900 3.2rem/4rem 'GmarketSans';
+  font: 900 3.2rem/4rem 'NanumSquareRound';
   color: white;
 `;
 
@@ -74,7 +74,7 @@ export const GoToMain = styled(Link)`
   width: 140px;
   height: 52.5px;
 
-  font: 700 1.6rem/5.25rem 'GmarketSans';
+  font: 700 1.6rem/5.25rem 'NanumSquareRound';
   text-align: center;
 
   background: ${({ theme }) => theme.color.grayLight};

@@ -5,6 +5,7 @@ import type {
   WaterPlantParams,
 } from 'types/reminder';
 import { useContext } from 'react';
+import { generatePath } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
 import Image from 'components/@common/Image';
 import {
@@ -15,6 +16,7 @@ import {
   Alert,
   NickName,
   DictionaryPlantName,
+  LinkContainer,
 } from './Card.style';
 import { ReminderContext } from 'contexts/reminderContext';
 import useAddToast from 'hooks/useAddToast';
@@ -25,6 +27,7 @@ import {
   isDateFormat,
 } from 'utils/date';
 import { DateValidate } from 'utils/validate';
+import { URL_PATH } from 'constants/index';
 
 interface ReminderCardProps {
   data: ReminderExtendType;
@@ -99,20 +102,25 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
     status === 'today' ? convertSubFix(status) : `${Math.abs(dday)}${convertSubFix(status)}`;
 
   return (
-    <Wrapper>
-      <StatusBar status={status} />
-      <Image src={image} size="64px" type="circle" alt={nickName} />
-      <ContentBox role="list" tabIndex={0}>
-        <NickName role="listitem" aria-label="반려 식물 닉네임">
-          {nickName}
-        </NickName>
-        <DictionaryPlantName role="listitem" aria-label="반려 식물 사전 이름">
-          {dictionaryPlantName}
-        </DictionaryPlantName>
-        <Alert status={status} role="listitem" aria-label="물을 줘야하는 날">
-          {alertMessage}
-        </Alert>
-      </ContentBox>
+    <Wrapper aria-label={`${nickName}의 정보`}>
+      <LinkContainer
+        to={generatePath(URL_PATH.petDetail, { id: String(petPlantId) })}
+        aria-label={`${nickName} 상세로 이동`}
+      >
+        <StatusBar status={status} />
+        <Image src={image} size="64px" type="circle" alt={nickName} />
+        <ContentBox role="list" tabIndex={0}>
+          <NickName role="listitem" aria-label="반려 식물 닉네임">
+            {nickName}
+          </NickName>
+          <DictionaryPlantName role="listitem" aria-label="반려 식물 사전 이름">
+            {dictionaryPlantName}
+          </DictionaryPlantName>
+          <Alert status={status} role="listitem" aria-label="물을 줘야하는 날">
+            {alertMessage}
+          </Alert>
+        </ContentBox>
+      </LinkContainer>
       <ActionBox>
         <DateInput
           value=""

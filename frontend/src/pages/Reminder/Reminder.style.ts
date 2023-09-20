@@ -1,4 +1,5 @@
 import { TodayStatus } from 'types/reminder';
+import { Link } from 'react-router-dom';
 import { css, styled } from 'styled-components';
 
 export interface BackgroundProps {
@@ -39,7 +40,7 @@ export const MonthReminderBox = styled.div`
 
 export const MonthTitle = styled.p`
   width: 100%;
-  font: 900 2.8rem/4rem 'GmarketSans';
+  font: 900 2.8rem/4rem 'NanumSquareRound';
 `;
 
 export const ReminderCardBox = styled.div`
@@ -62,7 +63,7 @@ export const InfoBox = styled.div`
 export const DateLabel = styled.label`
   position: absolute;
   top: 8px;
-  font: 700 2rem/2rem 'GmarketSans';
+  font: 700 2rem/2rem 'NanumSquareRound';
 `;
 
 export const FillStyle = css`
@@ -75,4 +76,25 @@ export const EmptyStyle = css`
   width: 24px;
   height: 24px;
   color: ${({ theme }) => theme.color.gray};
+`;
+
+export const NoDataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  height: 80%;
+`;
+
+export const Title = styled.p`
+  margin-bottom: 16px;
+  font: 700 2.4rem/4rem NanumSquareRound;
+`;
+
+export const Register = styled(Link)`
+  width: 200px;
+  font: 600 2rem/2.4rem NanumSquareRound;
+  text-align: center;
 `;

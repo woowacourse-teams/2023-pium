@@ -20,7 +20,7 @@ const MonthBox = ({ month, reminderDates }: MonthBoxProps) => {
   });
 
   return (
-    <MonthReminderBox role="feed">
+    <MonthReminderBox role="feed" aria-label={`${Number(month)}월의 리마인더 정보`}>
       <MonthTitle>{Number(month)}월</MonthTitle>
       {cardBoxes}
     </MonthReminderBox>

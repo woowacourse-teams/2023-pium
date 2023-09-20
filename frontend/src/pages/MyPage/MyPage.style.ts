@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const Wrapper = styled.main`
@@ -27,4 +28,25 @@ export const Button = styled.button`
   height: 45px;
   color: ${({ theme: { color } }) => color.gray};
   border-radius: 8px;
+`;
+
+export const BottomSheet = styled(Link)`
+  position: fixed;
+  right: 12px;
+  bottom: 100px;
+
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  justify-content: center;
+
+  padding: 8px 12px;
+
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.6rem;
+  color: ${({ theme }) => theme.color.background};
+
+  background: ${({ theme }) => theme.color.primary};
+  border-radius: 28px;
 `;
