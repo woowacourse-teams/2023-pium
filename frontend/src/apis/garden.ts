@@ -12,7 +12,7 @@ const getList = (dictionaryPlantId: DictionaryPlant['id'] | null, page: number) 
   let url = `${GARDEN_URL}?page=${page}`;
 
   if (dictionaryPlantId) {
-    url += `&dictionaryPlantId=${dictionaryPlantId}`;
+    url += `&filter=${dictionaryPlantId}`;
   }
 
   return fetch(url);

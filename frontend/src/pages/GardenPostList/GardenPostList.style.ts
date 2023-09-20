@@ -3,7 +3,7 @@ import { styled } from 'styled-components';
 export const Main = styled.main`
   position: relative;
   width: 100%;
-  height: 100%;
+  height: calc(100% - 90px);
   padding: 8px;
 `;
 
