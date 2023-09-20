@@ -25,7 +25,6 @@ const GardenPostList = () => {
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
   const {
     data: gardenPostList,
-    isLoading,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
@@ -49,6 +48,11 @@ const GardenPostList = () => {
     window.scrollTo(0, 0);
   }, [selectedDictionaryPlant]);
 
+  const Skeletons = () =>
+    Array(SKELETON_LENGTH)
+      .fill(null)
+      .map((_, index) => <GardenPostItemSkeleton key={index} />);
+
   return (
     <>
       <GardenPostListHeader
@@ -57,17 +61,24 @@ const GardenPostList = () => {
         clear={clear}
       />
       <Main>
-        <List>
-          {gardenPostList?.map((gardenPost) => (
-            <GardenPostItem key={gardenPost.id} {...gardenPost} />
-          ))}
-          {(isLoading || isFetchingNextPage) &&
-            Array(SKELETON_LENGTH)
-              .fill(null)
-              .map((_, index) => <GardenPostItemSkeleton key={index} />)}
-        </List>
-        {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
-        {!hasNextPage && <Message>마지막이에요 😊</Message>}
+        {gardenPostList ? (
+          gardenPostList.length ? (
+            <List>
+              {gardenPostList.map((gardenPost) => (
+                <GardenPostItem key={gardenPost.id} {...gardenPost} />
+              ))}
+              {isFetchingNextPage && <Skeletons />}
+              {!hasNextPage && <Message>마지막이에요 😊</Message>}
+              {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
+            </List>
+          ) : (
+            <Message>아직 작성된 글이 없어요 🤔</Message>
+          )
+        ) : (
+          <List>
+            <Skeletons />
+          </List>
+        )}
       </Main>
       <Navbar />
       {isLoggedIn && (
