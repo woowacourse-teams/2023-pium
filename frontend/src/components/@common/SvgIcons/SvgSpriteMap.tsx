@@ -87,6 +87,9 @@ const SvgIcons = () => (
       <symbol id="line-arrow-left" viewBox="0 0 24 24">
         <path d="M17.51 3.87L15.73 2.1L5.84 12l9.9 9.9l1.77-1.77L9.38 12l8.13-8.13z" />
       </symbol>
+      <symbol id="line-arrow-right" viewBox="0 0 24 24">
+        <path d="M8.025 22L6.25 20.225L14.475 12L6.25 3.775L8.025 2l10 10l-10 10Z"></path>
+      </symbol>
       <symbol id="manage-level-정보없음" viewBox="0 0 36 36">
         <path d="M30 30h-8V4h8zm-6-2h4V6h-4zm-4 2h-8V12h8zm-6-2h4V14h-4zm-4 2H2V18h8zm-6-2h4v-8H4z"></path>
       </symbol>
@@ -99,14 +102,12 @@ const SvgIcons = () => (
       <symbol id="manage-level-전문가" viewBox="0 0 36 36">
         <path d="M30 30h-8V4h8zm-10 0h-8V12h8zm-10 0H2V18h8z"></path>
       </symbol>
-
       <symbol viewBox="0 0 14 14" id="leaf">
         <g fill="none" strokeLinecap="round" strokeLinejoin="round">
           <path d="M11.51 5.38c2 2.82.47 6.05-.27 7.31a1.42 1.42 0 0 1-1 .66c-1.45.25-5.06.53-7-2.29C1.33 8.4 1.41 3.72 1.58 1.49A1.05 1.05 0 0 1 3 .55c2.15.62 6.63 2.17 8.51 4.83Z"></path>
           <path d="M4.77 4.45a52.26 52.26 0 0 1 6 8.73"></path>
         </g>
       </symbol>
-
       <symbol id="potted-plant" viewBox="0 0 24 24">
         <path d="M8.55 22q-.7 0-1.225-.425t-.7-1.1L5.5 16h13l-1.125 4.475q-.175.675-.7 1.1T15.45 22h-6.9ZM12 8q0-2.5 1.75-4.25T18 2q0 2.25-1.425 3.9T13 7.9V10h8v3q0 .825-.588 1.413T19 15H5q-.825 0-1.413-.588T3 13v-3h8V7.9q-2.15-.35-3.575-2T6 2q2.5 0 4.25 1.75T12 8Z" />{' '}
       </symbol>
@@ -184,6 +185,15 @@ const SvgIcons = () => (
       </symbol>
       <symbol viewBox="0 0 24 24" id="survey">
         <path d="M17 2v2h3.007c.548 0 .993.445.993.993v16.014a.994.994 0 0 1-.993.993H3.993A.993.993 0 0 1 3 21.007V4.993C3 4.445 3.445 4 3.993 4H7V2h10ZM7 6H5v14h14V6h-2v2H7V6Zm2 10v2H7v-2h2Zm0-3v2H7v-2h2Zm0-3v2H7v-2h2Zm6-6H9v2h6V4Z"></path>
+      </symbol>
+      <symbol viewBox="0 0 24 24" id="plus">
+        <path
+          fill="none"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="2"
+          d="M5 12h7m7 0h-7m0 0V5m0 7v7"
+        ></path>
       </symbol>
     </defs>
   </Svg>

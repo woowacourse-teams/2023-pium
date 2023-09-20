@@ -1,4 +1,5 @@
-import type { HistoryResponse, HistoryType } from 'types/history';
+import type { PageDataResponse } from 'types/api';
+import type { HistoryType, HistoryItem } from 'types/history';
 import type { PetPlantDetails } from 'types/petPlant';
 import { keepPreviousData, useInfiniteQuery } from '@tanstack/react-query';
 import {
@@ -13,26 +14,27 @@ import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
 const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = []) =>
   useInfiniteQuery<
-    HistoryResponse,
+    PageDataResponse<HistoryItem[]>,
     Error,
     YearList,
-    [typeof HISTORY_URL, PetPlantDetails['id'], HistoryType[]],
+    [typeof HISTORY_URL, typeof petPlantId, typeof filter],
     number
   >({
     queryKey: [HISTORY_URL, petPlantId, filter],
     queryFn: async ({ pageParam }) => {
       const response = await HistoryAPI.getPetPlant(petPlantId, pageParam, 20, filter);
-
       throwOnInvalidStatus(response);
-
-      const data = await response.json();
-      return data;
+      return response.json();
     },
 
     initialPageParam: 0,
-    getNextPageParam: ({ hasNext }, _allPages, lastPageParam) => {
-      return hasNext ? lastPageParam + 1 : undefined;
-    },
+    getNextPageParam: ({ hasNext }, _, lastPageParam) => (hasNext ? lastPageParam + 1 : null),
+
+    throwOnError: true,
+    retry: noRetryIfUnauthorized,
+    refetchOnWindowFocus: false,
+    placeholderData: keepPreviousData,
+    gcTime: 0,
 
     select: (data) => {
       const historyItemList = convertHistoryResponseListToHistoryItemList(data.pages);
@@ -40,12 +42,6 @@ const useYearList = (petPlantId: PetPlantDetails['id'], filter: HistoryType[] = 
       const yearList = convertYearMapToYearList(yearMap);
       return yearList;
     },
-
-    throwOnError: true,
-    retry: noRetryIfUnauthorized,
-    refetchOnWindowFocus: false,
-    placeholderData: keepPreviousData,
-    gcTime: 0,
   });
 
 export default useYearList;

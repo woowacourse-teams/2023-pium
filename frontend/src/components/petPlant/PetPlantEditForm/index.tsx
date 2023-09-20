@@ -1,6 +1,6 @@
 import type { PetPlantDetails } from 'types/petPlant';
 import { useId } from 'react';
-import { generatePath, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DateInput from 'components/@common/DateInput';
 import Image from 'components/@common/Image';
 import ImageButton from 'components/@common/ImageButton';
@@ -40,7 +40,7 @@ import {
   isDateFormat,
   getDaysBetween,
 } from 'utils/date';
-import { NUMBER, OPTIONS, URL_PATH } from 'constants/index';
+import { NUMBER, OPTIONS } from 'constants/index';
 import theme from 'style/theme.style';
 
 const PetPlantEditForm = (props: PetPlantDetails) => {
@@ -131,10 +131,6 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
   const handleSubmitClick: React.MouseEventHandler<HTMLButtonElement> = (event) => {
     event.preventDefault();
     submit();
-  };
-
-  const goToPetDetailsPage = () => {
-    navigate(generatePath(URL_PATH.petDetail, { id: petPlantId.toString() }), { replace: true });
   };
 
   const setNickname: React.ChangeEventHandler<HTMLInputElement> = ({ target: { value } }) => {
@@ -357,7 +353,7 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
           <PrimaryButton type="submit" onClick={handleSubmitClick} disabled={!isValidForm(form)}>
             저장하기
           </PrimaryButton>
-          <SecondaryButton type="button" role="link" onClick={goToPetDetailsPage}>
+          <SecondaryButton type="button" role="link" onClick={() => navigate(-1)}>
             취소하기
           </SecondaryButton>
         </ButtonArea>

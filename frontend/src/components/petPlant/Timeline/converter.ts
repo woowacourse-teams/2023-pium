@@ -1,4 +1,5 @@
-import type { HistoryItem, HistoryResponse } from 'types/history';
+import type { PageDataResponse } from 'types/api';
+import type { HistoryItem } from 'types/history';
 
 export interface TimelineItem {
   type: HistoryItem['type'];
@@ -15,7 +16,7 @@ type MonthList = [string, DayList][];
 export type YearList = [string, MonthList][];
 
 export const convertHistoryResponseListToHistoryItemList = (
-  historyResponseList: HistoryResponse[]
+  historyResponseList: PageDataResponse<HistoryItem[]>[]
 ) =>
   historyResponseList.reduce<HistoryItem[]>(
     (accWaterDateList, page) => accWaterDateList.concat(page.data),

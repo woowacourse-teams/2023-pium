@@ -1,4 +1,4 @@
-import type { DataResponse } from 'types/DataResponse';
+import type { DataResponse } from 'types/api';
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import DictionaryPlantAPI, { DICTIONARY_PLANT_URL } from 'apis/dictionaryPlant';

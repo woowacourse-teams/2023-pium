@@ -1,28 +1,12 @@
 package com.official.pium.controller;
 
-import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.willDoNothing;
-import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
+import com.official.pium.admin.controller.AdminPageController;
+import com.official.pium.admin.repository.RegistrationRepository;
+import com.official.pium.admin.service.AdminService;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.service.AdminService;
 import com.official.pium.service.PetPlantService;
 import com.official.pium.service.dto.AdminLoginRequest;
 import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
@@ -39,6 +23,19 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.official.pium.fixture.DictionaryPlantFixture.스투키;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willDoNothing;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @WebMvcTest(controllers = AdminPageController.class)
@@ -54,10 +51,10 @@ class AdminPageControllerTest extends UITest {
     private DictionaryPlantRepository dictionaryPlantRepository;
 
     @MockBean
-    private AdminService adminService;
+    private RegistrationRepository registrationRepository;
 
     @MockBean
-    private PetPlantService petPlantService;
+    private AdminService adminService;
 
     @Nested
     class 페이지_정상_호출_ {
@@ -130,7 +127,10 @@ class AdminPageControllerTest extends UITest {
         }
 
         @Test
-        void 사전식물_요청_목록_페이지() throws Exception {
+        void 사전_식물_요청_목록_페이지() throws Exception {
+            given(registrationRepository.findAll(any(Pageable.class)))
+                    .willReturn(Page.empty());
+
             mockMvc.perform(get("/admin/dict/requests")
                             .session(session)
                     )

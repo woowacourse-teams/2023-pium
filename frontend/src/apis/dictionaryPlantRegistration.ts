@@ -7,7 +7,13 @@ const register = (form: DictionaryPlantRegistrationForm) => {
   const { name, image } = form;
   const formData = new FormData();
 
-  if (name) formData.append('request', JSON.stringify({ name }));
+  if (name)
+    formData.append(
+      'request',
+      new Blob([JSON.stringify({ name })], {
+        type: 'application/json',
+      })
+    );
   if (image) formData.append('image', image);
 
   return fetch(DICTIONARY_PLANT_REGISTRATION_URL, {

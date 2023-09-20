@@ -26,7 +26,6 @@ create TABLE IF NOT EXISTS member
 (
     id         BIGINT AUTO_INCREMENT NOT NULL,
     kakao_id   BIGINT                NOT NULL,
-    email      VARCHAR(255)          NOT NULL,
     created_at DATETIME              NOT NULL,
     updated_at DATETIME              NOT NULL,
     CONSTRAINT pk_member PRIMARY KEY (id)
@@ -69,8 +68,6 @@ create TABLE IF NOT EXISTS history_category
 (
     id           BIGINT AUTO_INCREMENT NOT NULL,
     history_type VARCHAR(255)          NOT NULL,
-    created_at   DATETIME              NOT NULL,
-    updated_at   DATETIME              NOT NULL,
     CONSTRAINT pk_history_category PRIMARY KEY (id)
 );
 
@@ -86,7 +83,7 @@ CREATE TABLE garden
     flowerpot           VARCHAR(255)          NOT NULL,
     light               VARCHAR(255)          NOT NULL,
     wind                VARCHAR(255)          NOT NULL,
-    day_since           INT                   NOT NULL,
+    day_since           BIGINT                NOT NULL,
     water_cycle         INT                   NOT NULL,
     manage_level        VARCHAR(255)          NOT NULL,
     created_at          DATETIME              NOT NULL,
@@ -124,3 +121,6 @@ alter table history
 
 ALTER TABLE member
     ADD UNIQUE (kakao_id);
+
+ALTER TABLE history_category
+    ADD UNIQUE (history_type);

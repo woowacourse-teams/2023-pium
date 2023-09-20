@@ -1,25 +1,56 @@
-import { useParams } from 'react-router-dom';
+import { generatePath, useNavigate, useParams } from 'react-router-dom';
+import { Header } from 'pages/PetPlantRegister/Form/Form.style';
 import Image from 'components/@common/Image';
-import Navbar from 'components/@common/Navbar';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
-import { Main } from './DictionaryPlantDetail.style';
+import { BackButton, BottomSheet, Main, PrimaryButton } from './DictionaryPlantDetail.style';
+import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
+import useAddToast from 'hooks/useAddToast';
+import { URL_PATH } from 'constants/index';
+import theme from 'style/theme.style';
 
 const DictionaryPlantDetail = () => {
   const { id } = useParams();
   if (!id) throw new Error('URL에 id가 없습니다.');
 
+  const { isSuccess: isValidSession } = useCheckSessionId(false);
+  const addToast = useAddToast();
+
   const dictionaryPlantId = Number(id);
   const { data: dictionaryPlantDetail } = useDictionaryPlantDetail(dictionaryPlantId);
   const { image, name } = dictionaryPlantDetail;
 
+  const navigate = useNavigate();
+
+  const goBack = () => {
+    navigate(-1);
+  };
+
+  const goPetPlantRegisterForm = () => {
+    navigate(generatePath(URL_PATH.petRegisterForm, { id: String(dictionaryPlantId) }));
+  };
+
+  const warning = () => {
+    addToast('info', '로그인 후 등록할 수 있어요 😊');
+  };
+
   return (
     <>
+      <Header>
+        <BackButton onClick={goBack}>
+          <SvgFill icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
+        </BackButton>
+      </Header>
       <Main>
         <Image type="wide" src={image} alt={name} size="300px" />
         <DictionaryPlantContent {...dictionaryPlantDetail} />
       </Main>
-      <Navbar />
+      <BottomSheet>
+        <PrimaryButton onClick={isValidSession ? goPetPlantRegisterForm : warning}>
+          반려 식물로 등록하기
+        </PrimaryButton>
+      </BottomSheet>
     </>
   );
 };

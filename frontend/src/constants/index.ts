@@ -12,12 +12,13 @@ export const URL_PATH = {
   petEdit: '/pet/:id/edit',
   petRegisterSearch: '/pet/register',
   petRegisterForm: '/pet/register/:id',
-  calendar: '/calendar',
   reminder: '/reminder',
+  garden: '/garden',
+  gardenRegisterPick: '/garden/register',
+  gardenRegisterForm: '/garden/register/:id',
   login: '/login',
   authorization: '/authorization',
   myPage: '/myPage',
-  garden: '/garden',
   newDictionaryPlantRequest: '/dict/new-plant-request',
 } as const;
 
@@ -70,6 +71,7 @@ export const NUMBER = {
   maxCycleDate: 365,
   minCycleDate: 1,
   maxNicknameLength: 30,
+  maxGardenContentLength: 1000,
 } as const;
 
 export const STATUS_CODE = {

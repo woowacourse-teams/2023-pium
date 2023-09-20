@@ -7,16 +7,15 @@ import com.official.pium.admin.mapper.RegistrationMapper;
 import com.official.pium.admin.repository.RegistrationRepository;
 import com.official.pium.domain.Admin;
 import com.official.pium.exception.AuthorizationException;
-import com.official.pium.service.PhotoManger;
+import com.official.pium.service.PhotoManager;
 import com.official.pium.service.dto.DataResponse;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,7 +26,7 @@ public class RegistrationService {
     private String workingDirectory;
 
     private final RegistrationRepository registrationRepository;
-    private final PhotoManger photoManger;
+    private final PhotoManager photoManager;
 
     @Transactional
     public void save(RegistrationRequest request, MultipartFile multipartFile) {
@@ -42,7 +41,7 @@ public class RegistrationService {
             return;
         }
 
-        String imageUrl = photoManger.upload(multipartFile, workingDirectory);
+        String imageUrl = photoManager.upload(multipartFile, workingDirectory);
 
         if (request == null) {
             Registration registration = RegistrationMapper.toRegistration(null, imageUrl);

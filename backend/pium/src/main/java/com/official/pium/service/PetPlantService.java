@@ -6,6 +6,7 @@ import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.event.history.HistoryEvent;
+import com.official.pium.event.history.HistoryEvents;
 import com.official.pium.event.history.LastWaterDateEvent;
 import com.official.pium.event.history.PetPlantHistory;
 import com.official.pium.mapper.PetPlantMapper;
@@ -23,8 +24,8 @@ import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,7 +42,7 @@ public class PetPlantService {
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
-    private final PhotoManger photoManger;
+    private final PhotoManager photoManager;
     private final ApplicationEventPublisher publisher;
 
     @Transactional
@@ -65,16 +66,15 @@ public class PetPlantService {
         if (image == null || image.isEmpty()) {
             return imageDefaultUrl;
         }
-        return photoManger.upload(image, workingDirectory);
+        return photoManager.upload(image, workingDirectory);
     }
 
     private void createHistory(PetPlant petPlant) {
         PetPlantHistory petPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         List<HistoryEvent> historyEvents = petPlantHistory.generateCreateHistoryEvents(petPlant.getId(),
                 LocalDate.now());
-        for (HistoryEvent historyEvent : historyEvents) {
-            publisher.publishEvent(historyEvent);
-        }
+
+        publisher.publishEvent(HistoryEvents.from(historyEvents));
     }
 
     public PetPlantResponse read(Long id, Member member) {
@@ -86,7 +86,7 @@ public class PetPlantService {
         Long dday = petPlant.calculateDday(LocalDate.now());
         Long daySince = petPlant.calculateDaySince(LocalDate.now());
 
-        Page<History> secondLastWaterDatePage = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(
+        Slice<History> secondLastWaterDatePage = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(
                 petPlant.getId(), HistoryType.LAST_WATER_DATE, PageRequest.of(1, 1, Direction.DESC, "date"));
         if (!secondLastWaterDatePage.isEmpty()) {
             LocalDate secondLastWaterDate = secondLastWaterDatePage.getContent().get(0).getDate();
@@ -161,7 +161,7 @@ public class PetPlantService {
     private void validateLastWaterDate(PetPlantUpdateRequest updateRequest, PetPlant petPlant) {
         int pageNumber = 1;
         int pageSize = 1;
-        Page<History> currentHistory = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(
+        Slice<History> currentHistory = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(
                 petPlant.getId(), HistoryType.LAST_WATER_DATE,
                 PageRequest.of(pageNumber, pageSize, Direction.DESC, "date"));
         List<History> content = currentHistory.getContent();

@@ -41,7 +41,7 @@ class MemberServiceTest {
         Member saveMember = memberRepository.save(member);
 
         memberService.withdraw(saveMember);
-        Optional<Member> findMember = memberRepository.findByKakaoId(member.getKakaoId());
+        Optional<Member> findMember = memberRepository.findById(member.getId());
 
         assertThat(findMember).isEmpty();
     }

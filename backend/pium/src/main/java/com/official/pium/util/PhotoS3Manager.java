@@ -2,7 +2,7 @@ package com.official.pium.util;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.official.pium.service.PhotoManger;
+import com.official.pium.service.PhotoManager;
 import java.io.File;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -12,9 +12,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 @RequiredArgsConstructor
-public class PhotoS3Manager implements PhotoManger {
+public class PhotoS3Manager implements PhotoManager {
 
     private static final String SLASH = "/";
+    private static final String SYSTEM_PATH = System.getProperty("user.dir");
 
     private final AmazonS3 s3Client;
 
@@ -41,24 +42,39 @@ public class PhotoS3Manager implements PhotoManger {
     private String uploadPhoto(MultipartFile multipartFile, String workingDirectory) {
         try {
             String fileName = PhotoNameGenerator.of(multipartFile.getOriginalFilename());
-            File file = convertMultiPartFileToFile(multipartFile, fileName);
+            File uploadDirectory = loadDirectory(getLocalDirectoryPath(workingDirectory));
+            File uploadPath = new File(uploadDirectory, fileName);
+            File file = uploadFileInLocal(multipartFile, uploadPath);
 
             s3Client.putObject(new PutObjectRequest(bucket + folder + directory + workingDirectory, fileName, file));
 
             file.delete();
-            return rootPath + SLASH + directory + SLASH + workingDirectory + SLASH + fileName;
+            return rootPath + SLASH + directory + workingDirectory + SLASH + fileName;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new IllegalStateException("파일 업로드를 실패했습니다.");
         }
     }
 
-    private File convertMultiPartFileToFile(MultipartFile multipartFile, String path) {
-        File convertedFile = new File(path);
+    private String getLocalDirectoryPath(String workingDirectory) {
+        return SYSTEM_PATH + SLASH + directory + workingDirectory;
+    }
+
+    private File loadDirectory(String directoryLocation) {
+        File directory = new File(directoryLocation);
+        if (!directory.exists()) {
+            directory.mkdirs();
+        }
+        return directory;
+    }
+
+    private File uploadFileInLocal(MultipartFile multipartFile, File uploadPath) {
         try {
-            multipartFile.transferTo(convertedFile);
+            multipartFile.transferTo(uploadPath);
         } catch (IOException e) {
+            e.printStackTrace();
             throw new IllegalStateException("파일 변환이 실패했습니다.");
         }
-        return convertedFile;
+        return uploadPath;
     }
 }

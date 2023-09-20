@@ -12,6 +12,12 @@ export const HeaderBox = styled.section`
   border-bottom: 1px solid ${(props) => props.theme.color.grayLight};
 `;
 
+export const Name = styled.p`
+  font: 900 2.4rem/4rem 'GmarketSans';
+  color: ${(props) => props.theme.color.sub};
+  text-align: left;
+`;
+
 export const FamilyName = styled.p`
   margin-bottom: 4px;
   font: 500 1.2rem/1.6rem 'NanumSquareRound';
@@ -19,10 +25,17 @@ export const FamilyName = styled.p`
   text-align: left;
 `;
 
-export const Name = styled.p`
-  font: 900 2.4rem/4rem 'NanumSquareRound';
+export const GardenButton = styled.button`
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+
+  height: 24px;
+  margin-top: 16px;
+
+  font-size: 1.4rem;
+  font-weight: 600;
   color: ${(props) => props.theme.color.sub};
-  text-align: left;
 `;
 
 export const ContentBox = styled.section`
@@ -33,12 +46,13 @@ export const ContentBox = styled.section`
 
   width: 320px;
   margin: 0 auto;
-  div {
-    font: ${(props) => props.theme.font.dictContent};
+`;
 
-    p {
-      font: ${(props) => props.theme.font.dictTitle};
-    }
+export const InformationTagBox = styled.div`
+  font: ${(props) => props.theme.font.dictContent};
+
+  p {
+    font: ${(props) => props.theme.font.dictTitle};
   }
 `;
 
@@ -82,14 +96,12 @@ export const ManageInfoBox = styled.div`
   width: 100%;
   padding: 16px;
 
+  font: ${(props) => props.theme.font.dictContent};
+
   background: #ececec;
   border-radius: 8px;
 
-  p {
+  & > p {
     font: ${(props) => props.theme.font.dictTitle};
-  }
-
-  span {
-    font: ${(props) => props.theme.font.dictContent};
   }
 `;

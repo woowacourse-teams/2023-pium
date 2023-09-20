@@ -13,4 +13,6 @@ public interface HistoryCustomRepository {
                                                      Pageable pageable);
 
     void deleteAllByPetPlants(List<PetPlant> petPlants);
+
+    void deleteAllByPetPlantId(Long petPlantId);
 }
