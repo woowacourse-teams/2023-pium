@@ -39,6 +39,9 @@ public class PetPlantService {
     @Value("${petPlant.image.directory}")
     private String workingDirectory;
 
+    @Value("${aws.s3.root}")
+    private String rootPath;
+
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
@@ -115,7 +118,7 @@ public class PetPlantService {
 
         validateLastWaterDate(updateRequest, petPlant);
 
-        String imageUrl = saveImageIfExists(image, petPlant.getImageUrl());
+        String imageUrl = updateImage(image, petPlant.getImageUrl());
         PetPlantHistory previousPetPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         petPlant.updatePetPlant(
                 updateRequest.getNickname(), updateRequest.getLocation(),
@@ -126,6 +129,21 @@ public class PetPlantService {
         );
         PetPlantHistory currentPetPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         publishPetPlantHistories(petPlant, previousPetPlantHistory, currentPetPlantHistory);
+    }
+
+    private String updateImage(MultipartFile image, String originalImageUrl) {
+        if (image == null || image.isEmpty()) {
+            return originalImageUrl;
+        }
+        deleteImageIfExists(originalImageUrl);
+        return photoManager.upload(image, workingDirectory);
+    }
+
+    private void deleteImageIfExists(String originalImageUrl) {
+        if (originalImageUrl.contains(rootPath + "/petPlant")) {
+            String fileName = originalImageUrl.substring(rootPath.length() - 1);
+            photoManager.delete(fileName);
+        }
     }
 
     private void publishPetPlantHistories(PetPlant petPlant, PetPlantHistory previousPetPlantHistory,

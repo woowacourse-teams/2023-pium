@@ -77,4 +77,9 @@ public class PhotoS3Manager implements PhotoManager {
         }
         return uploadPath;
     }
+
+    @Override
+    public void delete(String fileName) {
+        s3Client.deleteObject(bucket, fileName);
+    }
 }
