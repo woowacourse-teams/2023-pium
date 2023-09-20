@@ -6,7 +6,7 @@ import { ContentBox, NoDataContainer, Register, Title, Wrapper } from './Reminde
 import ReminderProvider from 'contexts/reminderContext';
 import { URL_PATH } from 'constants/index';
 import PiumiEmotionlessPng from 'assets/piumi-emotionless.png';
-import PiumiEmotionlessWepb from 'assets/piumi-emotionless.webp';
+import PiumiEmotionlessWebp from 'assets/piumi-emotionless.webp';
 import useReminderHooks from './hooks/useReminderHooks';
 
 const Reminder = () => {
@@ -24,7 +24,7 @@ const Reminder = () => {
           {reminderBox.length === 0 ? (
             <NoDataContainer>
               <picture>
-                <source srcSet={PiumiEmotionlessWepb} type="image/webp" />
+                <source srcSet={PiumiEmotionlessWebp} type="image/webp" />
                 <img
                   width={250}
                   height={250}
