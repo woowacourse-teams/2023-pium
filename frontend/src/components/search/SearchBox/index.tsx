@@ -1,9 +1,8 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
-import { useState } from 'react';
 import Image from 'components/@common/Image';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import {
-  InputArea,
+  InputBox,
   ResultItem,
   ResultList,
   Wrapper,
@@ -12,89 +11,121 @@ import {
   Input,
   ResultMessage,
   StyledLink,
+  Backdrop,
+  ResultDropdown,
 } from './SearchBox.style';
 import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
 import useDebounce from 'hooks/useDebounce';
+import useToggle from 'hooks/useToggle';
 import { MESSAGE, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
 interface SearchBoxProps {
-  onResultClick?: (id: number) => void;
+  value: string;
+  height?: `${number}px`;
+  fontSize?: string;
+  showResultSize?: number;
+  onChangeValue: (value: string) => void;
+  onResultClick?: (searchResult: DictionaryPlantNameSearchResult) => void;
   onEnter?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
   onNextClick?: (name: string, searchResults?: DictionaryPlantNameSearchResult[]) => void;
 }
 
 const SearchBox = (props: SearchBoxProps) => {
-  const { onResultClick, onEnter, onNextClick } = props;
-
-  const [searchName, setSearchName] = useState('');
-  const queryName = useDebounce<string>(searchName, 200);
-
+  const {
+    value,
+    height = '56px',
+    fontSize = '2rem',
+    showResultSize = 4,
+    onChangeValue,
+    onResultClick,
+    onEnter,
+    onNextClick,
+  } = props;
+  const queryName = useDebounce<string>(value, 200);
   const { data: searchResults } = useDictionaryPlantSearch(queryName);
+  const { isOn, on: open, off: close } = useToggle();
+
+  const isOpen = value !== '' && isOn;
+  const numberHeight = Number(height.slice(0, -2));
 
   const handleSearchNameChange: React.ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }) => {
-    setSearchName(value);
+    onChangeValue(value);
+    open();
   };
 
   const searchOnEnter: React.ComponentProps<'input'>['onKeyDown'] = ({ key }) => {
-    if (key !== 'Enter') return;
-    onEnter?.(searchName, searchResults);
+    if (key !== 'Enter' || !onEnter) return;
+    onEnter(value, searchResults);
+    close();
   };
 
-  const handleResultClick = (plantId: number) => () => {
-    onResultClick?.(plantId);
+  const handleResultClick = (searchResult: DictionaryPlantNameSearchResult) => () => {
+    onResultClick?.(searchResult);
+    onChangeValue(searchResult.name);
+    close();
   };
 
   const handleNextButtonClick = () => {
-    onNextClick?.(searchName, searchResults);
+    onNextClick?.(value, searchResults);
+    close();
   };
 
-  const hasSearchResult = searchResults && searchName !== '';
+  const handleFocus = () => {
+    open();
+  };
 
   return (
-    <Wrapper>
-      <InputArea>
-        <SvgIcons icon="search" size={40} color={theme.color.primary} />
+    <Wrapper $fontSize={fontSize}>
+      <InputBox $openBottom={isOpen} $height={height}>
+        <SvgIcons icon="search" size={numberHeight / 1.6} color={theme.color.primary} />
         <Input
           type="text"
-          value={searchName}
+          value={value}
           onChange={handleSearchNameChange}
           onKeyDown={searchOnEnter}
+          onFocus={handleFocus}
+          $height={height}
         />
         {onNextClick && (
           <EnterButton type="button" aria-label="이동하기" onClick={handleNextButtonClick}>
-            <SvgIcons icon="arrow-right-alt" size={32} color={theme.color.sub} />
+            <SvgIcons icon="arrow-right-alt" size={numberHeight / 2} color={theme.color.sub} />
           </EnterButton>
         )}
-      </InputArea>
-      {hasSearchResult &&
-        (searchResults.length ? (
-          <>
-            <ResultList>
-              {searchResults.map(({ id, name, image }) => (
-                <ResultItem key={id} onClick={handleResultClick(id)}>
-                  <Image alt={name} src={image} type="circle" size="40px" />
+      </InputBox>
+      {isOpen && (
+        <>
+          <Backdrop onClick={close} />
+          <ResultDropdown $height={height}>
+            <ResultList $maxHeight={`calc(${height} * ${showResultSize})`}>
+              {searchResults?.map(({ id, name, image }) => (
+                <ResultItem
+                  key={id}
+                  onClick={handleResultClick({ id, name, image })}
+                  $height={height}
+                >
+                  <Image
+                    alt={name}
+                    src={image}
+                    type="circle"
+                    size={`calc(${height} * 2/3)`}
+                    loading="lazy"
+                  />
                   <Name>{name}</Name>
                 </ResultItem>
               ))}
             </ResultList>
             <ResultMessage>
-              찾는 식물이 없으신가요?
-              <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
+              {searchResults?.length ? '찾는 식물이 없으신가요?' : MESSAGE.noSearchResult}
+              <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={value}>
                 등록 신청하기
               </StyledLink>
             </ResultMessage>
-          </>
-        ) : (
-          <ResultMessage>
-            {MESSAGE.noSearchResult}
-            <StyledLink to={URL_PATH.newDictionaryPlantRequest} state={searchName}>
-              등록 신청하기
-            </StyledLink>
-          </ResultMessage>
-        ))}
+          </ResultDropdown>
+        </>
+      )}
     </Wrapper>
   );
 };

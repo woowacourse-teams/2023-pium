@@ -5,8 +5,10 @@ import { ToastListWrapper } from './Toast.style';
 import toasts from 'store/atoms/toasts';
 import Toast from '.';
 
+const SHOW_TOAST_SIZE = 5;
+
 const ToastList = () => {
-  const toastList = useRecoilValue(toasts);
+  const toastList = useRecoilValue(toasts).slice(-SHOW_TOAST_SIZE);
   const root = document.getElementById('toast-root') ?? document.body;
 
   return createPortal(

@@ -1,11 +1,16 @@
+import { useNavigate } from 'react-router';
+import { useSetRecoilState } from 'recoil';
 import SeeMoreContentBox from 'components/@common/SeeMoreContentBox';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
+import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import TagBox from 'components/dictionaryPlant/TagBox';
 import TagSwitch from 'components/dictionaryPlant/TagSwitch';
 import {
   Accent,
   ContentBox,
   FamilyName,
+  GardenButton,
   HeaderBox,
   InformationTagBox,
   ManageInfoBox,
@@ -13,16 +18,19 @@ import {
   PropBox,
   PropsBox,
 } from './DictionaryPlantContent.style';
+import selectedDictionaryPlantAtom from 'store/atoms/garden';
 import type { DictionaryPlantExtendCycles } from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import parseTemperature from 'utils/parseTemperature';
-import { NO_INFORMATION } from 'constants/index';
+import { NO_INFORMATION, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 
 const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
   const {
+    id,
     postingPlace,
     familyName,
     name,
+    image,
     manageLevel,
     growSpeed,
     requireHumidity,
@@ -33,6 +41,18 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
     specialManageInfo,
     waterOptions,
   } = props;
+
+  const setSelectedDictionaryPlant = useSetRecoilState(selectedDictionaryPlantAtom);
+  const navigate = useNavigate();
+
+  const goFilteredGarden = () => {
+    setSelectedDictionaryPlant({
+      id,
+      name,
+      image,
+    });
+    navigate(URL_PATH.garden);
+  };
 
   const place = postingPlace.map((position, idx) => {
     const text = position === NO_INFORMATION ? '제공된 정보가 없어요😢' : position;
@@ -47,6 +67,15 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
         <div>
           <Name>{name}</Name>
           <FamilyName>{familyName}</FamilyName>
+          <GardenButton type="button" onClick={goFilteredGarden} aria-label="모두의 정원">
+            <SvgStroke
+              color={theme.color.fontPrimaryForBackground}
+              size={16}
+              icon="bulletin-board-line"
+            />
+            모두의 정원
+            <SvgFill color={theme.color.sub} size={12} icon="line-arrow-right" />
+          </GardenButton>
         </div>
       </HeaderBox>
       <ContentBox>

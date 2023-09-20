@@ -1,4 +1,4 @@
-import type { DataResponse } from 'types/DataResponse';
+import type { DataResponse } from 'types/api';
 import type { Reminder } from 'types/reminder';
 import { getDaysBetween, getParticularDateFromSpecificDay, getDateToString } from 'utils/date';
 

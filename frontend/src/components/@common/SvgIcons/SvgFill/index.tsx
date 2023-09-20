@@ -19,6 +19,7 @@ export const ICONS = [
   'humidity',
   'info-circle',
   'line-arrow-left',
+  'line-arrow-right',
   'manage-level-정보없음',
   'manage-level-초보자',
   'manage-level-경험자',

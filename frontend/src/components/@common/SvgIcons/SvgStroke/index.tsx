@@ -8,6 +8,7 @@ export const ICONS = [
   'bulletin-board-line',
   'reminder',
   'dictionary',
+  'plus',
 ] as const;
 
 type IconIds = (typeof ICONS)[number];

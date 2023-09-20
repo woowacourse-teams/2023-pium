@@ -7,8 +7,8 @@ const useDictionaryPlantNavigate = () => {
   const navigate = useNavigate();
 
   const goToDictionaryPlantDetailPage = useCallback(
-    (plantId: number) => {
-      navigate(generatePath(URL_PATH.dictDetail, { id: plantId.toString() }));
+    ({ id }: DictionaryPlantNameSearchResult) => {
+      navigate(generatePath(URL_PATH.dictDetail, { id: id.toString() }));
     },
     [navigate]
   );
@@ -24,7 +24,7 @@ const useDictionaryPlantNavigate = () => {
         return;
       }
 
-      goToDictionaryPlantDetailPage(samePlant.id);
+      goToDictionaryPlantDetailPage(samePlant);
     },
     [navigate, goToDictionaryPlantDetailPage]
   );
