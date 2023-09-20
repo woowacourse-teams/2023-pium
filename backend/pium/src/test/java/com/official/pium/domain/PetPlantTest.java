@@ -68,7 +68,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "imageUrl");
+                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com");
 
             assertSoftly(
                     softly -> {
@@ -77,7 +77,7 @@ class PetPlantTest {
                         softly.assertThat(petPlant.getFlowerpot()).isEqualTo("수경 재배");
                         softly.assertThat(petPlant.getLight()).isEqualTo("거의 없음");
                         softly.assertThat(petPlant.getWind()).isEqualTo("통풍이 잘 됨");
-                        softly.assertThat(petPlant.getImageUrl()).isEqualTo("imageUrl");
+                        softly.assertThat(petPlant.getImageUrl()).isEqualTo("https://testimage.com");
                         softly.assertThat(petPlant.getWaterCycle()).isEqualTo(10);
                     }
             );
@@ -100,7 +100,7 @@ class PetPlantTest {
                     .build();
 
             petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2000, 2, 3), LocalDate.of(2022, 1, 6), "imageUrl");
+                    "통풍이 잘 됨", 10, LocalDate.of(2000, 2, 3), LocalDate.of(2022, 1, 6), "https://testimage.com");
 
             assertThat(petPlant.getNextWaterDate())
                     .isEqualTo(petPlant.getLastWaterDate().plusDays(petPlant.getWaterCycle()));
@@ -112,7 +112,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant(nickname, "책상", "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "imageUrl"))
+                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + nickname);
         }
@@ -123,7 +123,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", location, "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "imageUrl"))
+                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + location);
         }
@@ -134,7 +134,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", flowerpot, "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "imageUrl"))
+                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + flowerpot);
         }
@@ -145,7 +145,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", light,
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "imageUrl"))
+                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + light);
         }
@@ -156,7 +156,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    wind, 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "imageUrl"))
+                    wind, 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + wind);
         }
@@ -167,7 +167,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "바람 선선", waterCycle, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "imageUrl"))
+                    "바람 선선", waterCycle, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("물주기 주기는 1이상 365이하의 값만 가능합니다. waterCycle: " + waterCycle);
         }
@@ -177,7 +177,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "바람이 선선한 곳", 10, null, LocalDate.of(2022, 7, 8), "imageUrl"))
+                    "바람이 선선한 곳", 10, null, LocalDate.of(2022, 7, 8), "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
@@ -187,7 +187,7 @@ class PetPlantTest {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "바람이 선선한 곳", 10, LocalDate.of(2022, 7, 8), null, "imageUrl"))
+                    "바람이 선선한 곳", 10, LocalDate.of(2022, 7, 8), null, "https://testimage.com"))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
@@ -199,7 +199,7 @@ class PetPlantTest {
             assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
                     "바람이 선선한 곳", 10, LocalDate.of(2022, 7, 8), LocalDate.of(2022, 7, 8), null))
                     .isInstanceOf(IllegalArgumentException.class)
-                    .hasMessageContaining("반려 식물 이미지 URL은 빈 값이 될 수 없습니다. date: null");
+                    .hasMessageContaining("반려 식물 이미지 URL은 빈 값이 될 수 없습니다. imageUrl: null");
         }
     }
 

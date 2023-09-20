@@ -163,8 +163,8 @@ public class PetPlant extends BaseEntity {
     }
 
     private void validateImageUrl(String imageUrl) {
-        if (imageUrl == null) {
-            throw new IllegalArgumentException("반려 식물 이미지 URL은 빈 값이 될 수 없습니다. date: null");
+        if (imageUrl == null || imageUrl.isBlank()) {
+            throw new IllegalArgumentException("반려 식물 이미지 URL은 빈 값이 될 수 없습니다. imageUrl: null");
         }
     }
 
