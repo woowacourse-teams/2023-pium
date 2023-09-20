@@ -3,7 +3,7 @@ import { Header } from 'pages/PetPlantRegister/Form/Form.style';
 import Image from 'components/@common/Image';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
-import { BackButton, Footer, Main, PrimaryButton } from './DictionaryPlantDetail.style';
+import { BackButton, BottomSheet, Main, PrimaryButton } from './DictionaryPlantDetail.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import useAddToast from 'hooks/useAddToast';
@@ -46,11 +46,11 @@ const DictionaryPlantDetail = () => {
         <Image type="wide" src={image} alt={name} size="300px" />
         <DictionaryPlantContent {...dictionaryPlantDetail} />
       </Main>
-      <Footer>
+      <BottomSheet>
         <PrimaryButton onClick={isValidSession ? goPetPlantRegisterForm : warning}>
           반려 식물로 등록하기
         </PrimaryButton>
-      </Footer>
+      </BottomSheet>
     </>
   );
 };

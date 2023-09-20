@@ -13,7 +13,7 @@ export const BackButton = styled.button`
   font-size: 2rem;
 `;
 
-export const Footer = styled.footer`
+export const BottomSheet = styled.div`
   position: fixed;
   bottom: 0;
 
