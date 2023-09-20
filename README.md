@@ -4,10 +4,10 @@
 
 ## 피움의 집사들을 소개합니다 🤗
 
-|                                                Backend                                                |                                                Backend                                                 |                                                Backend                                                |                                                                Backend                                                                |                                               Frontend                                               |                                               Frontend                                               |                                               Frontend                                               |
-|:-----------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------:|:-----------------------------------------------------------------------------------------------------:|:-------------------------------------------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|:----------------------------------------------------------------------------------------------------:|
+|                                                              Backend                                                              |                                                               Backend                                                               |                                                            Backend                                                            |                                                                 Backend                                                                  |                                                              Frontend                                                               |                                                             Frontend                                                             |                                                            Frontend                                                             |
+| :-------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://github.com/yeonkkk"><img src="https://avatars.githubusercontent.com/u/88660886?v=4" width=400px alt="조이"/></a> | <a href="https://github.com/kim0914"><img src="https://avatars.githubusercontent.com/u/68818952?v=4" width=400px alt="그레이"/></a> | <a href="github.com/Choi-JJunho"><img src="https://avatars.githubusercontent.com/u/49794401?v=4" width=400px alt="주노"/></a> | <a href="https://github.com/rawfishthelgh"><img src="https://avatars.githubusercontent.com/u/79038908?v=4" width=400px alt="하마드"></a> | <a href="https://github.com/hozzijeong"><img src="https://avatars.githubusercontent.com/u/50974359?v=4" width=400px alt="클린"></a> | <a href="https://github.com/WaiNaat"><img src="https://avatars.githubusercontent.com/u/77872742?v=4" width=400px alt="참새"></a> | <a href="https://github.com/bassyu"><img src="https://avatars.githubusercontent.com/u/54442420?v=4" width=400px alt="쵸파"></a> |
-|                                   [조이](https://github.com/yeonkkk)                                    |                                   [그레이](https://github.com/kim0914)                                    |                                 [주노](https://github.com/Choi-JJunho)                                  |                                                [하마드](https://github.com/rawfishthelgh)                                                |                                 [클린](https://github.com/hozzijeong)                                  |                                   [참새](https://github.com/WaiNaat)                                   |                                   [쵸파](https://github.com/bassyu)                                    |
+|                                                [조이](https://github.com/yeonkkk)                                                 |                                                [그레이](https://github.com/kim0914)                                                 |                                            [주노](https://github.com/Choi-JJunho)                                             |                                                [하마드](https://github.com/rawfishthelgh)                                                |                                                [클린](https://github.com/hozzijeong)                                                |                                                [참새](https://github.com/WaiNaat)                                                |                                                [쵸파](https://github.com/bassyu)                                                |
 
 # 피움 서비스 소개
 
@@ -15,7 +15,7 @@
 
 식물 관리법은 환경에 따라 다르기 때문에 경험을 통해서 터득할 수밖에 없어요.
 
-여러분의 관리 경험을 기록한다면 각자에게 알맞은 관리법을 더 빠르게 도출할 수 있겠죠? 
+여러분의 관리 경험을 기록한다면 각자에게 알맞은 관리법을 더 빠르게 도출할 수 있겠죠?
 
 '피움'은 이러한 가치를 바탕으로 탄생하게 되었습니다.
 
@@ -32,7 +32,7 @@
 ```shell
 git clone https://github.com/woowacourse-teams/2023-pium.git
 
-cd 2023-pium/frontend 
+cd 2023-pium/frontend
 ```
 
 ### env파일 설정
@@ -47,6 +47,7 @@ vim env/local.env
 
 - local.env 파일 내부에 다음과 같이 설정한다.
 - 카카오 rest_key는 [카카오 로그인 문서](https://developers.kakao.com/docs/latest/ko/kakaologin/rest-api)를 확인하고 적용해야 한다.
+
 ```env
 KAKAO_REST_KEY={본인_카카오_REST_KEY}
 KAKAO_REDIRECT_URL=http://localhost:8282/authorization
@@ -56,7 +57,7 @@ HOST=http://localhost:8080/
 ### 실행
 
 ```shell
-npm install 
+npm install
 
 npm run local
 ```
@@ -76,6 +77,7 @@ vim src/main/resources/application.properties
 ```
 
 아래 내용을 참고하여 properties 파일을 작성한다.
+
 ```properties
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://{서버_HOST}/{DATABASE}?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
@@ -99,10 +101,19 @@ server.servlet.session.cookie.same-site=none
 server.servlet.session.cookie.secure=true
 ```
 
-
 ### 프로젝트 실행
+
 ```shell
 ./gradlew build
 
 java -jar build/libs/pium.jar
 ```
+
+---
+
+폰트: [네이버 나눔 스퀘어 라운드](https://hangeul.naver.com/font)를 수정하여 사용했습니다.
+
+라이선스 (License)
+자세한 사항은 해당 문서를 참조하십시오.
+
+See [LICENSE](https://help.naver.com/service/30016/contents/18088?osType=PC&lang=ko) for more information.
