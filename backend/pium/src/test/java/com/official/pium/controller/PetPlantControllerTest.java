@@ -16,6 +16,7 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestPartBody;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
@@ -85,6 +86,7 @@ class PetPlantControllerTest extends UITest {
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             requestCookies(),
+                            requestPartBody("request"),
                             requestParts(
                                     partWithName("request").description("등록 요청 반려 식물 정보"),
                                     partWithName("image").description("등록 요청 반려 식물 이미지").optional()
@@ -198,6 +200,7 @@ class PetPlantControllerTest extends UITest {
                     .andDo(document("petPlant/update/",
                                     preprocessRequest(prettyPrint()),
                                     preprocessResponse(prettyPrint()),
+                                    requestPartBody("request"),
                                     requestCookies(),
                                     pathParameters(
                                             parameterWithName("id").description("반려 식물 ID")
