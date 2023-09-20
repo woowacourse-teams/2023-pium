@@ -20,7 +20,7 @@ export const InfoBox = styled.div`
 export const DateLabel = styled.span`
   position: absolute;
   top: 8px;
-  font: 700 2rem/2rem 'GmarketSans';
+  font: 700 2rem/2rem 'NanumSquareRound';
 `;
 
 export const CheckButton = styled.button`

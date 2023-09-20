@@ -14,12 +14,12 @@ const color = {
 
 const font = {
   emphasize: '',
-  subTitle: 'normal 600 2rem/2.4rem "GmarketSans"',
-  title: 'normal 700 3.2rem/4rem "GmarketSans"',
-  input: 'normal 500 1.8rem/2.2rem "GmarketSans"',
-  dictTitle: 'normal 600 1.8rem/2.2rem "GmarketSans"',
-  dictContent: 'normal 400 1.4rem/1.8rem "GmarketSans"',
-  reminderCardContent: '500 1rem/1.5rem "GmarketSans"',
+  subTitle: 'normal 600 2rem/2.4rem "NanumSquareRound"',
+  title: 'normal 700 3.2rem/4rem "NanumSquareRound"',
+  input: 'normal 500 1.8rem/2.2rem "NanumSquareRound"',
+  dictTitle: 'normal 600 1.8rem/2.2rem "NanumSquareRound"',
+  dictContent: 'normal 400 1.4rem/1.8rem "NanumSquareRound"',
+  reminderCardContent: '500 1rem/1.5rem "NanumSquareRound"',
 } as const;
 
 const width = {

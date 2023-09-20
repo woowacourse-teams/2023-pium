@@ -1,11 +1,13 @@
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
+import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import VerticalDivider from 'components/@common/VerticalDivider/VerticalDivider.style';
-import { Button, ButtonBox, Wrapper } from './MyPage.style';
+import { BottomSheet, Button, ButtonBox, Wrapper } from './MyPage.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
 import useConfirm from 'hooks/useConfirm';
+import theme from 'style/theme.style';
 
 const MyPage = () => {
   useCheckSessionId();
@@ -38,6 +40,10 @@ const MyPage = () => {
             회원 탈퇴
           </Button>
         </ButtonBox>
+        <BottomSheet to="https://forms.gle/rQUAi9GbVwrr7oG2A" target="blank">
+          <SvgFill icon="survey" color={theme.color.background} size={16} />
+          문의하기
+        </BottomSheet>
       </Wrapper>
       <Navbar />
     </>

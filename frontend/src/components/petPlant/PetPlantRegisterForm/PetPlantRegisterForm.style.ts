@@ -10,7 +10,7 @@ export const Wrapper = styled.form`
   width: 100%;
   height: 100%;
 
-  font: 500 1.8rem/2.2rem 'GmarketSans';
+  font: 500 1.8rem/2.2rem 'NanumSquareRound';
 `;
 
 export const DictionaryPlantImageArea = styled.div`
