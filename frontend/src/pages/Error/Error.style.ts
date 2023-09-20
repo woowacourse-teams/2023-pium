@@ -5,10 +5,12 @@ export const Wrapper = styled.main`
   flex-direction: column;
   row-gap: 30px;
   align-items: center;
+  justify-content: center;
 
   min-width: ${({ theme }) => theme.width.mobile};
   max-width: ${({ theme }) => theme.width.pad};
-  margin: 0 auto 0 auto;
+  height: 100%;
+  margin: 0 auto;
 `;
 
 export const Section = styled.div`
@@ -17,13 +19,20 @@ export const Section = styled.div`
   row-gap: 15px;
   align-items: center;
 
-  width: 90%;
+  width: 334px;
 
   text-align: center;
 `;
 
+export const ButtonSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 334px;
+`;
+
 export const SadPiumiImage = styled.img`
   width: 250px;
+  height: 160px;
 `;
 
 export const Title = styled.h1`
@@ -35,7 +44,7 @@ export const Text = styled.p`
 `;
 
 export const Button = styled.button`
-  width: ${({ theme }) => theme.width.mobile};
+  width: 150px;
   height: 50px;
 
   font-size: 1.6rem;

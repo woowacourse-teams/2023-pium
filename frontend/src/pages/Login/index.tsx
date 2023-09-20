@@ -56,9 +56,7 @@ const Login = () => {
       </ContentBox>
 
       <LoginBox>
-        <GoToMain to={URL_PATH.main} aria-label="메인으로 돌아가기">
-          메인으로 돌아가기
-        </GoToMain>
+        <GoToMain to={URL_PATH.main}>메인으로 돌아가기</GoToMain>
         <Link to={AUTHORIZATION_URL} aria-label="카카오로 로그인하기">
           <picture>
             <source srcSet={KakaoLoginLargeWebp} type="image/webp" />

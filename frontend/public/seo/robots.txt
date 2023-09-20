@@ -1,0 +1,13 @@
+# *
+User-agent: *
+Disallow: /404
+
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://pium.life/
+
+# Sitemaps
+Sitemap: https://pium.life/sitemap.xml
