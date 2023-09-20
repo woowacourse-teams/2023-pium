@@ -29,7 +29,7 @@ const PetPlantCard = ({
     <Wrapper>
       <CrownArea>{isBirthday && <SvgIcons icon="crown" size={64} aria-hidden />}</CrownArea>
       <ImageArea>
-        <Image src={imageUrl} type="square" size="100%" alt="반려 식물 이미지" />
+        <Image src={imageUrl} type="square" size="160px" alt="반려 식물 이미지" />
       </ImageArea>
       <ContentArea>
         <Nickname aria-label="식물 별명">{nickname} </Nickname>
