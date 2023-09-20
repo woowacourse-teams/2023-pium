@@ -6,6 +6,7 @@ import Navbar from 'components/@common/Navbar';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import { FixedButtonArea, FixedButton, List, Main, Message, Sensor } from './GardenPostList.style';
 import selectedDictionaryPlantAtom from 'store/atoms/garden';
+import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useIntersectionRef from 'hooks/useIntersectionRef';
 import { URL_PATH } from 'constants/index';
 import useGardenPostList from '../../hooks/queries/garden/useGardenPostList';
@@ -21,9 +22,9 @@ const GardenPostList = () => {
     selectedDictionaryPlantAtom
   );
 
+  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
   const {
     data: gardenPostList,
-    isLoading,
     isFetchingNextPage,
     hasNextPage,
     fetchNextPage,
@@ -47,6 +48,11 @@ const GardenPostList = () => {
     window.scrollTo(0, 0);
   }, [selectedDictionaryPlant]);
 
+  const Skeletons = () =>
+    Array(SKELETON_LENGTH)
+      .fill(null)
+      .map((_, index) => <GardenPostItemSkeleton key={index} />);
+
   return (
     <>
       <GardenPostListHeader
@@ -55,24 +61,33 @@ const GardenPostList = () => {
         clear={clear}
       />
       <Main>
-        <List>
-          {gardenPostList?.map((gardenPost) => (
-            <GardenPostItem key={gardenPost.id} {...gardenPost} />
-          ))}
-          {(isLoading || isFetchingNextPage) &&
-            Array(SKELETON_LENGTH)
-              .fill(null)
-              .map((_, index) => <GardenPostItemSkeleton key={index} />)}
-        </List>
-        {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
-        {!hasNextPage && <Message>마지막이에요 😊</Message>}
+        {gardenPostList ? (
+          gardenPostList.length ? (
+            <List>
+              {gardenPostList.map((gardenPost) => (
+                <GardenPostItem key={gardenPost.id} {...gardenPost} />
+              ))}
+              {isFetchingNextPage && <Skeletons />}
+              {!hasNextPage && <Message>마지막이에요 😊</Message>}
+              {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
+            </List>
+          ) : (
+            <Message>아직 작성된 글이 없어요 🤔</Message>
+          )
+        ) : (
+          <List>
+            <Skeletons />
+          </List>
+        )}
       </Main>
       <Navbar />
-      <FixedButtonArea>
-        <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">
-          <SvgStroke color="white" size={32} icon="plus" />
-        </FixedButton>
-      </FixedButtonArea>
+      {isLoggedIn && (
+        <FixedButtonArea>
+          <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">
+            <SvgStroke color="white" size={32} icon="plus" />
+          </FixedButton>
+        </FixedButtonArea>
+      )}
     </>
   );
 };

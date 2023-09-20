@@ -31,7 +31,7 @@ export const Button = styled.button`
 `;
 
 export const BottomSheet = styled(Link)`
-  position: fixed;
+  position: absolute;
   right: 12px;
   bottom: 100px;
 

@@ -9,11 +9,11 @@ const gardenHandlers = [
     const pageParam = req.url.searchParams.get('page');
     const page = pageParam ? Number(pageParam) : 0;
 
-    const dictionaryPlantIdParam = req.url.searchParams.get('dictionaryPlantId');
-    const dictionaryPlantId = dictionaryPlantIdParam ? Number(dictionaryPlantIdParam) : null;
+    const filterParam = req.url.searchParams.get('filter');
+    const filter = filterParam ? Number(filterParam) : null;
 
     const hasNext = page < 6;
-    const data = generateGardenPageData(dictionaryPlantId, page, hasNext);
+    const data = generateGardenPageData(filter, page, hasNext);
     const response = {
       page,
       size: data.length,

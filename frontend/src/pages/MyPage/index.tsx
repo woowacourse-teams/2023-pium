@@ -1,3 +1,4 @@
+import { FixedButtonArea } from 'pages/GardenPostList/GardenPostList.style';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
@@ -40,12 +41,14 @@ const MyPage = () => {
             회원 탈퇴
           </Button>
         </ButtonBox>
+      </Wrapper>
+      <Navbar />
+      <FixedButtonArea>
         <BottomSheet to="https://forms.gle/rQUAi9GbVwrr7oG2A" target="blank">
           <SvgFill icon="survey" color={theme.color.background} size={16} />
           문의하기
         </BottomSheet>
-      </Wrapper>
-      <Navbar />
+      </FixedButtonArea>
     </>
   );
 };

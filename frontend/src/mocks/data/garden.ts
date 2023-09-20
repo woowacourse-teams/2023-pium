@@ -9,7 +9,7 @@ const DICTIONARY_PLANT_MAP: Record<number, string> = {
 };
 
 export const generateGardenPageData = (
-  dictionaryPlantId: number | null,
+  filter: number | null,
   pageParam: number,
   hasNext: boolean
 ) => {
@@ -96,7 +96,7 @@ export const generateGardenPageData = (
           id: pageParam * 100 + 5,
           createdAt: '1999-12-14',
           updatedAt: '1999-12-14',
-          dictionaryPlantName: '참새',
+          dictionaryPlantName: '아',
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
@@ -132,9 +132,9 @@ export const generateGardenPageData = (
         },
       ];
 
-  if (dictionaryPlantId) {
+  if (filter) {
     return page.filter(
-      ({ dictionaryPlantName }) => DICTIONARY_PLANT_MAP[dictionaryPlantId] === dictionaryPlantName
+      ({ dictionaryPlantName }) => DICTIONARY_PLANT_MAP[filter] === dictionaryPlantName
     );
   }
 
