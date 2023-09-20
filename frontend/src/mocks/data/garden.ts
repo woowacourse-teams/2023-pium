@@ -9,7 +9,7 @@ const DICTIONARY_PLANT_MAP: Record<number, string> = {
 };
 
 export const generateGardenPageData = (
-  dictionaryPlantId: number | null,
+  filter: number | null,
   pageParam: number,
   hasNext: boolean
 ) => {
@@ -132,9 +132,9 @@ export const generateGardenPageData = (
         },
       ];
 
-  if (dictionaryPlantId) {
+  if (filter) {
     return page.filter(
-      ({ dictionaryPlantName }) => DICTIONARY_PLANT_MAP[dictionaryPlantId] === dictionaryPlantName
+      ({ dictionaryPlantName }) => DICTIONARY_PLANT_MAP[filter] === dictionaryPlantName
     );
   }
 
