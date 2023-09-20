@@ -1,4 +1,4 @@
-import type { DataResponse } from 'types/DataResponse';
+import type { DataResponse } from 'types/api';
 import type { PetPlantItem } from 'types/petPlant';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import PetPlantAPI, { PET_PLANT_URL } from 'apis/petPlant';

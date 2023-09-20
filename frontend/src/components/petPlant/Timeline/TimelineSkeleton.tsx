@@ -8,13 +8,14 @@ import {
 } from './Timeline.style';
 
 interface SkeletonProps {
+  length: number;
   hasYearHeader?: boolean;
 }
 
-const Skeleton = ({ hasYearHeader }: SkeletonProps) => (
+const TimelineSkeleton = ({ length, hasYearHeader }: SkeletonProps) => (
   <>
     {hasYearHeader && <YearHeader />}
-    {Array(10)
+    {Array(length)
       .fill(null)
       .map((_, index) => (
         <DayArea key={index}>
@@ -29,4 +30,4 @@ const Skeleton = ({ hasYearHeader }: SkeletonProps) => (
   </>
 );
 
-export default Skeleton;
+export default TimelineSkeleton;

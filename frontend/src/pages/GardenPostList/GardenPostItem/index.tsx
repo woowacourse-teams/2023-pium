@@ -7,7 +7,7 @@ import {
   ContentArea,
   DaySince,
   DictionaryPlantTag,
-  Environment,
+  GreenBox,
   EnvironmentItem,
   EnvironmentTitle,
   Header,
@@ -19,6 +19,7 @@ import {
   TagArea,
   WaterCycleTag,
   Wrapper,
+  TagRow,
 } from './GardenPostItem.styles';
 
 type GardenPostItemProps = Omit<GardenPostItemType, 'id' | 'updatedAt'>;
@@ -47,12 +48,19 @@ const GardenPostItem = ({
         </HeaderContent>
         <PostingDate>{postingDate}</PostingDate>
       </Header>
+      <ContentArea>
+        <SeeMoreContentBox maxHeight="64px">{content}</SeeMoreContentBox>
+      </ContentArea>
       <TagArea>
-        <DictionaryPlantTag>{dictionaryPlantName}</DictionaryPlantTag>
-        <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
-        {manageLevel !== '정보없음' && <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>}
+        <TagRow>
+          <DictionaryPlantTag>{dictionaryPlantName}</DictionaryPlantTag>
+          <WaterCycleTag>물 주기: {petPlant.waterCycle}일</WaterCycleTag>
+          {manageLevel !== '정보없음' && (
+            <ManageLevelTag>{manageLevel}에게 추천해요</ManageLevelTag>
+          )}
+        </TagRow>
       </TagArea>
-      <Environment>
+      <GreenBox>
         <EnvironmentItem>
           <EnvironmentTitle>
             <SvgFill
@@ -101,10 +109,7 @@ const GardenPostItem = ({
           </EnvironmentTitle>
           {petPlant.wind}
         </EnvironmentItem>
-      </Environment>
-      <ContentArea>
-        <SeeMoreContentBox>{content}</SeeMoreContentBox>
-      </ContentArea>
+      </GreenBox>
     </Wrapper>
   );
 };

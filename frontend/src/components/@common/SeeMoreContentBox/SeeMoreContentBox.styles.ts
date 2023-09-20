@@ -14,7 +14,6 @@ export const ContentBox = styled.div<{ $hiddenOver: boolean; $maxHeight: string 
 
 export const SeeMoreButtonArea = styled.div`
   position: absolute;
-  z-index: ${(props) => props.theme.zIndex.fixed};
   bottom: 0;
 
   display: flex;

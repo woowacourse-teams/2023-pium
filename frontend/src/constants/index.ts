@@ -12,13 +12,13 @@ export const URL_PATH = {
   petEdit: '/pet/:id/edit',
   petRegisterSearch: '/pet/register',
   petRegisterForm: '/pet/register/:id',
+  reminder: '/reminder',
+  garden: '/garden',
   gardenRegisterPick: '/garden/register',
   gardenRegisterForm: '/garden/register/:id',
-  reminder: '/reminder',
   login: '/login',
   authorization: '/authorization',
   myPage: '/myPage',
-  garden: '/garden',
   newDictionaryPlantRequest: '/dict/new-plant-request',
 } as const;
 

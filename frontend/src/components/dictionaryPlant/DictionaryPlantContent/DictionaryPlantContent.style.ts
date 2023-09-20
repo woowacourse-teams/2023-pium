@@ -12,6 +12,12 @@ export const HeaderBox = styled.section`
   border-bottom: 1px solid ${(props) => props.theme.color.grayLight};
 `;
 
+export const Name = styled.p`
+  font: 900 2.4rem/4rem 'GmarketSans';
+  color: ${(props) => props.theme.color.sub};
+  text-align: left;
+`;
+
 export const FamilyName = styled.p`
   margin-bottom: 4px;
   font: 500 1.2rem/1.6rem 'GmarketSans';
@@ -19,10 +25,17 @@ export const FamilyName = styled.p`
   text-align: left;
 `;
 
-export const Name = styled.p`
-  font: 900 2.4rem/4rem 'GmarketSans';
+export const GardenButton = styled.button`
+  display: flex;
+  column-gap: 4px;
+  align-items: center;
+
+  height: 24px;
+  margin-top: 16px;
+
+  font-size: 1.4rem;
+  font-weight: 600;
   color: ${(props) => props.theme.color.sub};
-  text-align: left;
 `;
 
 export const ContentBox = styled.section`
