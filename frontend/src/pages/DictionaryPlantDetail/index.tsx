@@ -14,7 +14,7 @@ const DictionaryPlantDetail = () => {
   const { id } = useParams();
   if (!id) throw new Error('URL에 id가 없습니다.');
 
-  const { isSuccess: isLoggedin } = useCheckSessionId(false);
+  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
   const addToast = useAddToast();
 
   const dictionaryPlantId = Number(id);
@@ -47,7 +47,7 @@ const DictionaryPlantDetail = () => {
         <DictionaryPlantContent {...dictionaryPlantDetail} />
       </Main>
       <BottomSheet>
-        <PrimaryButton onClick={isLoggedin ? goPetPlantRegisterForm : warning}>
+        <PrimaryButton onClick={isLoggedIn ? goPetPlantRegisterForm : warning}>
           반려 식물로 등록하기
         </PrimaryButton>
       </BottomSheet>

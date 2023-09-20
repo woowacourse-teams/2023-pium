@@ -22,7 +22,7 @@ const GardenPostList = () => {
     selectedDictionaryPlantAtom
   );
 
-  const { isSuccess: isLoggedin } = useCheckSessionId(false);
+  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
   const {
     data: gardenPostList,
     isLoading,
@@ -70,7 +70,7 @@ const GardenPostList = () => {
         {!hasNextPage && <Message>마지막이에요 😊</Message>}
       </Main>
       <Navbar />
-      {isLoggedin && (
+      {isLoggedIn && (
         <FixedButtonArea>
           <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">
             <SvgStroke color="white" size={32} icon="plus" />
