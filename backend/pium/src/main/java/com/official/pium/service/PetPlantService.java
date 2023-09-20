@@ -39,6 +39,9 @@ public class PetPlantService {
     @Value("${petPlant.image.directory}")
     private String workingDirectory;
 
+    @Value("${aws.s3.root}")
+    private String rootPath;
+
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
@@ -107,7 +110,7 @@ public class PetPlantService {
     }
 
     @Transactional
-    public void update(Long id, PetPlantUpdateRequest updateRequest, Member member) {
+    public void update(Long id, PetPlantUpdateRequest updateRequest, MultipartFile image, Member member) {
         PetPlant petPlant = petPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 반려 식물이 존재하지 않습니다. id: " + id));
 
@@ -115,15 +118,32 @@ public class PetPlantService {
 
         validateLastWaterDate(updateRequest, petPlant);
 
+        String imageUrl = updateImage(image, petPlant.getImageUrl());
         PetPlantHistory previousPetPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         petPlant.updatePetPlant(
                 updateRequest.getNickname(), updateRequest.getLocation(),
                 updateRequest.getFlowerpot(), updateRequest.getLight(),
                 updateRequest.getWind(), updateRequest.getWaterCycle(),
-                updateRequest.getBirthDate(), updateRequest.getLastWaterDate()
+                updateRequest.getBirthDate(), updateRequest.getLastWaterDate(),
+                imageUrl
         );
         PetPlantHistory currentPetPlantHistory = PetPlantMapper.toPetPlantHistory(petPlant);
         publishPetPlantHistories(petPlant, previousPetPlantHistory, currentPetPlantHistory);
+    }
+
+    private String updateImage(MultipartFile image, String originalImageUrl) {
+        if (image == null || image.isEmpty()) {
+            return originalImageUrl;
+        }
+        deleteImageIfExists(originalImageUrl);
+        return photoManager.upload(image, workingDirectory);
+    }
+
+    private void deleteImageIfExists(String originalImageUrl) {
+        if (originalImageUrl.contains(rootPath + "/petPlant")) {
+            String fileName = originalImageUrl.substring(rootPath.length() - 1);
+            photoManager.delete(fileName);
+        }
     }
 
     private void publishPetPlantHistories(PetPlant petPlant, PetPlantHistory previousPetPlantHistory,

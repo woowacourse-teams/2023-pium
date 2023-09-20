@@ -5,6 +5,8 @@
 ==== Request
 
 include::{snippets}/petPlant/create/http-request.adoc[]
+include::{snippets}/petPlant/create/request-part-request-body.adoc[]
+include::{snippets}/petPlant/create/request-parts.adoc[]
 
 ==== Response
 
@@ -36,7 +38,9 @@ include::{snippets}/petPlant/findAll/http-response.adoc[]
 ==== Request
 
 include::{snippets}/petPlant/update/http-request.adoc[]
+include::{snippets}/petPlant/update/request-part-request-body.adoc[]
 include::{snippets}/petPlant/update/path-parameters.adoc[]
+include::{snippets}/petPlant/update/request-parts.adoc[]
 
 ==== Response
 

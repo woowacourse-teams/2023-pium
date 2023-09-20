@@ -191,9 +191,14 @@ class PetPlantServiceTest extends IntegrationTest {
         @Test
         void 정보_수정() {
             PetPlant petPlant = petPlantSupport.builder().member(member).build();
-            PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
+            String petPlantImageUrl = petPlant.getImageUrl();
 
-            petPlantService.update(petPlant.getId(), updateRequest, member);
+            PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
+            MultipartFile multipartFile = FileFixture.generateMultiPartFile();
+            given(amazonS3.putObject(any(PutObjectRequest.class)))
+                    .willReturn(new PutObjectResult());
+
+            petPlantService.update(petPlant.getId(), updateRequest, multipartFile, member);
             PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
 
             assertSoftly(
@@ -206,6 +211,7 @@ class PetPlantServiceTest extends IntegrationTest {
                         assertThat(updatedPetPlant.getWaterCycle()).isEqualTo(updateRequest.getWaterCycle());
                         assertThat(updatedPetPlant.getBirthDate()).isEqualTo(updateRequest.getBirthDate());
                         assertThat(updatedPetPlant.getLastWaterDate()).isEqualTo(updateRequest.getLastWaterDate());
+                        assertThat(updatedPetPlant.getImageUrl()).isNotEqualTo(petPlantImageUrl);
                     }
             );
         }
@@ -216,7 +222,7 @@ class PetPlantServiceTest extends IntegrationTest {
             PetPlant petPlant = petPlantSupport.builder().member(member).build();
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
 
-            assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, otherMember))
+            assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, null, otherMember))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. memberId: " + otherMember.getId());
         }
@@ -226,14 +232,13 @@ class PetPlantServiceTest extends IntegrationTest {
             Long wrongId = -1L;
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
 
-            assertThatThrownBy(() -> petPlantService.update(wrongId, updateRequest, member))
+            assertThatThrownBy(() -> petPlantService.update(wrongId, updateRequest, null, member))
                     .isInstanceOf(NoSuchElementException.class)
                     .hasMessage("일치하는 반려 식물이 존재하지 않습니다. id: " + wrongId);
         }
 
         @Test
         void 마지막으로_물준_날짜가_직전값과_같으면_예외_발생() {
-            // given
             LocalDate baseDate = LocalDate.of(2022, 3, 4);
             PetPlant petPlant = petPlantSupport.builder()
                     .member(member)
@@ -266,14 +271,13 @@ class PetPlantServiceTest extends IntegrationTest {
                     .lastWaterDate(firstDate)
                     .build();
 
-            assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, member))
+            assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, null, member))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
         }
 
         @Test
         void 마지막으로_물준_날짜가_직전값보다_이전이면_예외_발생() {
-            // given
             LocalDate baseDate = LocalDate.of(2022, 3, 4);
             PetPlant petPlant = petPlantSupport.builder()
                     .member(member)
@@ -305,7 +309,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .lastWaterDate(firstDate.minusDays(5))
                     .build();
 
-            assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, member))
+            assertThatThrownBy(() -> petPlantService.update(petPlant.getId(), updateRequest, null, member))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
         }

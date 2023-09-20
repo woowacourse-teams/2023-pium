@@ -40,13 +40,13 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 존재하지_않는_사용자라면_404_반환() {
             DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(dictionaryPlant.getId());
-            MultiPartSpecification data = getMultiPartSpecification(request);
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
             String invalidSessionId = "invalidSessionId";
 
             RestAssured
                     .given()
                     .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                    .multiPart(data)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(invalidSessionId)
                     .when()
@@ -60,13 +60,13 @@ public class PetPlantApiTest extends AcceptanceTest {
         @Test
         void 존재하지_않는_사전_식물을_참조하면_404_반환() {
             PetPlantCreateRequest request = REQUEST.generatePetPlantCreateRequest(3L);
-            MultiPartSpecification data = getMultiPartSpecification(request);
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
             String sessionId = 로그인_요청();
 
             RestAssured
                     .given()
                     .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                    .multiPart(data)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -118,12 +118,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .birthDate(LocalDate.of(2020, 1, 3))
                     .lastWaterDate(LocalDate.now().plusDays(2))
                     .build();
-            MultiPartSpecification data = getMultiPartSpecification(request);
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
                     .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                    .multiPart(data)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -150,12 +150,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .birthDate(LocalDate.now().plusDays(2))
                     .lastWaterDate(LocalDate.of(2022, 2, 3))
                     .build();
-            MultiPartSpecification data = getMultiPartSpecification(request);
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
                     .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                    .multiPart(data)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -409,11 +409,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .build();
 
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(invalidSessionId)
                     .when()
@@ -435,11 +436,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .build();
 
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -462,11 +464,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .build();
 
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -500,11 +503,12 @@ public class PetPlantApiTest extends AcceptanceTest {
 
             PetPlantUpdateRequest request = REQUEST.generatePetPlantUpdateRequest(
                     createRequest.getLastWaterDate().plusDays(2));
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -528,11 +532,12 @@ public class PetPlantApiTest extends AcceptanceTest {
                     .birthDate(LocalDate.of(2000, 1, 3))
                     .lastWaterDate(LocalDate.parse(lastWaterDate))
                     .build();
+            MultiPartSpecification data2 = getMultiPartSpecification(request2);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(data2)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -544,16 +549,16 @@ public class PetPlantApiTest extends AcceptanceTest {
             ExtractableResponse<Response> response = 반려_식물_단건_조회(반려_식물_ID);
 
             assertSoftly(softly -> {
-                softly.assertThat(response.jsonPath().getString("nickname")).isEqualTo(request.getNickname());
-                softly.assertThat(response.jsonPath().getString("flowerpot")).isEqualTo(request.getFlowerpot());
-                softly.assertThat(response.jsonPath().getString("location")).isEqualTo(request.getLocation());
-                softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request.getWaterCycle());
-                softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request.getLight());
-                softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request.getWind());
+                softly.assertThat(response.jsonPath().getString("nickname")).isEqualTo(request2.getNickname());
+                softly.assertThat(response.jsonPath().getString("flowerpot")).isEqualTo(request2.getFlowerpot());
+                softly.assertThat(response.jsonPath().getString("location")).isEqualTo(request2.getLocation());
+                softly.assertThat(response.jsonPath().getInt("waterCycle")).isEqualTo(request2.getWaterCycle());
+                softly.assertThat(response.jsonPath().getString("light")).isEqualTo(request2.getLight());
+                softly.assertThat(response.jsonPath().getString("wind")).isEqualTo(request2.getWind());
                 softly.assertThat(response.jsonPath().getString("birthDate"))
-                        .isEqualTo(request.getBirthDate().toString());
+                        .isEqualTo(request2.getBirthDate().toString());
                 softly.assertThat(response.jsonPath().getString("lastWaterDate"))
-                        .isEqualTo(request2.getLastWaterDate().toString());
+                        .isEqualTo(request.getLastWaterDate().toString());
             });
         }
 
@@ -575,11 +580,12 @@ public class PetPlantApiTest extends AcceptanceTest {
             반려_식물_물주기(petPlant.getId(), secondWaterDate);
 
             PetPlantUpdateRequest request = REQUEST.generatePetPlantUpdateRequest(firstWaterDate);
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -608,11 +614,12 @@ public class PetPlantApiTest extends AcceptanceTest {
             반려_식물_물주기(petPlant.getId(), secondWaterDate);
 
             PetPlantUpdateRequest request = REQUEST.generatePetPlantUpdateRequest(firstWaterDate.minusDays(3));
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -628,11 +635,12 @@ public class PetPlantApiTest extends AcceptanceTest {
             String sessionId = 로그인_요청();
 
             PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -647,13 +655,14 @@ public class PetPlantApiTest extends AcceptanceTest {
         void 잘못된_반려_식물_ID_라면_400_반환() {
             String sessionId = 로그인_요청();
 
-            PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
             long invalidId = -1;
+            PetPlantUpdateRequest request = REQUEST.피우미_수정_요청;
+            MultiPartSpecification multipartData = getMultiPartSpecification(request);
 
             RestAssured
                     .given()
-                    .contentType(ContentType.JSON)
-                    .body(request)
+                    .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
+                    .multiPart(multipartData)
                     .log().all()
                     .sessionId(sessionId)
                     .when()
@@ -758,12 +767,12 @@ public class PetPlantApiTest extends AcceptanceTest {
     private Long 반려_식물_등록_요청(PetPlantCreateRequest petPlantCreateRequest) {
         String sessionId = 로그인_요청();
 
-        MultiPartSpecification data = getMultiPartSpecification(petPlantCreateRequest);
+        MultiPartSpecification multipartData = getMultiPartSpecification(petPlantCreateRequest);
 
         String petPlantId = RestAssured
                 .given()
                 .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
-                .multiPart(data)
+                .multiPart(multipartData)
                 .log().all()
                 .sessionId(sessionId)
                 .when()
@@ -809,8 +818,8 @@ public class PetPlantApiTest extends AcceptanceTest {
                 .sessionId();
     }
 
-    private MultiPartSpecification getMultiPartSpecification(PetPlantCreateRequest petPlantCreateRequest) {
-        return new MultiPartSpecBuilder(petPlantCreateRequest, ObjectMapperType.JACKSON_2)
+    private MultiPartSpecification getMultiPartSpecification(Object request) {
+        return new MultiPartSpecBuilder(request, ObjectMapperType.JACKSON_2)
                 .controlName("request")
                 .mimeType(MediaType.APPLICATION_JSON_VALUE)
                 .charset("UTF-8")

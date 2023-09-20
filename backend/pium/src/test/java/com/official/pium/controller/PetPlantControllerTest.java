@@ -12,18 +12,21 @@ import static org.springframework.restdocs.cookies.CookieDocumentation.requestCo
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestPartBody;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
@@ -44,10 +47,11 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMultipartHttpServletRequestBuilder;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -71,14 +75,9 @@ class PetPlantControllerTest extends UITest {
             PetPlantResponse response = RESPONSE.피우미_응답;
             given(petPlantService.create(any(PetPlantCreateRequest.class), any(), any(Member.class)))
                     .willReturn(response);
-            MockMultipartFile request = new MockMultipartFile(
-                    "request",
-                    "",
-                    "application/json",
-                    objectMapper.writeValueAsBytes(피우미_등록_요청)
-            );
+            MockMultipartFile request = generateMockMultipartFile(피우미_등록_요청);
 
-            mockMvc.perform(multipart(HttpMethod.POST, "/pet-plants")
+            mockMvc.perform(multipart("/pet-plants")
                             .file(request)
                             .session(session)
                             .contentType(MediaType.MULTIPART_FORM_DATA)
@@ -86,7 +85,12 @@ class PetPlantControllerTest extends UITest {
                     .andDo(document("petPlant/create/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
-                            requestCookies()
+                            requestCookies(),
+                            requestPartBody("request"),
+                            requestParts(
+                                    partWithName("request").description("등록 요청 반려 식물 정보"),
+                                    partWithName("image").description("등록 요청 반려 식물 이미지").optional()
+                            )
                     ))
                     .andExpect(status().isCreated())
                     .andExpect(redirectedUrl("/pet-plants/" + response.getId()))
@@ -98,15 +102,10 @@ class PetPlantControllerTest extends UITest {
             PetPlantResponse response = RESPONSE.피우미_응답;
             given(petPlantService.create(any(PetPlantCreateRequest.class), any(), any(Member.class)))
                     .willReturn(response);
-            MockMultipartFile request = new MockMultipartFile(
-                    "request",
-                    "",
-                    "application/json",
-                    objectMapper.writeValueAsBytes(피우미_등록_요청)
-            );
+            MockMultipartFile request = generateMockMultipartFile(피우미_등록_요청);
             MockMultipartFile multipartFile = (MockMultipartFile) FileFixture.generateMultiPartFile();
 
-            mockMvc.perform(multipart(HttpMethod.POST, "/pet-plants")
+            mockMvc.perform(multipart("/pet-plants")
                             .file(request)
                             .file(multipartFile)
                             .session(session)
@@ -187,43 +186,47 @@ class PetPlantControllerTest extends UITest {
 
         @Test
         void 정상_요청시_200_반환() throws Exception {
-            PetPlantUpdateRequest updateRequest = PetPlantUpdateRequest.builder()
-                    .nickname("피우미 2")
-                    .location("침대 옆")
-                    .flowerpot("유리병")
-                    .waterCycle(10)
-                    .light("빛 많이 필요함")
-                    .wind("바람이 잘 통하는 곳")
-                    .birthDate(LocalDate.of(2020, 1, 3))
-                    .lastWaterDate(LocalDate.of(2020, 1, 5))
-                    .build();
             willDoNothing().given(petPlantService)
-                    .update(anyLong(), any(PetPlantUpdateRequest.class), any(Member.class));
+                    .update(anyLong(), any(PetPlantUpdateRequest.class), any(), any(Member.class));
+            MockMultipartFile request = generateMockMultipartFile(피우미_수정_요청);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON))
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
+                            .characterEncoding(StandardCharsets.UTF_8))
                     .andDo(document("petPlant/update/",
-                            preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            requestCookies(),
-                            pathParameters(
-                                    parameterWithName("id").description("반려 식물 ID")
-                            ))
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestPartBody("request"),
+                                    requestCookies(),
+                                    pathParameters(
+                                            parameterWithName("id").description("반려 식물 ID")
+                                    ),
+                                    requestParts(
+                                            partWithName("request").description("수정 요청 반려 식물 정보"),
+                                            partWithName("image").description("수정 요청 반려 식물 이미지").optional()
+                                    )
+                            )
                     )
                     .andExpect(status().isOk())
                     .andDo(print());
+
         }
 
         @Test
         void 잘못된_ID로_수정하면_400을_반환() throws Exception {
             Long wrongId = -1L;
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", wrongId);
+            MockMultipartFile request = generateMockMultipartFile(피우미_수정_요청);
 
-            mockMvc.perform(patch("/pet-plants/{id}", wrongId)
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(피우미_수정_요청))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
@@ -245,10 +248,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2023, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 닉네임은 필수 값입니다.")))
@@ -270,10 +277,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("화분 정보는 필수 값입니다.")))
@@ -295,10 +306,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("화분 위치는 필수 값입니다.")))
@@ -318,10 +333,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("물주기 주기 값은 필수 값입니다.")))
@@ -341,10 +360,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("물주기 주기 값은 양수만 가능합니다.")))
@@ -366,10 +389,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("조도 정보는 필수 값입니다.")))
@@ -391,10 +418,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("통풍 정보는 필수 값입니다.")))
@@ -414,10 +445,14 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(LocalDate.of(2020, 1, 3))
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 입양일은 필수 값입니다.")))
@@ -437,14 +472,31 @@ class PetPlantControllerTest extends UITest {
                     .lastWaterDate(null)
                     .build();
 
-            mockMvc.perform(patch("/pet-plants/{id}", 1L)
+            MockMultipartFile request = generateMockMultipartFile(updateRequest);
+            MockMultipartHttpServletRequestBuilder requestBuilder = generateMultipartRequestBuilderForPatch(
+                    "/pet-plants/{id}", 1L);
+
+            mockMvc.perform(requestBuilder
+                            .file(request)
                             .session(session)
-                            .content(objectMapper.writeValueAsString(updateRequest))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(MediaType.MULTIPART_FORM_DATA)
                             .characterEncoding(StandardCharsets.UTF_8))
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value(containsString("마지막 물주기 날짜는 필수 값입니다.")))
                     .andDo(print());
+        }
+
+        private static MockMultipartHttpServletRequestBuilder generateMultipartRequestBuilderForPatch(String uri,
+                                                                                                      Object... pathVariables) {
+            MockMultipartHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders.
+                    multipart(uri, pathVariables);
+
+            requestBuilder.with(request -> {
+                request.setMethod("PATCH");
+                return request;
+            });
+
+            return requestBuilder;
         }
     }
 
@@ -481,5 +533,13 @@ class PetPlantControllerTest extends UITest {
                     .andExpect(jsonPath("$.message").value(containsString("반려 식물 ID는 1이상의 값이어야 합니다.")))
                     .andDo(print());
         }
+    }
+
+    private MockMultipartFile generateMockMultipartFile(Object request) throws JsonProcessingException {
+        return new MockMultipartFile(
+                "request",
+                "",
+                "application/json",
+                objectMapper.writeValueAsBytes(request));
     }
 }
