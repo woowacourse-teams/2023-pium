@@ -78,6 +78,10 @@ module.exports = (env) => ({
           from: resolve(__dirname, 'public', 'fonts'),
           to: resolve(__dirname, 'dist', 'fonts'),
         },
+        {
+          from: resolve(__dirname, 'public', 'seo'),
+          to: resolve(__dirname, 'dist', './'),
+        },
       ],
     }),
     new BundleAnalyzerPlugin({
