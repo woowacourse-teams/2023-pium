@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, useRef } from 'react';
 import type { StyledImageProps } from './Image.style';
 import { StyledImage } from './Image.style';
 import { getResizedImageUrl, isServerStaticData } from 'utils/image';
