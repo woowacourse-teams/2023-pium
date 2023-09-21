@@ -23,7 +23,7 @@ import theme from 'style/theme.style';
 interface SearchBoxProps {
   value: string;
   height?: `${number}px`;
-  fontSize?: string;
+  fontSize?: `${number}rem`;
   showResultSize?: number;
   onChangeValue: (value: string) => void;
   onResultClick?: (searchResult: DictionaryPlantNameSearchResult) => void;

@@ -32,6 +32,7 @@ export const RegisterButton = styled.button`
   height: 224px;
 
   font-size: 3.6rem;
+  line-height: 4.2rem;
   color: ${(props) => props.theme.color.primary};
 
   background: ${(props) => props.theme.color.background};
