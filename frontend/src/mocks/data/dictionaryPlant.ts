@@ -2,7 +2,7 @@ const DICTIONARY_PLANT_DATA = [
   {
     id: 1,
     name: '스킨답서스',
-    image: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+    image: 'https://static.pium.life/dict/dict_plants_1.jpg',
     familyName: '천남성과',
     smell: '거의 없음',
     poison: '많음',
@@ -23,7 +23,7 @@ const DICTIONARY_PLANT_DATA = [
   {
     id: 2,
     name: '투명 피우미',
-    image: 'https://images.unsplash.com/photo-1617677916288-7a5c8e88a285',
+    image: 'https://static.pium.life/dict/dict_plants_1000.jpg',
     familyName: '캠릿브지 대학의 연결구과',
     smell: '정보없음',
     poison: '정보없음',
