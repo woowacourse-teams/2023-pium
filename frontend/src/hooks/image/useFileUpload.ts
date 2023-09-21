@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import useAddToast from 'hooks/useAddToast';
 import basicImage from 'assets/piumi-emotionless.png';
 
@@ -13,7 +13,10 @@ const useFileUpload = ({ imageUrl = basicImage }: FileUploadParams) => {
   const [file, setFile] = useState<Blob | null>(null);
 
   const imgRef = useRef<HTMLInputElement>(null);
-
+  const uploadedImageUrl = useMemo(
+    () => (file ? URL.createObjectURL(file) : imageUrl),
+    [file, imageUrl]
+  );
   const addToast = useAddToast();
 
   const fileUploadHandler: React.ChangeEventHandler<HTMLInputElement> = (event) => {
@@ -50,7 +53,7 @@ const useFileUpload = ({ imageUrl = basicImage }: FileUploadParams) => {
 
   return {
     fileUploadHandler,
-    uploadedImageUrl: file ? URL.createObjectURL(file) : imageUrl,
+    uploadedImageUrl,
     imgRef,
     file,
   };
