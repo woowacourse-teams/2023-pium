@@ -53,13 +53,6 @@ jobs:
           start: npm run local
           wait-on: 'http://localhost:8282'
 
-      - name: Upload screenshots if test failed
-        uses: actions/upload-artifact@v3
-        if: failure()
-        with:
-            name: cypress-screenshots
-            path: cypress/screenshots
-
       # - name: Send slack notification if test failed
       #   if: ${{ failure() }}
       #   uses: 8398a7/action-slack@v3
