@@ -54,7 +54,7 @@ jobs:
           wait-on: 'http://localhost:8282'
 
       - name: Upload screenshots if test failed
-        uses: actions/upload-artifact@latest
+        uses: actions/upload-artifact@v3
         if: failure()
         with:
             name: cypress-screenshots
