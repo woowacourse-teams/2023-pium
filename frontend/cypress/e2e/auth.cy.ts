@@ -3,21 +3,25 @@ import login from '../utils/login';
 describe('비로그인 상태에서는 로그인 페이지로 이동한다.', () => {
   it('리마인더', () => {
     cy.visit('/reminder');
+    cy.wait(3000);
     cy.url().should('match', /login/);
   });
 
   it('내 반려 식물 목록', () => {
     cy.visit('/pet');
+    cy.wait(3000);
     cy.url().should('match', /login/);
   });
 
   it('반려 식물 상세 정보', () => {
     cy.visit('/pet/123');
+    cy.wait(3000);
     cy.url().should('match', /login/);
   });
 
   it('반려 식물 등록: 검색', () => {
     cy.visit('/pet/register');
+    cy.wait(3000);
     cy.url().should('match', /login/);
   });
 
@@ -28,16 +32,19 @@ describe('비로그인 상태에서는 로그인 페이지로 이동한다.', ()
 
   it('마이페이지', () => {
     cy.visit('/myPage');
+    cy.wait(3000);
     cy.url().should('match', /login/);
   });
 
   it('반려 식물 정보 수정', () => {
     cy.visit('/pet/1/edit');
+    cy.wait(3000);
     cy.url().should('match', /login/);
   });
 
   it('타임라인', () => {
     cy.visit('/pet/1/timeline');
+    cy.wait(3000);
     cy.url().should('match', /login/);
   });
 });
