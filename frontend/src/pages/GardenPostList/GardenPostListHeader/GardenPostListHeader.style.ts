@@ -27,7 +27,9 @@ export const FilterTag = styled.p`
   display: flex;
   column-gap: 4px;
   align-items: center;
+
   font-size: 1.4rem;
+  line-height: 1.8rem;
 `;
 
 export const DeleteFilterButton = styled.button`

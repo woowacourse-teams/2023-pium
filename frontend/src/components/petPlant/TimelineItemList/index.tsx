@@ -54,7 +54,8 @@ const TimelineItemList = ({ timelineItemList }: TimelineItemListProps) => (
                 <ItemContent>
                   {hasPrevious && (
                     <>
-                      {previous}일 <SvgIcons icon="arrow-right-alt" color={theme.color.sub} />
+                      {previous}일{' '}
+                      <SvgIcons icon="arrow-right-alt" color={theme.color.sub} size={16} />
                     </>
                   )}
                   {current}일

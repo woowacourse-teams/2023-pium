@@ -47,8 +47,9 @@ export const NavItem = styled.div`
 `;
 
 export const NavLabel = styled.p<{ $active?: boolean }>`
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 700;
+  line-height: 1.5rem;
   color: ${({ $active, theme: { color } }) =>
     $active ? color.fontPrimaryForBackground : color.subLight};
 `;

@@ -69,6 +69,7 @@ const Button = styled.button`
 
   font-size: 1.5rem;
   font-weight: normal;
+  line-height: 2rem;
   letter-spacing: 1px;
 
   border-radius: 8px;

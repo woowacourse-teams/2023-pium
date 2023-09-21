@@ -10,8 +10,7 @@ export const Tag = styled.span<TagProps>`
   margin-right: 10px;
   padding: 8px 12px;
 
-  font-size: 1.2rem;
-  font-weight: 500;
+  font: 500 1.2rem/1.6rem NanumSquareRound;
   color: ${({ theme: { color } }) => color.sub};
 
   background-repeat: no-repeat;
