@@ -2,7 +2,7 @@ import { keyframes, styled } from 'styled-components';
 
 export interface StyledImageProps {
   type: 'circle' | 'square' | 'wide';
-  size: string;
+  size: `${number}px`;
 }
 
 const wave = (size: string) => keyframes`

@@ -110,7 +110,7 @@ const SearchBox = (props: SearchBoxProps) => {
                     alt={name}
                     src={image}
                     type="circle"
-                    size={`calc(${height} * 2/3)`}
+                    size={`${Math.round(numberHeight * (2 / 3))}px`}
                     loading="lazy"
                   />
                   <Name>{name}</Name>
