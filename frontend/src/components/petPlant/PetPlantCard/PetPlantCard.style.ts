@@ -46,6 +46,7 @@ export const Nickname = styled.p`
   width: 100%;
 
   font-size: 1.8rem;
+  line-height: 2.2rem;
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
@@ -54,6 +55,9 @@ export const ContentRow = styled.div`
   display: flex;
   align-items: end;
   justify-content: space-between;
+
+  font-size: 1.4rem;
+  line-height: 1.8rem;
 `;
 
 export const DictionaryPlantName = styled.p`
@@ -61,19 +65,13 @@ export const DictionaryPlantName = styled.p`
 
   width: 70%;
 
-  font-size: 1.4rem;
   color: ${(props) => props.theme.color.grayDark};
   text-overflow: ellipsis;
   white-space: nowrap;
 `;
 
-export const DaySince = styled.p`
-  font-size: 1.4rem;
-`;
-
 export const DaySinceNumber = styled.span`
-  margin-left: 2px;
-  font-size: 1.8rem;
+  margin-left: 1px;
   font-weight: 900;
   color: ${(props) => props.theme.color.primary};
 `;

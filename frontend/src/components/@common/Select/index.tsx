@@ -1,4 +1,4 @@
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { Backdrop, IconArea, OptionBox, OptionItem, SelectedValue, Wrapper } from './Select.style';
 import useToggle from 'hooks/useToggle';
@@ -11,8 +11,20 @@ interface SelectProps {
   placeholder?: string;
 }
 
+const DEFAULT_HEIGHT = 32;
+
 const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
   const { isOn: isOpen, off: close, toggle } = useToggle();
+
+  const selectRef = useRef<HTMLDivElement | null>(null);
+
+  const currentPos = selectRef.current?.getBoundingClientRect();
+  const optionHeight = options.length * 40;
+
+  const topPosition =
+    currentPos && currentPos.top + optionHeight + DEFAULT_HEIGHT > window.innerHeight
+      ? -optionHeight
+      : DEFAULT_HEIGHT;
 
   const select = (option: string) => {
     onChange?.(option);
@@ -34,10 +46,10 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
     return () => {
       window.removeEventListener('keyup', closeOnEscape);
     };
-  }, [isOpen, closeOnEscape]);
+  }, [isOpen, closeOnEscape, options.length]);
 
   return (
-    <Wrapper>
+    <Wrapper ref={selectRef}>
       <SelectedValue
         type="button"
         onClick={toggle}
@@ -52,7 +64,7 @@ const Select = ({ value, options, onChange, placeholder }: SelectProps) => {
       {isOpen && (
         <>
           <Backdrop onClick={close} />
-          <OptionBox role="menu">
+          <OptionBox role="menu" $top={topPosition}>
             {options.map((option) => {
               const selectOnClick = () => select(option);
               const selectOnEnterOrSpace = ({ key }: React.KeyboardEvent<HTMLLIElement>) => {

@@ -67,6 +67,7 @@ export const SubmitButton = styled.button`
 
   font-size: 2rem;
   font-weight: 700;
+  line-height: 2.4rem;
   color: ${({ theme }) => theme.color.background};
   letter-spacing: 1px;
 

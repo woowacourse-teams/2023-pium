@@ -23,7 +23,7 @@ export const generateGardenPageData = (
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
-            imageUrl: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+            imageUrl: 'https://static.pium.life/dict/dict_plants_1.jpg',
             nickname: '루피',
             location: OPTIONS.location[0],
             flowerpot: OPTIONS.flowerPot[0],
@@ -41,7 +41,7 @@ export const generateGardenPageData = (
           content: '이거 이렇게 키워보아요',
           manageLevel: '전문가',
           petPlant: {
-            imageUrl: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+            imageUrl: 'https://static.pium.life/dict/dict_plants_2.jpg',
             nickname: '쵸파',
             location: OPTIONS.location[0],
             flowerpot: OPTIONS.flowerPot[0],
@@ -59,7 +59,7 @@ export const generateGardenPageData = (
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
-            imageUrl: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+            imageUrl: 'https://static.pium.life/dict/dict_plants_3.jpg',
             nickname: '토마토1호',
             location: OPTIONS.location[0],
             flowerpot: OPTIONS.flowerPot[0],
@@ -82,7 +82,7 @@ export const generateGardenPageData = (
           `,
           manageLevel: '초보자',
           petPlant: {
-            imageUrl: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+            imageUrl: 'https://static.pium.life/dict/dict_plants_4.jpg',
             nickname: '뉴기니아봉선화',
             location: OPTIONS.location[0],
             flowerpot: OPTIONS.flowerPot[0],
@@ -100,7 +100,7 @@ export const generateGardenPageData = (
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
-            imageUrl: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+            imageUrl: 'https://static.pium.life/dict/dict_plants_5.jpg',
             nickname: '상디',
             location: OPTIONS.location[0],
             flowerpot: OPTIONS.flowerPot[0],
@@ -120,7 +120,7 @@ export const generateGardenPageData = (
           content: '이거 이렇게 키워보아요',
           manageLevel: '초보자',
           petPlant: {
-            imageUrl: 'https://images.unsplash.com/photo-1598983062491-5934ce558814',
+            imageUrl: 'https://static.pium.life/dict/dict_plants_6789.jpg',
             nickname: '브룩',
             location: OPTIONS.location[0],
             flowerpot: OPTIONS.flowerPot[0],

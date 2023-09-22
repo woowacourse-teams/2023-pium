@@ -80,9 +80,6 @@ export const Text = styled.span`
 `;
 
 export const Strong = styled.strong`
-  font: ${({ theme }) => theme.font.dictContent};
-  font-size: 2.4rem;
-  font-weight: bold;
   color: ${({ theme }) => theme.color.primary};
 `;
 
@@ -161,8 +158,8 @@ export const EnvironmentTitle = styled.span`
 
 export const ButtonArea = styled.div`
   display: flex;
-  justify-content: space-between;
   column-gap: 10px;
+  justify-content: space-between;
 `;
 
 const ButtonLink = styled(Link)`
@@ -174,7 +171,8 @@ const ButtonLink = styled(Link)`
   height: 36px;
 
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 700;
+  line-height: 1.8rem;
   letter-spacing: 1px;
 
   border-radius: 4px;

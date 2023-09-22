@@ -10,7 +10,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
       id: 1,
       name: '백엔드1',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1457530378978-8bac673b8062',
+    imageUrl: 'https://static.pium.life/dict/dict_plants_1.jpg',
     birthDate: '2023-03-03',
     daySince: 9,
 
@@ -32,7 +32,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
       id: 2,
       name: '백엔드2',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1457530378978-8bac673b8062',
+    imageUrl: 'https://static.pium.life/dict/dict_plants_2.jpg',
     birthDate: '2023-04-04',
     daySince: 99,
 
@@ -54,7 +54,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
       id: 3,
       name: '백엔드3',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1457530378978-8bac673b8062',
+    imageUrl: 'https://static.pium.life/dict/dict_plants_3.jpg',
     birthDate: '2023-05-05',
     daySince: 999,
 
@@ -76,7 +76,7 @@ const PET_PLANTS_DATA: PetPlantDetails[] = [
       id: 4,
       name: '백엔드4',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1457530378978-8bac673b8062',
+    imageUrl: 'https://static.pium.life/dict/dict_plants_4.jpg',
     birthDate: getDateToString(),
     daySince: 9999,
 

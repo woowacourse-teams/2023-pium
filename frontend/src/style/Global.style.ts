@@ -17,6 +17,7 @@ export const GlobalStyle = createGlobalStyle`
   html,
   body {
     scrollbar-width: none;
+    width: 100%;
     font-size: 62.5%;
   }
 

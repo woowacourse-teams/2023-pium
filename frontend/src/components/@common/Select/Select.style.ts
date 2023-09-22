@@ -60,10 +60,10 @@ export const Backdrop = styled.div`
   height: 100%;
 `;
 
-export const OptionBox = styled.ul`
+export const OptionBox = styled.ul<{ $top?: number }>`
   position: absolute;
   z-index: ${({ theme: { zIndex } }) => zIndex.modal};
-  top: 32px;
+  top: ${(props) => props.$top ?? 32}px;
 
   width: 100%;
 

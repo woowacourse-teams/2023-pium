@@ -162,8 +162,11 @@ export const HiddenLabel = styled.label`
 
 export const Input = styled.input`
   height: 30px;
+
   font-size: 2.5rem;
+  line-height: 3rem;
   text-align: center;
+
   border: none;
 
   &:focus {
@@ -194,7 +197,8 @@ const Button = styled.button`
   height: 36px;
 
   font-size: 1.5rem;
-  font-weight: 500;
+  font-weight: 700;
+  line-height: 1.8rem;
   letter-spacing: 1px;
 
   border-radius: 4px;

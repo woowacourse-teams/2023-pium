@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Wrapper = styled.div<{ $fontSize: string }>`
+export const Wrapper = styled.div<{ $fontSize: `${number}rem` }>`
   position: relative;
 
   display: flex;
@@ -10,6 +10,10 @@ export const Wrapper = styled.div<{ $fontSize: string }>`
   width: 100%;
 
   font-size: ${(props) => props.$fontSize};
+  line-height: ${(props) => {
+    const font = Number(props.$fontSize.slice(0, -3));
+    return `${Math.ceil(font * 1.2)}rem`;
+  }};
 `;
 
 export const InputBox = styled.div<{ $openBottom: boolean; $height: string }>`

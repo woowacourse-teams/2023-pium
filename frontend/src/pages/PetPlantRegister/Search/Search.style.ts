@@ -14,6 +14,7 @@ export const Wrapper = styled.main`
 export const Message = styled.p`
   margin-top: 20%;
   font-size: 3rem;
+  line-height: 3.6rem;
 `;
 
 export const SearchBoxArea = styled.div`

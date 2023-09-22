@@ -10,8 +10,7 @@ export const Tag = styled.span<TagProps>`
   margin-right: 10px;
   padding: 8px 12px;
 
-  font-size: 1.2rem;
-  font-weight: 500;
+  font: 500 1.2rem/1.6rem NanumSquareRound;
   color: ${({ theme: { color } }) => color.sub};
 
   background-repeat: no-repeat;
@@ -60,12 +59,14 @@ export const StyledForm = styled.form`
 export const Question = styled.p`
   margin-bottom: 15px;
   font-size: 1.4rem;
+  line-height: 1.8rem;
 `;
 
 export const QuestionLabel = styled.label`
   display: block;
   margin-bottom: 15px;
   font-size: 1.4rem;
+  line-height: 1.8rem;
 `;
 
 export const TextArea = styled.textarea`
@@ -82,6 +83,7 @@ export const TextArea = styled.textarea`
 export const TextLengthNotice = styled.p`
   margin-top: 10px;
   font-size: 1.2rem;
+  line-height: 1.5rem;
   text-align: right;
 `;
 

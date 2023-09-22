@@ -23,7 +23,7 @@ import theme from 'style/theme.style';
 interface SearchBoxProps {
   value: string;
   height?: `${number}px`;
-  fontSize?: string;
+  fontSize?: `${number}rem`;
   showResultSize?: number;
   onChangeValue: (value: string) => void;
   onResultClick?: (searchResult: DictionaryPlantNameSearchResult) => void;
@@ -110,7 +110,7 @@ const SearchBox = (props: SearchBoxProps) => {
                     alt={name}
                     src={image}
                     type="circle"
-                    size={`calc(${height} * 2/3)`}
+                    size={`${Math.round(numberHeight * (2 / 3))}px`}
                     loading="lazy"
                   />
                   <Name>{name}</Name>
