@@ -6,7 +6,7 @@ export const Main = styled.main`
   width: 100%;
   height: calc(100% - 90px);
   margin-bottom: 70px;
-  padding: 8px;
+  padding: 85px 8px 8px 8px;
 `;
 
 export const List = styled.ul`
