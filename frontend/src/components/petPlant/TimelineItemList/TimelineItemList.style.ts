@@ -20,19 +20,21 @@ export const IconArea = styled.div`
 
   width: 16px;
   height: 100%;
-  margin-right: 12px;
-
-  font-size: 2rem;
+  margin-right: 8px;
 `;
 
 export const ItemHead = styled.p`
   font-size: 1.4rem;
+  line-height: 1.8rem;
   color: ${(props) => props.theme.color.sub};
 `;
 
 export const ItemContent = styled.p`
   display: flex;
   align-items: center;
+
   margin-top: 8px;
-  font-size: 1rem;
+
+  font-size: 1.2rem;
+  line-height: 1.6rem;
 `;

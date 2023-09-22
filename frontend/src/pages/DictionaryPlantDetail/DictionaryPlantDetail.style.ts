@@ -10,7 +10,6 @@ export const Main = styled.main`
 export const BackButton = styled.button`
   display: flex;
   align-items: center;
-  font-size: 2rem;
 `;
 
 export const BottomSheet = styled.div`
@@ -39,8 +38,7 @@ const Button = styled.button`
   height: 36px;
   padding: 0 1rem;
 
-  font-size: 1.5rem;
-  font-weight: 500;
+  font: 500 1.5rem/ 1.8rem NanumSquareRound;
   letter-spacing: 1px;
 
   border-radius: 4px;

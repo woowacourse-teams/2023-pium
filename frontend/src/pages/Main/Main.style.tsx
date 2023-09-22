@@ -14,8 +14,10 @@ export const Wrapper = styled.div`
 
 export const LogoMessage = styled.p`
   margin-top: 15vh;
+
   font-size: 2.4rem;
-  font-weight: 500;
+  font-weight: 900;
+  line-height: 3rem;
   color: ${(props) => props.theme.color.primary};
 `;
 
@@ -38,8 +40,11 @@ export const bounce = keyframes`
 
 export const SearchMessage = styled.p`
   margin-top: 40px;
+
   font-size: 1.6rem;
-  color: #333333;
+  line-height: 2rem;
+  color: ${({ theme }) => theme.color.sub};
+
   animation: ${bounce} 6s infinite;
 `;
 

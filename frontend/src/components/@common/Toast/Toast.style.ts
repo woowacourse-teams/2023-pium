@@ -64,16 +64,13 @@ export const MessageArea = styled.div`
 export const Title = styled.p`
   width: 100%;
   margin-bottom: 8px;
-
-  font-size: 2rem;
-  font-weight: 900;
+  font: 900 2rem/2.4rem NanumSquareRound;
   vertical-align: center;
 `;
 
 export const Message = styled.p`
   width: 100%;
-  font-size: 1.8rem;
-  font-weight: 600;
+  font: 600 1.8rem/2.2rem NanumSquareRound;
 `;
 
 export const ToastListWrapper = styled.div`

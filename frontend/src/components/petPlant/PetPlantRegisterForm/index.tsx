@@ -52,7 +52,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
   const isValidForm = Object.values(form).every((value) => value !== '');
 
   const addToast = useAddToast();
-  const { mutate: registerPetPlant } = useRegisterPetPlant();
+  const { mutate: registerPetPlant, isPending } = useRegisterPetPlant();
 
   const setNickname = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
     dispatch({ type: 'SET', key: 'nickname', maxLength: NUMBER.maxNicknameLength, value });
@@ -232,7 +232,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
         </Stack.Element>
         <Stack.Element height={STACK_ELEMENT_HEIGHT}>
           <Center>
-            <Button type="submit" disabled={!isValidForm}>
+            <Button type="submit" disabled={!isValidForm || isPending}>
               등록하기
             </Button>
           </Center>

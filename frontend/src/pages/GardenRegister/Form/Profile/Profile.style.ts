@@ -87,6 +87,7 @@ export const EnvironmentItem = styled.p`
   width: 100%;
 
   font-size: 1.2rem;
+  line-height: 1.5rem;
 `;
 
 export const EnvironmentTitle = styled.span`
@@ -109,6 +110,8 @@ export const StyledLink = styled(Link)`
   margin-top: 10px;
   margin-right: 5%;
 
+  font-size: 1.2rem;
+  line-height: 1.5rem;
   text-align: end;
   text-decoration: underline;
 `;

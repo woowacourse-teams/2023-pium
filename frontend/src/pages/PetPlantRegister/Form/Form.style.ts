@@ -22,7 +22,6 @@ export const Header = styled.header`
 export const BackLink = styled(Link)`
   display: flex;
   align-items: center;
-  font-size: 2rem;
 `;
 
 export const Main = styled.main`
@@ -38,6 +37,7 @@ export const Main = styled.main`
 
 export const DictionaryPlantName = styled.p`
   font-size: 3rem;
+  line-height: 3.6rem;
 `;
 
 export const DictionaryPlantButton = styled.button`

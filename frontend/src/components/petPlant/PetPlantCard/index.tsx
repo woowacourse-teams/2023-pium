@@ -5,7 +5,6 @@ import {
   ContentArea,
   ContentRow,
   CrownArea,
-  DaySince,
   DaySinceNumber,
   DictionaryPlantName,
   ImageArea,
@@ -35,9 +34,9 @@ const PetPlantCard = ({
         <Nickname aria-label="식물 별명">{nickname} </Nickname>
         <ContentRow>
           <DictionaryPlantName aria-label="식물 종류">{dictionaryPlantName}</DictionaryPlantName>
-          <DaySince aria-label="식물과 같이 지낸 시간">
+          <p aria-label="식물과 같이 지낸 시간">
             D+<DaySinceNumber>{daySince}</DaySinceNumber>
-          </DaySince>
+          </p>
         </ContentRow>
       </ContentArea>
     </Wrapper>
