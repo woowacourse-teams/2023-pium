@@ -1,4 +1,4 @@
-import { ALLOWED_IMAGE_EXTENSIONS } from 'constants/index';
+import { ALLOWED_IMAGE_EXTENSIONS, STATIC_BASE_URL } from 'constants/index';
 
 export const getFirstImage = (fileList: FileList, maxByteSize: File['size'] = 5_000_000) => {
   const firstImage = Array.from(fileList).find(
@@ -14,6 +14,16 @@ export const getImageUrl = (file: File) => {
 
 export const isAllowedImageExtension = (file: File) =>
   ALLOWED_IMAGE_EXTENSIONS.includes(file.type.toLowerCase());
+
+/**
+ * 주어진 url이 피움 서비스의 정적 자료 주소인지 확인합니다.
+ * @param url 문자열
+ * @returns 피움이 제공하는 정적 자료일 경우 `true`
+ */
+export const isServerStaticData = (url: string) => {
+  const regex = new RegExp(`^${STATIC_BASE_URL}`);
+  return regex.test(url);
+};
 
 const X_SMALL_WIDTH = 64;
 const SMALL_WIDTH = 256;
