@@ -1,5 +1,5 @@
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
-import { Header } from 'pages/PetPlantRegister/Form/Form.style';
+import { Header } from 'pages/petPlant/PetPlantRegister/Form/Form.style';
 import Image from 'components/@common/Image';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';

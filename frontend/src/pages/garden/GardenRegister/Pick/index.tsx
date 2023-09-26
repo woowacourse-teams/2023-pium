@@ -1,5 +1,5 @@
 import { Link, generatePath } from 'react-router-dom';
-import { CardList, Wrapper } from 'pages/PetPlantCardList/PetPlantCardList.style';
+import { CardList, Wrapper } from 'pages/petPlant/PetPlantCardList/PetPlantCardList.style';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import PetPlantCard from 'components/petPlant/PetPlantCard';

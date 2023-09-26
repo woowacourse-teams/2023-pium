@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
-import NotFound from 'pages/Error/NotFound';
-import Loading from 'pages/Loading';
+import NotFound from 'pages/@common/Error/NotFound';
+import Loading from 'pages/@common/Loading';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
 import Redirect from 'components/@common/Redirect';
 import { PageArea, Wrapper } from './RootTemplate.style';

@@ -1,28 +1,28 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
-import DictionaryPlantDetail from 'pages/DictionaryPlantDetail';
-import DictionaryPlantSearch from 'pages/DictionaryPlantSearch';
-import NotFound from 'pages/Error/NotFound';
-import GardenPostList from 'pages/GardenPostList';
-import GardenRegisterForm from 'pages/GardenRegister/Form';
-import GardenRegisterPick from 'pages/GardenRegister/Pick';
-import Main from 'pages/Main';
-import NewDictionaryPlantRequest from 'pages/NewDictionaryPlantRequest';
-import PetPlantCardList from 'pages/PetPlantCardList';
-import PetPlantDetails from 'pages/PetPlantDetails';
-import PetPlantEdit from 'pages/PetPlantEdit';
-import PetPlantRegisterForm from 'pages/PetPlantRegister/Form';
-import PetPlantRegisterSearch from 'pages/PetPlantRegister/Search';
-import PetPlantTimeline from 'pages/PetPlantTimeline';
-import Reminder from 'pages/Reminder';
-import RootTemplate from 'pages/RootTemplate';
+import NotFound from 'pages/@common/Error/NotFound';
+import Main from 'pages/@common/Main';
+import RootTemplate from 'pages/@common/RootTemplate';
+import DictionaryPlantDetail from 'pages/dictionaryPlant/DictionaryPlantDetail';
+import DictionaryPlantSearch from 'pages/dictionaryPlant/DictionaryPlantSearch';
+import NewDictionaryPlantRequest from 'pages/dictionaryPlant/NewDictionaryPlantRequest';
+import GardenPostList from 'pages/garden/GardenPostList';
+import GardenRegisterForm from 'pages/garden/GardenRegister/Form';
+import GardenRegisterPick from 'pages/garden/GardenRegister/Pick';
+import PetPlantCardList from 'pages/petPlant/PetPlantCardList';
+import PetPlantDetails from 'pages/petPlant/PetPlantDetails';
+import PetPlantEdit from 'pages/petPlant/PetPlantEdit';
+import PetPlantRegisterForm from 'pages/petPlant/PetPlantRegister/Form';
+import PetPlantRegisterSearch from 'pages/petPlant/PetPlantRegister/Search';
+import PetPlantTimeline from 'pages/petPlant/PetPlantTimeline';
+import Reminder from 'pages/reminder/ReminderPage';
 import { URL_PATH } from './constants';
 
-const Login = lazy(() => import(/* webpackChunkName: "Login" */ 'pages/Login'));
+const Login = lazy(() => import(/* webpackChunkName: "Login" */ 'pages/auth/Login'));
 const Authorization = lazy(
-  () => import(/* webpackChunkName: "Authorization" */ 'pages/Login/Authorization')
+  () => import(/* webpackChunkName: "Authorization" */ 'pages/auth/Login/Authorization')
 );
-const MyPage = lazy(() => import(/* webpackChunkName: "MyPage" */ 'pages/MyPage'));
+const MyPage = lazy(() => import(/* webpackChunkName: "MyPage" */ 'pages/auth/MyPage'));
 
 const router = createBrowserRouter([
   {

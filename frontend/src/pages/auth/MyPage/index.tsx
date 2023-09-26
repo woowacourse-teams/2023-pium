@@ -1,4 +1,4 @@
-import { FixedButtonArea } from 'pages/GardenPostList/GardenPostList.style';
+import { FixedButtonArea } from 'pages/garden/GardenPostList/GardenPostList.style';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';

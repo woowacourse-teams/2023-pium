@@ -2,14 +2,14 @@ import { PrimaryButton } from 'components/@common/Confirm/Confirm.style';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import MonthBox from 'components/reminder/MonthBox';
-import { ContentBox, NoDataContainer, Register, Title, Wrapper } from './Reminder.style';
+import { ContentBox, NoDataContainer, Register, Title, Wrapper } from './ReminderPage.style';
 import ReminderProvider from 'contexts/reminderContext';
 import { URL_PATH } from 'constants/index';
 import PiumiEmotionlessPng from 'assets/piumi-emotionless.png';
 import PiumiEmotionlessWebp from 'assets/piumi-emotionless.webp';
-import useReminderHooks from '../../hooks/reminder/useReminderHooks';
+import useReminderHooks from '../../../hooks/reminder/useReminderHooks';
 
-const Reminder = () => {
+const ReminderPage = () => {
   const { reminderData, water, changeDate } = useReminderHooks();
 
   const reminderBox = reminderData.data.map(([month, reminders]) => {
@@ -48,4 +48,4 @@ const Reminder = () => {
   );
 };
 
-export default Reminder;
+export default ReminderPage;

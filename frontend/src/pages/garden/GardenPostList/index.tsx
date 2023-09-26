@@ -9,7 +9,7 @@ import selectedDictionaryPlantAtom from 'store/atoms/garden';
 import useIntersectionRef from 'hooks/common/useIntersectionRef';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
-import useGardenPostList from '../../hooks/queries/garden/useGardenPostList';
+import useGardenPostList from '../../../hooks/queries/garden/useGardenPostList';
 import GardenPostItem from './GardenPostItem';
 import GardenPostItemSkeleton from './GardenPostItem/GardenPostItemSkeleton';
 import GardenPostListHeader from './GardenPostListHeader';

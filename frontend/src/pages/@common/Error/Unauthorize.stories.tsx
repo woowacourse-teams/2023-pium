@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Suspense } from 'react';
-import Loading from 'pages/Loading';
-import NotFound from './NotFound';
+import Loading from 'pages/@common/Loading';
+import Unauthorize from './Unauthorize';
 
-const meta: Meta<typeof NotFound> = {
-  component: NotFound,
+const meta: Meta<typeof Unauthorize> = {
+  component: Unauthorize,
   parameters: {
     reactRouter: {
       routePath: '/dict/:id',
@@ -24,6 +24,6 @@ const meta: Meta<typeof NotFound> = {
 
 export default meta;
 
-type Story = StoryObj<typeof NotFound>;
+type Story = StoryObj<typeof Unauthorize>;
 
 export const Default: Story = {};

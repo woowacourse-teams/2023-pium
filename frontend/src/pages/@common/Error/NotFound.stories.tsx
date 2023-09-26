@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Suspense } from 'react';
-import Loading from 'pages/Loading';
-import DictionaryPlantDetail from '.';
+import Loading from 'pages/@common/Loading';
+import NotFound from './NotFound';
 
-const meta: Meta<typeof DictionaryPlantDetail> = {
-  component: DictionaryPlantDetail,
+const meta: Meta<typeof NotFound> = {
+  component: NotFound,
   parameters: {
     reactRouter: {
       routePath: '/dict/:id',
@@ -24,6 +24,6 @@ const meta: Meta<typeof DictionaryPlantDetail> = {
 
 export default meta;
 
-type Story = StoryObj<typeof DictionaryPlantDetail>;
+type Story = StoryObj<typeof NotFound>;
 
 export const Default: Story = {};

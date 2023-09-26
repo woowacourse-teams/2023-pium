@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
-import Loading from 'pages/Loading';
+import Loading from 'pages/@common/Loading';
 import Navbar from 'components/@common/Navbar';
 import PetPlantDetailContent from 'components/petPlant/PetPlantDetail';
 

@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Suspense } from 'react';
-import Loading from 'pages/Loading';
-import Unauthorize from './Unauthorize';
+import Loading from 'pages/@common/Loading';
+import DictionaryPlantDetail from '.';
 
-const meta: Meta<typeof Unauthorize> = {
-  component: Unauthorize,
+const meta: Meta<typeof DictionaryPlantDetail> = {
+  component: DictionaryPlantDetail,
   parameters: {
     reactRouter: {
       routePath: '/dict/:id',
@@ -24,6 +24,6 @@ const meta: Meta<typeof Unauthorize> = {
 
 export default meta;
 
-type Story = StoryObj<typeof Unauthorize>;
+type Story = StoryObj<typeof DictionaryPlantDetail>;
 
 export const Default: Story = {};

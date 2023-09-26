@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Suspense } from 'react';
-import Loading from 'pages/Loading';
+import Loading from 'pages/@common/Loading';
 import PetDetails from '.';
 
 const meta: Meta<typeof PetDetails> = {
