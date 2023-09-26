@@ -13,16 +13,16 @@ import {
   RedTag,
   TextArea,
   TextLengthNotice,
-} from './FormSection.style';
+} from './GardenRegisterFormSection.style';
 import useGardenRegister from 'hooks/queries/garden/useGardenRegister';
 import { isValidManageLevel } from 'utils/validate';
 import { NUMBER } from 'constants/index';
 
-interface FormSectionProps {
+interface GardenRegisterFormSectionProps {
   petPlantId: PetPlantDetails['id'];
 }
 
-const FormSection = (props: FormSectionProps) => {
+const GardenRegisterFormSection = (props: GardenRegisterFormSectionProps) => {
   const { petPlantId } = props;
 
   const [manageLevel, setManageLevel] = useState<ManageLevel>('정보없음');
@@ -90,4 +90,4 @@ const FormSection = (props: FormSectionProps) => {
   );
 };
 
-export default FormSection;
+export default GardenRegisterFormSection;
