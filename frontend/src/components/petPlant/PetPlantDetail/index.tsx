@@ -26,7 +26,7 @@ import {
   TertiaryButton,
   TertiaryLink,
 } from './PetPlantDetail.style';
-import useConfirm from 'hooks/common/useConfirm';
+import useConfirm from 'hooks/@common/useConfirm';
 import useDeletePetPlant from 'hooks/queries/petPlant/useDeletePetPlant';
 import usePetPlantDetails from 'hooks/queries/petPlant/usePetPlantDetails';
 import { convertDateKorYear, getDaysBetween } from 'utils/date';

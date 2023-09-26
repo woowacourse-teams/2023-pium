@@ -5,7 +5,7 @@ import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import PetPlantRegisterForm from 'components/petPlant/PetPlantRegisterForm';
 import { BackLink, DictionaryPlantButton, DictionaryPlantName, Header, Main } from './Form.style';
-import useModal from 'hooks/common/useModal';
+import useModal from 'hooks/@common/useModal';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import { URL_PATH } from 'constants/index';

@@ -29,8 +29,8 @@ import {
   ButtonArea,
   Label,
 } from './PetPlantEditForm.style';
-import useAddToast from 'hooks/common/useAddToast';
-import useFileUpload from 'hooks/common/useFileUpload';
+import useAddToast from 'hooks/@common/useAddToast';
+import useFileUpload from 'hooks/@common/useFileUpload';
 import { PetPlantForm, usePetPlantForm } from 'hooks/petPlant/usePetPlantForm';
 import useEditPetPlant from 'hooks/queries/petPlant/useEditPetPlant';
 import {

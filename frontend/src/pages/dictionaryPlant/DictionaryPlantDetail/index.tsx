@@ -4,7 +4,7 @@ import Image from 'components/@common/Image';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import { BackButton, BottomSheet, Main, PrimaryButton } from './DictionaryPlantDetail.style';
-import useAddToast from 'hooks/common/useAddToast';
+import useAddToast from 'hooks/@common/useAddToast';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import { URL_PATH } from 'constants/index';

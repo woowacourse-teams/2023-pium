@@ -14,8 +14,8 @@ import {
   DictionaryPlantImageArea,
   Wrapper,
 } from './PetPlantRegisterForm.style';
-import useAddToast from 'hooks/common/useAddToast';
-import useFileUpload from 'hooks/common/useFileUpload';
+import useAddToast from 'hooks/@common/useAddToast';
+import useFileUpload from 'hooks/@common/useFileUpload';
 import { initialPetPlantForm, usePetPlantForm } from 'hooks/petPlant/usePetPlantForm';
 import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
 import { getDateToString, isDateFormat } from 'utils/date';

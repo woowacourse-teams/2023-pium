@@ -1,7 +1,7 @@
 import { useEffect, useCallback, useRef } from 'react';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { Backdrop, IconArea, OptionBox, OptionItem, SelectedValue, Wrapper } from './Select.style';
-import useToggle from 'hooks/common/useToggle';
+import useToggle from 'hooks/@common/useToggle';
 import theme from 'style/theme.style';
 
 interface SelectProps {

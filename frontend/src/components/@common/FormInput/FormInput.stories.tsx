@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import useNumberInput from 'hooks/common/useNumberInput';
+import useNumberInput from 'hooks/@common/useNumberInput';
 import { NUMBER } from 'constants/index';
 import FormInput, { FormInputProps } from '.';
 

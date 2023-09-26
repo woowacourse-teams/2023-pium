@@ -1,7 +1,7 @@
 import type { DictionaryPlantRegistrationForm } from 'types/dictionaryPlantRegistration';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import useAddToast from 'hooks/common/useAddToast';
+import useAddToast from 'hooks/@common/useAddToast';
 import DictionaryPlantRegistrationAPI from 'apis/dictionaryPlantRegistration';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 import { URL_PATH } from 'constants/index';

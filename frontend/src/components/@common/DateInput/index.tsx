@@ -1,7 +1,7 @@
 import Calendar from 'components/@common/Calendar';
 import Modal from 'components/@common/Modal';
 import { Wrapper, DateValue } from './DateInput.style';
-import useModal from 'hooks/common/useModal';
+import useModal from 'hooks/@common/useModal';
 import { convertDateKorYear, getStringToDate } from 'utils/date';
 
 interface DateInputProps extends React.InputHTMLAttributes<HTMLInputElement> {

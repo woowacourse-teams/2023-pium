@@ -10,7 +10,7 @@ import {
   Thumbnail,
   UploadButton,
 } from './Form.style';
-import useAddToast from 'hooks/common/useAddToast';
+import useAddToast from 'hooks/@common/useAddToast';
 import useDictionaryPlantRegister from 'hooks/queries/dictionaryPlantRegistration/useDictionaryPlantRegister';
 import { getFirstImage, getImageUrl, isAllowedImageExtension } from 'utils/image';
 import { NUMBER } from 'constants/index';

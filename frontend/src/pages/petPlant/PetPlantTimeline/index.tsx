@@ -6,7 +6,7 @@ import Navbar from 'components/@common/Navbar';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import Timeline from 'components/petPlant/Timeline';
 import { ButtonLabel, Header, Main } from './PetPlantTimeline.style';
-import useToggle from 'hooks/common/useToggle';
+import useToggle from 'hooks/@common/useToggle';
 import theme from 'style/theme.style';
 
 const PetPlantTimeline = () => {
