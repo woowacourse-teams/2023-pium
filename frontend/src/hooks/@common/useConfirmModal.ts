@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useRecoilValue } from 'recoil';
-import confirm from 'store/atoms/confirm';
+import { confirmState } from 'store/atoms/@common';
 
 /**
  * dialog에 confirm을 위한 이벤트 핸들러들을 추가합니다.
@@ -15,7 +15,7 @@ import confirm from 'store/atoms/confirm';
 const useConfirmModal = () => {
   const modalRef = useRef<HTMLDialogElement>(null);
   const bodyRef = useRef(document.body);
-  const { isOpen, setAnswer } = useRecoilValue(confirm);
+  const { isOpen, setAnswer } = useRecoilValue(confirmState);
 
   useEffect(() => {
     if (!isOpen) return;

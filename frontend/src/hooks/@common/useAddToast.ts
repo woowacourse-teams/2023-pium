@@ -1,13 +1,13 @@
-import type { ToastItem } from 'types/toast';
+import type { ToastItem } from 'types/@common';
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
-import toasts from 'store/atoms/toasts';
+import { toastsState } from 'store/atoms/@common';
 
 /**
  * @returns 새로운 토스트를 추가하는 함수
  */
 const useAddToast = () => {
-  const setToasts = useSetRecoilState(toasts);
+  const setToasts = useSetRecoilState(toastsState);
 
   const addToast = useCallback(
     (type: ToastItem['type'], message: ToastItem['message'], time = 2300) => {

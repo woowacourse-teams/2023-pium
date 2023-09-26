@@ -1,4 +1,4 @@
-import type { ImageFormData } from 'types/image';
+import type { ImageFormData } from 'types/@common';
 import type { NewPetPlantRequest, PetPlantDetails, EditPetPlantRequest } from 'types/petPlant';
 import { BASE_URL } from 'constants/index';
 

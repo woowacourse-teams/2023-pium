@@ -8,7 +8,7 @@ interface ConfirmState {
   setAnswer: ((userAnswer: boolean) => void) | null;
 }
 
-export const confirm = atom<ConfirmState>({
+export const confirmState = atom<ConfirmState>({
   key: 'confirm',
   default: {
     title: null,
@@ -18,7 +18,7 @@ export const confirm = atom<ConfirmState>({
   },
 });
 
-export const toasts = atom<ToastItem[]>({
+export const toastsState = atom<ToastItem[]>({
   key: 'toasts',
   default: [],
 });

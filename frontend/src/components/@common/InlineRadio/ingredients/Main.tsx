@@ -1,5 +1,5 @@
 import { Wrapper } from './Main.style';
-import RadioProvider, { RadioProviderProps } from 'contexts/radioContext';
+import RadioProvider, { RadioProviderProps } from '../radioContext';
 
 const Main = (props: RadioProviderProps) => {
   const { value, setValue, children, name } = props;

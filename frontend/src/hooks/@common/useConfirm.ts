@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { useSetRecoilState } from 'recoil';
-import confirmState from 'store/atoms/confirm';
+import { confirmState } from 'store/atoms/@common';
 import { ERROR } from 'constants/index';
 
 interface ConfirmParams {
