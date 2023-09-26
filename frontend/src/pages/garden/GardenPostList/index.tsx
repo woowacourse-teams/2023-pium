@@ -4,22 +4,22 @@ import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
 import Navbar from 'components/@common/Navbar';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
+import GardenPostItem from 'components/garden/GardenPostItem';
+import GardenPostItemSkeleton from 'components/garden/GardenPostItem/GardenPostItemSkeleton';
+import GardenPostListHeader from 'components/garden/GardenPostListHeader';
 import { FixedButtonArea, FixedButton, List, Main, Message, Sensor } from './GardenPostList.style';
-import selectedDictionaryPlantAtom from 'store/atoms/garden';
+import { selectedDictionaryPlantState } from 'store/atoms/garden';
 import useIntersectionRef from 'hooks/@common/useIntersectionRef';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
+import useGardenPostList from 'hooks/queries/garden/useGardenPostList';
 import { URL_PATH } from 'constants/index';
-import useGardenPostList from '../../../hooks/queries/garden/useGardenPostList';
-import GardenPostItem from './GardenPostItem';
-import GardenPostItemSkeleton from './GardenPostItem/GardenPostItemSkeleton';
-import GardenPostListHeader from './GardenPostListHeader';
 
 const SKELETON_LENGTH = 20;
 
 const GardenPostList = () => {
   const navigate = useNavigate();
   const [selectedDictionaryPlant, setSelectedDictionaryPlant] = useRecoilState(
-    selectedDictionaryPlantAtom
+    selectedDictionaryPlantState
   );
 
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
