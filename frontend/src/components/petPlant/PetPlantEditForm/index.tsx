@@ -29,10 +29,10 @@ import {
   ButtonArea,
   Label,
 } from './PetPlantEditForm.style';
-import useFileUpload from 'hooks/image/useFileUpload';
+import useAddToast from 'hooks/common/useAddToast';
+import useFileUpload from 'hooks/common/useFileUpload';
+import { PetPlantForm, usePetPlantForm } from 'hooks/petPlant/usePetPlantForm';
 import useEditPetPlant from 'hooks/queries/petPlant/useEditPetPlant';
-import useAddToast from 'hooks/useAddToast';
-import { PetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import {
   convertDateKorYear,
   getParticularDateFromSpecificDay,

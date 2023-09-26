@@ -4,10 +4,10 @@ import Navbar from 'components/@common/Navbar';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import VerticalDivider from 'components/@common/VerticalDivider/VerticalDivider.style';
 import { BottomSheet, Button, ButtonBox, Wrapper } from './MyPage.style';
+import useConfirm from 'hooks/common/useConfirm';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
-import useConfirm from 'hooks/useConfirm';
 import theme from 'style/theme.style';
 
 const MyPage = () => {

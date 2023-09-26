@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Wrapper, Image, ImageArea } from './Main.style';
-import useDictionaryNavigate from 'hooks/useDictionaryPlantNavigate';
+import useDictionaryNavigate from 'hooks/dictionaryPlant/useDictionaryPlantNavigate';
 import LogoSvg from 'assets/logo.svg';
 import LogoWebp from 'assets/logo.webp';
 

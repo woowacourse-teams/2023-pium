@@ -7,7 +7,7 @@ import ReminderProvider from 'contexts/reminderContext';
 import { URL_PATH } from 'constants/index';
 import PiumiEmotionlessPng from 'assets/piumi-emotionless.png';
 import PiumiEmotionlessWebp from 'assets/piumi-emotionless.webp';
-import useReminderHooks from './hooks/useReminderHooks';
+import useReminderHooks from '../../hooks/reminder/useReminderHooks';
 
 const Reminder = () => {
   const { reminderData, water, changeDate } = useReminderHooks();

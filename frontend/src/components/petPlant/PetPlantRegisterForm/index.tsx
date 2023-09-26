@@ -14,10 +14,10 @@ import {
   DictionaryPlantImageArea,
   Wrapper,
 } from './PetPlantRegisterForm.style';
-import useFileUpload from 'hooks/image/useFileUpload';
+import useAddToast from 'hooks/common/useAddToast';
+import useFileUpload from 'hooks/common/useFileUpload';
+import { initialPetPlantForm, usePetPlantForm } from 'hooks/petPlant/usePetPlantForm';
 import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
-import useAddToast from 'hooks/useAddToast';
-import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import { getDateToString, isDateFormat } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 

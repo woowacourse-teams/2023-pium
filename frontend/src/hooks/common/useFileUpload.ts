@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import useAddToast from 'hooks/useAddToast';
+import useAddToast from 'hooks/common/useAddToast';
 import basicImage from 'assets/piumi-emotionless.png';
 
 interface FileUploadParams {

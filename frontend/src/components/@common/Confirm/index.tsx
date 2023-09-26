@@ -8,7 +8,7 @@ import {
   Title,
 } from './Confirm.style';
 import confirm from 'store/atoms/confirm';
-import useConfirmModal from 'hooks/useConfirmModal';
+import useConfirmModal from 'hooks/common/useConfirmModal';
 
 const Confirm = () => {
   const { isOpen, title, message, setAnswer } = useRecoilValue(confirm);

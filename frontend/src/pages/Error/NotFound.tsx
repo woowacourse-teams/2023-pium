@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Button, ButtonSection, SadPiumiImage, Section, Text, Title, Wrapper } from './Error.style';
-import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
+import useResetErrorBoundary from 'hooks/common/useResetErrorBoundary';
 import { URL_PATH } from 'constants/index';
 import SadPiumiImagePng from 'assets/sadpiumi.png';
 import SadPiumiImageWebp from 'assets/sadpiumi.webp';
