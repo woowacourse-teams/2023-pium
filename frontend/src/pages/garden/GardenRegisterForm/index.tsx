@@ -5,7 +5,7 @@ import Navbar from 'components/@common/Navbar';
 import GardenRegisterFormSection from 'components/garden/GardenRegisterFormSection';
 import Profile from 'components/petPlant/Profile';
 import ProfileSkeleton from 'components/petPlant/Profile/ProfileSkeleton';
-import { Main } from './Form.style';
+import { Main } from './GardenRegisterForm.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 
 const GardenRegisterForm = () => {

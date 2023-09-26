@@ -3,7 +3,7 @@ import { CardList, Wrapper } from 'pages/petPlant/PetPlantCardList/PetPlantCardL
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import PetPlantCard from 'components/petPlant/PetPlantCard';
-import { SubTitle } from './PetPlantPicker.style';
+import { SubTitle } from './GardenRegisterPick.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import usePetPlantCardList from 'hooks/queries/petPlant/usePetPlantCardList';
 import { URL_PATH } from 'constants/index';
