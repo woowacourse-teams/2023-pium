@@ -1,3 +1,4 @@
+import type { ToastItem } from 'types/toast';
 import { atom } from 'recoil';
 
 interface ConfirmState {
@@ -7,7 +8,7 @@ interface ConfirmState {
   setAnswer: ((userAnswer: boolean) => void) | null;
 }
 
-const confirm = atom<ConfirmState>({
+export const confirm = atom<ConfirmState>({
   key: 'confirm',
   default: {
     title: null,
@@ -17,4 +18,7 @@ const confirm = atom<ConfirmState>({
   },
 });
 
-export default confirm;
+export const toasts = atom<ToastItem[]>({
+  key: 'toasts',
+  default: [],
+});
