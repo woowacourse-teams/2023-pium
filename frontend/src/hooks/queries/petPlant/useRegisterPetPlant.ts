@@ -1,4 +1,4 @@
-import type { ImageFormData } from 'types/image';
+import type { ImageFormData } from 'types/@common';
 import type { NewPetPlantRequest } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';

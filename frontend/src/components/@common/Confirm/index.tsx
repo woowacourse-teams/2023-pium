@@ -7,11 +7,11 @@ import {
   SecondaryButton,
   Title,
 } from './Confirm.style';
-import confirm from 'store/atoms/confirm';
+import { confirmState } from 'store/atoms/@common';
 import useConfirmModal from 'hooks/@common/useConfirmModal';
 
 const Confirm = () => {
-  const { isOpen, title, message, setAnswer } = useRecoilValue(confirm);
+  const { isOpen, title, message, setAnswer } = useRecoilValue(confirmState);
   const modalRef = useConfirmModal();
 
   return (

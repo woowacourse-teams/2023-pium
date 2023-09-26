@@ -1,4 +1,4 @@
-import type { ToastItem } from 'types/toast';
+import type { ToastItem } from 'types/@common';
 import type { Meta, StoryObj } from '@storybook/react';
 import useToggle from 'hooks/@common/useToggle';
 import Toast from '.';

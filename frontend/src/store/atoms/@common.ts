@@ -18,7 +18,7 @@ export const confirmState = atom<ConfirmState>({
   },
 });
 
-export const toastsState = atom<ToastItem[]>({
+export const toastListState = atom<ToastItem[]>({
   key: 'toasts',
   default: [],
 });

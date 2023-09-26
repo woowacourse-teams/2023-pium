@@ -2,13 +2,13 @@ import { memo } from 'react';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { ToastListWrapper } from './Toast.style';
-import toasts from 'store/atoms/toasts';
+import { toastListState } from 'store/atoms/@common';
 import Toast from '.';
 
 const SHOW_TOAST_SIZE = 5;
 
 const ToastList = () => {
-  const toastList = useRecoilValue(toasts).slice(-SHOW_TOAST_SIZE);
+  const toastList = useRecoilValue(toastListState).slice(-SHOW_TOAST_SIZE);
   const root = document.getElementById('toast-root') ?? document.body;
 
   return createPortal(

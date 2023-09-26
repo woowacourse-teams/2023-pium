@@ -1,4 +1,4 @@
-import type { ToastItem } from 'types/toast';
+import type { ToastItem } from 'types/@common';
 import { useEffect } from 'react';
 import { Navigate, type NavigateProps } from 'react-router-dom';
 import useAddToast from 'hooks/@common/useAddToast';

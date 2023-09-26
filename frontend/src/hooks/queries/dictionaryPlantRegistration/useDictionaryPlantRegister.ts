@@ -1,4 +1,4 @@
-import type { DictionaryPlantRegistrationForm } from 'types/dictionaryPlantRegistration';
+import type { DictionaryPlantRegistrationForm } from 'types/dictionaryPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/@common/useAddToast';
