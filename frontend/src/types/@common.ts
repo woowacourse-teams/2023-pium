@@ -4,3 +4,8 @@ export interface ToastItem {
   message: string;
   title?: string;
 }
+
+export interface ImageFormData<T> {
+  requestForm: T;
+  imageData: Blob | null;
+}

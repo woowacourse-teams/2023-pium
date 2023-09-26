@@ -1,4 +1,4 @@
-import type { ToastItem } from 'types/toast';
+import type { ToastItem } from 'types/@common';
 import { atom } from 'recoil';
 
 interface ConfirmState {
