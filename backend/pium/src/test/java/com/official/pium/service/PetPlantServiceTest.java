@@ -227,7 +227,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .member(member)
                     .dictionaryPlant(dictionaryPlant)
                     .flowerpot("유리")
-                    .imageUrl("https://test.image.storage/petPlant/34234.jpg")
+                    .imageUrl("https://test.image.storage/test/test/34234.jpg")
                     .wind("바람이 안 통해요")
                     .light("일반 조명")
                     .lastWaterDate(LocalDate.now())

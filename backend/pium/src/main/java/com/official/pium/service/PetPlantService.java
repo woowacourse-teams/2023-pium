@@ -39,9 +39,6 @@ public class PetPlantService {
     @Value("${petPlant.image.directory}")
     private String workingDirectory;
 
-    @Value("${aws.s3.root}")
-    private String rootPath;
-
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
     private final HistoryRepository historyRepository;
@@ -135,15 +132,8 @@ public class PetPlantService {
         if (image == null || image.isEmpty()) {
             return originalImageUrl;
         }
-        deleteImageIfExists(originalImageUrl);
+        photoManager.delete(originalImageUrl, workingDirectory);
         return photoManager.upload(image, workingDirectory);
-    }
-
-    private void deleteImageIfExists(String originalImageUrl) {
-        if (originalImageUrl.contains(rootPath + "/petPlant")) {
-            String fileName = originalImageUrl.substring(rootPath.length() - 1);
-            photoManager.delete(fileName);
-        }
     }
 
     private void publishPetPlantHistories(PetPlant petPlant, PetPlantHistory previousPetPlantHistory,

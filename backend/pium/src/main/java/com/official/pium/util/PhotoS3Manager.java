@@ -79,7 +79,10 @@ public class PhotoS3Manager implements PhotoManager {
     }
 
     @Override
-    public void delete(String fileName) {
-        s3Client.deleteObject(bucket, folder + directory + fileName);
+    public void delete(String originalImageUrl, String workingDirectory) {
+        if (originalImageUrl.contains(rootPath + SLASH + directory + workingDirectory)) {
+            String fileName = originalImageUrl.substring(rootPath.length() + 1);
+            s3Client.deleteObject(bucket, folder + fileName);
+        }
     }
 }
