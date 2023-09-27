@@ -6,5 +6,5 @@ public interface PhotoManager {
 
     String upload(MultipartFile file, String workingDirectory);
 
-    void delete(String fileName);
+    void delete(String originalImageUrl, String workingDirectory);
 }

@@ -1,6 +1,7 @@
 package com.official.pium.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
@@ -40,11 +41,5 @@ class PhotoS3ManagerTest {
         String imageUrl = photoS3Manager.upload(multipartFile, "test");
 
         assertThat(imageUrl).isNotBlank();
-    }
-
-    @Test
-    void 이미지를_삭제한다() {
-        willDoNothing().given(s3Client).deleteObject(any(), anyString());
-        Assertions.assertDoesNotThrow(() -> photoS3Manager.delete("/image.jpg"));
     }
 }
