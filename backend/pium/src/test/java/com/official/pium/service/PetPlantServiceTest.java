@@ -6,8 +6,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
@@ -212,6 +216,91 @@ class PetPlantServiceTest extends IntegrationTest {
                         assertThat(updatedPetPlant.getBirthDate()).isEqualTo(updateRequest.getBirthDate());
                         assertThat(updatedPetPlant.getLastWaterDate()).isEqualTo(updateRequest.getLastWaterDate());
                         assertThat(updatedPetPlant.getImageUrl()).isNotEqualTo(petPlantImageUrl);
+                    }
+            );
+        }
+
+        @Test
+        void 이미지_수정_요청_시_기존_이미지_제거() {
+            PetPlant petPlant = petPlantRepository.save(PetPlant.builder()
+                    .birthDate(LocalDate.now())
+                    .member(member)
+                    .dictionaryPlant(dictionaryPlant)
+                    .flowerpot("유리")
+                    .imageUrl("https://test.image.storage/petPlant/34234.jpg")
+                    .wind("바람이 안 통해요")
+                    .light("일반 조명")
+                    .lastWaterDate(LocalDate.now())
+                    .nextWaterDate(LocalDate.now())
+                    .waterCycle(3)
+                    .nickname("피우미")
+                    .location("거실")
+                    .build());
+            PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
+            MultipartFile multipartFile = FileFixture.generateMultiPartFile();
+            given(amazonS3.putObject(any(PutObjectRequest.class)))
+                    .willReturn(new PutObjectResult());
+
+            petPlantService.update(petPlant.getId(), updateRequest, multipartFile, member);
+
+            assertSoftly(
+                    softly -> {
+                        verify(amazonS3, atLeastOnce()).putObject(any());
+                        verify(amazonS3, atLeastOnce()).deleteObject(any(), anyString());
+                    }
+            );
+        }
+
+        @Test
+        void 이미지_없이_요청하면_기존_이미지_사용() {
+            PetPlant petPlant = petPlantSupport.builder().member(member).build();
+            String petPlantImageUrl = petPlant.getImageUrl();
+
+            PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
+            given(amazonS3.putObject(any(PutObjectRequest.class)))
+                    .willReturn(new PutObjectResult());
+
+            petPlantService.update(petPlant.getId(), updateRequest, null, member);
+            PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
+
+            assertSoftly(
+                    softly -> {
+                        assertThat(updatedPetPlant.getImageUrl()).isEqualTo(petPlantImageUrl);
+                        verify(amazonS3, never()).putObject(any());
+                        verify(amazonS3, never()).deleteObject(any(), anyString());
+                    }
+            );
+        }
+
+        @Test
+        void 기존_이미지가_사전_식물_이미지면_제거하지_않음() {
+            PetPlant petPlant = petPlantRepository.save(PetPlant.builder()
+                    .birthDate(LocalDate.now())
+                    .member(member)
+                    .dictionaryPlant(dictionaryPlant)
+                    .flowerpot("유리")
+                    .imageUrl("static/dictionary-plant/34234.jpg")
+                    .wind("바람이 안 통해요")
+                    .light("일반 조명")
+                    .lastWaterDate(LocalDate.now())
+                    .nextWaterDate(LocalDate.now())
+                    .waterCycle(3)
+                    .nickname("피우미")
+                    .location("거실")
+                    .build());
+
+            PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
+            given(amazonS3.putObject(any(PutObjectRequest.class)))
+                    .willReturn(new PutObjectResult());
+
+            MultipartFile multipartFile = FileFixture.generateMultiPartFile();
+
+            petPlantService.update(petPlant.getId(), updateRequest, multipartFile, member);
+
+            assertSoftly(
+                    softly -> {
+                        verify(amazonS3, atLeastOnce()).putObject(any());
+                        verify(amazonS3, never()).deleteObject(any(), anyString());
                     }
             );
         }
