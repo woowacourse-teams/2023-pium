@@ -80,6 +80,6 @@ public class PhotoS3Manager implements PhotoManager {
 
     @Override
     public void delete(String fileName) {
-        s3Client.deleteObject(bucket, fileName);
+        s3Client.deleteObject(bucket, folder + directory + fileName);
     }
 }
