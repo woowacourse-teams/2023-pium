@@ -17,8 +17,8 @@ import {
   YearArea,
   YearHeader,
 } from './Timeline.style';
+import useIntersectionRef from 'hooks/@common/useIntersectionRef';
 import useYearList from 'hooks/queries/history/useYearList';
-import useIntersectionRef from 'hooks/useIntersectionRef';
 import SproutSvg from 'assets/sprout.svg';
 import SproutWebp from 'assets/sprout.webp';
 import TimelineItemList from '../TimelineItemList';

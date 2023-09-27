@@ -1,4 +1,4 @@
-import type { ToastItem } from 'types/toast';
+import type { ToastItem } from 'types/@common';
 import { memo, useEffect, useState, useCallback } from 'react';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { IconArea, Message, MessageArea, Title, Wrapper } from './Toast.style';

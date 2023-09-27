@@ -6,7 +6,6 @@ import ImageButton from 'components/@common/ImageButton';
 import ProgressBar from 'components/@common/ProgressBar';
 import Select from 'components/@common/Select';
 import Stack from 'components/@common/Stack';
-import useStack from 'components/@common/Stack/hooks/useStack';
 import {
   AddImageButton,
   Button,
@@ -14,10 +13,11 @@ import {
   DictionaryPlantImageArea,
   Wrapper,
 } from './PetPlantRegisterForm.style';
-import useFileUpload from 'hooks/image/useFileUpload';
+import useAddToast from 'hooks/@common/useAddToast';
+import useFileUpload from 'hooks/@common/useFileUpload';
+import useStack from 'hooks/@common/useStack';
+import { initialPetPlantForm, usePetPlantForm } from 'hooks/petPlant/usePetPlantForm';
 import useRegisterPetPlant from 'hooks/queries/petPlant/useRegisterPetPlant';
-import useAddToast from 'hooks/useAddToast';
-import { initialPetPlantForm, usePetPlantForm } from 'hooks/usePetPlantForm';
 import { getDateToString, isDateFormat } from 'utils/date';
 import { NUMBER, OPTIONS } from 'constants/index';
 

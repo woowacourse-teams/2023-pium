@@ -1,4 +1,4 @@
-import type { DictionaryPlantRegistrationForm } from 'types/dictionaryPlantRegistration';
+import type { DictionaryPlantRegistrationForm } from 'types/dictionaryPlant';
 import { BASE_URL } from 'constants/index';
 
 const DICTIONARY_PLANT_REGISTRATION_URL = `${BASE_URL}/dictionary-registrations`;

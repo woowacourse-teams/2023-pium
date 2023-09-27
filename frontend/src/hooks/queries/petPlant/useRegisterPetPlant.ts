@@ -1,8 +1,8 @@
-import type { ImageFormData } from 'types/image';
+import type { ImageFormData } from 'types/@common';
 import type { NewPetPlantRequest } from 'types/petPlant';
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import useAddToast from 'hooks/useAddToast';
+import useAddToast from 'hooks/@common/useAddToast';
 import PetPlantAPI from 'apis/petPlant';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
