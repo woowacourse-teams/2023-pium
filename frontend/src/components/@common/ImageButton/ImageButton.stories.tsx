@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import ImageButton from '.';
-import useFileUpload from '../../../hooks/image/useFileUpload';
+import useFileUpload from '../../../hooks/@common/useFileUpload';
 import ToastList from '../Toast/ToastList';
 
 const meta: Meta<typeof ImageButton> = {

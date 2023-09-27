@@ -1,4 +1,4 @@
-import { ToastItem } from 'types/toast';
+import { ToastItem } from 'types/@common';
 import { keyframes, styled } from 'styled-components';
 import theme from 'style/theme.style';
 

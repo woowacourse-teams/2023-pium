@@ -14,9 +14,9 @@ import {
   Backdrop,
   ResultDropdown,
 } from './SearchBox.style';
+import useDebounce from 'hooks/@common/useDebounce';
+import useToggle from 'hooks/@common/useToggle';
 import useDictionaryPlantSearch from 'hooks/queries/dictionaryPlant/useDictionaryPlantSearch';
-import useDebounce from 'hooks/useDebounce';
-import useToggle from 'hooks/useToggle';
 import { MESSAGE, URL_PATH } from 'constants/index';
 import theme from 'style/theme.style';
 

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import useAddToast from 'hooks/useAddToast';
+import useAddToast from 'hooks/@common/useAddToast';
 import AuthAPI from 'apis/auth';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
-import useConfirm from 'hooks/useConfirm';
+import useConfirm from 'hooks/@common/useConfirm';
 import Confirm from '.';
 
 const meta: Meta<typeof Confirm> = {

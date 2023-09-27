@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { useState } from 'react';
 import Stack from '.';
-import useStack from './hooks/useStack';
+import useStack from '../../../hooks/@common/useStack';
 
 const meta: Meta<typeof Stack> = {
   component: Stack,

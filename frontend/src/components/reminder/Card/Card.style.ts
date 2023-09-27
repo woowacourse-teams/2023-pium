@@ -1,7 +1,7 @@
 import { TodayStatus } from 'types/reminder';
 import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
-import { BackgroundProps } from 'pages/Reminder/Reminder.style';
+import { BackgroundProps } from 'pages/reminder/ReminderPage/ReminderPage.style';
 import theme from 'style/theme.style';
 
 const convertCardStatusBar: {

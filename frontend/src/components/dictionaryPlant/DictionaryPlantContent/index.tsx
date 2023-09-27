@@ -18,7 +18,7 @@ import {
   PropBox,
   PropsBox,
 } from './DictionaryPlantContent.style';
-import selectedDictionaryPlantAtom from 'store/atoms/garden';
+import { selectedDictionaryPlantState } from 'store/atoms/garden';
 import type { DictionaryPlantExtendCycles } from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import parseTemperature from 'utils/parseTemperature';
 import { NO_INFORMATION, URL_PATH } from 'constants/index';
@@ -42,7 +42,7 @@ const DictionaryPlantContent = (props: DictionaryPlantExtendCycles) => {
     waterOptions,
   } = props;
 
-  const setSelectedDictionaryPlant = useSetRecoilState(selectedDictionaryPlantAtom);
+  const setSelectedDictionaryPlant = useSetRecoilState(selectedDictionaryPlantState);
   const navigate = useNavigate();
 
   const goFilteredGarden = () => {
