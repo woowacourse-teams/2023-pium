@@ -45,8 +45,15 @@
       "purpose": "maskable"
     }
   ],
-  "start_url": "/",
   "display": "standalone",
+  "theme_color": "#1bcc66",
   "background_color": "#ffffff",
-  "theme_color": "#1BCC66"
+  "id": "pium",
+  "description": "피움은 여러분의 관리 경험을 기록할 수 있도록 도와주고 각자에게 알맞은 관리법을 빠르게 찾도록 도와주고 있어요.",
+  "start_url": "/",
+  "dir": "auto",
+  "lang": "ko",
+  "orientation": "any",
+  "scope": "https://pium.life",
+  "categories": ["lifestyle", "personalization"]
 }
