@@ -1,8 +1,8 @@
-import type { ToastItem } from 'types/toast';
+import type { ToastItem } from 'types/@common';
 import { useEffect } from 'react';
 import { Navigate, type NavigateProps } from 'react-router-dom';
-import useAddToast from 'hooks/useAddToast';
-import useResetErrorBoundary from 'hooks/useResetErrorBoundary';
+import useAddToast from 'hooks/@common/useAddToast';
+import useResetErrorBoundary from 'hooks/@common/useResetErrorBoundary';
 
 interface RedirectProps extends NavigateProps {
   toastType?: ToastItem['type'];

@@ -1,9 +1,9 @@
-import type { ToastItem } from 'types/toast';
+import type { ToastItem } from 'types/@common';
 import type { Meta, StoryObj } from '@storybook/react';
-import useToggle from 'hooks/useToggle';
+import useToggle from 'hooks/@common/useToggle';
 import Toast from '.';
 import ToastList from './ToastList';
-import useAddToast from 'hooks/useAddToast';
+import useAddToast from 'hooks/@common/useAddToast';
 
 const ToastItem = (props: ToastItem) => {
   const { isOn, on } = useToggle();

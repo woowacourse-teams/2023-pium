@@ -19,7 +19,7 @@ import {
   LinkContainer,
 } from './Card.style';
 import { ReminderContext } from 'contexts/reminderContext';
-import useAddToast from 'hooks/useAddToast';
+import useAddToast from 'hooks/@common/useAddToast';
 import {
   getDateToString,
   getParticularDateFromSpecificDay,
