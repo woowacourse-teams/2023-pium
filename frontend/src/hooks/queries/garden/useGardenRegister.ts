@@ -18,12 +18,12 @@ const useRegisterPetPlant = () => {
     },
 
     onSuccess: () => {
-      addToast('success', '게시글 등록에 성공했어요.');
+      addToast({ type: 'success', message: '게시글 등록에 성공했어요.' });
       navigate(URL_PATH.garden, { replace: true });
     },
 
     onError: () => {
-      addToast('error', '게시글 등록에 실패했어요.');
+      addToast({ type: 'error', message: '게시글 등록에 실패했어요.' });
     },
 
     retry: noRetryIfUnauthorized,

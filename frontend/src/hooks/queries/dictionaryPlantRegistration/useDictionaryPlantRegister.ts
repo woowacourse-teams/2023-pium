@@ -17,12 +17,12 @@ const useDictionaryPlantRegister = () => {
     },
 
     onSuccess: () => {
-      addToast('success', '식물 등록 신청에 성공했어요.');
+      addToast({ type: 'success', message: '식물 등록 신청에 성공했어요.' });
       navigate(URL_PATH.main, { replace: true });
     },
 
     onError: () => {
-      addToast('error', '식물 등록 신청에 실패했어요.');
+      addToast({ type: 'error', message: '식물 등록 신청에 실패했어요.' });
     },
 
     retry: 0,

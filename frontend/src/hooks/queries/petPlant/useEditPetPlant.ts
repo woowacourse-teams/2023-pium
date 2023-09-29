@@ -19,12 +19,12 @@ const useEditPetPlant = (petPlantId: PetPlantDetails['id']) => {
     },
 
     onSuccess: () => {
-      addToast('success', '반려 식물 정보를 바꿨습니다.');
+      addToast({ type: 'success', message: '반려 식물 정보를 바꿨습니다.' });
       navigate(generatePath(URL_PATH.petDetail, { id: petPlantId.toString() }), { replace: true });
     },
 
     onError: () => {
-      addToast('error', '반려 식물 정보 수정에 실패했어요.');
+      addToast({ type: 'error', message: '반려 식물 정보 수정에 실패했어요.' });
     },
     throwOnError: true,
     retry: noRetryIfUnauthorized,

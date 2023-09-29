@@ -44,14 +44,16 @@ export const Success: Story = {
   args: {
     type: 'success',
     message: '성공했어요!',
+    buttonContent: '확인하러 가기'
   },
 };
 
 const Interactive = (props: ToastItem) => {
-  const { type } = props;
+  const { type, message } = props;
   const addToast = useAddToast();
+
   const addHandler = () => {
-    addToast(type, props.message);
+    addToast({type, message, time: 4000});
   };
 
   return (
