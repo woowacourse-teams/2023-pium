@@ -148,7 +148,7 @@ export const ProgressBar = styled.div<{ $type: ToastItem['type']; $time: number 
 export const ToastListWrapper = styled.div`
   position: fixed;
   z-index: ${({ theme: { zIndex } }) => zIndex.popover};
-  bottom: 64px;
+  bottom: 68px;
 
   display: flex;
   flex-direction: column;

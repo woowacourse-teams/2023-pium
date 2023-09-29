@@ -61,7 +61,7 @@ const Navbar = () => {
           addToast({
             type: 'info',
             message: '로그인 후 이용할 수 있어요',
-            time: 1800,
+            time: 2200,
             buttonContent: '로그인',
             onClickButton: () => {
               navigate(URL_PATH.login);
