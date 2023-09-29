@@ -19,7 +19,7 @@ export const Wrapper = styled.nav`
   box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
 `;
 
-export const NavLink = styled(Link)`
+export const NavButton = styled.button`
   height: 100%;
 `;
 
@@ -47,7 +47,7 @@ export const NavItem = styled.div`
 `;
 
 export const NavLabel = styled.p<{ $active?: boolean }>`
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.5rem;
   color: ${({ $active, theme: { color } }) =>
