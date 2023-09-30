@@ -84,10 +84,10 @@ export const IconArea = styled.div`
 export const ContentArea = styled.div`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   align-items: flex-end;
   justify-content: center;
 
+  width: 80%;
   padding: 4px 0;
 `;
 
@@ -100,7 +100,7 @@ export const Title = styled.p`
   vertical-align: center;
 `;
 
-export const Message = styled.p`
+export const MessageArea = styled.div`
   width: 100%;
   font-size: 1.2rem;
   font-weight: 600;

@@ -1,12 +1,13 @@
 import type { ToastItem } from 'types/@common';
 import { memo, useEffect, useState, useCallback } from 'react';
-import { useRecoilState, useSetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
+import SeeMoreContentBox from 'components/@common/SeeMoreContentBox';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import {
   IconArea,
   InteractionButton,
   LeftArea,
-  Message,
+  MessageArea,
   ContentArea,
   CloseButton,
   Title,
@@ -58,7 +59,9 @@ const Toast = (props: ToastItem) => {
         <IconArea>{icons[type]}</IconArea>
         <ContentArea>
           {title && <Title>{title}</Title>}
-          <Message>{message}</Message>
+          <MessageArea>
+            <SeeMoreContentBox maxHeight="32px">{message}</SeeMoreContentBox>
+          </MessageArea>
           {buttonContent && (
             <InteractionButton type="button" onClick={handleClickButton}>
               {buttonContent}
