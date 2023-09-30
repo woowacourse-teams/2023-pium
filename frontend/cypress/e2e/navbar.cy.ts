@@ -4,10 +4,11 @@ describe('내비게이션 바를 이용한 페이지 이동', () => {
   beforeEach(() => {
     login();
     cy.visit('/');
+    cy.wait(1000);
   });
 
   it('리마인더 페이지로 이동할 수 있다.', () => {
-    cy.get('a')
+    cy.get('button')
       .contains('리마인더')
       .click()
       .location('pathname')
@@ -17,7 +18,7 @@ describe('내비게이션 바를 이용한 페이지 이동', () => {
   });
 
   it('내 반려 식물 목록 페이지로 이동할 수 있다.', () => {
-    cy.get('a')
+    cy.get('button')
       .contains('내 식물')
       .click()
       .location('pathname')
@@ -27,10 +28,10 @@ describe('내비게이션 바를 이용한 페이지 이동', () => {
   });
 
   it('메인 화면으로 이동할 수 있다.', () => {
-    cy.get('a')
+    cy.get('button')
       .contains('리마인더')
       .click()
-      .get('a')
+      .get('button')
       .contains('메인')
       .click()
       .location('pathname')
