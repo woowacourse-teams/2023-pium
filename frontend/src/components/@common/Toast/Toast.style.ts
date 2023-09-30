@@ -65,7 +65,10 @@ export const Wrapper = styled.div<{
 export const LeftArea = styled.div`
   display: flex;
   gap: 8px;
+  justify-content: space-between;
+
   width: calc(100% - 32px);
+
   border-right: solid 1px ${(props) => props.theme.color.gray};
 `;
 
@@ -87,7 +90,7 @@ export const ContentArea = styled.div`
   align-items: flex-end;
   justify-content: center;
 
-  width: 80%;
+  width: 88%;
   padding: 4px 0;
 `;
 
