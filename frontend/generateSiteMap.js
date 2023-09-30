@@ -5,7 +5,7 @@ const fs = require('fs');
 const prettier = require('prettier');
 
 const SitemapGeneratedDate = new Date().toISOString();
-const DOMAIN = 'https://pium.life.com';
+const DOMAIN = 'https://pium.life';
 
 const formatting = (target) => prettier.format(target, { parser: 'html' });
 
