@@ -57,20 +57,23 @@ const Navbar = () => {
         const active = pathname === path;
         const color = active ? fillColor.fontPrimaryForBackground : theme.color.subLight;
 
-        const askLogin = () => {
-          addToast({
-            type: 'info',
-            message: '로그인 후 이용할 수 있어요',
-            time: 2200,
-            buttonContent: '로그인',
-            onClickButton: () => {
-              navigate(URL_PATH.login);
-            },
-          });
+        const goLogin = () => {
+          navigate(URL_PATH.login);
         };
 
         const goPath = () => {
           navigate(path);
+        };
+
+        const askLogin = () => {
+          addToast({
+            type: 'info',
+            title: '로그인 후 이용할 수 있어요.',
+            message: '피움과 함께 최적의 환경을 찾아봐요!',
+            time: 3000,
+            buttonContent: '로그인',
+            onClickButton: goLogin,
+          });
         };
 
         return (
