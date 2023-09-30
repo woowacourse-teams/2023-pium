@@ -5,32 +5,32 @@
   xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"
 >
   <url>
-    <loc>https://pium.life.com/</loc>
-    <lastmod>2023-09-20T03:44:49.995Z</lastmod>
+    <loc>https://pium.life/</loc>
+    <lastmod>2023-09-29T14:33:08.164Z</lastmod>
   </url>
 
   <url>
-    <loc>https://pium.life.com/login</loc>
-    <lastmod>2023-09-20T03:44:49.995Z</lastmod>
+    <loc>https://pium.life/login</loc>
+    <lastmod>2023-09-29T14:33:08.164Z</lastmod>
   </url>
 
   <url>
-    <loc>https://pium.life.com/garden</loc>
-    <lastmod>2023-09-20T03:44:49.995Z</lastmod>
+    <loc>https://pium.life/garden</loc>
+    <lastmod>2023-09-29T14:33:08.164Z</lastmod>
   </url>
 
   <url>
-    <loc>https://pium.life.com/dict</loc>
-    <lastmod>2023-09-20T03:44:49.995Z</lastmod>
+    <loc>https://pium.life/dict</loc>
+    <lastmod>2023-09-29T14:33:08.164Z</lastmod>
   </url>
 
   <url>
-    <loc>https://pium.life.com/dict/:id</loc>
-    <lastmod>2023-09-20T03:44:49.995Z</lastmod>
+    <loc>https://pium.life/dict/:id</loc>
+    <lastmod>2023-09-29T14:33:08.164Z</lastmod>
   </url>
 
   <url>
-    <loc>https://pium.life.com/dict/new-plant-request</loc>
-    <lastmod>2023-09-20T03:44:49.995Z</lastmod>
+    <loc>https://pium.life/dict/new-plant-request</loc>
+    <lastmod>2023-09-29T14:33:08.164Z</lastmod>
   </url>
 </urlset>
