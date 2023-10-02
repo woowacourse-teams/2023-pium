@@ -9,7 +9,7 @@ const assetCacheName = `assets-${version}`;
  * https://web.dev/learn/pwa/caching/
  */
 
-this.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(assetCacheName).then((cache) => {
       // 캐시로 저장할 파일을 지정. 어떤 파일을 넣을지는 차후 얘기해 보며 좋을 듯.
@@ -22,10 +22,13 @@ this.addEventListener('install', (event) => {
       ]);
     })
   );
+
+  // 제어중인 서비스 워커가 존재해도 대기 상태 건너 뜀
+  self.skipWaiting();
 });
 
 // 기존에 있던 cache 삭제
-this.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
       return Promise.all(
@@ -37,10 +40,13 @@ this.addEventListener('activate', (event) => {
       );
     })
   );
+
+  // 활성화 즉시 클라이언트를 제어한다.(새로고침 불필요)
+  self.clients.claim();
 });
 
 // 오프라인 상태라면, 캐시에 저장되어 있는 파일들 fetch로 받아옴
-this.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => {
   if (!navigator.onLine) {
     event.respondWith(caches.match(event.request).then((result) => result && result));
   }
