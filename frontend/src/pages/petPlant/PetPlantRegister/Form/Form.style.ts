@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const Header = styled.header`
@@ -19,7 +18,7 @@ export const Header = styled.header`
   box-shadow: 0 2px 2px -2px ${(props) => props.theme.color.gray};
 `;
 
-export const BackLink = styled(Link)`
+export const BackButton = styled.button`
   display: flex;
   align-items: center;
 `;
