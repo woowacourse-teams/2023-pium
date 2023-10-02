@@ -53,8 +53,8 @@
   "start_url": "/",
   "dir": "auto",
   "lang": "ko",
-  "orientation": "any",
-  "scope": "https://pium.life",
+  "orientation": "portrait",
+  "scope": "/",
   "categories": ["lifestyle", "plant", "indoor-garden"],
   "display_override": ["window-controls-overlay", "standalone", "browser"]
 }
