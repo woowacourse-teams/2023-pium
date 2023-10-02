@@ -1,42 +1,60 @@
 {
   "name": "피움",
+  "short_name": "pium",
   "icons": [
     {
-      "src": "/android-icon-36x36.png",
-      "sizes": "36x36",
-      "type": "image/png",
-      "density": "0.75"
-    },
-    {
-      "src": "/android-icon-48x48.png",
+      "src": "/assets/android-icon-48x48.png",
       "sizes": "48x48",
       "type": "image/png",
-      "density": "1.0"
+      "density": "1.0",
+      "purpose": "any"
     },
     {
-      "src": "/android-icon-72x72.png",
+      "src": "/assets/android-icon-72x72.png",
       "sizes": "72x72",
       "type": "image/png",
-      "density": "1.5"
+      "density": "1.5",
+      "purpose": "any"
     },
     {
-      "src": "/android-icon-96x96.png",
+      "src": "/assets/android-icon-96x96.png",
       "sizes": "96x96",
       "type": "image/png",
-      "density": "2.0"
+      "density": "2.0",
+      "purpose": "any"
     },
     {
-      "src": "/android-icon-144x144.png",
+      "src": "/assets/android-icon-144x144.png",
       "sizes": "144x144",
       "type": "image/png",
-      "density": "3.0"
+      "density": "3.0",
+      "purpose": "any"
     },
     {
-      "src": "/android-icon-192x192.png",
+      "src": "/assets/android-icon-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "density": "4.0"
+      "density": "4.0",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/android-icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "density": "5.0",
+      "purpose": "maskable"
     }
   ],
-  "display": "standalone"
+  "display": "standalone",
+  "theme_color": "#1bcc66",
+  "background_color": "#ffffff",
+  "id": "pium",
+  "description": "피움은 여러분의 반려 식물 관리 경험을 기록할 수 있도록 도와주고 각자에게 알맞은 관리법을 빠르게 찾도록 도와주고 있어요.",
+  "start_url": "/",
+  "dir": "auto",
+  "lang": "ko",
+  "orientation": "portrait",
+  "scope": "/",
+  "categories": ["lifestyle", "plant", "indoor-garden"],
+  "display_override": ["window-controls-overlay", "standalone", "browser"]
 }
