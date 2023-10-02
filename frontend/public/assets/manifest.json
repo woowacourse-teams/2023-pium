@@ -56,5 +56,5 @@
   "orientation": "portrait",
   "scope": "/",
   "categories": ["lifestyle", "plant", "indoor-garden"],
-  "display_override": ["window-controls-overlay", "standalone", "browser"]
+  "display_override": ["window-controls-overlay"]
 }
