@@ -16,7 +16,7 @@ const useLogout = () => {
       throwOnInvalidStatus(response);
     },
     onSuccess: () => {
-      addToast({ type: 'info', message: '로그아웃 되었습니다.' });
+      addToast({ type: 'info', message: '로그아웃 되었습니다' });
       navigate(URL_PATH.main, { replace: true });
     },
     throwOnError: true,

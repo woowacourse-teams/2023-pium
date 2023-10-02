@@ -36,7 +36,7 @@ export const Info: Story = {
   args: {
     id: 'Info',
     type: 'info',
-    message: '피움 서비스의 정보 입니다.',
+    message: '피움 서비스의 정보 입니다',
   },
 };
 

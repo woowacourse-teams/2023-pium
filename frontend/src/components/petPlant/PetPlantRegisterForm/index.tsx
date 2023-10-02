@@ -117,7 +117,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     const { birthDate, lastWaterDate } = form;
 
     if (!(isDateFormat(birthDate) && isDateFormat(lastWaterDate))) {
-      addToast({ type: 'error', message: '잘못된 날짜 형식입니다.' });
+      addToast({ type: 'error', message: '잘못된 날짜 형식입니다' });
       return;
     }
 
