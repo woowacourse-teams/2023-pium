@@ -105,7 +105,7 @@ export const Title = styled.p`
 
 export const MessageArea = styled.div`
   width: 100%;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-weight: 600;
 `;
 
