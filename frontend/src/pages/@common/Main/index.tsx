@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import InstallPrompt from 'components/@common/InstallPrompt';
 import Navbar from 'components/@common/Navbar';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Wrapper, Image, ImageArea } from './Main.style';
@@ -12,6 +13,8 @@ const Main = () => {
 
   return (
     <>
+      <InstallPrompt />
+
       <Wrapper>
         <LogoMessage>식물을 쉽게</LogoMessage>
         <ImageArea>
