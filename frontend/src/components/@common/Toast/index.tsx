@@ -10,7 +10,6 @@ import {
   MessageArea,
   ContentArea,
   CloseButton,
-  Title,
   Wrapper,
   ProgressBar,
 } from './Toast.style';
@@ -27,7 +26,7 @@ const icons: Record<ToastItem['type'], JSX.Element> = {
 };
 
 const Toast = (props: ToastItem) => {
-  const { id, type, message, time = 2100, title, buttonContent, onClickButton } = props;
+  const { id, type, message, time = 2100, buttonContent, onClickButton } = props;
 
   const [toastList, setToastList] = useRecoilState(toastListState);
   const [visible, setVisible] = useState(true);
@@ -58,7 +57,6 @@ const Toast = (props: ToastItem) => {
       <LeftArea>
         <IconArea>{icons[type]}</IconArea>
         <ContentArea>
-          {title && <Title>{title}</Title>}
           <MessageArea>
             <SeeMoreContentBox maxHeight="32px">{message}</SeeMoreContentBox>
           </MessageArea>

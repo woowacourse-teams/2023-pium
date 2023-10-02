@@ -20,8 +20,7 @@ const Navbar = () => {
   const askLogin = () => {
     addToast({
       type: 'info',
-      title: '로그인 후 이용할 수 있어요.',
-      message: '피움과 함께 최적의 환경을 찾아보세요!',
+      message: '로그인 후 이용할 수 있어요',
       time: 3000,
       buttonContent: '로그인',
       onClickButton: goLogin,

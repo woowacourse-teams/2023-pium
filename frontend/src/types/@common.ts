@@ -3,7 +3,6 @@ export interface ToastItem {
   type: 'info' | 'success' | 'warning' | 'error';
   message: string;
   time?: number;
-  title?: string;
   buttonContent?: string;
   onClickButton?: () => void;
 }

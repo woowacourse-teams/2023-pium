@@ -94,15 +94,6 @@ export const ContentArea = styled.div`
   padding: 4px 0;
 `;
 
-export const Title = styled.p`
-  width: 100%;
-  margin-bottom: 8px;
-
-  font-size: 1.6rem;
-  font-weight: 600;
-  vertical-align: center;
-`;
-
 export const MessageArea = styled.div`
   width: 100%;
   font-size: 1.4rem;
