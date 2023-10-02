@@ -19,6 +19,10 @@ export const Wrapper = styled.nav`
   box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
 `;
 
+export const NavLink = styled(Link)`
+  height: 100%;
+`;
+
 export const NavButton = styled.button`
   height: 100%;
 `;
@@ -36,7 +40,7 @@ export const NavItemArea = styled.div<{ $active?: boolean }>`
   border-bottom: solid 2px transparent;
 `;
 
-export const NavItem = styled.div`
+export const NavItemCenter = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
