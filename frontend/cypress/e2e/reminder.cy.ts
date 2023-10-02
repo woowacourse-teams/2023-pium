@@ -10,7 +10,7 @@ describe('리마인더 테스트', () => {
   it('리마인더 페이지로 이동할 수 있다.', () => {
     cy.visit('/');
     cy.wait(1000);
-    cy.get('button').contains('리마인더').click().location('pathname').should('equal', '/reminder');
+    cy.get('a').contains('리마인더').click().location('pathname').should('equal', '/reminder');
   });
 
   it('내 반려 식물 상세보기로 이동할 수 있다.', () => {
