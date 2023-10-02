@@ -32,16 +32,15 @@ export default meta;
 
 type Story = StoryObj<typeof Toast>;
 
-export const InfoWithTitle: Story = {
+export const Info: Story = {
   args: {
-    id: 'InfoWithTitle',
+    id: 'Info',
     type: 'info',
     message: '피움 서비스의 정보 입니다.',
-    title: '제목이 있는 피움 서비스의 정보입니다.',
   },
 };
 
-export const Success: Story = {
+export const SuccessWithButton: Story = {
   args: {
     id: 'Success',
     type: 'success',
