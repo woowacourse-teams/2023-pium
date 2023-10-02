@@ -36,6 +36,7 @@ export const ICONS = [
   'wind',
   'add-circle',
   'survey',
+  'ios-share',
 ] as const;
 
 type IconIds = (typeof ICONS)[number];
