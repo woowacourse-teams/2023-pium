@@ -1,7 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import swDev from './swDev';
+import registerServiceWork from './registerServiceWork';
 
 if (process.env.NODE_ENV === 'development') {
   // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -12,9 +12,12 @@ if (process.env.NODE_ENV === 'development') {
       url: 'http://localhost:8282/mockServiceWorker.js',
     },
   });
-} else {
-  swDev();
 }
+
+if (process.env.NODE_ENV === 'production') {
+  registerServiceWork();
+}
+
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
