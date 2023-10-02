@@ -1,5 +1,5 @@
 import type { ToastItem } from 'types/@common';
-import { memo, useEffect, useState, useCallback } from 'react';
+import { memo, useEffect, useState, useCallback, useRef } from 'react';
 import { useRecoilState } from 'recoil';
 import SeeMoreContentBox from 'components/@common/SeeMoreContentBox';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
@@ -30,6 +30,9 @@ const Toast = (props: ToastItem) => {
 
   const [toastList, setToastList] = useRecoilState(toastListState);
   const [visible, setVisible] = useState(true);
+  const timeoutId = useRef(0);
+
+  const isTop = toastList[toastList.length - 1]?.id === id;
 
   const close = useCallback(() => {
     setVisible(false);
@@ -44,16 +47,19 @@ const Toast = (props: ToastItem) => {
   };
 
   useEffect(() => {
-    setTimeout(close, time);
-  }, [close, time]);
+    if (isTop) {
+      timeoutId.current = self.setTimeout(close, time);
+    } else {
+      if (!timeoutId.current) clearTimeout(timeoutId.current);
+    }
+
+    return () => {
+      if (timeoutId.current) clearTimeout(timeoutId.current);
+    };
+  }, [close, time, isTop]);
 
   return (
-    <Wrapper
-      role="alert"
-      $type={type}
-      $visible={visible}
-      $isTop={toastList[toastList.length - 1]?.id === id}
-    >
+    <Wrapper role="alert" $type={type} $visible={visible} $isTop={isTop}>
       <LeftArea>
         <IconArea>{icons[type]}</IconArea>
         <ContentArea>
@@ -70,7 +76,7 @@ const Toast = (props: ToastItem) => {
       <CloseButton type="button" onClick={close}>
         <SvgFill size={16} icon="close" color={theme.color.sub} />
       </CloseButton>
-      <ProgressBar $type={type} $time={time} />
+      {isTop && <ProgressBar $type={type} $time={time} />}
     </Wrapper>
   );
 };
