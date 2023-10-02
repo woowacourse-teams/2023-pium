@@ -15,7 +15,7 @@ export const Wrapper = styled.div`
   position: absolute;
   top: 0;
 
-  display: flex;
+  display: none;
   flex-direction: column;
   justify-content: space-evenly;
 
@@ -36,6 +36,7 @@ export const ContentWrapper = styled.div`
   position: relative;
 
   svg {
+    cursor: pointer;
     position: absolute;
     top: -20px;
     right: 0;

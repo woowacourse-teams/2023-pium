@@ -11,11 +11,12 @@ import theme from 'style/theme.style';
 import SvgFill from '../SvgIcons/SvgFill';
 
 const InstallPrompt = () => {
-  const { installApp, ignoreInstallApp } = useInstallApp();
+  const { installApp, ignoreInstallApp, installAppRef } = useInstallApp();
+
   const isIos = /iPhone|iPod|iPad/i.test(navigator.userAgent);
 
   return (
-    <Wrapper>
+    <Wrapper ref={installAppRef}>
       <ContentWrapper>
         <SvgFill
           icon="close-circle"
