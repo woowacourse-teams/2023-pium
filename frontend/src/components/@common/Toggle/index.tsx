@@ -7,6 +7,7 @@ interface ToggleProps {
   initialState?: boolean;
   toggleOnCallback?: () => void;
   toggleOffCallback?: () => void;
+  disabled?: boolean;
 }
 
 const Toggle = ({
@@ -15,6 +16,7 @@ const Toggle = ({
   initialState = true,
   toggleOnCallback,
   toggleOffCallback,
+  disabled = false,
 }: ToggleProps) => {
   const { isOn, toggle } = useToggle(initialState);
 
@@ -33,7 +35,13 @@ const Toggle = ({
 
   return (
     <Wrapper>
-      <ToggleBtn onClick={toggleHandler} on={isOn} width={width} height={height}>
+      <ToggleBtn
+        onClick={toggleHandler}
+        on={isOn}
+        width={width}
+        height={height}
+        disabled={disabled}
+      >
         <Circle on={isOn} width={width} height={height} />
       </ToggleBtn>
     </Wrapper>

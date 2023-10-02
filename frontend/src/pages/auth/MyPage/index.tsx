@@ -2,9 +2,18 @@ import { FixedButtonArea } from 'pages/garden/GardenPostList/GardenPostList.styl
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
+import Toggle from 'components/@common/Toggle';
 import VerticalDivider from 'components/@common/VerticalDivider/VerticalDivider.style';
-import { BottomSheet, Button, ButtonBox, Wrapper } from './MyPage.style';
+import {
+  BottomSheet,
+  Button,
+  ButtonBox,
+  Wrapper,
+  PushAlertWrapper,
+  PushAlertContent,
+} from './MyPage.style';
 import useConfirm from 'hooks/@common/useConfirm';
+import usePushAlert from 'hooks/@common/usePushAlert';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
@@ -14,6 +23,7 @@ const MyPage = () => {
   useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
+  const { isSubscribe, pushSupport, subscribe } = usePushAlert();
   const confirm = useConfirm();
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -28,10 +38,28 @@ const MyPage = () => {
     }
   };
 
+  const toggleCallback = () => {
+    subscribe();
+  };
+
   return (
     <>
       <ContentHeader title="마이페이지" />
       <Wrapper>
+        <PushAlertWrapper>
+          <PushAlertContent>
+            <p>리마인더 알림 받기</p>
+            <Toggle
+              width={45}
+              height={20}
+              toggleOnCallback={toggleCallback}
+              toggleOffCallback={toggleCallback}
+              initialState={isSubscribe}
+              disabled={!pushSupport}
+            />
+          </PushAlertContent>
+          {!pushSupport && <span>지원하지 않는 브라우저 또는 os입니다.</span>}
+        </PushAlertWrapper>
         <ButtonBox>
           <Button type="button" onClick={handleLogout}>
             로그아웃
