@@ -53,7 +53,7 @@ const Toast = (props: ToastItem) => {
       role="alert"
       $type={type}
       $visible={visible}
-      $isTop={toastList[toastList.length - 1].id === id}
+      $isTop={toastList[toastList.length - 1]?.id === id}
     >
       <LeftArea>
         <IconArea>{icons[type]}</IconArea>

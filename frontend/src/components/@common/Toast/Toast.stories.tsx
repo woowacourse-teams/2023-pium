@@ -34,6 +34,7 @@ type Story = StoryObj<typeof Toast>;
 
 export const InfoWithTitle: Story = {
   args: {
+    id: 'InfoWithTitle',
     type: 'info',
     message: '피움 서비스의 정보 입니다.',
     title: '제목이 있는 피움 서비스의 정보입니다.',
@@ -42,6 +43,7 @@ export const InfoWithTitle: Story = {
 
 export const Success: Story = {
   args: {
+    id: 'Success',
     type: 'success',
     message: '성공했어요!',
     buttonContent: '확인하러 가기'
