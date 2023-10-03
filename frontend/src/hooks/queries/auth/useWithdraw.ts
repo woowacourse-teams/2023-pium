@@ -17,7 +17,7 @@ const useWithdraw = () => {
     },
 
     onSuccess: () => {
-      addToast('success', '회원 탈퇴에 성공했어요');
+      addToast({ type: 'success', message: '회원 탈퇴에 성공했어요' });
       navigate(URL_PATH.main, { replace: true });
     },
 

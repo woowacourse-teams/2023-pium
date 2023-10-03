@@ -21,7 +21,7 @@ const Redirect = (props: RedirectProps) => {
   useEffect(() => {
     resetError?.();
     if (toastMessage) {
-      addToast(toastType, toastMessage);
+      addToast({ type: toastType, message: toastMessage });
     }
   }, [resetError, addToast, toastType, toastMessage]);
 

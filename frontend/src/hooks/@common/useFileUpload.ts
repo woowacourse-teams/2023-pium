@@ -26,7 +26,7 @@ const useFileUpload = ({ imageUrl = basicImage }: FileUploadParams) => {
       const firstFile = files[0];
 
       if (firstFile.size > MAX_FILE_CAPACITY) {
-        addToast('warning', '10MB 이하로 입력해주세요');
+        addToast({ type: 'warning', message: '10MB 이하로 입력해주세요' });
 
         if (imgRef.current) {
           imgRef.current.value = '';
@@ -37,7 +37,7 @@ const useFileUpload = ({ imageUrl = basicImage }: FileUploadParams) => {
       }
 
       if (!ALLOWED_FILE_EXTENSIONS.includes(firstFile.type)) {
-        addToast('warning', '지원하지 않는 확장자 입니다!');
+        addToast({ type: 'warning', message: '지원하지 않는 확장자 입니다!' });
 
         if (imgRef.current) {
           imgRef.current.value = '';

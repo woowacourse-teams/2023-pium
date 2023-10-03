@@ -52,9 +52,9 @@ const Form = (props: FormProps) => {
     }
 
     const firstImage = getFirstImage(files);
-    if (!firstImage) addToast('warning', '5MB 이하의 사진을 올려주세요!');
+    if (!firstImage) addToast({ type: 'warning', message: '5MB 이하의 사진을 올려주세요!' });
     if (firstImage && !isAllowedImageExtension(firstImage)) {
-      addToast('warning', '지원하지 않는 확장자입니다!');
+      addToast({ type: 'warning', message: '지원하지 않는 확장자입니다!' });
       return;
     }
     setImage(firstImage ? firstImage : image);

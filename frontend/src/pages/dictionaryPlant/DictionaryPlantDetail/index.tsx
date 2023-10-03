@@ -31,8 +31,18 @@ const DictionaryPlantDetail = () => {
     navigate(generatePath(URL_PATH.petRegisterForm, { id: String(dictionaryPlantId) }));
   };
 
+  const goLogin = () => {
+    navigate(URL_PATH.login);
+  };
+
   const warning = () => {
-    addToast('info', '로그인 후 등록할 수 있어요 😊');
+    addToast({
+      type: 'info',
+      message: '로그인 후 등록할 수 있어요',
+      time: 4000,
+      buttonContent: '로그인',
+      onClickButton: goLogin,
+    });
   };
 
   return (

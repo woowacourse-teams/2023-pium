@@ -12,6 +12,7 @@ export const ICONS = [
   'checkbox-fill',
   'check-circle',
   'close-circle',
+  'close',
   'crown',
   'flowerpot',
   'fragrance',

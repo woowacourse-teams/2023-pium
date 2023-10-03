@@ -59,7 +59,7 @@ export const PrimaryText = styled.span`
 
 export const LoginBox = styled.section`
   position: fixed;
-  bottom: 40px;
+  bottom: 24px;
 
   display: flex;
   align-items: center;

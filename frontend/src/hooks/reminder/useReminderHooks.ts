@@ -14,20 +14,26 @@ const useReminderHooks = () => {
   const { mutate: water } = useWater<string>({
     successCallback: (_, { body: { waterDate } }) => {
       queryClient.invalidateQueries({ queryKey: [REMINDER_URL] });
-      addToast('success', `${convertDateKorYear(waterDate).slice(5)}에 물주기 완료`);
+      addToast({
+        type: 'success',
+        message: `${convertDateKorYear(waterDate).slice(5)}에 물주기 완료`,
+      });
     },
     errorCallback: (error) => {
-      addToast('error', error.message);
+      addToast({ type: 'error', message: error.message });
     },
   });
 
   const { mutate: changeDate } = useChangeDate<string>({
     successCallback: (_, { body: { nextWaterDate } }) => {
       queryClient.invalidateQueries({ queryKey: [REMINDER_URL] });
-      addToast('success', `${convertDateKorYear(nextWaterDate).slice(5)}로 물주기 날짜 변경`);
+      addToast({
+        type: 'success',
+        message: `${convertDateKorYear(nextWaterDate).slice(5)}로 물주기 날짜 변경`,
+      });
     },
     errorCallback: (error) => {
-      addToast('error', error.message);
+      addToast({ type: 'error', message: error.message });
     },
   });
 
