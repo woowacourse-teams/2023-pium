@@ -22,11 +22,15 @@ export const BottomSheet = styled.div`
 
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
-  height: 60px;
+  height: 80px;
   padding: 0 32px;
+  padding-top: 16px;
 
-  background-color: ${(props) => props.theme.color.background};
-  box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    ${(props) => props.theme.color.background} 30%
+  );
 `;
 
 const Button = styled.button`

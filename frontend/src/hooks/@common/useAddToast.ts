@@ -10,14 +10,10 @@ const useAddToast = () => {
   const setToasts = useSetRecoilState(toastListState);
 
   const addToast = useCallback(
-    (type: ToastItem['type'], message: ToastItem['message'], time = 2300) => {
+    (props: Omit<ToastItem, 'id'>) => {
       const id = self.crypto.randomUUID();
 
-      setToasts((prev) => [...prev, { id, type, message }]);
-
-      setTimeout(() => {
-        setToasts((prev) => prev.filter(({ id: toastId }) => toastId !== id));
-      }, time);
+      setToasts((prev) => [...prev, { ...props, id }]);
     },
     [setToasts]
   );

@@ -32,26 +32,29 @@ export default meta;
 
 type Story = StoryObj<typeof Toast>;
 
-export const InfoWithTitle: Story = {
+export const Info: Story = {
   args: {
+    id: 'Info',
     type: 'info',
-    message: '피움 서비스의 정보 입니다.',
-    title: '제목이 있는 피움 서비스의 정보입니다.',
+    message: '피움 서비스의 정보 입니다',
   },
 };
 
-export const Success: Story = {
+export const SuccessWithButton: Story = {
   args: {
+    id: 'Success',
     type: 'success',
     message: '성공했어요!',
+    buttonContent: '확인하러 가기'
   },
 };
 
 const Interactive = (props: ToastItem) => {
-  const { type } = props;
+  const { type, message } = props;
   const addToast = useAddToast();
+
   const addHandler = () => {
-    addToast(type, props.message);
+    addToast({type, message, time: 4000});
   };
 
   return (

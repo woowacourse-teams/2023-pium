@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
 `;
 
 export const LogoMessage = styled.p`
-  margin-top: 15vh;
+  margin-top: 10vh;
 
   font-size: 2.4rem;
   font-weight: 900;
