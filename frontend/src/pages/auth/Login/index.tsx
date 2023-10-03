@@ -10,7 +10,7 @@ import {
   Text,
   Wrapper,
 } from './Login.style';
-import Auth from 'apis/auth';
+import AuthAPI from 'apis/auth';
 import { URL_PATH } from 'constants/index';
 import KakaoLoginLargePng from 'assets/kakao_login_large_narrow.png';
 import KakaoLoginLargeWebp from 'assets/kakao_login_large_narrow.webp';
@@ -25,7 +25,7 @@ const IMAGE_SRC_LIST = [
 ];
 
 const Login = () => {
-  const { AUTHORIZATION_URL } = Auth;
+  const { AUTHORIZATION_URL } = AuthAPI;
 
   const [imageSrcIndex, setImageSrcIndex] = useState(0);
 

@@ -106,14 +106,14 @@ const PetPlantEditForm = (props: PetPlantDetails) => {
 
   const submit = () => {
     if (!isValidForm(form)) {
-      addToast('warning', '별명과 물 주기 주기는 공백이 아니어야 해요.');
+      addToast({ type: 'warning', message: '별명과 물 주기 주기는 공백이 아니어야 해요' });
       return;
     }
 
     const { birthDate: formBirthDate, lastWaterDate: formLastWaterDate } = form;
 
     if (!(isDateFormat(formBirthDate) && isDateFormat(formLastWaterDate))) {
-      addToast('error', '잘못된 날짜 형식입니다.');
+      addToast({ type: 'error', message: '잘못된 날짜 형식입니다' });
       return;
     }
 
