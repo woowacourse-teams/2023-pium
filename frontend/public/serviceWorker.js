@@ -51,3 +51,30 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(caches.match(event.request).then((result) => result && result));
   }
 });
+
+self.addEventListener('push', (event) => {
+  // 여기서 어떤 값을 받을지가 관건!
+  // 일단은 리마인더만 값을 받기 때문에 리마인더 알리만을 생각한다.
+  const { message } = event.data.json();
+  const title = '식물을 쉽게, 피움';
+
+  const path = '/reminder';
+
+  const options = {
+    body: message,
+    icon: './assets/favicon-32x32.png',
+    badge: './assets/favicon-16x16.png',
+    data: path,
+    tag: 'reminder-alert',
+    vibrate: [200, 100, 200, 100, 200, 100, 200], // 짝수 인덱스는 진동 시간, 홀수 인덱스는 휴식 시간
+  };
+
+  event.waitUntil(self.registration.showNotification(title, options));
+});
+
+self.addEventListener('notificationclick', (event) => {
+  event.notification.close();
+  const movePath = self.location.origin + event.notification.data; // 알림 클릭시에 리마인더로 이동 가능
+
+  event.waitUntil(self.clients.openWindow(movePath));
+});
