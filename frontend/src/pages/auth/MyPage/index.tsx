@@ -23,7 +23,7 @@ const MyPage = () => {
   useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
-  const { isSubscribe, pushSupport, subscribe } = usePushAlert();
+  const { isSubscribe, pushSupport, subscribeToggle } = usePushAlert();
   const confirm = useConfirm();
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -39,7 +39,7 @@ const MyPage = () => {
   };
 
   const toggleCallback = () => {
-    subscribe();
+    subscribeToggle();
   };
 
   return (
