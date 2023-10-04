@@ -82,6 +82,10 @@ module.exports = (env) => ({
           from: resolve(__dirname, 'public', 'seo'),
           to: resolve(__dirname, 'dist', './'),
         },
+        {
+          from: resolve(__dirname, 'public', 'serviceWorker.js'),
+          to: resolve(__dirname, 'dist', './'),
+        },
       ],
     }),
     new BundleAnalyzerPlugin({
