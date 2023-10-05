@@ -1,3 +1,4 @@
+import { Stack } from '@pium/stack-component';
 import DateInput from 'components/@common/DateInput';
 import FormInput from 'components/@common/FormInput';
 import FormInputBox from 'components/@common/FormInputBox';
@@ -5,7 +6,6 @@ import Image from 'components/@common/Image';
 import ImageButton from 'components/@common/ImageButton';
 import ProgressBar from 'components/@common/ProgressBar';
 import Select from 'components/@common/Select';
-import Stack from 'components/@common/Stack';
 import {
   AddImageButton,
   Button,
@@ -29,7 +29,6 @@ interface PetPlantRegisterFormProps {
 }
 
 const STACK_SIZE = 9;
-const STACK_ELEMENT_HEIGHT = '96px';
 
 const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
   const { dictionaryPlantId, defaultNickname = '', dictionaryImageUrl } = props;
@@ -37,7 +36,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     ...initialPetPlantForm,
     nickname: defaultNickname,
   });
-  const { topIndex, showNextElement } = useStack(STACK_SIZE);
+  const { showCount, showNextElement } = useStack(1, STACK_SIZE);
   const {
     uploadedImageUrl,
     fileUploadHandler,
@@ -48,7 +47,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
   });
 
   const today = getDateToString();
-  const formProgressPercentage = Math.floor((topIndex / (STACK_SIZE - 1)) * 100);
+  const formProgressPercentage = Math.floor((showCount / STACK_SIZE) * 100);
   const isValidForm = Object.values(form).every((value) => value !== '');
 
   const addToast = useAddToast();
@@ -59,7 +58,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
   };
 
   const validateNickname = () => {
-    if (form.nickname !== '') showNextElement(0);
+    if (form.nickname.trim() !== '') showNextElement(0);
   };
 
   const setBirthDate = (value: string) => {
@@ -133,7 +132,7 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
     registerPetPlant({ imageData: imageBlob, requestForm });
   };
 
-  const getStatus = (index: number) => (topIndex === index ? 'focus' : 'default');
+  const getInputBoxStatus = (index: number) => (showCount - 1 === index ? 'focus' : 'default');
 
   return (
     <Wrapper method="POST" encType="multipart/form-data" onSubmit={submit}>
@@ -150,93 +149,75 @@ const PetPlantRegisterForm = (props: PetPlantRegisterFormProps) => {
       <Center>
         <ProgressBar percentage={formProgressPercentage} width="90%" height="12px" />
       </Center>
-      <Stack topIndex={topIndex}>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="별명이 뭔가요?" status={getStatus(0)}>
-            <FormInput
-              aria-label="별명 입력"
-              value={form.nickname}
-              onChange={setNickname}
-              nextCallback={validateNickname}
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="입양일이 언제인가요?" status={getStatus(1)}>
-            <DateInput
-              aria-label="입양일 선택"
-              value={form.birthDate}
-              changeCallback={setBirthDate}
-              max={today}
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getStatus(2)}>
-            <DateInput
-              aria-label="마지막으로 물 준 날짜 선택"
-              value={form.lastWaterDate}
-              changeCallback={setLastWaterDate}
-              max={today}
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="며칠 주기로 물을 주나요?" status={getStatus(3)}>
-            <FormInput
-              value={form.waterCycle}
-              onChange={setWaterCycle}
-              nextCallback={validateWaterCycle}
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="어떤 화분에서 키우고 있나요?" status={getStatus(4)}>
-            <Select
-              value={form.flowerpot}
-              options={OPTIONS.flowerPot}
-              onChange={setFlowerpot}
-              placeholder="화분의 종류를 선택해 주세요"
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="화분의 위치는 어디인가요?" status={getStatus(5)}>
-            <Select
-              value={form.location}
-              options={OPTIONS.location}
-              onChange={setLocation}
-              placeholder="화분의 위치를 선택해 주세요"
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="빛을 어떻게 받고 있나요?" status={getStatus(6)}>
-            <Select
-              value={form.light}
-              options={OPTIONS.light}
-              onChange={setLight}
-              placeholder="채광을 선택해 주세요"
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <FormInputBox title="바람은 얼마나 통하나요?" status={getStatus(7)}>
-            <Select
-              value={form.wind}
-              options={OPTIONS.wind}
-              onChange={setWind}
-              placeholder="통풍을 선택해 주세요"
-            />
-          </FormInputBox>
-        </Stack.Element>
-        <Stack.Element height={STACK_ELEMENT_HEIGHT}>
-          <Center>
-            <Button type="submit" disabled={!isValidForm || isPending}>
-              등록하기
-            </Button>
-          </Center>
-        </Stack.Element>
+      <Stack showCount={showCount} rowGap="10px">
+        <FormInputBox title="별명이 뭔가요?" status={getInputBoxStatus(0)}>
+          <FormInput
+            aria-label="별명 입력"
+            value={form.nickname}
+            onChange={setNickname}
+            nextCallback={validateNickname}
+          />
+        </FormInputBox>
+        <FormInputBox title="입양일이 언제인가요?" status={getInputBoxStatus(1)}>
+          <DateInput
+            aria-label="입양일 선택"
+            value={form.birthDate}
+            changeCallback={setBirthDate}
+            max={today}
+          />
+        </FormInputBox>
+        <FormInputBox title="마지막으로 물 준 날짜가 언제인가요?" status={getInputBoxStatus(2)}>
+          <DateInput
+            aria-label="마지막으로 물 준 날짜 선택"
+            value={form.lastWaterDate}
+            changeCallback={setLastWaterDate}
+            max={today}
+          />
+        </FormInputBox>
+        <FormInputBox title="며칠 주기로 물을 주나요?" status={getInputBoxStatus(3)}>
+          <FormInput
+            value={form.waterCycle}
+            onChange={setWaterCycle}
+            nextCallback={validateWaterCycle}
+          />
+        </FormInputBox>
+        <FormInputBox title="어떤 화분에서 키우고 있나요?" status={getInputBoxStatus(4)}>
+          <Select
+            value={form.flowerpot}
+            options={OPTIONS.flowerPot}
+            onChange={setFlowerpot}
+            placeholder="화분의 종류를 선택해 주세요"
+          />
+        </FormInputBox>
+        <FormInputBox title="화분의 위치는 어디인가요?" status={getInputBoxStatus(5)}>
+          <Select
+            value={form.location}
+            options={OPTIONS.location}
+            onChange={setLocation}
+            placeholder="화분의 위치를 선택해 주세요"
+          />
+        </FormInputBox>
+        <FormInputBox title="빛을 어떻게 받고 있나요?" status={getInputBoxStatus(6)}>
+          <Select
+            value={form.light}
+            options={OPTIONS.light}
+            onChange={setLight}
+            placeholder="채광을 선택해 주세요"
+          />
+        </FormInputBox>
+        <FormInputBox title="바람은 얼마나 통하나요?" status={getInputBoxStatus(7)}>
+          <Select
+            value={form.wind}
+            options={OPTIONS.wind}
+            onChange={setWind}
+            placeholder="통풍을 선택해 주세요"
+          />
+        </FormInputBox>
+        <Center>
+          <Button type="submit" disabled={!isValidForm || isPending}>
+            등록하기
+          </Button>
+        </Center>
       </Stack>
     </Wrapper>
   );
