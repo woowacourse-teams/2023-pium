@@ -26,6 +26,9 @@ public class Member extends BaseEntity {
     @Column(name = "kakao_id", unique = true)
     private Long kakaoId;
 
+    @Column(name = "device_token")
+    private String deviceToken;
+
     @Builder
     public Member(Long kakaoId) {
         this.kakaoId = kakaoId;
