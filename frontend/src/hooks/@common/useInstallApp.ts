@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
+import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { getCookie, setCookie } from 'utils/cookie';
 
 declare global {
@@ -19,40 +20,37 @@ interface BeforeInstallPromptEvent extends Event {
 let deferredPrompt: BeforeInstallPromptEvent | null = null;
 
 const useInstallApp = () => {
-  const installAppRef = useRef<HTMLDivElement>(null);
+  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
 
-  const installApp = () => {
+  const [showPrompt, setShowPrompt] = useState<boolean>(
+    JSON.parse(getCookie('PromptVisible') || 'true')
+  );
+
+  const installApp = async () => {
     if (deferredPrompt) {
-      deferredPrompt.prompt();
+      await deferredPrompt.prompt();
 
       deferredPrompt.userChoice.then(() => {
         deferredPrompt = null;
-        if (installAppRef.current) {
-          installAppRef.current.style.display = 'none';
-        }
       });
     }
   };
 
   const ignoreInstallApp = () => {
     setCookie({ key: 'PromptVisible', value: 'false' });
-
+    setShowPrompt(false);
     deferredPrompt = null;
-    if (installAppRef.current) {
-      installAppRef.current.style.display = 'none';
-    }
+  };
+
+  const closePrompt = () => {
+    setShowPrompt(false);
   };
 
   const beforeInstallPromptHandler = (event: BeforeInstallPromptEvent) => {
     event.preventDefault();
-    const showPrompt = JSON.parse(getCookie('PromptVisible') || 'true');
-
     if (!showPrompt) return;
 
     deferredPrompt = event;
-    if (installAppRef.current) {
-      installAppRef.current.style.display = 'flex';
-    }
   };
 
   useEffect(() => {
@@ -63,7 +61,7 @@ const useInstallApp = () => {
     };
   }, []);
 
-  return { installApp, ignoreInstallApp, installAppRef };
+  return { showPrompt: showPrompt && isLoggedIn, installApp, ignoreInstallApp, closePrompt };
 };
 
 export default useInstallApp;
