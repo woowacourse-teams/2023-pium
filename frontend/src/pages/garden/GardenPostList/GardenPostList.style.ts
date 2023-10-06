@@ -38,6 +38,7 @@ export const FixedButton = styled.button`
 
   background-color: ${(props) => props.theme.color.primary};
   border-radius: 28px;
+  box-shadow: 0 0 5px ${(props) => props.theme.color.grayDark};
 `;
 
 export const Sensor = styled.div`
