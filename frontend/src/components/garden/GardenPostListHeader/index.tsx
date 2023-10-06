@@ -30,16 +30,16 @@ const GardenPostListHeader = ({
         height="36px"
         fontSize="1.6rem"
       />
-      <FilterArea>
-        {selectedDictionaryPlant && (
+      {selectedDictionaryPlant && (
+        <FilterArea>
           <FilterTag>
             {selectedDictionaryPlant.name}
             <DeleteFilterButton type="button" onClick={onClickDelete} aria-label="필터 지우기">
               ✕
             </DeleteFilterButton>
           </FilterTag>
-        )}
-      </FilterArea>
+        </FilterArea>
+      )}
     </Wrapper>
   );
 };
