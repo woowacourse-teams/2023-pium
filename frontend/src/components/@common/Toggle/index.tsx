@@ -18,7 +18,7 @@ const Toggle = ({
   toggleOffCallback,
   disabled = false,
 }: ToggleProps) => {
-  const { isOn, toggle } = useToggle(initialState);
+  const { isOn, toggle } = useToggle(initialState && !disabled);
 
   const toggleHandler = () => {
     toggle();
@@ -37,12 +37,12 @@ const Toggle = ({
     <Wrapper>
       <ToggleBtn
         onClick={toggleHandler}
-        on={isOn}
+        $on={isOn}
         width={width}
         height={height}
         disabled={disabled}
       >
-        <Circle on={isOn} width={width} height={height} />
+        <Circle $on={isOn} width={width} height={height} />
       </ToggleBtn>
     </Wrapper>
   );

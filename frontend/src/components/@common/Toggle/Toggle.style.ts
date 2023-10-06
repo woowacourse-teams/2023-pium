@@ -1,7 +1,8 @@
+import { HTMLProps } from 'react';
 import styled, { css } from 'styled-components';
 
-interface ToggleParams {
-  on: boolean;
+interface ToggleParams extends HTMLProps<HTMLButtonElement | HTMLDivElement> {
+  $on: boolean;
   width: number;
   height: number;
 }
@@ -20,7 +21,8 @@ export const ToggleBtn = styled.button<ToggleParams>`
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
 
-  background-color: ${({ on, theme }) => (!on ? theme.color.gray : theme.color.primary)};
+  opacity: ${({ disabled }) => (disabled ? 0.3 : 1)};
+  background-color: ${({ $on, theme }) => (!$on ? theme.color.gray : theme.color.primary)};
   border: none;
   border-radius: 30px;
 
@@ -33,8 +35,8 @@ export const Circle = styled.div<ToggleParams>`
   width: ${({ height }) => height * 0.8}px;
   height: ${({ height }) => height * 0.8}px;
 
-  ${({ on, width, height }) =>
-    on &&
+  ${({ $on, width, height }) =>
+    $on &&
     css`
       transform: translate(${width - height}px, 0);
       transition: all 0.5s ease-in-out;
