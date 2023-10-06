@@ -17,40 +17,36 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-let deferredPrompt: BeforeInstallPromptEvent | null = null;
-
 const useInstallApp = () => {
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
 
-  const [showPrompt, setShowPrompt] = useState<boolean>(
-    JSON.parse(getCookie('PromptVisible') || 'true')
-  );
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   const installApp = async () => {
     if (deferredPrompt) {
       await deferredPrompt.prompt();
 
       deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
+        setDeferredPrompt(null);
       });
     }
   };
 
   const ignoreInstallApp = () => {
     setCookie({ key: 'PromptVisible', value: 'false' });
-    setShowPrompt(false);
-    deferredPrompt = null;
+    setDeferredPrompt(null);
   };
 
   const closePrompt = () => {
-    setShowPrompt(false);
+    setDeferredPrompt(null);
   };
 
   const beforeInstallPromptHandler = (event: BeforeInstallPromptEvent) => {
     event.preventDefault();
+    const showPrompt = JSON.parse(getCookie('PromptVisible') || 'true');
     if (!showPrompt) return;
 
-    deferredPrompt = event;
+    setDeferredPrompt(event);
   };
 
   useEffect(() => {
@@ -61,7 +57,7 @@ const useInstallApp = () => {
     };
   }, []);
 
-  return { showPrompt: showPrompt && isLoggedIn, installApp, ignoreInstallApp, closePrompt };
+  return { showPrompt: deferredPrompt && isLoggedIn, installApp, ignoreInstallApp, closePrompt };
 };
 
 export default useInstallApp;
