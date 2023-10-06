@@ -35,7 +35,7 @@
       "sizes": "192x192",
       "type": "image/png",
       "density": "4.0",
-      "purpose": "any"
+      "purpose": "maskable"
     },
     {
       "src": "/assets/android-icon-512x512.png",
