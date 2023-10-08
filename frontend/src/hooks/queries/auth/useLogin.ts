@@ -1,12 +1,15 @@
-import { useSuspenseQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import AuthAPI from 'apis/auth';
+import { getCurrentToken } from 'utils/firebase';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
-const useLogin = (code: string) =>
-  useSuspenseQuery<null, Error, void>({
-    queryKey: ['getSession', code],
-    queryFn: async () => {
-      const response = await AuthAPI.getSessionId(code);
+const useLogin = () =>
+  useMutation<null, Error, string>({
+    mutationFn: async (code: string) => {
+      const currentToken = await getCurrentToken();
+
+      const response = await AuthAPI.getSessionId(code, currentToken);
+
       throwOnInvalidStatus(response);
       return null;
     },

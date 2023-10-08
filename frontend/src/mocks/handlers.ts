@@ -181,8 +181,10 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(204));
     }),
 
-    rest.post('/login', (req, res, ctx) => {
-      const code = req.url.searchParams.get('code') ?? null;
+    rest.post('/login', async (req, res, ctx) => {
+      const { code, deviceToken } = await req.json();
+
+      console.log(code, deviceToken, '@@@@');
 
       if (code === null) {
         return res(

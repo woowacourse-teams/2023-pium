@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { getAnalytics } from 'firebase/analytics';
 import { initializeApp } from 'firebase/app';
-import { getMessaging } from 'firebase/messaging';
+import { getMessaging, getToken } from 'firebase/messaging';
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -23,4 +23,9 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const messaging = getMessaging(app);
 
-export { analytics, messaging };
+const getCurrentToken = async () =>
+  await getToken(messaging, {
+    vapidKey: process.env.VAPID_PUBLIC_KEY ?? '',
+  });
+
+export { analytics, messaging, getCurrentToken };
