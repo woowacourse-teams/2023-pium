@@ -8,7 +8,7 @@ const registerPwaServiceWorker = async () => {
   // 기존에 있던 서비스 워커를 가져옴
   let registration = await navigator.serviceWorker.getRegistration();
 
-  const newScriptPath = '/serviceWorker.js';
+  const newScriptPath = '/firebase-messaging-sw.js';
   const oldScriptUrl = registration?.active?.scriptURL;
 
   // 서비스워커 등록이 되어 있지 않다면 새로 등록함.

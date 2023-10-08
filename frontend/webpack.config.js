@@ -83,7 +83,7 @@ module.exports = (env) => ({
           to: resolve(__dirname, 'dist', './'),
         },
         {
-          from: resolve(__dirname, 'public', 'serviceWorker.js'),
+          from: resolve(__dirname, 'public', 'firebase-messaging-sw.js'),
           to: resolve(__dirname, 'dist', './'),
         },
       ],

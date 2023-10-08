@@ -5,6 +5,9 @@ const assetCacheName = `assets-${version}`;
  * cache 설정
  * TODO: 처음 파일들을 캐싱하는 것인데 파일 명이 달라져서 매번 갈아끼워 줘야 하는 문제가 있는것 같습니다.
  * 근데, 버저닝 생각하면 괜찮을지도?
+ *
+ * 파일명이 firebase-messaging-sw인 이유는, 해당 파일명으로 serviceWorker를 하지 않으면 firebase에서 인식이 되지 않더라구여;;
+ *
  * https://web.dev/service-worker-mindset/ 참조
  * https://web.dev/learn/pwa/caching/
  */
