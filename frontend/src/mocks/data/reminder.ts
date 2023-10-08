@@ -6,7 +6,7 @@ const REMINDER_DATA = {
   data: [
     {
       petPlantId: 0,
-      image: 'https://static.pium.life/dict/dict_plants_1.jpg',
+      image: 'https://static.pium.life/dev/petPlant/032e28c1_1695347817381.jpg',
       nickName: '내가 만든 쿠키이이이이 히? 너는 절대 못먹지 캔츄바레 원잇  플리즈',
       dictionaryPlantName: '이 편지는 영국에서 시작해서 그렇게 변화게 되어왔습니다.',
       dday: 20,
