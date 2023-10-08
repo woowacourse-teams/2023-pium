@@ -49,6 +49,7 @@ const useInstallApp = () => {
     setDeferredPrompt(event);
   };
 
+  // TODO: 왜 '/'에서만 beforeinstallprompt가 이벤트 추가가 되나?  prompt가 나오고 나머지는 나오지 않는가?
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
 
