@@ -18,7 +18,7 @@ const PageLoadingBar = () => {
       show();
     } else {
       showFinish();
-      setTimeout(hide, 400);
+      setTimeout(hide, 300);
       setTimeout(hideFinish, 1000);
     }
   }, [isShowPageLoading]);
@@ -49,11 +49,12 @@ const ProgressBar = styled.div`
 
 const progressing = keyframes`
   0%    { transform: translateX(-100%); }
+  50%   { transform: translateX(-80%); }
   100%  { transform: translateX(0); }
 `;
 
 const Progressing = styled(ProgressBar)`
-  animation: ${progressing} 5s;
+  animation: ${progressing} 4s ease-out;
 `;
 
 const fillOut = keyframes`
@@ -61,7 +62,7 @@ const fillOut = keyframes`
     opacity: 1; 
     transform: translateX(-100%);
   }
-  50% {
+  30% {
     opacity: 1; 
     transform: translateX(0);  }
   100% {
