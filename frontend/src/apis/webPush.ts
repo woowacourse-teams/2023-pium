@@ -6,21 +6,20 @@ const headers = {
   'Content-Type': 'application/json',
 };
 
-const subscribe = (subscribe: PushSubscription) => {
+const subscribe = (token: string) => {
   return fetch(SUBSCRIBE_URL, {
     method: 'POST',
     headers,
     credentials: 'include',
-    body: JSON.stringify(subscribe),
+    body: JSON.stringify(token),
   });
 };
 
-const unSubscribe = (endpoint: string) => {
+const unSubscribe = () => {
   return fetch(SUBSCRIBE_URL, {
     method: 'POST',
     credentials: 'include',
     headers,
-    body: JSON.stringify({ endpoint }),
   });
 };
 

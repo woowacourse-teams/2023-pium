@@ -23,7 +23,7 @@ const MyPage = () => {
   useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
-  const { isSubscribe, pushSupport, subscribeToggle } = usePushAlert();
+  const { isSubscribe, pushSupport, subscribeAlert, unSubscribeAlert } = usePushAlert();
   const confirm = useConfirm();
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -38,10 +38,6 @@ const MyPage = () => {
     }
   };
 
-  const toggleCallback = () => {
-    subscribeToggle();
-  };
-
   return (
     <>
       <ContentHeader title="마이페이지" />
@@ -52,8 +48,8 @@ const MyPage = () => {
             <Toggle
               width={45}
               height={20}
-              toggleOnCallback={toggleCallback}
-              toggleOffCallback={toggleCallback}
+              toggleOnCallback={subscribeAlert}
+              toggleOffCallback={unSubscribeAlert}
               initialState={isSubscribe}
               disabled={!pushSupport}
             />

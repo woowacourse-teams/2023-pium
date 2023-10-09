@@ -1,55 +1,42 @@
 import { useWebPushSubscribe, useWebPushUnSubscribe } from 'hooks/queries/auth/useWebPush';
+import { getCurrentToken } from 'utils/firebase';
 import { pushStatus } from 'utils/pushStatus';
-import { urlB64ToUint8Array } from 'utils/urlB64ToUint8Array';
 import useAddToast from './useAddToast';
 
 const usePushAlert = () => {
   const addToast = useAddToast();
 
   const { mutate: subscribe } = useWebPushSubscribe();
-  const { mutate: unSubScribe } = useWebPushUnSubscribe();
+  const { mutate: unSubscribe } = useWebPushUnSubscribe();
 
-  const subscribeToggle = () => {
+  const subscribeAlert = async () => {
     if (!pushStatus.pushSupport) {
       addToast('warning', '지원하지 않는 브라우저입니다', 3000);
       return;
     }
 
-    Notification.requestPermission().then((permission) => {
-      pushStatus.notificationPermission = permission;
+    // subscribe를 하지 않으려면 해당 토큰을 제거해야 한다.
+    const permission = await Notification.requestPermission();
+    pushStatus.notificationPermission = permission;
 
-      if (permission !== 'granted') {
-        addToast('info', '알림을 거부했습니다', 3000);
-        return;
-      }
+    if (permission !== 'granted') {
+      addToast('info', '알림을 거부했습니다', 3000);
+      return;
+    }
 
-      if (pushStatus.pushSubscription) {
-        pushStatus.pushSubscription.unsubscribe().then((success) => {
-          if (success && pushStatus.pushSubscription) {
-            const { endpoint } = pushStatus.pushSubscription;
-            unSubScribe(endpoint);
-            addToast('info', '알림을 비활성화 합니다.', 3000);
-          }
-        });
-      } else {
-        const option = {
-          userVisibleOnly: true,
-          applicationServerKey: urlB64ToUint8Array(process.env.VAPID_PUBLIC_KEY ?? ''),
-        };
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.pushManager.subscribe(option).then((pushSubscription) => {
-            subscribe(pushSubscription);
-            pushStatus.pushSubscription = pushSubscription;
-          });
-        });
-      }
-    });
+    const currentToken = await getCurrentToken(); // 여기서 새로운 토큰을 전달하면 됨.
+    subscribe(currentToken);
+  };
+
+  const unSubscribeAlert = async () => {
+    unSubscribe();
   };
 
   return {
     isSubscribe: pushStatus.pushSubscription ? true : false,
     pushSupport: pushStatus.pushSupport,
-    subscribeToggle,
+    subscribeAlert,
+    unSubscribeAlert,
   };
 };
 
