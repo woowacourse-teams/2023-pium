@@ -34,7 +34,7 @@ const PageLoadingBar = () => {
 
 export default PageLoadingBar;
 
-const Wrapper = styled.div`
+const ProgressBar = styled.div`
   position: fixed;
   z-index: ${(props) => props.theme.zIndex.tooltip};
   top: 0;
@@ -44,7 +44,7 @@ const Wrapper = styled.div`
   height: 4px;
 
   background-color: ${(props) => props.theme.color.primary};
-  border-radius: 4px;
+  border-radius: 0 4px 4px 0;
 `;
 
 const progressing = keyframes`
@@ -52,7 +52,7 @@ const progressing = keyframes`
   100%  { transform: translateX(0); }
 `;
 
-const Progressing = styled(Wrapper)`
+const Progressing = styled(ProgressBar)`
   animation: ${progressing} 5s;
 `;
 
@@ -70,6 +70,6 @@ const fillOut = keyframes`
   }
 `;
 
-const Finish = styled(Wrapper)`
+const Finish = styled(ProgressBar)`
   animation: ${fillOut} 1s;
 `;
