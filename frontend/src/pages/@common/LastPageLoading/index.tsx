@@ -1,12 +1,11 @@
 import { useContext, useEffect } from 'react';
-import { useSetRecoilState } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { styled } from 'styled-components';
 import Loading from 'pages/@common/Loading';
-import { isShowPageLoadingState } from 'store/atoms/@common';
-import { LastPageContext } from '../RootTemplate';
+import { isShowPageLoadingState, lastPageState } from 'store/atoms/@common';
 
 const LastPageLoading = () => {
-  const lastPageValue = useContext(LastPageContext);
+  const lastPageValue = useRecoilValue(lastPageState);
   const setIsShowPageLoading = useSetRecoilState(isShowPageLoadingState);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ const LastPageLoading = () => {
 
   return (
     <>
-      {lastPageValue?.lastPage || <Loading />}
+      {lastPageValue || <Loading />}
       <Backdrop />
     </>
   );
