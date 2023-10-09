@@ -1,3 +1,28 @@
+/* eslint-disable no-undef */
+// Give the service worker access to Firebase Messaging.
+// Note that you can only use Firebase Messaging here. Other Firebase libraries
+// are not available in the service worker.
+importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js');
+
+// Initialize the Firebase app in the service worker by passing in
+// your app's Firebase config object.
+// https://firebase.google.com/docs/web/setup#config-object
+firebase.initializeApp({
+  apiKey: 'AIzaSyCNVyJ1qLPvMiuZDK97O-rmB3mz48UqC1g',
+  authDomain: 'pium-7445f.firebaseapp.com',
+  databaseURL: 'https://pium-7445f.firebaseio.com',
+  projectId: 'pium-7445f',
+  storageBucket: 'pium-7445f.appspot.com',
+  messagingSenderId: '14284052337',
+  appId: '1:14284052337:web:4ccb34224d907e73fa48d0',
+  measurementId: 'G-Z5F62MDJ8N',
+});
+
+// Retrieve an instance of Firebase Messaging so that it can handle background
+// messages.
+const messaging = firebase.messaging();
+
 const version = 1;
 const assetCacheName = `assets-${version}`;
 
@@ -55,16 +80,16 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-self.addEventListener('push', (event) => {
-  // 여기서 어떤 값을 받을지가 관건!
-  // 일단은 리마인더만 값을 받기 때문에 리마인더 알리만을 생각한다.
-  const { message } = event.data.json();
-  const title = '식물을 쉽게, 피움';
-
+messaging.onBackgroundMessage((payload) => {
+  const {
+    notification: { title, body },
+  } = payload;
+  // Customize notification here
   const path = '/reminder';
 
-  const options = {
-    body: message,
+  const notificationTitle = title;
+  const notificationOptions = {
+    body: body,
     icon: './assets/favicon-32x32.png',
     badge: './assets/favicon-16x16.png',
     data: path,
@@ -72,7 +97,7 @@ self.addEventListener('push', (event) => {
     vibrate: [200, 100, 200, 100, 200, 100, 200], // 짝수 인덱스는 진동 시간, 홀수 인덱스는 휴식 시간
   };
 
-  event.waitUntil(self.registration.showNotification(title, options));
+  self.registration.showNotification(notificationTitle, notificationOptions);
 });
 
 self.addEventListener('notificationclick', (event) => {
