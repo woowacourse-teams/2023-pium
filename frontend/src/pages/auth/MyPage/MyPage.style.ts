@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Wrapper = styled.main`
+export const Main = styled.main`
   position: relative;
   display: flex;
   flex-direction: column;

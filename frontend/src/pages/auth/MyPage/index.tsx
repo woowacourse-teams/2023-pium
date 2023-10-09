@@ -1,9 +1,10 @@
 import { FixedButtonArea } from 'pages/garden/GardenPostList/GardenPostList.style';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import VerticalDivider from 'components/@common/VerticalDivider/VerticalDivider.style';
-import { BottomSheet, Button, ButtonBox, Wrapper } from './MyPage.style';
+import { BottomSheet, Button, ButtonBox, Main } from './MyPage.style';
 import useConfirm from 'hooks/@common/useConfirm';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
@@ -29,9 +30,9 @@ const MyPage = () => {
   };
 
   return (
-    <>
+    <PageLogger>
       <ContentHeader title="마이페이지" />
-      <Wrapper>
+      <Main>
         <ButtonBox>
           <Button type="button" onClick={handleLogout}>
             로그아웃
@@ -41,7 +42,7 @@ const MyPage = () => {
             회원 탈퇴
           </Button>
         </ButtonBox>
-      </Wrapper>
+      </Main>
       <Navbar />
       <FixedButtonArea>
         <BottomSheet to="https://forms.gle/rQUAi9GbVwrr7oG2A" target="blank">
@@ -49,7 +50,7 @@ const MyPage = () => {
           문의하기
         </BottomSheet>
       </FixedButtonArea>
-    </>
+    </PageLogger>
   );
 };
 
