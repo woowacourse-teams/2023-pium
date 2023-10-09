@@ -53,7 +53,7 @@ const progressing = keyframes`
 `;
 
 const Progressing = styled(Wrapper)`
-  animation: ${progressing} 10s;
+  animation: ${progressing} 5s;
 `;
 
 const fillOut = keyframes`
