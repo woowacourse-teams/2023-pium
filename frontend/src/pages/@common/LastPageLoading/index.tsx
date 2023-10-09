@@ -4,7 +4,7 @@ import Loading from 'pages/@common/Loading';
 import { isShowPageLoadingState, lastPageState } from 'store/atoms/@common';
 
 const LastPageLoading = () => {
-  const lastPageValue = useRecoilValue(lastPageState);
+  const lastPage = useRecoilValue(lastPageState);
   const setIsShowPageLoading = useSetRecoilState(isShowPageLoadingState);
 
   useEffect(() => {
@@ -15,7 +15,7 @@ const LastPageLoading = () => {
     };
   }, []);
 
-  return lastPageValue || <Loading />;
+  return lastPage || <Loading />;
 };
 
 export default LastPageLoading;
