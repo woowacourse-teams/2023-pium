@@ -15,7 +15,7 @@ export const ProgressBar = styled.div`
 
 export const progressing = keyframes`
   0%    { transform: translateX(-100%); }
-  50%   { transform: translateX(-80%); }
+  50%   { transform: translateX(-10%); }
   100%  { transform: translateX(0); }
 `;
 
