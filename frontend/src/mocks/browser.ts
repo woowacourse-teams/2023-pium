@@ -5,7 +5,7 @@ import gardenHandlers from './handlers/gardenHandlers';
 import historyHandlers from './handlers/historyHandlers';
 
 export const worker = setupWorker(
-  ...makeHandler(3000, 0),
+  ...makeHandler(500, 0),
   ...historyHandlers,
   ...dictionaryPlantRegistrationHandlers,
   ...gardenHandlers
