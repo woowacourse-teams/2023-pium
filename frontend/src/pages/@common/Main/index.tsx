@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import InstallPrompt from 'components/@common/InstallPrompt';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Wrapper, Image, ImageArea } from './Main.style';
 import useDictionaryNavigate from 'hooks/dictionaryPlant/useDictionaryPlantNavigate';
@@ -12,7 +13,7 @@ const Main = () => {
   const [searchValue, setSearchValue] = useState('');
 
   return (
-    <>
+    <PageLogger>
       <InstallPrompt />
 
       <Wrapper>
@@ -35,7 +36,7 @@ const Main = () => {
         <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
       </Wrapper>
       <Navbar />
-    </>
+    </PageLogger>
   );
 };
 

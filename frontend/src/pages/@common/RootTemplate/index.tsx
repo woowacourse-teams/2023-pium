@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
 import NotFound from 'pages/@common/Error/NotFound';
-import Loading from 'pages/@common/Loading';
+import LastPageLoading from 'pages/@common/LastPageLoading';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
 import Redirect from 'components/@common/Redirect';
 import { PageArea, Wrapper } from './RootTemplate.style';
@@ -23,7 +23,7 @@ const RootTemplate = () => {
             }
             statusCode={401}
           >
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={<LastPageLoading />}>
               <Outlet />
             </Suspense>
           </ErrorBoundary>

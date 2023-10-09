@@ -1,5 +1,6 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import Modal from 'components/@common/Modal';
+import PageLogger from 'components/@common/PageLogger';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
@@ -27,7 +28,7 @@ const PetPlantRegisterFormPage = () => {
   };
 
   return (
-    <>
+    <PageLogger>
       <Header>
         <BackButton onClick={goBack}>
           <SvgFill icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
@@ -47,7 +48,7 @@ const PetPlantRegisterFormPage = () => {
       <Modal ref={modalRef} isOpen={isOpen} closeModal={close}>
         <DictionaryPlantContent {...dictionaryPlantDetail} />
       </Modal>
-    </>
+    </PageLogger>
   );
 };
 

@@ -1,6 +1,7 @@
 import { PrimaryButton } from 'components/@common/Confirm/Confirm.style';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import MonthBox from 'components/reminder/MonthBox';
 import { ContentBox, NoDataContainer, Register, Title, Wrapper } from './ReminderPage.style';
 import ReminderProvider from 'contexts/reminderContext';
@@ -17,7 +18,7 @@ const ReminderPage = () => {
   });
 
   return (
-    <>
+    <PageLogger>
       <ReminderProvider waterCallback={water} changeDateCallback={changeDate}>
         <Wrapper status={reminderData.status}>
           <ContentHeader title="리마인더" />
@@ -44,7 +45,7 @@ const ReminderPage = () => {
         </Wrapper>
       </ReminderProvider>
       <Navbar />
-    </>
+    </PageLogger>
   );
 };
 
