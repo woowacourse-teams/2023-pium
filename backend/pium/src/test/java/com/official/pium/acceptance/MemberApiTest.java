@@ -1,7 +1,9 @@
 package com.official.pium.acceptance;
 
 import com.official.pium.AcceptanceTest;
+import com.official.pium.fixture.LoginFixture;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -9,7 +11,7 @@ import org.springframework.http.HttpStatus;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class MemberApiTest extends AcceptanceTest {
+class MemberApiTest extends AcceptanceTest {
 
     @Test
     void 회원탈퇴_정상_요청_시_204_반환() {
@@ -74,7 +76,8 @@ public class MemberApiTest extends AcceptanceTest {
     private String 로그인_요청() {
         return RestAssured.given()
                 .log().all()
-                .queryParam("code", "authorizationCode")
+                .contentType(ContentType.JSON)
+                .body(LoginFixture.REQUEST.로그인_요청)
                 .when()
                 .post("/login")
                 .then()

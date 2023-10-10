@@ -34,6 +34,10 @@ public class Member extends BaseEntity {
         this.kakaoId = kakaoId;
     }
 
+    public void updateDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) {

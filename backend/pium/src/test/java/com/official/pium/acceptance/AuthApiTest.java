@@ -1,9 +1,9 @@
 package com.official.pium.acceptance;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-
 import com.official.pium.AcceptanceTest;
+import com.official.pium.fixture.LoginFixture;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -11,16 +11,19 @@ import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class AuthApiTest extends AcceptanceTest {
+class AuthApiTest extends AcceptanceTest {
 
     @Test
     void 로그인_정상_요청_시_200_반환() {
         ExtractableResponse<Response> response = RestAssured
                 .given()
                 .log().all()
-                .queryParam("code", "authorizationCode")
+                .contentType(ContentType.JSON)
+                .body(LoginFixture.REQUEST.로그인_요청)
                 .when()
                 .post("/login")
                 .then()
@@ -64,7 +67,8 @@ public class AuthApiTest extends AcceptanceTest {
     private String 로그인_요청() {
         return RestAssured.given()
                 .log().all()
-                .queryParam("code", "authorizationCode")
+                .contentType(ContentType.JSON)
+                .body(LoginFixture.REQUEST.로그인_요청)
                 .when()
                 .post("/login")
                 .then()

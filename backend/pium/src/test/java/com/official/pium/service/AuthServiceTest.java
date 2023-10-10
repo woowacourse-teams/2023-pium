@@ -1,9 +1,13 @@
 package com.official.pium.service;
 
+import static com.official.pium.fixture.LoginFixture.REQUEST.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.official.pium.domain.Member;
+import com.official.pium.fixture.LoginFixture;
+import com.official.pium.fixture.LoginFixture.REQUEST;
 import com.official.pium.repository.MemberRepository;
+import com.official.pium.service.dto.LoginRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
@@ -26,7 +30,7 @@ class AuthServiceTest {
 
     @Test
     void 로그인_성공() {
-        Member loginMember = authService.login("12345");
+        Member loginMember = authService.login(로그인_요청);
 
         assertThat(loginMember.getKakaoId()).isNotNull();
     }

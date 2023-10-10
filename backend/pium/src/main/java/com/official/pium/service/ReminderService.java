@@ -79,7 +79,7 @@ public class ReminderService {
 
     @Scheduled(cron = "0 0 7 * * *")
     public void sendWaterNotification() {
-        List<PetPlant> petPlants = petPlantRepository.findAllByNextWaterDate(LocalDate.now());
+        List<PetPlant> petPlants = petPlantRepository.findAllByWaterNotification(LocalDate.now());
         List<NotificationEvent> events = petPlants.stream()
                 .map(plant -> NotificationEvent.of(
                         plant.getMember().getDeviceToken(),

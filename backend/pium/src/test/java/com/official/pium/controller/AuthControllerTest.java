@@ -1,5 +1,6 @@
 package com.official.pium.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
@@ -14,8 +15,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
+import com.official.pium.fixture.LoginFixture;
 import com.official.pium.service.AuthService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -41,17 +44,20 @@ class AuthControllerTest extends UITest {
     @MockBean
     private AuthService authService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Nested
     class 로그인_ {
 
         @Test
         void 정상_요청_시_200_반환() throws Exception {
-            given(authService.login(anyString())).willReturn(Member.builder()
+            given(authService.login(any())).willReturn(Member.builder()
                     .kakaoId(12345L)
                     .build());
 
             mockMvc.perform(post("/login")
-                            .queryParam("code", "authorization code")
+                            .content(objectMapper.writeValueAsString(LoginFixture.REQUEST.로그인_요청))
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andDo(document("auth/login.html/",
                             preprocessRequest(prettyPrint()),
