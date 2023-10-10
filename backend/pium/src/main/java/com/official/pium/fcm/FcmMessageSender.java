@@ -11,6 +11,7 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
@@ -45,7 +46,8 @@ public class FcmMessageSender {
                     .addHeader(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8")
                     .build();
 
-            client.newCall(request).execute();
+            Response execute = client.newCall(request).execute();
+            execute.close();
         } catch (Exception e) {
             log.error("FCM 메시지 전송 실패", e);
             throw new FcmException.FcmMessageSendException(e.getMessage());

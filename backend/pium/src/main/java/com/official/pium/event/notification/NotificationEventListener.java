@@ -15,7 +15,7 @@ public class NotificationEventListener {
     @EventListener
     public void handleNotificationEvents(List<NotificationEvent> notificationEvent) {
         for (NotificationEvent event : notificationEvent) {
-            notificationService.sendNotification(event.getTargetToken(), event.getTitle(), event.getBody());
+            notificationService.sendNotification(event.getDeviceToken(), event.getTitle(), event.getBody());
         }
     }
 }

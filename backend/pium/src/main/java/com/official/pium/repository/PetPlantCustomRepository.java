@@ -9,5 +9,5 @@ public interface PetPlantCustomRepository {
 
     void deleteAllByMember(Member member);
 
-    List<PetPlant> findAllByNextWaterDate(LocalDate date);
+    List<PetPlant> findAllByWaterNotification(LocalDate date);
 }

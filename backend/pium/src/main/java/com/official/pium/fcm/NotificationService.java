@@ -11,7 +11,7 @@ public class NotificationService {
 
     private final FcmMessageSender fcmMessageSender;
 
-    public void sendNotification(String targetToken, String title, String body) {
-        fcmMessageSender.sendMessageTo(targetToken, title, body);
+    public void sendNotification(String deviceToken, String title, String body) {
+        fcmMessageSender.sendMessageTo(deviceToken, title, body);
     }
 }

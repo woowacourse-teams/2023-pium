@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class NotificationEvent {
 
-    private final String targetToken;
+    private final String deviceToken;
     private final String title;
     private final String body;
 
