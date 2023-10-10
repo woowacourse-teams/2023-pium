@@ -1,20 +1,5 @@
 package com.official.pium.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
@@ -32,6 +17,20 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static com.official.pium.fixture.LoginFixture.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
+import static org.springframework.http.MediaType.*;
+import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -57,14 +56,11 @@ class AuthControllerTest extends UITest {
                     .build());
 
             mockMvc.perform(post("/login")
-                            .content(objectMapper.writeValueAsString(LoginFixture.REQUEST.로그인_요청))
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .content(objectMapper.writeValueAsString(REQUEST.로그인_요청))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andDo(document("auth/login.html/",
                             preprocessRequest(prettyPrint()),
-                            preprocessResponse(prettyPrint()),
-                            queryParameters(
-                                    parameterWithName("code").description("카카오 인증 코드")
-                            ))
+                            preprocessResponse(prettyPrint()))
                     )
                     .andExpect(status().isOk())
                     .andDo(print());
@@ -74,7 +70,7 @@ class AuthControllerTest extends UITest {
         @ValueSource(strings = {"", " "})
         void 잘못된_인증_코드로_요청_시_400_반환(String code) throws Exception {
             mockMvc.perform(post("/login")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andDo(print());
         }
@@ -87,7 +83,7 @@ class AuthControllerTest extends UITest {
         void 정상_요청_시_200_반환() throws Exception {
             mockMvc.perform(post("/logout")
                             .session(session)
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andDo(document("auth/logout/",
                                     preprocessRequest(prettyPrint()),
                                     preprocessResponse(prettyPrint()),
@@ -101,7 +97,7 @@ class AuthControllerTest extends UITest {
         @Test
         void 세션_정보_없이_요청_시_401_반환() throws Exception {
             mockMvc.perform(post("/logout")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
                     .andExpect(jsonPath("$.message").value("로그인이 필요합니다"))
                     .andDo(print());
@@ -114,7 +110,7 @@ class AuthControllerTest extends UITest {
 
             mockMvc.perform(post("/logout")
                             .session(expiredSession)
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
                     .andExpect(jsonPath("$.message").value("로그인이 필요합니다"))
                     .andDo(print());
