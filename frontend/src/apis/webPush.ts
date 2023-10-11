@@ -1,6 +1,6 @@
 import { BASE_URL } from 'constants/index';
 
-export const SUBSCRIBE_URL = `${BASE_URL}/member/notification`;
+export const SUBSCRIBE_URL = `${BASE_URL}/members/notification`;
 
 const headers = {
   'Content-Type': 'application/json',

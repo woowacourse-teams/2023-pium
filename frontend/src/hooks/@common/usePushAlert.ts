@@ -1,18 +1,18 @@
+import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 import useWebPush from 'hooks/queries/auth/useWebPush';
+import { SUBSCRIBE_URL } from 'apis/webPush';
 import { getCurrentToken } from 'utils/firebase';
 import { pushStatus } from 'utils/pushStatus';
 import useAddToast from './useAddToast';
 
 const usePushAlert = () => {
   const addToast = useAddToast();
+  const queryClient = useQueryClient();
 
-  const {
-    subscribe,
-    unSubscribe,
-    currentSubscribe: {
-      data: { isSubscribe },
-    },
-  } = useWebPush();
+  const { subscribe, unSubscribe, currentSubscribe } = useWebPush();
+
+  const [isSubscribe, setIsSubscribe] = useState(currentSubscribe.data.isSubscribe);
 
   const subscribeAlert = async () => {
     if (!pushStatus.pushSupport) {
@@ -31,11 +31,29 @@ const usePushAlert = () => {
 
     const currentToken = await getCurrentToken(); // 여기서 새로운 토큰을 전달하면 됨.
 
-    subscribe.mutate(currentToken);
+    subscribe.mutate(currentToken, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
+        addToast('success', '알림을 등록했습니다.', 3000);
+      },
+      onError: () => {
+        setIsSubscribe(false);
+        addToast('error', '알림 등록에 실패했습니다.', 3000);
+      },
+    });
   };
 
   const unSubscribeAlert = async () => {
-    unSubscribe.mutate();
+    unSubscribe.mutate(undefined, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
+        addToast('info', '알림을 해제했습니다.', 3000);
+      },
+      onError: () => {
+        setIsSubscribe(true);
+        addToast('error', '알림 해제에 실패했습니다.', 3000);
+      },
+    });
   };
 
   return {
