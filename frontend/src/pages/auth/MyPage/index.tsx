@@ -11,6 +11,7 @@ import {
   Wrapper,
   PushAlertWrapper,
   PushAlertContent,
+  WarnParagraph,
 } from './MyPage.style';
 import useConfirm from 'hooks/@common/useConfirm';
 import usePushAlert from 'hooks/@common/usePushAlert';
@@ -23,7 +24,10 @@ const MyPage = () => {
   useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
-  const { isSubscribe, pushSupport, subscribeAlert, unSubscribeAlert } = usePushAlert();
+
+  const { isSubscribe, pushSupport, notificationDenied, subscribeAlert, unSubscribeAlert } =
+    usePushAlert();
+
   const confirm = useConfirm();
 
   const handleLogout: React.MouseEventHandler<HTMLButtonElement> = () => {
@@ -51,10 +55,15 @@ const MyPage = () => {
               toggleOnCallback={subscribeAlert}
               toggleOffCallback={unSubscribeAlert}
               initialState={isSubscribe}
-              disabled={!pushSupport}
+              disabled={!pushSupport || notificationDenied === 'denied'}
             />
           </PushAlertContent>
-          {!pushSupport && <span>지원하지 않는 브라우저 또는 os입니다.</span>}
+          {!pushSupport && <WarnParagraph>지원하지 않는 브라우저 또는 os입니다.</WarnParagraph>}
+          {notificationDenied === 'denied' && (
+            <WarnParagraph>
+              브라우저 알림을 허용하지 않았습니다. 허용하기 위해서는 설정 {'>'} 알림 허용을 해주세요
+            </WarnParagraph>
+          )}
         </PushAlertWrapper>
         <ButtonBox>
           <Button type="button" onClick={handleLogout}>

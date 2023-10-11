@@ -35,12 +35,12 @@ export const PushAlertWrapper = styled.div`
 
   width: 80%;
   margin: 0 auto;
+`;
 
-  span {
-    font: 400 1.2rem/1.6rem NanumSquareRound;
-    color: ${({ theme }) => theme.color.accent};
-    text-align: right;
-  }
+export const WarnParagraph = styled.p`
+  font: 400 1.2rem/1.6rem NanumSquareRound;
+  color: ${({ theme }) => theme.color.accent};
+  text-align: right;
 `;
 
 export const PushAlertContent = styled.div`
