@@ -3,14 +3,14 @@ package com.official.pium.controller;
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.AuthService;
-import com.official.pium.service.dto.LoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Validated
@@ -24,8 +24,10 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
-        Member loginMember = authService.login(loginRequest);
+    public ResponseEntity<Void> login(
+            @RequestParam(name = "code") @NotBlank String code,
+            HttpServletRequest request) {
+        Member loginMember = authService.login(code);
 
         HttpSession session = request.getSession();
         session.setAttribute(SESSION_KEY, loginMember.getKakaoId());

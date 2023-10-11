@@ -1,6 +1,5 @@
 package com.official.pium.acceptance;
 
-import static com.official.pium.fixture.LoginFixture.*;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.hamcrest.Matchers.containsString;
 
@@ -8,7 +7,6 @@ import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.fixture.GardenFixture;
-import com.official.pium.fixture.LoginFixture;
 import com.official.pium.service.dto.GardenCreateRequest;
 import com.official.pium.service.dto.SingleGardenResponse;
 import io.restassured.RestAssured;
@@ -203,8 +201,7 @@ public class GardenApiTest extends AcceptanceTest {
     private String 로그인_요청() {
         return RestAssured.given()
                 .log().all()
-                .contentType(ContentType.JSON)
-                .body(REQUEST.로그인_요청)
+                .queryParam("code", "authorizationCode")
                 .when()
                 .post("/login")
                 .then()

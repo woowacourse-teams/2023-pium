@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.containsString;
 import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.fixture.LoginFixture;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import com.official.pium.service.dto.ReminderUpdateRequest;
@@ -525,8 +524,7 @@ public class ReminderApiTest extends AcceptanceTest {
     private String 로그인_요청() {
         return RestAssured.given()
                 .log().all()
-                .contentType(ContentType.JSON)
-                .body(LoginFixture.REQUEST.로그인_요청)
+                .queryParam("code", "authorizationCode")
                 .when()
                 .post("/login")
                 .then()

@@ -1,6 +1,5 @@
 package com.official.pium.acceptance;
 
-import static com.official.pium.fixture.LoginFixture.REQUEST.*;
 import static com.official.pium.fixture.PetPlantFixture.REQUEST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
@@ -10,7 +9,6 @@ import com.official.pium.AcceptanceTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.fixture.LoginFixture;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
@@ -810,8 +808,7 @@ public class PetPlantApiTest extends AcceptanceTest {
     private String 로그인_요청() {
         return RestAssured.given()
                 .log().all()
-                .contentType(ContentType.JSON)
-                .body(로그인_요청)
+                .queryParam("code", "authorizationCode")
                 .when()
                 .post("/login")
                 .then()
