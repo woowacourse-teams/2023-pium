@@ -3,20 +3,25 @@ package com.official.pium.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import com.official.pium.config.DatabaseClearExtension;
 import com.official.pium.domain.Member;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.service.dto.NotificationCheckResponse;
+import com.official.pium.service.dto.NotificationSubscribeRequest;
 import com.official.pium.support.PetPlantSupport;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
+@ExtendWith(DatabaseClearExtension.class)
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 class MemberServiceTest {
 
@@ -64,5 +69,57 @@ class MemberServiceTest {
             softly.assertThat(petPlantRepository.findById(petPlant2)).isEmpty();
             softly.assertThat(petPlantRepository.findById(petPlant3)).isEmpty();
         });
+    }
+
+    @Test
+    void 알림_구독_시_사용자의_디바이스_토큰에_값이_존재한다() {
+        Member member = Member.builder()
+                .kakaoId(123451L)
+                .build();
+        Member saveMember = memberRepository.save(member);
+
+        memberService.subscribeNotification(saveMember, NotificationSubscribeRequest.builder()
+                .deviceToken("deviceToken")
+                .build());
+
+        assertThat(saveMember.getDeviceToken()).isEqualTo("deviceToken");
+    }
+
+    @Test
+    void 알림_해지_시_사용자의_디바이스_토큰에_값이_존재한다() {
+        Member member = Member.builder()
+                .kakaoId(123451L)
+                .deviceToken("deviceToken")
+                .build();
+        Member saveMember = memberRepository.save(member);
+
+        memberService.unSubscribeNotification(saveMember);
+
+        assertThat(saveMember.getDeviceToken()).isNull();
+    }
+
+    @Test
+    void 사용자가_알림_구독중이면_True() {
+        Member member = Member.builder()
+                .kakaoId(123451L)
+                .deviceToken("deviceToken")
+                .build();
+        Member saveMember = memberRepository.save(member);
+
+        NotificationCheckResponse notificationCheckResponse = memberService.checkNotification(saveMember);
+
+        assertThat(notificationCheckResponse.isSubscribe()).isTrue();
+    }
+
+    @Test
+    void 사용자가_알림_구독중이_아니면_False() {
+        Member member = Member.builder()
+                .kakaoId(123451L)
+                .build();
+        Member saveMember = memberRepository.save(member);
+
+        NotificationCheckResponse notificationCheckResponse = memberService.checkNotification(saveMember);
+
+        assertThat(notificationCheckResponse.isSubscribe()).isFalse();
     }
 }

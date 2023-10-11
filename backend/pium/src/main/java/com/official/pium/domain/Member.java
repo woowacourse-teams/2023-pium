@@ -30,8 +30,9 @@ public class Member extends BaseEntity {
     private String deviceToken;
 
     @Builder
-    public Member(Long kakaoId) {
+    public Member(Long kakaoId, String deviceToken) {
         this.kakaoId = kakaoId;
+        this.deviceToken = deviceToken;
     }
 
     public void updateDeviceToken(String deviceToken) {

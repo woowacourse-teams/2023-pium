@@ -42,10 +42,12 @@ public class MemberService {
                 .build();
     }
 
+    @Transactional
     public void subscribeNotification(Member member, NotificationSubscribeRequest request) {
         member.updateDeviceToken(request.getDeviceToken());
     }
 
+    @Transactional
     public void unSubscribeNotification(Member member) {
         member.updateDeviceToken(null);
     }
