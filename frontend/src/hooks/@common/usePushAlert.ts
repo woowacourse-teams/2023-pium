@@ -6,7 +6,13 @@ import useAddToast from './useAddToast';
 const usePushAlert = () => {
   const addToast = useAddToast();
 
-  const { subscribe, unSubscribe } = useWebPush();
+  const {
+    subscribe,
+    unSubscribe,
+    currentSubscribe: {
+      data: { isSubscribe },
+    },
+  } = useWebPush();
 
   const subscribeAlert = async () => {
     if (!pushStatus.pushSupport) {
@@ -33,8 +39,9 @@ const usePushAlert = () => {
   };
 
   return {
-    isSubscribe: pushStatus.pushSubscription ? true : false,
-    pushSupport: pushStatus.pushSupport,
+    isSubscribe, // 현재 FCM을 구독하고 있는지 아닌지
+    pushSupport: pushStatus.pushSupport, // 푸시 서비스를 지원하는지 여부
+    notificationDenied: pushStatus.notificationPermission, // 알림을 구독하지 않음
     subscribeAlert,
     unSubscribeAlert,
   };
