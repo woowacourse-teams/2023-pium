@@ -6,19 +6,13 @@ const REDIRECT_URI = `${process.env.KAKAO_REDIRECT_URL}`;
 
 const AUTHORIZATION_URL = `${KAKAO_AUTH_URL}/oauth/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-const getSessionId = (code: string, deviceToken: string | null) => {
-  const body = {
-    code,
-    deviceToken,
-  };
-  return fetch(`${BASE_URL}/login`, {
+const getSessionId = (code: string) => {
+  return fetch(`${BASE_URL}/login?code=${code}`, {
     method: 'POST',
     credentials: 'include',
-    body: JSON.stringify(body),
   });
 };
 
-// 로그아웃시에 token은 필요 없지 않을까?
 const logout = () => {
   return fetch(`${BASE_URL}/logout`, {
     method: 'POST',
