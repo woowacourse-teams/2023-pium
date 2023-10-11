@@ -1,11 +1,13 @@
 package com.official.pium.controller;
 
 import com.official.pium.exception.AuthorizationException;
+import com.official.pium.exception.FcmException;
 import com.official.pium.exception.OAuthException;
 import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
 import com.official.pium.exception.OAuthException.KakaoServerException;
 import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
 import com.official.pium.exception.dto.GlobalExceptionResponse;
+import jakarta.persistence.ElementCollection;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Iterator;
@@ -119,6 +121,14 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         GlobalExceptionResponse exceptionResponse = createExceptionResponse(message);
         log.warn(message);
         return new ResponseEntity<>(exceptionResponse, HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(FcmException.class)
+    public ResponseEntity<GlobalExceptionResponse> handleFcmException(FcmException e) {
+        String message = e.getMessage();
+        GlobalExceptionResponse exceptionResponse = createExceptionResponse("FCM 메시지 전송 중 오류가 발생했습니다.");
+        log.error(message);
+        return ResponseEntity.internalServerError().body(exceptionResponse);
     }
 
     private StringBuilder getExceptionMessages(ConstraintViolationException e) {

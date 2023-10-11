@@ -1,21 +1,18 @@
 package com.official.pium.fcm;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.official.pium.exception.FcmException;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
-import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 @Slf4j
 @Service
@@ -32,30 +29,34 @@ public class FcmMessageSender {
     private String keyScope;
 
     private final ObjectMapper objectMapper;
+    private final RestTemplate restTemplate;
 
     public void sendMessageTo(String targetToken, String title, String body) {
         try {
-            String message = makeMessage(targetToken, title, body);
+            FcmMessage message = makeMessage(targetToken, title, body);
 
-            OkHttpClient client = new OkHttpClient();
-            RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
-            Request request = new Request.Builder()
-                    .url(apiUrl)
-                    .post(requestBody)
-                    .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
-                    .addHeader(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8")
-                    .build();
+            HttpHeaders headers = new HttpHeaders();
+            headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
+            headers.set(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8");
 
-            Response execute = client.newCall(request).execute();
-            execute.close();
+            HttpEntity<FcmMessage> request = new HttpEntity<>(message, headers);
+
+            ResponseEntity<FcmMessage> postResult = restTemplate.postForEntity(
+                    apiUrl,
+                    request,
+                    FcmMessage.class
+            );
+
+            log.info("FCM 메시지 전송 성공: {}", postResult.getBody());
+
         } catch (Exception e) {
             log.error("FCM 메시지 전송 실패", e);
             throw new FcmException.FcmMessageSendException(e.getMessage());
         }
     }
 
-    private String makeMessage(String targetToken, String title, String body) throws JsonProcessingException {
-        FcmMessage fcmMessage = FcmMessage.builder()
+    private FcmMessage makeMessage(String targetToken, String title, String body) {
+        return FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
                         .token(targetToken)
                         .notification(FcmMessage.Notification.builder()
@@ -68,7 +69,6 @@ public class FcmMessageSender {
                 )
                 .validate_only(false)
                 .build();
-        return objectMapper.writeValueAsString(fcmMessage);
     }
 
     private String getAccessToken() throws IOException {
