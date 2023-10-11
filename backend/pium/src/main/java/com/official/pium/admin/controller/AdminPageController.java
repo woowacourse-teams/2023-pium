@@ -1,12 +1,16 @@
 package com.official.pium.admin.controller;
 
 import com.official.pium.admin.domain.Registration;
+import com.official.pium.admin.dto.SendNotificationRequest;
 import com.official.pium.admin.repository.RegistrationRepository;
 import com.official.pium.admin.service.AdminService;
 import com.official.pium.domain.Admin;
 import com.official.pium.domain.AdminAuth;
 import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.Member;
+import com.official.pium.fcm.NotificationService;
 import com.official.pium.repository.DictionaryPlantRepository;
+import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -37,7 +41,9 @@ public class AdminPageController {
 
     private final RegistrationRepository registrationRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
+    private final MemberRepository memberRepository;
     private final AdminService adminService;
+    private final NotificationService notificationService;
 
     @GetMapping("/**")
     public String adminPage(@AdminAuth Admin admin, Model model) {
@@ -111,6 +117,28 @@ public class AdminPageController {
         model.addAttribute("page", registrations);
         model.addAttribute("registrations", registrations.getContent());
         return "admin/dict/requests";
+    }
+
+    @GetMapping("/member/requests")
+    public String membersPage(@PageableDefault Pageable pageable, @AdminAuth Admin admin, Model model) {
+        if (admin == null) {
+            return REDIRECT_ADMIN_LOGIN;
+        }
+        Page<Member> members = memberRepository.findAll(pageable);
+        model.addAttribute(ADMIN_FIELD, admin);
+        model.addAttribute("page", members);
+        model.addAttribute("members", members.getContent());
+        return "admin/member/requests";
+    }
+
+    @PostMapping("/notification")
+    public ResponseEntity<Void> sendNotification(@AdminAuth Admin admin, @RequestBody SendNotificationRequest request) {
+        if (admin == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        notificationService.sendNotification(request.getDeviceToken(), request.getTitle(), request.getBody());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/login")

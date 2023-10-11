@@ -44,7 +44,6 @@
     function submitForm(e) {
         e.preventDefault();
         const formData = new FormData(formElement);
-        console.log(formData, JSON.stringify(Object.fromEntries(formData)));
 
         fetch(`/admin/login`, {
             method: 'POST',
