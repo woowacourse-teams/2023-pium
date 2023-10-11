@@ -1,6 +1,6 @@
 import { BASE_URL } from 'constants/index';
 
-export const SUBSCRIBE_URL = `${BASE_URL}/아직 몰라요`;
+export const SUBSCRIBE_URL = `${BASE_URL}/member/notification`;
 
 const headers = {
   'Content-Type': 'application/json',
@@ -17,7 +17,15 @@ const subscribe = (token: string) => {
 
 const unSubscribe = () => {
   return fetch(SUBSCRIBE_URL, {
-    method: 'POST',
+    method: 'DELETE',
+    credentials: 'include',
+    headers,
+  });
+};
+
+const currentSubscribe = () => {
+  return fetch(SUBSCRIBE_URL, {
+    method: 'GET',
     credentials: 'include',
     headers,
   });
@@ -26,6 +34,7 @@ const unSubscribe = () => {
 const WebPushAPI = {
   subscribe,
   unSubscribe,
+  currentSubscribe,
 };
 
 export default WebPushAPI;
