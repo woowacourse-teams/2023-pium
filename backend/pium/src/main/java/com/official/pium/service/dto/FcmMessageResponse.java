@@ -1,4 +1,4 @@
-package com.official.pium.fcm;
+package com.official.pium.service.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class FcmMessage {
+public class FcmMessageResponse {
     private boolean validate_only;
     private Message message;
 

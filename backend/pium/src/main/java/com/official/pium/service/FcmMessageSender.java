@@ -1,8 +1,9 @@
-package com.official.pium.fcm;
+package com.official.pium.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.official.pium.exception.FcmException;
+import com.official.pium.service.dto.FcmMessageResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,18 +34,18 @@ public class FcmMessageSender {
 
     public void sendMessageTo(String targetToken, String title, String body) {
         try {
-            FcmMessage message = makeMessage(targetToken, title, body);
+            FcmMessageResponse message = makeMessage(targetToken, title, body);
 
             HttpHeaders headers = new HttpHeaders();
             headers.set(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken());
             headers.set(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8");
 
-            HttpEntity<FcmMessage> request = new HttpEntity<>(message, headers);
+            HttpEntity<FcmMessageResponse> request = new HttpEntity<>(message, headers);
 
-            ResponseEntity<FcmMessage> postResult = restTemplate.postForEntity(
+            ResponseEntity<FcmMessageResponse> postResult = restTemplate.postForEntity(
                     apiUrl,
                     request,
-                    FcmMessage.class
+                    FcmMessageResponse.class
             );
 
             log.info("FCM 메시지 전송 성공: {}", postResult.getBody());
@@ -55,11 +56,11 @@ public class FcmMessageSender {
         }
     }
 
-    private FcmMessage makeMessage(String targetToken, String title, String body) {
-        return FcmMessage.builder()
-                .message(FcmMessage.Message.builder()
+    private FcmMessageResponse makeMessage(String targetToken, String title, String body) {
+        return FcmMessageResponse.builder()
+                .message(FcmMessageResponse.Message.builder()
                         .token(targetToken)
-                        .notification(FcmMessage.Notification.builder()
+                        .notification(FcmMessageResponse.Notification.builder()
                                 .title(title)
                                 .body(body)
                                 .image(null)

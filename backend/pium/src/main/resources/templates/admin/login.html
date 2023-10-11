@@ -61,9 +61,7 @@
                     throw new Error('서버 응답 오류');
                 }
             })
-            .then(data => {
-                console.log('서버 응답:', data);
-            })
+            .then()
             .catch(error => {
                 console.error('오류 발생:', error);
             });

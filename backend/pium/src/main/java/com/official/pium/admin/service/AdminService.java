@@ -2,23 +2,18 @@ package com.official.pium.admin.service;
 
 import com.official.pium.admin.mapper.AdminMapper;
 import com.official.pium.domain.Admin;
-import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AdminService {
 
     private static final int EXPIRED_TIME_ONE_HOUR = 3600;
     private static final String SESSION_KEY = "PIUM_ADMIN_SESSION_ID";
-
-    private final MemberRepository memberRepository;
 
     @Value("${admin.account}")
     private String adminAccount;

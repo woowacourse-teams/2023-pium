@@ -1,14 +1,14 @@
 package com.official.pium.admin.controller;
 
 import com.official.pium.admin.domain.Registration;
-import com.official.pium.admin.dto.SendNotificationRequest;
+import com.official.pium.admin.dto.AdminSendNotificationRequest;
 import com.official.pium.admin.repository.RegistrationRepository;
 import com.official.pium.admin.service.AdminService;
 import com.official.pium.domain.Admin;
 import com.official.pium.domain.AdminAuth;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
-import com.official.pium.fcm.NotificationService;
+import com.official.pium.service.NotificationService;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.dto.AdminLoginRequest;
@@ -132,7 +132,7 @@ public class AdminPageController {
     }
 
     @PostMapping("/notification")
-    public ResponseEntity<Void> sendNotification(@AdminAuth Admin admin, @RequestBody SendNotificationRequest request) {
+    public ResponseEntity<Void> sendNotification(@AdminAuth Admin admin, @RequestBody AdminSendNotificationRequest request) {
         if (admin == null) {
             return ResponseEntity.status(401).build();
         }

@@ -1,6 +1,6 @@
 package com.official.pium.event.notification;
 
-import com.official.pium.fcm.NotificationService;
+import com.official.pium.service.NotificationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;

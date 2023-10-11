@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class SendNotificationRequest {
+public class AdminSendNotificationRequest {
+    
     private String deviceToken;
     private String title;
     private String body;
