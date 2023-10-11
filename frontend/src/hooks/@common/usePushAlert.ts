@@ -1,4 +1,4 @@
-import { useWebPushSubscribe, useWebPushUnSubscribe } from 'hooks/queries/auth/useWebPush';
+import useWebPush from 'hooks/queries/auth/useWebPush';
 import { getCurrentToken } from 'utils/firebase';
 import { pushStatus } from 'utils/pushStatus';
 import useAddToast from './useAddToast';
@@ -6,8 +6,7 @@ import useAddToast from './useAddToast';
 const usePushAlert = () => {
   const addToast = useAddToast();
 
-  const { mutate: subscribe } = useWebPushSubscribe();
-  const { mutate: unSubscribe } = useWebPushUnSubscribe();
+  const { subscribe, unSubscribe } = useWebPush();
 
   const subscribeAlert = async () => {
     if (!pushStatus.pushSupport) {
@@ -25,11 +24,12 @@ const usePushAlert = () => {
     }
 
     const currentToken = await getCurrentToken(); // 여기서 새로운 토큰을 전달하면 됨.
-    subscribe(currentToken);
+
+    subscribe.mutate(currentToken);
   };
 
   const unSubscribeAlert = async () => {
-    unSubscribe();
+    unSubscribe.mutate();
   };
 
   return {
