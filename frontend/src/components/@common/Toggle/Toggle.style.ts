@@ -27,6 +27,10 @@ export const ToggleBtn = styled.button<ToggleParams>`
   border-radius: 30px;
 
   transition: all 0.5s ease-in-out;
+
+  :disabled {
+    cursor: not-allowed;
+  }
 `;
 export const Circle = styled.div<ToggleParams>`
   position: absolute;
