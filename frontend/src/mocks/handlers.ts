@@ -181,8 +181,8 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(204));
     }),
 
-    rest.post('/login', async (req, res, ctx) => {
-      const { code } = await req.json();
+    rest.post('/login', (req, res, ctx) => {
+      const code = req.url.searchParams.get('code') ?? null;
 
       if (code === null) {
         return res(
