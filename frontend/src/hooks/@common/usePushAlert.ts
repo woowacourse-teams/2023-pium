@@ -9,7 +9,7 @@ const usePushAlert = () => {
 
   const subscribeAlert = async () => {
     if (!pushStatus.pushSupport) {
-      addToast('warning', '지원하지 않는 브라우저입니다', 3000);
+      addToast({ type: 'warning', message: '지원하지 않는 브라우저입니다', time: 3000 });
       return;
     }
 
@@ -18,7 +18,7 @@ const usePushAlert = () => {
     pushStatus.notificationPermission = permission;
 
     if (permission !== 'granted') {
-      addToast('info', '알림을 거부했습니다', 3000);
+      addToast({ type: 'info', message: '알림을 거부했습니다', time: 3000 });
       return;
     }
 

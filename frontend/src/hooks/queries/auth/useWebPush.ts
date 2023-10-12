@@ -27,11 +27,11 @@ const useWebPush = () => {
       return { prevData };
     },
     onSuccess: () => {
-      addToast('success', '알림을 등록했습니다.', 3000);
+      addToast({ type: 'success', message: '알림을 등록했습니다', time: 3000 });
     },
     onError: (_, __, context) => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
-      addToast('error', '알림 등록에 실패했습니다.', 3000);
+      addToast({ type: 'error', message: '알림 등록에 실패했습니다', time: 3000 });
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
@@ -56,12 +56,12 @@ const useWebPush = () => {
       return { prevData };
     },
     onSuccess: () => {
-      addToast('info', '알림을 해제했습니다.', 3000);
+      addToast({ type: 'success', message: '알림을 해제했습니다', time: 3000 });
     },
     onError: (_, __, context) => {
       // 업데이트에 실패한 경우 이전 값으로 반환
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
-      addToast('error', '알림 해제에 실패했습니다.', 3000);
+      addToast({ type: 'error', message: '알림 해제에 실패했습니다', time: 3000 });
     },
 
     onSettled: () => {
