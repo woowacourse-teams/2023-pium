@@ -5,14 +5,13 @@ import useAddToast from './useAddToast';
 
 const usePushAlert = () => {
   const addToast = useAddToast();
-
   const { subscribe, unSubscribe, currentSubscribe } = useWebPush();
 
   const subscribeAlert = async () => {
-    // if (!pushStatus.pushSupport) {
-    //   addToast('warning', '지원하지 않는 브라우저입니다', 3000);
-    //   return;
-    // }
+    if (!pushStatus.pushSupport) {
+      addToast('warning', '지원하지 않는 브라우저입니다', 3000);
+      return;
+    }
 
     // subscribe를 하지 않으려면 해당 토큰을 제거해야 한다.
     const permission = await Notification.requestPermission();
@@ -28,14 +27,14 @@ const usePushAlert = () => {
     subscribe.mutate(currentToken);
   };
 
-  const unSubscribeAlert = async () => {
+  const unSubscribeAlert = () => {
     unSubscribe.mutate();
   };
 
   return {
     currentSubscribe, // 현재 FCM을 구독하고 있는지 아닌지
     pushSupport: pushStatus.pushSupport, // 푸시 서비스를 지원하는지 여부
-    notificationDenied: pushStatus.notificationPermission, // 알림을 구독하지 않음
+    notificationDenied: pushStatus.notificationPermission, // 알림 구독 여부
     subscribeAlert,
     unSubscribeAlert,
   };

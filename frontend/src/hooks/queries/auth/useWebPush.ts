@@ -16,9 +16,6 @@ const useWebPush = () => {
     mutationFn: async (token: string) => {
       const response = await WebPushSubscribeAPI.subscribe(token);
       throwOnInvalidStatus(response);
-      if (response.status === 407) {
-        throw new Error('랜덤 실패');
-      }
 
       return null;
     },

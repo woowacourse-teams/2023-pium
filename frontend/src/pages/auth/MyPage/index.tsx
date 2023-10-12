@@ -59,7 +59,7 @@ const MyPage = () => {
               toggleOnCallback={subscribeAlert}
               toggleOffCallback={unSubscribeAlert}
               state={isSubscribe}
-              disabled={notificationDenied === 'denied'}
+              disabled={!pushSupport || notificationDenied === 'denied'}
             />
           </PushAlertContent>
           {!pushSupport && <WarnParagraph>지원하지 않는 브라우저 또는 os입니다.</WarnParagraph>}
