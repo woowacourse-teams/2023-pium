@@ -25,7 +25,7 @@ const MyPage = () => {
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
 
-  const { isSubscribe, pushSupport, notificationDenied, subscribeAlert, unSubscribeAlert } =
+  const { currentSubscribe, pushSupport, notificationDenied, subscribeAlert, unSubscribeAlert } =
     usePushAlert();
 
   const confirm = useConfirm();
@@ -42,6 +42,10 @@ const MyPage = () => {
     }
   };
 
+  const {
+    data: { isSubscribe },
+  } = currentSubscribe;
+
   return (
     <>
       <ContentHeader title="마이페이지" />
@@ -54,8 +58,8 @@ const MyPage = () => {
               height={20}
               toggleOnCallback={subscribeAlert}
               toggleOffCallback={unSubscribeAlert}
-              initialState={isSubscribe}
-              disabled={!pushSupport || notificationDenied === 'denied'}
+              state={isSubscribe}
+              disabled={notificationDenied === 'denied'}
             />
           </PushAlertContent>
           {!pushSupport && <WarnParagraph>지원하지 않는 브라우저 또는 os입니다.</WarnParagraph>}

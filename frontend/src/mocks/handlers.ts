@@ -251,20 +251,33 @@ export const makeHandler = (delay = 0, failRate = 0) => {
         return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
       }
 
-      return res(ctx.delay(delay), ctx.json({ isSubscribe: true }));
+      const token = JSON.parse(sessionStorage.getItem('FCM_TOKEN') ?? 'false');
+      let isSubscribe = false;
+      if (token) isSubscribe = true;
+
+      return res(ctx.delay(delay), ctx.json({ isSubscribe }));
     }),
 
     rest.post('/members/notification', async (req, res, ctx) => {
       const { token } = await req.json();
+
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(407));
+      }
+
       sessionStorage.setItem('FCM_TOKEN', JSON.stringify(token));
 
-      return res(ctx.delay(delay), ctx.json({ isSubscribe: true }));
+      return res(ctx.delay(delay), ctx.status(204));
     }),
 
     rest.delete('/members/notification', (req, res, ctx) => {
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(407));
+      }
+
       sessionStorage.removeItem('FCM_TOKEN');
 
-      return res(ctx.delay(delay), ctx.json({ isSubscribe: true }));
+      return res(ctx.delay(delay), ctx.status(204));
     }),
   ];
 };

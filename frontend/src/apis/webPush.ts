@@ -11,7 +11,7 @@ const subscribe = (token: string) => {
     method: 'POST',
     headers,
     credentials: 'include',
-    body: JSON.stringify(token),
+    body: JSON.stringify({ token }),
   });
 };
 

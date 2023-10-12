@@ -1,10 +1,10 @@
+import { useCallback } from 'react';
 import { Circle, ToggleBtn, Wrapper } from './Toggle.style';
-import useToggle from 'hooks/@common/useToggle';
 
 interface ToggleProps {
   width?: number;
   height?: number;
-  initialState?: boolean;
+  state: boolean;
   toggleOnCallback?: () => void;
   toggleOffCallback?: () => void;
   disabled?: boolean;
@@ -13,36 +13,29 @@ interface ToggleProps {
 const Toggle = ({
   width = 130,
   height = 50,
-  initialState = true,
+  state,
   toggleOnCallback,
   toggleOffCallback,
   disabled = false,
 }: ToggleProps) => {
-  const { isOn, toggle } = useToggle(initialState && !disabled);
-
-  const toggleHandler = () => {
-    toggle();
-
-    if (isOn) {
+  const toggleHandler = useCallback(() => {
+    if (state) {
       toggleOffCallback && toggleOffCallback();
-      return;
-    }
-
-    if (!isOn) {
+    } else {
       toggleOnCallback && toggleOnCallback();
     }
-  };
+  }, [state]);
 
   return (
     <Wrapper>
       <ToggleBtn
         onClick={toggleHandler}
-        $on={isOn}
+        $on={state && !disabled}
         width={width}
         height={height}
         disabled={disabled}
       >
-        <Circle $on={isOn} width={width} height={height} />
+        <Circle $on={state && !disabled} width={width} height={height} />
       </ToggleBtn>
     </Wrapper>
   );
