@@ -81,7 +81,11 @@ const useWebPush = () => {
     retry: noRetryIfUnauthorized,
   });
 
-  return { subscribe, unSubscribe, currentSubscribe };
+  return {
+    subscribe: subscribe.mutate,
+    unSubscribe: unSubscribe.mutate,
+    currentSubscribe: currentSubscribe.data.isSubscribe,
+  };
 };
 
 export default useWebPush;

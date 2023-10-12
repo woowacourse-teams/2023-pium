@@ -24,11 +24,11 @@ const usePushAlert = () => {
 
     const currentToken = await getCurrentToken(); // 여기서 새로운 토큰을 전달하면 됨.
 
-    subscribe.mutate(currentToken);
+    subscribe(currentToken);
   };
 
   const unSubscribeAlert = () => {
-    unSubscribe.mutate();
+    unSubscribe();
   };
 
   return {

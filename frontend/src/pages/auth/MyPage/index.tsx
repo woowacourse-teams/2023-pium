@@ -42,10 +42,6 @@ const MyPage = () => {
     }
   };
 
-  const {
-    data: { isSubscribe },
-  } = currentSubscribe;
-
   return (
     <>
       <ContentHeader title="마이페이지" />
@@ -58,7 +54,7 @@ const MyPage = () => {
               height={20}
               toggleOnCallback={subscribeAlert}
               toggleOffCallback={unSubscribeAlert}
-              state={isSubscribe}
+              state={currentSubscribe}
               disabled={!pushSupport || notificationDenied === 'denied'}
             />
           </PushAlertContent>
