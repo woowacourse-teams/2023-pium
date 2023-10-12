@@ -80,19 +80,30 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
+/**
+ * self.addEventListener('push'.)를 하지 않아도 되는 이유는 messaging이라는 메서드 안에 이미 선언이 되어 있기 때문
+ * https://github.dev/firebase/firebase-js-sdk
+ *
+ *
+ */
+
+// TODO: 사용자가 forward ground인 경우에 알림을 받을 수 있도록 설정하기.
+
 messaging.onBackgroundMessage((payload) => {
   const {
     notification: { title, body },
+    webpush: {
+      fcm_options: { link },
+    },
   } = payload;
   // Customize notification here
-  const path = '/reminder';
 
   const notificationTitle = title;
   const notificationOptions = {
     body: body,
     icon: './assets/favicon-32x32.png',
     badge: './assets/favicon-16x16.png',
-    data: path,
+    data: link,
     tag: 'reminder-alert',
     vibrate: [200, 100, 200, 100, 200, 100, 200], // 짝수 인덱스는 진동 시간, 홀수 인덱스는 휴식 시간
   };

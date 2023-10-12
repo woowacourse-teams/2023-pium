@@ -23,6 +23,15 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const messaging = getMessaging(app);
 
+/**
+ * firebase에서 pushManager를 등록하지 않고도 값 사용이 가능한 이유.
+ *
+ * getToken 메서드에서 getTokenInternal이라는 메서드를 return 하는데, getPushSubscription 이라는 메서드에서 pushManager를 통해서 serviceWorker에 등록을 하기 때문.
+ * getTokenInternal를 호출 하기 전 vapidKey를 업데이트 하고, 해당 messaging 객체를 넘겨준다.
+ *
+ * https://github.dev/firebase/firebase-js-sdk
+ */
+
 const getCurrentToken = async () =>
   await getToken(messaging, {
     vapidKey: process.env.VAPID_PUBLIC_KEY ?? '',
