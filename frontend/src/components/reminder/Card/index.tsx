@@ -51,7 +51,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
 
   const changeDateHandler = (changeDate: string) => {
     if (!isDateFormat(changeDate)) {
-      addToast('error', '올바른 날짜 형식이 아니에요.');
+      addToast({ type: 'error', message: '올바른 날짜 형식이 아니에요' });
       return;
     }
 
@@ -67,7 +67,7 @@ const ReminderCard = ({ data }: ReminderCardProps) => {
   };
   const waterHandler = (waterDate: string) => {
     if (!isDateFormat(waterDate)) {
-      addToast('error', '올바른 날짜 형식이 아니에요.');
+      addToast({ type: 'error', message: '올바른 날짜 형식이 아니에요' });
       return;
     }
 

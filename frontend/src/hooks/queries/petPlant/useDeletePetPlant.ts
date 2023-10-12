@@ -16,12 +16,12 @@ const useDeletePetPlant = () => {
     },
 
     onSuccess: () => {
-      addToast('success', '반려 식물을 삭제했어요.');
+      addToast({ type: 'success', message: '반려 식물을 삭제했어요' });
       navigate(URL_PATH.petList, { replace: true });
     },
 
     onError: () => {
-      addToast('error', '반려 식물 삭제에 실패했어요.');
+      addToast({ type: 'error', message: '반려 식물 삭제에 실패했어요' });
     },
   });
 };

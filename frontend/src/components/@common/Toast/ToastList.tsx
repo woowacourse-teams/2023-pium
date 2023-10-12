@@ -5,7 +5,7 @@ import { ToastListWrapper } from './Toast.style';
 import { toastListState } from 'store/atoms/@common';
 import Toast from '.';
 
-const SHOW_TOAST_SIZE = 5;
+const SHOW_TOAST_SIZE = 4;
 
 const ToastList = () => {
   const toastList = useRecoilValue(toastListState).slice(-SHOW_TOAST_SIZE);
