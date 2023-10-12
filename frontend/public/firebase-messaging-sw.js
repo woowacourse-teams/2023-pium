@@ -92,20 +92,18 @@ self.addEventListener('fetch', (event) => {
 messaging.onBackgroundMessage((payload) => {
   const {
     notification: { title, body },
-    webpush: {
-      fcm_options: { link },
-    },
   } = payload;
-  // Customize notification here
 
+  // Customize notification here
   const notificationTitle = title;
+
   const notificationOptions = {
     body: body,
     icon: './assets/favicon-32x32.png',
     badge: './assets/favicon-16x16.png',
-    data: link,
+    data: '/reminder',
     tag: 'reminder-alert',
-    vibrate: [200, 100, 200, 100, 200, 100, 200], // 짝수 인덱스는 진동 시간, 홀수 인덱스는 휴식 시간
+    vibrate: [200], // 짝수 인덱스는 진동 시간, 홀수 인덱스는 휴식 시간
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
