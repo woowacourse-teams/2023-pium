@@ -6,11 +6,11 @@ import { URL_PATH } from 'constants/index';
 const Authorization = () => {
   const [searchParams] = useSearchParams();
   const code = searchParams.get('code');
-  const { mutate } = useLogin();
+  const { mutate: login } = useLogin();
 
   useEffect(() => {
-    mutate(code ?? '');
-  }, []);
+    login(code ?? '');
+  }, [code, login]);
 
   return <Navigate to={URL_PATH.reminder} replace />;
 };
