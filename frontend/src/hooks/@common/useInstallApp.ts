@@ -43,7 +43,7 @@ const useInstallApp = () => {
 
   const beforeInstallPromptHandler = (event: BeforeInstallPromptEvent) => {
     event.preventDefault();
-    const showPrompt = JSON.parse(getCookie('PromptVisible') || 'true');
+    const showPrompt = JSON.parse(getCookie('PromptVisible') ?? 'true');
     if (!showPrompt) return;
 
     setDeferredPrompt(event);
