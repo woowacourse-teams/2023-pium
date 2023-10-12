@@ -25,8 +25,8 @@ const MyPage = () => {
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
 
-  const { currentSubscribe, pushSupport, notificationDenied, subscribeAlert, unSubscribeAlert } =
-    usePushAlert();
+  // const { currentSubscribe, pushSupport, notificationDenied, subscribeAlert, unSubscribeAlert } =
+  //   usePushAlert();
 
   const confirm = useConfirm();
 
@@ -42,15 +42,15 @@ const MyPage = () => {
     }
   };
 
-  const {
-    data: { isSubscribe },
-  } = currentSubscribe;
+  // const {
+  //   data: { isSubscribe },
+  // } = currentSubscribe;
 
   return (
     <>
       <ContentHeader title="마이페이지" />
       <Wrapper>
-        <PushAlertWrapper>
+        {/* <PushAlertWrapper>
           <PushAlertContent>
             <p>리마인더 알림 받기</p>
             <Toggle
@@ -68,7 +68,7 @@ const MyPage = () => {
               브라우저 알림을 허용하지 않았습니다. 허용하기 위해서는 설정 {'>'} 알림 허용을 해주세요
             </WarnParagraph>
           )}
-        </PushAlertWrapper>
+        </PushAlertWrapper> */}
         <ButtonBox>
           <Button type="button" onClick={handleLogout}>
             로그아웃
