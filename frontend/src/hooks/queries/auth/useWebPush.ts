@@ -79,7 +79,6 @@ const useWebPush = () => {
       throwOnInvalidStatus(response);
 
       const data = await response.json();
-      console.log(data, 'current subscribe');
       return data;
     },
     retry: noRetryIfUnauthorized,
