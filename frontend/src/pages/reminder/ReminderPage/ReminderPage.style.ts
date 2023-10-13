@@ -14,7 +14,7 @@ const convertReminderBackground: {
   future: '#F3F3F3',
 };
 
-export const Wrapper = styled.div<BackgroundProps>`
+export const Main = styled.main<BackgroundProps>`
   width: 100%;
   height: 100%;
   min-height: calc(100vh - 72px);
@@ -23,7 +23,7 @@ export const Wrapper = styled.div<BackgroundProps>`
   background: ${({ status }) => convertReminderBackground[status]};
 `;
 
-export const ContentBox = styled.main`
+export const ContentBox = styled.div`
   width: 100%;
   margin: 0 auto;
 `;

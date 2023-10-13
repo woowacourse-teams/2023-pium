@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import { AlertSpan, Button, CalendarBox, DaysBox, HeaderBox, Wrapper } from './Calendar.style';
+import useCalendar from 'hooks/@common/useCalendar';
 import { convertDateKorYear, getDateToString, getDayInfo, getDaysBetween } from 'utils/date';
 import { DateValidate } from 'utils/validate';
 import { DAYS_OF_THE_WEEK } from 'constants/index';
 import theme from 'style/theme.style';
 import DaySmallBox from './DaySmallBox';
-import useCalendar from './hooks/useCalendar';
 
 interface CalendarProps {
   selectedDate: Date | null;

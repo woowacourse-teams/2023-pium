@@ -1,4 +1,5 @@
 import type { ToastItem } from 'types/@common';
+import type { ReactNode } from 'react';
 import { atom } from 'recoil';
 
 interface ConfirmState {
@@ -21,4 +22,14 @@ export const confirmState = atom<ConfirmState>({
 export const toastListState = atom<ToastItem[]>({
   key: 'toasts',
   default: [],
+});
+
+export const lastPageState = atom<ReactNode>({
+  key: 'lastPage',
+  default: null,
+});
+
+export const isShowPageLoadingState = atom({
+  key: 'showPageLoading',
+  default: true,
 });

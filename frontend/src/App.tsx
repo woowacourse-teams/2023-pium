@@ -3,6 +3,7 @@ import { RouterProvider } from 'react-router-dom';
 import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 import Confirm from 'components/@common/Confirm';
+import PageLoadingBar from 'components/@common/PageLoadingBar';
 import SvgSpriteMap from 'components/@common/SvgIcons/SvgSpriteMap';
 import ToastList from 'components/@common/Toast/ToastList';
 import { GlobalStyle } from 'style/Global.style';
@@ -22,6 +23,7 @@ const App = () => {
             <RouterProvider router={router} />
             <Confirm />
             <ToastList />
+            <PageLoadingBar />
           </RecoilRoot>
         </QueryClientProvider>
       </ThemeProvider>
