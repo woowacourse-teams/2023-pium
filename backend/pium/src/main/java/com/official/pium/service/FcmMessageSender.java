@@ -29,7 +29,6 @@ public class FcmMessageSender {
     @Value("${fcm.key.scope}")
     private String keyScope;
 
-    private final ObjectMapper objectMapper;
     private final RestTemplate restTemplate;
 
     public void sendMessageTo(String targetToken, String title, String body) {
