@@ -24,7 +24,7 @@ const Toggle = ({
     } else {
       toggleOnCallback && toggleOnCallback();
     }
-  }, [state]);
+  }, [state, toggleOffCallback, toggleOnCallback]);
 
   return (
     <Wrapper>
