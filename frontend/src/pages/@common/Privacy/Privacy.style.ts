@@ -1,12 +1,29 @@
 import styled from 'styled-components';
 
+export const Wrapper = styled.div`
+  margin: 0 auto;
+
+  @media (max-width: ${({ theme }) => theme.width.mobile}) {
+    max-width: 300px; /* 컨테이너의 최대 너비 설정 */
+  }
+
+  @media ((max-width: 540px) and (min-width: ${({ theme }) => theme.width.mobile})) {
+    max-width: ${({ theme }) => theme.width.mobile}; /* 컨테이너의 최대 너비 설정 */
+  }
+
+  @media (max-width: ${({ theme }) => theme.width.pad}) and (min-width: 540px) {
+    max-width: 540px; /* 컨테이너의 최대 너비 설정 */
+  }
+`;
+
 export const Header = styled.header`
   display: flex;
   align-items: center;
 
   width: auto;
-  height: 80px;
+  height: 96px;
   margin-top: 32px;
+  padding: 20px 0;
 
   text-align: center;
 
@@ -18,6 +35,26 @@ export const Title = styled.h1`
   width: 100%;
   font: 900 4rem/4.8rem NanumSquareRound;
   text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.width.mobile}) {
+    font: 900 2.8rem/3.6rem NanumSquareRound;
+    word-break: keep-all;
+  }
+
+  @media ((max-width: 540px) and (min-width: ${({ theme }) => theme.width.mobile})) {
+    font: 900 3.2rem/4rem NanumSquareRound;
+    word-break: keep-all;
+  }
+
+  @media (max-width: ${({ theme }) => theme.width.pad}) and (min-width: 540px) {
+    font: 900 3.6rem/4.4rem NanumSquareRound;
+    word-break: keep-all;
+  }
+`;
+
+export const BackButton = styled.button`
+  display: flex;
+  align-items: center;
 `;
 
 export const Main = styled.main`
@@ -27,7 +64,6 @@ export const Main = styled.main`
   align-items: center;
   justify-content: center;
 
-  max-width: 800px; /* 컨테이너의 최대 너비 설정 */
   height: 100%;
   margin: 0 auto; /* 가운데 정렬 */
   padding: 20px; /* 내부 여백 설정 */
