@@ -7,7 +7,7 @@ export const ProgressBar = styled.div`
   left: 0;
 
   width: 100%;
-  height: 4px;
+  height: 3px;
 
   background-color: ${(props) => props.theme.color.primary};
   border-radius: 0 4px 4px 0;
