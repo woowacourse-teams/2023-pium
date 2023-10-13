@@ -44,6 +44,9 @@ public class MemberService {
 
     @Transactional
     public void subscribeNotification(Member member, NotificationSubscribeRequest request) {
+        if (member.isSubscribe()) {
+            throw new IllegalArgumentException("이미 알림을 구독하고 있습니다.");
+        }
         member.updateDeviceToken(request.getDeviceToken());
     }
 
