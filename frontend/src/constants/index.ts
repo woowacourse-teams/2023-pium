@@ -21,6 +21,7 @@ export const URL_PATH = {
   authorization: '/authorization',
   myPage: '/myPage',
   newDictionaryPlantRequest: '/dict/new-plant-request',
+  privacy: '/privacy',
 } as const;
 
 export const MESSAGE = {
