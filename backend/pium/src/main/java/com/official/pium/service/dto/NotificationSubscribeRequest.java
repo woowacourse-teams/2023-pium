@@ -1,6 +1,7 @@
 package com.official.pium.service.dto;
 
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,5 +14,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class NotificationSubscribeRequest {
 
-        private String deviceToken;
+    @NotNull
+    private String deviceToken;
 }

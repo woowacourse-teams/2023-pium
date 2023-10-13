@@ -7,6 +7,7 @@ import com.official.pium.service.dto.NotificationCheckResponse;
 import com.official.pium.service.dto.NotificationSubscribeRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +57,7 @@ public class MemberController {
     }
 
     @PostMapping("/notification")
-    public ResponseEntity<Void> checkNotificationStatus(@Auth Member member, @RequestBody NotificationSubscribeRequest request) {
+    public ResponseEntity<Void> subscribeNotification(@Auth Member member, @RequestBody @Valid NotificationSubscribeRequest request) {
         memberService.subscribeNotification(member, request);
         return ResponseEntity.ok().build();
     }
