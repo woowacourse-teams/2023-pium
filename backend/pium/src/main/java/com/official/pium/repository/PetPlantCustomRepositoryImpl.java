@@ -28,7 +28,7 @@ public class PetPlantCustomRepositoryImpl implements PetPlantCustomRepository {
     public List<PetPlant> findAllByWaterNotification(LocalDate date) {
         return jpaQueryFactory.select(petPlant)
                 .from(petPlant)
-                .join(member, petPlant.member)
+                .join(petPlant.member, member)
                 .fetchJoin()
                 .where(petPlant.nextWaterDate.eq(date), member.deviceToken.isNotNull())
                 .fetch();
