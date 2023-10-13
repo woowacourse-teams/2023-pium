@@ -65,6 +65,6 @@ public class MemberController {
     @DeleteMapping("/notification")
     public ResponseEntity<Void> delete(@Auth Member member) {
         memberService.unSubscribeNotification(member);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
