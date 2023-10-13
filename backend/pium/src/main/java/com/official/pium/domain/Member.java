@@ -39,6 +39,10 @@ public class Member extends BaseEntity {
         this.deviceToken = deviceToken;
     }
 
+    public boolean isSubscribe() {
+        return deviceToken != null;
+    }
+
     @Override
     public final boolean equals(Object o) {
         if (this == o) {

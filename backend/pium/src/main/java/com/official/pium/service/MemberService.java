@@ -38,7 +38,7 @@ public class MemberService {
 
     public NotificationCheckResponse checkNotification(Member member) {
         return NotificationCheckResponse.builder()
-                .isSubscribe(member.getDeviceToken() != null)
+                .isSubscribe(member.isSubscribe())
                 .build();
     }
 
