@@ -96,6 +96,10 @@ describe('검색창', () => {
       .type('아카시')
       .wait(500)
 
+      .get('ul > li')
+      .contains('아카시')
+      .should('be.visible')
+
       .get('button[aria-label="이동하기"]')
       .click()
 
@@ -110,6 +114,13 @@ describe('검색창', () => {
     cy.get('input')
       .type('참')
       .wait(500)
+
+      .get('ul > li')
+      .should('be.visible')
+
+      .get('input')
+      .focus()
+
       .type('{enter}')
 
       .location('pathname')
