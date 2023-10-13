@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
+import useShowState from 'hooks/@common/useShowState';
 import { ContentBox, SeeMoreButton, SeeMoreButtonArea, Wrapper } from './SeeMoreContentBox.styles';
-import useShowState from './hooks/useShowState';
 
 interface SeeMoreContentBoxProps {
   children: string;
