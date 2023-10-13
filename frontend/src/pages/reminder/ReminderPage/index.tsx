@@ -3,7 +3,7 @@ import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import MonthBox from 'components/reminder/MonthBox';
-import { ContentBox, NoDataContainer, Register, Title, Wrapper } from './ReminderPage.style';
+import { ContentBox, NoDataContainer, Register, Title, Main } from './ReminderPage.style';
 import ReminderProvider from 'contexts/reminderContext';
 import { URL_PATH } from 'constants/index';
 import PiumiEmotionlessPng from 'assets/piumi-emotionless.png';
@@ -20,7 +20,7 @@ const ReminderPage = () => {
   return (
     <PageLogger>
       <ReminderProvider waterCallback={water} changeDateCallback={changeDate}>
-        <Wrapper status={reminderData.status}>
+        <Main status={reminderData.status}>
           <ContentHeader title="리마인더" />
           {reminderBox.length === 0 ? (
             <NoDataContainer>
@@ -42,7 +42,7 @@ const ReminderPage = () => {
           ) : (
             <ContentBox>{reminderBox}</ContentBox>
           )}
-        </Wrapper>
+        </Main>
       </ReminderProvider>
       <Navbar />
     </PageLogger>
