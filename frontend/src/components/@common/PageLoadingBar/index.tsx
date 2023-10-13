@@ -5,6 +5,8 @@ import { Finish, Progressing } from './PageLoadingBar.style';
 import { isShowPageLoadingState } from 'store/atoms/@common';
 import useToggle from 'hooks/@common/useToggle';
 
+export const FINISH_ANIMATION_TIME = 600;
+
 const PageLoadingBar = () => {
   const isShowPageLoading = useRecoilValue(isShowPageLoadingState);
 
@@ -16,17 +18,24 @@ const PageLoadingBar = () => {
   useEffect(() => {
     if (isShowPageLoading) {
       show();
-    } else {
-      showFinish();
-      setTimeout(hide, 300);
-      setTimeout(hideFinish, 1000);
+      hideFinish();
+      return;
     }
+
+    showFinish();
+    const hideId = setTimeout(hide, FINISH_ANIMATION_TIME / 2);
+    const hideFinishId = setTimeout(hideFinish, FINISH_ANIMATION_TIME);
+
+    return () => {
+      clearTimeout(hideId);
+      clearTimeout(hideFinishId);
+    };
   }, [isShowPageLoading]);
 
   return createPortal(
     <>
       {isShow && <Progressing />}
-      {isShowFinish && <Finish />}
+      {isShowFinish && <Finish $animationTime={FINISH_ANIMATION_TIME} />}
     </>,
     root
   );

@@ -15,12 +15,12 @@ export const ProgressBar = styled.div`
 
 export const progressing = keyframes`
   0%    { transform: translateX(-100%); }
-  50%   { transform: translateX(-10%); }
+  50%   { transform: translateX(-20%); }
   100%  { transform: translateX(0); }
 `;
 
 export const Progressing = styled(ProgressBar)`
-  animation: ${progressing} 4s ease-out;
+  animation: ${progressing} 6s ease-out;
 `;
 
 export const fillOut = keyframes`
@@ -28,15 +28,16 @@ export const fillOut = keyframes`
     opacity: 1; 
     transform: translateX(-100%);
   }
-  30% {
+  50% {
     opacity: 1; 
-    transform: translateX(0);  }
+    transform: translateX(0);  
+  }
   100% {
     opacity: 0; 
     transform: translateX(0);
   }
 `;
 
-export const Finish = styled(ProgressBar)`
-  animation: ${fillOut} 1s;
+export const Finish = styled(ProgressBar)<{ $animationTime: number }>`
+  animation: ${fillOut} ${(props) => props.$animationTime}ms;
 `;
