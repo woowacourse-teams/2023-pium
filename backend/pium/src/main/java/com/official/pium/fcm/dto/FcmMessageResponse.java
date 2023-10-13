@@ -1,4 +1,4 @@
-package com.official.pium.service.dto;
+package com.official.pium.fcm.dto;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

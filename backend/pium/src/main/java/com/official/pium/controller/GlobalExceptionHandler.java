@@ -1,13 +1,12 @@
 package com.official.pium.controller;
 
 import com.official.pium.exception.AuthorizationException;
-import com.official.pium.exception.FcmException;
+import com.official.pium.fcm.exception.FcmException;
 import com.official.pium.exception.OAuthException;
 import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
 import com.official.pium.exception.OAuthException.KakaoServerException;
 import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
 import com.official.pium.exception.dto.GlobalExceptionResponse;
-import jakarta.persistence.ElementCollection;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Iterator;

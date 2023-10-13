@@ -1,4 +1,4 @@
-package com.official.pium.exception;
+package com.official.pium.fcm.exception;
 
 public class FcmException extends RuntimeException {
 
