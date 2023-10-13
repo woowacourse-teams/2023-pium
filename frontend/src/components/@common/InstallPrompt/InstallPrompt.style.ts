@@ -13,9 +13,10 @@ const slideDown = keyframes`
 
 export const Wrapper = styled.div`
   position: absolute;
+  z-index: ${({ theme }) => theme.zIndex.popover};
   top: 0;
 
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: space-evenly;
 

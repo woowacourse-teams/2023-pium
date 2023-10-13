@@ -241,5 +241,41 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       // 쿠키 갱신
       return res(ctx.delay(delay), ctx.cookie('JSESSION', JSESSION));
     }),
+
+    rest.get('/members/notification', (req, res, ctx) => {
+      const { JSESSION } = req.cookies;
+
+      if (JSESSION === undefined) {
+        return res(ctx.delay(delay), ctx.status(401), ctx.json({ message: '만료된 세션입니다.' }));
+      }
+
+      const token = JSON.parse(sessionStorage.getItem('FCM_TOKEN') ?? 'false');
+      let isSubscribe = false;
+      if (token) isSubscribe = true;
+
+      return res(ctx.delay(delay), ctx.json({ isSubscribe }));
+    }),
+
+    rest.post('/members/notification', async (req, res, ctx) => {
+      const { token } = await req.json();
+
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(407));
+      }
+
+      sessionStorage.setItem('FCM_TOKEN', JSON.stringify(token));
+
+      return res(ctx.delay(delay), ctx.status(204));
+    }),
+
+    rest.delete('/members/notification', (req, res, ctx) => {
+      if (Math.random() < failRate) {
+        return res(ctx.delay(delay), ctx.status(407));
+      }
+
+      sessionStorage.removeItem('FCM_TOKEN');
+
+      return res(ctx.delay(delay), ctx.status(204));
+    }),
   ];
 };
