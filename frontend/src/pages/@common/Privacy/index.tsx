@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import PageLogger from 'components/@common/PageLogger';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
-import { BackButton, Header, Main, SubTitle, Title, Wrapper } from './Privacy.style';
+import { BackButton, Content, Header, Main, SubTitle, Title, Wrapper } from './Privacy.style';
 import theme from 'style/theme.style';
 
 const Privacy = () => {
@@ -19,7 +19,7 @@ const Privacy = () => {
           <Title>Privacy Policy (개인정보 처리방침)</Title>
         </Header>
         <Main>
-          <div>
+          <Content>
             <SubTitle>1. 개인정보 처리 방침</SubTitle>
             피움은(는) {`"`}개인정보 보호법{`"`} 제 30조에 따라 정보 주체의 개인정보를 보호하고 이와
             관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위해여 다음과 같이 개인 정보
@@ -40,8 +40,8 @@ const Privacy = () => {
             이용자는 개인정보의 수집, 이용, 제공, 위탁 등과 관련한 아래 사항에 대하여 원하지 않는
             경우 동의를 거부할 수 있습니다. 다만, 이용자가 동의를 거부하는 경우 서비스의 전부 또는
             일부를 이용할 수 없음을 알려드립니다.
-          </div>
-          <div>
+          </Content>
+          <Content>
             <SubTitle>2. 개인정보 수집</SubTitle>
             개인정보는 생존하는 개인에 관한 정보로서 이용자 개인을 식별할 수 있는 정보(당해
             정보만으로는 특정 개인을 식별할 수 없더라도 다른 정보와 용이하게 결합하여 식별할 수 있는
@@ -91,8 +91,8 @@ const Privacy = () => {
             서비스는 구글에서 제공하는 푸시 서비스인 Firebase Cloud Messaging를 이용하고 있으며,
             이를 통해 사용자에게 알림을 제공하고 있습니다. 마이페이지에서 알림 거부 혹은 앱 자체에서
             알림 거부를 통해서 이용을 거부할 수 있습니다.
-          </div>
-          <div>
+          </Content>
+          <Content>
             <SubTitle> 3. 개인정보 이용</SubTitle>
             회원관리, 서비스 제공·개선, 신규 서비스 개발 등을 위해 이용합니다. 회원 가입 시 또는
             서비스 이용 과정에서 아래와 같이 서비스 제공을 위해 필요한 최소한의 개인정보를 수집하고
@@ -117,13 +117,13 @@ const Privacy = () => {
                 파기합니다.
               </li>
             </ul>
-          </div>
-          <div>
+          </Content>
+          <Content>
             <SubTitle>4. 개인정보 제공 </SubTitle>
             피움은 이용자의 동의가 있지 않다면 사용자의 개인정보는 제3자와 공유되지 않으며, 오직
             서비스의 운영을 위한 목적으로만 사용됩니다.
-          </div>
-          <div>
+          </Content>
+          <Content>
             <SubTitle>5. 이용자의 권리와 선택</SubTitle>
             <ul>
               <li>
@@ -147,8 +147,8 @@ const Privacy = () => {
                 있습니다. 비밀번호는 암화화되어 저장되기 때문에 서비스 운영자도 알 수 없습니다.
               </li>
             </ul>
-          </div>
-          <div>
+          </Content>
+          <Content>
             <SubTitle>6. 법적 요구사항</SubTitle>
             <ul>
               <li>
@@ -172,7 +172,18 @@ const Privacy = () => {
                 혹은 easyplantscheduler@gmail.com 을 통해 저희에게 문의해 주시기 바랍니다.
               </li>
             </ul>
-          </div>
+          </Content>
+          <Content>
+            개인정보처리방침 공고일자: 2023년 10월 16일
+            <br />
+            개인정보처리방침 시행일자: 2023년 10월 23일
+            <br />
+            <br />
+            <span>변경 이력</span>
+            <ul>
+              <li>2023년 10월 23일</li>
+            </ul>
+          </Content>
         </Main>
       </Wrapper>
     </PageLogger>

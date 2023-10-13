@@ -106,3 +106,7 @@ export const SubTitle = styled.p`
   font-size: 24px; /* 원하는 제목 글꼴 크기 설정 */
   font-weight: bold; /* 볼드체 설정 */
 `;
+
+export const Content = styled.div`
+  width: 100%;
+`;
