@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import GardenRegisterFormSection from 'components/garden/GardenRegisterFormSection';
 import Profile from 'components/petPlant/Profile';
 import ProfileSkeleton from 'components/petPlant/Profile/ProfileSkeleton';
@@ -15,7 +16,7 @@ const GardenRegisterForm = () => {
   if (!petPlantId) throw new Error('URL에 id가 없습니다.');
 
   return (
-    <>
+    <PageLogger>
       <ContentHeader title="모두의 정원에 기록하기" />
       <Main>
         <Suspense fallback={<ProfileSkeleton />}>
@@ -24,7 +25,7 @@ const GardenRegisterForm = () => {
         <GardenRegisterFormSection petPlantId={Number(petPlantId)} />
       </Main>
       <Navbar />
-    </>
+    </PageLogger>
   );
 };
 

@@ -1,6 +1,7 @@
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
 import { Header } from 'pages/petPlant/PetPlantRegister/Form/Form.style';
 import Image from 'components/@common/Image';
+import PageLogger from 'components/@common/PageLogger';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
 import { BackButton, BottomSheet, Main, PrimaryButton } from './DictionaryPlantDetail.style';
@@ -46,7 +47,7 @@ const DictionaryPlantDetail = () => {
   };
 
   return (
-    <>
+    <PageLogger>
       <Header>
         <BackButton onClick={goBack}>
           <SvgFill icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
@@ -61,7 +62,7 @@ const DictionaryPlantDetail = () => {
           반려 식물로 등록하기
         </PrimaryButton>
       </BottomSheet>
-    </>
+    </PageLogger>
   );
 };
 

@@ -1,7 +1,7 @@
 import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import NotFound from 'pages/@common/Error/NotFound';
-import Main from 'pages/@common/Main';
+import Home from 'pages/@common/Home';
 import RootTemplate from 'pages/@common/RootTemplate';
 import DictionaryPlantDetail from 'pages/dictionaryPlant/DictionaryPlantDetail';
 import DictionaryPlantSearch from 'pages/dictionaryPlant/DictionaryPlantSearch';
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Main />,
+        element: <Home />,
       },
       {
         path: URL_PATH.petRegisterSearch,

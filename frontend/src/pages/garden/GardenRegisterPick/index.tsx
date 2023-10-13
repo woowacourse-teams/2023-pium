@@ -2,6 +2,7 @@ import { Link, generatePath } from 'react-router-dom';
 import { CardList, Wrapper } from 'pages/petPlant/PetPlantCardList/PetPlantCardList.style';
 import ContentHeader from 'components/@common/ContentHeader';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import PetPlantCard from 'components/petPlant/PetPlantCard';
 import { SubTitle } from './GardenRegisterPick.style';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
@@ -13,7 +14,7 @@ const PetPlantPicker = () => {
   const { data: petPlantCardList } = usePetPlantCardList();
 
   return (
-    <>
+    <PageLogger>
       <ContentHeader title="모두의 정원에 기록하기" />
       <SubTitle>반려 식물을 골라주세요.</SubTitle>
       <Wrapper>
@@ -30,7 +31,7 @@ const PetPlantPicker = () => {
         </CardList>
       </Wrapper>
       <Navbar />
-    </>
+    </PageLogger>
   );
 };
 

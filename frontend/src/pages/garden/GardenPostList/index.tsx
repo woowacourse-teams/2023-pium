@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import GardenPostItem from 'components/garden/GardenPostItem';
 import GardenPostItemSkeleton from 'components/garden/GardenPostItem/GardenPostItemSkeleton';
@@ -54,7 +55,7 @@ const GardenPostList = () => {
       .map((_, index) => <GardenPostItemSkeleton key={index} />);
 
   return (
-    <>
+    <PageLogger>
       <GardenPostListHeader
         selectedDictionaryPlant={selectedDictionaryPlant}
         select={select}
@@ -88,7 +89,7 @@ const GardenPostList = () => {
           </FixedButton>
         </FixedButtonArea>
       )}
-    </>
+    </PageLogger>
   );
 };
 

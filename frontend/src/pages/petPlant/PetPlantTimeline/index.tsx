@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CheckButton from 'components/@common/CheckButton';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import Timeline from 'components/petPlant/Timeline';
 import { ButtonLabel, Header, Main } from './PetPlantTimeline.style';
@@ -51,7 +52,7 @@ const PetPlantTimeline = () => {
   const { water, background, primary, sub } = theme.color;
 
   return (
-    <>
+    <PageLogger>
       <Header>
         <CheckButton checked={isCheckedWater} onClick={onClickWater}>
           <SvgIcons
@@ -85,7 +86,7 @@ const PetPlantTimeline = () => {
         <Timeline petPlantId={Number(petPlantId)} filter={filter} />
       </Main>
       <Navbar />
-    </>
+    </PageLogger>
   );
 };
 
