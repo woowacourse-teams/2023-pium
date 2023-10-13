@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useState } from 'react';
+import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { getCookie, setCookie } from 'utils/cookie';
 
 declare global {
@@ -16,45 +17,39 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>;
 }
 
-let deferredPrompt: BeforeInstallPromptEvent | null = null;
-
 const useInstallApp = () => {
-  const installAppRef = useRef<HTMLDivElement>(null);
+  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
 
-  const installApp = () => {
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+
+  const installApp = async () => {
     if (deferredPrompt) {
-      deferredPrompt.prompt();
+      await deferredPrompt.prompt();
 
       deferredPrompt.userChoice.then(() => {
-        deferredPrompt = null;
-        if (installAppRef.current) {
-          installAppRef.current.style.display = 'none';
-        }
+        setDeferredPrompt(null);
       });
     }
   };
 
   const ignoreInstallApp = () => {
     setCookie({ key: 'PromptVisible', value: 'false' });
+    setDeferredPrompt(null);
+  };
 
-    deferredPrompt = null;
-    if (installAppRef.current) {
-      installAppRef.current.style.display = 'none';
-    }
+  const closePrompt = () => {
+    setDeferredPrompt(null);
   };
 
   const beforeInstallPromptHandler = (event: BeforeInstallPromptEvent) => {
     event.preventDefault();
-    const showPrompt = JSON.parse(getCookie('PromptVisible') || 'true');
-
+    const showPrompt = JSON.parse(getCookie('PromptVisible') ?? 'true');
     if (!showPrompt) return;
 
-    deferredPrompt = event;
-    if (installAppRef.current) {
-      installAppRef.current.style.display = 'flex';
-    }
+    setDeferredPrompt(event);
   };
 
+  // TODO: 왜 '/'에서만 beforeinstallprompt가 이벤트 추가가 되나?  prompt가 나오고 나머지는 나오지 않는가?
   useEffect(() => {
     window.addEventListener('beforeinstallprompt', beforeInstallPromptHandler);
 
@@ -63,7 +58,7 @@ const useInstallApp = () => {
     };
   }, []);
 
-  return { installApp, ignoreInstallApp, installAppRef };
+  return { showPrompt: deferredPrompt && isLoggedIn, installApp, ignoreInstallApp, closePrompt };
 };
 
 export default useInstallApp;

@@ -14,43 +14,46 @@ on:
 defaults:
   run:
     working-directory: frontend
-    
+
 permissions:
-    pull-requests: write
-    checks: write
+  pull-requests: write
+  checks: write
 
 jobs:
-   build:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Repository
         uses: actions/checkout@v3
 
-      - name : Set up Node 18.16.0 
+      - name: Set up Node 18.16.0
         uses: actions/setup-node@v3
         with:
           node-version: 18.16.0
-          
+
       - name: Cache node_modules
         id: cache
         uses: actions/cache@v3
         with:
-         path: '**/node_modules'
-         key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-         restore-keys: |
-          ${{ runner.os }}-node-
-          
+          path: '**/node_modules'
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: npm clean install
         run: npm ci
         if: steps.cache.outputs.cache-hit != 'true'
 
+      - name: submodule update
+        run: git submodule update --remote --merge
+
       - name: npm build dev
         run: npm run build-dev
-      
+
       - name: storyBook build
         run: npm run build-storybook
         if: always()
-      
+
       - name: notificate on slack if build failed
         uses: 8398a7/action-slack@v3
         with:
