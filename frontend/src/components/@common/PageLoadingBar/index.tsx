@@ -30,7 +30,7 @@ const PageLoadingBar = () => {
       clearTimeout(hideId);
       clearTimeout(hideFinishId);
     };
-  }, [isShowPageLoading]);
+  }, [isShowPageLoading, show, hide, showFinish, hideFinish]);
 
   return createPortal(
     <>

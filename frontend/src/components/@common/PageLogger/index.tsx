@@ -10,7 +10,7 @@ const PageLogger = (props: PropsWithChildren) => {
   useEffect(() => {
     setLastPage(children);
     setIsShowPageLoadingState(false);
-  }, []);
+  }, [children, setLastPage, setIsShowPageLoadingState]);
 
   return children;
 };

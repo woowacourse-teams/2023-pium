@@ -13,7 +13,7 @@ const LastPageLoading = () => {
     return () => {
       setIsShowPageLoading(false);
     };
-  }, []);
+  }, [setIsShowPageLoading]);
 
   return lastPage || <Loading />;
 };
