@@ -15,7 +15,7 @@ const LastPageLoading = () => {
     };
   }, [setIsShowPageLoading]);
 
-  return lastPage || <Loading />;
+  return lastPage ?? <Loading />;
 };
 
 export default LastPageLoading;
