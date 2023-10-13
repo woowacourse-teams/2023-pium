@@ -52,6 +52,9 @@ public class MemberService {
 
     @Transactional
     public void unSubscribeNotification(Member member) {
+        if (!member.isSubscribe()) {
+            throw new IllegalArgumentException("이미 알림을 구독하지 않고 있습니다.");
+        }
         member.updateDeviceToken(null);
     }
 }
