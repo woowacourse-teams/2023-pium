@@ -81,10 +81,11 @@ public class ReminderService {
     public void sendWaterNotification() {
         List<PetPlant> petPlants = petPlantRepository.findAllByWaterNotification(LocalDate.now());
         List<NotificationEvent> events = petPlants.stream()
-                .map(plant -> NotificationEvent.of(
-                        plant.getMember().getDeviceToken(),
-                        plant.getNickname(),
-                        "물을 줄 시간이에요!")
+                .map(plant -> NotificationEvent.builder()
+                        .title(plant.getNickname())
+                        .body("물을 줄 시간이에요!")
+                        .deviceToken(plant.getMember().getDeviceToken())
+                        .build()
                 ).toList();
 
         publisher.publishEvent(events);
