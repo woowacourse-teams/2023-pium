@@ -15,7 +15,6 @@ const Main = () => {
   return (
     <PageLogger>
       <InstallPrompt />
-
       <Wrapper>
         <LogoMessage>식물을 쉽게</LogoMessage>
         <ImageArea>

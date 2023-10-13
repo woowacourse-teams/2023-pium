@@ -22,6 +22,13 @@ const throwOnInvalidStatus = (response: Response) => {
       message: 'internal Server Error 500',
     });
   }
+
+  if (response.status >= 300) {
+    throw new StatusError({
+      statusCode: response.status,
+      message: 'Something Wrong',
+    });
+  }
 };
 
 export default throwOnInvalidStatus;
