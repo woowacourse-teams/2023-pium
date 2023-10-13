@@ -9,6 +9,7 @@ import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.NotificationCheckResponse;
 import com.official.pium.service.dto.NotificationSubscribeRequest;
+import com.official.pium.support.MemberSupport;
 import com.official.pium.support.PetPlantSupport;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -27,6 +28,9 @@ class MemberServiceTest {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private MemberSupport memberSupport;
 
     @Autowired
     private MemberRepository memberRepository;
@@ -53,10 +57,9 @@ class MemberServiceTest {
 
     @Test
     void 사용자_삭제시_반려식물도_함께_삭제된다() {
-        Member member = Member.builder()
+        Member saveMember = memberSupport.builder()
                 .kakaoId(123451L)
                 .build();
-        Member saveMember = memberRepository.save(member);
 
         Long petPlant1 = petPlantSupport.builder().member(saveMember).build().getId();
         Long petPlant2 = petPlantSupport.builder().member(saveMember).build().getId();
@@ -73,10 +76,10 @@ class MemberServiceTest {
 
     @Test
     void 알림_구독_시_사용자의_디바이스_토큰에_값이_존재한다() {
-        Member member = Member.builder()
+        Member saveMember = memberSupport.builder()
                 .kakaoId(123451L)
+                .deviceToken("deviceToken")
                 .build();
-        Member saveMember = memberRepository.save(member);
 
         memberService.subscribeNotification(saveMember, NotificationSubscribeRequest.builder()
                 .deviceToken("deviceToken")
@@ -87,11 +90,10 @@ class MemberServiceTest {
 
     @Test
     void 알림_해지_시_사용자의_디바이스_토큰에_값이_존재한다() {
-        Member member = Member.builder()
+        Member saveMember = memberSupport.builder()
                 .kakaoId(123451L)
                 .deviceToken("deviceToken")
                 .build();
-        Member saveMember = memberRepository.save(member);
 
         memberService.unSubscribeNotification(saveMember);
 
@@ -100,11 +102,10 @@ class MemberServiceTest {
 
     @Test
     void 사용자가_알림_구독중이면_True() {
-        Member member = Member.builder()
+        Member saveMember = memberSupport.builder()
                 .kakaoId(123451L)
                 .deviceToken("deviceToken")
                 .build();
-        Member saveMember = memberRepository.save(member);
 
         NotificationCheckResponse notificationCheckResponse = memberService.checkNotification(saveMember);
 
@@ -113,10 +114,10 @@ class MemberServiceTest {
 
     @Test
     void 사용자가_알림_구독중이_아니면_False() {
-        Member member = Member.builder()
-                .kakaoId(123451L)
+        Member saveMember = memberSupport.builder()
+                .kakaoId(1231451L)
+                .deviceToken(null)
                 .build();
-        Member saveMember = memberRepository.save(member);
 
         NotificationCheckResponse notificationCheckResponse = memberService.checkNotification(saveMember);
 
