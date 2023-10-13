@@ -1,6 +1,6 @@
 import { keyframes, styled } from 'styled-components';
 
-export const Wrapper = styled.div`
+export const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;

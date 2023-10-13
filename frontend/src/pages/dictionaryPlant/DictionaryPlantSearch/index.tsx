@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import SearchBox from 'components/search/SearchBox';
 import SearchResults from 'components/search/SearchResults';
 import { Title, Wrapper } from './DictionaryPlantSearch.style';
@@ -14,7 +15,7 @@ const DictionarySearch = () => {
   const [searchValue, setSearchValue] = useState('');
 
   return (
-    <>
+    <PageLogger>
       <Wrapper>
         <SearchBox
           value={searchValue}
@@ -27,7 +28,7 @@ const DictionarySearch = () => {
         <SearchResults plantName={search} />
       </Wrapper>
       <Navbar />
-    </>
+    </PageLogger>
   );
 };
 
