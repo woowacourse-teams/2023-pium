@@ -15,6 +15,9 @@ import useGardenPostList from 'hooks/queries/garden/useGardenPostList';
 import { URL_PATH } from 'constants/index';
 
 const SKELETON_LENGTH = 20;
+const SKELETONS = new Array(SKELETON_LENGTH)
+  .fill(null)
+  .map((_, index) => <GardenPostItemSkeleton key={index} />);
 
 const GardenPostList = () => {
   const navigate = useNavigate();
@@ -48,11 +51,6 @@ const GardenPostList = () => {
     window.scrollTo(0, 0);
   }, [selectedDictionaryPlant]);
 
-  const Skeletons = () =>
-    Array(SKELETON_LENGTH)
-      .fill(null)
-      .map((_, index) => <GardenPostItemSkeleton key={index} />);
-
   return (
     <PageLogger>
       <GardenPostListHeader
@@ -67,7 +65,7 @@ const GardenPostList = () => {
               {gardenPostList.map((gardenPost) => (
                 <GardenPostItem key={gardenPost.id} {...gardenPost} />
               ))}
-              {isFetchingNextPage && <Skeletons />}
+              {isFetchingNextPage && SKELETONS}
               {!hasNextPage && <Message>마지막이에요 😊</Message>}
               {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
             </List>
@@ -75,9 +73,7 @@ const GardenPostList = () => {
             <Message>아직 작성된 글이 없어요 🤔</Message>
           )
         ) : (
-          <List>
-            <Skeletons />
-          </List>
+          <List>{SKELETONS}</List>
         )}
       </Main>
       {isLoggedIn && (
