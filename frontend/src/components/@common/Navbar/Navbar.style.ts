@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 export const Wrapper = styled.nav`
@@ -19,10 +18,6 @@ export const Wrapper = styled.nav`
   box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
 `;
 
-export const NavLink = styled(Link)`
-  height: 100%;
-`;
-
-export const NavButton = styled.button`
+export const Button = styled.button`
   height: 100%;
 `;
