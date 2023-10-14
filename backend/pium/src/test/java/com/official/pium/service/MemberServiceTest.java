@@ -78,7 +78,6 @@ class MemberServiceTest {
     void 알림_구독_시_사용자의_디바이스_토큰에_값이_존재한다() {
         Member saveMember = memberSupport.builder()
                 .kakaoId(123451L)
-                .deviceToken("deviceToken")
                 .build();
 
         memberService.subscribeNotification(saveMember, NotificationSubscribeRequest.builder()

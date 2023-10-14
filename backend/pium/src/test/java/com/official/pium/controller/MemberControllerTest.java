@@ -148,7 +148,7 @@ class MemberControllerTest extends UITest {
         }
 
         @Test
-        void 삭제_정상_요청_시_204_반환() throws Exception {
+        void 취소_정상_요청_시_200_반환() throws Exception {
             doNothing().when(memberService).unSubscribeNotification(any(Member.class));
 
             mockMvc.perform(delete("/members/notification")
@@ -160,7 +160,7 @@ class MemberControllerTest extends UITest {
                                     requestCookies()
                             )
                     )
-                    .andExpect(status().isNoContent())
+                    .andExpect(status().isOk())
                     .andDo(print());
         }
     }
