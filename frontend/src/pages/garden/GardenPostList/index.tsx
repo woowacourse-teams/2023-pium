@@ -2,7 +2,6 @@ import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import GardenPostItem from 'components/garden/GardenPostItem';
@@ -81,7 +80,6 @@ const GardenPostList = () => {
           </List>
         )}
       </Main>
-      <Navbar />
       {isLoggedIn && (
         <FixedButtonArea>
           <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">

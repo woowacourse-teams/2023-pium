@@ -1,6 +1,5 @@
 import { FixedButtonArea } from 'pages/garden/GardenPostList/GardenPostList.style';
 import ContentHeader from 'components/@common/ContentHeader';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import Toggle from 'components/@common/Toggle';
@@ -76,7 +75,6 @@ const MyPage = () => {
           </Button>
         </ButtonBox>
       </Main>
-      <Navbar />
       <FixedButtonArea>
         <BottomSheet to="https://forms.gle/rQUAi9GbVwrr7oG2A" target="blank">
           <SvgFill icon="survey" color={theme.color.background} size={16} />

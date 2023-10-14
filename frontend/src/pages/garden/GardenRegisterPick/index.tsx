@@ -1,7 +1,6 @@
 import { Link, generatePath } from 'react-router-dom';
 import { CardList, Wrapper } from 'pages/petPlant/PetPlantCardList/PetPlantCardList.style';
 import ContentHeader from 'components/@common/ContentHeader';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import PetPlantCard from 'components/petPlant/PetPlantCard';
 import { SubTitle } from './GardenRegisterPick.style';
@@ -30,7 +29,6 @@ const PetPlantPicker = () => {
           ))}
         </CardList>
       </Wrapper>
-      <Navbar />
     </PageLogger>
   );
 };

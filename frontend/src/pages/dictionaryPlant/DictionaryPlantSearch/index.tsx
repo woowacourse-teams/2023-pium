@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import SearchBox from 'components/search/SearchBox';
 import SearchResults from 'components/search/SearchResults';
@@ -27,7 +26,6 @@ const DictionarySearch = () => {
         <Title>&quot;{search}&quot; 검색 결과</Title>
         <SearchResults plantName={search} />
       </Wrapper>
-      <Navbar />
     </PageLogger>
   );
 };

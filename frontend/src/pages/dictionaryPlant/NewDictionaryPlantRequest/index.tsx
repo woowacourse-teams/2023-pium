@@ -1,6 +1,5 @@
 import { useLocation } from 'react-router-dom';
 import ContentHeader from 'components/@common/ContentHeader';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import { Description, Main } from './NewDictionaryPlantRequest.style';
 import { NUMBER } from 'constants/index';
@@ -18,7 +17,6 @@ const NewDictionaryPlantRequest = () => {
         <Description>요청하신 식물은 저희가 검토 후 추가할게요!</Description>
         <Form initialName={initialName} />
       </Main>
-      <Navbar />
     </PageLogger>
   );
 };
