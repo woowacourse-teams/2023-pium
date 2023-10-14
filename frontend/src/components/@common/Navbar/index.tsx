@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { Link, matchRoutes, useLocation, useNavigate } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import { Button, Roof, Wrapper } from './Navbar.style';
+import { isShowPageLoadingState } from 'store/atoms/@common';
 import useAddToast from 'hooks/@common/useAddToast';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
@@ -37,6 +39,8 @@ const Navbar = () => {
   const navBar = useRef<HTMLElement>(null);
   const navItemPositions = useRef<number[]>([]);
 
+  const isPageLoading = useRecoilValue(isShowPageLoadingState);
+
   const addToast = useAddToast();
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
 
@@ -54,6 +58,12 @@ const Navbar = () => {
     return () => resizeObserver.disconnect();
   }, []);
 
+  useEffect(() => {
+    const resetHistoryState = () => history.replaceState(null, '');
+    window.addEventListener('beforeunload', resetHistoryState);
+    return () => window.removeEventListener('beforeunload', resetHistoryState);
+  }, []);
+
   const goLogin = () => {
     navigate(URL_PATH.login);
   };
@@ -68,26 +78,33 @@ const Navbar = () => {
     });
   };
 
+  const prevPathname = state ? state.prevPathname : pathname;
+
+  const isActive = (targetPathname: string) => {
+    if (isPageLoading) {
+      return targetPathname === prevPathname;
+    }
+    return targetPathname === pathname;
+  };
+
   const hideNavbar = matchRoutes(NO_NAVIGATION_BAR_URLS, pathname) !== null;
 
-  const roofPosition = getRoofPosition(pathname);
-  const prevRoofPosition = getRoofPosition(state ? state.prevPathname : '');
+  const prevRoofPosition = getRoofPosition(prevPathname);
+  const roofPosition = isPageLoading ? prevRoofPosition : getRoofPosition(pathname);
 
-  const roofAbsolutePosition = roofPosition ? navItemPositions.current[roofPosition - 1] : 0;
-  const prevRoofAbsolutePosition = prevRoofPosition
-    ? navItemPositions.current[prevRoofPosition - 1]
-    : 0;
-
-  const transitionOffset = prevRoofAbsolutePosition - roofAbsolutePosition;
+  const transitionOffset =
+    roofPosition && prevRoofPosition
+      ? navItemPositions.current[prevRoofPosition - 1] - navItemPositions.current[roofPosition - 1]
+      : 0;
 
   return (
     <Wrapper ref={navBar} $hide={hideNavbar}>
       <Button as={Link} to={URL_PATH.main} state={{ prevPathname: pathname }}>
-        <NavItem isActive={pathname === URL_PATH.main} iconId="home-line" label="메인" />
+        <NavItem isActive={isActive(URL_PATH.main)} iconId="home-line" label="메인" />
       </Button>
       <Button as={Link} to={URL_PATH.garden} state={{ prevPathname: pathname }}>
         <NavItem
-          isActive={pathname === URL_PATH.garden}
+          isActive={isActive(URL_PATH.garden)}
           iconId="bulletin-board-line"
           label="모두의 정원"
         />
@@ -95,14 +112,14 @@ const Navbar = () => {
       {isLoggedIn ? (
         <>
           <Button as={Link} to={URL_PATH.reminder} state={{ prevPathname: pathname }}>
-            <NavItem isActive={pathname === URL_PATH.reminder} iconId="reminder" label="리마인더" />
+            <NavItem isActive={isActive(URL_PATH.reminder)} iconId="reminder" label="리마인더" />
           </Button>
           <Button as={Link} to={URL_PATH.petList} state={{ prevPathname: pathname }}>
-            <NavItem isActive={pathname === URL_PATH.petList} iconId="leaf" label="내 식물" />
+            <NavItem isActive={isActive(URL_PATH.petList)} iconId="leaf" label="내 식물" />
           </Button>
           <Button as={Link} to={URL_PATH.myPage} state={{ prevPathname: pathname }}>
             <NavItem
-              isActive={pathname === URL_PATH.myPage}
+              isActive={isActive(URL_PATH.myPage)}
               iconId="account-circle-line"
               label="마이페이지"
             />
@@ -111,14 +128,14 @@ const Navbar = () => {
       ) : (
         <>
           <Button type="button" onClick={askLogin}>
-            <NavItem isActive={pathname === URL_PATH.reminder} iconId="reminder" label="리마인더" />
+            <NavItem isActive={isActive(URL_PATH.reminder)} iconId="reminder" label="리마인더" />
           </Button>
           <Button type="button" onClick={askLogin}>
-            <NavItem isActive={pathname === URL_PATH.petList} iconId="leaf" label="내 식물" />
+            <NavItem isActive={isActive(URL_PATH.petList)} iconId="leaf" label="내 식물" />
           </Button>
           <Button as={Link} to={URL_PATH.login} state={{ prevPathname: pathname }}>
             <NavItem
-              isActive={pathname === URL_PATH.login}
+              isActive={isActive(URL_PATH.login)}
               iconId="account-circle-line"
               label="로그인"
             />
