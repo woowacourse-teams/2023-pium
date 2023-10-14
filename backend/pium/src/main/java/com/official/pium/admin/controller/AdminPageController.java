@@ -132,7 +132,7 @@ public class AdminPageController {
     }
 
     @PostMapping("/notification")
-    public ResponseEntity<Void> sendNotification(@AdminAuth Admin admin, @RequestBody AdminSendNotificationRequest request) {
+    public ResponseEntity<Void> sendNotification(@AdminAuth Admin admin, @RequestBody @Valid AdminSendNotificationRequest request) {
         if (admin == null) {
             return ResponseEntity.status(401).build();
         }
