@@ -1,13 +1,11 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import SvgStroke, { ICONS } from 'components/@common/SvgIcons/SvgStroke';
-import { NavItemCenter, NavItemArea, NavLabel, NavButton, Wrapper, NavLink } from './Navbar.style';
+import { useNavigate } from 'react-router-dom';
+import { NavButton, Wrapper, NavLink } from './Navbar.style';
 import useAddToast from 'hooks/@common/useAddToast';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
-import theme from 'style/theme.style';
+import NavItem from './NavItem';
 
 const Navbar = () => {
-  const location = useLocation();
   const navigate = useNavigate();
   const addToast = useAddToast();
 
@@ -25,21 +23,6 @@ const Navbar = () => {
       buttonContent: '로그인',
       onClickButton: goLogin,
     });
-  };
-
-  const NavItem = (props: { path: string; iconId: (typeof ICONS)[number]; label: string }) => {
-    const { path, iconId, label } = props;
-    const active = path === location.pathname;
-    const iconColor = active ? theme.color.fontPrimaryForBackground : theme.color.subLight;
-
-    return (
-      <NavItemArea $active={active}>
-        <NavItemCenter>
-          <SvgStroke color={iconColor} size={24} icon={iconId} />
-          <NavLabel $active={active}>{label}</NavLabel>
-        </NavItemCenter>
-      </NavItemArea>
-    );
   };
 
   return (
