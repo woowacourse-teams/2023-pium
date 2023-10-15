@@ -56,17 +56,3 @@ export const ImageArea = styled.div`
   height: 128px;
   margin-top: 16px;
 `;
-
-export const Footer = styled.footer`
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-
-  height: 200px;
-  padding: 40px 0;
-
-  font: 700 1.6rem/2rem NanumSquareRound;
-  text-align: center;
-
-  border-top: 1px solid ${({ theme }) => theme.color.grayLight};
-`;
