@@ -1,10 +1,9 @@
 package com.official.pium.fcm.service;
 
 import com.google.auth.oauth2.GoogleCredentials;
-import com.official.pium.fcm.exception.FcmException;
 import com.official.pium.fcm.dto.FcmMessageResponse;
+import com.official.pium.fcm.exception.FcmException;
 import com.official.pium.util.MessageSendManager;
-import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,11 +11,12 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import java.io.IOException;
 
 @Slf4j
-@Service
+@Component
 @RequiredArgsConstructor
 public class FcmMessageSender implements MessageSendManager {
 
