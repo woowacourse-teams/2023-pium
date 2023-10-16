@@ -135,7 +135,7 @@ class MemberControllerTest extends UITest {
                             .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE)
                             .content(objectMapper.writeValueAsString(NotificationSubscribeRequest.builder()
-                                    .deviceToken("deviceToken")
+                                    .token("deviceToken")
                                     .build())))
                     .andDo(document("member/subscribeNotification/",
                                     preprocessRequest(prettyPrint()),
