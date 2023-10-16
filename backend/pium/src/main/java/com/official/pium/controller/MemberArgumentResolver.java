@@ -3,6 +3,7 @@ package com.official.pium.controller;
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.repository.MemberRepository;
+import com.official.pium.service.SessionGroupService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import javax.naming.AuthenticationException;
@@ -19,6 +20,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
     private static final String SESSION_KEY = "KAKAO_ID";
 
     private final MemberRepository memberRepository;
+    private final SessionGroupService sessionGroupService;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
@@ -36,8 +38,9 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             throw new AuthenticationException("로그인이 필요합니다");
         }
 
+        String sessionValue = sessionGroupService.findBySessionIdAndKey(session.getId(), SESSION_KEY);
         try {
-            Long kakaoId = (Long) session.getAttribute(SESSION_KEY);
+            Long kakaoId = Long.valueOf(sessionValue);
             return memberRepository.findByKakaoId(kakaoId)
                     .orElseThrow(() -> new AuthenticationException("회원을 찾을 수 없습니다."));
         } catch (ClassCastException e) {
