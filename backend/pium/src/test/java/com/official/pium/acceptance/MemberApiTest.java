@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class MemberApiTest extends AcceptanceTest {
+class MemberApiTest extends AcceptanceTest {
 
     @Test
     void 회원탈퇴_정상_요청_시_204_반환() {

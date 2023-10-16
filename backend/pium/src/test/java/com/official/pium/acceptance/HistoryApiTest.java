@@ -30,7 +30,7 @@ import org.springframework.http.MediaType;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class HistoryApiTest extends AcceptanceTest {
+class HistoryApiTest extends AcceptanceTest {
 
     @Nested
     class 반려_식물_단건_히스토리_조회_시_ {

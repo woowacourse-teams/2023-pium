@@ -22,7 +22,7 @@ public class UITest {
     private static final String ADMIN_SESSION_KEY = "PIUM_ADMIN_SESSION_ID";
 
     @MockBean
-    private MemberRepository memberRepository;
+    protected MemberRepository memberRepository;
 
     protected MockHttpSession session = new MockHttpSession();
 
