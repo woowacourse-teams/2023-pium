@@ -6,6 +6,7 @@ import com.official.pium.support.HistoryCategorySupport;
 import com.official.pium.support.HistorySupport;
 import com.official.pium.support.MemberSupport;
 import com.official.pium.support.PetPlantSupport;
+import com.official.pium.support.SessionGroupSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,4 +32,7 @@ public class IntegrationTest {
 
     @Autowired
     protected GardenSupport gardenSupport;
+
+    @Autowired
+    protected SessionGroupSupport sessionGroupSupport;
 }
