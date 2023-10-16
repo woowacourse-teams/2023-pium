@@ -12,6 +12,7 @@ import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -127,11 +128,13 @@ class SessionGroupServiceTest extends IntegrationTest {
 
         @Test
         void 정상적으로_추가한다() {
-            SessionGroup sessionGroup = sessionGroupSupport.builder().build();
+            String sessionId = UUID.randomUUID().toString();
+            String sessionKey = "KAKAO_ID";
+            String sessionValue = "1203214";
 
-            assertThat(sessionGroupRepository.findBySessionIdAndSessionKey(sessionGroup.getSessionId(),
-                    sessionGroup.getSessionKey()))
-                    .isPresent();
+            sessionGroupService.add(sessionId, sessionKey, sessionValue);
+
+            assertThat(sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, sessionKey)).isPresent();
         }
 
         @Test
@@ -141,8 +144,7 @@ class SessionGroupServiceTest extends IntegrationTest {
             assertThatThrownBy(() -> sessionGroupService.add(
                     sessionGroup.getSessionId(),
                     sessionGroup.getSessionKey(),
-                    sessionGroup.getSessionValue(),
-                    30
+                    sessionGroup.getSessionValue()
             ))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("이미 존재하는 세션입니다. sessionId: " + sessionGroup.getSessionId());

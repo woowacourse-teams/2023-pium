@@ -43,7 +43,7 @@ public class SessionGroupService {
     }
 
     @Transactional
-    public void add(String sessionId, String key, String value, int expiredTime) {
+    public void add(String sessionId, String key, String value) {
         sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, key)
                 .ifPresent(existsSessionGroup -> {
                     throw new IllegalArgumentException("이미 존재하는 세션입니다. sessionId: " + sessionId);
@@ -53,7 +53,7 @@ public class SessionGroupService {
                 .sessionId(sessionId)
                 .sessionKey(key)
                 .sessionValue(value)
-                .expireTime(LocalDateTime.now().plusMinutes(expiredTime))
+                .expireTime(LocalDateTime.now().plusMinutes(EXTEND_EXPIRED_DAY))
                 .build();
         sessionGroupRepository.save(sessionGroup);
     }
