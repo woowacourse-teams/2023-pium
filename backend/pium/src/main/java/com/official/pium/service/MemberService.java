@@ -5,6 +5,8 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.service.dto.NotificationCheckResponse;
+import com.official.pium.service.dto.NotificationSubscribeRequest;
 import com.official.pium.service.dto.OAuthProvider;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +34,27 @@ public class MemberService {
         petPlantRepository.deleteAllByMember(member);
 
         memberRepository.deleteById(member.getId());
+    }
+
+    public NotificationCheckResponse checkNotification(Member member) {
+        return NotificationCheckResponse.builder()
+                .isSubscribe(member.isSubscribe())
+                .build();
+    }
+
+    @Transactional
+    public void subscribeNotification(Member member, NotificationSubscribeRequest request) {
+        if (member.isSubscribe()) {
+            throw new IllegalArgumentException("이미 알림을 구독하고 있습니다.");
+        }
+        member.updateDeviceToken(request.getDeviceToken());
+    }
+
+    @Transactional
+    public void unSubscribeNotification(Member member) {
+        if (!member.isSubscribe()) {
+            throw new IllegalArgumentException("이미 알림을 구독하지 않고 있습니다.");
+        }
+        member.updateDeviceToken(null);
     }
 }

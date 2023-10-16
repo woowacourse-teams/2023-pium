@@ -25,7 +25,7 @@ import org.springframework.data.domain.Pageable;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class GardenServiceTest extends IntegrationTest {
+class GardenServiceTest extends IntegrationTest {
 
     private Member member;
     private PetPlant petPlant;

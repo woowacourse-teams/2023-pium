@@ -19,9 +19,15 @@ public class MemberSupport {
     public final class MemberBuilder {
 
         private Long kakaoId;
+        private String deviceToken;
 
         public MemberBuilder kakaoId(Long kakaoId) {
             this.kakaoId = kakaoId;
+            return this;
+        }
+
+        public MemberBuilder deviceToken(String deviceToken) {
+            this.deviceToken = deviceToken;
             return this;
         }
 
@@ -30,6 +36,7 @@ public class MemberSupport {
                     .orElseGet(
                             () -> memberRepository.save(Member.builder()
                                     .kakaoId(kakaoId == null ? 12345L : kakaoId)
+                                    .deviceToken(deviceToken)
                                     .build()
                             ));
         }

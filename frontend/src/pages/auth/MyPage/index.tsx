@@ -1,6 +1,8 @@
 import { FixedButtonArea } from 'pages/garden/GardenPostList/GardenPostList.style';
 import ContentHeader from 'components/@common/ContentHeader';
+import Footer from 'components/@common/Footer';
 import Navbar from 'components/@common/Navbar';
+import PageLogger from 'components/@common/PageLogger';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import Toggle from 'components/@common/Toggle';
 import VerticalDivider from 'components/@common/VerticalDivider/VerticalDivider.style';
@@ -11,7 +13,7 @@ import {
   PushAlertContent,
   PushAlertWrapper,
   WarnParagraph,
-  Wrapper,
+  Main,
 } from './MyPage.style';
 import useConfirm from 'hooks/@common/useConfirm';
 import usePushAlert from 'hooks/@common/usePushAlert';
@@ -43,9 +45,9 @@ const MyPage = () => {
   };
 
   return (
-    <>
+    <PageLogger>
       <ContentHeader title="마이페이지" />
-      <Wrapper>
+      <Main>
         <PushAlertWrapper>
           <PushAlertContent>
             <p>리마인더 알림 받기</p>
@@ -74,7 +76,8 @@ const MyPage = () => {
             회원 탈퇴
           </Button>
         </ButtonBox>
-      </Wrapper>
+      </Main>
+      <Footer />
       <Navbar />
       <FixedButtonArea>
         <BottomSheet to="https://forms.gle/rQUAi9GbVwrr7oG2A" target="blank">
@@ -82,7 +85,7 @@ const MyPage = () => {
           문의하기
         </BottomSheet>
       </FixedButtonArea>
-    </>
+    </PageLogger>
   );
 };
 

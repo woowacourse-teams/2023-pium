@@ -31,7 +31,7 @@ import org.springframework.http.MediaType;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class PetPlantApiTest extends AcceptanceTest {
+class PetPlantApiTest extends AcceptanceTest {
 
     @Nested
     class 반려_식물_등록_시_ {
