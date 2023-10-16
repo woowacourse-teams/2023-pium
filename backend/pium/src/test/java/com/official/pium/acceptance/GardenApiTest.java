@@ -24,7 +24,7 @@ import org.springframework.http.HttpStatus;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class GardenApiTest extends AcceptanceTest {
+class GardenApiTest extends AcceptanceTest {
 
     @Nested
     class 정원_식물_등록_ {

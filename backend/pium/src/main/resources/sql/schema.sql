@@ -24,10 +24,11 @@ create TABLE IF NOT EXISTS dictionary_plant
 
 create TABLE IF NOT EXISTS member
 (
-    id         BIGINT AUTO_INCREMENT NOT NULL,
-    kakao_id   BIGINT                NOT NULL,
-    created_at DATETIME              NOT NULL,
-    updated_at DATETIME              NOT NULL,
+    id           BIGINT AUTO_INCREMENT NOT NULL,
+    kakao_id     BIGINT                NOT NULL,
+    device_token VARCHAR(255)          NULL,
+    created_at   DATETIME              NOT NULL,
+    updated_at   DATETIME              NOT NULL,
     CONSTRAINT pk_member PRIMARY KEY (id)
 );
 

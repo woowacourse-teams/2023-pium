@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    implementation 'com.google.firebase:firebase-admin:9.2.0'
 
     implementation 'com.github.maricn:logback-slack-appender:1.6.1'
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'

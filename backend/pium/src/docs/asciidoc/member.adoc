@@ -1,0 +1,72 @@
+== 사용자(Member)
+
+=== 로그인
+
+==== Request
+
+include::{snippets}/auth/login/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/auth/login/http-response.adoc[]
+
+=== 로그아웃
+
+==== Request
+
+include::{snippets}/auth/logout/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/auth/logout/http-response.adoc[]
+
+=== 세션확인
+
+==== Request
+
+include::{snippets}/member/checkSession/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/member/checkSession/http-response.adoc[]
+
+=== 회원탈퇴
+
+==== Request
+
+include::{snippets}/member/withdraw/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/member/withdraw/http-response.adoc[]
+
+=== 알림구독
+
+==== Request
+
+include::{snippets}/member/subscribeNotification/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/member/subscribeNotification/http-response.adoc[]
+
+=== 알림구독해지
+
+==== Request
+
+include::{snippets}/member/unSubscribeNotification/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/member/unSubscribeNotification/http-response.adoc[]
+
+=== 알림 구독상태 확인
+
+==== Request
+
+include::{snippets}/member/checkNotification/http-request.adoc[]
+
+==== Response
+
+include::{snippets}/member/checkNotification/http-response.adoc[]
+include::{snippets}/member/checkNotification/response-body.adoc[]

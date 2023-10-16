@@ -26,9 +26,21 @@ public class Member extends BaseEntity {
     @Column(name = "kakao_id", unique = true)
     private Long kakaoId;
 
+    @Column(name = "device_token")
+    private String deviceToken;
+
     @Builder
-    public Member(Long kakaoId) {
+    public Member(Long kakaoId, String deviceToken) {
         this.kakaoId = kakaoId;
+        this.deviceToken = deviceToken;
+    }
+
+    public void updateDeviceToken(String deviceToken) {
+        this.deviceToken = deviceToken;
+    }
+
+    public boolean isSubscribe() {
+        return deviceToken != null;
     }
 
     @Override
