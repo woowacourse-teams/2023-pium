@@ -43,14 +43,14 @@
             </th:block>
         </div>
         <nav aria-label="Page Navigation">
-            <ul class="pagination justify-content-center">
+            <ul class="pagination justify-content-center mt-3">
                 <li class="page-item" th:classappend="${page.number == 0} ? 'disabled' : ''">
-                    <a class="page-link" th:href="@{|/admin/dict?page=0|}" th:if="${page.number != 0}">처음으로</a>
+                    <a class="page-link" th:href="@{|/admin/member/requests?page=0|}" th:if="${page.number != 0}">처음으로</a>
                 </li>
 
                 <li class="page-item" th:classappend="${page.hasPrevious()} ? '' : 'disabled'">
                     <a class="page-link" tabindex="-1"
-                       th:href="@{|/admin/dict?page=${page.number - 1}|}"
+                       th:href="@{|/admin/member/requests?page=${page.number - 1}|}"
                        th:if="${page.hasPrevious()}">이전</a>
                 </li>
 
@@ -58,18 +58,18 @@
                         th:with="startPage=${(page.number - 5 < 0 ? 0 : page.number - 5)}, endPage=${(page.number + 4 >= page.totalPages ? page.totalPages - 1 : page.number + 4)}">
                     <li class="page-item" th:classappend="${pageNumber == page.number} ? 'active' : ''"
                         th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}" th:if="${pageNumber >= 0}">
-                        <a class="page-link" th:href="@{|/admin/dict?page=${pageNumber}|}"
+                        <a class="page-link" th:href="@{|/admin/member/requests?page=${pageNumber}|}"
                            th:text="${pageNumber + 1}"></a>
                     </li>
                 </th:block>
 
                 <li class="page-item" th:classappend="${page.hasNext()} ? '' : 'disabled'">
-                    <a class="page-link" th:href="@{|/admin/dict?page=${page.number + 1}|}"
+                    <a class="page-link" th:href="@{|/admin/member/requests?page=${page.number + 1}|}"
                        th:if="${page.hasNext()}">다음</a>
                 </li>
 
                 <li class="page-item" th:classappend="${page.number == page.totalPages - 1} ? 'disabled' : ''">
-                    <a class="page-link" th:href="@{|/admin/dict?page=${page.totalPages - 1}|}"
+                    <a class="page-link" th:href="@{|/admin/member/requests?page=${page.totalPages - 1}|}"
                        th:if="${page.number != page.totalPages - 1 && page.totalPages > 0}">끝으로</a>
                 </li>
             </ul>
