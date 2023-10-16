@@ -15,5 +15,5 @@ import lombok.NoArgsConstructor;
 public class NotificationSubscribeRequest {
 
     @NotNull
-    private String deviceToken;
+    private String token;
 }
