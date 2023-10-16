@@ -32,7 +32,7 @@ import org.springframework.http.MediaType;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class ReminderApiTest extends AcceptanceTest {
+class ReminderApiTest extends AcceptanceTest {
 
     @Nested
     class 리마인더_조회_시_ {

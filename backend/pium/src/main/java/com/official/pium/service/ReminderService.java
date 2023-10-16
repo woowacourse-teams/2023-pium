@@ -4,6 +4,7 @@ import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.event.history.HistoryEvent;
+import com.official.pium.event.notification.NotificationEvent;
 import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,5 +75,19 @@ public class ReminderService {
         return DataResponse.<List<ReminderResponse>>builder()
                 .data(reminderResponses)
                 .build();
+    }
+
+    @Scheduled(cron = "0 0 7 * * *")
+    public void sendWaterNotification() {
+        List<PetPlant> petPlants = petPlantRepository.findAllByWaterNotification(LocalDate.now());
+        List<NotificationEvent> events = petPlants.stream()
+                .map(plant -> NotificationEvent.builder()
+                        .title(plant.getNickname())
+                        .body("물을 줄 시간이에요!")
+                        .deviceToken(plant.getMember().getDeviceToken())
+                        .build()
+                ).toList();
+
+        publisher.publishEvent(events);
     }
 }
