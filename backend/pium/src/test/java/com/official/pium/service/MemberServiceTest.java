@@ -77,7 +77,7 @@ class MemberServiceTest {
                 .build();
 
         memberService.subscribeNotification(saveMember, NotificationSubscribeRequest.builder()
-                .deviceToken("deviceToken")
+                .token("deviceToken")
                 .build());
 
         assertThat(saveMember.getDeviceToken()).isEqualTo("deviceToken");
@@ -102,7 +102,7 @@ class MemberServiceTest {
                 .deviceToken("deviceToken")
                 .build();
         NotificationSubscribeRequest request = NotificationSubscribeRequest.builder()
-                .deviceToken("deviceToken")
+                .token("deviceToken")
                 .build();
 
         Assertions.assertThatThrownBy(() -> {
