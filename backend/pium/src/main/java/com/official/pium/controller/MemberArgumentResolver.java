@@ -2,11 +2,11 @@ package com.official.pium.controller;
 
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
+import com.official.pium.exception.AuthenticationException;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.service.SessionGroupService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import javax.naming.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -43,7 +43,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             Long kakaoId = Long.valueOf(sessionValue);
             return memberRepository.findByKakaoId(kakaoId)
                     .orElseThrow(() -> new AuthenticationException("회원을 찾을 수 없습니다."));
-        } catch (ClassCastException e) {
+        } catch (NumberFormatException e) {
             throw new AuthenticationException("잘못된 세션 정보로 인해 사용자 인증에 실패하였습니다.");
         }
     }

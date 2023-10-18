@@ -7,11 +7,11 @@ import static org.mockito.BDDMockito.given;
 
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.SessionGroup;
+import com.official.pium.exception.AuthenticationException;
 import com.official.pium.repository.SessionGroupRepository;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -55,7 +55,7 @@ class SessionGroupServiceTest extends IntegrationTest {
         @Test
         void 존재하지_않는_세션_KEY와_세션_ID로_조회하면_예외_발생() {
             assertThatThrownBy(() -> sessionGroupService.findBySessionIdAndKey(" ", " "))
-                    .isInstanceOf(NoSuchElementException.class)
+                    .isInstanceOf(AuthenticationException.class)
                     .hasMessage("일치하는 세션을 찾을 수 없습니다.");
         }
 
@@ -72,10 +72,10 @@ class SessionGroupServiceTest extends IntegrationTest {
 
             assertSoftly(softly -> {
                 softly.assertThatThrownBy(() -> sessionGroupService.findBySessionIdAndKey(sessionId, sessionKey))
-                        .isInstanceOf(IllegalArgumentException.class)
+                        .isInstanceOf(AuthenticationException.class)
                         .hasMessage("세션이 만료 되었습니다.");
                 softly.assertThatThrownBy(() -> sessionGroupService.findBySessionIdAndKey(sessionId, sessionKey))
-                        .isInstanceOf(NoSuchElementException.class)
+                        .isInstanceOf(AuthenticationException.class)
                         .hasMessage("일치하는 세션을 찾을 수 없습니다.");
             });
         }
@@ -146,7 +146,7 @@ class SessionGroupServiceTest extends IntegrationTest {
                     sessionGroup.getSessionKey(),
                     sessionGroup.getSessionValue()
             ))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(AuthenticationException.class)
                     .hasMessage("이미 존재하는 세션입니다. sessionId: " + sessionGroup.getSessionId());
         }
     }
@@ -169,7 +169,7 @@ class SessionGroupServiceTest extends IntegrationTest {
         @Test
         void 존재하지_않는_세션이면_예외가_발생한다() {
             assertThatThrownBy(() -> sessionGroupService.delete(" ", " "))
-                    .isInstanceOf(IllegalArgumentException.class)
+                    .isInstanceOf(AuthenticationException.class)
                     .hasMessage("일치하는 세션을 찾을 수 없습니다.");
         }
     }

@@ -1,10 +1,10 @@
 package com.official.pium.service;
 
 import com.official.pium.domain.SessionGroup;
+import com.official.pium.exception.AuthenticationException;
 import com.official.pium.repository.SessionGroupRepository;
 import java.time.Clock;
 import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +22,7 @@ public class SessionGroupService {
     @Transactional
     public String findBySessionIdAndKey(String sessionId, String key) {
         SessionGroup sessionGroup = sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, key)
-                .orElseThrow(() -> new NoSuchElementException("일치하는 세션을 찾을 수 없습니다."));
+                .orElseThrow(() -> new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
 
         LocalDateTime currentTime = LocalDateTime.now(clock);
         validateSession(sessionGroup, currentTime);
@@ -30,10 +30,10 @@ public class SessionGroupService {
         return sessionGroup.getSessionValue();
     }
 
-    private void validateSession(SessionGroup sessionGroup, LocalDateTime currentTime) {
+    private void validateSession(SessionGroup sessionGroup, LocalDateTime currentTime) throws AuthenticationException {
         if (sessionGroup.isExpired(currentTime)) {
             sessionGroupRepository.delete(sessionGroup);
-            throw new IllegalArgumentException("세션이 만료 되었습니다.");
+            throw new AuthenticationException("세션이 만료 되었습니다.");
         }
     }
 
@@ -47,7 +47,7 @@ public class SessionGroupService {
     public void add(String sessionId, String key, String value) {
         sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, key)
                 .ifPresent(existsSessionGroup -> {
-                    throw new IllegalArgumentException("이미 존재하는 세션입니다. sessionId: " + sessionId);
+                    throw new AuthenticationException("이미 존재하는 세션입니다. sessionId: " + sessionId);
                 });
 
         SessionGroup sessionGroup = SessionGroup.builder()
@@ -62,7 +62,7 @@ public class SessionGroupService {
     @Transactional
     public void delete(String sessionId, String key) {
         SessionGroup sessionGroup = sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, key)
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 세션을 찾을 수 없습니다."));
+                .orElseThrow(() -> new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
 
         sessionGroupRepository.delete(sessionGroup);
     }
