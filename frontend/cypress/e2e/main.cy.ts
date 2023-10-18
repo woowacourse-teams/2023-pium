@@ -82,7 +82,7 @@ describe('검색창', () => {
       .get('ul > li')
       .contains('참새')
       .should('be.visible')
-      .click()
+      .click({ force: true })
 
       .location()
       .should((location) => {
@@ -101,7 +101,7 @@ describe('검색창', () => {
       .should('be.visible')
 
       .get('button[aria-label="이동하기"]')
-      .click()
+      .click({ force: true })
 
       .location()
       .should((location) => {

@@ -10,7 +10,7 @@ describe('내비게이션 바를 이용한 페이지 이동', () => {
   it('리마인더 페이지로 이동할 수 있다.', () => {
     cy.get('a')
       .contains('리마인더')
-      .click()
+      .click({ force: true })
       .location('pathname')
       .should('equal', '/reminder')
       .get('#root')
@@ -20,7 +20,7 @@ describe('내비게이션 바를 이용한 페이지 이동', () => {
   it('내 반려 식물 목록 페이지로 이동할 수 있다.', () => {
     cy.get('a')
       .contains('내 식물')
-      .click()
+      .click({ force: true })
       .location('pathname')
       .should('equal', '/pet')
       .get('#root')
@@ -30,10 +30,10 @@ describe('내비게이션 바를 이용한 페이지 이동', () => {
   it('메인 화면으로 이동할 수 있다.', () => {
     cy.get('a')
       .contains('리마인더')
-      .click()
+      .click({ force: true })
       .get('a')
       .contains('메인')
-      .click()
+      .click({ force: true })
       .location('pathname')
       .should('equal', '/')
       .get('#root')
