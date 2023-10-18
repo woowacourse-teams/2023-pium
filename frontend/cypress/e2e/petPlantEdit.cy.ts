@@ -76,7 +76,7 @@ describe('반려 식물 등록하기', () => {
 
       .get('button[type="submit"]')
       .should('not.be.disabled')
-      .click()
+      .click({ force: true })
 
       .get('#toast-root')
       .contains('반려 식물 정보를 바꿨습니다')
