@@ -1,15 +1,16 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import useAddToast from 'hooks/@common/useAddToast';
+import PushStatus from 'models/PushStatus';
 import WebPushSubscribeAPI, { SUBSCRIBE_URL } from 'apis/webPush';
 import { deleteCurrentToken, getCurrentToken } from 'utils/firebase';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
-import { pushStatus } from 'utils/pushStatus';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
 interface CurrentSubscribe {
   subscribe: boolean;
 }
 
+// 지금 tanskack query에서 error를 잡지 않고 무조건 success를 돌려버림... 그 이유ㄴ느 뭔지 모르겟다 정말;;
 const useWebPush = () => {
   const addToast = useAddToast();
   const queryClient = useQueryClient();
@@ -29,13 +30,14 @@ const useWebPush = () => {
 
       return { prevData };
     },
+
     onError: async (error, __, context) => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
       addToast({ type: 'error', message: error.message });
 
       await deleteCurrentToken();
       const currentToken = await getCurrentToken();
-      pushStatus.currentToken = currentToken;
+      PushStatus.setCurrentToken(currentToken);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
@@ -58,12 +60,12 @@ const useWebPush = () => {
       return { prevData };
     },
     onSuccess: async () => {
+      console.log('설마 성공?');
       await deleteCurrentToken();
       const currentToken = await getCurrentToken();
-      pushStatus.currentToken = currentToken;
+      PushStatus.setCurrentToken(currentToken);
     },
     onError: (error, __, context) => {
-      // 업데이트에 실패한 경우 이전 값으로 반환
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
       addToast({ type: 'error', message: error.message });
     },
@@ -73,13 +75,14 @@ const useWebPush = () => {
     },
   });
 
-  const currentSubscribe = useSuspenseQuery<CurrentSubscribe>({
+  const { data: currentSubscribe } = useSuspenseQuery<CurrentSubscribe>({
     queryKey: [SUBSCRIBE_URL],
     queryFn: async () => {
       const response = await WebPushSubscribeAPI.currentSubscribe();
       throwOnInvalidStatus(response);
 
       const data = await response.json();
+
       return data;
     },
     retry: noRetryIfUnauthorized,
@@ -88,7 +91,7 @@ const useWebPush = () => {
   return {
     subscribe: subscribe.mutate,
     unSubscribe: unSubscribe.mutate,
-    currentSubscribe: currentSubscribe.data.subscribe,
+    currentSubscribe: currentSubscribe.subscribe,
   };
 };
 
