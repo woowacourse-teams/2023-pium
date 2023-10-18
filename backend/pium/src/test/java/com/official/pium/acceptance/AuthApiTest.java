@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
-public class AuthApiTest extends AcceptanceTest {
+class AuthApiTest extends AcceptanceTest {
 
     @Test
     void 로그인_정상_요청_시_200_반환() {

@@ -185,6 +185,34 @@ class ReminderServiceTest extends IntegrationTest {
                 .isEqualTo(expected);
     }
 
+    @Test
+    void 물주기_알림_대상_식물을_조회한다() {
+        // given
+        Member subscribedMember = memberSupport.builder().kakaoId(99L).deviceToken("testDeviceToken").build();
+        PetPlant sourcePetPlant = petPlantSupport.builder().member(subscribedMember).build();
+
+        // when
+        List<PetPlant> expected = petPlantRepository.findAllByWaterNotification(sourcePetPlant.getNextWaterDate());
+
+        // then
+        assertThat(expected)
+                .usingRecursiveComparison()
+                .isEqualTo(List.of(sourcePetPlant));
+    }
+
+    @Test
+    void 물주기_알림_대상_식물이_없다() {
+        // given
+        Member subscribedMember = memberSupport.builder().kakaoId(99L).deviceToken("testDeviceToken").build();
+        PetPlant sourcePetPlant = petPlantSupport.builder().member(subscribedMember).build();
+
+        // when
+        List<PetPlant> expected = petPlantRepository.findAllByWaterNotification(sourcePetPlant.getNextWaterDate().minusDays(5));
+
+        // then
+        assertThat(expected).isEmpty();
+    }
+
     private PetPlant savePetPlantWithNextWaterDate(LocalDate nextWaterDate) {
         return petPlantRepository.save(PetPlant.builder()
                 .dictionaryPlant(petPlant.getDictionaryPlant())

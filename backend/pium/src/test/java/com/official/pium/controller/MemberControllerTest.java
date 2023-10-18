@@ -4,6 +4,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -13,9 +14,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
 import com.official.pium.service.MemberService;
+import com.official.pium.service.dto.NotificationSubscribeRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -38,6 +41,9 @@ class MemberControllerTest extends UITest {
     @MockBean
     private MemberService memberService;
 
+    @Autowired
+    private ObjectMapper objectMapper;
+
     @Nested
     class 회원_탈퇴_ {
 
@@ -48,7 +54,7 @@ class MemberControllerTest extends UITest {
             mockMvc.perform(delete("/members/withdraw")
                             .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andDo(document("auth/withdraw/",
+                    .andDo(document("member/withdraw/",
                                     preprocessRequest(prettyPrint()),
                                     preprocessResponse(prettyPrint()),
                                     requestCookies()
@@ -80,7 +86,7 @@ class MemberControllerTest extends UITest {
             mockMvc.perform(get("/members/me")
                             .session(session)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andDo(document("auth/checkSession/",
+                    .andDo(document("member/checkSession/",
                                     preprocessRequest(prettyPrint()),
                                     preprocessResponse(prettyPrint()),
                                     requestCookies()
@@ -99,6 +105,62 @@ class MemberControllerTest extends UITest {
                             .session(expiredSession)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
+                    .andDo(print());
+        }
+    }
+
+    @Nested
+    class 알림_구독_ {
+
+        @Test
+        void 확인_정상_요청_시_200_반환() throws Exception {
+            mockMvc.perform(get("/members/notification")
+                            .session(session)
+                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("member/checkNotification/",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies()
+                            )
+                    )
+                    .andExpect(status().isOk())
+                    .andDo(print());
+        }
+
+        @Test
+        void 등록_정상_요청_시_200_반환() throws Exception {
+            doNothing().when(memberService).subscribeNotification(any(Member.class), any());
+
+            mockMvc.perform(post("/members/notification")
+                            .session(session)
+                            .contentType(MediaType.APPLICATION_JSON_VALUE)
+                            .content(objectMapper.writeValueAsString(NotificationSubscribeRequest.builder()
+                                    .token("deviceToken")
+                                    .build())))
+                    .andDo(document("member/subscribeNotification/",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies()
+                            )
+                    )
+                    .andExpect(status().isOk())
+                    .andDo(print());
+        }
+
+        @Test
+        void 취소_정상_요청_시_200_반환() throws Exception {
+            doNothing().when(memberService).unSubscribeNotification(any(Member.class));
+
+            mockMvc.perform(delete("/members/notification")
+                            .session(session)
+                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                    .andDo(document("member/unSubscribeNotification/",
+                                    preprocessRequest(prettyPrint()),
+                                    preprocessResponse(prettyPrint()),
+                                    requestCookies()
+                            )
+                    )
+                    .andExpect(status().isOk())
                     .andDo(print());
         }
     }

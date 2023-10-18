@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko"
+      layout:decorate="~{admin/common/layout}"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block layout:fragment="content">
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">사용자 목록</h1>
+
+        <div>
+            <th:block th:each="member : ${members}">
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <p class="card-text" th:text="|사용자 ID: ${member.id}|"></p>
+                            <p class="card-text" th:text="|알림 등록 여부: ${member.deviceToken == null ? '구독중이 아님' : '구독중' }|"></p>
+                            <p class="card-text"
+                               th:text="|가입일: ${#temporals.format(member.createdAt, 'yyyy-MM-dd HH:mm:ss')}|"></p>
+                            <div>
+                                <th:block th:if="${member.deviceToken != null}">
+                                    <form id="sendNotificationForm" method="post">
+                                        <div class="bord">
+                                            <input name="deviceToken" th:value="${member.deviceToken}" type="hidden">
+                                            <label for="notificationTitle">알림 제목</label>
+                                            <input class="form-control" id="notificationTitle" name="title"
+                                                   placeholder="피움 알림 테스트"
+                                                   required
+                                                   type="text">
+                                            <label for="notificationBody">알림 내용</label>
+                                            <input class="form-control" id="notificationBody" name="body"
+                                                   placeholder="피움 알림 테스트"
+                                                   required
+                                                   type="text">
+                                        </div>
+                                        <button class="btn btn-outline-danger mt-3" type="submit">테스트 알림 보내기</button>
+                                    </form>
+                                </th:block>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </th:block>
+        </div>
+        <nav aria-label="Page Navigation">
+            <ul class="pagination justify-content-center mt-3">
+                <li class="page-item" th:classappend="${page.number == 0} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{|/admin/member/requests?page=0|}" th:if="${page.number != 0}">처음으로</a>
+                </li>
+
+                <li class="page-item" th:classappend="${page.hasPrevious()} ? '' : 'disabled'">
+                    <a class="page-link" tabindex="-1"
+                       th:href="@{|/admin/member/requests?page=${page.number - 1}|}"
+                       th:if="${page.hasPrevious()}">이전</a>
+                </li>
+
+                <th:block
+                        th:with="startPage=${(page.number - 5 < 0 ? 0 : page.number - 5)}, endPage=${(page.number + 4 >= page.totalPages ? page.totalPages - 1 : page.number + 4)}">
+                    <li class="page-item" th:classappend="${pageNumber == page.number} ? 'active' : ''"
+                        th:each="pageNumber : ${#numbers.sequence(startPage, endPage)}" th:if="${pageNumber >= 0}">
+                        <a class="page-link" th:href="@{|/admin/member/requests?page=${pageNumber}|}"
+                           th:text="${pageNumber + 1}"></a>
+                    </li>
+                </th:block>
+
+                <li class="page-item" th:classappend="${page.hasNext()} ? '' : 'disabled'">
+                    <a class="page-link" th:href="@{|/admin/member/requests?page=${page.number + 1}|}"
+                       th:if="${page.hasNext()}">다음</a>
+                </li>
+
+                <li class="page-item" th:classappend="${page.number == page.totalPages - 1} ? 'disabled' : ''">
+                    <a class="page-link" th:href="@{|/admin/member/requests?page=${page.totalPages - 1}|}"
+                       th:if="${page.number != page.totalPages - 1 && page.totalPages > 0}">끝으로</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</th:block>
+
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        const formElement = document.getElementById("sendNotificationForm");
+        formElement.addEventListener("submit", submitForm);
+
+        function submitForm(e) {
+            e.preventDefault();
+            if (confirm('정말로 테스트 알림을 보내겠습니까?')) {
+                const formData = new FormData(formElement);
+                fetch(`/admin/notification`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(Object.fromEntries(formData))
+                })
+                    .then(function (response) {
+                        if (response.ok) {
+                            alert('알림을 전송했습니다.');
+                        } else {
+                            alert('알림 전송중 오류가 발생했습니다.');
+                        }
+                    })
+                    .catch(function (error) {
+                        console.error('Fetch 오류:', error);
+                        alert('오류가 발생했습니다.');
+                    });
+            } else {
+            }
+        }
+    </script>
+</th:block>
+</html>

@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import NotFound from 'pages/@common/Error/NotFound';
 import Home from 'pages/@common/Home';
+import Privacy from 'pages/@common/Privacy';
 import RootTemplate from 'pages/@common/RootTemplate';
 import DictionaryPlantDetail from 'pages/dictionaryPlant/DictionaryPlantDetail';
 import DictionaryPlantSearch from 'pages/dictionaryPlant/DictionaryPlantSearch';
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
       {
         path: URL_PATH.newDictionaryPlantRequest,
         element: <NewDictionaryPlantRequest />,
+      },
+      {
+        path: URL_PATH.privacy,
+        element: <Privacy />,
       },
     ],
   },

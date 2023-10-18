@@ -2,6 +2,7 @@ package com.official.pium.controller;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
@@ -26,7 +27,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -52,8 +52,8 @@ class AuthControllerTest extends UITest {
 
             mockMvc.perform(post("/login")
                             .queryParam("code", "authorization code")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
-                    .andDo(document("auth/login.html/",
+                            .contentType(APPLICATION_JSON_VALUE))
+                    .andDo(document("auth/login/",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             queryParameters(
@@ -68,7 +68,7 @@ class AuthControllerTest extends UITest {
         @ValueSource(strings = {"", " "})
         void 잘못된_인증_코드로_요청_시_400_반환(String code) throws Exception {
             mockMvc.perform(post("/login")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isBadRequest())
                     .andDo(print());
         }
@@ -81,7 +81,7 @@ class AuthControllerTest extends UITest {
         void 정상_요청_시_200_반환() throws Exception {
             mockMvc.perform(post("/logout")
                             .session(session)
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andDo(document("auth/logout/",
                                     preprocessRequest(prettyPrint()),
                                     preprocessResponse(prettyPrint()),
@@ -95,7 +95,7 @@ class AuthControllerTest extends UITest {
         @Test
         void 세션_정보_없이_요청_시_401_반환() throws Exception {
             mockMvc.perform(post("/logout")
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
                     .andExpect(jsonPath("$.message").value("로그인이 필요합니다"))
                     .andDo(print());
@@ -108,7 +108,7 @@ class AuthControllerTest extends UITest {
 
             mockMvc.perform(post("/logout")
                             .session(expiredSession)
-                            .contentType(MediaType.APPLICATION_JSON_VALUE))
+                            .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
                     .andExpect(jsonPath("$.message").value("로그인이 필요합니다"))
                     .andDo(print());
