@@ -28,8 +28,6 @@ firebase.initializeApp({
 // messages.
 const messaging = firebase.messaging();
 
-console.log(messaging, 'messaging?');
-
 const version = 1;
 const assetCacheName = `assets-${version}`;
 
@@ -99,7 +97,6 @@ messaging.onBackgroundMessage((payload) => {
   const {
     notification: { title, body },
   } = payload;
-  console.log(payload, 'payload');
   // Customize notification here
   const notificationTitle = title;
 
