@@ -4,6 +4,7 @@ import { useRecoilValue } from 'recoil';
 import { Button, Roof, Wrapper } from './Navbar.style';
 import { isShowPageLoadingState } from 'store/atoms/@common';
 import useAddToast from 'hooks/@common/useAddToast';
+import useChildrenLeftPositions from 'hooks/@common/useChildrenLeftPositions';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
 import NavItem from './NavItem';
@@ -33,30 +34,28 @@ const getRoofPosition = (pathname: string) => {
   }
 };
 
+const getAnimationOffset = (prevPathname: string, currentPathname: string, positions: number[]) => {
+  const prevRoofPosition = getRoofPosition(prevPathname);
+  const roofPosition = getRoofPosition(currentPathname);
+
+  const transitionOffset =
+    roofPosition && prevRoofPosition
+      ? positions[prevRoofPosition - 1] - positions[roofPosition - 1]
+      : 0;
+
+  return transitionOffset;
+};
+
 const Navbar = () => {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
   const navBar = useRef<HTMLElement>(null);
-  const navItemPositions = useRef<number[]>([]);
 
   const isPageLoading = useRecoilValue(isShowPageLoadingState);
 
   const addToast = useAddToast();
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
-
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver(([entry]) => {
-      navItemPositions.current = Array.from(entry.target.children)
-        .slice(0, -1)
-        .map((child) => {
-          const { left } = child.getBoundingClientRect();
-          return left;
-        });
-    });
-
-    if (navBar.current) resizeObserver.observe(navBar.current);
-    return () => resizeObserver.disconnect();
-  }, []);
+  const navItemPositions = useChildrenLeftPositions(navBar);
 
   useEffect(() => {
     const resetHistoryState = () => history.replaceState(null, '');
@@ -78,31 +77,23 @@ const Navbar = () => {
     });
   };
 
-  const prevPathname = state ? state.prevPathname : pathname;
+  const prevPathname = state ? state.prevPathname ?? pathname : pathname;
 
-  const isActive = (targetPathname: string) => {
-    if (isPageLoading) {
-      return targetPathname === prevPathname;
-    }
-    return targetPathname === pathname;
-  };
-
+  const isActive = (targetPathname: string) =>
+    isPageLoading ? targetPathname === prevPathname : targetPathname === pathname;
   const hideNavbar = matchRoutes(NO_NAVIGATION_BAR_URLS, pathname) !== null;
-
-  const prevRoofPosition = getRoofPosition(prevPathname);
-  const roofPosition = isPageLoading ? prevRoofPosition : getRoofPosition(pathname);
-
-  const transitionOffset =
-    roofPosition && prevRoofPosition
-      ? navItemPositions.current[prevRoofPosition - 1] - navItemPositions.current[roofPosition - 1]
-      : 0;
+  const roofPosition = getRoofPosition(pathname);
+  const transitionOffset = !isPageLoading
+    ? getAnimationOffset(prevPathname, pathname, navItemPositions)
+    : 0;
+  const newHistoryState = { prevPathname: pathname };
 
   return (
     <Wrapper ref={navBar} $hide={hideNavbar}>
-      <Button as={Link} to={URL_PATH.main} state={{ prevPathname: pathname }}>
+      <Button as={Link} to={URL_PATH.main} state={newHistoryState}>
         <NavItem isActive={isActive(URL_PATH.main)} iconId="home-line" label="메인" />
       </Button>
-      <Button as={Link} to={URL_PATH.garden} state={{ prevPathname: pathname }}>
+      <Button as={Link} to={URL_PATH.garden} state={newHistoryState}>
         <NavItem
           isActive={isActive(URL_PATH.garden)}
           iconId="bulletin-board-line"
@@ -111,13 +102,13 @@ const Navbar = () => {
       </Button>
       {isLoggedIn ? (
         <>
-          <Button as={Link} to={URL_PATH.reminder} state={{ prevPathname: pathname }}>
+          <Button as={Link} to={URL_PATH.reminder} state={newHistoryState}>
             <NavItem isActive={isActive(URL_PATH.reminder)} iconId="reminder" label="리마인더" />
           </Button>
-          <Button as={Link} to={URL_PATH.petList} state={{ prevPathname: pathname }}>
+          <Button as={Link} to={URL_PATH.petList} state={newHistoryState}>
             <NavItem isActive={isActive(URL_PATH.petList)} iconId="leaf" label="내 식물" />
           </Button>
-          <Button as={Link} to={URL_PATH.myPage} state={{ prevPathname: pathname }}>
+          <Button as={Link} to={URL_PATH.myPage} state={newHistoryState}>
             <NavItem
               isActive={isActive(URL_PATH.myPage)}
               iconId="account-circle-line"
@@ -133,7 +124,7 @@ const Navbar = () => {
           <Button type="button" onClick={askLogin}>
             <NavItem isActive={isActive(URL_PATH.petList)} iconId="leaf" label="내 식물" />
           </Button>
-          <Button as={Link} to={URL_PATH.login} state={{ prevPathname: pathname }}>
+          <Button as={Link} to={URL_PATH.login} state={newHistoryState}>
             <NavItem
               isActive={isActive(URL_PATH.login)}
               iconId="account-circle-line"
