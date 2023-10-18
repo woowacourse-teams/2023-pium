@@ -1,5 +1,4 @@
 import useWebPush from 'hooks/queries/auth/useWebPush';
-import { getCurrentToken } from 'utils/firebase';
 import { pushStatus } from 'utils/pushStatus';
 import useAddToast from './useAddToast';
 
@@ -21,10 +20,9 @@ const usePushAlert = () => {
       addToast({ type: 'info', message: '알림을 거부했습니다', time: 3000 });
       return;
     }
-    try {
-      const currentToken = await getCurrentToken(); // 여기서 새로운 토큰을 전달하면 됨.
 
-      subscribe(currentToken);
+    try {
+      subscribe(pushStatus.currentToken);
     } catch (error) {
       addToast({ type: 'error', message: '구독중에 에러가 발생했습니다', time: 3000 });
     }

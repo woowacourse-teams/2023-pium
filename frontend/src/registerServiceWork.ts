@@ -1,3 +1,4 @@
+import { getCurrentToken } from 'utils/firebase';
 import { isSupported, updatePushStatus } from 'utils/pushStatus';
 
 const registerPwaServiceWorker = async (workerPath: string) => {
@@ -22,7 +23,9 @@ const registerPwaServiceWorker = async (workerPath: string) => {
   }
 
   // 새로운 서비스워커로 업데이트
-  await updatePushStatus(registration);
+  // 초기에 시작할 때 currentToken을 일단 받음
+  const currentToken = await getCurrentToken();
+  await updatePushStatus(registration, currentToken);
 };
 
 export default registerPwaServiceWorker;
