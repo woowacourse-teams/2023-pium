@@ -259,7 +259,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.post('*/members/notification', async (req, res, ctx) => {
       const { token } = await req.json();
 
-      if (Math.random() < failRate) {
+      if (Math.random() < 0.15) {
         return res(ctx.delay(delay), ctx.status(407));
       }
 
@@ -269,7 +269,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     }),
 
     rest.delete('*/members/notification', (req, res, ctx) => {
-      if (Math.random() < failRate) {
+      if (Math.random() < 0.15) {
         return res(ctx.delay(delay), ctx.status(407));
       }
 
