@@ -32,7 +32,7 @@ class SessionGroupTest {
     }
 
     @Test
-    void 세션_만료일_7일_이내이면_세션을_연장_유무는_TRUE를_반환한다() {
+    void 세션_만료일_7일_이내이면_세션_연장_가능_여부는_TRUE를_반환한다() {
         SessionGroup sessionGroup = SessionGroupFixture.세션_그룹_만료일_2023_10_16;
         LocalDateTime currentTime = LocalDateTime.of(2023, 10, 9, 0, 1);
 
@@ -40,7 +40,7 @@ class SessionGroupTest {
     }
 
     @Test
-    void 세션_만료일_7일_이내가_아니면_세션을_연장_유무는_FALSE를_반환한다() {
+    void 세션_만료일_7일_이내가_아니면_세션_연장_가능_여부는_FALSE를_반환한다() {
         SessionGroup sessionGroup = SessionGroupFixture.세션_그룹_만료일_2023_10_16;
         LocalDateTime currentTime = LocalDateTime.of(2023, 10, 9, 0, 0);
 

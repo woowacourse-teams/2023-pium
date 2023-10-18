@@ -12,6 +12,4 @@ public class SessionGroupFixture {
             .sessionValue("210231414")
             .expireTime(LocalDateTime.of(2023, 10, 16, 0, 0))
             .build();
-
-
 }
