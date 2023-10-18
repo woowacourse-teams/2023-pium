@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private static final String SESSION_KEY = "KAKAO_ID";
+    private static final int SESSION_EXPIRE_SECOND = 86400 * 30;
 
     private final AuthService authService;
     private final SessionGroupService sessionGroupService;
@@ -31,7 +32,7 @@ public class AuthController {
         Member loginMember = authService.login(code);
 
         HttpSession session = request.getSession();
-
+        session.setMaxInactiveInterval(SESSION_EXPIRE_SECOND);
         sessionGroupService.add(session.getId(), SESSION_KEY, loginMember.getKakaoId().toString());
         return ResponseEntity.ok().build();
     }
@@ -42,6 +43,7 @@ public class AuthController {
 
         if (session != null) {
             sessionGroupService.delete(session.getId(), SESSION_KEY);
+            session.invalidate();
         }
 
         return ResponseEntity.ok().build();
