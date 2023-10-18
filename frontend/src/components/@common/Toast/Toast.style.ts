@@ -16,7 +16,7 @@ const show = keyframes`
   }
   100% {
     opacity: 1;
-    transform: translateY(0%);
+    transform: translateY(0);
   }
 `;
 
@@ -37,8 +37,9 @@ export const Wrapper = styled.div<{
   $isTop: boolean;
 }>`
   position: absolute;
-  bottom: ${(props) => (props.$isTop ? '0' : '4px')};
-  transform: scale(${(props) => (props.$isTop ? '100%' : '98%')});
+  bottom: 0;
+  transform: scale(${(props) => (props.$isTop ? '100%' : '98%')})
+    translateY(${(props) => (props.$isTop ? '0' : '-4px')});
 
   overflow: hidden;
   display: flex;
@@ -56,9 +57,8 @@ export const Wrapper = styled.div<{
   backdrop-filter: blur(1px);
   border: solid 1px ${(props) => toastBorderColors[props.$type]};
   border-radius: 8px;
-  box-shadow: 0 0 8px ${(props) => props.theme.color.sub + '33'};
 
-  transition: all 0.2s;
+  transition: transform 0.2s;
   animation: ${(props) => (props.$visible ? show : hide)} 0.2s ease-out alternate;
 `;
 
@@ -121,19 +121,19 @@ export const CloseButton = styled.button`
 `;
 
 const fill = keyframes`
-  0%    { transform: translateX(-100%); }
-  100%  { transform: translateX(0); }
+  0%    { transform: translateX(0); }
+  100%  { transform: translateX(100%); }
 `;
 
 export const ProgressBar = styled.div<{ $type: ToastItem['type']; $time: number }>`
   position: absolute;
   bottom: 0;
-  left: 0;
+  left: -100%;
 
   width: 100%;
-  height: 4px;
+  height: 3px;
 
-  background-color: ${(props) => toastBorderColors[props.$type] + 'aa'};
+  background-color: ${(props) => toastBorderColors[props.$type] + '99'};
   border-radius: 2px;
 
   animation: ${fill} ${(props) => props.$time}ms;
