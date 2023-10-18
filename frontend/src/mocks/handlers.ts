@@ -242,7 +242,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.cookie('JSESSION', JSESSION));
     }),
 
-    rest.get('/members/notification', (req, res, ctx) => {
+    rest.get('*/members/notification', (req, res, ctx) => {
       const { JSESSION } = req.cookies;
 
       if (JSESSION === undefined) {
@@ -253,10 +253,10 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       let isSubscribe = false;
       if (token) isSubscribe = true;
 
-      return res(ctx.delay(delay), ctx.json({ isSubscribe }));
+      return res(ctx.delay(delay), ctx.status(200), ctx.json({ isSubscribe }));
     }),
 
-    rest.post('/members/notification', async (req, res, ctx) => {
+    rest.post('*/members/notification', async (req, res, ctx) => {
       const { token } = await req.json();
 
       if (Math.random() < failRate) {
@@ -268,7 +268,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
       return res(ctx.delay(delay), ctx.status(204));
     }),
 
-    rest.delete('/members/notification', (req, res, ctx) => {
+    rest.delete('*/members/notification', (req, res, ctx) => {
       if (Math.random() < failRate) {
         return res(ctx.delay(delay), ctx.status(407));
       }
