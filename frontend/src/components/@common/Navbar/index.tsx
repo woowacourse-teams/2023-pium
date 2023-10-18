@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link, matchRoutes, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Roof, Wrapper } from './Navbar.style';
 import useAddToast from 'hooks/@common/useAddToast';
-import useNavbarRoofAnimation from 'hooks/@common/useNavBarRoofAnimation';
+import useNavbarRoofAnimation from 'hooks/@common/useNavbarRoofAnimation';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
 import NavItem from './NavItem';
