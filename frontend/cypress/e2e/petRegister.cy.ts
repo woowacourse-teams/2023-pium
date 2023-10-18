@@ -15,7 +15,7 @@ describe('반려 식물 등록하기', () => {
 
   it('반려 식물을 등록한다.', () => {
     cy.get('input')
-      .type('참')
+      .type('참', { force: true })
       .wait(500)
       .get('ul > li')
       .contains('참새')
@@ -55,7 +55,7 @@ describe('반려 식물 등록하기', () => {
       .contains('투명 피우미')
       .should('be.visible')
       .get('input[aria-label="별명 입력"]')
-      .type('{selectAll}{backspace}피우미')
+      .type('{selectAll}{backspace}피우미', { force: true })
       .get('button[aria-label="입력 완료"]')
       .click({ force: true })
 
@@ -73,7 +73,7 @@ describe('반려 식물 등록하기', () => {
 
       .get('input[type="text"]')
       .first()
-      .type('7')
+      .type('7', { force: true })
       .get('button[aria-label="입력 완료"]')
       .first()
       .click({ force: true })

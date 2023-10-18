@@ -9,14 +9,14 @@ describe('반려 식물 등록하기', () => {
   it('별명을 고칠 수 있다.', () => {
     cy.get('input')
       .first()
-      .type('{selectAll}{backspace}')
+      .type('{selectAll}{backspace}', { force: true })
 
       .get('button[type="submit"]')
       .should('be.disabled')
 
       .get('input')
       .first()
-      .type('클린')
+      .type('클린', { force: true })
 
       .get('input')
       .first()
@@ -25,13 +25,13 @@ describe('반려 식물 등록하기', () => {
 
   it('물 주기 주기를 고칠 수 있다.', () => {
     cy.get('input[inputmode="numeric"]')
-      .type('{selectAll}{backspace}')
+      .type('{selectAll}{backspace}', { force: true })
 
       .get('button[type="submit"]')
       .should('be.disabled')
 
       .get('input[inputmode="numeric"]')
-      .type('50')
+      .type('50', { force: true })
 
       .get('input[inputmode="numeric"]')
       .should('have.value', '50');
@@ -72,7 +72,7 @@ describe('반려 식물 등록하기', () => {
 
   it('수정 후에는 토스트를 띄우고 해당 반려 식물 상세 페이지로 이동한다.', () => {
     cy.get('input[inputmode="numeric"]')
-      .type('{selectAll}{backspace}77')
+      .type('{selectAll}{backspace}77', { force: true })
 
       .get('button[type="submit"]')
       .should('not.be.disabled')
