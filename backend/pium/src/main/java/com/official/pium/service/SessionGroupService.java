@@ -19,6 +19,7 @@ public class SessionGroupService {
     private final SessionGroupRepository sessionGroupRepository;
     private final Clock clock;
 
+    @Transactional
     public String findBySessionIdAndKey(String sessionId, String key) {
         SessionGroup sessionGroup = sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, key)
                 .orElseThrow(() -> new NoSuchElementException("일치하는 세션을 찾을 수 없습니다."));
