@@ -22,10 +22,6 @@ const DictionaryPlantDetail = () => {
 
   const navigate = useNavigate();
 
-  const goBack = () => {
-    navigate(-1);
-  };
-
   const goPetPlantRegisterForm = () => {
     navigate(generatePath(URL_PATH.petRegisterForm, { id: String(dictionaryPlantId) }));
   };
@@ -46,7 +42,7 @@ const DictionaryPlantDetail = () => {
 
   return (
     <PageLogger>
-      <BackHeader />
+      <BackHeader transparentHeight={256} />
       <Main>
         <Image type="wide" src={image} alt={name} size="300px" />
         <DictionaryPlantContent {...dictionaryPlantDetail} />

@@ -13,8 +13,10 @@ export const Wrapper = styled.header<{ $transparent: boolean }>`
   height: 48px;
   padding: 0 16px;
 
-  background-color: ${(props) =>
-    props.$transparent ? 'transparent' : props.theme.color.background};
+  background: ${(props) =>
+    props.$transparent
+      ? `linear-gradient(rgba(0, 0, 0, 0.4), rgba(255, 255, 255, 0))`
+      : props.theme.color.background};
   box-shadow: 0 2px 2px -2px ${(props) => (props.$transparent ? 'transparent' : props.theme.color.gray)};
 `;
 
@@ -25,7 +27,7 @@ export const BackButton = styled.button`
   display: flex;
   align-items: center;
 
-  width: 20px;
+  width: 22px;
 `;
 
 export const TransparentSensor = styled.div<{ $height: `${string}px` }>`

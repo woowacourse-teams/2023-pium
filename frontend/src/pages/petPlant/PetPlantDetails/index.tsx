@@ -7,7 +7,7 @@ const PetPlantDetails = () => {
   const { id } = useParams();
   return (
     <PageLogger>
-      <BackHeader />
+      <BackHeader transparentHeight={256} />
       <PetPlantDetailContent petPlantId={Number(id)} />
     </PageLogger>
   );
