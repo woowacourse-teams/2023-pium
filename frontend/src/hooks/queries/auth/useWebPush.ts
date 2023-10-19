@@ -10,7 +10,6 @@ interface CurrentSubscribe {
   subscribe: boolean;
 }
 
-// 지금 tanskack query에서 error를 잡지 않고 무조건 success를 돌려버림... 그 이유ㄴ느 뭔지 모르겟다 정말;;
 const useWebPush = () => {
   const addToast = useAddToast();
   const queryClient = useQueryClient();
@@ -60,7 +59,6 @@ const useWebPush = () => {
       return { prevData };
     },
     onSuccess: async () => {
-      console.log('설마 성공?');
       await deleteCurrentToken();
       const currentToken = await getCurrentToken();
       PushStatus.setCurrentToken(currentToken);
