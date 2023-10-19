@@ -1,11 +1,12 @@
 import type { HistoryType } from 'types/history';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import BackHeader from 'components/@common/BackHeader';
 import CheckButton from 'components/@common/CheckButton';
 import PageLogger from 'components/@common/PageLogger';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import Timeline from 'components/petPlant/Timeline';
-import { ButtonLabel, Header, Main } from './PetPlantTimeline.style';
+import { ButtonLabel, FilterArea, Main } from './PetPlantTimeline.style';
 import useToggle from 'hooks/@common/useToggle';
 import theme from 'style/theme.style';
 
@@ -52,35 +53,37 @@ const PetPlantTimeline = () => {
 
   return (
     <PageLogger>
-      <Header>
-        <CheckButton checked={isCheckedWater} onClick={onClickWater}>
-          <SvgIcons
-            size={14}
-            icon="water"
-            color={isCheckedWater ? background : water}
-            aria-hidden
-          />
-          <ButtonLabel>물 준 날</ButtonLabel>
-        </CheckButton>
-        <CheckButton checked={isCheckedWaterCycle} onClick={onClickWaterCycle}>
-          <SvgIcons
-            size={14}
-            icon="stopwatch"
-            color={isCheckedWaterCycle ? background : sub}
-            aria-hidden
-          />
-          <ButtonLabel>물 주기 설정</ButtonLabel>
-        </CheckButton>
-        <CheckButton checked={isCheckedSetting} onClick={onClickSetting}>
-          <SvgIcons
-            size={14}
-            icon="tree-plant-pot"
-            color={isCheckedSetting ? background : primary}
-            aria-hidden
-          />
-          <ButtonLabel>환경 변화</ButtonLabel>
-        </CheckButton>
-      </Header>
+      <BackHeader>
+        <FilterArea>
+          <CheckButton checked={isCheckedWater} onClick={onClickWater}>
+            <SvgIcons
+              size={14}
+              icon="water"
+              color={isCheckedWater ? background : water}
+              aria-hidden
+            />
+            <ButtonLabel>물 준 날</ButtonLabel>
+          </CheckButton>
+          <CheckButton checked={isCheckedWaterCycle} onClick={onClickWaterCycle}>
+            <SvgIcons
+              size={14}
+              icon="stopwatch"
+              color={isCheckedWaterCycle ? background : sub}
+              aria-hidden
+            />
+            <ButtonLabel>물 주기 설정</ButtonLabel>
+          </CheckButton>
+          <CheckButton checked={isCheckedSetting} onClick={onClickSetting}>
+            <SvgIcons
+              size={14}
+              icon="tree-plant-pot"
+              color={isCheckedSetting ? background : primary}
+              aria-hidden
+            />
+            <ButtonLabel>환경 변화</ButtonLabel>
+          </CheckButton>
+        </FilterArea>
+      </BackHeader>
       <Main>
         <Timeline petPlantId={Number(petPlantId)} filter={filter} />
       </Main>

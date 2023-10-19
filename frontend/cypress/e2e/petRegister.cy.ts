@@ -79,29 +79,39 @@ describe('반려 식물 등록하기', () => {
       .click({ force: true })
 
       .get('button[type="button"]')
-      .first()
-      .click({ force: true })
+      .then(($buttons) => {
+        cy.wrap($buttons[1]).click({ force: true });
+      })
+
       .get('li[role="menuitem"]')
-      .first()
-      .click({ force: true })
+      .then(($buttons) => {
+        cy.wrap($buttons[1]).click({ force: true });
+      })
 
       .get('button[type="button"]')
-      .first()
-      .click({ force: true })
+      .then(($buttons) => {
+        cy.wrap($buttons[1]).click({ force: true });
+      })
+
       .get('li[role="menuitem"]')
       .last()
       .click({ force: true })
 
       .get('button[type="button"]')
-      .first()
-      .click({ force: true })
+      .then(($buttons) => {
+        cy.wrap($buttons[1]).click({ force: true });
+      })
+
       .get('li[role="menuitem"]')
-      .first()
-      .click({ force: true })
+      .then(($buttons) => {
+        cy.wrap($buttons[1]).click({ force: true });
+      })
 
       .get('button[type="button"]')
-      .first()
-      .click({ force: true })
+      .then(($buttons) => {
+        cy.wrap($buttons[1]).click({ force: true });
+      })
+
       .get('li[role="menuitem"]')
       .last()
       .click({ force: true })

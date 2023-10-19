@@ -7,11 +7,6 @@ export const Main = styled.main`
   margin: 0 auto 100px auto;
 `;
 
-export const BackButton = styled.button`
-  display: flex;
-  align-items: center;
-`;
-
 export const BottomSheet = styled.div`
   position: fixed;
   bottom: 0;
