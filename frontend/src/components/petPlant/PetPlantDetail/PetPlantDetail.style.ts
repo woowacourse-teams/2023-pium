@@ -178,6 +178,27 @@ const ButtonLink = styled(Link)`
   border-radius: 4px;
 `;
 
+export const BottomSheet = styled.div`
+  position: fixed;
+  bottom: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: ${(props) => props.theme.width.pad};
+  height: 80px;
+  padding: 0 32px;
+  padding-top: 16px;
+
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    ${(props) => props.theme.color.background} 30%
+  );
+`;
+
 export const PrimaryLink = styled(ButtonLink)`
   color: ${({ theme }) => theme.color.background};
   background: ${(props) => props.theme.color.primary};
