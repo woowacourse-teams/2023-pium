@@ -1,3 +1,4 @@
+import { useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { Link, matchRoutes, useLocation, useNavigate } from 'react-router-dom';
 import { Button, Roof, Wrapper } from './Navbar.style';
@@ -18,13 +19,15 @@ const NO_NAVIGATION_BAR_URLS = [
 const Navbar = () => {
   const navigate = useNavigate();
   const { pathname, state } = useLocation();
+  const queryClient = useQueryClient();
 
   const addToast = useAddToast();
-  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
   const { navbarRef, roofPosition, transitionOffset } = useNavbarRoofAnimation(
     state ? state.prevPathname ?? pathname : pathname,
     pathname
   );
+  queryClient.invalidateQueries({ queryKey: ['checkSessionId'] });
+  const { isSuccess: isLoggedIn } = useCheckSessionId(false);
 
   useEffect(() => {
     const resetHistoryState = () => history.replaceState(null, '');
