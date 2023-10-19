@@ -3,6 +3,7 @@ package com.official.pium.controller;
 import com.official.pium.domain.Auth;
 import com.official.pium.domain.Member;
 import com.official.pium.service.AuthService;
+import com.official.pium.service.SessionGroupService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.constraints.NotBlank;
@@ -19,9 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private static final String SESSION_KEY = "KAKAO_ID";
-    private static final int EXPIRED_TIME_SIX_HOUR = 21600;
+    private static final int SESSION_EXPIRE_SECOND = 86400 * 30;
 
     private final AuthService authService;
+    private final SessionGroupService sessionGroupService;
 
     @PostMapping("/login")
     public ResponseEntity<Void> login(
@@ -30,9 +32,8 @@ public class AuthController {
         Member loginMember = authService.login(code);
 
         HttpSession session = request.getSession();
-        session.setAttribute(SESSION_KEY, loginMember.getKakaoId());
-        session.setMaxInactiveInterval(EXPIRED_TIME_SIX_HOUR);
-
+        session.setMaxInactiveInterval(SESSION_EXPIRE_SECOND);
+        sessionGroupService.add(session.getId(), SESSION_KEY, loginMember.getKakaoId().toString());
         return ResponseEntity.ok().build();
     }
 
@@ -41,6 +42,7 @@ public class AuthController {
         HttpSession session = request.getSession(false);
 
         if (session != null) {
+            sessionGroupService.delete(session.getId(), SESSION_KEY);
             session.invalidate();
         }
 

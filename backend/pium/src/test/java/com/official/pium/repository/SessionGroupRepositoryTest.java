@@ -1,0 +1,83 @@
+package com.official.pium.repository;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.official.pium.RepositoryTest;
+import com.official.pium.domain.SessionGroup;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import org.junit.jupiter.api.DisplayNameGeneration;
+import org.junit.jupiter.api.DisplayNameGenerator;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
+@SuppressWarnings("NonAsciiCharacters")
+class SessionGroupRepositoryTest extends RepositoryTest {
+
+    @Autowired
+    private SessionGroupRepository sessionGroupRepository;
+
+    @Test
+    void 세션ID와_KEY값을_가진_객체_생성() {
+        SessionGroup sessionGroup = SessionGroup.builder()
+                .sessionId(UUID.randomUUID().toString())
+                .sessionKey("KAKAO_ID")
+                .sessionValue("1234546426")
+                .expireTime(LocalDateTime.now().plusMinutes(30))
+                .build();
+
+        SessionGroup savedSessionGroup = sessionGroupRepository.save(sessionGroup);
+
+        assertThat(savedSessionGroup.getId()).isPositive();
+    }
+
+    @Test
+    void 세션_그룹_객체_조회() {
+        SessionGroup sessionGroup = SessionGroup.builder()
+                .sessionId(UUID.randomUUID().toString())
+                .sessionKey("KAKAO_ID")
+                .sessionValue("1234546426")
+                .expireTime(LocalDateTime.now().plusMinutes(30))
+                .build();
+        SessionGroup savedSessionGroup = sessionGroupRepository.save(sessionGroup);
+
+        assertThat(sessionGroupRepository.findById(savedSessionGroup.getId())).isPresent();
+    }
+
+    @Test
+    void 존재하는_세션_ID와_세션_KEY를_이용해_객체_조회() {
+        SessionGroup sessionGroup = SessionGroup.builder()
+                .sessionId(UUID.randomUUID().toString())
+                .sessionKey("KAKAO_ID")
+                .sessionValue("1234546426")
+                .expireTime(LocalDateTime.now().plusMinutes(30))
+                .build();
+        SessionGroup savedSessionGroup = sessionGroupRepository.save(sessionGroup);
+
+        assertThat(sessionGroupRepository.findBySessionIdAndSessionKey(
+                savedSessionGroup.getSessionId(),
+                savedSessionGroup.getSessionKey()
+        )).isPresent();
+    }
+
+    @Test
+    void 존재하지_않는_세션_ID와_세션_KEY를_이용해_객체_조회() {
+        assertThat(sessionGroupRepository.findBySessionIdAndSessionKey("", "")).isEmpty();
+    }
+
+    @Test
+    void 세션_그룹_객체_삭제() {
+        SessionGroup sessionGroup = SessionGroup.builder()
+                .sessionId(UUID.randomUUID().toString())
+                .sessionKey("KAKAO_ID")
+                .sessionValue("1234546426")
+                .expireTime(LocalDateTime.now().plusMinutes(30))
+                .build();
+        SessionGroup savedSessionGroup = sessionGroupRepository.save(sessionGroup);
+
+        sessionGroupRepository.delete(savedSessionGroup);
+
+        assertThat(sessionGroupRepository.findById(savedSessionGroup.getId())).isEmpty();
+    }
+}
