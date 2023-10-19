@@ -14,12 +14,13 @@
                     <div class="card shadow-sm">
                         <div class="card-body">
                             <p class="card-text" th:text="|사용자 ID: ${member.id}|"></p>
-                            <p class="card-text" th:text="|알림 등록 여부: ${member.deviceToken == null ? '구독중이 아님' : '구독중' }|"></p>
+                            <p class="card-text"
+                               th:text="|알림 등록 여부: ${member.deviceToken == null ? '구독중이 아님' : '구독중' }|"></p>
                             <p class="card-text"
                                th:text="|가입일: ${#temporals.format(member.createdAt, 'yyyy-MM-dd HH:mm:ss')}|"></p>
                             <div>
                                 <th:block th:if="${member.deviceToken != null}">
-                                    <form id="sendNotificationForm" method="post">
+                                    <form id="sendNotificationForm">
                                         <div class="bord">
                                             <input name="deviceToken" th:value="${member.deviceToken}" type="hidden">
                                             <label for="notificationTitle">알림 제목</label>
@@ -45,7 +46,8 @@
         <nav aria-label="Page Navigation">
             <ul class="pagination justify-content-center mt-3">
                 <li class="page-item" th:classappend="${page.number == 0} ? 'disabled' : ''">
-                    <a class="page-link" th:href="@{|/admin/member/requests?page=0|}" th:if="${page.number != 0}">처음으로</a>
+                    <a class="page-link" th:href="@{|/admin/member/requests?page=0|}"
+                       th:if="${page.number != 0}">처음으로</a>
                 </li>
 
                 <li class="page-item" th:classappend="${page.hasPrevious()} ? '' : 'disabled'">
