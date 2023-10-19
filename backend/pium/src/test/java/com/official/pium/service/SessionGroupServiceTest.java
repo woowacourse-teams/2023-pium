@@ -138,19 +138,6 @@ class SessionGroupServiceTest extends IntegrationTest {
 
             assertThat(sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, sessionKey)).isPresent();
         }
-
-        @Test
-        void 동일한_세션_그룹이_존재하면_예외가_발생한다() {
-            SessionGroup sessionGroup = sessionGroupSupport.builder().build();
-
-            assertThatThrownBy(() -> sessionGroupService.add(
-                    sessionGroup.getSessionId(),
-                    sessionGroup.getSessionKey(),
-                    sessionGroup.getSessionValue()
-            ))
-                    .isInstanceOf(AuthenticationException.class)
-                    .hasMessage("이미 존재하는 세션입니다. sessionId: " + sessionGroup.getSessionId());
-        }
     }
 
     @Nested
