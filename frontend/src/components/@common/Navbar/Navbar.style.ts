@@ -1,5 +1,10 @@
 import { keyframes, styled } from 'styled-components';
 
+const appear = keyframes`
+  from { transform: translateY(100%) }
+  to { transform: translateY(0) }
+`;
+
 export const Wrapper = styled.nav`
   position: fixed;
   z-index: ${(props) => props.theme.zIndex.fixed};
@@ -17,6 +22,8 @@ export const Wrapper = styled.nav`
 
   background: white;
   box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
+
+  animation: ${appear} 0.3s ease-out;
 `;
 
 export const Button = styled.button`
