@@ -1,6 +1,6 @@
 import { keyframes, styled } from 'styled-components';
 
-export const Wrapper = styled.nav<{ $hide: boolean }>`
+export const Wrapper = styled.nav`
   position: fixed;
   z-index: ${(props) => props.theme.zIndex.fixed};
   bottom: 0;
@@ -17,14 +17,11 @@ export const Wrapper = styled.nav<{ $hide: boolean }>`
 
   background: white;
   box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
-
-  transform: translateY(${({ $hide }) => ($hide ? '60px' : '0')});
-  transition: transform 0.3s ease-out;
 `;
 
 export const Button = styled.button`
-  height: 100%;
   grid-row-start: 2;
+  height: 100%;
 `;
 
 const move = (offset: number) => keyframes`
@@ -33,9 +30,12 @@ const move = (offset: number) => keyframes`
 `;
 
 export const Roof = styled.div<{ $position: number; $transitionOffset: number }>`
-  height: 2px;
-  grid-row-start: 1;
   grid-column-start: ${({ $position }) => $position};
+  grid-row-start: 1;
+
+  height: 2px;
+
   background-color: ${({ theme: { color } }) => color.fontPrimaryForBackground};
+
   animation: ${({ $transitionOffset }) => move($transitionOffset)} 0.3s ease-out;
 `;
