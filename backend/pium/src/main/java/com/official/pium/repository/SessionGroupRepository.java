@@ -10,5 +10,5 @@ public interface SessionGroupRepository extends JpaRepository<SessionGroup, Long
 
     void deleteBySessionValue(String sessionValue);
 
-    boolean existsBySessionIdAndSessionKey(String sessionId, String key);
+    boolean existsBySessionIdAndSessionValue(String sessionId, String key);
 }
