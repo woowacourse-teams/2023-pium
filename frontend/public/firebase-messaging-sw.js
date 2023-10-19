@@ -8,15 +8,20 @@ importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js')
 // Initialize the Firebase app in the service worker by passing in
 // your app's Firebase config object.
 // https://firebase.google.com/docs/web/setup#config-object
+
+const firebaseConfig = {
+  apiKey: 'AIzaSyAOEUhyDZ1FQ2Ly77t-TNEqzb-686teUKU',
+  authDomain: 'pium-7ddfe.firebaseapp.com',
+  projectId: 'pium-7ddfe',
+  storageBucket: 'pium-7ddfe.appspot.com',
+  messagingSenderId: '66938335591',
+  appId: '1:66938335591:web:88ebf4f7f9dba08031ffc2',
+  measurementId: 'G-8SL2D547VW',
+};
+
 firebase.initializeApp({
-  apiKey: 'AIzaSyCNVyJ1qLPvMiuZDK97O-rmB3mz48UqC1g',
-  authDomain: 'pium-7445f.firebaseapp.com',
-  databaseURL: 'https://pium-7445f.firebaseio.com',
-  projectId: 'pium-7445f',
-  storageBucket: 'pium-7445f.appspot.com',
-  messagingSenderId: '14284052337',
-  appId: '1:14284052337:web:4ccb34224d907e73fa48d0',
-  measurementId: 'G-Z5F62MDJ8N',
+  ...firebaseConfig,
+  authDomain: 'pium-7ddfe.firebaseapp.com',
 });
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
@@ -88,12 +93,10 @@ self.addEventListener('fetch', (event) => {
  */
 
 // TODO: 사용자가 forward ground인 경우에 알림을 받을 수 있도록 설정하기.
-
 messaging.onBackgroundMessage((payload) => {
   const {
     notification: { title, body },
   } = payload;
-
   // Customize notification here
   const notificationTitle = title;
 
