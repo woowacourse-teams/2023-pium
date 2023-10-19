@@ -1,15 +1,13 @@
 import { generatePath, useNavigate, useParams } from 'react-router-dom';
-import { Header } from 'pages/petPlant/PetPlantRegister/Form/Form.style';
+import BackHeader from 'components/@common/BackHeader';
 import Image from 'components/@common/Image';
 import PageLogger from 'components/@common/PageLogger';
-import SvgFill from 'components/@common/SvgIcons/SvgFill';
 import DictionaryPlantContent from 'components/dictionaryPlant/DictionaryPlantContent';
-import { BackButton, BottomSheet, Main, PrimaryButton } from './DictionaryPlantDetail.style';
+import { BottomSheet, Main, PrimaryButton } from './DictionaryPlantDetail.style';
 import useAddToast from 'hooks/@common/useAddToast';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useDictionaryPlantDetail from 'hooks/queries/dictionaryPlant/useDictionaryPlantDetail';
 import { URL_PATH } from 'constants/index';
-import theme from 'style/theme.style';
 
 const DictionaryPlantDetail = () => {
   const { id } = useParams();
@@ -48,11 +46,7 @@ const DictionaryPlantDetail = () => {
 
   return (
     <PageLogger>
-      <Header>
-        <BackButton onClick={goBack}>
-          <SvgFill icon="line-arrow-left" aria-label="뒤로 가기" color={theme.color.sub} />
-        </BackButton>
-      </Header>
+      <BackHeader />
       <Main>
         <Image type="wide" src={image} alt={name} size="300px" />
         <DictionaryPlantContent {...dictionaryPlantDetail} />
