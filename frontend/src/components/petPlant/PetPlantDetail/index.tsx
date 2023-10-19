@@ -25,6 +25,7 @@ import {
   ButtonArea,
   TertiaryButton,
   TertiaryLink,
+  BottomSheet,
 } from './PetPlantDetail.style';
 import useConfirm from 'hooks/@common/useConfirm';
 import useDeletePetPlant from 'hooks/queries/petPlant/useDeletePetPlant';
@@ -189,13 +190,15 @@ const PetPlantDetail = ({ petPlantId }: PetDetailsProps) => {
             삭제하기
           </TertiaryButton>
         </ButtonArea>
+      </Content>
+      <BottomSheet>
         <PrimaryLink
           to={generatePath(URL_PATH.gardenRegisterForm, { id: petPlantId.toString() })}
           state={{ nickname, dictionaryPlantName, imageUrl }}
         >
           모두의 정원에 기록하기
         </PrimaryLink>
-      </Content>
+      </BottomSheet>
     </Wrapper>
   );
 };

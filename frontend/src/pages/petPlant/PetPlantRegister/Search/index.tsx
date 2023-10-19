@@ -1,6 +1,7 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useState } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
+import BackHeader from 'components/@common/BackHeader';
 import PageLogger from 'components/@common/PageLogger';
 import SearchBox from 'components/search/SearchBox';
 import { Main, Message, SearchBoxArea } from './Search.style';
@@ -19,6 +20,7 @@ const PetPlantRegisterSearch = () => {
 
   return (
     <PageLogger>
+      <BackHeader />
       <Main>
         <Message>어떤 식물을 키우시나요?</Message>
         <SearchBoxArea>
