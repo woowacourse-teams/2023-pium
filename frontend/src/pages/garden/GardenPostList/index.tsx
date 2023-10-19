@@ -2,7 +2,6 @@ import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import { useRecoilState } from 'recoil';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import SvgStroke from 'components/@common/SvgIcons/SvgStroke';
 import GardenPostItem from 'components/garden/GardenPostItem';
@@ -16,6 +15,9 @@ import useGardenPostList from 'hooks/queries/garden/useGardenPostList';
 import { URL_PATH } from 'constants/index';
 
 const SKELETON_LENGTH = 20;
+const SKELETONS = new Array(SKELETON_LENGTH)
+  .fill(null)
+  .map((_, index) => <GardenPostItemSkeleton key={index} />);
 
 const GardenPostList = () => {
   const navigate = useNavigate();
@@ -49,11 +51,6 @@ const GardenPostList = () => {
     window.scrollTo(0, 0);
   }, [selectedDictionaryPlant]);
 
-  const Skeletons = () =>
-    Array(SKELETON_LENGTH)
-      .fill(null)
-      .map((_, index) => <GardenPostItemSkeleton key={index} />);
-
   return (
     <PageLogger>
       <GardenPostListHeader
@@ -68,7 +65,7 @@ const GardenPostList = () => {
               {gardenPostList.map((gardenPost) => (
                 <GardenPostItem key={gardenPost.id} {...gardenPost} />
               ))}
-              {isFetchingNextPage && <Skeletons />}
+              {isFetchingNextPage && SKELETONS}
               {!hasNextPage && <Message>마지막이에요 😊</Message>}
               {!isFetchingNextPage && <Sensor ref={intersectionRef} />}
             </List>
@@ -76,12 +73,9 @@ const GardenPostList = () => {
             <Message>아직 작성된 글이 없어요 🤔</Message>
           )
         ) : (
-          <List>
-            <Skeletons />
-          </List>
+          <List>{SKELETONS}</List>
         )}
       </Main>
-      <Navbar />
       {isLoggedIn && (
         <FixedButtonArea>
           <FixedButton type="button" onClick={goGardenRegisterPick} aria-label="모두의 정원 글쓰기">

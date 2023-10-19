@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { useRecoilValue } from 'recoil';
 import { Finish, Progressing } from './PageLoadingBar.style';
@@ -12,8 +12,6 @@ const PageLoadingBar = () => {
 
   const { isOn: isShow, on: show, off: hide } = useToggle();
   const { isOn: isShowFinish, on: showFinish, off: hideFinish } = useToggle();
-
-  const root = useMemo(() => document.getElementById('root')!, []);
 
   useEffect(() => {
     if (isShowPageLoading) {
@@ -37,7 +35,7 @@ const PageLoadingBar = () => {
       {isShow && <Progressing />}
       {isShowFinish && <Finish $animationTime={FINISH_ANIMATION_TIME} />}
     </>,
-    root
+    document.body
   );
 };
 

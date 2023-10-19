@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import NotFound from 'pages/@common/Error/NotFound';
 import LastPageLoading from 'pages/@common/LastPageLoading';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
+import Navbar from 'components/@common/Navbar';
 import Redirect from 'components/@common/Redirect';
 import { PageArea, Wrapper } from './RootTemplate.style';
 import { GUIDE, URL_PATH } from 'constants/index';
@@ -26,6 +27,7 @@ const RootTemplate = () => {
             <Suspense fallback={<LastPageLoading />}>
               <Outlet />
             </Suspense>
+            <Navbar />
           </ErrorBoundary>
         </ErrorBoundary>
       </PageArea>

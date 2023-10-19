@@ -1,7 +1,6 @@
 import type { DictionaryPlantNameSearchResult } from 'types/dictionaryPlant';
 import { useState } from 'react';
 import { generatePath, useNavigate } from 'react-router-dom';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import SearchBox from 'components/search/SearchBox';
 import { Main, Message, SearchBoxArea } from './Search.style';
@@ -30,7 +29,6 @@ const PetPlantRegisterSearch = () => {
           />
         </SearchBoxArea>
       </Main>
-      <Navbar />
     </PageLogger>
   );
 };
