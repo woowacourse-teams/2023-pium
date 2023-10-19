@@ -21,6 +21,9 @@ export const Wrapper = styled.header`
 export const BackButton = styled.button`
   position: absolute;
   left: 16px;
+
   display: flex;
   align-items: center;
+
+  width: 20px;
 `;
