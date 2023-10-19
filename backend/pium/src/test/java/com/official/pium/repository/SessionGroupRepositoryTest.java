@@ -88,22 +88,22 @@ class SessionGroupRepositoryTest extends RepositoryTest {
                 .sessionId("UUID.randomUUID().toString()")
                 .sessionKey("KAKAO_ID")
                 .sessionValue("1234546426")
-                .expireTime(LocalDateTime.now().plusMinutes(30))
+                .expireTime(LocalDateTime.now().plusDays(30))
                 .build();
         SessionGroup savedSessionGroup = sessionGroupRepository.save(sessionGroup);
 
-        boolean existsBySessionIdAndSessionKey = sessionGroupRepository.existsBySessionIdAndSessionKey(
+        boolean existsBySessionIdAndSessionValue = sessionGroupRepository.existsBySessionIdAndSessionValue(
                 savedSessionGroup.getSessionId(),
-                savedSessionGroup.getSessionKey()
+                savedSessionGroup.getSessionValue()
         );
 
-        assertThat(existsBySessionIdAndSessionKey).isTrue();
+        assertThat(existsBySessionIdAndSessionValue).isTrue();
     }
 
     @Test
     void 기존_세션이_존재하지않으면_False() {
-        boolean existsBySessionIdAndSessionKey = sessionGroupRepository.existsBySessionIdAndSessionKey(
-                "id", "sessionKey"
+        boolean existsBySessionIdAndSessionKey = sessionGroupRepository.existsBySessionIdAndSessionValue(
+                "id", "sessionValue"
         );
 
         assertThat(existsBySessionIdAndSessionKey).isFalse();

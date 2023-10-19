@@ -45,7 +45,7 @@ public class SessionGroupService {
 
     @Transactional
     public void add(String sessionId, String key, String value) {
-        if (sessionGroupRepository.existsBySessionIdAndSessionKey(sessionId, key)) {
+        if (sessionGroupRepository.existsBySessionIdAndSessionValue(sessionId, value)) {
             return;
         }
 
@@ -53,7 +53,7 @@ public class SessionGroupService {
                 .sessionId(sessionId)
                 .sessionKey(key)
                 .sessionValue(value)
-                .expireTime(LocalDateTime.now().plusMinutes(EXTEND_EXPIRED_DAY))
+                .expireTime(LocalDateTime.now().plusDays(EXTEND_EXPIRED_DAY))
                 .build();
         sessionGroupRepository.save(sessionGroup);
     }
