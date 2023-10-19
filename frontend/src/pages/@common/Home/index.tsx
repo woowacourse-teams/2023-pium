@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import InstallPrompt from 'components/@common/InstallPrompt';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Main, Image, ImageArea } from './Home.style';
@@ -34,7 +33,6 @@ const Home = () => {
         </SearchBoxArea>
         <SearchMessage>피움에 등록된 식물을 검색해 보세요!</SearchMessage>
       </Main>
-      <Navbar />
     </PageLogger>
   );
 };

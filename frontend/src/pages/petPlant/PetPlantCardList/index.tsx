@@ -1,6 +1,5 @@
 import { Link, generatePath } from 'react-router-dom';
 import ContentHeader from 'components/@common/ContentHeader';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import PetPlantCard from 'components/petPlant/PetPlantCard';
 import { CardList, RegisterButton, Wrapper } from './PetPlantCardList.style';
@@ -28,7 +27,6 @@ const PetPlantCardList = () => {
           ))}
         </CardList>
       </Wrapper>
-      <Navbar />
     </PageLogger>
   );
 };

@@ -2,7 +2,6 @@ import type { HistoryType } from 'types/history';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import CheckButton from 'components/@common/CheckButton';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import SvgIcons from 'components/@common/SvgIcons/SvgFill';
 import Timeline from 'components/petPlant/Timeline';
@@ -85,7 +84,6 @@ const PetPlantTimeline = () => {
       <Main>
         <Timeline petPlantId={Number(petPlantId)} filter={filter} />
       </Main>
-      <Navbar />
     </PageLogger>
   );
 };
