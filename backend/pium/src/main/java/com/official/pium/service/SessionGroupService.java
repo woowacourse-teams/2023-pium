@@ -20,7 +20,7 @@ public class SessionGroupService {
     private final Clock clock;
 
     @Transactional
-    public String findBySessionIdAndKey(String sessionId, String key) {
+    public String findOrExtendsBySessionIdAndKey(String sessionId, String key) {
         SessionGroup sessionGroup = sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, key)
                 .orElseThrow(() -> new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
 

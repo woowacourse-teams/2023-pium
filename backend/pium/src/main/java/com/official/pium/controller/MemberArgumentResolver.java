@@ -38,7 +38,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
             throw new AuthenticationException("로그인이 필요합니다");
         }
 
-        String sessionValue = sessionGroupService.findBySessionIdAndKey(session.getId(), SESSION_KEY);
+        String sessionValue = sessionGroupService.findOrExtendsBySessionIdAndKey(session.getId(), SESSION_KEY);
         try {
             Long kakaoId = Long.valueOf(sessionValue);
             return memberRepository.findByKakaoId(kakaoId)

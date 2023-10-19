@@ -25,6 +25,7 @@ public class SessionGroup extends BaseEntity {
 
     private static final int SESSION_EXTEND_DAYS = 7;
     private static final int MIN_EXPIRE_DAY = 1;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

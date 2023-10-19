@@ -44,7 +44,7 @@ class SessionGroupServiceTest extends IntegrationTest {
                     .sessionValue("12441")
                     .build();
 
-            String sessionValue = sessionGroupService.findBySessionIdAndKey(
+            String sessionValue = sessionGroupService.findOrExtendsBySessionIdAndKey(
                     sessionGroup.getSessionId(),
                     sessionGroup.getSessionKey()
             );
@@ -54,7 +54,7 @@ class SessionGroupServiceTest extends IntegrationTest {
 
         @Test
         void 존재하지_않는_세션_KEY와_세션_ID로_조회하면_예외_발생() {
-            assertThatThrownBy(() -> sessionGroupService.findBySessionIdAndKey(" ", " "))
+            assertThatThrownBy(() -> sessionGroupService.findOrExtendsBySessionIdAndKey(" ", " "))
                     .isInstanceOf(AuthenticationException.class)
                     .hasMessage("일치하는 세션을 찾을 수 없습니다.");
         }
@@ -71,10 +71,12 @@ class SessionGroupServiceTest extends IntegrationTest {
                     .build();
 
             assertSoftly(softly -> {
-                softly.assertThatThrownBy(() -> sessionGroupService.findBySessionIdAndKey(sessionId, sessionKey))
+                softly.assertThatThrownBy(
+                                () -> sessionGroupService.findOrExtendsBySessionIdAndKey(sessionId, sessionKey))
                         .isInstanceOf(AuthenticationException.class)
                         .hasMessage("세션이 만료 되었습니다.");
-                softly.assertThatThrownBy(() -> sessionGroupService.findBySessionIdAndKey(sessionId, sessionKey))
+                softly.assertThatThrownBy(
+                                () -> sessionGroupService.findOrExtendsBySessionIdAndKey(sessionId, sessionKey))
                         .isInstanceOf(AuthenticationException.class)
                         .hasMessage("일치하는 세션을 찾을 수 없습니다.");
             });
@@ -94,7 +96,7 @@ class SessionGroupServiceTest extends IntegrationTest {
                     .expireTime(expireTime)
                     .build();
 
-            sessionGroupService.findBySessionIdAndKey(sessionId, sessionKey);
+            sessionGroupService.findOrExtendsBySessionIdAndKey(sessionId, sessionKey);
             SessionGroup sessionGroup = sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, sessionKey)
                     .get();
 
@@ -115,7 +117,7 @@ class SessionGroupServiceTest extends IntegrationTest {
                     .expireTime(expireTime)
                     .build();
 
-            sessionGroupService.findBySessionIdAndKey(sessionId, sessionKey);
+            sessionGroupService.findOrExtendsBySessionIdAndKey(sessionId, sessionKey);
             SessionGroup sessionGroup = sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, sessionKey)
                     .get();
 

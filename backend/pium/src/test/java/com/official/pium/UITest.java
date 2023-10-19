@@ -41,7 +41,7 @@ public class UITest {
         admin = new Admin("admin", "1234", "12345");
 
         session.setAttribute(ADMIN_SESSION_KEY, admin);
-        given(sessionGroupService.findBySessionIdAndKey(anyString(), anyString()))
+        given(sessionGroupService.findOrExtendsBySessionIdAndKey(anyString(), anyString()))
                 .willReturn("12345");
         given(memberRepository.findByKakaoId(anyLong()))
                 .willReturn(Optional.of(member));
