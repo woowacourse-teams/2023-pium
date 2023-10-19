@@ -23,13 +23,12 @@ const useInstallApp = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   const installApp = async () => {
-    if (deferredPrompt) {
-      await deferredPrompt.prompt();
+    if (!deferredPrompt) return;
+    await deferredPrompt.prompt();
 
-      deferredPrompt.userChoice.then(() => {
-        setDeferredPrompt(null);
-      });
-    }
+    await deferredPrompt.userChoice;
+
+    setDeferredPrompt(null);
   };
 
   const ignoreInstallApp = () => {
@@ -44,6 +43,7 @@ const useInstallApp = () => {
   const beforeInstallPromptHandler = (event: BeforeInstallPromptEvent) => {
     event.preventDefault();
     const showPrompt = JSON.parse(getCookie('PromptVisible') ?? 'true');
+
     if (!showPrompt) return;
 
     setDeferredPrompt(event);
