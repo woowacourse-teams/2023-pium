@@ -1,10 +1,6 @@
 import { styled } from 'styled-components';
 
-export const Header = styled.header`
-  position: fixed;
-  z-index: ${(props) => props.theme.zIndex.fixed};
-  top: 0;
-
+export const FilterArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -12,8 +8,8 @@ export const Header = styled.header`
   width: 100%;
   max-width: ${(props) => props.theme.width.pad};
   height: 48px;
+  padding-left: 28px;
 
-  background-color: ${(props) => props.theme.color.background};
   box-shadow: 0 2px 2px -2px ${(props) => props.theme.color.gray};
 `;
 
