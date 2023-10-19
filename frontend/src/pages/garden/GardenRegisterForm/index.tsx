@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import { useParams } from 'react-router-dom';
 import ContentHeader from 'components/@common/ContentHeader';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import GardenRegisterFormSection from 'components/garden/GardenRegisterFormSection';
 import Profile from 'components/petPlant/Profile';
@@ -24,7 +23,6 @@ const GardenRegisterForm = () => {
         </Suspense>
         <GardenRegisterFormSection petPlantId={Number(petPlantId)} />
       </Main>
-      <Navbar />
     </PageLogger>
   );
 };

@@ -1,17 +1,36 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import SvgStroke, { ICONS } from 'components/@common/SvgIcons/SvgStroke';
-import { NavItemCenter, NavItemArea, NavLabel, NavButton, Wrapper, NavLink } from './Navbar.style';
+import { useEffect } from 'react';
+import { Link, matchRoutes, useLocation, useNavigate } from 'react-router-dom';
+import { Button, Roof, Wrapper } from './Navbar.style';
 import useAddToast from 'hooks/@common/useAddToast';
+import useNavbarRoofAnimation from 'hooks/@common/useNavbarRoofAnimation';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { URL_PATH } from 'constants/index';
-import theme from 'style/theme.style';
+import NavItem from './NavItem';
+
+const NO_NAVIGATION_BAR_URLS = [
+  URL_PATH.petRegisterForm,
+  URL_PATH.dictDetail,
+  URL_PATH.petEdit,
+  URL_PATH.login,
+  URL_PATH.authorization,
+].map((path) => ({ path }));
 
 const Navbar = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const addToast = useAddToast();
+  const { pathname, state } = useLocation();
 
+  const addToast = useAddToast();
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
+  const { navbarRef, roofPosition, transitionOffset } = useNavbarRoofAnimation(
+    state ? state.prevPathname ?? pathname : pathname,
+    pathname
+  );
+
+  useEffect(() => {
+    const resetHistoryState = () => history.replaceState(null, '');
+    window.addEventListener('beforeunload', resetHistoryState);
+    return () => window.removeEventListener('beforeunload', resetHistoryState);
+  }, []);
 
   const goLogin = () => {
     navigate(URL_PATH.login);
@@ -27,53 +46,48 @@ const Navbar = () => {
     });
   };
 
-  const NavItem = (props: { path: string; iconId: (typeof ICONS)[number]; label: string }) => {
-    const { path, iconId, label } = props;
-    const active = path === location.pathname;
-    const iconColor = active ? theme.color.fontPrimaryForBackground : theme.color.subLight;
-
-    return (
-      <NavItemArea $active={active}>
-        <NavItemCenter>
-          <SvgStroke color={iconColor} size={24} icon={iconId} />
-          <NavLabel $active={active}>{label}</NavLabel>
-        </NavItemCenter>
-      </NavItemArea>
-    );
-  };
+  const hideNavbar = matchRoutes(NO_NAVIGATION_BAR_URLS, pathname) !== null;
+  const newHistoryState = { prevPathname: pathname };
 
   return (
-    <Wrapper>
-      <NavLink to={URL_PATH.main}>
-        <NavItem path={URL_PATH.main} iconId="home-line" label="메인" />
-      </NavLink>
-      <NavLink to={URL_PATH.garden}>
-        <NavItem path={URL_PATH.garden} iconId="bulletin-board-line" label="모두의 정원" />
-      </NavLink>
+    <Wrapper ref={navbarRef} $hide={hideNavbar}>
+      <Button as={Link} to={URL_PATH.main} state={newHistoryState}>
+        <NavItem isActive={roofPosition === 1} iconId="home-line" label="메인" />
+      </Button>
+      <Button as={Link} to={URL_PATH.garden} state={newHistoryState}>
+        <NavItem isActive={roofPosition === 2} iconId="bulletin-board-line" label="모두의 정원" />
+      </Button>
       {isLoggedIn ? (
         <>
-          <NavLink to={URL_PATH.reminder}>
-            <NavItem path={URL_PATH.reminder} iconId="reminder" label="리마인더" />
-          </NavLink>
-          <NavLink to={URL_PATH.petList}>
-            <NavItem path={URL_PATH.petList} iconId="leaf" label="내 식물" />
-          </NavLink>
-          <NavLink to={URL_PATH.myPage}>
-            <NavItem path={URL_PATH.myPage} iconId="account-circle-line" label="마이페이지" />
-          </NavLink>
+          <Button as={Link} to={URL_PATH.reminder} state={newHistoryState}>
+            <NavItem isActive={roofPosition === 3} iconId="reminder" label="리마인더" />
+          </Button>
+          <Button as={Link} to={URL_PATH.petList} state={newHistoryState}>
+            <NavItem isActive={roofPosition === 4} iconId="leaf" label="내 식물" />
+          </Button>
+          <Button as={Link} to={URL_PATH.myPage} state={newHistoryState}>
+            <NavItem
+              isActive={roofPosition === 5}
+              iconId="account-circle-line"
+              label="마이페이지"
+            />
+          </Button>
         </>
       ) : (
         <>
-          <NavButton onClick={askLogin}>
-            <NavItem path={URL_PATH.reminder} iconId="reminder" label="리마인더" />
-          </NavButton>
-          <NavButton onClick={askLogin}>
-            <NavItem path={URL_PATH.petList} iconId="leaf" label="내 식물" />
-          </NavButton>
-          <NavLink to={URL_PATH.login}>
-            <NavItem path={URL_PATH.login} iconId="account-circle-line" label="로그인" />
-          </NavLink>
+          <Button type="button" onClick={askLogin}>
+            <NavItem isActive={false} iconId="reminder" label="리마인더" />
+          </Button>
+          <Button type="button" onClick={askLogin}>
+            <NavItem isActive={false} iconId="leaf" label="내 식물" />
+          </Button>
+          <Button as={Link} to={URL_PATH.login} state={newHistoryState}>
+            <NavItem isActive={false} iconId="account-circle-line" label="로그인" />
+          </Button>
         </>
+      )}
+      {roofPosition && (
+        <Roof $position={roofPosition} $transitionOffset={transitionOffset} aria-hidden />
       )}
     </Wrapper>
   );

@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import { styled } from 'styled-components';
+import { keyframes, styled } from 'styled-components';
 
-export const Wrapper = styled.nav`
+export const Wrapper = styled.nav<{ $hide: boolean }>`
   position: fixed;
   z-index: ${(props) => props.theme.zIndex.fixed};
   bottom: 0;
 
-  display: flex;
+  display: grid;
+  grid-template-rows: 2px 58px;
   align-items: center;
   justify-content: space-around;
 
@@ -17,43 +17,25 @@ export const Wrapper = styled.nav`
 
   background: white;
   box-shadow: 0 -1px 1px -1px ${(props) => props.theme.color.subLight};
+
+  transform: translateY(${({ $hide }) => ($hide ? '60px' : '0')});
+  transition: transform 0.3s ease-out;
 `;
 
-export const NavLink = styled(Link)`
+export const Button = styled.button`
   height: 100%;
+  grid-row-start: 2;
 `;
 
-export const NavButton = styled.button`
-  height: 100%;
+const move = (offset: number) => keyframes`
+  0% { transform: translateX(${offset}px) };
+  100% { transform: translateX(0) }
 `;
 
-export const NavItemArea = styled.div<{ $active?: boolean }>`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 64px;
-  height: 100%;
-
-  border-top: solid 2px
-    ${({ $active, theme: { color } }) => ($active ? color.fontPrimaryForBackground : 'transparent')};
-  border-bottom: solid 2px transparent;
-`;
-
-export const NavItemCenter = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-
-  width: 100%;
-  height: 48px;
-`;
-
-export const NavLabel = styled.p<{ $active?: boolean }>`
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1.5rem;
-  color: ${({ $active, theme: { color } }) =>
-    $active ? color.fontPrimaryForBackground : color.subLight};
+export const Roof = styled.div<{ $position: number; $transitionOffset: number }>`
+  height: 2px;
+  grid-row-start: 1;
+  grid-column-start: ${({ $position }) => $position};
+  background-color: ${({ theme: { color } }) => color.fontPrimaryForBackground};
+  animation: ${({ $transitionOffset }) => move($transitionOffset)} 0.3s ease-out;
 `;

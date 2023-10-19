@@ -39,7 +39,7 @@ const Toast = (props: ToastItem) => {
     setTimeout(() => {
       setToastList((prev) => prev.filter(({ id: toastId }) => toastId !== id));
     }, 200);
-  }, []);
+  }, [id, setToastList]);
 
   const handleClickButton = () => {
     onClickButton?.();

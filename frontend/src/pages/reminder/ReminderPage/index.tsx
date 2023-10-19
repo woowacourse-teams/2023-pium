@@ -1,6 +1,5 @@
 import { PrimaryButton } from 'components/@common/Confirm/Confirm.style';
 import ContentHeader from 'components/@common/ContentHeader';
-import Navbar from 'components/@common/Navbar';
 import PageLogger from 'components/@common/PageLogger';
 import MonthBox from 'components/reminder/MonthBox';
 import { ContentBox, NoDataContainer, Register, Title, Main } from './ReminderPage.style';
@@ -44,7 +43,6 @@ const ReminderPage = () => {
           )}
         </Main>
       </ReminderProvider>
-      <Navbar />
     </PageLogger>
   );
 };
