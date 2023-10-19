@@ -3,6 +3,7 @@ package com.official.pium.controller;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.willDoNothing;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
@@ -21,6 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
+import com.official.pium.exception.AuthenticationException;
 import com.official.pium.fixture.GardenFixture;
 import com.official.pium.fixture.GardenFixture.REQUEST;
 import com.official.pium.service.GardenService;
@@ -86,6 +88,8 @@ public class GardenControllerTest extends UITest {
         void 로그인_없이_요청하면_401_반환() throws Exception {
             willDoNothing().given(gardenService)
                     .create(any(GardenCreateRequest.class), any(Member.class));
+            given(sessionGroupService.findOrExtendsBySessionIdAndKey(any(), anyString()))
+                    .willThrow(new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
 
             mockMvc.perform(post("/garden")
                             .content(objectMapper.writeValueAsString(REQUEST.정원_게시글_등록_요청))
