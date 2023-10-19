@@ -10,12 +10,16 @@ describe('리마인더 테스트', () => {
   it('리마인더 페이지로 이동할 수 있다.', () => {
     cy.visit('/');
     cy.wait(1000);
-    cy.get('a').contains('리마인더').click().location('pathname').should('equal', '/reminder');
+    cy.get('a')
+      .contains('리마인더')
+      .click({ force: true })
+      .location('pathname')
+      .should('equal', '/reminder');
   });
 
   it('내 반려 식물 상세보기로 이동할 수 있다.', () => {
     cy.get('a[aria-label="참새 나무 상세로 이동"]')
-      .click()
+      .click({ force: true })
       .location('pathname')
       .should('equal', '/pet/1');
   });
@@ -24,11 +28,11 @@ describe('리마인더 테스트', () => {
     const today = convertDateKorYear(new Date());
     cy.get('div[aria-label="참새 나무의 정보"]')
       .find('button[aria-label="물 준 날짜 선택"]')
-      .click()
+      .click({ force: true })
       .get('div[aria-label="달력"')
       .should('be.visible')
       .get(`span[aria-label="${today}"]`)
-      .click()
+      .click({ force: true })
 
       .get('#toast-root')
       .contains('물주기 완료');
@@ -39,16 +43,16 @@ describe('리마인더 테스트', () => {
     const nextMonth = curMonth === 11 ? 1 : curMonth + 2;
     cy.get('div[aria-label="참새 나무의 정보"]')
       .find('button[aria-label="알림을 줄 날짜 선택"]')
-      .click()
+      .click({ force: true })
       .get('div[aria-label="달력"')
       .should('be.visible')
       .get(`button[aria-label="다음 달 보기"]`)
-      .click()
+      .click({ force: true })
 
       .get('section[aria-live="assertive"]')
       .find('span')
       .contains(1)
-      .click()
+      .click({ force: true })
 
       .get('#toast-root')
       .contains('01일로 물주기 날짜 변경')

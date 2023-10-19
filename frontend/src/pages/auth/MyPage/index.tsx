@@ -1,21 +1,13 @@
 import { FixedButtonArea } from 'pages/garden/GardenPostList/GardenPostList.style';
 import ContentHeader from 'components/@common/ContentHeader';
+import ErrorBoundary from 'components/@common/ErrorBoundary';
 import Footer from 'components/@common/Footer';
 import PageLogger from 'components/@common/PageLogger';
 import SvgFill from 'components/@common/SvgIcons/SvgFill';
-import Toggle from 'components/@common/Toggle';
 import VerticalDivider from 'components/@common/VerticalDivider/VerticalDivider.style';
-import {
-  BottomSheet,
-  Button,
-  ButtonBox,
-  PushAlertContent,
-  PushAlertWrapper,
-  WarnParagraph,
-  Main,
-} from './MyPage.style';
+import PushAlert from 'components/mypage/PushAlert';
+import { BottomSheet, Button, ButtonBox, Main } from './MyPage.style';
 import useConfirm from 'hooks/@common/useConfirm';
-import usePushAlert from 'hooks/@common/usePushAlert';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import useLogout from 'hooks/queries/auth/useLogout';
 import useWithdraw from 'hooks/queries/auth/useWithdraw';
@@ -25,9 +17,6 @@ const MyPage = () => {
   useCheckSessionId();
   const { mutate: logoutMutate } = useLogout();
   const { mutate: withdrawMutate } = useWithdraw();
-
-  const { currentSubscribe, pushSupport, notificationDenied, subscribeAlert, unSubscribeAlert } =
-    usePushAlert();
 
   const confirm = useConfirm();
 
@@ -47,25 +36,9 @@ const MyPage = () => {
     <PageLogger>
       <ContentHeader title="마이페이지" />
       <Main>
-        <PushAlertWrapper>
-          <PushAlertContent>
-            <p>리마인더 알림 받기</p>
-            <Toggle
-              width={45}
-              height={20}
-              toggleOnCallback={subscribeAlert}
-              toggleOffCallback={unSubscribeAlert}
-              state={currentSubscribe}
-              disabled={!pushSupport || notificationDenied === 'denied'}
-            />
-          </PushAlertContent>
-          {!pushSupport && <WarnParagraph>지원하지 않는 브라우저 또는 os입니다.</WarnParagraph>}
-          {notificationDenied === 'denied' && (
-            <WarnParagraph>
-              브라우저 알림을 허용하지 않았습니다. 허용하기 위해서는 설정 {'>'} 알림 허용을 해주세요
-            </WarnParagraph>
-          )}
-        </PushAlertWrapper>
+        <ErrorBoundary fallback={<div>에러 발생...</div>}>
+          <PushAlert />
+        </ErrorBoundary>
         <ButtonBox>
           <Button type="button" onClick={handleLogout}>
             로그아웃

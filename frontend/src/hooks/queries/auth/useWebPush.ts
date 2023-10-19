@@ -1,11 +1,13 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import useAddToast from 'hooks/@common/useAddToast';
+import PushStatus from 'models/PushStatus';
 import WebPushSubscribeAPI, { SUBSCRIBE_URL } from 'apis/webPush';
+import { deleteCurrentToken, getCurrentToken } from 'utils/firebase';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
 interface CurrentSubscribe {
-  isSubscribe: boolean;
+  subscribe: boolean;
 }
 
 const useWebPush = () => {
@@ -23,15 +25,18 @@ const useWebPush = () => {
       await queryClient.cancelQueries({ queryKey: [SUBSCRIBE_URL] });
 
       const prevData = queryClient.getQueryState([SUBSCRIBE_URL]);
+      queryClient.setQueryData([SUBSCRIBE_URL], () => ({ subscribe: true }));
 
       return { prevData };
     },
-    onSuccess: () => {
-      addToast({ type: 'success', message: '알림을 등록했습니다', time: 3000 });
-    },
-    onError: (_, __, context) => {
+
+    onError: async (error, __, context) => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
-      addToast({ type: 'error', message: '알림 등록에 실패했습니다', time: 3000 });
+      addToast({ type: 'error', message: error.message });
+
+      await deleteCurrentToken();
+      const currentToken = await getCurrentToken();
+      PushStatus.setCurrentToken(currentToken);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
@@ -42,9 +47,6 @@ const useWebPush = () => {
     mutationFn: async () => {
       const response = await WebPushSubscribeAPI.unSubscribe();
       throwOnInvalidStatus(response);
-      if (response.status === 407) {
-        throw new Error('랜덤 실패');
-      }
 
       return null;
     },
@@ -52,16 +54,18 @@ const useWebPush = () => {
       await queryClient.cancelQueries({ queryKey: [SUBSCRIBE_URL] });
 
       const prevData = queryClient.getQueryState([SUBSCRIBE_URL]);
+      queryClient.setQueryData([SUBSCRIBE_URL], () => ({ subscribe: false }));
 
       return { prevData };
     },
-    onSuccess: () => {
-      addToast({ type: 'success', message: '알림을 해제했습니다', time: 3000 });
+    onSuccess: async () => {
+      await deleteCurrentToken();
+      const currentToken = await getCurrentToken();
+      PushStatus.setCurrentToken(currentToken);
     },
-    onError: (_, __, context) => {
-      // 업데이트에 실패한 경우 이전 값으로 반환
+    onError: (error, __, context) => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
-      addToast({ type: 'error', message: '알림 해제에 실패했습니다', time: 3000 });
+      addToast({ type: 'error', message: error.message });
     },
 
     onSettled: () => {
@@ -69,13 +73,14 @@ const useWebPush = () => {
     },
   });
 
-  const currentSubscribe = useSuspenseQuery<CurrentSubscribe>({
+  const { data: currentSubscribe } = useSuspenseQuery<CurrentSubscribe>({
     queryKey: [SUBSCRIBE_URL],
     queryFn: async () => {
       const response = await WebPushSubscribeAPI.currentSubscribe();
       throwOnInvalidStatus(response);
 
       const data = await response.json();
+
       return data;
     },
     retry: noRetryIfUnauthorized,
@@ -84,7 +89,7 @@ const useWebPush = () => {
   return {
     subscribe: subscribe.mutate,
     unSubscribe: unSubscribe.mutate,
-    currentSubscribe: currentSubscribe.data.isSubscribe,
+    currentSubscribe: currentSubscribe.subscribe,
   };
 };
 

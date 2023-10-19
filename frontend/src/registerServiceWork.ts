@@ -1,4 +1,5 @@
-import { isSupported, updatePushStatus } from 'utils/pushStatus';
+import PushStatus, { isSupported } from 'models/PushStatus';
+import { getCurrentToken } from 'utils/firebase';
 
 const registerPwaServiceWorker = async (workerPath: string) => {
   // 지원하지 않는 브라우저라면 return;
@@ -22,7 +23,16 @@ const registerPwaServiceWorker = async (workerPath: string) => {
   }
 
   // 새로운 서비스워커로 업데이트
-  await updatePushStatus(registration);
+  // 초기에 시작할 때 currentToken을 일단 받음
+  // permission을 물어보지 않아서 getCurrentToken을 받아올 수 없음.
+
+  const currentToken = await getCurrentToken();
+
+  PushStatus.updatePushStatus({
+    notificationPermission: Notification.permission,
+    currentToken,
+    pushSupport: isSupported,
+  });
 };
 
 export default registerPwaServiceWorker;
