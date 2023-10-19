@@ -8,7 +8,7 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">사용자 목록</h1>
 
-        <div>
+        <div id="sendNotificationForm">
             <th:block th:each="member : ${members}">
                 <div class="col">
                     <div class="card shadow-sm">
@@ -18,9 +18,9 @@
                                th:text="|알림 등록 여부: ${member.deviceToken == null ? '구독중이 아님' : '구독중' }|"></p>
                             <p class="card-text"
                                th:text="|가입일: ${#temporals.format(member.createdAt, 'yyyy-MM-dd HH:mm:ss')}|"></p>
-                            <div>
+                            <div >
                                 <th:block th:if="${member.deviceToken != null}">
-                                    <form id="sendNotificationForm">
+                                    <form>
                                         <div class="bord">
                                             <input name="deviceToken" th:value="${member.deviceToken}" type="hidden">
                                             <label for="notificationTitle">알림 제목</label>
@@ -86,8 +86,11 @@
 
         function submitForm(e) {
             e.preventDefault();
+            const target = e.target;
+            const closeForm = target.closest('form');
+
             if (confirm('정말로 테스트 알림을 보내겠습니까?')) {
-                const formData = new FormData(formElement);
+                const formData = new FormData(closeForm);
                 fetch(`/admin/notification`, {
                     method: 'POST',
                     headers: {
