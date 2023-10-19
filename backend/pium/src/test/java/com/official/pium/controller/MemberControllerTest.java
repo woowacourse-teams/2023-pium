@@ -1,6 +1,8 @@
 package com.official.pium.controller;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.cookies.CookieDocumentation.requestCookies;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -17,6 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
+import com.official.pium.exception.AuthenticationException;
 import com.official.pium.service.MemberService;
 import com.official.pium.service.dto.NotificationSubscribeRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -66,14 +69,14 @@ class MemberControllerTest extends UITest {
 
         @Test
         void 만료된_세션으로_요청_시_401_반환() throws Exception {
-            MockHttpSession expiredSession = new MockHttpSession();
-            expiredSession.invalidate();
+            given(sessionGroupService.findOrExtendsBySessionIdAndKey(any(), anyString()))
+                    .willThrow(new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
 
             mockMvc.perform(delete("/members/withdraw")
-                            .session(expiredSession)
+                            .session(new MockHttpSession())
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
-                    .andExpect(jsonPath("$.message").value("로그인이 필요합니다"))
+                    .andExpect(jsonPath("$.message").value("일치하는 세션을 찾을 수 없습니다."))
                     .andDo(print());
         }
     }

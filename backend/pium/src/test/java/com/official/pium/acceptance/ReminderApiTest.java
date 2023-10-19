@@ -49,7 +49,7 @@ class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.UNAUTHORIZED.value())
-                    .assertThat().body("message", containsString("로그인이 필요합니다"));
+                    .assertThat().body("message", containsString("일치하는 세션을 찾을 수 없습니다."));
         }
 
         @Test
@@ -119,7 +119,7 @@ class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.UNAUTHORIZED.value())
-                    .assertThat().body("message", containsString("로그인이 필요합니다"));
+                    .assertThat().body("message", containsString("일치하는 세션을 찾을 수 없습니다."));
         }
 
         @Test
@@ -327,7 +327,7 @@ class ReminderApiTest extends AcceptanceTest {
                     .then()
                     .log().all()
                     .statusCode(HttpStatus.UNAUTHORIZED.value())
-                    .assertThat().body("message", containsString("로그인이 필요합니다"));
+                    .assertThat().body("message", containsString("일치하는 세션을 찾을 수 없습니다."));
         }
 
         @Test

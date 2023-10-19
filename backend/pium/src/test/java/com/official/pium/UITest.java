@@ -1,5 +1,6 @@
 package com.official.pium;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
@@ -41,7 +42,7 @@ public class UITest {
         admin = new Admin("admin", "1234", "12345");
 
         session.setAttribute(ADMIN_SESSION_KEY, admin);
-        given(sessionGroupService.findOrExtendsBySessionIdAndKey(anyString(), anyString()))
+        given(sessionGroupService.findOrExtendsBySessionIdAndKey(any(), anyString()))
                 .willReturn("12345");
         given(memberRepository.findByKakaoId(anyLong()))
                 .willReturn(Optional.of(member));
