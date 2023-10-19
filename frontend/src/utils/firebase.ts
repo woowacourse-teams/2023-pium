@@ -45,7 +45,19 @@ const getCurrentToken = async () => {
 const deleteCurrentToken = async () => await deleteToken(messaging);
 
 onMessage(messaging, (payload) => {
-  console.log(payload, 'this is payload');
+  const { notification } = payload;
+
+  const notificationTitle = notification?.title ?? '피움 알림';
+  const notificationOptions = {
+    body: notification?.body ?? '내용이 없습니다',
+    icon: notification?.icon ?? './assets/favicon-32x32.png',
+  };
+  const foregroundNotification = new Notification(notificationTitle, notificationOptions);
+
+  foregroundNotification.onclick = function (event) {
+    event.preventDefault();
+    foregroundNotification.close();
+  };
 });
 
 export { analytics, messaging, getCurrentToken, deleteCurrentToken };
