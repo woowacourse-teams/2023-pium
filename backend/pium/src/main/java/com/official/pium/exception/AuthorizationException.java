@@ -12,10 +12,6 @@ public class AuthorizationException extends RuntimeException {
 
     public static class NeedAdminException extends AuthorizationException {
 
-        public NeedAdminException() {
-            super();
-        }
-
         public NeedAdminException(final String message) {
             super(message);
         }

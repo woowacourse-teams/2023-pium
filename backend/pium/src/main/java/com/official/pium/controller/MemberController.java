@@ -30,24 +30,12 @@ public class MemberController {
 
     @DeleteMapping("/withdraw")
     public ResponseEntity<Void> withdraw(HttpServletRequest request, @Auth Member member) {
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-            session.invalidate();
-        }
         memberService.withdraw(member);
-
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/me")
-    public ResponseEntity<Void> checkSessionStatus(HttpServletRequest request, @Auth Member member) {
-        HttpSession session = request.getSession(false);
-
-        if (session == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
+    public ResponseEntity<Void> checkSessionStatus(@Auth Member member) {
         return ResponseEntity.ok().build();
     }
 

@@ -36,14 +36,8 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<Void> logout(HttpServletRequest request, @Auth Member member) {
-        HttpSession session = request.getSession(false);
-
-        if (session != null) {
-            sessionGroupService.delete(session.getId(), SESSION_KEY);
-            session.invalidate();
-        }
-
+    public ResponseEntity<Void> logout(@Auth Member member) {
+        sessionGroupService.delete(member.getKakaoId());
         return ResponseEntity.ok().build();
     }
 }

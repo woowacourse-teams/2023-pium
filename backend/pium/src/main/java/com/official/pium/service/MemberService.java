@@ -5,6 +5,7 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.repository.SessionGroupRepository;
 import com.official.pium.service.dto.NotificationCheckResponse;
 import com.official.pium.service.dto.NotificationSubscribeRequest;
 import com.official.pium.service.dto.OAuthProvider;
@@ -21,6 +22,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final HistoryRepository historyRepository;
     private final PetPlantRepository petPlantRepository;
+    private final SessionGroupRepository sessionGroupRepository;
     private final OAuthProvider provider;
 
     @Transactional
@@ -33,6 +35,7 @@ public class MemberService {
 
         petPlantRepository.deleteAllByMember(member);
 
+        sessionGroupRepository.deleteBySessionValue(String.valueOf(member.getKakaoId()));
         memberRepository.deleteById(member.getId());
     }
 
