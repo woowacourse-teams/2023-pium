@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useAddToast from 'hooks/@common/useAddToast';
 import AuthAPI from 'apis/auth';
@@ -8,6 +8,8 @@ import { URL_PATH } from 'constants/index';
 const useLogin = () => {
   const navigation = useNavigate();
   const addToast = useAddToast();
+
+  const queryClient = useQueryClient();
 
   return useMutation<null, Error, string>({
     mutationFn: async (code: string) => {
@@ -24,6 +26,10 @@ const useLogin = () => {
     onError: (error) => {
       addToast({ type: 'error', message: error.message, time: 3000 });
       navigation(URL_PATH.login, { replace: true });
+    },
+
+    onMutate: () => {
+      queryClient.invalidateQueries({ queryKey: ['checkSessionId'] });
     },
   });
 };
