@@ -17,7 +17,7 @@ export const isSupported =
 const initialPushStatus: PushStatusState = {
   pushSupport: isSupported,
   currentToken: null,
-  notificationPermission: Notification.permission,
+  notificationPermission: 'default',
 };
 
 class PushStatus {

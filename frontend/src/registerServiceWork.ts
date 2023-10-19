@@ -1,4 +1,5 @@
 import { isSupported } from 'firebase/messaging';
+import FCMMessaging from 'models/FCMMessaging';
 import PushStatus, { isSupported as isBrowserSupport } from 'models/PushStatus';
 
 const registerPwaServiceWorker = async (workerPath: string) => {
@@ -24,9 +25,8 @@ const registerPwaServiceWorker = async (workerPath: string) => {
     }
   }
 
-  // 새로운 서비스워커로 업데이트
-  // 초기에 시작할 때 currentToken을 일단 받음
-  // permission을 물어보지 않아서 getCurrentToken을 받아올 수 없음.
+  FCMMessaging.registerMessaging();
+  FCMMessaging.setOnMessaging();
 
   PushStatus.updatePushStatus({
     notificationPermission: 'default',

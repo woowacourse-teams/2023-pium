@@ -53,7 +53,6 @@ class FCMMessaging {
   async getCurrentToken() {
     if (!this.messaging) throw new Error('등록된 메세지가 없어서 토큰을 반환할 수 없습니다');
     const permission = Notification.permission;
-    console.log('notification', permission);
 
     if (permission !== 'granted') return null;
 
@@ -63,7 +62,7 @@ class FCMMessaging {
   }
 
   async deleteCurrentToken() {
-    if (!this.messaging) throw new Error('등록된 메서지가 없어서 토큰을 삭제할 수 없습니다');
+    if (!this.messaging) throw new Error('등록된 메세지가 없어서 토큰을 삭제할 수 없습니다');
     return await deleteToken(this.messaging);
   }
 }

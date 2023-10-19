@@ -14,26 +14,21 @@ const usePushAlert = () => {
     }
 
     // subscribe를 하지 않으려면 해당 토큰을 제거해야 한다.
-    if (!('Notification' in window)) return;
 
     const permission = await Notification.requestPermission();
+    PushStatus.setPermission(permission);
 
     if (permission !== 'granted') {
       addToast({ type: 'info', message: '알림이 허용되지 않았습니다', time: 3000 });
-      PushStatus.setPermission(permission);
       return;
     }
-
-    if (FCMMessaging.checkMessaging()) {
-      FCMMessaging.registerMessaging();
-    }
-
     // TODO: 사용자가 처음 알림 설정을 한 것인지 아니면 기존에
     try {
       let token = PushStatus.getCurrentToken();
 
       // 이중 throw... 이게 괜찮은걸까?
       if (token === null) {
+        // TODO: 여기서 시간이 좀 걸림;;
         token = await FCMMessaging.getCurrentToken();
 
         if (token === null) throw new Error();
