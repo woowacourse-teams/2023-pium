@@ -32,10 +32,16 @@ const messaging = getMessaging(app);
  * https://github.dev/firebase/firebase-js-sdk
  */
 
-const getCurrentToken = async () =>
-  await getToken(messaging, {
+const getCurrentToken = async () => {
+  const permission = Notification.permission;
+
+  if (permission !== 'granted') return null;
+
+  return await getToken(messaging, {
     vapidKey: process.env.VAPID_PUBLIC_KEY ?? '',
   });
+};
+
 const deleteCurrentToken = async () => await deleteToken(messaging);
 
 onMessage(messaging, (payload) => {
