@@ -15,11 +15,9 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 @RequiredArgsConstructor
 public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private static final int VALUE_INDEX = 1;
-    private static final String SESSION_DELIMITER = "=";
     private static final String SESSION_KEY = "KAKAO_ID";
+    private static final String JSESSIONID = "JSESSIONID";
     private static final String COOKIE_HEADER = "cookie";
-    private static final int MIN_SESSION_SIZE = 2;
 
     private final MemberRepository memberRepository;
     private final SessionGroupService sessionGroupService;
@@ -53,10 +51,7 @@ public class MemberArgumentResolver implements HandlerMethodArgumentResolver {
         if (sessionCookie == null || sessionCookie.isBlank()) {
             return null;
         }
-        String[] keyAndValue = sessionCookie.split(SESSION_DELIMITER);
-        if (keyAndValue.length < MIN_SESSION_SIZE) {
-            return null;
-        }
-        return keyAndValue[VALUE_INDEX];
+        HttpCookieManager httpCookieManager = new HttpCookieManager(sessionCookie);
+        return httpCookieManager.getCookie(JSESSIONID);
     }
 }
