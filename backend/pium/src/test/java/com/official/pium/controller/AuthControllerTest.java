@@ -1,5 +1,6 @@
 package com.official.pium.controller;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -17,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.official.pium.UITest;
 import com.official.pium.domain.Member;
+import com.official.pium.exception.AuthenticationException;
 import com.official.pium.service.AuthService;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -27,7 +29,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.MockMvc;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -94,23 +95,25 @@ class AuthControllerTest extends UITest {
 
         @Test
         void 세션_정보_없이_요청_시_401_반환() throws Exception {
+            given(sessionGroupService.findOrExtendsBySessionIdAndKey(any(), anyString()))
+                    .willThrow(new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
+            
             mockMvc.perform(post("/logout")
                             .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
-                    .andExpect(jsonPath("$.message").value("로그인이 필요합니다"))
+                    .andExpect(jsonPath("$.message").value("일치하는 세션을 찾을 수 없습니다."))
                     .andDo(print());
         }
 
         @Test
         void 만료된_세션으로_요청_시_401_반환() throws Exception {
-            MockHttpSession expiredSession = new MockHttpSession();
-            expiredSession.invalidate();
+            given(sessionGroupService.findOrExtendsBySessionIdAndKey(any(), anyString()))
+                    .willThrow(new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
 
             mockMvc.perform(post("/logout")
-                            .session(expiredSession)
                             .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
-                    .andExpect(jsonPath("$.message").value("로그인이 필요합니다"))
+                    .andExpect(jsonPath("$.message").value("일치하는 세션을 찾을 수 없습니다."))
                     .andDo(print());
         }
     }
