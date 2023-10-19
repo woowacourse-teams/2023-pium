@@ -45,10 +45,9 @@ public class SessionGroupService {
 
     @Transactional
     public void add(String sessionId, String key, String value) {
-        sessionGroupRepository.findBySessionIdAndSessionKey(sessionId, key)
-                .ifPresent(existsSessionGroup -> {
-                    throw new AuthenticationException("이미 존재하는 세션입니다. sessionId: " + sessionId);
-                });
+        if (sessionGroupRepository.existsBySessionIdAndSessionKey(sessionId, key)) {
+            return;
+        }
 
         SessionGroup sessionGroup = SessionGroup.builder()
                 .sessionId(sessionId)

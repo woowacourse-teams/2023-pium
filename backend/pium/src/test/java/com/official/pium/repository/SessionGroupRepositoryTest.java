@@ -1,15 +1,16 @@
 package com.official.pium.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.official.pium.RepositoryTest;
 import com.official.pium.domain.SessionGroup;
-import java.time.LocalDateTime;
-import java.util.UUID;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
@@ -79,5 +80,32 @@ class SessionGroupRepositoryTest extends RepositoryTest {
         sessionGroupRepository.delete(savedSessionGroup);
 
         assertThat(sessionGroupRepository.findById(savedSessionGroup.getId())).isEmpty();
+    }
+
+    @Test
+    void 기존_세션이_존재하면_True() {
+        SessionGroup sessionGroup = SessionGroup.builder()
+                .sessionId("UUID.randomUUID().toString()")
+                .sessionKey("KAKAO_ID")
+                .sessionValue("1234546426")
+                .expireTime(LocalDateTime.now().plusMinutes(30))
+                .build();
+        SessionGroup savedSessionGroup = sessionGroupRepository.save(sessionGroup);
+
+        boolean existsBySessionIdAndSessionKey = sessionGroupRepository.existsBySessionIdAndSessionKey(
+                savedSessionGroup.getSessionId(),
+                savedSessionGroup.getSessionKey()
+        );
+
+        assertThat(existsBySessionIdAndSessionKey).isTrue();
+    }
+
+    @Test
+    void 기존_세션이_존재하지않으면_False() {
+        boolean existsBySessionIdAndSessionKey = sessionGroupRepository.existsBySessionIdAndSessionKey(
+                "id", "sessionKey"
+        );
+
+        assertThat(existsBySessionIdAndSessionKey).isFalse();
     }
 }
