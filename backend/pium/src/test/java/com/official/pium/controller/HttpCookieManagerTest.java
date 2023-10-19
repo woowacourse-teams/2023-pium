@@ -12,7 +12,17 @@ class HttpCookieManagerTest {
 
     @Test
     void JSESSIONID를_가져온다() {
-        String requestCookie = "JSESSIONID=F51D50B1C12CE2BC58C6AC6EF8EF0092; _ga_8SL2D547VW=GS1.1.1697719895.1.1.1697720060.0.0.0";
+        String requestCookie = "_ga_8SL2D547VW=GS1.1.1697719895.1.1.1697720060.0.0.0; JSESSIONID=F51D50B1C12CE2BC58C6AC6EF8EF0092";
+        HttpCookieManager httpCookieManager = new HttpCookieManager(requestCookie);
+
+        String jsessionid = httpCookieManager.getCookie("JSESSIONID");
+
+        assertThat(jsessionid).isEqualTo("F51D50B1C12CE2BC58C6AC6EF8EF0092");
+    }
+
+    @Test
+    void JSESSIONID를_가져온다2() {
+        String requestCookie = "JSESSIONID=F51D50B1C12CE2BC58C6AC6EF8EF0092";
         HttpCookieManager httpCookieManager = new HttpCookieManager(requestCookie);
 
         String jsessionid = httpCookieManager.getCookie("JSESSIONID");

@@ -9,7 +9,7 @@ public class HttpCookieManager {
     private static final int VALUE_INDEX = 1;
     private static final int COOKIE_SIZE = 2;
     private static final String SESSION_DELIMITER = "=";
-    private static final String SESSIONS_DELIMITER = ";";
+    private static final String SESSIONS_DELIMITER = "; ";
 
     private final Map<String, String> cookies = new HashMap<>();
 
