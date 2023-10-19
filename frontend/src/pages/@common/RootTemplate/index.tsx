@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, matchRoutes, useLocation } from 'react-router-dom';
 import NotFound from 'pages/@common/Error/NotFound';
 import LastPageLoading from 'pages/@common/LastPageLoading';
 import ErrorBoundary from 'components/@common/ErrorBoundary';
@@ -8,7 +8,18 @@ import Redirect from 'components/@common/Redirect';
 import { PageArea, Wrapper } from './RootTemplate.style';
 import { GUIDE, URL_PATH } from 'constants/index';
 
+const NO_NAVIGATION_BAR_URLS = [
+  URL_PATH.petRegisterForm,
+  URL_PATH.dictDetail,
+  URL_PATH.petEdit,
+  URL_PATH.login,
+  URL_PATH.authorization,
+].map((path) => ({ path }));
 const RootTemplate = () => {
+  const { pathname } = useLocation();
+
+  const showNavBar = matchRoutes(NO_NAVIGATION_BAR_URLS, pathname) === null;
+
   return (
     <Wrapper>
       <PageArea>
@@ -27,7 +38,7 @@ const RootTemplate = () => {
             <Suspense fallback={<LastPageLoading />}>
               <Outlet />
             </Suspense>
-            <Navbar />
+            {showNavBar && <Navbar />}
           </ErrorBoundary>
         </ErrorBoundary>
       </PageArea>
