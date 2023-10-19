@@ -20,25 +20,28 @@ const BackHeader = (props: BackHeaderProps) => {
     navigate(-1);
   };
 
-  const onChangeIntersection = (isIntersecting: boolean) => {
-    if (!transparentHeight) return;
+  const intersectionRef = useCallback(
+    <T extends Element>(instance: T | null) => {
+      const onChangeIntersection = (isIntersecting: boolean) => {
+        if (!transparentHeight) return;
 
-    if (isIntersecting) {
-      on();
-    } else {
-      off();
-    }
-  };
+        if (isIntersecting) {
+          on();
+        } else {
+          off();
+        }
+      };
 
-  const intersectionRef = useCallback(<T extends Element>(instance: T | null) => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(({ isIntersecting }) => {
-        onChangeIntersection(isIntersecting);
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(({ isIntersecting }) => {
+          onChangeIntersection(isIntersecting);
+        });
       });
-    });
 
-    if (instance) observer.observe(instance);
-  }, []);
+      if (instance) observer.observe(instance);
+    },
+    [off, on, transparentHeight]
+  );
 
   return (
     <>
@@ -47,7 +50,7 @@ const BackHeader = (props: BackHeaderProps) => {
         document.body
       )}
       <Wrapper $transparent={isTop}>
-        <BackButton onClick={goBack}>
+        <BackButton type="button" onClick={goBack}>
           <SvgFill
             icon="line-arrow-left"
             aria-label="뒤로 가기"
