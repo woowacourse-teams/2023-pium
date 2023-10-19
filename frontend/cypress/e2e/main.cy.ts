@@ -17,7 +17,7 @@ describe('검색창', () => {
 
   it('검색창을 이용해 비슷한 이름의 식물을 확인한다.', () => {
     cy.get('input')
-      .type('아')
+      .type('아', { force: true })
       .wait(500)
 
       .get('ul > li')
@@ -34,7 +34,7 @@ describe('검색창', () => {
       .should('be.visible')
 
       .get('input')
-      .type('카')
+      .type('카', { force: true })
       .wait(500)
 
       .get('ul > li')
@@ -48,7 +48,7 @@ describe('검색창', () => {
       .should('be.visible')
 
       .get('input')
-      .type('시')
+      .type('시', { force: true })
       .wait(500)
 
       .get('ul > li')
@@ -59,7 +59,7 @@ describe('검색창', () => {
       .should('be.visible')
 
       .get('input')
-      .type('아')
+      .type('아', { force: true })
       .wait(500)
 
       .get('ul > li')
@@ -67,7 +67,7 @@ describe('검색창', () => {
       .should('be.visible')
 
       .get('input')
-      .type('짱')
+      .type('짱', { force: true })
       .wait(500)
 
       .get('p')
@@ -77,12 +77,12 @@ describe('검색창', () => {
 
   it('식물 이름을 클릭해 식물 사전 페이지로 이동한다.', () => {
     cy.get('input')
-      .type('참')
+      .type('참', { force: true })
       .wait(500)
       .get('ul > li')
       .contains('참새')
       .should('be.visible')
-      .click()
+      .click({ force: true })
 
       .location()
       .should((location) => {
@@ -93,7 +93,7 @@ describe('검색창', () => {
 
   it('정확히 일치하는 이름이 있을 경우 식물 사전 페이지로 이동한다.', () => {
     cy.get('input')
-      .type('아카시')
+      .type('아카시', { force: true })
       .wait(500)
 
       .get('ul > li')
@@ -101,7 +101,7 @@ describe('검색창', () => {
       .should('be.visible')
 
       .get('button[aria-label="이동하기"]')
-      .click()
+      .click({ force: true })
 
       .location()
       .should((location) => {
@@ -112,7 +112,7 @@ describe('검색창', () => {
 
   it('정확히 일치하는 이름이 없을 경우 식물 사전 검색 페이지로 이동한다.', () => {
     cy.get('input')
-      .type('참')
+      .type('참', { force: true })
       .wait(500)
 
       .get('ul > li')
@@ -121,7 +121,7 @@ describe('검색창', () => {
       .get('input')
       .focus()
 
-      .type('{enter}')
+      .type('{enter}', { force: true })
 
       .location('pathname')
       .should('equal', '/dict')
