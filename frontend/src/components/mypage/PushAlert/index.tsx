@@ -1,10 +1,13 @@
 import Toggle from 'components/@common/Toggle';
 import { PushAlertContent, PushAlertWrapper, WarnParagraph } from './PushAlert.style';
 import usePushAlert from 'hooks/@common/usePushAlert';
+import PushStatus from 'models/PushStatus';
 
 const PushAlert = () => {
-  const { currentSubscribe, pushSupport, notificationDenied, subscribeAlert, unSubscribeAlert } =
-    usePushAlert();
+  const { currentSubscribe, subscribeAlert, unSubscribeAlert } = usePushAlert();
+
+  const pushSupport = PushStatus.getIsSupport();
+  const notificationDenied = PushStatus.getPermission();
 
   return (
     <PushAlertWrapper>
