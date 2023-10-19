@@ -8,9 +8,11 @@ import { URL_PATH } from 'constants/index';
 import NavItem from './NavItem';
 
 const NO_NAVIGATION_BAR_URLS = [
-  URL_PATH.petRegisterForm,
   URL_PATH.dictDetail,
+  URL_PATH.petRegisterForm,
+  URL_PATH.petDetail,
   URL_PATH.petEdit,
+  URL_PATH.timeline,
   URL_PATH.login,
   URL_PATH.authorization,
 ].map((path) => ({ path }));
