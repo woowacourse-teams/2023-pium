@@ -66,4 +66,9 @@ public class SessionGroupService {
 
         sessionGroupRepository.delete(sessionGroup);
     }
+
+    @Transactional
+    public void delete(Long kakaoId) {
+        sessionGroupRepository.deleteBySessionValue(String.valueOf(kakaoId));
+    }
 }

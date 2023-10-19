@@ -101,11 +101,10 @@ class MemberControllerTest extends UITest {
 
         @Test
         void 유효하지_않은_상태라면_401_반환() throws Exception {
-            MockHttpSession expiredSession = new MockHttpSession();
-            expiredSession.invalidate();
+            given(sessionGroupService.findOrExtendsBySessionIdAndKey(any(), anyString()))
+                    .willThrow(new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
 
             mockMvc.perform(get("/members/me")
-                            .session(expiredSession)
                             .contentType(MediaType.APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())
                     .andDo(print());
