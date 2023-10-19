@@ -1,19 +1,19 @@
 package com.official.pium.controller;
 
+import com.official.pium.exception.AuthenticationException;
 import com.official.pium.exception.AuthorizationException;
-import com.official.pium.fcm.exception.FcmException;
 import com.official.pium.exception.OAuthException;
 import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
 import com.official.pium.exception.OAuthException.KakaoServerException;
 import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
 import com.official.pium.exception.dto.GlobalExceptionResponse;
+import com.official.pium.fcm.exception.FcmException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringJoiner;
-import javax.naming.AuthenticationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
