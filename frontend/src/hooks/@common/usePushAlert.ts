@@ -1,6 +1,6 @@
 import useWebPush from 'hooks/queries/auth/useWebPush';
+import FCMMessaging from 'models/FCMMessaging';
 import PushStatus from 'models/PushStatus';
-import { getCurrentToken } from 'utils/firebase';
 import useAddToast from './useAddToast';
 
 const usePushAlert = () => {
@@ -14,6 +14,8 @@ const usePushAlert = () => {
     }
 
     // subscribe를 하지 않으려면 해당 토큰을 제거해야 한다.
+    if (!('Notification' in window)) return;
+
     const permission = await Notification.requestPermission();
 
     if (permission !== 'granted') {
@@ -22,13 +24,17 @@ const usePushAlert = () => {
       return;
     }
 
+    if (FCMMessaging.checkMessaging()) {
+      FCMMessaging.registerMessaging();
+    }
+
     // TODO: 사용자가 처음 알림 설정을 한 것인지 아니면 기존에
     try {
       let token = PushStatus.getCurrentToken();
 
       // 이중 throw... 이게 괜찮은걸까?
       if (token === null) {
-        token = await getCurrentToken();
+        token = await FCMMessaging.getCurrentToken();
 
         if (token === null) throw new Error();
       }

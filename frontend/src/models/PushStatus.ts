@@ -1,5 +1,5 @@
 // TODO: 클래스로 변환해서 사용해보기
-import { deleteCurrentToken } from 'utils/firebase';
+import FCMMessaging from './FCMMessaging';
 
 type NotificationPermission = 'granted' | 'default' | 'denied';
 
@@ -28,7 +28,7 @@ class PushStatus {
 
     if (pushStatus.notificationPermission !== 'granted') {
       this.pushStatus.currentToken = null;
-      await deleteCurrentToken();
+      await FCMMessaging.deleteCurrentToken();
     }
   }
 
@@ -47,7 +47,7 @@ class PushStatus {
   async setPermission(permission: NotificationPermission) {
     if (permission !== 'granted') {
       this.pushStatus.currentToken = null;
-      await deleteCurrentToken();
+      await FCMMessaging.deleteCurrentToken();
     }
 
     this.pushStatus.notificationPermission = permission;
