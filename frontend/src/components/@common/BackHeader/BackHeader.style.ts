@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.header`
+export const Wrapper = styled.header<{ $transparent: boolean }>`
   position: fixed;
   z-index: ${(props) => props.theme.zIndex.fixed};
   top: 0;
@@ -13,9 +13,9 @@ export const Wrapper = styled.header`
   height: 48px;
   padding: 0 16px;
 
-  background-color: ${(props) => props.theme.color.background + 'aa'};
-  backdrop-filter: blur(2px);
-  box-shadow: 0 2px 2px -2px ${(props) => props.theme.color.gray};
+  background-color: ${(props) =>
+    props.$transparent ? 'transparent' : props.theme.color.background};
+  box-shadow: 0 2px 2px -2px ${(props) => (props.$transparent ? 'transparent' : props.theme.color.gray)};
 `;
 
 export const BackButton = styled.button`
@@ -26,4 +26,10 @@ export const BackButton = styled.button`
   align-items: center;
 
   width: 20px;
+`;
+
+export const TransparentSensor = styled.div<{ $height: `${string}px` }>`
+  position: absolute;
+  top: 0;
+  height: ${(props) => props.$height};
 `;
