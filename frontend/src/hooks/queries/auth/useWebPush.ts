@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import useAddToast from 'hooks/@common/useAddToast';
+import FCMMessaging from 'models/FCMMessaging';
 import PushStatus from 'models/PushStatus';
 import WebPushSubscribeAPI, { SUBSCRIBE_URL } from 'apis/webPush';
-import { deleteCurrentToken, getCurrentToken } from 'utils/firebase';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
 
@@ -34,8 +34,8 @@ const useWebPush = () => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
       addToast({ type: 'error', message: error.message });
 
-      await deleteCurrentToken();
-      const currentToken = await getCurrentToken();
+      await FCMMessaging.deleteCurrentToken();
+      const currentToken = await FCMMessaging.getCurrentToken();
       PushStatus.setCurrentToken(currentToken);
     },
     onSettled: () => {
@@ -59,8 +59,8 @@ const useWebPush = () => {
       return { prevData };
     },
     onSuccess: async () => {
-      await deleteCurrentToken();
-      const currentToken = await getCurrentToken();
+      await FCMMessaging.deleteCurrentToken();
+      const currentToken = await FCMMessaging.getCurrentToken();
       PushStatus.setCurrentToken(currentToken);
     },
     onError: (error, __, context) => {
