@@ -5,6 +5,7 @@ import {
   ContentWrapper,
   Guide,
   GuideParagraph,
+  InfoButton,
   Wrapper,
 } from './InstallPrompt.style';
 import useInstallApp from 'hooks/@common/useInstallApp';
@@ -22,8 +23,13 @@ const InstallPrompt = () => {
     if (isIos) {
       return (
         <Guide>
-          하단 탭에 있는 <SvgFill icon="ios-share" size={16} fill={theme.color.sub} /> 아이콘에서
-          "홈 화면에 추가"를 통해 바로가기를 설치 할 수 있습니다.
+          <p>
+            하단 탭에 있는 <SvgFill icon="ios-share" size={16} fill={theme.color.sub} /> 아이콘에서
+            "홈 화면에 추가"를 통해 바로가기를 설치 할 수 있습니다.
+          </p>
+          <InfoButton type="button" onClick={ignoreInstallApp}>
+            웹으로 볼게요
+          </InfoButton>
         </Guide>
       );
     }
@@ -33,20 +39,24 @@ const InstallPrompt = () => {
       return (
         <Guide>
           <img src={FireFoxButton} width={210} height={30} alt="파이어폭스 바로가기 추가" />
-          <br />
-          상단 탭에 있는 더보기를 클릭한 다음 '설치' 버튼을 통해 바로가기를 설치할 수 있습니다.
+          <p>
+            상단 탭에 있는 더보기를 클릭한 다음 '설치' 버튼을 통해 바로가기를 설치할 수 있습니다.
+          </p>
+          <InfoButton type="button" onClick={ignoreInstallApp}>
+            웹으로 볼게요
+          </InfoButton>
         </Guide>
       );
     }
 
     return (
       <ButtonWrapper>
-        <button type="button" onClick={ignoreInstallApp}>
+        <InfoButton type="button" onClick={ignoreInstallApp}>
           웹으로 볼게요
-        </button>
-        <button type="button" onClick={installApp}>
+        </InfoButton>
+        <InfoButton type="button" onClick={installApp}>
           바로가기 추가
-        </button>
+        </InfoButton>
       </ButtonWrapper>
     );
   }, [ignoreInstallApp, installApp, isFireFox, isIos]);
