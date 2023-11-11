@@ -1,5 +1,6 @@
 import { PrimaryButton } from 'components/@common/Confirm/Confirm.style';
 import ContentHeader from 'components/@common/ContentHeader';
+import InstallPrompt from 'components/@common/InstallPrompt';
 import PageLogger from 'components/@common/PageLogger';
 import MonthBox from 'components/reminder/MonthBox';
 import { ContentBox, NoDataContainer, Register, Title, Main } from './ReminderPage.style';
@@ -18,6 +19,7 @@ const ReminderPage = () => {
 
   return (
     <PageLogger>
+      <InstallPrompt />
       <ReminderProvider waterCallback={water} changeDateCallback={changeDate}>
         <Main status={reminderData.status}>
           <ContentHeader title="리마인더" />

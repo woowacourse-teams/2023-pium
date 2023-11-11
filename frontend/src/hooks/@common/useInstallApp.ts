@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { getCookie, setCookie } from 'utils/cookie';
+import { URL_PATH } from 'constants/index';
 
 declare global {
   interface WindowEventMap {
@@ -35,7 +36,7 @@ const useInstallApp = () => {
   };
 
   const ignoreInstallApp = () => {
-    setCookie({ key: 'PromptVisible', value: 'false', path: '/reminder' });
+    setCookie({ key: 'PromptVisible', value: 'false', path: URL_PATH.reminder });
     deferredPrompt = null;
     setShowPrompt(false);
   };
