@@ -18,14 +18,14 @@ export const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  gap: 12px;
   justify-content: space-evenly;
 
   width: 100%;
   min-width: ${({ theme }) => theme.width.mobile};
   max-width: ${({ theme }) => theme.width.pad};
-  height: 120px;
   margin: 16px 0;
-  padding: 0 32px;
+  padding: 16px 32px;
 
   background: ${({ theme }) => theme.color.background};
   border-bottom: solid 2px ${({ theme }) => theme.color.grayLight};
@@ -48,9 +48,8 @@ export const GuideParagraph = styled.p`
   font: 500 1.6rem/2.2rem NanumSquareRound;
 `;
 
-export const IosGuide = styled.p`
+export const Guide = styled.p`
   justify-content: center;
-  height: 30px;
   font: 600 1.6rem/2.2rem NanumsquareRound;
 `;
 

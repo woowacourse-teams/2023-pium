@@ -4,12 +4,13 @@ interface CookieParams {
   key: Cookie;
   value: string;
   expire?: number;
+  path?: string;
 }
 
-export const setCookie = ({ key, value, expire = 2592000 }: CookieParams) => {
+export const setCookie = ({ key, value, expire = 2592000, path = '/' }: CookieParams) => {
   document.cookie = `${encodeURIComponent(key)}=${encodeURIComponent(
     value
-  )}; max-age=${expire}; path=/`;
+  )}; max-age=${expire}; path=${path}`;
 };
 
 export const getCookie = (cookieKey: Cookie): string | null => {
