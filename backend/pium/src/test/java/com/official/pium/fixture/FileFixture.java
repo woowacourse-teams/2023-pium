@@ -1,15 +1,17 @@
 package com.official.pium.fixture;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import javax.imageio.ImageIO;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 public class FileFixture {
 
+    public static final String IMAGE_PATH = "image";
     private static final byte[] IMAGE = generateMockImage();
 
     public static byte[] generateMockImage() {

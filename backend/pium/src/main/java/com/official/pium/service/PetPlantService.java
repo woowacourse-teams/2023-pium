@@ -18,9 +18,6 @@ import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.SinglePetPlantResponse;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationEventPublisher;
@@ -31,13 +28,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PetPlantService {
 
     @Value("${petPlant.image.directory}")
-    private String workingDirectory;
+    private String petPlantImageDirectory;
+
+    @Value("${local.image.web}")
+    private String webPath;
+
+    @Value("${dictPlant.image.directory}")
+    private String dictionaryPlantImageDirectory;
 
     private final PetPlantRepository petPlantRepository;
     private final DictionaryPlantRepository dictionaryPlantRepository;
@@ -66,7 +73,7 @@ public class PetPlantService {
         if (image == null || image.isEmpty()) {
             return imageDefaultUrl;
         }
-        return photoManager.upload(image, workingDirectory);
+        return photoManager.upload(image, petPlantImageDirectory);
     }
 
     private void createHistory(PetPlant petPlant) {
@@ -132,8 +139,12 @@ public class PetPlantService {
         if (image == null || image.isEmpty()) {
             return originalImageUrl;
         }
-        photoManager.delete(originalImageUrl, workingDirectory);
-        return photoManager.upload(image, workingDirectory);
+
+        if (!originalImageUrl.startsWith(webPath + dictionaryPlantImageDirectory)) {
+            photoManager.delete(originalImageUrl, petPlantImageDirectory);
+        }
+
+        return photoManager.upload(image, petPlantImageDirectory);
     }
 
     private void publishPetPlantHistories(PetPlant petPlant, PetPlantHistory previousPetPlantHistory,

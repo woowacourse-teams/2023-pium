@@ -1,33 +1,24 @@
 package com.official.pium.util;
 
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.official.pium.service.PhotoManager;
-import java.io.File;
-import java.io.IOException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@RequiredArgsConstructor
-public class PhotoS3Manager implements PhotoManager {
+import java.io.File;
+import java.io.IOException;
+
+@Component
+public class PhotoLocalManager implements PhotoManager {
 
     private static final String SLASH = "/";
-    private static final String SYSTEM_PATH = System.getProperty("user.dir");
+    private static final int NOT_FOUND_INDEX = -1;
 
-    private final AmazonS3 s3Client;
+    @Value("${local.image.web}")
+    private String webPath;
 
-    @Value("${aws.s3.root}")
-    private String rootPath;
-
-    @Value("${aws.s3.bucket}")
-    private String bucket;
-
-    @Value("${aws.s3.folder}")
-    private String folder;
-
-    @Value("${aws.s3.directory}")
-    private String directory;
+    @Value("${local.image.root}")
+    private String localPath;
 
     @Override
     public String upload(MultipartFile multipartFile, String workingDirectory) {
@@ -42,19 +33,16 @@ public class PhotoS3Manager implements PhotoManager {
             String fileName = PhotoNameGenerator.of(multipartFile.getOriginalFilename());
             File uploadDirectory = loadDirectory(getLocalDirectoryPath(workingDirectory));
             File uploadPath = new File(uploadDirectory, fileName);
-            File file = uploadFileInLocal(multipartFile, uploadPath);
+            uploadFileInLocal(multipartFile, uploadPath);
 
-            s3Client.putObject(new PutObjectRequest(bucket + folder + directory + workingDirectory, fileName, file));
-
-            file.delete();
-            return rootPath + SLASH + directory + workingDirectory + SLASH + fileName;
+            return webPath + SLASH + uploadDirectory + SLASH + fileName;
         } catch (Exception e) {
             throw new IllegalStateException("파일 업로드를 실패했습니다.");
         }
     }
 
     private String getLocalDirectoryPath(String workingDirectory) {
-        return SYSTEM_PATH + SLASH + directory + workingDirectory;
+        return localPath + SLASH + workingDirectory;
     }
 
     private File loadDirectory(String directoryLocation) {
@@ -65,20 +53,34 @@ public class PhotoS3Manager implements PhotoManager {
         return directory;
     }
 
-    private File uploadFileInLocal(MultipartFile multipartFile, File uploadPath) {
+    private void uploadFileInLocal(MultipartFile multipartFile, File uploadPath) {
         try {
             multipartFile.transferTo(uploadPath);
         } catch (IOException e) {
             throw new IllegalStateException("파일 변환이 실패했습니다.");
         }
-        return uploadPath;
     }
 
     @Override
     public void delete(String originalImageUrl, String workingDirectory) {
-        if (originalImageUrl.contains(rootPath + SLASH + directory + workingDirectory)) {
-            String fileName = originalImageUrl.substring(rootPath.length() + 1);
-            s3Client.deleteObject(bucket, folder + fileName);
+        String deletePath = getFileLocalPath(originalImageUrl);
+        File file = new File(deletePath);
+        deleteFile(file);
+    }
+
+    private String getFileLocalPath(String fullPath) {
+        int urlIndex = fullPath.lastIndexOf(webPath);
+
+        if (urlIndex == NOT_FOUND_INDEX) {
+            throw new IllegalArgumentException("잘못된 파일 경로입니다.");
+        }
+        int urlNextIndex = urlIndex + webPath.length();
+        return localPath + fullPath.substring(urlNextIndex);
+    }
+
+    private void deleteFile(File file) {
+        if (file.exists()) {
+            file.delete();
         }
     }
 }
