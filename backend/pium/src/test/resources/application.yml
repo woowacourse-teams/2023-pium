@@ -1,0 +1,78 @@
+spring:
+  flyway:
+    enabled: false
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+  datasource:
+    url: jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+    hikari:
+      connectionTimeout: 3000
+      maximum-pool-size: 4
+
+registration:
+  image:
+    directory: registration
+
+auth:
+  kakao:
+    token-request-uri: http://localhost:8888/oauth/token
+    admin-id: adminId
+    member-info-request-uri: http://localhost:8888/user/me
+    unlink-uri: http://localhost:8888/v1/user/unlink
+    redirect-uri: http://localhost:8888/authorization
+    client-id: clientId
+
+petPlant:
+  image:
+    directory: test
+
+dictPlant:
+  image:
+    directory: /dict
+
+aws:
+  s3:
+    root: https://static.pium.life
+    directory: test/
+    folder: test/
+    bucket: test/
+
+local:
+  image:
+    root: src/test/resources
+    web: https://static.pium.life
+
+admin:
+  secondPassword: 123
+  account: asdf
+  password: 123
+
+view:
+  image:
+    favicion: https://static.pium.life/prod/favicon.ico
+    home: https://static.pium.life/prod/home.png
+
+server:
+  port: 8888
+  tomcat:
+    max-http-form-post-size: 10MB
+
+fcm:
+  key:
+    path: config/pium-fcm.json
+    scope: https://www.googleapis.com/auth/firebase.messaging
+  api:
+    url: https://fcm.googleapis.com/v1/projects/pium-test/messages:send
+
+management:
+  endpoint:
+    health:
+      enabled: true
+  endpoints:
+    enabled-by-default: false

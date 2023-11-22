@@ -10,6 +10,7 @@ import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -29,6 +30,7 @@ public class PetPlantSupport {
         private Member member;
         private DictionaryPlant dictionaryPlant;
         private LocalDate lastWaterDate;
+        private String imageUrl;
 
         public PetPlantBuilder member(Member member) {
             this.member = member;
@@ -45,6 +47,11 @@ public class PetPlantSupport {
             return this;
         }
 
+        public PetPlantBuilder imageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
+            return this;
+        }
+
         public PetPlant build() {
             return petPlantRepository.save(
                     PetPlant.builder()
@@ -52,7 +59,7 @@ public class PetPlantSupport {
                                     DictionaryPlantFixture.generateDictionaryPlant()) : dictionaryPlant)
                             .member(member == null ? memberRepository.save(MemberFixture.generateMember()) : member)
                             .nickname("testNickName")
-                            .imageUrl("testImageUrl")
+                            .imageUrl(imageUrl == null ? "testImageUrl" : imageUrl)
                             .location("testLocation")
                             .flowerpot("testFlowerpot")
                             .light("testLight")

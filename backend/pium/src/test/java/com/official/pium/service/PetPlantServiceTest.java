@@ -1,22 +1,7 @@
 package com.official.pium.service;
 
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
-
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.amazonaws.services.s3.model.PutObjectResult;
 import com.official.pium.IntegrationTest;
+import com.official.pium.config.ImageCleanerExtension;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
@@ -24,29 +9,35 @@ import com.official.pium.domain.PetPlant;
 import com.official.pium.fixture.FileFixture;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.ReminderCreateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayNameGeneration;
-import org.junit.jupiter.api.DisplayNameGenerator;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import com.official.pium.service.dto.*;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
+
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(ImageCleanerExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 class PetPlantServiceTest extends IntegrationTest {
 
+    @Value("${local.image.web}")
+    private String webPath;
     private Member member;
     private DictionaryPlant dictionaryPlant;
 
@@ -62,8 +53,8 @@ class PetPlantServiceTest extends IntegrationTest {
     @Autowired
     private HistoryRepository historyRepository;
 
-    @MockBean
-    private AmazonS3 amazonS3;
+    @SpyBean
+    private PhotoManager photoManager;
 
     @BeforeEach
     void setUp() {
@@ -115,8 +106,6 @@ class PetPlantServiceTest extends IntegrationTest {
                     .lastWaterDate(LocalDate.of(2020, 2, 1))
                     .build();
             MultipartFile multipartFile = FileFixture.generateMultiPartFile();
-            given(amazonS3.putObject(any(PutObjectRequest.class)))
-                    .willReturn(new PutObjectResult());
 
             PetPlantResponse petPlantResponse = petPlantService.create(request, multipartFile, member);
 
@@ -194,13 +183,11 @@ class PetPlantServiceTest extends IntegrationTest {
 
         @Test
         void 정보_수정() {
-            PetPlant petPlant = petPlantSupport.builder().member(member).build();
+            PetPlant petPlant = petPlantSupport.builder().member(member).imageUrl(webPath + "/test/아무거나.jpg").build();
             String petPlantImageUrl = petPlant.getImageUrl();
 
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
             MultipartFile multipartFile = FileFixture.generateMultiPartFile();
-            given(amazonS3.putObject(any(PutObjectRequest.class)))
-                    .willReturn(new PutObjectResult());
 
             petPlantService.update(petPlant.getId(), updateRequest, multipartFile, member);
             PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
@@ -227,7 +214,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .member(member)
                     .dictionaryPlant(dictionaryPlant)
                     .flowerpot("유리")
-                    .imageUrl("https://test.image.storage/test/test/34234.jpg")
+                    .imageUrl(webPath + "/test/test/34234.jpg")
                     .wind("바람이 안 통해요")
                     .light("일반 조명")
                     .lastWaterDate(LocalDate.now())
@@ -238,15 +225,12 @@ class PetPlantServiceTest extends IntegrationTest {
                     .build());
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
             MultipartFile multipartFile = FileFixture.generateMultiPartFile();
-            given(amazonS3.putObject(any(PutObjectRequest.class)))
-                    .willReturn(new PutObjectResult());
 
             petPlantService.update(petPlant.getId(), updateRequest, multipartFile, member);
 
             assertSoftly(
                     softly -> {
-                        verify(amazonS3, atLeastOnce()).putObject(any());
-                        verify(amazonS3, atLeastOnce()).deleteObject(any(), anyString());
+                        verify(photoManager, atLeastOnce()).delete(anyString(), anyString());
                     }
             );
         }
@@ -257,8 +241,6 @@ class PetPlantServiceTest extends IntegrationTest {
             String petPlantImageUrl = petPlant.getImageUrl();
 
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
-            given(amazonS3.putObject(any(PutObjectRequest.class)))
-                    .willReturn(new PutObjectResult());
 
             petPlantService.update(petPlant.getId(), updateRequest, null, member);
             PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
@@ -266,8 +248,7 @@ class PetPlantServiceTest extends IntegrationTest {
             assertSoftly(
                     softly -> {
                         assertThat(updatedPetPlant.getImageUrl()).isEqualTo(petPlantImageUrl);
-                        verify(amazonS3, never()).putObject(any());
-                        verify(amazonS3, never()).deleteObject(any(), anyString());
+                        verify(photoManager, never()).delete(anyString(), anyString());
                     }
             );
         }
@@ -279,7 +260,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .member(member)
                     .dictionaryPlant(dictionaryPlant)
                     .flowerpot("유리")
-                    .imageUrl("static/dictionary-plant/34234.jpg")
+                    .imageUrl(webPath + "/dictionary-plant/34234.jpg")
                     .wind("바람이 안 통해요")
                     .light("일반 조명")
                     .lastWaterDate(LocalDate.now())
@@ -290,8 +271,6 @@ class PetPlantServiceTest extends IntegrationTest {
                     .build());
 
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
-            given(amazonS3.putObject(any(PutObjectRequest.class)))
-                    .willReturn(new PutObjectResult());
 
             MultipartFile multipartFile = FileFixture.generateMultiPartFile();
 
@@ -299,8 +278,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
             assertSoftly(
                     softly -> {
-                        verify(amazonS3, atLeastOnce()).putObject(any());
-                        verify(amazonS3, never()).deleteObject(any(), anyString());
+                        verify(photoManager, never()).delete(anyString(), anyString());
                     }
             );
         }
