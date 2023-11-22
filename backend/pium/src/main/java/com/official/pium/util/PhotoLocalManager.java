@@ -35,7 +35,7 @@ public class PhotoLocalManager implements PhotoManager {
             File uploadPath = new File(uploadDirectory, fileName);
             uploadFileInLocal(multipartFile, uploadPath);
 
-            return webPath + SLASH + uploadDirectory + SLASH + fileName;
+            return webPath + SLASH + workingDirectory + SLASH + fileName;
         } catch (Exception e) {
             throw new IllegalStateException("파일 업로드를 실패했습니다.");
         }
