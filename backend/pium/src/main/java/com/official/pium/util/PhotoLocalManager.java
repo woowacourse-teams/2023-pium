@@ -1,16 +1,18 @@
 package com.official.pium.util;
 
 import com.official.pium.service.PhotoManager;
-import java.io.File;
-import java.io.IOException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Component
 public class PhotoLocalManager implements PhotoManager {
 
     private static final String SLASH = "/";
+    private static final int NOT_FOUND_INDEX = -1;
 
     @Value("${local.image.web}")
     private String webPath;
@@ -68,7 +70,8 @@ public class PhotoLocalManager implements PhotoManager {
 
     private String getFileLocalPath(String fullPath) {
         int urlIndex = fullPath.lastIndexOf(webPath);
-        if (urlIndex == -1) {
+
+        if (urlIndex == NOT_FOUND_INDEX) {
             throw new IllegalArgumentException("잘못된 파일 경로입니다.");
         }
         int urlNextIndex = urlIndex + webPath.length();

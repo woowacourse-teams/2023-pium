@@ -1,7 +1,5 @@
 package com.official.pium.util;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import com.official.pium.IntegrationTest;
 import com.official.pium.config.ImageCleanerExtension;
 import com.official.pium.fixture.FileFixture;
@@ -10,10 +8,10 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.multipart.MultipartFile;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ImageCleanerExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
