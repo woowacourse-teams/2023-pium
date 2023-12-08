@@ -259,7 +259,7 @@ export const makeHandler = (delay = 0, failRate = 0) => {
     rest.post('*/members/notification', async (req, res, ctx) => {
       const { token } = await req.json();
 
-      if (Math.random() < 0.05) {
+      if (Math.random() < 1) {
         return res(
           ctx.delay(delay),
           ctx.status(400),

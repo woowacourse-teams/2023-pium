@@ -28,11 +28,13 @@ class FCMMessaging {
 
   registerMessaging() {
     if (!this.app) throw new Error('메세지 등록을 위해서는 FCM 초기화가 필요합니다.');
+
     this.messaging = getMessaging(this.app);
   }
 
   setOnMessaging() {
     if (!this.messaging) return;
+
     onMessage(this.messaging, (payload) => {
       const { notification } = payload;
 
