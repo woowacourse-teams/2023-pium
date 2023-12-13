@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import useAddToast from 'hooks/@common/useAddToast';
-import FCMMessaging from 'models/FCMMessaging';
+import useDeleteToken from 'hooks/firebase/useDeleteToken';
+import useGetToken from 'hooks/firebase/useGetToken';
 import PushStatus from 'models/PushStatus';
 import WebPushSubscribeAPI, { SUBSCRIBE_URL } from 'apis/webPush';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
@@ -21,8 +22,16 @@ const useWebPush = () => {
   const addToast = useAddToast();
   const queryClient = useQueryClient();
 
+  const deleteToken = useDeleteToken();
+  const { data: token, refetch } = useGetToken();
+
+  // token이 null인 경우는 알림이 허용되지 않은 경우
+  if (token === null) {
+    throw new Error('알림을 허용하지 않았습니다');
+  }
+
   const subscribe = useMutation({
-    mutationFn: async (token: string) => {
+    mutationFn: async () => {
       const response = await WebPushSubscribeAPI.subscribe(token);
       throwOnInvalidStatus(response);
 
@@ -39,12 +48,12 @@ const useWebPush = () => {
 
     onError: async (error, __, context) => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
-      console.log(error, 'error');
-      addToast({ type: 'error', message: error.message });
+
+      addToast({ type: 'error', message: '구독하는데 문제가 발생했습니다' });
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
+      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL, 'getFCMToken'] });
     },
   });
 
@@ -66,11 +75,12 @@ const useWebPush = () => {
 
     // 구독 취소를 한다면, 현재 토큰을 삭제하는게 맞음. 서버에서도 지정하고 있는 토큰을 지움. firebase db에서 삭제하는게 맞긴 함.
     onSuccess: async () => {
-      await FCMMessaging.deleteCurrentToken();
+      deleteToken.mutate();
+
+      const { data: result } = deleteToken;
 
       // 토큰을 제거하고 난 다음에 새로운 토큰을 발급받음.
-      const currentToken = await FCMMessaging.getCurrentToken();
-      PushStatus.setCurrentToken(currentToken);
+      if (result) refetch();
     },
     onError: (error, __, context) => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
@@ -78,7 +88,7 @@ const useWebPush = () => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
+      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL, 'getFCMToken'] });
     },
   });
 
@@ -94,7 +104,8 @@ const useWebPush = () => {
       const data = await response.json();
 
       if (data) {
-        const token = await FCMMessaging.getCurrentToken();
+        // 어떻게 보면 외부 상태인데, 이 상태를 어떻게 가지고 있을지가 의문임. 이 데이터를 query데이터로 가지고 있냐 마냐를 따져봐야 할듯.
+        console.log(token, 'initialToken');
         PushStatus.setCurrentToken(token);
       }
 
