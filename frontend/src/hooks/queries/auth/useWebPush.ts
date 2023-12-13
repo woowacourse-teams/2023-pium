@@ -2,7 +2,6 @@ import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-q
 import useAddToast from 'hooks/@common/useAddToast';
 import useDeleteToken from 'hooks/firebase/useDeleteToken';
 import useGetToken from 'hooks/firebase/useGetToken';
-import PushStatus from 'models/PushStatus';
 import WebPushSubscribeAPI, { SUBSCRIBE_URL } from 'apis/webPush';
 import noRetryIfUnauthorized from 'utils/noRetryIfUnauthorized';
 import throwOnInvalidStatus from 'utils/throwOnInvalidStatus';
@@ -22,8 +21,8 @@ const useWebPush = () => {
   const addToast = useAddToast();
   const queryClient = useQueryClient();
 
-  const deleteToken = useDeleteToken();
   const { data: token, refetch } = useGetToken();
+  const deleteToken = useDeleteToken({ onSuccessCallback: () => refetch() });
 
   // token이 null인 경우는 알림이 허용되지 않은 경우
   if (token === null) {
@@ -53,7 +52,7 @@ const useWebPush = () => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL, 'getFCMToken'] });
+      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
     },
   });
 
@@ -74,13 +73,8 @@ const useWebPush = () => {
     },
 
     // 구독 취소를 한다면, 현재 토큰을 삭제하는게 맞음. 서버에서도 지정하고 있는 토큰을 지움. firebase db에서 삭제하는게 맞긴 함.
-    onSuccess: async () => {
+    onSuccess: () => {
       deleteToken.mutate();
-
-      const { data: result } = deleteToken;
-
-      // 토큰을 제거하고 난 다음에 새로운 토큰을 발급받음.
-      if (result) refetch();
     },
     onError: (error, __, context) => {
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevData);
@@ -88,7 +82,7 @@ const useWebPush = () => {
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL, 'getFCMToken'] });
+      queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
     },
   });
 
@@ -100,14 +94,7 @@ const useWebPush = () => {
     queryFn: async () => {
       const response = await WebPushSubscribeAPI.currentSubscribe();
       throwOnInvalidStatus(response);
-
       const data = await response.json();
-
-      if (data) {
-        // 어떻게 보면 외부 상태인데, 이 상태를 어떻게 가지고 있을지가 의문임. 이 데이터를 query데이터로 가지고 있냐 마냐를 따져봐야 할듯.
-        console.log(token, 'initialToken');
-        PushStatus.setCurrentToken(token);
-      }
 
       return data;
     },
