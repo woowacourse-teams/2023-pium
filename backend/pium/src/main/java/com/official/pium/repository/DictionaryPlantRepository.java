@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DictionaryPlantRepository extends JpaRepository<DictionaryPlant, Long> {
 
-    List<DictionaryPlant> findDictionaryPlantsByNameContains(String name);
+    List<DictionaryPlant> findDictionaryPlantsByClassification_NameContains(String name);
 }

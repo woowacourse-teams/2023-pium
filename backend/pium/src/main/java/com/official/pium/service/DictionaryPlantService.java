@@ -1,7 +1,6 @@
 package com.official.pium.service;
 
 import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
@@ -27,14 +26,15 @@ public class DictionaryPlantService {
         DictionaryPlant dictionaryPlant = dictionaryPlantRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + id));
 
-        return DictionaryPlantMapper.toDictionaryPlantResponse(dictionaryPlant);
+        return DictionaryPlantResponse.from(dictionaryPlant);
     }
 
     public DataResponse<List<DictionaryPlantSearchResponse>> search(String name) {
-        List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByNameContains(name);
+        List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByClassification_NameContains(
+                name);
 
         List<DictionaryPlantSearchResponse> dictionaryPlantSearchResponses = dictionaryPlants.stream()
-                .map(DictionaryPlantMapper::toDictionaryPlantSearchResponse)
+                .map(DictionaryPlantSearchResponse::from)
                 .toList();
 
         return DataResponse.<List<DictionaryPlantSearchResponse>>builder()
@@ -44,7 +44,7 @@ public class DictionaryPlantService {
 
     @Transactional
     public Long create(DictionaryPlantCreateRequest request) {
-        DictionaryPlant dictionaryPlant = DictionaryPlantMapper.toDictionaryPlant(request);
+        DictionaryPlant dictionaryPlant = request.toDictionaryPlant();
         dictionaryPlantRepository.save(dictionaryPlant);
         return dictionaryPlant.getId();
     }
@@ -55,22 +55,10 @@ public class DictionaryPlantService {
                 .orElseThrow(() -> new NoSuchElementException("사전 식물이 존재하지 않습니다. id: " + id));
 
         dictionaryPlant.updateDictionaryPlant(
-                request.getName(),
                 request.getImageUrl(),
-                request.getFamilyName(),
-                request.getSmell(),
-                request.getPoison(),
-                request.getManageLevel(),
-                request.getGrowSpeed(),
-                request.getRequireTemp(),
-                request.getMinimumTemp(),
-                request.getRequireHumidity(),
-                request.getPostingPlace(),
-                request.getSpecialManageInfo(),
-                request.getSpring(),
-                request.getSummer(),
-                request.getAutumn(),
-                request.getWinter()
+                request.toClassification(),
+                request.toProperty(),
+                request.toCareDetail()
         );
     }
 
