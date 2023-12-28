@@ -3,7 +3,7 @@ package com.official.pium.support;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.Member;
-import com.official.pium.domain.vo.PlantState;
+import com.official.pium.domain.vo.GardenPlantState;
 import com.official.pium.fixture.DictionaryPlantFixture;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.repository.DictionaryPlantRepository;
@@ -48,8 +48,8 @@ public class GardenSupport {
                             .member(member == null ? memberRepository.save(MemberFixture.generateMember()) : member)
                             .nickname("기영")
                             .imageUrl("imageUrl")
-                            .plantState(
-                                    PlantState.builder()
+                            .gardenPlantState(
+                                    GardenPlantState.builder()
                                             .location("거실")
                                             .flowerpot("토분")
                                             .light("일반 조명")

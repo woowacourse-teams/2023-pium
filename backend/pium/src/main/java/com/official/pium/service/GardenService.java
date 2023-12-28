@@ -3,7 +3,7 @@ package com.official.pium.service;
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.vo.PlantState;
+import com.official.pium.domain.vo.GardenPlantState;
 import com.official.pium.repository.GardenRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.GardenCreateRequest;
@@ -40,7 +40,7 @@ public class GardenService {
                 .member(petPlant.getMember())
                 .nickname(petPlant.getNickname())
                 .imageUrl(petPlant.getImageUrl())
-                .plantState(
+                .gardenPlantState(
                         toPlantState(petPlant)
                 )
                 .daySince(petPlant.calculateDaySince(LocalDate.now()))
@@ -50,12 +50,12 @@ public class GardenService {
                 .build();
     }
 
-    private static PlantState toPlantState(PetPlant petPlant) {
-        return PlantState.builder()
-                .location(petPlant.getLocation())
-                .flowerpot(petPlant.getFlowerpot())
-                .light(petPlant.getLight())
-                .wind(petPlant.getWind())
+    private static GardenPlantState toPlantState(PetPlant petPlant) {
+        return GardenPlantState.builder()
+                .location(petPlant.getPetPlantState().getLocation())
+                .flowerpot(petPlant.getPetPlantState().getFlowerpot())
+                .light(petPlant.getPetPlantState().getLight())
+                .wind(petPlant.getPetPlantState().getWind())
                 .build();
     }
 

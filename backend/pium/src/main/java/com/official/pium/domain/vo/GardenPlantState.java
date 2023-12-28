@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PlantState {
+public class GardenPlantState {
 
     @NotBlank
     @Column(name = "location", nullable = false)
@@ -30,7 +30,7 @@ public class PlantState {
     private String wind;
 
     @Builder
-    private PlantState(String location, String flowerpot, String light, String wind) {
+    private GardenPlantState(String location, String flowerpot, String light, String wind) {
         this.location = location;
         this.flowerpot = flowerpot;
         this.light = light;

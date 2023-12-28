@@ -2,7 +2,7 @@ package com.official.pium.service.dto;
 
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.vo.PlantState;
+import com.official.pium.domain.vo.GardenPlantState;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -35,12 +35,12 @@ public class GardenCreateRequest {
                 .member(petPlant.getMember())
                 .nickname(petPlant.getNickname())
                 .imageUrl(petPlant.getImageUrl())
-                .plantState(
-                        PlantState.builder()
-                                .location(petPlant.getLocation())
-                                .flowerpot(petPlant.getFlowerpot())
-                                .light(petPlant.getLight())
-                                .wind(petPlant.getWind())
+                .gardenPlantState(
+                        GardenPlantState.builder()
+                                .location(petPlant.getPetPlantState().getLocation())
+                                .flowerpot(petPlant.getPetPlantState().getFlowerpot())
+                                .light(petPlant.getPetPlantState().getLight())
+                                .wind(petPlant.getPetPlantState().getWind())
                                 .build()
                 )
                 .daySince(petPlant.calculateDaySince(LocalDate.now()))

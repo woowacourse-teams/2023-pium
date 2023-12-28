@@ -1,5 +1,6 @@
 package com.official.pium.service.dto;
 
+import com.official.pium.domain.PetPlant;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,4 +26,16 @@ public class ReminderResponse {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
+
+    public static ReminderResponse of(PetPlant petPlant, Long dday) {
+        return ReminderResponse.builder()
+                .petPlantId(petPlant.getId())
+                .image(petPlant.getImageUrl())
+                .nickName(petPlant.getNickname())
+                .dictionaryPlantName(petPlant.getDictionaryPlant().getClassification().getName())
+                .dday(dday)
+                .nextWaterDate(petPlant.getWaterDate().getNextWaterDate())
+                .lastWaterDate(petPlant.getWaterDate().getLastWaterDate())
+                .build();
+    }
 }

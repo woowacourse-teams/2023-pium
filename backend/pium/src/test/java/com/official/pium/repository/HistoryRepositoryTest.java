@@ -10,11 +10,13 @@ import com.official.pium.domain.HistoryContent;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.vo.WaterCycle;
 import com.official.pium.domain.vo.CareDetail;
 import com.official.pium.domain.vo.Classification;
+import com.official.pium.domain.vo.PetPlantState;
 import com.official.pium.domain.vo.Property;
 import com.official.pium.domain.vo.Temperature;
+import com.official.pium.domain.vo.WaterCycle;
+import com.official.pium.domain.vo.WaterDate;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -157,13 +159,21 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .member(member)
                 .nickname("피우미")
                 .imageUrl("https://image.com")
-                .location("베란다")
-                .flowerpot("화분")
-                .light("밝아요")
-                .wind("추워요")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .location("베란다")
+                                .flowerpot("화분")
+                                .light("밝아요")
+                                .wind("추워요")
+                                .build()
+                )
                 .birthDate(LocalDate.of(2021, 6, 4))
-                .nextWaterDate(LocalDate.of(2021, 6, 4))
-                .lastWaterDate(LocalDate.of(2021, 6, 4))
+                .waterDate(
+                        WaterDate.builder()
+                                .nextWaterDate(LocalDate.of(2021, 6, 4))
+                                .lastWaterDate(LocalDate.of(2021, 6, 4))
+                                .build()
+                )
                 .waterCycle(3)
                 .build();
         petPlantRepository.save(petPlant);

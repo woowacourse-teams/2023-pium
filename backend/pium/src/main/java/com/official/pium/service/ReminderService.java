@@ -5,7 +5,6 @@ import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.event.history.HistoryEvent;
 import com.official.pium.event.notification.NotificationEvent;
-import com.official.pium.mapper.PetPlantMapper;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.ReminderCreateRequest;
@@ -38,9 +37,9 @@ public class ReminderService {
 
         checkOwner(petPlant, member);
 
-        LocalDate previousWaterDate = petPlant.getLastWaterDate();
+        LocalDate previousWaterDate = petPlant.getWaterDate().getLastWaterDate();
         petPlant.water(reminderCreateRequest.getWaterDate());
-        LocalDate currentWaterDate = petPlant.getLastWaterDate();
+        LocalDate currentWaterDate = petPlant.getWaterDate().getLastWaterDate();
 
         publisher.publishEvent(
                 HistoryEvent.of(petPlantId, previousWaterDate, currentWaterDate, HistoryType.LAST_WATER_DATE,
@@ -64,10 +63,10 @@ public class ReminderService {
 
     public DataResponse<List<ReminderResponse>> readAll(Member member) {
         List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId(),
-                Sort.by(Direction.ASC, "nextWaterDate"));
+                Sort.by(Direction.ASC, "waterDate_nextWaterDate"));
 
         List<ReminderResponse> reminderResponses = petPlants.stream()
-                .map(petPlant -> PetPlantMapper.toReminderResponse(
+                .map(petPlant -> ReminderResponse.of(
                         petPlant,
                         petPlant.calculateDday(LocalDate.now())))
                 .toList();

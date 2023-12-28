@@ -1,6 +1,7 @@
 package com.official.pium.event.history;
 
 import com.official.pium.domain.HistoryType;
+import com.official.pium.domain.PetPlant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,17 @@ public class PetPlantHistory {
         this.wind = wind;
         this.waterCycle = waterCycle;
         this.lastWaterDate = lastWaterDate;
+    }
+
+    public static PetPlantHistory from(PetPlant petPlant) {
+        return PetPlantHistory.builder()
+                .location(petPlant.getPetPlantState().getLocation())
+                .flowerpot(petPlant.getPetPlantState().getFlowerpot())
+                .light(petPlant.getPetPlantState().getLight())
+                .wind(petPlant.getPetPlantState().getWind())
+                .waterCycle(petPlant.getWaterCycle().toString())
+                .lastWaterDate(petPlant.getWaterDate().getLastWaterDate().toString())
+                .build();
     }
 
     public List<HistoryEvent> generateCreateHistoryEvents(Long petPlantId, LocalDate date) {

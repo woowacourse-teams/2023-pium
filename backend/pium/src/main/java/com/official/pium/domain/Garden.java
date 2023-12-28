@@ -1,6 +1,6 @@
 package com.official.pium.domain;
 
-import com.official.pium.domain.vo.PlantState;
+import com.official.pium.domain.vo.GardenPlantState;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -51,7 +51,7 @@ public class Garden extends BaseEntity {
     private String imageUrl;
 
     @Embedded
-    private PlantState plantState;
+    private GardenPlantState gardenPlantState;
 
     @NotNull
     @Column(name = "day_since", nullable = false)
@@ -74,13 +74,13 @@ public class Garden extends BaseEntity {
 
     @Builder
     private Garden(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl,
-                   PlantState plantState,
+                   GardenPlantState gardenPlantState,
                    Long daySince, Integer waterCycle, String content, String manageLevel) {
         this.dictionaryPlant = dictionaryPlant;
         this.member = member;
         this.nickname = nickname;
         this.imageUrl = imageUrl;
-        this.plantState = plantState;
+        this.gardenPlantState = gardenPlantState;
         this.daySince = daySince;
         this.waterCycle = waterCycle;
         this.content = content;

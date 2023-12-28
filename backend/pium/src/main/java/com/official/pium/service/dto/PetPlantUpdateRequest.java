@@ -1,5 +1,6 @@
 package com.official.pium.service.dto;
 
+import com.official.pium.domain.vo.PetPlantState;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -43,4 +44,13 @@ public class PetPlantUpdateRequest {
     @NotNull(message = "마지막 물주기 날짜는 필수 값입니다.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
+
+    public PetPlantState toPetPlantState() {
+        return PetPlantState.builder()
+                .light(this.light)
+                .wind(this.wind)
+                .location(this.location)
+                .flowerpot(this.flowerpot)
+                .build();
+    }
 }
