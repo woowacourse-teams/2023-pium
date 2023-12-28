@@ -3,11 +3,12 @@ package com.official.pium.service;
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.mapper.GardenMapper;
+import com.official.pium.domain.vo.PlantState;
 import com.official.pium.repository.GardenRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.GardenCreateRequest;
 import com.official.pium.service.dto.GardenResponse;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
@@ -29,9 +30,33 @@ public class GardenService {
         PetPlant petPlant = petPlantRepository.findById(request.getPetPlantId())
                 .orElseThrow(() -> new NoSuchElementException("반려 식물이 존재하지 않습니다. id: " + request.getPetPlantId()));
         checkOwner(petPlant, member);
-
-        Garden garden = GardenMapper.toGarden(request, petPlant);
+        Garden garden = createGarden(petPlant, request);
         gardenRepository.save(garden);
+    }
+
+    private Garden createGarden(PetPlant petPlant, GardenCreateRequest request) {
+        return Garden.builder()
+                .dictionaryPlant(petPlant.getDictionaryPlant())
+                .member(petPlant.getMember())
+                .nickname(petPlant.getNickname())
+                .imageUrl(petPlant.getImageUrl())
+                .plantState(
+                        toPlantState(petPlant)
+                )
+                .daySince(petPlant.calculateDaySince(LocalDate.now()))
+                .waterCycle(petPlant.getWaterCycle())
+                .content(request.getContent())
+                .manageLevel(request.getManageLevel())
+                .build();
+    }
+
+    private static PlantState toPlantState(PetPlant petPlant) {
+        return PlantState.builder()
+                .location(petPlant.getLocation())
+                .flowerpot(petPlant.getFlowerpot())
+                .light(petPlant.getLight())
+                .wind(petPlant.getWind())
+                .build();
     }
 
     private void checkOwner(PetPlant petPlant, Member member) {
@@ -42,6 +67,6 @@ public class GardenService {
 
     public GardenResponse readAll(Pageable pageable, List<Long> filters) {
         Page<Garden> gardens = gardenRepository.findAllByDictionaryPlantIds(pageable, filters);
-        return GardenMapper.toGardenResponse(gardens);
+        return GardenResponse.from(gardens);
     }
 }

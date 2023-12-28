@@ -10,7 +10,7 @@ import com.official.pium.domain.HistoryContent;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.WaterCycle;
+import com.official.pium.domain.vo.WaterCycle;
 import com.official.pium.domain.vo.CareDetail;
 import com.official.pium.domain.vo.Classification;
 import com.official.pium.domain.vo.Property;

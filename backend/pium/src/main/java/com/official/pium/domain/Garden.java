@@ -1,6 +1,8 @@
 package com.official.pium.domain;
 
+import com.official.pium.domain.vo.PlantState;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -48,21 +50,8 @@ public class Garden extends BaseEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @NotBlank
-    @Column(name = "location", nullable = false)
-    private String location;
-
-    @NotBlank
-    @Column(name = "flowerpot", nullable = false)
-    private String flowerpot;
-
-    @NotBlank
-    @Column(name = "light", nullable = false)
-    private String light;
-
-    @NotBlank
-    @Column(name = "wind", nullable = false)
-    private String wind;
+    @Embedded
+    private PlantState plantState;
 
     @NotNull
     @Column(name = "day_since", nullable = false)
@@ -84,19 +73,14 @@ public class Garden extends BaseEntity {
     private String manageLevel;
 
     @Builder
-    public Garden(final DictionaryPlant dictionaryPlant, final Member member, final String nickname,
-                  final String imageUrl, final String location,
-                  final String flowerpot, final String light, final String wind, final Long daySince,
-                  final Integer waterCycle, final String content,
-                  final String manageLevel) {
+    private Garden(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl,
+                   PlantState plantState,
+                   Long daySince, Integer waterCycle, String content, String manageLevel) {
         this.dictionaryPlant = dictionaryPlant;
         this.member = member;
         this.nickname = nickname;
         this.imageUrl = imageUrl;
-        this.location = location;
-        this.flowerpot = flowerpot;
-        this.light = light;
-        this.wind = wind;
+        this.plantState = plantState;
         this.daySince = daySince;
         this.waterCycle = waterCycle;
         this.content = content;

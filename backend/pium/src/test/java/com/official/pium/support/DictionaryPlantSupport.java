@@ -1,7 +1,7 @@
 package com.official.pium.support;
 
 import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.WaterCycle;
+import com.official.pium.domain.vo.WaterCycle;
 import com.official.pium.domain.vo.CareDetail;
 import com.official.pium.domain.vo.Classification;
 import com.official.pium.domain.vo.Property;

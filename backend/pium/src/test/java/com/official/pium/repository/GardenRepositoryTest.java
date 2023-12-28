@@ -8,6 +8,7 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.vo.PlantState;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -144,10 +145,14 @@ public class GardenRepositoryTest extends RepositoryTest {
                 .member(petPlant.getMember())
                 .nickname(petPlant.getNickname())
                 .imageUrl(petPlant.getImageUrl())
-                .location(petPlant.getLocation())
-                .flowerpot(petPlant.getFlowerpot())
-                .light(petPlant.getLight())
-                .wind(petPlant.getWind())
+                .plantState(
+                        PlantState.builder()
+                                .location(petPlant.getLocation())
+                                .flowerpot(petPlant.getFlowerpot())
+                                .light(petPlant.getLight())
+                                .wind(petPlant.getWind())
+                                .build()
+                )
                 .daySince(petPlant.calculateDaySince(LocalDate.now()))
                 .waterCycle(petPlant.getWaterCycle())
                 .content("기영이가 아프네요..")

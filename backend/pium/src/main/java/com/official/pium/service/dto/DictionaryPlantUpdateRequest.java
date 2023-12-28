@@ -1,6 +1,6 @@
 package com.official.pium.service.dto;
 
-import com.official.pium.domain.WaterCycle;
+import com.official.pium.domain.vo.WaterCycle;
 import com.official.pium.domain.vo.CareDetail;
 import com.official.pium.domain.vo.Classification;
 import com.official.pium.domain.vo.Property;

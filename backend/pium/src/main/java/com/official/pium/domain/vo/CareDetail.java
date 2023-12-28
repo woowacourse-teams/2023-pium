@@ -1,6 +1,5 @@
 package com.official.pium.domain.vo;
 
-import com.official.pium.domain.WaterCycle;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.Embedded;

@@ -1,4 +1,4 @@
-package com.official.pium.domain;
+package com.official.pium.domain.vo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
