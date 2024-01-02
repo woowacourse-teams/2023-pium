@@ -19,9 +19,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.official.pium.UITest;
-import com.official.pium.domain.Member;
-import com.official.pium.service.HistoryService;
-import com.official.pium.service.dto.HistoryResponse;
+import com.official.pium.member.domain.Member;
+import com.official.pium.history.application.HistoryService;
+import com.official.pium.history.application.dto.HistoryResponse;
+import com.official.pium.history.ui.HistoryController;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;

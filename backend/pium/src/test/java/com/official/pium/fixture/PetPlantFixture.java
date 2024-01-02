@@ -1,16 +1,14 @@
 package com.official.pium.fixture;
 
-import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResponse;
-import static com.official.pium.service.dto.PetPlantResponse.builder;
-
-import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDetail;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.PetPlantCreateRequest;
-import com.official.pium.service.dto.PetPlantResponse;
-import com.official.pium.service.dto.PetPlantUpdateRequest;
-import com.official.pium.service.dto.SinglePetPlantResponse;
+import com.official.pium.common.dto.DataResponse;
+import com.official.pium.petPlant.application.dto.PetPlantCreateRequest;
+import com.official.pium.petPlant.application.dto.PetPlantResponse;
+import com.official.pium.petPlant.application.dto.PetPlantResponse.DictionaryPlantResponse;
+import com.official.pium.petPlant.application.dto.PetPlantUpdateRequest;
+import com.official.pium.petPlant.application.dto.SinglePetPlantResponse;
+import com.official.pium.petPlant.domain.PetPlant;
+import com.official.pium.petPlant.domain.vo.PetPlantState;
+import com.official.pium.petPlant.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -91,7 +89,7 @@ public class PetPlantFixture {
     }
 
     public static class RESPONSE {
-        public static PetPlantResponse 피우미_응답 = builder()
+        public static PetPlantResponse 피우미_응답 = PetPlantResponse.builder()
                 .id(1L)
                 .nickname("피우미")
                 .imageUrl("https://image.com")

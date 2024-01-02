@@ -3,13 +3,14 @@ package com.official.pium.service;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.IntegrationTest;
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.Garden;
-import com.official.pium.domain.Member;
-import com.official.pium.domain.PetPlant;
-import com.official.pium.repository.GardenRepository;
-import com.official.pium.service.dto.GardenCreateRequest;
-import com.official.pium.service.dto.GardenResponse;
+import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
+import com.official.pium.garden.domain.Garden;
+import com.official.pium.member.domain.Member;
+import com.official.pium.petPlant.domain.PetPlant;
+import com.official.pium.garden.application.GardenService;
+import com.official.pium.garden.repository.GardenRepository;
+import com.official.pium.garden.application.dto.GardenCreateRequest;
+import com.official.pium.garden.application.dto.GardenResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -60,7 +61,8 @@ class GardenServiceTest extends IntegrationTest {
                     softly.assertThat(garden.getId()).isNotNull();
                     softly.assertThat(garden.getContent()).isEqualTo(request.getContent());
                     softly.assertThat(garden.getManageLevel()).isEqualTo(request.getManageLevel());
-                    softly.assertThat(garden.getDictionaryPlant().getId()).isEqualTo(petPlant.getDictionaryPlant().getId());
+                    softly.assertThat(garden.getDictionaryPlant().getId())
+                            .isEqualTo(petPlant.getDictionaryPlant().getId());
                 }
         );
     }

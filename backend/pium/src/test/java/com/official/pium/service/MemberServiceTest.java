@@ -4,9 +4,12 @@ import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.SoftAssertions.*;
 
 import com.official.pium.config.*;
-import com.official.pium.domain.*;
-import com.official.pium.repository.*;
-import com.official.pium.service.dto.*;
+import com.official.pium.member.application.MemberService;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.repository.MemberRepository;
+import com.official.pium.notification.application.dto.NotificationCheckResponse;
+import com.official.pium.notification.application.dto.NotificationSubscribeRequest;
+import com.official.pium.petPlant.repository.PetPlantRepository;
 import com.official.pium.support.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;

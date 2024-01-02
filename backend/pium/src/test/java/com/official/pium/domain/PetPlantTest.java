@@ -4,10 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
-import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.fixture.PetPlantFixture;
+import com.official.pium.petPlant.domain.PetPlant;
+import com.official.pium.petPlant.domain.vo.PetPlantState;
+import com.official.pium.petPlant.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;

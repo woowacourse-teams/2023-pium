@@ -2,6 +2,7 @@ package com.official.pium.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.official.pium.admin.domain.Admin;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

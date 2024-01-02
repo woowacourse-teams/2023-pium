@@ -1,8 +1,8 @@
 package com.official.pium.support;
 
-import com.official.pium.domain.HistoryCategory;
-import com.official.pium.domain.HistoryType;
-import com.official.pium.repository.HistoryCategoryRepository;
+import com.official.pium.history.domain.HistoryCategory;
+import com.official.pium.history.domain.HistoryType;
+import com.official.pium.history.repository.HistoryCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

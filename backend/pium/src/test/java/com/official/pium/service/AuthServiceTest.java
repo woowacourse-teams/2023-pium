@@ -2,8 +2,9 @@ package com.official.pium.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.official.pium.domain.Member;
-import com.official.pium.repository.MemberRepository;
+import com.official.pium.member.application.AuthService;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.repository.MemberRepository;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

@@ -6,10 +6,10 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
 import com.official.pium.config.WebMvcConfigure;
-import com.official.pium.domain.Admin;
-import com.official.pium.domain.Member;
-import com.official.pium.repository.MemberRepository;
-import com.official.pium.service.SessionGroupService;
+import com.official.pium.admin.domain.Admin;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.repository.MemberRepository;
+import com.official.pium.sessionGroup.application.SessionGroupService;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;

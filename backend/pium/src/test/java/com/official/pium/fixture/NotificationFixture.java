@@ -1,6 +1,6 @@
 package com.official.pium.fixture;
 
-import com.official.pium.admin.dto.AdminSendNotificationRequest;
+import com.official.pium.admin.service.dto.AdminSendNotificationRequest;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class NotificationFixture {

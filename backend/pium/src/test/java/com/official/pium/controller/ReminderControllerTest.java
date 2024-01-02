@@ -24,10 +24,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
-import com.official.pium.domain.Member;
-import com.official.pium.service.ReminderService;
-import com.official.pium.service.dto.ReminderCreateRequest;
-import com.official.pium.service.dto.ReminderUpdateRequest;
+import com.official.pium.member.domain.Member;
+import com.official.pium.petPlant.application.ReminderService;
+import com.official.pium.petPlant.application.dto.ReminderCreateRequest;
+import com.official.pium.petPlant.application.dto.ReminderUpdateRequest;
+import com.official.pium.petPlant.ui.ReminderController;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

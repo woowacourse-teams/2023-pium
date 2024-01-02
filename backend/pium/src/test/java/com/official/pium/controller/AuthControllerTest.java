@@ -17,9 +17,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.official.pium.UITest;
-import com.official.pium.domain.Member;
-import com.official.pium.exception.AuthenticationException;
-import com.official.pium.service.AuthService;
+import com.official.pium.member.domain.Member;
+import com.official.pium.common.exception.AuthenticationException;
+import com.official.pium.member.application.AuthService;
+import com.official.pium.member.ui.AuthController;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -97,7 +98,7 @@ class AuthControllerTest extends UITest {
         void 세션_정보_없이_요청_시_401_반환() throws Exception {
             given(sessionGroupService.findOrExtendsBySessionIdAndKey(any(), anyString()))
                     .willThrow(new AuthenticationException("일치하는 세션을 찾을 수 없습니다."));
-            
+
             mockMvc.perform(post("/logout")
                             .contentType(APPLICATION_JSON_VALUE))
                     .andExpect(status().isUnauthorized())

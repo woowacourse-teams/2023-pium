@@ -1,15 +1,15 @@
 package com.official.pium.support;
 
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.Member;
-import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDetail;
+import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
+import com.official.pium.dictionaryPlant.repository.DictionaryPlantRepository;
 import com.official.pium.fixture.DictionaryPlantFixture;
 import com.official.pium.fixture.MemberFixture;
-import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.repository.MemberRepository;
-import com.official.pium.repository.PetPlantRepository;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.repository.MemberRepository;
+import com.official.pium.petPlant.domain.PetPlant;
+import com.official.pium.petPlant.domain.vo.PetPlantState;
+import com.official.pium.petPlant.domain.vo.WaterDetail;
+import com.official.pium.petPlant.repository.PetPlantRepository;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -18,10 +18,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
-import com.official.pium.domain.Member;
-import com.official.pium.exception.AuthenticationException;
-import com.official.pium.service.MemberService;
-import com.official.pium.service.dto.NotificationSubscribeRequest;
+import com.official.pium.member.domain.Member;
+import com.official.pium.common.exception.AuthenticationException;
+import com.official.pium.member.application.MemberService;
+import com.official.pium.member.ui.MemberController;
+import com.official.pium.notification.application.dto.NotificationSubscribeRequest;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;

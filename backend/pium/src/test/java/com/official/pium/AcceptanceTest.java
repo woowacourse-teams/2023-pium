@@ -2,8 +2,8 @@ package com.official.pium;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.config.DatabaseClearExtension;
-import com.official.pium.domain.HistoryType;
-import com.official.pium.domain.Member;
+import com.official.pium.history.domain.HistoryType;
+import com.official.pium.member.domain.Member;
 import com.official.pium.support.DictionaryPlantSupport;
 import com.official.pium.support.GardenSupport;
 import com.official.pium.support.HistoryCategorySupport;

@@ -16,16 +16,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
-import com.official.pium.admin.controller.AdminPageController;
+import com.official.pium.admin.ui.AdminPageController;
 import com.official.pium.admin.repository.RegistrationRepository;
 import com.official.pium.admin.service.AdminService;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.fixture.NotificationFixture;
-import com.official.pium.repository.DictionaryPlantRepository;
-import com.official.pium.service.NotificationService;
-import com.official.pium.service.dto.AdminLoginRequest;
-import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
+import com.official.pium.dictionaryPlant.repository.DictionaryPlantRepository;
+import com.official.pium.notification.application.NotificationService;
+import com.official.pium.admin.service.dto.AdminLoginRequest;
+import com.official.pium.dictionaryPlant.application.dto.DictionaryPlantUpdateRequest;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;

@@ -1,8 +1,8 @@
 package com.official.pium.fixture;
 
-import com.official.pium.service.dto.GardenCreateRequest;
-import com.official.pium.service.dto.GardenResponse;
-import com.official.pium.service.dto.SingleGardenResponse;
+import com.official.pium.garden.application.dto.GardenCreateRequest;
+import com.official.pium.garden.application.dto.GardenResponse;
+import com.official.pium.garden.application.dto.SingleGardenResponse;
 import java.time.LocalDateTime;
 import java.util.List;
 

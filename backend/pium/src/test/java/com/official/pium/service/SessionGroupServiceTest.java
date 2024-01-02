@@ -6,9 +6,10 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.mockito.BDDMockito.given;
 
 import com.official.pium.IntegrationTest;
-import com.official.pium.domain.SessionGroup;
-import com.official.pium.exception.AuthenticationException;
-import com.official.pium.repository.SessionGroupRepository;
+import com.official.pium.sessionGroup.application.SessionGroupService;
+import com.official.pium.sessionGroup.domain.SessionGroup;
+import com.official.pium.common.exception.AuthenticationException;
+import com.official.pium.sessionGroup.repository.SessionGroupRepository;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.LocalDateTime;

@@ -4,11 +4,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.RepositoryTest;
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.Member;
-import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDetail;
+import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
+import com.official.pium.dictionaryPlant.repository.DictionaryPlantRepository;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.repository.MemberRepository;
+import com.official.pium.petPlant.domain.PetPlant;
+import com.official.pium.petPlant.domain.vo.PetPlantState;
+import com.official.pium.petPlant.domain.vo.WaterDetail;
+import com.official.pium.petPlant.repository.PetPlantRepository;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -25,8 +28,10 @@ class PetPlantRepositoryTest extends RepositoryTest {
 
     @Autowired
     private PetPlantRepository petPlantRepository;
+
     @Autowired
     private DictionaryPlantRepository dictionaryPlantRepository;
+
     @Autowired
     private MemberRepository memberRepository;
 

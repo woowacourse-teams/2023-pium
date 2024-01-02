@@ -1,7 +1,7 @@
 package com.official.pium.service.dto;
 
-import static com.official.pium.service.dto.OAuthProvider.AUTHORIZATION_HEADER;
-import static com.official.pium.service.dto.OAuthProvider.TOKEN_TYPE;
+import static com.official.pium.member.application.dto.OAuthProvider.AUTHORIZATION_HEADER;
+import static com.official.pium.member.application.dto.OAuthProvider.TOKEN_TYPE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.content;
@@ -12,9 +12,12 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
-import com.official.pium.exception.OAuthException.KaKaoMemberInfoRequestException;
-import com.official.pium.exception.OAuthException.KakaoServerException;
-import com.official.pium.exception.OAuthException.KakaoTokenRequestException;
+import com.official.pium.common.exception.OAuthException.KaKaoMemberInfoRequestException;
+import com.official.pium.common.exception.OAuthException.KakaoServerException;
+import com.official.pium.common.exception.OAuthException.KakaoTokenRequestException;
+import com.official.pium.member.application.dto.KaKaoAccessTokenResponse;
+import com.official.pium.member.application.dto.KakaoMemberResponse;
+import com.official.pium.member.application.dto.OAuthProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

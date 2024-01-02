@@ -1,7 +1,7 @@
 package com.official.pium.support;
 
-import com.official.pium.service.dto.KaKaoAccessTokenResponse;
-import com.official.pium.service.dto.KakaoMemberResponse;
+import com.official.pium.member.application.dto.KaKaoAccessTokenResponse;
+import com.official.pium.member.application.dto.KakaoMemberResponse;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;

@@ -25,14 +25,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
+import com.official.pium.dictionaryPlant.ui.DictionaryPlantController;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.fixture.DictionaryPlantFixture.RESPONSE;
-import com.official.pium.service.DictionaryPlantService;
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.DictionaryPlantCreateRequest;
-import com.official.pium.service.dto.DictionaryPlantResponse;
-import com.official.pium.service.dto.DictionaryPlantSearchResponse;
-import com.official.pium.service.dto.DictionaryPlantUpdateRequest;
+import com.official.pium.dictionaryPlant.application.DictionaryPlantService;
+import com.official.pium.common.dto.DataResponse;
+import com.official.pium.dictionaryPlant.application.dto.DictionaryPlantCreateRequest;
+import com.official.pium.dictionaryPlant.application.dto.DictionaryPlantResponse;
+import com.official.pium.dictionaryPlant.application.dto.DictionaryPlantSearchResponse;
+import com.official.pium.dictionaryPlant.application.dto.DictionaryPlantUpdateRequest;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;

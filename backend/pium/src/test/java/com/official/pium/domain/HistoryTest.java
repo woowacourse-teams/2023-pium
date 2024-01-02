@@ -3,8 +3,13 @@ package com.official.pium.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDetail;
+import com.official.pium.history.domain.History;
+import com.official.pium.history.domain.HistoryCategory;
+import com.official.pium.history.domain.HistoryType;
+import com.official.pium.history.domain.vo.HistoryContent;
+import com.official.pium.petPlant.domain.PetPlant;
+import com.official.pium.petPlant.domain.vo.PetPlantState;
+import com.official.pium.petPlant.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;

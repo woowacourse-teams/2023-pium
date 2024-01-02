@@ -1,6 +1,6 @@
 package com.official.pium.fixture;
 
-import com.official.pium.domain.SessionGroup;
+import com.official.pium.sessionGroup.domain.SessionGroup;
 import java.time.LocalDateTime;
 
 @SuppressWarnings("NonAsciiCharacters")

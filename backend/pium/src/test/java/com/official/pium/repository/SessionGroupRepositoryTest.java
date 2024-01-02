@@ -1,7 +1,8 @@
 package com.official.pium.repository;
 
 import com.official.pium.RepositoryTest;
-import com.official.pium.domain.SessionGroup;
+import com.official.pium.sessionGroup.domain.SessionGroup;
+import com.official.pium.sessionGroup.repository.SessionGroupRepository;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

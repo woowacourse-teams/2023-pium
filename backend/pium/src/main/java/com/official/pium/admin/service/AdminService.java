@@ -1,8 +1,8 @@
 package com.official.pium.admin.service;
 
 import com.official.pium.admin.mapper.AdminMapper;
-import com.official.pium.domain.Admin;
-import com.official.pium.service.dto.AdminLoginRequest;
+import com.official.pium.admin.domain.Admin;
+import com.official.pium.admin.service.dto.AdminLoginRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
