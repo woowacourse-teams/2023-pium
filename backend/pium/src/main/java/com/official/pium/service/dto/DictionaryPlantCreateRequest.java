@@ -94,21 +94,11 @@ public class DictionaryPlantCreateRequest {
 
     private CareDetail toCareDetail() {
         return CareDetail.builder()
-                .temperature(
-                        toTemperature()
-                )
-                .requireHumidity(
-                        this.requireHumidity
-                )
-                .postingPlace(
-                        this.postingPlace
-                )
-                .specialManageInfo(
-                        this.specialManageInfo
-                )
-                .waterCycle(
-                        toWaterCycle()
-                )
+                .temperature(toTemperature())
+                .requireHumidity(this.requireHumidity)
+                .postingPlace(this.postingPlace)
+                .specialManageInfo(this.specialManageInfo)
+                .waterCycle(toWaterCycle())
                 .build();
     }
 
