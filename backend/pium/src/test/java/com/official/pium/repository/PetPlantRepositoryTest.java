@@ -8,7 +8,7 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -88,7 +88,7 @@ class PetPlantRepositoryTest extends RepositoryTest {
                 )
                 .birthDate(LocalDate.of(2020, 1, 3))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .nextWaterDate(LocalDate.of(2020, 1, 3))
                                 .lastWaterDate(LocalDate.of(2020, 1, 3))
                                 .build()

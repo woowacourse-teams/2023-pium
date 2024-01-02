@@ -4,7 +4,7 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.fixture.DictionaryPlantFixture;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.repository.DictionaryPlantRepository;
@@ -71,7 +71,7 @@ public class PetPlantSupport {
                             )
                             .birthDate(LocalDate.of(2000, 6, 14))
                             .waterDate(
-                                    WaterDate.builder()
+                                    WaterDetail.builder()
                                             .nextWaterDate(LocalDate.of(2020, 2, 3))
                                             .lastWaterDate(LocalDate.of(2022, 3, 4))
                                             .build()

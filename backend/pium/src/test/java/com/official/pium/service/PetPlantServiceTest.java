@@ -212,7 +212,7 @@ class PetPlantServiceTest extends IntegrationTest {
                         assertThat(updatedPetPlant.getPetPlantState().getWind()).isEqualTo(updateRequest.getWind());
                         assertThat(updatedPetPlant.getWaterCycle()).isEqualTo(updateRequest.getWaterCycle());
                         assertThat(updatedPetPlant.getBirthDate()).isEqualTo(updateRequest.getBirthDate());
-                        assertThat(updatedPetPlant.getWaterDate().getLastWaterDate()).isEqualTo(
+                        assertThat(updatedPetPlant.getWaterDetail().getLastWaterDate()).isEqualTo(
                                 updateRequest.getLastWaterDate());
                         assertThat(updatedPetPlant.getImageUrl()).isNotEqualTo(petPlantImageUrl);
                     }
@@ -298,7 +298,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .build();
             historySupport.builder().petPlant(petPlant).build();
 
-            LocalDate firstDate = petPlant.getWaterDate().getLastWaterDate().plusDays(1);
+            LocalDate firstDate = petPlant.getWaterDetail().getLastWaterDate().plusDays(1);
             ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
                     .waterDate(firstDate)
                     .build();
@@ -336,7 +336,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .lastWaterDate(baseDate)
                     .build();
 
-            LocalDate firstDate = petPlant.getWaterDate().getLastWaterDate().plusDays(1);
+            LocalDate firstDate = petPlant.getWaterDetail().getLastWaterDate().plusDays(1);
             ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
                     .waterDate(firstDate)
                     .build();

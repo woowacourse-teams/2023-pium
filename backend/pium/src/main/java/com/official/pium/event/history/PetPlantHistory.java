@@ -39,7 +39,7 @@ public class PetPlantHistory {
                 .light(petPlant.getPetPlantState().getLight())
                 .wind(petPlant.getPetPlantState().getWind())
                 .waterCycle(petPlant.getWaterCycle().toString())
-                .lastWaterDate(petPlant.getWaterDate().getLastWaterDate().toString())
+                .lastWaterDate(petPlant.getWaterDetail().getLastWaterDate().toString())
                 .build();
     }
 

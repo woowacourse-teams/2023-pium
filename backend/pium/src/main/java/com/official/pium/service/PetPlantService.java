@@ -173,7 +173,7 @@ public class PetPlantService {
 
         previousPetPlantHistory.generateUpdateLastWaterDateHistoryEvent(
                 petPlant.getId(),
-                petPlant.getWaterDate().getLastWaterDate()
+                petPlant.getWaterDetail().getLastWaterDate()
         ).ifPresent(publisher::publishEvent);
     }
 

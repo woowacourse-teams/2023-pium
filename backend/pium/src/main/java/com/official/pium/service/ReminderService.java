@@ -37,9 +37,9 @@ public class ReminderService {
 
         checkOwner(petPlant, member);
 
-        LocalDate previousWaterDate = petPlant.getWaterDate().getLastWaterDate();
+        LocalDate previousWaterDate = petPlant.getWaterDetail().getLastWaterDate();
         petPlant.water(reminderCreateRequest.getWaterDate());
-        LocalDate currentWaterDate = petPlant.getWaterDate().getLastWaterDate();
+        LocalDate currentWaterDate = petPlant.getWaterDetail().getLastWaterDate();
 
         publisher.publishEvent(
                 HistoryEvent.of(petPlantId, previousWaterDate, currentWaterDate, HistoryType.LAST_WATER_DATE,

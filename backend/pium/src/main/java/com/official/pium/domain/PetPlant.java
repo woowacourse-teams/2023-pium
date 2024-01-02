@@ -1,7 +1,7 @@
 package com.official.pium.domain;
 
 import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -62,7 +62,7 @@ public class PetPlant extends BaseEntity {
     private LocalDate birthDate;
 
     @Embedded
-    private WaterDate waterDate;
+    private WaterDetail waterDetail;
 
     @Min(MIN_WATER_CYCLE)
     @Max(MAX_WATER_CYCLE)
@@ -78,7 +78,7 @@ public class PetPlant extends BaseEntity {
             String imageUrl,
             PetPlantState petPlantState,
             LocalDate birthDate,
-            WaterDate waterDate,
+            WaterDetail waterDetail,
             Integer waterCycle
     ) {
         this.dictionaryPlant = dictionaryPlant;
@@ -87,7 +87,7 @@ public class PetPlant extends BaseEntity {
         this.imageUrl = imageUrl;
         this.petPlantState = petPlantState;
         this.birthDate = birthDate;
-        this.waterDate = waterDate;
+        this.waterDetail = waterDetail;
         this.waterCycle = waterCycle;
     }
 
@@ -102,7 +102,7 @@ public class PetPlant extends BaseEntity {
      * - 0 : 오늘 할 일 - 음수 : 할 일 - 양수 : 지각
      */
     public Long calculateDday(LocalDate currentDate) {
-        return waterDate.calculateDday(currentDate);
+        return waterDetail.calculateDday(currentDate);
     }
 
     public void updatePetPlant(
@@ -118,9 +118,9 @@ public class PetPlant extends BaseEntity {
         validateLocalDate(birthDate);
         validateLocalDate(lastWaterDate);
         validateImageUrl(imageUrl);
-        waterDate.changeLastWaterDate(lastWaterDate);
+        waterDetail.changeLastWaterDate(lastWaterDate);
         if (!Objects.equals(waterCycle, this.waterCycle)) {
-            waterDate.plusNextWaterDate(waterCycle);
+            waterDetail.plusNextWaterDate(waterCycle);
         }
         this.nickname = nickname;
         this.petPlantState = petPlantState;
@@ -154,11 +154,11 @@ public class PetPlant extends BaseEntity {
     }
 
     public void water(LocalDate newWaterDate) {
-        waterDate.water(newWaterDate, this.waterCycle);
+        waterDetail.water(newWaterDate, this.waterCycle);
     }
 
     public void changeNextWaterDate(LocalDate newWaterDate) {
-        waterDate.changeNextWaterDate(newWaterDate);
+        waterDetail.changeNextWaterDate(newWaterDate);
     }
 
     public boolean isNotOwnerOf(Member member) {
@@ -166,7 +166,7 @@ public class PetPlant extends BaseEntity {
     }
 
     public boolean isDifferentLastWaterDate(LocalDate lastWaterDate) {
-        return waterDate.isDifferentLastWaterDate(lastWaterDate);
+        return waterDetail.isDifferentLastWaterDate(lastWaterDate);
     }
 
     @Override

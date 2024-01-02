@@ -5,7 +5,7 @@ import static com.official.pium.service.dto.PetPlantResponse.builder;
 
 import com.official.pium.domain.PetPlant;
 import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
@@ -31,7 +31,7 @@ public class PetPlantFixture {
             .waterCycle(7)
             .birthDate(LocalDate.of(2022, 7, 1))
             .waterDate(
-                    WaterDate.builder()
+                    WaterDetail.builder()
                             .lastWaterDate(LocalDate.of(2022, 7, 1))
                             .nextWaterDate(LocalDate.of(2022, 7, 8))
                             .build()

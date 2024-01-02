@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -82,7 +82,7 @@ class HistoryTest {
                         .waterCycle(5)
                         .birthDate(LocalDate.of(2021, 7, 1))
                         .waterDate(
-                                WaterDate.builder()
+                                WaterDetail.builder()
                                         .lastWaterDate(lastWaterDate)
                                         .nextWaterDate(lastWaterDate.plusDays(5))
                                         .build()

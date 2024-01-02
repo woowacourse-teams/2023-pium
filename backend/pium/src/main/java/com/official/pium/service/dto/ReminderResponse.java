@@ -34,8 +34,8 @@ public class ReminderResponse {
                 .nickName(petPlant.getNickname())
                 .dictionaryPlantName(petPlant.getDictionaryPlant().getClassification().getName())
                 .dday(dday)
-                .nextWaterDate(petPlant.getWaterDate().getNextWaterDate())
-                .lastWaterDate(petPlant.getWaterDate().getLastWaterDate())
+                .nextWaterDate(petPlant.getWaterDetail().getNextWaterDate())
+                .lastWaterDate(petPlant.getWaterDetail().getLastWaterDate())
                 .build();
     }
 }

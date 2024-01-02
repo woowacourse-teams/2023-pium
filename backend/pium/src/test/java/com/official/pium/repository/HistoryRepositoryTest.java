@@ -16,7 +16,7 @@ import com.official.pium.domain.vo.PetPlantState;
 import com.official.pium.domain.vo.Property;
 import com.official.pium.domain.vo.Temperature;
 import com.official.pium.domain.vo.WaterCycle;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -169,7 +169,7 @@ class HistoryRepositoryTest extends RepositoryTest {
                 )
                 .birthDate(LocalDate.of(2021, 6, 4))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .nextWaterDate(LocalDate.of(2021, 6, 4))
                                 .lastWaterDate(LocalDate.of(2021, 6, 4))
                                 .build()

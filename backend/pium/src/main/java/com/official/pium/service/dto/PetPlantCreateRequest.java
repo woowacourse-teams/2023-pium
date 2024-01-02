@@ -1,7 +1,7 @@
 package com.official.pium.service.dto;
 
 import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -59,8 +59,8 @@ public class PetPlantCreateRequest {
                 .build();
     }
 
-    public WaterDate toWaterDate() {
-        return WaterDate.builder()
+    public WaterDetail toWaterDate() {
+        return WaterDetail.builder()
                 .lastWaterDate(lastWaterDate)
                 .nextWaterDate(LocalDate.now().plusDays(waterCycle))
                 .build();

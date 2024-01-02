@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class WaterDate {
+public class WaterDetail {
 
     @NotNull
     @Column(name = "next_water_date", nullable = false)
@@ -24,7 +24,7 @@ public class WaterDate {
     private LocalDate lastWaterDate;
 
     @Builder
-    private WaterDate(LocalDate nextWaterDate, LocalDate lastWaterDate) {
+    private WaterDetail(LocalDate nextWaterDate, LocalDate lastWaterDate) {
         this.nextWaterDate = nextWaterDate;
         this.lastWaterDate = lastWaterDate;
     }

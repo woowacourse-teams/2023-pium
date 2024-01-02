@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 import com.official.pium.domain.vo.PetPlantState;
-import com.official.pium.domain.vo.WaterDate;
+import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.fixture.PetPlantFixture;
 import java.time.LocalDate;
@@ -58,7 +58,7 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(LocalDate.of(2022, 7, 8))
                                 .build()
@@ -121,7 +121,7 @@ class PetPlantTest {
                     .waterCycle(7)
                     .birthDate(LocalDate.of(2022, 7, 1))
                     .waterDate(
-                            WaterDate.builder()
+                            WaterDetail.builder()
                                     .lastWaterDate(LocalDate.of(2022, 7, 1))
                                     .nextWaterDate(LocalDate.now().minusDays(3))
                                     .build()
@@ -142,8 +142,8 @@ class PetPlantTest {
                     "https://testimage.com"
             );
 
-            assertThat(petPlant.getWaterDate().getNextWaterDate())
-                    .isEqualTo(petPlant.getWaterDate().getLastWaterDate().plusDays(petPlant.getWaterCycle()));
+            assertThat(petPlant.getWaterDetail().getNextWaterDate())
+                    .isEqualTo(petPlant.getWaterDetail().getLastWaterDate().plusDays(petPlant.getWaterCycle()));
         }
 
         @ParameterizedTest
@@ -359,7 +359,7 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(baseDate.minusDays(days))
                                 .build()
@@ -370,7 +370,7 @@ class PetPlantTest {
 
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getWaterDate().getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "오늘 할 일을 {0}일 뒤로 미루기")
@@ -390,17 +390,17 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(LocalDate.now())
                                 .build()
                 )
                 .build();
 
-        LocalDate newWaterDate = petPlant.getWaterDate().getNextWaterDate().plusDays(days);
+        LocalDate newWaterDate = petPlant.getWaterDetail().getNextWaterDate().plusDays(days);
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getWaterDate().getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "{0}일 뒤의 물주기를 {1}일 뒤로 미루기")
@@ -419,17 +419,17 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(WaterDate.builder()
+                .waterDate(WaterDetail.builder()
                         .lastWaterDate(LocalDate.of(2022, 7, 1))
                         .nextWaterDate(LocalDate.now().plusDays(days))
                         .build())
                 .build();
 
-        LocalDate newWaterDate = petPlant.getWaterDate().getNextWaterDate().plusDays(plusDays);
+        LocalDate newWaterDate = petPlant.getWaterDetail().getNextWaterDate().plusDays(plusDays);
 
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getWaterDate().getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "미루는 날짜가 오늘보다 {0}일 전이면 예외 발생")
@@ -438,7 +438,7 @@ class PetPlantTest {
         PetPlant petPlant = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(
-                () -> petPlant.changeNextWaterDate(petPlant.getWaterDate().getNextWaterDate().minusDays(days)))
+                () -> petPlant.changeNextWaterDate(petPlant.getWaterDetail().getNextWaterDate().minusDays(days)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
     }
@@ -461,18 +461,18 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(now.plusDays(days))
                                 .build()
                 )
                 .build();
 
-        LocalDate newWaterDate = petPlant.getWaterDate().getNextWaterDate().minusDays(minusDays);
+        LocalDate newWaterDate = petPlant.getWaterDetail().getNextWaterDate().minusDays(minusDays);
 
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getWaterDate().getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "미루는 날짜가 오늘보다 {0}일 전이면 예외 발생")
@@ -481,7 +481,7 @@ class PetPlantTest {
         PetPlant petPlant = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(
-                () -> petPlant.changeNextWaterDate(petPlant.getWaterDate().getNextWaterDate().minusDays(days)))
+                () -> petPlant.changeNextWaterDate(petPlant.getWaterDetail().getNextWaterDate().minusDays(days)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
     }
@@ -496,8 +496,8 @@ class PetPlantTest {
 
         assertThat(petPlant)
                 .extracting(
-                        p -> p.getWaterDate().getNextWaterDate(),
-                        p -> p.getWaterDate().getLastWaterDate()
+                        p -> p.getWaterDetail().getNextWaterDate(),
+                        p -> p.getWaterDetail().getLastWaterDate()
                 )
                 .isEqualTo(List.of(newNextWaterDate, newWaterDate));
     }
@@ -538,7 +538,7 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2023, 7, 1))
                                 .nextWaterDate(LocalDate.of(2023, 7, 17))
                                 .build()
@@ -565,7 +565,7 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2023, 7, 1))
                                 .nextWaterDate(LocalDate.of(2023, 7, 17))
                                 .build()
@@ -593,7 +593,7 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(lastWaterDate)
                                 .nextWaterDate(LocalDate.of(2022, 7, 17))
                                 .build()
@@ -621,7 +621,7 @@ class PetPlantTest {
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
                 .waterDate(
-                        WaterDate.builder()
+                        WaterDetail.builder()
                                 .lastWaterDate(lastWaterDate)
                                 .nextWaterDate(LocalDate.of(2022, 7, 17))
                                 .build()

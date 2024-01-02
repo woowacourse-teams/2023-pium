@@ -127,7 +127,7 @@ class ReminderApiTest extends AcceptanceTest {
             String sessionId = 로그인_요청();
 
             PetPlant petPlant = petPlantSupport.builder().build();
-            ReminderCreateRequest request = 리마인더_물주기_요청(petPlant.getWaterDate().getLastWaterDate().plusDays(1));
+            ReminderCreateRequest request = 리마인더_물주기_요청(petPlant.getWaterDetail().getLastWaterDate().plusDays(1));
 
             RestAssured
                     .given()
