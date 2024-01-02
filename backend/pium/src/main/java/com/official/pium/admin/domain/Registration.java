@@ -1,6 +1,6 @@
 package com.official.pium.admin.domain;
 
-import com.official.pium.domain.BaseEntity;
+import com.official.pium.common.domain.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

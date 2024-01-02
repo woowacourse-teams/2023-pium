@@ -1,7 +1,7 @@
 package com.official.pium.support;
 
-import com.official.pium.domain.SessionGroup;
-import com.official.pium.repository.SessionGroupRepository;
+import com.official.pium.sessionGroup.domain.SessionGroup;
+import com.official.pium.sessionGroup.repository.SessionGroupRepository;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;

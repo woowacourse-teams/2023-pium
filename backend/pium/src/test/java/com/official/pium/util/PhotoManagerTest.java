@@ -1,9 +1,9 @@
 package com.official.pium.util;
 
 import com.official.pium.IntegrationTest;
+import com.official.pium.common.util.PhotoManager;
 import com.official.pium.config.ImageCleanerExtension;
 import com.official.pium.fixture.FileFixture;
-import com.official.pium.service.PhotoManager;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Test;

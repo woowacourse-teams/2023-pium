@@ -4,11 +4,11 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.hamcrest.Matchers.containsString;
 
 import com.official.pium.AcceptanceTest;
-import com.official.pium.domain.DictionaryPlant;
-import com.official.pium.domain.Member;
+import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
+import com.official.pium.member.domain.Member;
 import com.official.pium.fixture.GardenFixture;
-import com.official.pium.service.dto.GardenCreateRequest;
-import com.official.pium.service.dto.SingleGardenResponse;
+import com.official.pium.garden.application.dto.GardenCreateRequest;
+import com.official.pium.garden.application.dto.SingleGardenResponse;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.ExtractableResponse;

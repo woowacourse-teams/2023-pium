@@ -1,9 +1,9 @@
 package com.official.pium.fixture;
 
-import com.official.pium.service.dto.DataResponse;
-import com.official.pium.service.dto.ReminderCreateRequest;
-import com.official.pium.service.dto.ReminderResponse;
-import com.official.pium.service.dto.ReminderUpdateRequest;
+import com.official.pium.common.dto.DataResponse;
+import com.official.pium.petPlant.application.dto.ReminderCreateRequest;
+import com.official.pium.petPlant.application.dto.ReminderResponse;
+import com.official.pium.petPlant.application.dto.ReminderUpdateRequest;
 import java.time.LocalDate;
 import java.util.List;
 

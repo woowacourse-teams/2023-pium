@@ -1,7 +1,7 @@
 package com.official.pium.support;
 
-import com.official.pium.domain.Member;
-import com.official.pium.repository.MemberRepository;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

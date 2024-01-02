@@ -1,7 +1,7 @@
 package com.official.pium.admin.mapper;
 
 import com.official.pium.admin.domain.Registration;
-import com.official.pium.admin.dto.RegistrationResponse;
+import com.official.pium.admin.service.dto.RegistrationResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

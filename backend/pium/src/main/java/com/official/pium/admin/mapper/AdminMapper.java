@@ -1,7 +1,7 @@
 package com.official.pium.admin.mapper;
 
-import com.official.pium.domain.Admin;
-import com.official.pium.service.dto.AdminLoginRequest;
+import com.official.pium.admin.domain.Admin;
+import com.official.pium.admin.service.dto.AdminLoginRequest;
 
 public class AdminMapper {
 

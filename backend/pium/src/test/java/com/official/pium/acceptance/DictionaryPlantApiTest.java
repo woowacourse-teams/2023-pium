@@ -5,7 +5,7 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import static org.hamcrest.Matchers.equalTo;
 
 import com.official.pium.AcceptanceTest;
-import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

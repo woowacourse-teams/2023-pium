@@ -1,6 +1,6 @@
 package com.official.pium.fixture;
 
-import com.official.pium.domain.Member;
+import com.official.pium.member.domain.Member;
 
 @SuppressWarnings("NonAsciiCharacters")
 public class MemberFixture {

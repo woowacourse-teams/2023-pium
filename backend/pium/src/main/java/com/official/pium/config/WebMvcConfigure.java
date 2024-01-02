@@ -1,9 +1,9 @@
 package com.official.pium.config;
 
-import com.official.pium.admin.controller.AdminArgumentResolver;
-import com.official.pium.controller.MemberArgumentResolver;
-import com.official.pium.repository.MemberRepository;
-import com.official.pium.service.SessionGroupService;
+import com.official.pium.admin.ui.AdminArgumentResolver;
+import com.official.pium.common.ui.MemberArgumentResolver;
+import com.official.pium.member.repository.MemberRepository;
+import com.official.pium.sessionGroup.application.SessionGroupService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;

@@ -1,14 +1,14 @@
 package com.official.pium.admin.service;
 
 import com.official.pium.admin.domain.Registration;
-import com.official.pium.admin.dto.RegistrationRequest;
-import com.official.pium.admin.dto.RegistrationResponse;
+import com.official.pium.admin.service.dto.RegistrationRequest;
+import com.official.pium.admin.service.dto.RegistrationResponse;
 import com.official.pium.admin.mapper.RegistrationMapper;
 import com.official.pium.admin.repository.RegistrationRepository;
-import com.official.pium.domain.Admin;
-import com.official.pium.exception.AuthorizationException;
-import com.official.pium.service.PhotoManager;
-import com.official.pium.service.dto.DataResponse;
+import com.official.pium.admin.domain.Admin;
+import com.official.pium.common.exception.AuthorizationException;
+import com.official.pium.common.util.PhotoManager;
+import com.official.pium.common.dto.DataResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
