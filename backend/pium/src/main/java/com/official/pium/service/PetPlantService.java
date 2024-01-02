@@ -87,7 +87,7 @@ public class PetPlantService {
                 .petPlantState(request.toPetPlantState())
                 .birthDate(request.getBirthDate())
                 .waterCycle(request.getWaterCycle())
-                .waterDate(request.toWaterDate())
+                .waterDetail(request.toWaterDate())
                 .build();
     }
 

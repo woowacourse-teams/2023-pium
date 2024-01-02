@@ -168,7 +168,7 @@ class HistoryRepositoryTest extends RepositoryTest {
                                 .build()
                 )
                 .birthDate(LocalDate.of(2021, 6, 4))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .nextWaterDate(LocalDate.of(2021, 6, 4))
                                 .lastWaterDate(LocalDate.of(2021, 6, 4))

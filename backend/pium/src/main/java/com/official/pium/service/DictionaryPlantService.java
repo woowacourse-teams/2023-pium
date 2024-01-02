@@ -30,7 +30,7 @@ public class DictionaryPlantService {
     }
 
     public DataResponse<List<DictionaryPlantSearchResponse>> search(String name) {
-        List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.findDictionaryPlantsByClassification_NameContains(
+        List<DictionaryPlant> dictionaryPlants = dictionaryPlantRepository.searchDictionaryPlantByName(
                 name);
 
         List<DictionaryPlantSearchResponse> dictionaryPlantSearchResponses = dictionaryPlants.stream()

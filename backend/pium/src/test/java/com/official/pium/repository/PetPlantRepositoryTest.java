@@ -87,7 +87,7 @@ class PetPlantRepositoryTest extends RepositoryTest {
                                 .build()
                 )
                 .birthDate(LocalDate.of(2020, 1, 3))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .nextWaterDate(LocalDate.of(2020, 1, 3))
                                 .lastWaterDate(LocalDate.of(2020, 1, 3))

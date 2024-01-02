@@ -30,7 +30,7 @@ public class PetPlantCustomRepositoryImpl implements PetPlantCustomRepository {
                 .from(petPlant)
                 .join(petPlant.member, member)
                 .fetchJoin()
-                .where(petPlant.waterDate.nextWaterDate.eq(date), member.deviceToken.isNotNull())
+                .where(petPlant.waterDetail.nextWaterDate.eq(date), member.deviceToken.isNotNull())
                 .fetch();
     }
 }

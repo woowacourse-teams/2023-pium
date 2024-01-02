@@ -26,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ReminderService {
 
+    public static final String SORT_CONDITION = "waterDetail_nextWaterDate";
+
     private final PetPlantRepository petPlantRepository;
     private final ApplicationEventPublisher publisher;
 
@@ -63,7 +65,7 @@ public class ReminderService {
 
     public DataResponse<List<ReminderResponse>> readAll(Member member) {
         List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(member.getId(),
-                Sort.by(Direction.ASC, "waterDate_nextWaterDate"));
+                Sort.by(Direction.ASC, SORT_CONDITION));
 
         List<ReminderResponse> reminderResponses = petPlants.stream()
                 .map(petPlant -> ReminderResponse.of(

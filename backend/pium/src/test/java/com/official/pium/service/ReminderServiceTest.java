@@ -231,7 +231,7 @@ class ReminderServiceTest extends IntegrationTest {
                         .wind("testWind")
                         .build())
                 .birthDate(LocalDate.of(2000, 7, 1))
-                .waterDate(WaterDetail.builder()
+                .waterDetail(WaterDetail.builder()
                         .nextWaterDate(nextWaterDate)
                         .lastWaterDate(LocalDate.of(2022, 7, 1))
                         .build())

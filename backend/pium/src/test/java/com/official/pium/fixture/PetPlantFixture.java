@@ -30,7 +30,7 @@ public class PetPlantFixture {
             )
             .waterCycle(7)
             .birthDate(LocalDate.of(2022, 7, 1))
-            .waterDate(
+            .waterDetail(
                     WaterDetail.builder()
                             .lastWaterDate(LocalDate.of(2022, 7, 1))
                             .nextWaterDate(LocalDate.of(2022, 7, 8))

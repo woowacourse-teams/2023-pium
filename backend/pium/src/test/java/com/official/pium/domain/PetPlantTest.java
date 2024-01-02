@@ -57,7 +57,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(LocalDate.of(2022, 7, 8))
@@ -120,7 +120,7 @@ class PetPlantTest {
                     )
                     .waterCycle(7)
                     .birthDate(LocalDate.of(2022, 7, 1))
-                    .waterDate(
+                    .waterDetail(
                             WaterDetail.builder()
                                     .lastWaterDate(LocalDate.of(2022, 7, 1))
                                     .nextWaterDate(LocalDate.now().minusDays(3))
@@ -358,7 +358,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(baseDate.minusDays(days))
@@ -389,7 +389,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(LocalDate.now())
@@ -419,7 +419,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(WaterDetail.builder()
+                .waterDetail(WaterDetail.builder()
                         .lastWaterDate(LocalDate.of(2022, 7, 1))
                         .nextWaterDate(LocalDate.now().plusDays(days))
                         .build())
@@ -460,7 +460,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2022, 7, 1))
                                 .nextWaterDate(now.plusDays(days))
@@ -537,7 +537,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2023, 7, 1))
                                 .nextWaterDate(LocalDate.of(2023, 7, 17))
@@ -564,7 +564,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(LocalDate.of(2023, 7, 1))
                                 .nextWaterDate(LocalDate.of(2023, 7, 17))
@@ -592,7 +592,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(lastWaterDate)
                                 .nextWaterDate(LocalDate.of(2022, 7, 17))
@@ -620,7 +620,7 @@ class PetPlantTest {
                 )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .waterDate(
+                .waterDetail(
                         WaterDetail.builder()
                                 .lastWaterDate(lastWaterDate)
                                 .nextWaterDate(LocalDate.of(2022, 7, 17))

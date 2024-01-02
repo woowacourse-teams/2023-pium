@@ -70,7 +70,7 @@ public class PetPlantSupport {
                                             .build()
                             )
                             .birthDate(LocalDate.of(2000, 6, 14))
-                            .waterDate(
+                            .waterDetail(
                                     WaterDetail.builder()
                                             .nextWaterDate(LocalDate.of(2020, 2, 3))
                                             .lastWaterDate(LocalDate.of(2022, 3, 4))

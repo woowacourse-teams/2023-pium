@@ -81,7 +81,7 @@ class HistoryTest {
                         )
                         .waterCycle(5)
                         .birthDate(LocalDate.of(2021, 7, 1))
-                        .waterDate(
+                        .waterDetail(
                                 WaterDetail.builder()
                                         .lastWaterDate(lastWaterDate)
                                         .nextWaterDate(lastWaterDate.plusDays(5))
