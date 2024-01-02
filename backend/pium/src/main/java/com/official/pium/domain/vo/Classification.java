@@ -19,7 +19,7 @@ public class Classification {
     private String familyName;
 
     @Builder
-    public Classification(String name, String familyName) {
+    private Classification(String name, String familyName) {
         this.name = name;
         this.familyName = familyName;
     }

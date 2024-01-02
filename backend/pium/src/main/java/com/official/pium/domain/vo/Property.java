@@ -25,7 +25,7 @@ public class Property {
     private String growSpeed;
 
     @Builder
-    public Property(String smell, String poison, String manageLevel, String growSpeed) {
+    private Property(String smell, String poison, String manageLevel, String growSpeed) {
         this.smell = smell;
         this.poison = poison;
         this.manageLevel = manageLevel;

@@ -40,7 +40,7 @@ public class DictionaryPlant extends BaseEntity {
     private CareDetail careDetail;
 
     @Builder
-    public DictionaryPlant(
+    private DictionaryPlant(
             String imageUrl,
             Classification classification,
             Property property,

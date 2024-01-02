@@ -29,7 +29,7 @@ public class CareDetail {
     private WaterCycle waterCycle;
 
     @Builder
-    public CareDetail(
+    private CareDetail(
             Temperature temperature,
             String requireHumidity,
             String postingPlace,

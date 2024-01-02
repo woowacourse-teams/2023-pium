@@ -19,7 +19,7 @@ public class Temperature {
     private String minimumTemp;
 
     @Builder
-    public Temperature(String requireTemp, String minimumTemp) {
+    private Temperature(String requireTemp, String minimumTemp) {
         this.requireTemp = requireTemp;
         this.minimumTemp = minimumTemp;
     }
