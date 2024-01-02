@@ -7,7 +7,6 @@ import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
 import com.official.pium.event.history.HistoryEvent;
 import com.official.pium.event.history.HistoryEvents;
-import com.official.pium.event.history.LastWaterDateEvent;
 import com.official.pium.event.history.PetPlantHistory;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.repository.HistoryRepository;
@@ -172,11 +171,10 @@ public class PetPlantService {
             publisher.publishEvent(historyEvent);
         }
 
-        LastWaterDateEvent lastWaterDateEvent = previousPetPlantHistory.generateUpdateLastWaterDateHistoryEvent(
-                petPlant.getId(), petPlant.getWaterDate().getLastWaterDate());
-        if (lastWaterDateEvent != null) {
-            publisher.publishEvent(lastWaterDateEvent);
-        }
+        previousPetPlantHistory.generateUpdateLastWaterDateHistoryEvent(
+                petPlant.getId(),
+                petPlant.getWaterDate().getLastWaterDate()
+        ).ifPresent(publisher::publishEvent);
     }
 
     @Transactional
@@ -201,17 +199,22 @@ public class PetPlantService {
         int pageSize = 1;
         Slice<History> currentHistory = historyRepository.findAllByPetPlantIdAndHistoryCategoryHistoryType(
                 petPlant.getId(), HistoryType.LAST_WATER_DATE,
-                PageRequest.of(pageNumber, pageSize, Direction.DESC, "date"));
-        List<History> content = currentHistory.getContent();
+                PageRequest.of(pageNumber, pageSize, Direction.DESC, "date")
+        );
 
+        List<History> content = currentHistory.getContent();
         if (!content.isEmpty() && petPlant.isDifferentLastWaterDate(updateRequest.getLastWaterDate())) {
             History history = content.get(0);
-            LocalDate prevDate = history.getDate();
-            if (updateRequest.getLastWaterDate().isBefore(prevDate) || updateRequest.getLastWaterDate()
-                    .isEqual(prevDate)) {
+            if (isWrongLastWaterDate(updateRequest, history)) {
                 throw new IllegalArgumentException(
                         "마지막으로 물 준 날짜는 직전 값과 같거나 이전일 수 없습니다. date: " + updateRequest.getLastWaterDate());
             }
         }
+    }
+
+    private boolean isWrongLastWaterDate(PetPlantUpdateRequest updateRequest, History history) {
+        LocalDate prevDate = history.getDate();
+        LocalDate newLastWaterDate = updateRequest.getLastWaterDate();
+        return newLastWaterDate.isBefore(prevDate) || newLastWaterDate.isEqual(prevDate);
     }
 }

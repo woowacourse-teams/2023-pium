@@ -5,6 +5,7 @@ import com.official.pium.domain.PetPlant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -80,10 +81,13 @@ public class PetPlantHistory {
         return events;
     }
 
-    public LastWaterDateEvent generateUpdateLastWaterDateHistoryEvent(Long petPlantId, LocalDate otherLastWaterDate) {
+    public Optional<LastWaterDateEvent> generateUpdateLastWaterDateHistoryEvent(
+            Long petPlantId,
+            LocalDate otherLastWaterDate
+    ) {
         if (!lastWaterDate.equals(otherLastWaterDate.toString())) {
-            return new LastWaterDateEvent(petPlantId, otherLastWaterDate);
+            return Optional.of(new LastWaterDateEvent(petPlantId, otherLastWaterDate));
         }
-        return null;
+        return Optional.empty();
     }
 }

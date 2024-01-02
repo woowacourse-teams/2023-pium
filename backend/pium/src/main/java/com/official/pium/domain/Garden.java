@@ -73,9 +73,17 @@ public class Garden extends BaseEntity {
     private String manageLevel;
 
     @Builder
-    private Garden(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl,
-                   GardenPlantState gardenPlantState,
-                   Long daySince, Integer waterCycle, String content, String manageLevel) {
+    private Garden(
+            DictionaryPlant dictionaryPlant,
+            Member member,
+            String nickname,
+            String imageUrl,
+            GardenPlantState gardenPlantState,
+            Long daySince,
+            Integer waterCycle,
+            String content,
+            String manageLevel
+    ) {
         this.dictionaryPlant = dictionaryPlant;
         this.member = member;
         this.nickname = nickname;

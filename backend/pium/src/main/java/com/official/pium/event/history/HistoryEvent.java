@@ -29,25 +29,23 @@ public class HistoryEvent {
     @NotNull
     private final LocalDate date;
 
-    public static HistoryEvent of(Long petPlantId, String previous, String current, HistoryType historyType,
-                                  LocalDate date) {
-        return new HistoryEvent(
-                petPlantId,
-                previous,
-                current,
-                historyType,
-                date
-        );
+    public static HistoryEvent of(
+            Long petPlantId,
+            String previous,
+            String current,
+            HistoryType historyType,
+            LocalDate date
+    ) {
+        return new HistoryEvent(petPlantId, previous, current, historyType, date);
     }
 
-    public static HistoryEvent of(Long petPlantId, LocalDate previous, LocalDate current, HistoryType historyType,
-                                  LocalDate date) {
-        return new HistoryEvent(
-                petPlantId,
-                previous.toString(),
-                current.toString(),
-                historyType,
-                date
-        );
+    public static HistoryEvent of(
+            Long petPlantId,
+            LocalDate previous,
+            LocalDate current,
+            HistoryType historyType,
+            LocalDate date
+    ) {
+        return new HistoryEvent(petPlantId, previous.toString(), current.toString(), historyType, date);
     }
 }

@@ -29,7 +29,8 @@ public class GardenController {
     @PostMapping
     public ResponseEntity<Void> create(
             @RequestBody @Valid GardenCreateRequest request,
-            @Auth Member member) {
+            @Auth Member member
+    ) {
         gardenService.create(request, member);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
@@ -37,7 +38,8 @@ public class GardenController {
     @GetMapping
     public ResponseEntity<GardenResponse> readAll(
             @PageableDefault(size = 20) Pageable pageable,
-            @RequestParam(value = "filter", required = false) List<Long> filters) {
+            @RequestParam(value = "filter", required = false) List<Long> filters
+    ) {
         GardenResponse gardenResponse = gardenService.readAll(pageable, filters);
         return ResponseEntity.ok(gardenResponse);
     }

@@ -4,7 +4,6 @@ import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.mapper.HistoryMapper;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.HistoryResponse;
@@ -34,17 +33,23 @@ public class HistoryService {
             throw new IllegalArgumentException("요청 사용자와 반려 식물의 사용자가 일치하지 않습니다. id :" + member.getId());
         }
 
-        List<HistoryType> historyTypes = new ArrayList<>();
+        List<HistoryType> historyTypes = setHistoryFilters(filters);
 
+        Page<History> petPlantHistory = historyRepository.findAllByPetPlantIdAndHistoryTypes(
+                petPlantId,
+                historyTypes,
+                pageable
+        );
+        return HistoryResponse.from(petPlantHistory);
+    }
+
+    private static List<HistoryType> setHistoryFilters(List<String> filters) {
+        List<HistoryType> historyTypes = new ArrayList<>();
         if (filters != null) {
             historyTypes = filters.stream()
                     .map(HistoryType::from)
                     .toList();
         }
-
-        Page<History> historyPageByPetPlantId = historyRepository.findAllByPetPlantIdAndHistoryTypes(petPlantId,
-                historyTypes, pageable);
-
-        return HistoryMapper.toHistoryResponse(historyPageByPetPlantId);
+        return historyTypes;
     }
 }

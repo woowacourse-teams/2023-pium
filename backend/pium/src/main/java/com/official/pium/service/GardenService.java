@@ -40,9 +40,7 @@ public class GardenService {
                 .member(petPlant.getMember())
                 .nickname(petPlant.getNickname())
                 .imageUrl(petPlant.getImageUrl())
-                .gardenPlantState(
-                        toPlantState(petPlant)
-                )
+                .gardenPlantState(toPlantState(petPlant))
                 .daySince(petPlant.calculateDaySince(LocalDate.now()))
                 .waterCycle(petPlant.getWaterCycle())
                 .content(request.getContent())
