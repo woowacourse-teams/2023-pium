@@ -34,9 +34,12 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private static final String JOINER_DELIMITER = ", ";
 
     @Override
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
-                                                                  HttpHeaders headers, HttpStatusCode status,
-                                                                  WebRequest request) {
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest request
+    ) {
         List<ObjectError> allErrors = ex.getBindingResult().getAllErrors();
         StringJoiner stringJoiner = new StringJoiner(JOINER_DELIMITER);
 

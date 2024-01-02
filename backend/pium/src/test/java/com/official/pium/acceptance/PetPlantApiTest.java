@@ -574,7 +574,7 @@ class PetPlantApiTest extends AcceptanceTest {
                     .lastWaterDate(LocalDate.of(2022, 4, 1))
                     .build();
 
-            LocalDate firstWaterDate = petPlant.getLastWaterDate().plusDays(2);
+            LocalDate firstWaterDate = petPlant.getWaterDetail().getLastWaterDate().plusDays(2);
             반려_식물_물주기(petPlant.getId(), firstWaterDate);
             LocalDate secondWaterDate = firstWaterDate.plusDays(3);
             반려_식물_물주기(petPlant.getId(), secondWaterDate);
@@ -608,7 +608,7 @@ class PetPlantApiTest extends AcceptanceTest {
                     .lastWaterDate(LocalDate.of(2022, 4, 1))
                     .build();
 
-            LocalDate firstWaterDate = petPlant.getLastWaterDate().plusDays(1);
+            LocalDate firstWaterDate = petPlant.getWaterDetail().getLastWaterDate().plusDays(1);
             반려_식물_물주기(petPlant.getId(), firstWaterDate);
             LocalDate secondWaterDate = firstWaterDate.plusDays(3);
             반려_식물_물주기(petPlant.getId(), secondWaterDate);

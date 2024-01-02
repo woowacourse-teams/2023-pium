@@ -1,5 +1,16 @@
 package com.official.pium.service;
 
+import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+
 import com.official.pium.IntegrationTest;
 import com.official.pium.config.ImageCleanerExtension;
 import com.official.pium.domain.DictionaryPlant;
@@ -15,6 +26,9 @@ import com.official.pium.service.dto.PetPlantResponse;
 import com.official.pium.service.dto.PetPlantUpdateRequest;
 import com.official.pium.service.dto.ReminderCreateRequest;
 import com.official.pium.service.dto.SinglePetPlantResponse;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
@@ -26,21 +40,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.NoSuchElementException;
-
-import static com.official.pium.fixture.PetPlantFixture.REQUEST.피우미_수정_요청;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.SoftAssertions.assertSoftly;
-import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 @ExtendWith(ImageCleanerExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
@@ -207,12 +206,14 @@ class PetPlantServiceTest extends IntegrationTest {
                     softly -> {
                         assertThat(updatedPetPlant.getId()).isEqualTo(petPlant.getId());
                         assertThat(updatedPetPlant.getNickname()).isEqualTo(updateRequest.getNickname());
-                        assertThat(updatedPetPlant.getFlowerpot()).isEqualTo(updateRequest.getFlowerpot());
-                        assertThat(updatedPetPlant.getLight()).isEqualTo(updateRequest.getLight());
-                        assertThat(updatedPetPlant.getWind()).isEqualTo(updateRequest.getWind());
+                        assertThat(updatedPetPlant.getPetPlantState().getFlowerpot()).isEqualTo(
+                                updateRequest.getFlowerpot());
+                        assertThat(updatedPetPlant.getPetPlantState().getLight()).isEqualTo(updateRequest.getLight());
+                        assertThat(updatedPetPlant.getPetPlantState().getWind()).isEqualTo(updateRequest.getWind());
                         assertThat(updatedPetPlant.getWaterCycle()).isEqualTo(updateRequest.getWaterCycle());
                         assertThat(updatedPetPlant.getBirthDate()).isEqualTo(updateRequest.getBirthDate());
-                        assertThat(updatedPetPlant.getLastWaterDate()).isEqualTo(updateRequest.getLastWaterDate());
+                        assertThat(updatedPetPlant.getWaterDetail().getLastWaterDate()).isEqualTo(
+                                updateRequest.getLastWaterDate());
                         assertThat(updatedPetPlant.getImageUrl()).isNotEqualTo(petPlantImageUrl);
                     }
             );
@@ -220,20 +221,7 @@ class PetPlantServiceTest extends IntegrationTest {
 
         @Test
         void 이미지_수정_요청_시_기존_이미지_제거() {
-            PetPlant petPlant = petPlantRepository.save(PetPlant.builder()
-                    .birthDate(LocalDate.now())
-                    .member(member)
-                    .dictionaryPlant(dictionaryPlant)
-                    .flowerpot("유리")
-                    .imageUrl(webPath + "/test/test/34234.jpg")
-                    .wind("바람이 안 통해요")
-                    .light("일반 조명")
-                    .lastWaterDate(LocalDate.now())
-                    .nextWaterDate(LocalDate.now())
-                    .waterCycle(3)
-                    .nickname("피우미")
-                    .location("거실")
-                    .build());
+            PetPlant petPlant = petPlantSupport.builder().member(member).build();
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
             MultipartFile multipartFile = FileFixture.generateMultiPartFile();
 
@@ -266,23 +254,9 @@ class PetPlantServiceTest extends IntegrationTest {
 
         @Test
         void 기존_이미지가_사전_식물_이미지면_제거하지_않음() {
-            PetPlant petPlant = petPlantRepository.save(PetPlant.builder()
-                    .birthDate(LocalDate.now())
-                    .member(member)
-                    .dictionaryPlant(dictionaryPlant)
-                    .flowerpot("유리")
-                    .imageUrl(webPath + "/dictionary-plant/34234.jpg")
-                    .wind("바람이 안 통해요")
-                    .light("일반 조명")
-                    .lastWaterDate(LocalDate.now())
-                    .nextWaterDate(LocalDate.now())
-                    .waterCycle(3)
-                    .nickname("피우미")
-                    .location("거실")
-                    .build());
-
+            PetPlant petPlant = petPlantSupport.builder().imageUrl(webPath + "/dictionary-plant/34234.jpg")
+                    .member(member).build();
             PetPlantUpdateRequest updateRequest = 피우미_수정_요청;
-
             MultipartFile multipartFile = FileFixture.generateMultiPartFile();
 
             petPlantService.update(petPlant.getId(), updateRequest, multipartFile, member);
@@ -324,7 +298,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .build();
             historySupport.builder().petPlant(petPlant).build();
 
-            LocalDate firstDate = petPlant.getLastWaterDate().plusDays(1);
+            LocalDate firstDate = petPlant.getWaterDetail().getLastWaterDate().plusDays(1);
             ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
                     .waterDate(firstDate)
                     .build();
@@ -362,7 +336,7 @@ class PetPlantServiceTest extends IntegrationTest {
                     .lastWaterDate(baseDate)
                     .build();
 
-            LocalDate firstDate = petPlant.getLastWaterDate().plusDays(1);
+            LocalDate firstDate = petPlant.getWaterDetail().getLastWaterDate().plusDays(1);
             ReminderCreateRequest createRequest = ReminderCreateRequest.builder()
                     .waterDate(firstDate)
                     .build();

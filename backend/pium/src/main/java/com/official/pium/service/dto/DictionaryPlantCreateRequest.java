@@ -1,5 +1,11 @@
 package com.official.pium.service.dto;
 
+import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.vo.WaterCycle;
+import com.official.pium.domain.vo.CareDetail;
+import com.official.pium.domain.vo.Classification;
+import com.official.pium.domain.vo.Property;
+import com.official.pium.domain.vo.Temperature;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -60,4 +66,55 @@ public class DictionaryPlantCreateRequest {
 
     @NotNull(message = "winter은 비어있을 수 없습니다 winter: ${validatedValue}")
     private String winter;
+
+    public DictionaryPlant toDictionaryPlant() {
+        return DictionaryPlant.builder()
+                .imageUrl(this.imageUrl)
+                .classification(toClassification())
+                .property(toProperty())
+                .careDetail(toCareDetail())
+                .build();
+    }
+
+    private Classification toClassification() {
+        return Classification.builder()
+                .name(this.name)
+                .familyName(this.familyName)
+                .build();
+    }
+
+    private Property toProperty() {
+        return Property.builder()
+                .smell(this.smell)
+                .poison(this.poison)
+                .manageLevel(this.manageLevel)
+                .growSpeed(this.growSpeed)
+                .build();
+    }
+
+    private CareDetail toCareDetail() {
+        return CareDetail.builder()
+                .temperature(toTemperature())
+                .requireHumidity(this.requireHumidity)
+                .postingPlace(this.postingPlace)
+                .specialManageInfo(this.specialManageInfo)
+                .waterCycle(toWaterCycle())
+                .build();
+    }
+
+    private WaterCycle toWaterCycle() {
+        return WaterCycle.builder()
+                .spring(this.spring)
+                .summer(this.summer)
+                .autumn(this.autumn)
+                .winter(this.winter)
+                .build();
+    }
+
+    private Temperature toTemperature() {
+        return Temperature.builder()
+                .minimumTemp(this.minimumTemp)
+                .requireTemp(this.requireTemp)
+                .build();
+    }
 }

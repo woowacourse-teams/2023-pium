@@ -36,42 +36,45 @@ public class PetPlantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<PetPlantResponse> read(
-            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
-            @Auth Member member) {
+        @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
+        @Auth Member member
+    ) {
         PetPlantResponse petPlantResponse = petPlantService.read(id, member);
         return ResponseEntity.ok(petPlantResponse);
     }
 
     @PostMapping(consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> create(
-            @RequestPart(name = "request") @Valid PetPlantCreateRequest request,
-            @RequestPart(name = "image", required = false) MultipartFile multipartFile,
-            @Auth Member member) {
+        @RequestPart(name = "request") @Valid PetPlantCreateRequest request,
+        @RequestPart(name = "image", required = false) MultipartFile multipartFile,
+        @Auth Member member
+    ) {
         PetPlantResponse petPlantResponse = petPlantService.create(request, multipartFile, member);
         return ResponseEntity.created(URI.create("/pet-plants/" + petPlantResponse.getId())).build();
     }
 
     @GetMapping
-    public ResponseEntity<DataResponse<List<SinglePetPlantResponse>>> readAll(
-            @Auth Member member) {
+    public ResponseEntity<DataResponse<List<SinglePetPlantResponse>>> readAll(@Auth Member member) {
         DataResponse<List<SinglePetPlantResponse>> response = petPlantService.readAll(member);
         return ResponseEntity.ok(response);
     }
 
     @PatchMapping(path = "/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<Void> update(
-            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
-            @RequestPart(name = "request") @Valid PetPlantUpdateRequest petPlantUpdateRequest,
-            @RequestPart(name = "image", required = false) MultipartFile multipartFile,
-            @Auth Member member) {
+        @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
+        @RequestPart(name = "request") @Valid PetPlantUpdateRequest petPlantUpdateRequest,
+        @RequestPart(name = "image", required = false) MultipartFile multipartFile,
+        @Auth Member member
+    ) {
         petPlantService.update(id, petPlantUpdateRequest, multipartFile, member);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
-            @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
-            @Auth Member member) {
+        @PathVariable @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long id,
+        @Auth Member member
+    ) {
         petPlantService.delete(id, member);
         return ResponseEntity.noContent().build();
     }

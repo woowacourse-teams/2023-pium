@@ -1,9 +1,11 @@
 package com.official.pium.event.history;
 
 import com.official.pium.domain.HistoryType;
+import com.official.pium.domain.PetPlant;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -28,6 +30,17 @@ public class PetPlantHistory {
         this.wind = wind;
         this.waterCycle = waterCycle;
         this.lastWaterDate = lastWaterDate;
+    }
+
+    public static PetPlantHistory from(PetPlant petPlant) {
+        return PetPlantHistory.builder()
+                .location(petPlant.getPetPlantState().getLocation())
+                .flowerpot(petPlant.getPetPlantState().getFlowerpot())
+                .light(petPlant.getPetPlantState().getLight())
+                .wind(petPlant.getPetPlantState().getWind())
+                .waterCycle(petPlant.getWaterCycle().toString())
+                .lastWaterDate(petPlant.getWaterDetail().getLastWaterDate().toString())
+                .build();
     }
 
     public List<HistoryEvent> generateCreateHistoryEvents(Long petPlantId, LocalDate date) {
@@ -68,10 +81,13 @@ public class PetPlantHistory {
         return events;
     }
 
-    public LastWaterDateEvent generateUpdateLastWaterDateHistoryEvent(Long petPlantId, LocalDate otherLastWaterDate) {
+    public Optional<LastWaterDateEvent> generateUpdateLastWaterDateHistoryEvent(
+            Long petPlantId,
+            LocalDate otherLastWaterDate
+    ) {
         if (!lastWaterDate.equals(otherLastWaterDate.toString())) {
-            return new LastWaterDateEvent(petPlantId, otherLastWaterDate);
+            return Optional.of(new LastWaterDateEvent(petPlantId, otherLastWaterDate));
         }
-        return null;
+        return Optional.empty();
     }
 }

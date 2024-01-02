@@ -1,6 +1,9 @@
 package com.official.pium.domain;
 
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -51,33 +54,15 @@ public class PetPlant extends BaseEntity {
     @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    @NotBlank
-    @Column(name = "location", nullable = false)
-    private String location;
-
-    @NotBlank
-    @Column(name = "flowerpot", nullable = false)
-    private String flowerpot;
-
-    @NotBlank
-    @Column(name = "light", nullable = false)
-    private String light;
-
-    @NotBlank
-    @Column(name = "wind", nullable = false)
-    private String wind;
+    @Embedded
+    private PetPlantState petPlantState;
 
     @NotNull
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @NotNull
-    @Column(name = "next_water_date", nullable = false)
-    private LocalDate nextWaterDate;
-
-    @NotNull
-    @Column(name = "last_water_date", nullable = false)
-    private LocalDate lastWaterDate;
+    @Embedded
+    private WaterDetail waterDetail;
 
     @Min(MIN_WATER_CYCLE)
     @Max(MAX_WATER_CYCLE)
@@ -86,20 +71,23 @@ public class PetPlant extends BaseEntity {
     private Integer waterCycle;
 
     @Builder
-    private PetPlant(DictionaryPlant dictionaryPlant, Member member, String nickname, String imageUrl, String location,
-                     String flowerpot, String light, String wind, @NotNull LocalDate birthDate,
-                     @NotNull LocalDate nextWaterDate, @NotNull LocalDate lastWaterDate, @NotNull Integer waterCycle) {
+    private PetPlant(
+            DictionaryPlant dictionaryPlant,
+            Member member,
+            String nickname,
+            String imageUrl,
+            PetPlantState petPlantState,
+            LocalDate birthDate,
+            WaterDetail waterDetail,
+            Integer waterCycle
+    ) {
         this.dictionaryPlant = dictionaryPlant;
         this.member = member;
         this.nickname = nickname;
         this.imageUrl = imageUrl;
-        this.location = location;
-        this.flowerpot = flowerpot;
-        this.light = light;
-        this.wind = wind;
+        this.petPlantState = petPlantState;
         this.birthDate = birthDate;
-        this.nextWaterDate = nextWaterDate;
-        this.lastWaterDate = lastWaterDate;
+        this.waterDetail = waterDetail;
         this.waterCycle = waterCycle;
     }
 
@@ -114,33 +102,30 @@ public class PetPlant extends BaseEntity {
      * - 0 : 오늘 할 일 - 음수 : 할 일 - 양수 : 지각
      */
     public Long calculateDday(LocalDate currentDate) {
-        return ChronoUnit.DAYS.between(nextWaterDate, currentDate);
+        return waterDetail.calculateDday(currentDate);
     }
 
     public void updatePetPlant(
-            String nickname, String location, String flowerpot, String light,
-            String wind, Integer waterCycle, LocalDate birthDate, LocalDate lastWaterDate, String imageUrl
+            String nickname,
+            PetPlantState petPlantState,
+            Integer waterCycle,
+            LocalDate birthDate,
+            LocalDate lastWaterDate,
+            String imageUrl
     ) {
         validateEmptyValue(nickname);
-        validateEmptyValue(location);
-        validateEmptyValue(flowerpot);
-        validateEmptyValue(light);
-        validateEmptyValue(wind);
         validateWaterCycle(waterCycle);
         validateLocalDate(birthDate);
         validateLocalDate(lastWaterDate);
         validateImageUrl(imageUrl);
+        waterDetail.changeLastWaterDate(lastWaterDate);
         if (!Objects.equals(waterCycle, this.waterCycle)) {
-            this.nextWaterDate = lastWaterDate.plusDays(waterCycle);
+            waterDetail.plusNextWaterDate(waterCycle);
         }
         this.nickname = nickname;
-        this.location = location;
-        this.flowerpot = flowerpot;
-        this.light = light;
-        this.wind = wind;
+        this.petPlantState = petPlantState;
         this.waterCycle = waterCycle;
         this.birthDate = birthDate;
-        this.lastWaterDate = lastWaterDate;
         this.imageUrl = imageUrl;
     }
 
@@ -169,22 +154,11 @@ public class PetPlant extends BaseEntity {
     }
 
     public void water(LocalDate newWaterDate) {
-        if (newWaterDate.isAfter(LocalDate.now())) {
-            throw new IllegalArgumentException("오늘 이후 날짜에 물을 줄 수는 없습니다. date: " + newWaterDate);
-        }
-
-        if (newWaterDate.isEqual(lastWaterDate) || newWaterDate.isBefore(lastWaterDate)) {
-            throw new IllegalArgumentException("마지막으로 물을 준 날짜와 그 이전 날짜에는 물을 줄 수는 없습니다. date: " + newWaterDate);
-        }
-        this.nextWaterDate = newWaterDate.plusDays(waterCycle);
-        this.lastWaterDate = newWaterDate;
+        waterDetail.water(newWaterDate, this.waterCycle);
     }
 
     public void changeNextWaterDate(LocalDate newWaterDate) {
-        if (newWaterDate.isEqual(LocalDate.now()) || newWaterDate.isBefore(LocalDate.now())) {
-            throw new IllegalArgumentException("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다. date: " + newWaterDate);
-        }
-        this.nextWaterDate = newWaterDate;
+        waterDetail.changeNextWaterDate(newWaterDate);
     }
 
     public boolean isNotOwnerOf(Member member) {
@@ -192,7 +166,7 @@ public class PetPlant extends BaseEntity {
     }
 
     public boolean isDifferentLastWaterDate(LocalDate lastWaterDate) {
-        return !this.lastWaterDate.isEqual(lastWaterDate);
+        return waterDetail.isDifferentLastWaterDate(lastWaterDate);
     }
 
     @Override

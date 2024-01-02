@@ -10,7 +10,13 @@ import com.official.pium.domain.HistoryContent;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.domain.WaterCycle;
+import com.official.pium.domain.vo.CareDetail;
+import com.official.pium.domain.vo.Classification;
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.Property;
+import com.official.pium.domain.vo.Temperature;
+import com.official.pium.domain.vo.WaterCycle;
+import com.official.pium.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -153,13 +159,21 @@ class HistoryRepositoryTest extends RepositoryTest {
                 .member(member)
                 .nickname("피우미")
                 .imageUrl("https://image.com")
-                .location("베란다")
-                .flowerpot("화분")
-                .light("밝아요")
-                .wind("추워요")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .location("베란다")
+                                .flowerpot("화분")
+                                .light("밝아요")
+                                .wind("추워요")
+                                .build()
+                )
                 .birthDate(LocalDate.of(2021, 6, 4))
-                .nextWaterDate(LocalDate.of(2021, 6, 4))
-                .lastWaterDate(LocalDate.of(2021, 6, 4))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .nextWaterDate(LocalDate.of(2021, 6, 4))
+                                .lastWaterDate(LocalDate.of(2021, 6, 4))
+                                .build()
+                )
                 .waterCycle(3)
                 .build();
         petPlantRepository.save(petPlant);
@@ -168,26 +182,36 @@ class HistoryRepositoryTest extends RepositoryTest {
 
     private DictionaryPlant saveDictionaryPlant() {
         DictionaryPlant dictionaryPlant = DictionaryPlant.builder()
-                .name("스투키")
+                .classification(Classification.builder()
+                        .name("스투키")
+                        .familyName("선인장")
+                        .build())
                 .imageUrl("https://www.costco.co.kr/medias/sys_master/images/hd6/h37/31058517229598.jpg")
-                .familyName("선인장")
-                .smell("안남")
-                .poison("없음")
-                .manageLevel("어려움")
-                .growSpeed("빨리자람")
-                .requireTemp("20도")
-                .minimumTemp("0도")
-                .requireHumidity("15%")
-                .postingPlace("베란다 앞")
-                .specialManageInfo("물을 많이 주지않아도 됩니다.")
-                .waterCycle(
-                        WaterCycle.builder()
-                                .spring("겉흙이 마르면 촉촉하게")
-                                .summer("겉흙이 마르면 촉촉하게")
-                                .autumn("겉흙이 마르면 촉촉하게")
-                                .winter("겉흙이 마르면 촉촉하게")
-                                .build()
-                ).build();
+                .property(Property.builder()
+                        .smell("안남")
+                        .poison("없음")
+                        .manageLevel("어려움")
+                        .growSpeed("빨리자람")
+                        .build())
+                .careDetail(CareDetail.builder()
+                        .temperature(Temperature.builder()
+                                .requireTemp("20도")
+                                .minimumTemp("0도")
+                                .build())
+                        .requireHumidity("15%")
+                        .postingPlace("베란다 앞")
+                        .specialManageInfo("물을 많이 주지않아도 됩니다.")
+                        .waterCycle(
+                                WaterCycle.builder()
+                                        .spring("겉흙이 마르면 촉촉하게")
+                                        .summer("겉흙이 마르면 촉촉하게")
+                                        .autumn("겉흙이 마르면 촉촉하게")
+                                        .winter("겉흙이 마르면 촉촉하게")
+                                        .build()
+                        )
+                        .build()
+                )
+                .build();
         dictionaryPlantRepository.save(dictionaryPlant);
         return dictionaryPlant;
     }

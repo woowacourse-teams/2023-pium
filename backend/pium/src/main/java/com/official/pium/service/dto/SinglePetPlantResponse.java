@@ -2,6 +2,7 @@ package com.official.pium.service.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.official.pium.domain.PetPlant;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,4 +25,15 @@ public class SinglePetPlantResponse {
     private LocalDate birthDate;
 
     private Long daySince;
+
+    public static SinglePetPlantResponse of(PetPlant petPlant, Long daySince) {
+        return SinglePetPlantResponse.builder()
+                .id(petPlant.getId())
+                .nickname(petPlant.getNickname())
+                .imageUrl(petPlant.getImageUrl())
+                .dictionaryPlantName(petPlant.getDictionaryPlant().getClassification().getName())
+                .birthDate(petPlant.getBirthDate())
+                .daySince(daySince)
+                .build();
+    }
 }

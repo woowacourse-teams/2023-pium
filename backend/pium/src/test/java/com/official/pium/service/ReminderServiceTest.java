@@ -10,7 +10,8 @@ import com.official.pium.domain.History;
 import com.official.pium.domain.HistoryType;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
-import com.official.pium.mapper.PetPlantMapper;
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.repository.HistoryRepository;
 import com.official.pium.repository.PetPlantRepository;
 import com.official.pium.service.dto.DataResponse;
@@ -59,7 +60,7 @@ class ReminderServiceTest extends IntegrationTest {
     void 정상적인_물주기_시_다음_물주기_날짜와_마지막으로_물을_준_날짜를_변경() {
         PetPlant petPlant1 = petPlantSupport.builder().member(member).lastWaterDate(LocalDate.of(2022, 3, 4)).build();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
-                .waterDate(petPlant1.getLastWaterDate().plusDays(2))
+                .waterDate(petPlant1.getWaterDetail().getLastWaterDate().plusDays(2))
                 .build();
 
         reminderService.water(request, petPlant1.getId(), member);
@@ -69,9 +70,11 @@ class ReminderServiceTest extends IntegrationTest {
 
         assertSoftly(softly -> {
                     softly.assertThat(updatedPetPlant)
-                            .extracting(PetPlant::getNextWaterDate, PetPlant::getLastWaterDate)
+                            .extracting(
+                                    petPlant -> petPlant.getWaterDetail().getNextWaterDate(),
+                                    petPlant -> petPlant.getWaterDetail().getLastWaterDate()
+                            )
                             .isEqualTo(List.of(newWaterDate.plusDays(petPlant1.getWaterCycle()), newWaterDate));
-                    // findByHistoryCategory
                     softly.assertThat(historyRepository.findAll())
                             .extracting(History::getPetPlant,
                                     history -> LocalDate.parse(history.getHistoryContent().getCurrent()))
@@ -97,7 +100,7 @@ class ReminderServiceTest extends IntegrationTest {
     @ValueSource(ints = {0, 1, 2, 3, 4, 5})
     void 마지막으로_물준_날짜_이전에_물주면_예외_발생(int days) {
         ReminderCreateRequest request = ReminderCreateRequest.builder()
-                .waterDate(petPlant.getLastWaterDate().minusDays(days))
+                .waterDate(petPlant.getWaterDetail().getLastWaterDate().minusDays(days))
                 .build();
 
         assertThatThrownBy(
@@ -110,7 +113,7 @@ class ReminderServiceTest extends IntegrationTest {
     void 반려_식물의_사용자와_물주기를_요청한_사용자가_다르면_예외_발생() {
         Member otherMember = memberSupport.builder().kakaoId(54321L).build();
         ReminderCreateRequest request = ReminderCreateRequest.builder()
-                .waterDate(petPlant.getLastWaterDate().plusDays(3))
+                .waterDate(petPlant.getWaterDetail().getLastWaterDate().plusDays(3))
                 .build();
 
         assertThatThrownBy(
@@ -131,7 +134,7 @@ class ReminderServiceTest extends IntegrationTest {
 
         PetPlant updatedPetPlant = petPlantRepository.findById(petPlant.getId()).get();
 
-        assertThat(updatedPetPlant.getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(updatedPetPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "오늘보다 {0}일 전 날짜로 물주기를 미루면 예외 발생")
@@ -152,7 +155,7 @@ class ReminderServiceTest extends IntegrationTest {
     void 반려_식물의_사용자와_미루기를_요청한_사용자가_다르면_예외_발생() {
         Member otherMember = memberSupport.builder().kakaoId(524321L).build();
         ReminderUpdateRequest request = ReminderUpdateRequest.builder()
-                .nextWaterDate(petPlant.getNextWaterDate().plusDays(1))
+                .nextWaterDate(petPlant.getWaterDetail().getNextWaterDate().plusDays(1))
                 .build();
 
         assertThatThrownBy(
@@ -172,11 +175,11 @@ class ReminderServiceTest extends IntegrationTest {
         DataResponse<List<ReminderResponse>> actual = reminderService.readAll(petPlant.getMember());
 
         List<ReminderResponse> expected = List.of(
-                PetPlantMapper.toReminderResponse(petPlant, petPlant.calculateDday(baseDate)),
-                PetPlantMapper.toReminderResponse(petPlant1, petPlant1.calculateDday(baseDate)),
-                PetPlantMapper.toReminderResponse(petPlant2, petPlant2.calculateDday(baseDate)),
-                PetPlantMapper.toReminderResponse(petPlant3, petPlant3.calculateDday(baseDate)),
-                PetPlantMapper.toReminderResponse(petPlant4, petPlant4.calculateDday(baseDate))
+                ReminderResponse.of(petPlant, petPlant.calculateDday(baseDate)),
+                ReminderResponse.of(petPlant1, petPlant1.calculateDday(baseDate)),
+                ReminderResponse.of(petPlant2, petPlant2.calculateDday(baseDate)),
+                ReminderResponse.of(petPlant3, petPlant3.calculateDday(baseDate)),
+                ReminderResponse.of(petPlant4, petPlant4.calculateDday(baseDate))
         );
 
         assertThat(actual.getData())
@@ -192,7 +195,8 @@ class ReminderServiceTest extends IntegrationTest {
         PetPlant sourcePetPlant = petPlantSupport.builder().member(subscribedMember).build();
 
         // when
-        List<PetPlant> expected = petPlantRepository.findAllByWaterNotification(sourcePetPlant.getNextWaterDate());
+        List<PetPlant> expected = petPlantRepository.findAllByWaterNotification(
+                sourcePetPlant.getWaterDetail().getNextWaterDate());
 
         // then
         assertThat(expected)
@@ -207,7 +211,8 @@ class ReminderServiceTest extends IntegrationTest {
         PetPlant sourcePetPlant = petPlantSupport.builder().member(subscribedMember).build();
 
         // when
-        List<PetPlant> expected = petPlantRepository.findAllByWaterNotification(sourcePetPlant.getNextWaterDate().minusDays(5));
+        List<PetPlant> expected = petPlantRepository.findAllByWaterNotification(
+                sourcePetPlant.getWaterDetail().getNextWaterDate().minusDays(5));
 
         // then
         assertThat(expected).isEmpty();
@@ -219,13 +224,17 @@ class ReminderServiceTest extends IntegrationTest {
                 .member(member)
                 .nickname("testNickName")
                 .imageUrl("testImageUrl")
-                .location("testLocation")
-                .flowerpot("testFlowerpot")
-                .light("testLight")
-                .wind("testWind")
+                .petPlantState(PetPlantState.builder()
+                        .location("testLocation")
+                        .flowerpot("testFlowerpot")
+                        .light("testLight")
+                        .wind("testWind")
+                        .build())
                 .birthDate(LocalDate.of(2000, 7, 1))
-                .nextWaterDate(nextWaterDate)
-                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                .waterDetail(WaterDetail.builder()
+                        .nextWaterDate(nextWaterDate)
+                        .lastWaterDate(LocalDate.of(2022, 7, 1))
+                        .build())
                 .waterCycle(3)
                 .build());
     }

@@ -3,6 +3,8 @@ package com.official.pium.support;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.fixture.DictionaryPlantFixture;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.repository.DictionaryPlantRepository;
@@ -10,7 +12,6 @@ import com.official.pium.repository.MemberRepository;
 import com.official.pium.repository.PetPlantRepository;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -59,15 +60,22 @@ public class PetPlantSupport {
                                     DictionaryPlantFixture.generateDictionaryPlant()) : dictionaryPlant)
                             .member(member == null ? memberRepository.save(MemberFixture.generateMember()) : member)
                             .nickname("testNickName")
-                            .imageUrl(imageUrl == null ? "testImageUrl" : imageUrl)
-                            .location("testLocation")
-                            .flowerpot("testFlowerpot")
-                            .light("testLight")
-                            .wind("testWind")
+                            .imageUrl(imageUrl == null ? "https://static.pium.life/test/test.jpg" : imageUrl)
+                            .petPlantState(
+                                    PetPlantState.builder()
+                                            .location("testLocation")
+                                            .flowerpot("testFlowerpot")
+                                            .light("testLight")
+                                            .wind("testWind")
+                                            .build()
+                            )
                             .birthDate(LocalDate.of(2000, 6, 14))
-                            .nextWaterDate(LocalDate.of(2020, 2, 3))
-                            .lastWaterDate(LocalDate.of(2022, 3, 4))
-                            .lastWaterDate(lastWaterDate == null ? LocalDate.now().minusDays(1) : lastWaterDate)
+                            .waterDetail(
+                                    WaterDetail.builder()
+                                            .nextWaterDate(LocalDate.of(2020, 2, 3))
+                                            .lastWaterDate(LocalDate.of(2022, 3, 4))
+                                            .build()
+                            )
                             .waterCycle(3)
                             .build()
             );

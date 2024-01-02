@@ -27,7 +27,8 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Void> login(
             @RequestParam(name = "code") @NotBlank String code,
-            HttpServletRequest request) {
+            HttpServletRequest request
+    ) {
         Member loginMember = authService.login(code);
 
         HttpSession session = request.getSession();

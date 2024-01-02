@@ -8,15 +8,16 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">사전 식물 상세정보</h1>
 
-        <h2 th:text="${plant.name}"></h2>
+        <h2 th:text="${plant.classification.name}"></h2>
 
         <div class="mt-2">
             <label for="name">이름:</label>
-            <div class="form-control" id="name" th:field="${plant.name}" th:text="${plant.name}"></div>
+            <div class="form-control" id="name" th:field="${plant.classification.name}"
+                 th:text="${plant.classification.name}"></div>
         </div>
 
         <div class="mt-2" style="width: 300px">
-            <img class="plant-image" th:alt="${plant.name}" th:src="${plant.imageUrl}">
+            <img class="plant-image" th:alt="${plant.classification.name}" th:src="${plant.imageUrl}">
         </div>
 
         <div class="mt-2">
@@ -26,83 +27,86 @@
 
         <div class="mt-2">
             <label for="familyName">과명:</label>
-            <div class="form-control" id="familyName" th:field="${plant.familyName}"
-                 th:text="${plant.familyName}"></div>
+            <div class="form-control" id="familyName" th:field="${plant.classification.familyName}"
+                 th:text="${plant.classification.familyName}"></div>
         </div>
 
         <div class="mt-2">
             <label for="smell">향:</label>
-            <div class="form-control" id="smell" th:field="${plant.smell}" th:text="${plant.smell}"></div>
+            <div class="form-control" id="smell" th:field="${plant.property.smell}"
+                 th:text="${plant.property.smell}"></div>
         </div>
 
         <div class="mt-2">
             <label for="poison">독성:</label>
-            <div class="form-control" id="poison" th:field="${plant.poison}" th:text="${plant.poison}"></div>
+            <div class="form-control" id="poison" th:field="${plant.property.poison}"
+                 th:text="${plant.property.poison}"></div>
         </div>
 
         <div class="mt-2">
             <label for="manageLevel">관리 난이도:</label>
-            <div class="form-control" id="manageLevel" th:field="${plant.manageLevel}"
-                 th:text="${plant.manageLevel}"></div>
+            <div class="form-control" id="manageLevel" th:field="${plant.property.manageLevel}"
+                 th:text="${plant.property.manageLevel}"></div>
         </div>
 
         <div class="mt-2">
             <label for="growSpeed">성장 속도:</label>
-            <div class="form-control" id="growSpeed" th:field="${plant.growSpeed}" th:text="${plant.growSpeed}"></div>
+            <div class="form-control" id="growSpeed" th:field="${plant.property.growSpeed}"
+                 th:text="${plant.property.growSpeed}"></div>
         </div>
 
         <div class="mt-2">
             <label for="requireTemp">요구 온도:</label>
-            <div class="form-control" id="requireTemp" th:field="${plant.requireTemp}"
-                 th:text="${plant.requireTemp}"></div>
+            <div class="form-control" id="requireTemp" th:field="${plant.careDetail.temperature.requireTemp}"
+                 th:text="${plant.careDetail.temperature.requireTemp}"></div>
         </div>
 
         <div class="mt-2">
             <label for="minimumTemp">최소 온도:</label>
-            <div class="form-control" id="minimumTemp" th:field="${plant.minimumTemp}"
-                 th:text="${plant.minimumTemp}"></div>
+            <div class="form-control" id="minimumTemp" th:field="${plant.careDetail.temperature.minimumTemp}"
+                 th:text="${plant.careDetail.temperature.minimumTemp}"></div>
         </div>
 
         <div class="mt-2">
             <label for="requireHumidity">요구 습도:</label>
-            <div class="form-control" id="requireHumidity" th:field="${plant.requireHumidity}"
-                 th:text="${plant.requireHumidity}"></div>
+            <div class="form-control" id="requireHumidity" th:field="${plant.careDetail.requireHumidity}"
+                 th:text="${plant.careDetail.requireHumidity}"></div>
         </div>
 
         <div class="mt-2">
             <label for="postingPlace">배치 장소:</label>
-            <div class="form-control" id="postingPlace" th:field="${plant.postingPlace}"
-                 th:text="${plant.postingPlace}"></div>
+            <div class="form-control" id="postingPlace" th:field="${plant.careDetail.postingPlace}"
+                 th:text="${plant.careDetail.postingPlace}"></div>
         </div>
 
         <div class="mt-2">
             <label for="specialManageInfo">특별 관리 정보:</label>
-            <div class="form-control" id="specialManageInfo" th:field="${plant.specialManageInfo}"
-                 th:text="${plant.specialManageInfo}"></div>
+            <div class="form-control" id="specialManageInfo" th:field="${plant.careDetail.specialManageInfo}"
+                 th:text="${plant.careDetail.specialManageInfo}"></div>
         </div>
 
         <div class="mt-2">
             <label for="spring">물 주기(봄):</label>
-            <div class="form-control" id="spring" th:field="${plant.waterCycle.spring}"
-                 th:text="${plant.waterCycle.spring}"></div>
+            <div class="form-control" id="spring" th:field="${plant.careDetail.waterCycle.spring}"
+                 th:text="${plant.careDetail.waterCycle.spring}"></div>
         </div>
 
         <div class="mt-2">
             <label for="summer">물 주기(여름):</label>
-            <div class="form-control" id="summer" th:field="${plant.waterCycle.summer}"
-                 th:text="${plant.waterCycle.summer}"></div>
+            <div class="form-control" id="summer" th:field="${plant.careDetail.waterCycle.summer}"
+                 th:text="${plant.careDetail.waterCycle.summer}"></div>
         </div>
 
         <div class="mt-2">
             <label for="autumn">물 주기(가을):</label>
-            <div class="form-control" id="autumn" th:field="${plant.waterCycle.autumn}"
-                 th:text="${plant.waterCycle.autumn}"></div>
+            <div class="form-control" id="autumn" th:field="${plant.careDetail.waterCycle.autumn}"
+                 th:text="${plant.careDetail.waterCycle.autumn}"></div>
         </div>
 
         <div class="mt-2">
             <label for="winter">물 주기(겨울):</label>
-            <div class="form-control" id="winter" th:field="${plant.waterCycle.winter}"
-                 th:text="${plant.waterCycle.winter}"></div>
+            <div class="form-control" id="winter" th:field="${plant.careDetail.waterCycle.winter}"
+                 th:text="${plant.careDetail.waterCycle.winter}"></div>
         </div>
 
         <div class="mt-2">

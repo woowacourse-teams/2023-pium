@@ -4,6 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.fixture.PetPlantFixture;
 import java.time.LocalDate;
@@ -45,14 +47,22 @@ class PetPlantTest {
         PetPlant petPlant = PetPlant.builder()
                 .nickname("기영이")
                 .imageUrl("https://image.com")
-                .light("자연광이 잘 드는 곳")
-                .location("창가")
-                .wind("바람이 가끔 부는 곳")
-                .flowerpot("플라스틱")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(LocalDate.of(2022, 7, 1))
-                .nextWaterDate(LocalDate.of(2022, 7, 8))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                                .nextWaterDate(LocalDate.of(2022, 7, 8))
+                                .build()
+                )
                 .build();
 
         Long result = petPlant.calculateDday(LocalDate.of(year, month, day));
@@ -67,16 +77,27 @@ class PetPlantTest {
         void 성공() {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com");
+            petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("수경 재배")
+                            .light("거의 없음")
+                            .location("책상")
+                            .wind("통풍이 잘 됨")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com"
+            );
 
             assertSoftly(
                     softly -> {
                         softly.assertThat(petPlant.getNickname()).isEqualTo("기철이");
-                        softly.assertThat(petPlant.getLocation()).isEqualTo("책상");
-                        softly.assertThat(petPlant.getFlowerpot()).isEqualTo("수경 재배");
-                        softly.assertThat(petPlant.getLight()).isEqualTo("거의 없음");
-                        softly.assertThat(petPlant.getWind()).isEqualTo("통풍이 잘 됨");
+                        softly.assertThat(petPlant.getPetPlantState().getLocation()).isEqualTo("책상");
+                        softly.assertThat(petPlant.getPetPlantState().getFlowerpot()).isEqualTo("수경 재배");
+                        softly.assertThat(petPlant.getPetPlantState().getLight()).isEqualTo("거의 없음");
+                        softly.assertThat(petPlant.getPetPlantState().getWind()).isEqualTo("통풍이 잘 됨");
                         softly.assertThat(petPlant.getImageUrl()).isEqualTo("https://testimage.com");
                         softly.assertThat(petPlant.getWaterCycle()).isEqualTo(10);
                     }
@@ -89,21 +110,40 @@ class PetPlantTest {
                     .member(MemberFixture.주노)
                     .nickname("크론")
                     .imageUrl("https://image2.com")
-                    .light("자연광이 잘 드는 곳")
-                    .location("거실")
-                    .wind("바람 솔솔")
-                    .flowerpot("정보 없음")
+                    .petPlantState(
+                            PetPlantState.builder()
+                                    .flowerpot("토분")
+                                    .light("햇빛이 강함")
+                                    .location("베란다")
+                                    .wind("통풍이 잘 되는 곳")
+                                    .build()
+                    )
                     .waterCycle(7)
                     .birthDate(LocalDate.of(2022, 7, 1))
-                    .lastWaterDate(LocalDate.of(2022, 7, 1))
-                    .nextWaterDate(LocalDate.now().minusDays(3))
+                    .waterDetail(
+                            WaterDetail.builder()
+                                    .lastWaterDate(LocalDate.of(2022, 7, 1))
+                                    .nextWaterDate(LocalDate.now().minusDays(3))
+                                    .build()
+                    )
                     .build();
 
-            petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2000, 2, 3), LocalDate.of(2022, 1, 6), "https://testimage.com");
+            petPlant.updatePetPlant(
+                    "크론",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("햇빛이 강함")
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com"
+            );
 
-            assertThat(petPlant.getNextWaterDate())
-                    .isEqualTo(petPlant.getLastWaterDate().plusDays(petPlant.getWaterCycle()));
+            assertThat(petPlant.getWaterDetail().getNextWaterDate())
+                    .isEqualTo(petPlant.getWaterDetail().getLastWaterDate().plusDays(petPlant.getWaterCycle()));
         }
 
         @ParameterizedTest
@@ -111,8 +151,18 @@ class PetPlantTest {
         void 닉네임이_없으면_예외_발생(String nickname) {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant(nickname, "책상", "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(nickname,
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("햇빛이 강함")
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + nickname);
         }
@@ -122,8 +172,19 @@ class PetPlantTest {
         void 위치_정보가_없으면_예외_발생(String location) {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", location, "수경 재배", "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("햇빛이 강함")
+                            .location(location)
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + location);
         }
@@ -133,8 +194,19 @@ class PetPlantTest {
         void 화분_정보가_없으면_예외_발생(String flowerpot) {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", flowerpot, "거의 없음",
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot(flowerpot)
+                            .light("햇빛이 강함")
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + flowerpot);
         }
@@ -144,8 +216,19 @@ class PetPlantTest {
         void 조도_정보가_없으면_예외_발생(String light) {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", light,
-                    "통풍이 잘 됨", 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light(light)
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + light);
         }
@@ -155,8 +238,19 @@ class PetPlantTest {
         void 바람_정보가_없으면_예외_발생(String wind) {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    wind, 10, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("빛이 없음")
+                            .location("베란다")
+                            .wind(wind)
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 속성에는 빈 값 들어올 수 없습니다. value: " + wind);
         }
@@ -166,8 +260,19 @@ class PetPlantTest {
         void 물주기_주기_범위가_잘못되면_예외_발생(int waterCycle) {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "바람 선선", waterCycle, LocalDate.of(2022, 7, 1), LocalDate.of(2022, 7, 8), "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("햇빛이 강함")
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    waterCycle,
+                    LocalDate.of(2022, 7, 1),
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("물주기 주기는 1이상 365이하의 값만 가능합니다. waterCycle: " + waterCycle);
         }
@@ -176,8 +281,19 @@ class PetPlantTest {
         void 입양일_정보가_없으면_예외_발생() {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "바람이 선선한 곳", 10, null, LocalDate.of(2022, 7, 8), "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("햇빛이 강함")
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    null,
+                    LocalDate.of(2022, 7, 8),
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
@@ -186,8 +302,19 @@ class PetPlantTest {
         void 마지막_물주기_날짜_정보가_없으면_예외_발생() {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "바람이 선선한 곳", 10, LocalDate.of(2022, 7, 8), null, "https://testimage.com"))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("햇빛이 강함")
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 8),
+                    null,
+                    "https://testimage.com")
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 날짜 속성은 빈 값이 될 수 없습니다. date: null");
         }
@@ -196,8 +323,19 @@ class PetPlantTest {
         void 이미지_정보가_없으면_예외_발생() {
             PetPlant petPlant = PetPlantFixture.산세베리아;
 
-            assertThatThrownBy(() -> petPlant.updatePetPlant("기철이", "책상", "수경 재배", "거의 없음",
-                    "바람이 선선한 곳", 10, LocalDate.of(2022, 7, 8), LocalDate.of(2022, 7, 8), null))
+            assertThatThrownBy(() -> petPlant.updatePetPlant(
+                    "기철이",
+                    PetPlantState.builder()
+                            .flowerpot("토분")
+                            .light("햇빛이 강함")
+                            .location("베란다")
+                            .wind("통풍이 잘 되는 곳")
+                            .build(),
+                    10,
+                    LocalDate.of(2022, 7, 8),
+                    LocalDate.of(2022, 7, 8),
+                    null)
+            )
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("반려 식물 이미지 URL은 빈 값이 될 수 없습니다. imageUrl: null");
         }
@@ -210,21 +348,29 @@ class PetPlantTest {
         PetPlant petPlant = PetPlant.builder()
                 .nickname("크론")
                 .imageUrl("https://image2.com")
-                .light("자연광이 잘 드는 곳")
-                .location("거실")
-                .wind("바람 솔솔")
-                .flowerpot("정보 없음")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(LocalDate.of(2022, 7, 1))
-                .nextWaterDate(baseDate.minusDays(days))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                                .nextWaterDate(baseDate.minusDays(days))
+                                .build()
+                )
                 .build();
 
         LocalDate newWaterDate = baseDate.plusDays(plusDays);
 
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "오늘 할 일을 {0}일 뒤로 미루기")
@@ -233,21 +379,28 @@ class PetPlantTest {
         PetPlant petPlant = PetPlant.builder()
                 .nickname("포비")
                 .imageUrl("https://image.com")
-                .light("자연광이 잘 드는 곳")
-                .location("테라스")
-                .wind("바람이 조금 부는 곳")
-                .flowerpot("플라스틱")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(LocalDate.of(2022, 7, 1))
-                .nextWaterDate(LocalDate.now())
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                                .nextWaterDate(LocalDate.now())
+                                .build()
+                )
                 .build();
 
-        LocalDate newWaterDate = petPlant.getNextWaterDate().plusDays(days);
-
+        LocalDate newWaterDate = petPlant.getWaterDetail().getNextWaterDate().plusDays(days);
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "{0}일 뒤의 물주기를 {1}일 뒤로 미루기")
@@ -256,21 +409,27 @@ class PetPlantTest {
         PetPlant petPlant = PetPlant.builder()
                 .nickname("피우미")
                 .imageUrl("https://image.com")
-                .light("자연광이 잘 드는 곳")
-                .location("거실")
-                .wind("바람이 많이 불지 않는 곳")
-                .flowerpot("유리")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(LocalDate.of(2022, 7, 1))
-                .nextWaterDate(LocalDate.now().plusDays(days))
+                .waterDetail(WaterDetail.builder()
+                        .lastWaterDate(LocalDate.of(2022, 7, 1))
+                        .nextWaterDate(LocalDate.now().plusDays(days))
+                        .build())
                 .build();
 
-        LocalDate newWaterDate = petPlant.getNextWaterDate().plusDays(plusDays);
+        LocalDate newWaterDate = petPlant.getWaterDetail().getNextWaterDate().plusDays(plusDays);
 
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "미루는 날짜가 오늘보다 {0}일 전이면 예외 발생")
@@ -279,7 +438,7 @@ class PetPlantTest {
         PetPlant petPlant = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(
-                () -> petPlant.changeNextWaterDate(petPlant.getNextWaterDate().minusDays(days)))
+                () -> petPlant.changeNextWaterDate(petPlant.getWaterDetail().getNextWaterDate().minusDays(days)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
     }
@@ -291,21 +450,29 @@ class PetPlantTest {
         PetPlant petPlant = PetPlant.builder()
                 .nickname("피우미")
                 .imageUrl("https://image.com")
-                .light("자연광이 잘 드는 곳")
-                .location("거실")
-                .wind("바람이 많이 불지 않는 곳")
-                .flowerpot("유리")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(LocalDate.of(2022, 7, 1))
-                .nextWaterDate(now.plusDays(days))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(LocalDate.of(2022, 7, 1))
+                                .nextWaterDate(now.plusDays(days))
+                                .build()
+                )
                 .build();
 
-        LocalDate newWaterDate = petPlant.getNextWaterDate().minusDays(minusDays);
+        LocalDate newWaterDate = petPlant.getWaterDetail().getNextWaterDate().minusDays(minusDays);
 
         petPlant.changeNextWaterDate(newWaterDate);
 
-        assertThat(petPlant.getNextWaterDate()).isEqualTo(newWaterDate);
+        assertThat(petPlant.getWaterDetail().getNextWaterDate()).isEqualTo(newWaterDate);
     }
 
     @ParameterizedTest(name = "미루는 날짜가 오늘보다 {0}일 전이면 예외 발생")
@@ -314,7 +481,7 @@ class PetPlantTest {
         PetPlant petPlant = PetPlantFixture.산세베리아;
 
         assertThatThrownBy(
-                () -> petPlant.changeNextWaterDate(petPlant.getNextWaterDate().minusDays(days)))
+                () -> petPlant.changeNextWaterDate(petPlant.getWaterDetail().getNextWaterDate().minusDays(days)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("오늘과 그 이전 날짜로 물주기 날짜를 변경할 수는 없습니다.");
     }
@@ -328,7 +495,10 @@ class PetPlantTest {
         petPlant.water(newWaterDate);
 
         assertThat(petPlant)
-                .extracting(PetPlant::getNextWaterDate, PetPlant::getLastWaterDate)
+                .extracting(
+                        p -> p.getWaterDetail().getNextWaterDate(),
+                        p -> p.getWaterDetail().getLastWaterDate()
+                )
                 .isEqualTo(List.of(newNextWaterDate, newWaterDate));
     }
 
@@ -357,14 +527,22 @@ class PetPlantTest {
                 .member(MemberFixture.주노)
                 .nickname("크론")
                 .imageUrl("https://image2.com")
-                .light("자연광이 잘 드는 곳")
-                .location("거실")
-                .wind("바람 솔솔")
-                .flowerpot("정보 없음")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(LocalDate.of(2023, 7, 1))
-                .nextWaterDate(LocalDate.of(2023, 7, 17))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(LocalDate.of(2023, 7, 1))
+                                .nextWaterDate(LocalDate.of(2023, 7, 17))
+                                .build()
+                )
                 .build();
 
         assertThat(petPlant.isNotOwnerOf(MemberFixture.주노)).isFalse();
@@ -376,14 +554,22 @@ class PetPlantTest {
                 .member(MemberFixture.주노)
                 .nickname("크론")
                 .imageUrl("https://image2.com")
-                .light("자연광이 잘 드는 곳")
-                .location("거실")
-                .wind("바람 솔솔")
-                .flowerpot("정보 없음")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(LocalDate.of(2022, 7, 1))
-                .nextWaterDate(LocalDate.of(2022, 7, 17))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(LocalDate.of(2023, 7, 1))
+                                .nextWaterDate(LocalDate.of(2023, 7, 17))
+                                .build()
+                )
                 .build();
 
         assertThat(petPlant.isNotOwnerOf(MemberFixture.그레이)).isTrue();
@@ -396,14 +582,22 @@ class PetPlantTest {
                 .member(MemberFixture.주노)
                 .nickname("크론")
                 .imageUrl("https://image2.com")
-                .light("자연광이 잘 드는 곳")
-                .location("거실")
-                .wind("바람 솔솔")
-                .flowerpot("정보 없음")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(lastWaterDate)
-                .nextWaterDate(LocalDate.of(2022, 7, 17))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(lastWaterDate)
+                                .nextWaterDate(LocalDate.of(2022, 7, 17))
+                                .build()
+                )
                 .build();
 
         assertThat(petPlant.isDifferentLastWaterDate(lastWaterDate.plusDays(3))).isTrue();
@@ -416,14 +610,22 @@ class PetPlantTest {
                 .member(MemberFixture.주노)
                 .nickname("크론")
                 .imageUrl("https://image2.com")
-                .light("자연광이 잘 드는 곳")
-                .location("거실")
-                .wind("바람 솔솔")
-                .flowerpot("정보 없음")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .flowerpot("토분")
+                                .light("햇빛이 강함")
+                                .location("베란다")
+                                .wind("통풍이 잘 되는 곳")
+                                .build()
+                )
                 .waterCycle(7)
                 .birthDate(LocalDate.of(2022, 7, 1))
-                .lastWaterDate(lastWaterDate)
-                .nextWaterDate(LocalDate.of(2022, 7, 17))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .lastWaterDate(lastWaterDate)
+                                .nextWaterDate(LocalDate.of(2022, 7, 17))
+                                .build()
+                )
                 .build();
 
         assertThat(petPlant.isDifferentLastWaterDate(lastWaterDate)).isFalse();

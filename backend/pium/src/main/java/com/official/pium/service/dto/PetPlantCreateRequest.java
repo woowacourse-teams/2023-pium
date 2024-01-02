@@ -1,5 +1,7 @@
 package com.official.pium.service.dto;
 
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
@@ -47,4 +49,20 @@ public class PetPlantCreateRequest {
     @PastOrPresent(message = "마지막 물주기 날짜는 과거 또는 현재의 날짜여야 합니다. lastWaterDate: ${validatedValue}")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate lastWaterDate;
+
+    public PetPlantState toPetPlantState() {
+        return PetPlantState.builder()
+                .light(this.light)
+                .wind(this.wind)
+                .location(this.location)
+                .flowerpot(this.flowerpot)
+                .build();
+    }
+
+    public WaterDetail toWaterDate() {
+        return WaterDetail.builder()
+                .lastWaterDate(lastWaterDate)
+                .nextWaterDate(LocalDate.now().plusDays(waterCycle))
+                .build();
+    }
 }

@@ -3,6 +3,8 @@ package com.official.pium.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -69,14 +71,22 @@ class HistoryTest {
                 .petPlant(PetPlant.builder()
                         .nickname("기영이")
                         .imageUrl("https://image.com")
-                        .light("자연광이 잘 드는 곳")
-                        .location("창가")
-                        .wind("바람이 가끔 부는 곳")
-                        .flowerpot("플라스틱")
+                        .petPlantState(
+                                PetPlantState.builder()
+                                        .light("자연광이 잘 드는 곳")
+                                        .location("창가")
+                                        .wind("바람이 가끔 부는 곳")
+                                        .flowerpot("플라스틱")
+                                        .build()
+                        )
                         .waterCycle(5)
                         .birthDate(LocalDate.of(2021, 7, 1))
-                        .lastWaterDate(lastWaterDate)
-                        .nextWaterDate(lastWaterDate.plusDays(5))
+                        .waterDetail(
+                                WaterDetail.builder()
+                                        .lastWaterDate(lastWaterDate)
+                                        .nextWaterDate(lastWaterDate.plusDays(5))
+                                        .build()
+                        )
                         .build())
                 .build();
     }

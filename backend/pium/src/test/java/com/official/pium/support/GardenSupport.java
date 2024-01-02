@@ -3,6 +3,7 @@ package com.official.pium.support;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.Member;
+import com.official.pium.domain.vo.GardenPlantState;
 import com.official.pium.fixture.DictionaryPlantFixture;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.repository.DictionaryPlantRepository;
@@ -47,10 +48,14 @@ public class GardenSupport {
                             .member(member == null ? memberRepository.save(MemberFixture.generateMember()) : member)
                             .nickname("기영")
                             .imageUrl("imageUrl")
-                            .location("거실")
-                            .flowerpot("토분")
-                            .light("일반 조명")
-                            .wind("바람이 잘 안 통해요")
+                            .gardenPlantState(
+                                    GardenPlantState.builder()
+                                            .location("거실")
+                                            .flowerpot("토분")
+                                            .light("일반 조명")
+                                            .wind("바람이 잘 안 통해요")
+                                            .build()
+                            )
                             .daySince(100L)
                             .waterCycle(3)
                             .content("기영이가 많이 아픈 것 같습니다.")

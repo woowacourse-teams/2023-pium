@@ -1,5 +1,6 @@
 package com.official.pium.service.dto;
 
+import com.official.pium.domain.DictionaryPlant;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AccessLevel;
@@ -7,7 +8,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DictionaryPlantResponse {
@@ -46,6 +46,32 @@ public class DictionaryPlantResponse {
         this.postingPlace = Arrays.asList(postingPlace.split(","));
         this.specialManageInfo = specialManageInfo;
         this.waterCycle = waterCycle;
+    }
+
+    public static DictionaryPlantResponse from(DictionaryPlant dictionaryPlant) {
+        return DictionaryPlantResponse.builder()
+                .id(dictionaryPlant.getId())
+                .name(dictionaryPlant.getClassification().getName())
+                .image(dictionaryPlant.getImageUrl())
+                .familyName(dictionaryPlant.getClassification().getFamilyName())
+                .smell(dictionaryPlant.getProperty().getSmell())
+                .poison(dictionaryPlant.getProperty().getPoison())
+                .manageLevel(dictionaryPlant.getProperty().getManageLevel())
+                .growSpeed(dictionaryPlant.getProperty().getGrowSpeed())
+                .requireTemp(dictionaryPlant.getCareDetail().getTemperature().getRequireTemp())
+                .minimumTemp(dictionaryPlant.getCareDetail().getTemperature().getMinimumTemp())
+                .requireHumidity(dictionaryPlant.getCareDetail().getRequireHumidity())
+                .postingPlace(dictionaryPlant.getCareDetail().getPostingPlace())
+                .specialManageInfo(dictionaryPlant.getCareDetail().getSpecialManageInfo())
+                .waterCycle(
+                        WaterCycleResponse.builder()
+                                .spring(dictionaryPlant.getCareDetail().getWaterCycle().getSpring())
+                                .summer(dictionaryPlant.getCareDetail().getWaterCycle().getSummer())
+                                .autumn(dictionaryPlant.getCareDetail().getWaterCycle().getAutumn())
+                                .winter(dictionaryPlant.getCareDetail().getWaterCycle().getWinter())
+                                .build()
+                )
+                .build();
     }
 
     @Getter

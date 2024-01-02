@@ -31,8 +31,8 @@ public class HistoryController {
             @RequestParam @Positive(message = "반려 식물 ID는 1이상의 값이어야 합니다.") Long petPlantId,
             @PageableDefault(size = 20, sort = "date", direction = DESC) Pageable pageable,
             @RequestParam(value = "filter", required = false) List<String> filters,
-            @Auth Member member) {
-
+            @Auth Member member
+    ) {
         HistoryResponse historyResponse = historyService.read(petPlantId, pageable, member, filters);
         return ResponseEntity.ok(historyResponse);
     }

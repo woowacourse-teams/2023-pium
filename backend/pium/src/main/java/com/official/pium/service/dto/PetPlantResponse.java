@@ -1,5 +1,7 @@
 package com.official.pium.service.dto;
 
+import com.official.pium.domain.DictionaryPlant;
+import com.official.pium.domain.PetPlant;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -38,6 +40,56 @@ public class PetPlantResponse {
     private LocalDate nextWaterDate;
 
     private DictionaryPlantResponse dictionaryPlant;
+
+    public static PetPlantResponse of(PetPlant petPlant, Long dday, Long daySince) {
+        DictionaryPlant dictionaryPlant = petPlant.getDictionaryPlant();
+        return PetPlantResponse.builder()
+                .id(petPlant.getId())
+                .nickname(petPlant.getNickname())
+                .imageUrl(petPlant.getImageUrl())
+                .location(petPlant.getPetPlantState().getLocation())
+                .flowerpot(petPlant.getPetPlantState().getFlowerpot())
+                .light(petPlant.getPetPlantState().getLight())
+                .wind(petPlant.getPetPlantState().getWind())
+                .birthDate(petPlant.getBirthDate())
+                .lastWaterDate(petPlant.getWaterDetail().getLastWaterDate())
+                .waterCycle(petPlant.getWaterCycle())
+                .dday(dday)
+                .nextWaterDate(petPlant.getWaterDetail().getNextWaterDate())
+                .daySince(daySince)
+                .dictionaryPlant(PetPlantResponse.DictionaryPlantResponse.builder()
+                        .id(dictionaryPlant.getId())
+                        .name(dictionaryPlant.getClassification().getName())
+                        .build()
+                )
+                .build();
+    }
+
+    public static PetPlantResponse of(PetPlant petPlant, Long dday, Long daySince,
+                                      LocalDate secondLastWaterDate) {
+        DictionaryPlant dictionaryPlant = petPlant.getDictionaryPlant();
+        return PetPlantResponse.builder()
+                .id(petPlant.getId())
+                .nickname(petPlant.getNickname())
+                .imageUrl(petPlant.getImageUrl())
+                .location(petPlant.getPetPlantState().getLocation())
+                .flowerpot(petPlant.getPetPlantState().getFlowerpot())
+                .light(petPlant.getPetPlantState().getLight())
+                .wind(petPlant.getPetPlantState().getWind())
+                .birthDate(petPlant.getBirthDate())
+                .lastWaterDate(petPlant.getWaterDetail().getLastWaterDate())
+                .waterCycle(petPlant.getWaterCycle())
+                .dday(dday)
+                .nextWaterDate(petPlant.getWaterDetail().getNextWaterDate())
+                .daySince(daySince)
+                .dictionaryPlant(PetPlantResponse.DictionaryPlantResponse.builder()
+                        .id(dictionaryPlant.getId())
+                        .name(dictionaryPlant.getClassification().getName())
+                        .build()
+                )
+                .secondLastWaterDate(secondLastWaterDate)
+                .build();
+    }
 
     @Getter
     @NoArgsConstructor

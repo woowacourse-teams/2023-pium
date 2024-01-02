@@ -1,5 +1,6 @@
 package com.official.pium.service.dto;
 
+import com.official.pium.domain.History;
 import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,16 @@ public class SingleHistoryResponse {
             this.previous = previous;
             this.current = current;
         }
+    }
+
+    public static SingleHistoryResponse from(History history) {
+        return SingleHistoryResponse.builder()
+                .type(history.getHistoryCategory().getHistoryType().getType())
+                .date(history.getDate())
+                .content(Content.builder()
+                        .previous(history.getHistoryContent().getPrevious())
+                        .current(history.getHistoryContent().getCurrent())
+                        .build())
+                .build();
     }
 }

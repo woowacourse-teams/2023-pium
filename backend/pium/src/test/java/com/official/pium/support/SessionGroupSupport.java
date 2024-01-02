@@ -49,7 +49,7 @@ public class SessionGroupSupport {
                             .sessionId(sessionId == null ? UUID.randomUUID().toString() : sessionId)
                             .sessionKey(sessionKey == null ? UUID.randomUUID().toString() : sessionKey)
                             .sessionValue(sessionValue == null ? UUID.randomUUID().toString() : sessionValue)
-                            .expireTime(expireTime == null ? LocalDateTime.of(2023, 11, 24, 0, 0) : expireTime)
+                            .expireTime(expireTime == null ? LocalDateTime.now().plusDays(30) : expireTime)
                             .build()
             );
         }

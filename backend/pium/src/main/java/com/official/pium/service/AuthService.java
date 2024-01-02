@@ -26,8 +26,13 @@ public class AuthService {
         Long kakaoId = kakaoMemberResponse.getId();
 
         return memberRepository.findByKakaoId(kakaoId)
-                .orElseGet(() -> memberRepository.save(Member.builder()
-                        .kakaoId(kakaoId)
-                        .build()));
+                .orElseGet(() -> createMember(kakaoId));
+    }
+
+    private Member createMember(Long kakaoId) {
+        Member member = Member.builder()
+                .kakaoId(kakaoId)
+                .build();
+        return memberRepository.save(member);
     }
 }

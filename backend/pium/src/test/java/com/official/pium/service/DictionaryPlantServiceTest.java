@@ -7,7 +7,6 @@ import static org.assertj.core.api.SoftAssertions.assertSoftly;
 import com.official.pium.IntegrationTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
-import com.official.pium.mapper.DictionaryPlantMapper;
 import com.official.pium.repository.DictionaryPlantRepository;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.DictionaryPlantResponse;
@@ -35,7 +34,7 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         DictionaryPlant dictionaryPlant = dictionaryPlantSupport.builder().build();
         DictionaryPlantResponse actual = dictionaryPlantService.read(dictionaryPlant.getId());
 
-        DictionaryPlantResponse expected = DictionaryPlantMapper.toDictionaryPlantResponse(dictionaryPlant);
+        DictionaryPlantResponse expected = DictionaryPlantResponse.from(dictionaryPlant);
 
         assertThat(actual)
                 .usingRecursiveComparison()
@@ -84,22 +83,32 @@ class DictionaryPlantServiceTest extends IntegrationTest {
         dictionaryPlantService.update(dictionaryPlantId, updateRequest);
 
         assertSoftly(softly -> {
-            softly.assertThat(dictionaryPlant.getName()).isEqualTo(updateRequest.getName());
+            softly.assertThat(dictionaryPlant.getClassification().getName()).isEqualTo(updateRequest.getName());
             softly.assertThat(dictionaryPlant.getImageUrl()).isEqualTo(updateRequest.getImageUrl());
-            softly.assertThat(dictionaryPlant.getFamilyName()).isEqualTo(updateRequest.getFamilyName());
-            softly.assertThat(dictionaryPlant.getSmell()).isEqualTo(updateRequest.getSmell());
-            softly.assertThat(dictionaryPlant.getPoison()).isEqualTo(updateRequest.getPoison());
-            softly.assertThat(dictionaryPlant.getManageLevel()).isEqualTo(updateRequest.getManageLevel());
-            softly.assertThat(dictionaryPlant.getGrowSpeed()).isEqualTo(updateRequest.getGrowSpeed());
-            softly.assertThat(dictionaryPlant.getRequireTemp()).isEqualTo(updateRequest.getRequireTemp());
-            softly.assertThat(dictionaryPlant.getMinimumTemp()).isEqualTo(updateRequest.getMinimumTemp());
-            softly.assertThat(dictionaryPlant.getRequireHumidity()).isEqualTo(updateRequest.getRequireHumidity());
-            softly.assertThat(dictionaryPlant.getPostingPlace()).isEqualTo(updateRequest.getPostingPlace());
-            softly.assertThat(dictionaryPlant.getSpecialManageInfo()).isEqualTo(updateRequest.getSpecialManageInfo());
-            softly.assertThat(dictionaryPlant.getWaterCycle().getSpring()).isEqualTo(updateRequest.getSpring());
-            softly.assertThat(dictionaryPlant.getWaterCycle().getSummer()).isEqualTo(updateRequest.getSummer());
-            softly.assertThat(dictionaryPlant.getWaterCycle().getAutumn()).isEqualTo(updateRequest.getAutumn());
-            softly.assertThat(dictionaryPlant.getWaterCycle().getWinter()).isEqualTo(updateRequest.getWinter());
+            softly.assertThat(dictionaryPlant.getClassification().getFamilyName())
+                    .isEqualTo(updateRequest.getFamilyName());
+            softly.assertThat(dictionaryPlant.getProperty().getSmell()).isEqualTo(updateRequest.getSmell());
+            softly.assertThat(dictionaryPlant.getProperty().getPoison()).isEqualTo(updateRequest.getPoison());
+            softly.assertThat(dictionaryPlant.getProperty().getManageLevel()).isEqualTo(updateRequest.getManageLevel());
+            softly.assertThat(dictionaryPlant.getProperty().getGrowSpeed()).isEqualTo(updateRequest.getGrowSpeed());
+            softly.assertThat(dictionaryPlant.getCareDetail().getTemperature().getRequireTemp())
+                    .isEqualTo(updateRequest.getRequireTemp());
+            softly.assertThat(dictionaryPlant.getCareDetail().getTemperature().getMinimumTemp())
+                    .isEqualTo(updateRequest.getMinimumTemp());
+            softly.assertThat(dictionaryPlant.getCareDetail().getRequireHumidity())
+                    .isEqualTo(updateRequest.getRequireHumidity());
+            softly.assertThat(dictionaryPlant.getCareDetail().getPostingPlace())
+                    .isEqualTo(updateRequest.getPostingPlace());
+            softly.assertThat(dictionaryPlant.getCareDetail().getSpecialManageInfo())
+                    .isEqualTo(updateRequest.getSpecialManageInfo());
+            softly.assertThat(dictionaryPlant.getCareDetail().getWaterCycle().getSpring())
+                    .isEqualTo(updateRequest.getSpring());
+            softly.assertThat(dictionaryPlant.getCareDetail().getWaterCycle().getSummer())
+                    .isEqualTo(updateRequest.getSummer());
+            softly.assertThat(dictionaryPlant.getCareDetail().getWaterCycle().getAutumn())
+                    .isEqualTo(updateRequest.getAutumn());
+            softly.assertThat(dictionaryPlant.getCareDetail().getWaterCycle().getWinter())
+                    .isEqualTo(updateRequest.getWinter());
         });
     }
 

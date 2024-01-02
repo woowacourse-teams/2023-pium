@@ -4,6 +4,8 @@ import static com.official.pium.service.dto.PetPlantResponse.DictionaryPlantResp
 import static com.official.pium.service.dto.PetPlantResponse.builder;
 
 import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import com.official.pium.service.dto.DataResponse;
 import com.official.pium.service.dto.PetPlantCreateRequest;
 import com.official.pium.service.dto.PetPlantResponse;
@@ -18,14 +20,22 @@ public class PetPlantFixture {
     public static PetPlant 산세베리아 = PetPlant.builder()
             .nickname("기영이")
             .imageUrl("https://image.com")
-            .light("자연광이 잘 드는 곳")
-            .location("창가")
-            .wind("바람이 가끔 부는 곳")
-            .flowerpot("플라스틱")
+            .petPlantState(
+                    PetPlantState.builder()
+                            .light("자연광이 잘 드는 곳")
+                            .location("창가")
+                            .wind("바람이 가끔 부는 곳")
+                            .flowerpot("플라스틱")
+                            .build()
+            )
             .waterCycle(7)
             .birthDate(LocalDate.of(2022, 7, 1))
-            .lastWaterDate(LocalDate.of(2022, 7, 1))
-            .nextWaterDate(LocalDate.of(2022, 7, 8))
+            .waterDetail(
+                    WaterDetail.builder()
+                            .lastWaterDate(LocalDate.of(2022, 7, 1))
+                            .nextWaterDate(LocalDate.of(2022, 7, 8))
+                            .build()
+            )
             .build();
 
     public static class REQUEST {

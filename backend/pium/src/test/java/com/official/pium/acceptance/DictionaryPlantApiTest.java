@@ -9,11 +9,7 @@ import com.official.pium.domain.DictionaryPlant;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-
-import java.time.LocalDateTime;
 import java.util.List;
-
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator;
 import org.junit.jupiter.api.Nested;
@@ -42,21 +38,27 @@ class DictionaryPlantApiTest extends AcceptanceTest {
 
             assertSoftly(softly -> {
                         softly.assertThat(response.jsonPath().getLong("id")).isEqualTo(request.getId());
-                        softly.assertThat(response.jsonPath().getString("name")).isEqualTo(request.getName());
+                        softly.assertThat(response.jsonPath().getString("name"))
+                                .isEqualTo(request.getClassification().getName());
                         softly.assertThat(response.jsonPath().getString("image")).isEqualTo(request.getImageUrl());
-                        softly.assertThat(response.jsonPath().getString("familyName")).isEqualTo(request.getFamilyName());
-                        softly.assertThat(response.jsonPath().getString("smell")).isEqualTo(request.getSmell());
-                        softly.assertThat(response.jsonPath().getString("poison")).isEqualTo(request.getPoison());
-                        softly.assertThat(response.jsonPath().getString("manageLevel")).isEqualTo(request.getManageLevel());
-                        softly.assertThat(response.jsonPath().getString("growSpeed")).isEqualTo(request.getGrowSpeed());
-                        softly.assertThat(response.jsonPath().getString("requireTemp")).isEqualTo(request.getRequireTemp());
-                        softly.assertThat(response.jsonPath().getString("minimumTemp")).isEqualTo(request.getMinimumTemp());
+                        softly.assertThat(response.jsonPath().getString("familyName"))
+                                .isEqualTo(request.getClassification().getFamilyName());
+                        softly.assertThat(response.jsonPath().getString("smell")).isEqualTo(request.getProperty().getSmell());
+                        softly.assertThat(response.jsonPath().getString("poison")).isEqualTo(request.getProperty().getPoison());
+                        softly.assertThat(response.jsonPath().getString("manageLevel"))
+                                .isEqualTo(request.getProperty().getManageLevel());
+                        softly.assertThat(response.jsonPath().getString("growSpeed"))
+                                .isEqualTo(request.getProperty().getGrowSpeed());
+                        softly.assertThat(response.jsonPath().getString("requireTemp"))
+                                .isEqualTo(request.getCareDetail().getTemperature().getRequireTemp());
+                        softly.assertThat(response.jsonPath().getString("minimumTemp"))
+                                .isEqualTo(request.getCareDetail().getTemperature().getMinimumTemp());
                         softly.assertThat(response.jsonPath().getString("requireHumidity"))
-                                .isEqualTo(request.getRequireHumidity());
+                                .isEqualTo(request.getCareDetail().getRequireHumidity());
                         softly.assertThat(response.jsonPath().getList("postingPlace"))
-                                .isEqualTo(List.of(request.getPostingPlace().split(",")));
+                                .isEqualTo(List.of(request.getCareDetail().getPostingPlace().split(",")));
                         softly.assertThat(response.jsonPath().getString("specialManageInfo"))
-                                .isEqualTo(request.getSpecialManageInfo());
+                                .isEqualTo(request.getCareDetail().getSpecialManageInfo());
                     }
             );
         }

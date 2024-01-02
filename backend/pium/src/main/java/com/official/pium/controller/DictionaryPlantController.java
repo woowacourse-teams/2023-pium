@@ -37,14 +37,16 @@ public class DictionaryPlantController {
 
     @GetMapping("/{id}")
     public ResponseEntity<DictionaryPlantResponse> read(
-            @PathVariable @Positive(message = "사전 식물 ID는 1이상의 값이어야 합니다.") Long id) {
+            @PathVariable @Positive(message = "사전 식물 ID는 1이상의 값이어야 합니다.") Long id
+    ) {
         DictionaryPlantResponse dictionaryPlantResponse = dictionaryPlantService.read(id);
         return ResponseEntity.ok(dictionaryPlantResponse);
     }
 
     @GetMapping
     public ResponseEntity<DataResponse<List<DictionaryPlantSearchResponse>>> searchDictionaryPlants(
-            @RequestParam @NotBlank(message = "검색어는 비어있을 수 없습니다.") String name) {
+            @RequestParam @NotBlank(message = "검색어는 비어있을 수 없습니다.") String name
+    ) {
         DataResponse<List<DictionaryPlantSearchResponse>> dataResponse = dictionaryPlantService.search(name);
         return ResponseEntity.ok(dataResponse);
     }
@@ -52,7 +54,8 @@ public class DictionaryPlantController {
     @PostMapping
     public ResponseEntity<Void> create(
             @AdminAuth Admin admin,
-            @RequestBody @Valid DictionaryPlantCreateRequest request) {
+            @RequestBody @Valid DictionaryPlantCreateRequest request
+    ) {
         Long dictionaryPlantId = dictionaryPlantService.create(request);
         return ResponseEntity.created(URI.create("/dictionary-plants/" + dictionaryPlantId)).build();
     }
@@ -61,7 +64,8 @@ public class DictionaryPlantController {
     public ResponseEntity<Void> update(
             @AdminAuth Admin admin,
             @PathVariable Long id,
-            @RequestBody @Valid DictionaryPlantUpdateRequest request) {
+            @RequestBody @Valid DictionaryPlantUpdateRequest request
+    ) {
         dictionaryPlantService.update(id, request);
         return ResponseEntity.ok().build();
     }
@@ -69,7 +73,8 @@ public class DictionaryPlantController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(
             @AdminAuth Admin admin,
-            @PathVariable Long id) {
+            @PathVariable Long id
+    ) {
         dictionaryPlantService.delete(id);
         return ResponseEntity.noContent().build();
     }

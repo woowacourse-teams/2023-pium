@@ -7,6 +7,8 @@ import com.official.pium.RepositoryTest;
 import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -76,13 +78,21 @@ class PetPlantRepositoryTest extends RepositoryTest {
                 .member(member)
                 .nickname("피우미")
                 .imageUrl("https://image.com")
-                .location("베란다")
-                .flowerpot("화분")
-                .light("밝아요")
-                .wind("추워요")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .location("베란다")
+                                .flowerpot("화분")
+                                .light("밝아요")
+                                .wind("추워요")
+                                .build()
+                )
                 .birthDate(LocalDate.of(2020, 1, 3))
-                .nextWaterDate(LocalDate.of(2020, 1, 3))
-                .lastWaterDate(LocalDate.of(2020, 1, 3))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .nextWaterDate(LocalDate.of(2020, 1, 3))
+                                .lastWaterDate(LocalDate.of(2020, 1, 3))
+                                .build()
+                )
                 .waterCycle(3)
                 .build();
     }

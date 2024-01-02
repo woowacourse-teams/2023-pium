@@ -8,6 +8,9 @@ import com.official.pium.domain.DictionaryPlant;
 import com.official.pium.domain.Garden;
 import com.official.pium.domain.Member;
 import com.official.pium.domain.PetPlant;
+import com.official.pium.domain.vo.GardenPlantState;
+import com.official.pium.domain.vo.PetPlantState;
+import com.official.pium.domain.vo.WaterDetail;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -144,10 +147,14 @@ public class GardenRepositoryTest extends RepositoryTest {
                 .member(petPlant.getMember())
                 .nickname(petPlant.getNickname())
                 .imageUrl(petPlant.getImageUrl())
-                .location(petPlant.getLocation())
-                .flowerpot(petPlant.getFlowerpot())
-                .light(petPlant.getLight())
-                .wind(petPlant.getWind())
+                .gardenPlantState(
+                        GardenPlantState.builder()
+                                .location(petPlant.getPetPlantState().getLocation())
+                                .flowerpot(petPlant.getPetPlantState().getFlowerpot())
+                                .light(petPlant.getPetPlantState().getLight())
+                                .wind(petPlant.getPetPlantState().getWind())
+                                .build()
+                )
                 .daySince(petPlant.calculateDaySince(LocalDate.now()))
                 .waterCycle(petPlant.getWaterCycle())
                 .content("기영이가 아프네요..")
@@ -161,13 +168,21 @@ public class GardenRepositoryTest extends RepositoryTest {
                 .member(memberRepository.save(Member.builder().build()))
                 .nickname("피우미")
                 .imageUrl("https://image.com")
-                .location("베란다")
-                .flowerpot("화분")
-                .light("밝아요")
-                .wind("추워요")
+                .petPlantState(
+                        PetPlantState.builder()
+                                .location("베란다")
+                                .flowerpot("화분")
+                                .light("밝아요")
+                                .wind("추워요")
+                                .build()
+                )
                 .birthDate(LocalDate.of(2020, 1, 3))
-                .nextWaterDate(LocalDate.of(2020, 1, 3))
-                .lastWaterDate(LocalDate.of(2020, 1, 3))
+                .waterDetail(
+                        WaterDetail.builder()
+                                .nextWaterDate(LocalDate.of(2020, 1, 3))
+                                .lastWaterDate(LocalDate.of(2020, 1, 3))
+                                .build()
+                )
                 .waterCycle(3)
                 .build();
     }
