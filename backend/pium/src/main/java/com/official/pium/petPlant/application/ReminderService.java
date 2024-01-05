@@ -1,15 +1,15 @@
 package com.official.pium.petPlant.application;
 
+import com.official.pium.common.dto.DataResponse;
 import com.official.pium.history.domain.HistoryType;
 import com.official.pium.member.domain.Member;
+import com.official.pium.petPlant.application.dto.ReminderCreateRequest;
+import com.official.pium.petPlant.application.dto.ReminderResponse;
+import com.official.pium.petPlant.application.dto.ReminderUpdateRequest;
 import com.official.pium.petPlant.domain.PetPlant;
 import com.official.pium.petPlant.event.history.HistoryEvent;
 import com.official.pium.petPlant.event.notification.NotificationEvent;
 import com.official.pium.petPlant.repository.PetPlantRepository;
-import com.official.pium.common.dto.DataResponse;
-import com.official.pium.petPlant.application.dto.ReminderCreateRequest;
-import com.official.pium.petPlant.application.dto.ReminderResponse;
-import com.official.pium.petPlant.application.dto.ReminderUpdateRequest;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -84,6 +84,19 @@ public class ReminderService {
                 .map(plant -> NotificationEvent.builder()
                         .title(plant.getNickname())
                         .body("물을 줄 시간이에요!")
+                        .deviceToken(plant.getMember().getDeviceToken())
+                        .build()
+                ).toList();
+
+        publisher.publishEvent(events);
+    }
+
+    public void sendWaterNotificationTest() {
+        List<PetPlant> petPlants = petPlantRepository.findAll();
+        List<NotificationEvent> events = petPlants.stream()
+                .map(plant -> NotificationEvent.builder()
+                        .title(plant.getNickname())
+                        .body("(테스트 중) 물을 줄 시간이에요!")
                         .deviceToken(plant.getMember().getDeviceToken())
                         .build()
                 ).toList();
