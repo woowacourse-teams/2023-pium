@@ -20,11 +20,11 @@ public class TestController {
 
     private final TestService testService;
 
-    @GetMapping("/notifications")
-    public ResponseEntity<String> notificationTest() {
-        testService.sendWaterNotificationTest();
-        return ResponseEntity.ok("알림 기능 테스트 성공");
-    }
+//    @GetMapping("/notifications")
+//    public ResponseEntity<String> notificationTest() {
+//        testService.sendWaterNotificationTest();
+//        return ResponseEntity.ok("알림 기능 테스트 성공");
+//    }
 
     @GetMapping("/notifications/async")
     public ResponseEntity<String> notificationAsyncTest() {
