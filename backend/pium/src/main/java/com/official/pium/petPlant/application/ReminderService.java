@@ -9,6 +9,7 @@ import com.official.pium.petPlant.application.dto.ReminderUpdateRequest;
 import com.official.pium.petPlant.domain.PetPlant;
 import com.official.pium.petPlant.event.history.HistoryEvent;
 import com.official.pium.petPlant.event.notification.NotificationEvent;
+import com.official.pium.petPlant.event.notification.NotificationEvents;
 import com.official.pium.petPlant.repository.PetPlantRepository;
 import java.time.LocalDate;
 import java.util.List;
@@ -88,7 +89,7 @@ public class ReminderService {
                         .build()
                 ).toList();
 
-        publisher.publishEvent(events);
+        publisher.publishEvent(NotificationEvents.from(events));
     }
 
     public void sendWaterNotificationTest() {
@@ -101,6 +102,6 @@ public class ReminderService {
                         .build()
                 ).toList();
 
-        publisher.publishEvent(events);
+        publisher.publishEvent(NotificationEvents.from(events));
     }
 }
