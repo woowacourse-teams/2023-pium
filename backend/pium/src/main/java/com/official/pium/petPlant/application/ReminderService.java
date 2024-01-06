@@ -91,17 +91,4 @@ public class ReminderService {
 
         publisher.publishEvent(NotificationEvents.from(events));
     }
-
-    public void sendWaterNotificationTest() {
-        List<PetPlant> petPlants = petPlantRepository.findAll();
-        List<NotificationEvent> events = petPlants.stream()
-                .map(plant -> NotificationEvent.builder()
-                        .title(plant.getNickname())
-                        .body("(테스트 중) 물을 줄 시간이에요!")
-                        .deviceToken(plant.getMember().getDeviceToken())
-                        .build()
-                ).toList();
-
-        publisher.publishEvent(NotificationEvents.from(events));
-    }
 }
