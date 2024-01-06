@@ -44,8 +44,10 @@ public class TestService {
                         .build()
                 ).toList();
 
+        int i = 1;
         log.info("비동기 알림 테스트 시작. Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
         for (NotificationEvent event : events) {
+            log.info(i++ + "번째 알림 이벤트");
             publisher.publishEvent(event);
         }
         log.info("비동기 알림 테스트 종료. Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
