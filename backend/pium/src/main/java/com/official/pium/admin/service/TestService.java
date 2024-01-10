@@ -44,7 +44,7 @@ public class TestService {
                 ).toList();
 
         log.info("비동기 테스트 램프업 시작");
-        for (int i = 0; i < 40; i++) {
+        for (int i = 0; i < 100; i++) {
             NotificationEvent notificationEvent = events.get(i);
             publisher.publishEvent(notificationEvent);
         }
