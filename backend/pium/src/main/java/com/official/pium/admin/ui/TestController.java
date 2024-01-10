@@ -26,6 +26,12 @@ public class TestController {
 //        return ResponseEntity.ok("알림 기능 테스트 성공");
 //    }
 
+    @GetMapping("/notifications/ramp")
+    public ResponseEntity<String> notificationRampTest() {
+        testService.sendWaterNotificationAsyncRampTest();
+        return ResponseEntity.ok("비동기 알림 기능 테스트 램프업 성공");
+    }
+
     @GetMapping("/notifications/async")
     public ResponseEntity<String> notificationAsyncTest() {
         testService.sendWaterNotificationAsyncTest();

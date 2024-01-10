@@ -33,6 +33,23 @@ public class TestService {
 //        log.info("동기 알림 테스트 종료. Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
 //    }
 
+    public void sendWaterNotificationAsyncRampTest() {
+        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(7L);
+        List<NotificationEvent> events = petPlants.stream()
+                .map(plant -> NotificationEvent.builder()
+                        .title(plant.getNickname())
+                        .body("(테스트 중) 물을 줄 시간이에요!")
+                        .deviceToken(plant.getMember().getDeviceToken())
+                        .build()
+                ).toList();
+
+        log.info("비동기 테스트 램프업 시작");
+        for (int i = 0; i < 40; i++) {
+            NotificationEvent notificationEvent = events.get(i);
+            publisher.publishEvent(notificationEvent);
+        }
+    }
+
     public void sendWaterNotificationAsyncTest() {
         List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(7L);
         List<NotificationEvent> events = petPlants.stream()
