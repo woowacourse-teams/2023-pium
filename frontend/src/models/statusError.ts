@@ -6,7 +6,7 @@ interface StatusErrorProps {
 
 class StatusError extends Error {
   statusCode: number;
-  errorResponse?: Response;
+  errorResponse: Response | undefined;
 
   constructor(props: StatusErrorProps) {
     super(props.message);

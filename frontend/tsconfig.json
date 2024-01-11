@@ -6,7 +6,7 @@
     "module": "ESNext", // 동적 import를 위한 module 설정
 
     "strict": true,
-    // "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "removeComments": false,
