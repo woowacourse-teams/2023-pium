@@ -17,7 +17,7 @@ class FCMMessaging {
 
   constructor(config: FirebaseOptions) {
     this.app = initializeApp(config);
-    console.log(this.messaging, 'messaging');
+
     this.messaging = getMessaging(this.app);
 
     this.getCurrentToken = this.getCurrentToken.bind(this);
@@ -46,21 +46,21 @@ class FCMMessaging {
   }
 
   async getCurrentToken() {
-    // null이면 null이지 왜 undefiend임? this 바인딩이 안됨. this 바인딩이 queryKey가 되어버림
-    console.log();
-
     if (!this.messaging) throw new Error('등록된 메세지가 없어서 토큰을 반환할 수 없습니다');
     const permission = Notification.permission;
 
     if (permission !== 'granted') return null;
 
-    return await getToken(this.messaging, {
+    const token = await getToken(this.messaging, {
       vapidKey: process.env.VAPID_PUBLIC_KEY ?? '',
     });
+
+    return token;
   }
 
   async deleteCurrentToken() {
     if (!this.messaging) throw new Error('등록된 메세지가 없어서 토큰을 삭제할 수 없습니다');
+
     return await deleteToken(this.messaging);
   }
 }

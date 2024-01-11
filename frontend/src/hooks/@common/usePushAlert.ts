@@ -19,8 +19,8 @@ const usePushAlert = () => {
       addToast({ type: 'info', message: '알림이 허용되지 않았습니다', time: 3000 });
       return;
     }
+
     try {
-      // 필요 없음!
       subscribe();
     } catch (error) {
       addToast({ type: 'error', message: '구독중에 에러가 발생했습니다', time: 3000 });
