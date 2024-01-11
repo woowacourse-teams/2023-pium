@@ -1,22 +1,8 @@
+import type { BeforeInstallPromptEvent } from 'types/global';
 import { useCallback, useEffect, useState } from 'react';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { getCookie, setCookie } from 'utils/cookie';
 import { URL_PATH } from 'constants/index';
-
-declare global {
-  interface WindowEventMap {
-    beforeinstallprompt: BeforeInstallPromptEvent;
-  }
-}
-
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: Array<string>;
-  readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
-}
 
 let deferredPrompt: BeforeInstallPromptEvent | null = null;
 
