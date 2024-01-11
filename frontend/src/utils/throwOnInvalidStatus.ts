@@ -26,6 +26,7 @@ const throwOnInvalidStatus = (response: Response) => {
   if (response.status >= 300) {
     throw new StatusError({
       statusCode: response.status,
+      errorResponse: response,
     });
   }
 };
