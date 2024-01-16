@@ -35,19 +35,29 @@ public class TestService {
 
     public void sendWaterNotificationAsyncRampTest() {
         List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(6L);
-        List<NotificationEvent> events = petPlants.stream()
-                .map(plant -> NotificationEvent.builder()
-                        .title(plant.getNickname())
-                        .body("(테스트 중) 물을 줄 시간이에요!")
-                        .deviceToken(plant.getMember().getDeviceToken())
-                        .build()
-                ).toList();
+//        List<NotificationEvent> events = petPlants.stream()
+//                .map(plant -> NotificationEvent.builder()
+//                        .title(plant.getNickname())
+//                        .body("(테스트 중) 물을 줄 시간이에요!")
+//                        .deviceToken(plant.getMember().getDeviceToken())
+//                        .build()
+//                ).toList();
 
-        log.info("비동기 테스트 램프업 시작");
         for (int i = 0; i < 100; i++) {
-            NotificationEvent notificationEvent = events.get(i);
-            publisher.publishEvent(notificationEvent);
+            PetPlant petPlant = petPlants.get(i);
+            NotificationEvent event = NotificationEvent.builder()
+                    .title(petPlant.getNickname())
+                    .body("물줘")
+                    .deviceToken(petPlant.getMember().getDeviceToken())
+                    .build();
+            publisher.publishEvent(event);
         }
+
+//        log.info("비동기 테스트 램프업 시작");
+//        for (int i = 0; i < 100; i++) {
+//            NotificationEvent notificationEvent = events.get(i);
+//            publisher.publishEvent(notificationEvent);
+//        }
     }
 
     public void sendWaterNotificationAsyncTest() {
