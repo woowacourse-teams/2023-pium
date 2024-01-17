@@ -29,7 +29,6 @@ const registerPwaServiceWorker = async (workerPath: string) => {
 
   PushStatus.updatePushStatus({
     notificationPermission: 'default',
-    currentToken: null,
     pushSupport: FCMSupported && isBrowserSupport,
   });
 };
