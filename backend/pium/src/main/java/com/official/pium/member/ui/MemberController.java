@@ -1,7 +1,7 @@
 package com.official.pium.member.ui;
 
-import com.official.pium.member.domain.Member;
 import com.official.pium.member.application.MemberService;
+import com.official.pium.member.domain.Member;
 import com.official.pium.notification.application.dto.NotificationCheckResponse;
 import com.official.pium.notification.application.dto.NotificationSubscribeRequest;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,8 +42,10 @@ public class MemberController {
     }
 
     @PostMapping("/notification")
-    public ResponseEntity<Void> subscribeNotification(@Auth Member member,
-                                                      @RequestBody @Valid NotificationSubscribeRequest request) {
+    public ResponseEntity<Void> subscribeNotification(
+            @Auth Member member,
+            @RequestBody @Valid NotificationSubscribeRequest request
+    ) {
         memberService.subscribeNotification(member, request);
         return ResponseEntity.ok().build();
     }

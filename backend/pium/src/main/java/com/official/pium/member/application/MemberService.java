@@ -54,10 +54,14 @@ public class MemberService {
             throw new IllegalArgumentException("이미 알림을 구독하고 있습니다.");
         }
         member.updateDeviceToken(request.getToken());
+        sendAlarmNotification(member);
+    }
+
+    private void sendAlarmNotification(Member member) {
         NotificationEvent event = NotificationEvent.builder()
                 .deviceToken(member.getDeviceToken())
                 .title("알림 설정 완료")
-                .body("리마인더 알림 받기 성공.")
+                .body("리마인더 알림 받기 성공")
                 .build();
         publisher.publishEvent(event);
     }
