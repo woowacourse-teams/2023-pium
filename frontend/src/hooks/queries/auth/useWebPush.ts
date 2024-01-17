@@ -52,16 +52,15 @@ const useWebPush = () => {
   // 구독 해제를 했을 때 구독 취소 API와 fcm에서 토큰 삭제가 모두 이루어 져야 함. 근데 그게 안된다면 에러를 던진다.
   const unSubscribe = useMutation({
     mutationFn: async () => {
-      const results = await Promise.allSettled([
-        WebPushSubscribeAPI.unSubscribe(),
-        FCMMessaging.deleteCurrentToken(),
-      ]);
+      const fcmDeleteToken = await FCMMessaging.deleteCurrentToken();
 
-      const [unsubscribe] = results;
-
-      if (unsubscribe.status === 'fulfilled') {
-        throwOnInvalidStatus(unsubscribe.value);
+      if (!fcmDeleteToken) {
+        throw new Error('토큰 삭제에 실패했습니다');
       }
+
+      const results = await WebPushSubscribeAPI.unSubscribe();
+
+      throwOnInvalidStatus(results);
 
       return null;
     },
