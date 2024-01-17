@@ -1,4 +1,5 @@
 import { Suspense } from 'react';
+import Spinner from 'components/@common/Spinner';
 import { PushAlertContent, PushAlertWrapper, WarnParagraph } from './PushAlert.style';
 import PushStatus from 'models/PushStatus';
 import PushToggle from './PushToggle';
@@ -11,7 +12,7 @@ const PushAlert = () => {
     <PushAlertWrapper>
       <PushAlertContent>
         <p>리마인더 알림 받기</p>
-        <Suspense fallback={<div>로딩중잉ㅂ니다?</div>}>
+        <Suspense fallback={<Spinner size="20" />}>
           <PushToggle />
         </Suspense>
       </PushAlertContent>

@@ -19,10 +19,7 @@ const firebaseConfig = {
   measurementId: 'G-8SL2D547VW',
 };
 
-firebase.initializeApp({
-  ...firebaseConfig,
-  authDomain: 'pium-7ddfe.firebaseapp.com',
-});
+firebase.initializeApp(firebaseConfig);
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
 // messages.

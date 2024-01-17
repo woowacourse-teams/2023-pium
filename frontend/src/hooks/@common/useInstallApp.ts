@@ -1,26 +1,15 @@
-import { useEffect, useState } from 'react';
+import type { BeforeInstallPromptEvent } from 'types/global';
+import { useCallback, useEffect, useState } from 'react';
 import useCheckSessionId from 'hooks/queries/auth/useCheckSessionId';
 import { getCookie, setCookie } from 'utils/cookie';
+import { URL_PATH } from 'constants/index';
 
-declare global {
-  interface WindowEventMap {
-    beforeinstallprompt: BeforeInstallPromptEvent;
-  }
-}
-
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: Array<string>;
-  readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed';
-    platform: string;
-  }>;
-  prompt(): Promise<void>;
-}
+let deferredPrompt: BeforeInstallPromptEvent | null = null;
 
 const useInstallApp = () => {
   const { isSuccess: isLoggedIn } = useCheckSessionId(false);
 
-  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showPrompt, setShowPrompt] = useState(JSON.parse(getCookie('PromptVisible') ?? 'true'));
 
   const installApp = async () => {
     if (!deferredPrompt) return;
@@ -28,26 +17,31 @@ const useInstallApp = () => {
 
     await deferredPrompt.userChoice;
 
-    setDeferredPrompt(null);
+    deferredPrompt = null;
+    setShowPrompt(false);
   };
 
   const ignoreInstallApp = () => {
-    setCookie({ key: 'PromptVisible', value: 'false' });
-    setDeferredPrompt(null);
+    setCookie({ key: 'PromptVisible', value: 'false', path: URL_PATH.reminder });
+    deferredPrompt = null;
+    setShowPrompt(false);
   };
 
   const closePrompt = () => {
-    setDeferredPrompt(null);
+    deferredPrompt = null;
+    setShowPrompt(false);
   };
 
-  const beforeInstallPromptHandler = (event: BeforeInstallPromptEvent) => {
-    event.preventDefault();
-    const showPrompt = JSON.parse(getCookie('PromptVisible') ?? 'true');
+  // TODO: 해당 이벤트를 지원하지 않는 브라우저의 경우에 어떻게 처리를 할 것인가?
+  const beforeInstallPromptHandler = useCallback(
+    (event: BeforeInstallPromptEvent) => {
+      event.preventDefault();
+      if (!showPrompt) return;
 
-    if (!showPrompt) return;
-
-    setDeferredPrompt(event);
-  };
+      deferredPrompt = event;
+    },
+    [showPrompt]
+  );
 
   // TODO: 왜 '/'에서만 beforeinstallprompt가 이벤트 추가가 되나?  prompt가 나오고 나머지는 나오지 않는가?
   useEffect(() => {
@@ -56,9 +50,9 @@ const useInstallApp = () => {
     return () => {
       window.removeEventListener('beforeinstallprompt', beforeInstallPromptHandler);
     };
-  }, []);
+  }, [beforeInstallPromptHandler]);
 
-  return { showPrompt: deferredPrompt && isLoggedIn, installApp, ignoreInstallApp, closePrompt };
+  return { showPrompt: showPrompt && isLoggedIn, installApp, ignoreInstallApp, closePrompt };
 };
 
 export default useInstallApp;

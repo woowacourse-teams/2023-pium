@@ -18,14 +18,14 @@ export const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  gap: 12px;
   justify-content: space-evenly;
 
   width: 100%;
   min-width: ${({ theme }) => theme.width.mobile};
   max-width: ${({ theme }) => theme.width.pad};
-  height: 120px;
   margin: 16px 0;
-  padding: 0 32px;
+  padding: 16px 32px;
 
   background: ${({ theme }) => theme.color.background};
   border-bottom: solid 2px ${({ theme }) => theme.color.grayLight};
@@ -48,10 +48,20 @@ export const GuideParagraph = styled.p`
   font: 500 1.6rem/2.2rem NanumSquareRound;
 `;
 
-export const IosGuide = styled.p`
+export const Guide = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
   justify-content: center;
-  height: 30px;
+
   font: 600 1.6rem/2.2rem NanumsquareRound;
+`;
+
+export const InfoButton = styled.button`
+  width: 100%;
+  height: 30px;
+  background-color: ${({ theme }) => theme.color.grayLight};
+  border-radius: 8px;
 `;
 
 export const ButtonWrapper = styled.div`
@@ -59,12 +69,6 @@ export const ButtonWrapper = styled.div`
   gap: 16px;
   height: 30px;
   font: 500 1.8rem/2.2rem NanumSquareRound;
-
-  button {
-    width: 100%;
-    background-color: ${({ theme }) => theme.color.grayLight};
-    border-radius: 8px;
-  }
 
   :last-child {
     color: ${({ theme }) => theme.color.background};

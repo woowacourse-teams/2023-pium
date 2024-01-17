@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import InstallPrompt from 'components/@common/InstallPrompt';
 import PageLogger from 'components/@common/PageLogger';
 import SearchBox from 'components/search/SearchBox';
 import { LogoMessage, SearchBoxArea, SearchMessage, Main, Image, ImageArea } from './Home.style';
@@ -13,7 +12,6 @@ const Home = () => {
 
   return (
     <PageLogger>
-      <InstallPrompt />
       <Main>
         <LogoMessage>식물을 쉽게</LogoMessage>
         <ImageArea>

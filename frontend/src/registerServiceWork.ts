@@ -25,7 +25,6 @@ const registerPwaServiceWorker = async (workerPath: string) => {
     }
   }
 
-  FCMMessaging.registerMessaging();
   FCMMessaging.setOnMessaging();
 
   PushStatus.updatePushStatus({
