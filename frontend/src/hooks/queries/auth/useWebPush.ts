@@ -1,6 +1,5 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import useAddToast from 'hooks/@common/useAddToast';
-import useGetToken from 'hooks/firebase/useGetToken';
 import FCMMessaging from 'models/FCMMessaging';
 import StatusError from 'models/statusError';
 import WebPushSubscribeAPI, { SUBSCRIBE_URL } from 'apis/webPush';
@@ -15,15 +14,14 @@ const useWebPush = () => {
   const addToast = useAddToast();
   const queryClient = useQueryClient();
 
-  const { data: token } = useGetToken();
-
-  // token이 null인 경우는 알림이 허용되지 않은 경우
-  if (token === null) {
-    throw new Error('알림을 허용하지 않았습니다');
-  }
-
   const subscribe = useMutation({
     mutationFn: async () => {
+      const token = await FCMMessaging.getCurrentToken();
+
+      if (token === null) {
+        throw new Error('알림을 허용하지 않았습니다');
+      }
+
       const response = await WebPushSubscribeAPI.subscribe(token);
       throwOnInvalidStatus(response);
 
@@ -65,19 +63,16 @@ const useWebPush = () => {
       return null;
     },
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ['getFCMToken'] });
       await queryClient.cancelQueries({ queryKey: [SUBSCRIBE_URL] });
 
-      const prevData = queryClient.getQueryState<string | null>(['getFCMToken']);
       const prevSubscribe = queryClient.getQueryState<CurrentSubscribe>([SUBSCRIBE_URL]);
 
       queryClient.setQueryData([SUBSCRIBE_URL], () => ({ subscribe: false }));
 
-      return { prevData, prevSubscribe };
+      return { prevSubscribe };
     },
 
     onError: async (error, __, context) => {
-      queryClient.setQueryData(['getFCMToken'], context?.prevData);
       queryClient.setQueryData([SUBSCRIBE_URL], context?.prevSubscribe);
 
       if (error instanceof StatusError) {
@@ -90,7 +85,6 @@ const useWebPush = () => {
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [SUBSCRIBE_URL] });
-      queryClient.invalidateQueries({ queryKey: ['getFCMToken'] });
     },
   });
 
