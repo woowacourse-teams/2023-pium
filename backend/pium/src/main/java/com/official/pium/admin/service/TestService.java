@@ -34,7 +34,7 @@ public class TestService {
 //    }
 
     public void sendWaterNotificationAsyncRampTest() {
-        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(6L);
+        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(7L);
 //        List<NotificationEvent> events = petPlants.stream()
 //                .map(plant -> NotificationEvent.builder()
 //                        .title(plant.getNickname())
@@ -61,7 +61,7 @@ public class TestService {
     }
 
     public void sendWaterNotificationAsyncTest() {
-        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(6L);
+        List<PetPlant> petPlants = petPlantRepository.findAllByMemberId(7L);
         List<NotificationEvent> events = petPlants.stream()
                 .map(plant -> NotificationEvent.builder()
                         .title(plant.getNickname())
