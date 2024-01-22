@@ -1,7 +1,6 @@
 package com.official.pium.notification.application;
 
 import com.official.pium.petPlant.event.notification.NotificationEvent;
-import com.official.pium.petPlant.event.notification.NotificationEvents;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
@@ -21,15 +20,5 @@ public class NotificationEventListener {
         log.info("비동기 알림 START, Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
         notificationService.sendNotification(event.getDeviceToken(), event.getTitle(), event.getBody());
         log.info("비동기 알림 END, Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
-    }
-
-    @EventListener
-    @Async
-    public void handleNotificationEvents(NotificationEvents notificationEvents) {
-        log.info("동기 알림 START, Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
-        for (NotificationEvent event : notificationEvents.getNotificationEvents()) {
-            notificationService.sendNotification(event.getDeviceToken(), event.getTitle(), event.getBody());
-        }
-        log.info("동기 알림 END, Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
     }
 }
