@@ -25,7 +25,8 @@ import org.springframework.web.client.RestTemplate;
 @RequiredArgsConstructor
 public class FcmMessageSender implements MessageSendManager {
 
-    private static final String JSON_FILE_PATH = "src/main/resources/config/pium-fcm.json";
+    private static final String SYSTEM_PATH = System.getProperty("user.dir");
+    private static final String JSON_FILE_PATH = "/src/main/resources/config/pium-fcm.json";
 
     @Value("${fcm.api.url}")
     private String apiUrl;
@@ -42,7 +43,7 @@ public class FcmMessageSender implements MessageSendManager {
     public void initialize() {
         FileInputStream serviceAccount;
         try {
-            serviceAccount = new FileInputStream(JSON_FILE_PATH);
+            serviceAccount = new FileInputStream(SYSTEM_PATH + JSON_FILE_PATH);
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                     .build();
