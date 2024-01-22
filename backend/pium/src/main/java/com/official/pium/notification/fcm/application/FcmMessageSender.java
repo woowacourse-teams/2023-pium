@@ -44,10 +44,12 @@ public class FcmMessageSender implements MessageSendManager {
         try {
             serviceAccount = new FileInputStream(JSON_FILE_PATH);
             FirebaseOptions options = FirebaseOptions.builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .build();
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .build();
 
-            FirebaseApp.initializeApp(options);
+            if (FirebaseApp.getApps().isEmpty()) {
+                FirebaseApp.initializeApp(options, "Pium");
+            }
         } catch (FileNotFoundException e) {
             log.error("파일을 찾을 수 없습니다. " + e);
         } catch (IOException e) {
@@ -57,13 +59,13 @@ public class FcmMessageSender implements MessageSendManager {
 
     public void sendMessageTo(String targetToken, String title, String body) {
         Notification notification = Notification.builder()
-            .setTitle(title)
-            .setBody(body)
-            .build();
+                .setTitle(title)
+                .setBody(body)
+                .build();
         Message message = Message.builder()
-            .setToken(targetToken)
-            .setNotification(notification)
-            .build();
+                .setToken(targetToken)
+                .setNotification(notification)
+                .build();
         try {
             String response = FirebaseMessaging.getInstance().sendAsync(message).get();
             log.info("응답 결과 : " + response);
@@ -100,24 +102,24 @@ public class FcmMessageSender implements MessageSendManager {
 
     private FcmMessageResponse makeMessage(String targetToken, String title, String body) {
         return FcmMessageResponse.builder()
-            .message(FcmMessageResponse.Message.builder()
-                .token(targetToken)
-                .notification(FcmMessageResponse.Notification.builder()
-                    .title(title)
-                    .body(body)
-                    .image(null)
-                    .build()
+                .message(FcmMessageResponse.Message.builder()
+                        .token(targetToken)
+                        .notification(FcmMessageResponse.Notification.builder()
+                                .title(title)
+                                .body(body)
+                                .image(null)
+                                .build()
+                        )
+                        .build()
                 )
-                .build()
-            )
-            .validate_only(false)
-            .build();
+                .validate_only(false)
+                .build();
     }
 
     private String getAccessToken() throws IOException {
         GoogleCredentials googleCredentials = GoogleCredentials
-            .fromStream(new ClassPathResource(keyPath).getInputStream())
-            .createScoped(keyScope);
+                .fromStream(new ClassPathResource(keyPath).getInputStream())
+                .createScoped(keyScope);
         googleCredentials.refreshIfExpired();
         return googleCredentials.getAccessToken().getTokenValue();
     }
