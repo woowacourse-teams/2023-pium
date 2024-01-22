@@ -13,7 +13,7 @@ public class AsyncConfig implements AsyncConfigurer {
     @Override
     public Executor getAsyncExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(40);
+        executor.setCorePoolSize(20);
         executor.setThreadNamePrefix("2024-Pium-Thread: ");
         executor.initialize();
         return executor;
