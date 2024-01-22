@@ -9,12 +9,12 @@ import com.official.pium.petPlant.application.dto.ReminderUpdateRequest;
 import com.official.pium.petPlant.domain.PetPlant;
 import com.official.pium.petPlant.event.history.HistoryEvent;
 import com.official.pium.petPlant.event.notification.NotificationEvent;
-import com.official.pium.petPlant.event.notification.NotificationEvents;
 import com.official.pium.petPlant.repository.PetPlantRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -22,6 +22,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -81,27 +82,17 @@ public class ReminderService {
     @Scheduled(cron = "0 0 7 * * *")
     public void sendWaterNotification() {
         List<PetPlant> petPlants = petPlantRepository.findAllByWaterNotification(LocalDate.now());
-        List<NotificationEvent> events = petPlants.stream()
-                .map(plant -> NotificationEvent.builder()
-                        .title(plant.getNickname())
-                        .body("물을 줄 시간이에요!")
-                        .deviceToken(plant.getMember().getDeviceToken())
-                        .build()
-                ).toList();
+        log.info("[" + LocalDate.now() + " 물주기] " + "전체 알림: " + petPlants.size() + "개");
+        petPlants.forEach(this::sendNotification);
 
-        publisher.publishEvent(NotificationEvents.from(events));
     }
 
-    public void sendWaterNotificationTest() {
-        List<PetPlant> petPlants = petPlantRepository.findAll();
-        List<NotificationEvent> events = petPlants.stream()
-                .map(plant -> NotificationEvent.builder()
-                        .title(plant.getNickname())
-                        .body("(테스트 중) 물을 줄 시간이에요!")
-                        .deviceToken(plant.getMember().getDeviceToken())
-                        .build()
-                ).toList();
-
-        publisher.publishEvent(NotificationEvents.from(events));
+    private void sendNotification(PetPlant petPlant) {
+        NotificationEvent.builder()
+                .title(petPlant.getNickname())
+                .body("물을 줄 시간이에요!")
+                .deviceToken(petPlant.getMember().getDeviceToken())
+                .build();
+        publisher.publishEvent(petPlant);
     }
 }

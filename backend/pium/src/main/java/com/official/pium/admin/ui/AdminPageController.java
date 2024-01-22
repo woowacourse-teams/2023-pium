@@ -11,7 +11,6 @@ import com.official.pium.dictionaryPlant.repository.DictionaryPlantRepository;
 import com.official.pium.member.domain.Member;
 import com.official.pium.member.repository.MemberRepository;
 import com.official.pium.notification.application.NotificationService;
-import com.official.pium.petPlant.application.ReminderService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -44,7 +43,6 @@ public class AdminPageController {
     private final MemberRepository memberRepository;
     private final AdminService adminService;
     private final NotificationService notificationService;
-    private final ReminderService reminderService;
 
     @GetMapping("/**")
     public String adminPage(@AdminAuth Admin admin, Model model) {
@@ -163,11 +161,5 @@ public class AdminPageController {
         }
 
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/notifications")
-    public ResponseEntity<String> notificationTest() {
-        reminderService.sendWaterNotificationTest();
-        return ResponseEntity.ok("알림 기능 테스트 성공");
     }
 }

@@ -26,7 +26,6 @@ import com.official.pium.fixture.DictionaryPlantFixture.REQUEST;
 import com.official.pium.fixture.MemberFixture;
 import com.official.pium.fixture.NotificationFixture;
 import com.official.pium.notification.application.NotificationService;
-import com.official.pium.petPlant.application.ReminderService;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayNameGeneration;
@@ -64,9 +63,6 @@ class AdminPageControllerTest extends UITest {
 
     @MockBean
     private NotificationService notificationService;
-
-    @MockBean
-    private ReminderService reminderService;
 
     @Nested
     class 페이지_정상_호출_ {

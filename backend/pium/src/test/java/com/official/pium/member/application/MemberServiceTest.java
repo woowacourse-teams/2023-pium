@@ -8,6 +8,7 @@ import com.official.pium.member.domain.Member;
 import com.official.pium.member.repository.MemberRepository;
 import com.official.pium.notification.application.dto.NotificationCheckResponse;
 import com.official.pium.notification.application.dto.NotificationSubscribeRequest;
+import com.official.pium.petPlant.event.notification.NotificationEvent;
 import com.official.pium.petPlant.repository.PetPlantRepository;
 import com.official.pium.support.MemberSupport;
 import com.official.pium.support.PetPlantSupport;
@@ -20,10 +21,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 @SuppressWarnings("NonAsciiCharacters")
 @ExtendWith(DatabaseClearExtension.class)
+@RecordApplicationEvents
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 class MemberServiceTest {
 
@@ -41,6 +45,9 @@ class MemberServiceTest {
 
     @Autowired
     private PetPlantRepository petPlantRepository;
+
+    @Autowired
+    private ApplicationEvents applicationEvents;
 
     @Test
     void 회원탈퇴_성공() {
@@ -86,6 +93,20 @@ class MemberServiceTest {
                 .build());
 
         assertThat(saveMember.getDeviceToken()).isEqualTo("deviceToken");
+    }
+
+    @Test
+    void 알림_구독_시_구독_완료_알림이_발송된다() {
+        Member saveMember = memberSupport.builder()
+                .kakaoId(123451L)
+                .build();
+
+        memberService.subscribeNotification(saveMember, NotificationSubscribeRequest.builder()
+                .token("deviceToken")
+                .build());
+        long eventCount = applicationEvents.stream(NotificationEvent.class).count();
+
+        assertThat(eventCount).isEqualTo(1);
     }
 
     @Test
