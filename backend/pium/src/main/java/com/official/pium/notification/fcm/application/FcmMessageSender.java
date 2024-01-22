@@ -49,7 +49,7 @@ public class FcmMessageSender implements MessageSendManager {
                     .build();
 
             if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options, "Pium");
+                FirebaseApp.initializeApp(options);
             }
         } catch (FileNotFoundException e) {
             log.error("파일을 찾을 수 없습니다. " + e);
