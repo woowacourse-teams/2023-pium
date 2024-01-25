@@ -21,10 +21,12 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FcmMessageSender implements MessageSendManager {
 
+    private static final String FCM_JSON_PATH = "config/pium-fcm.json";
+
     @PostConstruct
     public void initialize() {
         try {
-            ClassPathResource resource = new ClassPathResource("config/pium-fcm.json");
+            ClassPathResource resource = new ClassPathResource(FCM_JSON_PATH);
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(resource.getInputStream()))
                     .build();
