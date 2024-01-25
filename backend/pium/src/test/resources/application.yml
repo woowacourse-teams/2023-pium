@@ -64,11 +64,8 @@ server:
     max-http-form-post-size: 10MB
 
 fcm:
-  key:
+  json:
     path: config/pium-fcm.json
-    scope: https://www.googleapis.com/auth/firebase.messaging
-  api:
-    url: https://fcm.googleapis.com/v1/projects/pium-test/messages:send
 
 management:
   endpoint:

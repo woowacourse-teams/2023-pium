@@ -1,5 +1,6 @@
 package com.official.pium.admin.ui;
 
+import com.official.pium.admin.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,13 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-//    private final TestService testService;
-
-//    @GetMapping("/notifications")
-//    public ResponseEntity<String> notificationTest() {
-//        testService.sendWaterNotificationTest();
-//        return ResponseEntity.ok("알림 기능 테스트 성공");
-//    }
+    private final TestService testService;
 
 //    @GetMapping("/notifications/ramp")
 //    public ResponseEntity<String> notificationRampTest() {
