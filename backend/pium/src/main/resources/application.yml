@@ -27,11 +27,9 @@ management:
   endpoints:
     enabled-by-default: false
 fcm:
-  key:
-    path: test/
-    scope: https://www.googleapis.com/auth/firebase.messaging
-  api:
-    url: https://fcm.googleapis.com/v1/projects/project-id/messages:send
+  json:
+    path: config/pium-fcm.json
+
 petPlant:
   image:
     directory: test

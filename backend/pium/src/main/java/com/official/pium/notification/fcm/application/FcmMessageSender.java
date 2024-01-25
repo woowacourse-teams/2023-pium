@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class FcmMessageSender implements MessageSendManager {
 
-    private static final String FCM_JSON_PATH = "config/pium-fcm.json";
+    @Value("${fcm.json.path}")
+    private String FCM_JSON_PATH;
 
     @PostConstruct
     public void initialize() {
