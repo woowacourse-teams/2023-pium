@@ -88,11 +88,11 @@ public class ReminderService {
     }
 
     private void sendNotification(PetPlant petPlant) {
-        NotificationEvent.builder()
+        NotificationEvent event = NotificationEvent.builder()
                 .title(petPlant.getNickname())
                 .body("물을 줄 시간이에요!")
                 .deviceToken(petPlant.getMember().getDeviceToken())
                 .build();
-        publisher.publishEvent(petPlant);
+        publisher.publishEvent(event);
     }
 }
