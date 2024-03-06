@@ -1,8 +1,8 @@
 package com.official.pium.history.domain;
 
 import com.official.pium.common.domain.BaseEntity;
-import com.official.pium.petPlant.domain.PetPlant;
 import com.official.pium.history.domain.vo.HistoryContent;
+import com.official.pium.petPlant.domain.PetPlant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

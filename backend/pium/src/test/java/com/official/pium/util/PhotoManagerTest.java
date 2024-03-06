@@ -1,5 +1,7 @@
 package com.official.pium.util;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import com.official.pium.IntegrationTest;
 import com.official.pium.common.util.PhotoManager;
 import com.official.pium.config.ImageCleanerExtension;
@@ -10,8 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(ImageCleanerExtension.class)
 @DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)

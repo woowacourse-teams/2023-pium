@@ -1,12 +1,12 @@
 package com.official.pium.support;
 
 import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
-import com.official.pium.petPlant.domain.vo.WaterCycle;
 import com.official.pium.dictionaryPlant.domain.vo.CareDetail;
 import com.official.pium.dictionaryPlant.domain.vo.Classification;
 import com.official.pium.dictionaryPlant.domain.vo.Property;
-import com.official.pium.petPlant.domain.vo.Temperature;
 import com.official.pium.dictionaryPlant.repository.DictionaryPlantRepository;
+import com.official.pium.petPlant.domain.vo.Temperature;
+import com.official.pium.petPlant.domain.vo.WaterCycle;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

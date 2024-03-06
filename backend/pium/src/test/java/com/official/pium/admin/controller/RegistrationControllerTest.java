@@ -12,13 +12,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.official.pium.UITest;
+import com.official.pium.admin.domain.Admin;
+import com.official.pium.admin.service.RegistrationService;
 import com.official.pium.admin.service.dto.RegistrationRequest;
 import com.official.pium.admin.service.dto.RegistrationResponse;
-import com.official.pium.admin.service.RegistrationService;
-import com.official.pium.admin.domain.Admin;
 import com.official.pium.admin.ui.RegistrationController;
-import com.official.pium.fixture.FileFixture;
 import com.official.pium.common.dto.DataResponse;
+import com.official.pium.fixture.FileFixture;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.junit.jupiter.api.DisplayNameGeneration;

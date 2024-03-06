@@ -5,8 +5,8 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 
-import com.official.pium.config.WebMvcConfigure;
 import com.official.pium.admin.domain.Admin;
+import com.official.pium.config.WebMvcConfigure;
 import com.official.pium.member.domain.Member;
 import com.official.pium.member.repository.MemberRepository;
 import com.official.pium.sessionGroup.application.SessionGroupService;

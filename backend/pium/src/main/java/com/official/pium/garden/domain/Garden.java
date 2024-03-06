@@ -2,8 +2,8 @@ package com.official.pium.garden.domain;
 
 import com.official.pium.common.domain.BaseEntity;
 import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
-import com.official.pium.member.domain.Member;
 import com.official.pium.garden.domain.vo.GardenPlantState;
+import com.official.pium.member.domain.Member;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

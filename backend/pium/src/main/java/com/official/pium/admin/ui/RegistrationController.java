@@ -1,11 +1,11 @@
 package com.official.pium.admin.ui;
 
+import com.official.pium.admin.domain.Admin;
+import com.official.pium.admin.service.RegistrationService;
 import com.official.pium.admin.service.dto.RegistrationRequest;
 import com.official.pium.admin.service.dto.RegistrationResponse;
-import com.official.pium.admin.service.RegistrationService;
-import com.official.pium.admin.domain.Admin;
-import com.official.pium.member.ui.Auth;
 import com.official.pium.common.dto.DataResponse;
+import com.official.pium.member.ui.Auth;
 import jakarta.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;

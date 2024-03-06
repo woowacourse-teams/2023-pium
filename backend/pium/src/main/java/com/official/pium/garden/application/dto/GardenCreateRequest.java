@@ -1,8 +1,8 @@
 package com.official.pium.garden.application.dto;
 
 import com.official.pium.garden.domain.Garden;
-import com.official.pium.petPlant.domain.PetPlant;
 import com.official.pium.garden.domain.vo.GardenPlantState;
+import com.official.pium.petPlant.domain.PetPlant;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;

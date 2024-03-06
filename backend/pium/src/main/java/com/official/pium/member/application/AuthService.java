@@ -1,10 +1,10 @@
 package com.official.pium.member.application;
 
-import com.official.pium.member.domain.Member;
-import com.official.pium.member.repository.MemberRepository;
 import com.official.pium.member.application.dto.KaKaoAccessTokenResponse;
 import com.official.pium.member.application.dto.KakaoMemberResponse;
 import com.official.pium.member.application.dto.OAuthProvider;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

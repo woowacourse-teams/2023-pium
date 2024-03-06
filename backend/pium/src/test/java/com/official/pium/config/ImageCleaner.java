@@ -1,8 +1,7 @@
 package com.official.pium.config;
 
-import org.springframework.stereotype.Component;
-
 import java.io.File;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ImageCleaner {
