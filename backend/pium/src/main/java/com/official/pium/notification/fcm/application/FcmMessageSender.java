@@ -91,4 +91,47 @@ public class FcmMessageSender implements MessageSendManager {
             }
         }
     }
+
+    private void retryWithInThreeTimes(Message message) {
+        int count = 0;
+        while (count < MAX_RETRY_COUNT) {
+            log.info(count + 1 + "번째 재시도 입니다.");
+            try {
+                Thread.sleep(LOOP_BACK_TIMES[count]);
+            } catch (InterruptedException e) {
+                log.error("Thread Sleep Error");
+                throw new RuntimeException(e);
+            }
+            boolean isRetrySuccess = retry(message);
+            if (isRetrySuccess) {
+                break;
+            }
+            count++;
+        }
+
+        if (count == MAX_RETRY_COUNT) {
+            log.info("알림 재전송에 실패했습니다.");
+        }
+    }
+
+    private boolean retry(Message message) {
+        try {
+            String response = FirebaseMessaging.getInstance().sendAsync(message).get();
+            log.info("알림 재시도 성공 " + response);
+        } catch (Exception e) {
+            if (e.getCause() instanceof FirebaseMessagingException exception) {
+                MessagingErrorCode errorCode = exception.getMessagingErrorCode();
+                if (isRetryErrorCode(errorCode)) {
+                    log.info("알림 재시도 실패... 다시 시도합니다.");
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isRetryErrorCode(MessagingErrorCode errorCode) {
+        return MessagingErrorCode.UNREGISTERED.equals(errorCode) ||
+                MessagingErrorCode.UNAVAILABLE.equals(errorCode);
+    }
 }
