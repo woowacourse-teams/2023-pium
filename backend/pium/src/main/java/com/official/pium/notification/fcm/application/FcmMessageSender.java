@@ -10,6 +10,7 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.MessagingErrorCode;
 import com.google.firebase.messaging.Notification;
 import com.official.pium.notification.application.MessageSendManager;
+import com.official.pium.notification.fcm.config.CustomThreadManager;
 import jakarta.annotation.PostConstruct;
 import java.io.FileNotFoundException;
 import java.io.IOException;

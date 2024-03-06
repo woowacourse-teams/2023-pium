@@ -1,4 +1,4 @@
-package com.official.pium.notification.fcm.application;
+package com.official.pium.notification.fcm.config;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.ThreadManager;
