@@ -15,7 +15,7 @@ public class NotificationEventListener {
     private final NotificationService notificationService;
 
     @EventListener
-    @Async
+    @Async("notificationAsyncExecutor")
     public void handleNotificationEvent(NotificationEvent event) {
         log.info("비동기 알림 START, Thread: " + Thread.currentThread().getId() + " " + Thread.currentThread().getName());
         notificationService.sendNotification(event.getDeviceToken(), event.getTitle(), event.getBody());
