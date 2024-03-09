@@ -2,10 +2,10 @@ package com.official.pium.history.ui;
 
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
-import com.official.pium.member.ui.Auth;
-import com.official.pium.member.domain.Member;
 import com.official.pium.history.application.HistoryService;
 import com.official.pium.history.application.dto.HistoryResponse;
+import com.official.pium.member.domain.Member;
+import com.official.pium.member.ui.Auth;
 import jakarta.validation.constraints.Positive;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

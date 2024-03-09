@@ -1,9 +1,9 @@
 package com.official.pium.fixture;
 
-import com.official.pium.history.domain.HistoryType;
 import com.official.pium.history.application.dto.HistoryResponse;
 import com.official.pium.history.application.dto.SingleHistoryResponse;
 import com.official.pium.history.application.dto.SingleHistoryResponse.Content;
+import com.official.pium.history.domain.HistoryType;
 import java.time.LocalDate;
 import java.util.List;
 

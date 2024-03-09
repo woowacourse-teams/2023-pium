@@ -8,10 +8,10 @@ import static org.hamcrest.Matchers.equalTo;
 
 import com.official.pium.AcceptanceTest;
 import com.official.pium.dictionaryPlant.domain.DictionaryPlant;
-import com.official.pium.petPlant.domain.PetPlant;
 import com.official.pium.petPlant.application.dto.PetPlantCreateRequest;
 import com.official.pium.petPlant.application.dto.PetPlantUpdateRequest;
 import com.official.pium.petPlant.application.dto.ReminderCreateRequest;
+import com.official.pium.petPlant.domain.PetPlant;
 import io.restassured.RestAssured;
 import io.restassured.builder.MultiPartSpecBuilder;
 import io.restassured.http.ContentType;

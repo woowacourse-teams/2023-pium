@@ -1,9 +1,9 @@
 package com.official.pium.common.ui;
 
-import com.official.pium.member.ui.Auth;
-import com.official.pium.member.domain.Member;
 import com.official.pium.common.exception.AuthenticationException;
+import com.official.pium.member.domain.Member;
 import com.official.pium.member.repository.MemberRepository;
+import com.official.pium.member.ui.Auth;
 import com.official.pium.sessionGroup.application.SessionGroupService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;

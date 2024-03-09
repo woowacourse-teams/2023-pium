@@ -1,7 +1,7 @@
 package com.official.pium.sessionGroup.application;
 
-import com.official.pium.sessionGroup.domain.SessionGroup;
 import com.official.pium.common.exception.AuthenticationException;
+import com.official.pium.sessionGroup.domain.SessionGroup;
 import com.official.pium.sessionGroup.repository.SessionGroupRepository;
 import java.time.Clock;
 import java.time.LocalDateTime;
